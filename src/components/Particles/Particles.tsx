@@ -1,7 +1,14 @@
 // @ts-nocheck
 /* eslint-disable react/no-unknown-property */
 
-import React, { memo, Suspense, useCallback, useMemo, useRef } from 'react';
+import React, {
+  memo,
+  Suspense,
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef
+} from 'react';
 import {
   Canvas,
   extend,
@@ -128,8 +135,21 @@ export const AnimationCanvas = () => {
   );
 };
 
-export const Particles = memo(() => (
-  <div className='particles'>
-    <AnimationCanvas />
-  </div>
-));
+export const Particles = memo(() => {
+  const onunload = (e) => {
+    document.getElementById('canvas-container')?.remove();
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', onunload);
+    return () => {
+      window.removeEventListener('beforeunload', onunload);
+    };
+  }, []);
+
+  return (
+    <div className='particles' id='canvas-container'>
+      <AnimationCanvas />
+    </div>
+  );
+});
