@@ -25,6 +25,7 @@ export const ChartComposed = ({
   dateFormat,
   hasOnlyStartEndTick,
   tooltip,
+  staked,
   showLegend = true
 }: ChartComposedProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
@@ -45,7 +46,8 @@ export const ChartComposed = ({
   );
 
   const { getChartData } = useChartComposedData({
-    seriesConfig
+    seriesConfig,
+    staked
   });
 
   const chartData = getChartData();
@@ -244,7 +246,7 @@ export const ChartComposed = ({
             }}
           />
 
-          {showLegend && (
+          {showLegend && seriesConfig.length > 1 && (
             <Legend
               verticalAlign='bottom'
               iconType='circle'

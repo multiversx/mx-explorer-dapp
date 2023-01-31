@@ -19,10 +19,12 @@ export interface AnalyticsChartDataType {
 
 export const AnalyticsChart = ({
   series,
-  title
+  title,
+  stacked
 }: {
   series: ChartListType[];
   title?: string;
+  stacked?: boolean;
 }) => {
   const ref = useRef(null);
 
