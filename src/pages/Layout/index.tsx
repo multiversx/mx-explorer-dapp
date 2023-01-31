@@ -198,14 +198,14 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                   </div>
                 )}
 
-                {isTransactions && (
+                {isTransactions && isMainnet && (
                   <div className='container mb-3'>
                     <div className='card card-lg card-black'>
                       <div className='card-header pb-0'>
                         <h2 className='title mb-0'>Transactions</h2>
                       </div>
                       <div className='card-body p-0'>
-                        {isMainnet && <ChartContractsTransactions />}
+                        <ChartContractsTransactions />
                       </div>
                     </div>
                   </div>

@@ -27,13 +27,15 @@ export const PageLayout = ({ children }: { children: React.ReactNode }) => {
       return <NodesLayout>{children}</NodesLayout>;
 
     case activeRoute(accountsRoutes.accountDetails):
-    case activeRoute(accountsRoutes.accountCode):
     case activeRoute(accountsRoutes.accountTokens):
     case activeRoute(accountsRoutes.accountNfts):
     case activeRoute(accountsRoutes.accountContracts):
     case activeRoute(accountsRoutes.accountStaking):
     case activeRoute(accountsRoutes.accountAnalytics):
-    case activeRoute(accountsRoutes.oldAccountDetails):
+    case activeRoute(accountsRoutes.accountCode):
+    case activeRoute(accountsRoutes.accountCodeEndpoints):
+    case activeRoute(accountsRoutes.accountCodeViews):
+    case activeRoute(accountsRoutes.accountCodeTypes):
       return <AccountLayout>{children}</AccountLayout>;
 
     case activeRoute(tokensRoutes.tokenDetails):

@@ -37,7 +37,7 @@ export const EventsList = ({
   React.useEffect(() => {
     if (ref.current && ref.current !== null) {
       window.scrollTo({
-        top: ref.current.getBoundingClientRect().top - 70,
+        top: ref.current.getBoundingClientRect().top - 86,
         behavior: 'smooth'
       });
     }

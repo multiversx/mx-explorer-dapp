@@ -76,5 +76,8 @@ export const elasticAdapter = {
   },
   getMarkers: () => {
     throw new Error('not defined');
+  },
+  getAccountContractVerification: () => {
+    throw new Error('not defined');
   }
 };
