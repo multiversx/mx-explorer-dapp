@@ -373,7 +373,7 @@ div.side-icon {
   margin-bottom: 0 !important;
 }
 
-.search-filter {
+.search-small {
   @include media-breakpoint-up(xl) {
     max-width: 12rem;
   }
