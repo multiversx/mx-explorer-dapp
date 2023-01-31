@@ -115,6 +115,7 @@ export const AnimationCanvas = () => {
     <Canvas
       colorManagement={false}
       camera={{ position: [100, 30, 0], fov: 45 }}
+      resize={{ scroll: false }}
     >
       <Suspense fallback={null}>
         <Points />
