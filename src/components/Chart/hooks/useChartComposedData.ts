@@ -27,7 +27,7 @@ export const useChartComposedData = ({
 
       const mergedSeriesObject: Record<string, string | number> = {};
       for (const s of series) {
-        if (s.data?.[i]?.[s?.id]) {
+        if (s.data?.[i]?.[s?.id] !== undefined) {
           mergedSeriesObject[s.id] = s.data[i][s.id];
         }
       }
