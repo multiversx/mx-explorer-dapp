@@ -384,3 +384,9 @@ div.side-icon {
     color: var(--neutral-900) !important;
   }
 }
+
+.table-width-xl-helper {
+  @include media-breakpoint-up(xl) {
+    width: 9rem;
+  }
+}

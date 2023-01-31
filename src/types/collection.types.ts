@@ -36,6 +36,10 @@ export interface CollectionType {
   canAddQuantity?: boolean;
   canUpdateAttributes?: boolean;
   canAddUri?: boolean;
+
+  isVerified?: boolean;
+  nftCount?: number;
+  holderCount?: number;
 }
 
 export interface CollectionSliceType extends SliceType {

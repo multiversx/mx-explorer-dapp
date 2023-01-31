@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { faHexagonCheck } from '@fortawesome/pro-solid-svg-icons/faHexagonCheck';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
 import {
@@ -149,6 +153,10 @@ export const Collections = () => {
                                 <th>Collection</th>
                                 <th>Name</th>
                                 <th>Age</th>
+                                <th className='table-width-xl-helper'>Items</th>
+                                <th className='table-width-xl-helper'>
+                                  Holders
+                                </th>
                                 <th>Owner</th>
                               </tr>
                             </thead>
@@ -177,6 +185,27 @@ export const Collections = () => {
                                           <div>{collection.collection}</div>
                                         </div>
                                       </NetworkLink>
+
+                                      {collection.isVerified && (
+                                        <OverlayTrigger
+                                          placement='top'
+                                          delay={{ show: 0, hide: 400 }}
+                                          overlay={(props: any) => (
+                                            <Tooltip
+                                              {...props}
+                                              show={props.show.toString()}
+                                            >
+                                              Verified
+                                            </Tooltip>
+                                          )}
+                                        >
+                                          <FontAwesomeIcon
+                                            icon={faHexagonCheck}
+                                            size='sm'
+                                            className='ms-2 text-yellow-spotlight'
+                                          />
+                                        </OverlayTrigger>
+                                      )}
                                       <NftBadge
                                         type={collection.type}
                                         className='ms-2'
@@ -189,6 +218,20 @@ export const Collections = () => {
                                       value={collection.timestamp}
                                       tooltip
                                     />
+                                  </td>
+                                  <td>
+                                    {collection?.nftCount
+                                      ? new BigNumber(
+                                          collection.nftCount
+                                        ).toFormat(0)
+                                      : ''}
+                                  </td>
+                                  <td>
+                                    {collection?.holderCount
+                                      ? new BigNumber(
+                                          collection.holderCount
+                                        ).toFormat(0)
+                                      : ''}
                                   </td>
                                   <td>
                                     <div className='d-flex trim-size-xl'>
