@@ -81,6 +81,7 @@ export const usePageStats = () => {
     switch (true) {
       case activeRoute(blocksRoutes.miniBlockDetails):
       case activeRoute(blocksRoutes.blocks):
+      case activeRoute(blocksRoutes.blocksDetails):
         return {
           title: headersBlocksTitle,
           data: headersBlocksData

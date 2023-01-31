@@ -124,6 +124,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const showCustomStats = () => {
     switch (true) {
       case activeRoute(blocksRoutes.blocks):
+      case activeRoute(blocksRoutes.blocksDetails):
       case activeRoute(blocksRoutes.miniBlockDetails):
       case activeRoute(accountsRoutes.accounts):
       case activeRoute(accountsRoutes.accountDetails):
