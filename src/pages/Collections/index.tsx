@@ -3,6 +3,7 @@ import { faHexagonCheck } from '@fortawesome/pro-solid-svg-icons/faHexagonCheck'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import {
@@ -16,6 +17,7 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useGetFilters, useURLSearchParams, useActiveRoute } from 'hooks';
+import { pageHeadersCollectionsStatsSelector } from 'redux/selectors/pageHeadersCollectionsStats';
 import { collectionRoutes } from 'routes';
 import { NftEnumType, CollectionType } from 'types';
 import { FailedCollections } from './FailedCollections';
@@ -29,6 +31,9 @@ export const Collections = () => {
   const { search } = useLocation();
   const { getQueryObject, size } = useGetFilters();
   const { getCollections, getCollectionsCount } = useAdapter();
+  const pageHeadersCollections = useSelector(
+    pageHeadersCollectionsStatsSelector
+  );
 
   const [collections, setCollections] = React.useState<CollectionType[]>([]);
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
@@ -75,7 +80,8 @@ export const Collections = () => {
 
   return (
     <>
-      {dataReady === undefined && <Loader />}
+      {(dataReady === undefined ||
+        Object.keys(pageHeadersCollections).length === 0) && <Loader />}
       {dataReady === false && <FailedCollections />}
 
       <div ref={ref}>

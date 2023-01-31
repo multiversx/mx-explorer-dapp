@@ -607,6 +607,9 @@ export const useAdapter = () => {
       provider({
         baseUrl: '***REMOVED***',
         url: '/markers'
-      })
+      }),
+
+    getGrowthHeaders: (url: string) =>
+      provider({ baseUrl: `${growthApi}/explorer/headers`, url })
   };
 };

@@ -27,13 +27,15 @@ import {
   BlockHeightStatsCard,
   TransactionsStatsCard,
   ValidatorsStatusCard,
-  HeroPills
+  HeroPills,
+  StatsCard
 } from 'widgets';
 
 import { Footer } from './Footer/index';
 import { Header } from './Header/index';
 import { PageLayout } from './PageLayout';
 import { Unavailable } from './Unavailable';
+import { usePageStats } from '../../hooks/pageStats/usePageStats';
 
 const getCustomPageName = ({
   pathname,
@@ -75,6 +77,7 @@ const formatClassName = (className: string) => {
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const [freeze, setFreeze] = useState(false);
+  const [stats, setStats] = useState<{ title: string; data: any }>();
 
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
@@ -83,6 +86,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
+
+  const { pageStats } = usePageStats();
 
   const showGlobalStats = () => {
     let show = true;
@@ -189,10 +194,19 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                         </h2>
                       </div>
                       <div className='card-body d-flex flex-row flex-wrap gap-3'>
-                        <TransactionsStatsCard />
-                        <AccountsStatsCard />
-                        {isMainnet && <ValidatorsStatusCard isSmall />}
-                        <BlockHeightStatsCard neutralColors />
+                        {pageStats?.data.map((item) => (
+                          <StatsCard
+                            key={item.title}
+                            title={item.title}
+                            value={item.value ? item.value.toString() : ''}
+                            className='card-solitary'
+                            neutralColors={true}
+                          />
+                        ))}
+                        {/*<TransactionsStatsCard />*/}
+                        {/*<AccountsStatsCard />*/}
+                        {/*{isMainnet && <ValidatorsStatusCard isSmall />}*/}
+                        {/*<BlockHeightStatsCard neutralColors />*/}
                       </div>
                     </div>
                   </div>
