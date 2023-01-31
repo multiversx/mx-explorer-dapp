@@ -19,12 +19,14 @@ export const urlBuilder = {
   accountDetailsContracts: (address: string) =>
     `/accounts/${address}/contracts`,
   accountDetailsContractCode: (address: string) => `/accounts/${address}/code`,
+  accountDetailsContractCodeConstructor: (address: string) =>
+    `/accounts/${address}/code/contract-constructor`,
   accountDetailsContractCodeEndpoints: (address: string) =>
     `/accounts/${address}/code/endpoints`,
   accountDetailsContractCodeTypes: (address: string) =>
     `/accounts/${address}/code/types`,
-  accountDetailsContractCodeViews: (address: string) =>
-    `/accounts/${address}/code/views`,
+  accountDetailsContractCodeEvents: (address: string) =>
+    `/accounts/${address}/code/events`,
   identityDetails: (id: string) => `/identities/${id}`,
   tokenDetails: (tokenId: string) => `/tokens/${tokenId}`,
   tokenMetaEsdtDetails: (tokenId: string) => `/meta-esdt/${tokenId}`,

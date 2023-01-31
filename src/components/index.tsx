@@ -66,5 +66,6 @@ export * from './NodesHero';
 export * from './ProgressRing';
 export * from './ShardList';
 export * from './FormatUSD';
+export * from './CollapsibleArrows';
 
 export { Chart, NodesTable, TxActionBlock, SharedIdentity };
