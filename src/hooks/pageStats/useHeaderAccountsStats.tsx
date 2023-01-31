@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAdapter } from '../../components';
 import { pageHeadersAccountsStatsSelector } from '../../redux/selectors/pageHeadersAccountsStats';
@@ -22,7 +23,21 @@ export const useHeaderAccountsStats = () => {
       return {} as HeadersAccountsType;
     }
 
-    dispatch(setPageHeaderAccountsStats(result.data));
+    dispatch(
+      setPageHeaderAccountsStats({
+        accountsBalanceGt1000: new BigNumber(
+          result.data.accountsBalanceGt1000
+        ).toFormat(0),
+        activeAccountsToday: new BigNumber(
+          result.data.activeAccountsToday
+        ).toFormat(0),
+        totalAccounts: new BigNumber(result.data.totalAccounts).toFormat(0),
+        usersStaking: new BigNumber(result.data.usersStaking).toFormat(0),
+        newAccountsToday: new BigNumber(
+          result.data.activeAccountsToday
+        ).toFormat(0)
+      })
+    );
     return result.data;
   };
 

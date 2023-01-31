@@ -23,7 +23,7 @@ export const pageHeadersCollectionsStatsSlice = createSlice({
     },
     setPageHeaderBlocksStatsEcosystemMarketCap: (
       state: HeadersTokensType,
-      action: PayloadAction<number>
+      action: PayloadAction<number | string>
     ) => {
       state.ecosystemMarketCap = action.payload;
     }

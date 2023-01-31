@@ -34,8 +34,14 @@ export const useHeadersTokensStats = () => {
 
     dispatch(
       setPageHeaderTokensStats({
-        ...result.data,
-        ecosystemMarketCap: ecosystemMarketCap.toNumber()
+        totalTokens: new BigNumber(result.data.totalTokens).toFormat(0),
+        newTokensInLast30d: new BigNumber(
+          result.data.newTokensInLast30d
+        ).toFormat(0),
+        tokenTransfersInLast30d: new BigNumber(
+          result.data.tokenTransfersInLast30d
+        ).toFormat(0),
+        ecosystemMarketCap: ecosystemMarketCap.toFormat(0)
       })
     );
 
@@ -48,7 +54,7 @@ export const useHeadersTokensStats = () => {
 
   useEffect(() => {
     dispatch(
-      setPageHeaderBlocksStatsEcosystemMarketCap(ecosystemMarketCap.toNumber())
+      setPageHeaderBlocksStatsEcosystemMarketCap(ecosystemMarketCap.toFormat(0))
     );
   }, [ecosystemMarketCap]);
 

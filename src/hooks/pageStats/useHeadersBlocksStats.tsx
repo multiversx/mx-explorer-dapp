@@ -8,6 +8,7 @@ import {
   setPageHeaderBlocksStatsBlockHeight
 } from '../../redux/slices/pageHeadersBlocksStats';
 import { HeadersBlocksType } from '../../types/headerStats.types';
+import BigNumber from 'bignumber.js';
 
 export const useHeadersBlocksStats = () => {
   const headersBlocks = useSelector(pageHeadersBlocksStatsSelector);
@@ -29,8 +30,16 @@ export const useHeadersBlocksStats = () => {
 
     dispatch(
       setPageHeaderBlocksStats({
-        ...result.data,
-        blockHeight: unprocessed.blocks
+        totalNetworkFees: new BigNumber(result.data.totalNetworkFees).toFormat(
+          0
+        ),
+        totalDeveloperRewards: new BigNumber(
+          result.data.totalDeveloperRewards
+        ).toFormat(0),
+        totalApplicationsDeployed: new BigNumber(
+          result.data.totalApplicationsDeployed
+        ).toFormat(0),
+        blockHeight: new BigNumber(unprocessed.blocks).toFormat(0)
       })
     );
     return result.data;
@@ -41,7 +50,11 @@ export const useHeadersBlocksStats = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(setPageHeaderBlocksStatsBlockHeight(unprocessed.blocks));
+    dispatch(
+      setPageHeaderBlocksStatsBlockHeight(
+        new BigNumber(unprocessed.blocks).toFormat(0)
+      )
+    );
   }, [unprocessed.blocks, headersBlocks]);
 
   return {

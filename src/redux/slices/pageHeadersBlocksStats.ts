@@ -24,7 +24,7 @@ export const pageHeadersBlocksStatsSlice = createSlice({
     },
     setPageHeaderBlocksStatsBlockHeight: (
       state: HeadersBlocksType,
-      action: PayloadAction<number>
+      action: PayloadAction<number | string>
     ) => {
       state.blockHeight = action.payload;
     }
