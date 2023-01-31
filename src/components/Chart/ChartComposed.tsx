@@ -25,7 +25,8 @@ export const ChartComposed = ({
   dateFormat,
   hasOnlyStartEndTick,
   tooltip,
-  staked,
+  stacked,
+  stackedLabel,
   showLegend = true
 }: ChartComposedProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
@@ -48,8 +49,7 @@ export const ChartComposed = ({
   );
 
   const { getChartData } = useChartComposedData({
-    seriesConfig,
-    staked
+    seriesConfig
   });
 
   const chartData = getChartData();
@@ -236,13 +236,23 @@ export const ChartComposed = ({
           ))}
 
           <Tooltip
-            content={(props) => (
-              <AnalyticsChartTooltip
-                {...props}
-                seriesConfig={seriesConfig}
-                dateFormat={tooltip?.dateFormat}
-              />
-            )}
+            content={(props) => {
+              const totalValue = props.payload?.reduce((acc, curr) => {
+                acc += Number(curr.value);
+                return acc;
+              }, 0);
+
+              return (
+                <AnalyticsChartTooltip
+                  {...props}
+                  seriesConfig={seriesConfig}
+                  stacked={stacked}
+                  stackedLabel={stackedLabel}
+                  totalValueStacked={totalValue}
+                  dateFormat={tooltip?.dateFormat}
+                />
+              );
+            }}
             cursor={{
               strokeDasharray: '3 5',
               stroke: muted
