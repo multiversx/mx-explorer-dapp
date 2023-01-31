@@ -84,7 +84,10 @@ export const AccountTabs = () => {
         <NetworkLink
           to={urlBuilder.accountDetailsContractCode(address)}
           className={`tab-link ${
-            activeRoute(accountsRoutes.accountCode) ? 'active' : ''
+            activeRoute(accountsRoutes.accountCode) ||
+            activeRoute(accountsRoutes.accountCodeEndpoints)
+              ? 'active'
+              : ''
           }`}
         >
           <h5>

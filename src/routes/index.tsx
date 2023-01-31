@@ -77,8 +77,8 @@ export const accountsRoutes = {
   oldAccountDetails: '/address/:hash',
   accountCode: '/accounts/:hash/code',
   accountCodeEndpoints: '/accounts/:hash/code/endpoints',
-  accountCodeViews: '/accounts/:hash/code/endpoints',
-  accountCodeTypes: '/accounts/:hash/code/endpoints'
+  accountCodeViews: '/accounts/:hash/code/views',
+  accountCodeTypes: '/accounts/:hash/code/types'
 };
 
 export const validatorsRoutes = {
@@ -216,6 +216,11 @@ const mainRoutes: RouteType[] = [
   {
     path: accountsRoutes.accountCode,
     title: 'Account Contract Code',
+    component: AccountContractCode
+  },
+  {
+    path: accountsRoutes.accountCodeEndpoints,
+    title: 'Account Smart Contract Endpoints',
     component: AccountContractCode
   },
   {

@@ -61,10 +61,13 @@ export const Links = (props: LinksPropsType) => {
       activeRoutes: [
         accountsRoutes.accounts,
         accountsRoutes.accountDetails,
-        accountsRoutes.accountCode,
         accountsRoutes.accountTokens,
         accountsRoutes.accountNfts,
-        accountsRoutes.accountContracts
+        accountsRoutes.accountContracts,
+        accountsRoutes.accountCode,
+        accountsRoutes.accountCodeEndpoints,
+        accountsRoutes.accountCodeViews,
+        accountsRoutes.accountCodeTypes
       ]
     },
     {
