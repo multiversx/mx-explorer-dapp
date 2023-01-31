@@ -283,7 +283,10 @@ export const NodesFilters = ({
           </li>
         </ul>
       )}
-      <div role='search' className='search-filter'>
+      <div
+        role='search'
+        className={onlySearch ? 'search-large' : 'search-small'}
+      >
         <div className='input-group input-group-sm input-group-seamless'>
           <input
             type='text'
