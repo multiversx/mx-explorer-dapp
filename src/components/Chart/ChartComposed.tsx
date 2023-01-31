@@ -25,14 +25,13 @@ export const ChartComposed = ({
   dateFormat,
   hasOnlyStartEndTick,
   tooltip,
-  showLegend
+  showLegend = true
 }: ChartComposedProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
   const [hiddenSeries, setHiddenSeries] =
     useState<Record<string, string | undefined>>();
 
-  const [white, neutral800, muted, primary, secondary] = [
-    'white',
+  const [neutral800, muted, primary, secondary] = [
     'neutral-800',
     'teal',
     'violet-400',
@@ -64,11 +63,11 @@ export const ChartComposed = ({
   const getLegendPayload = () => {
     return seriesConfig.map((sc) => ({
       id: sc.id,
+      value: sc?.legend?.config?.label ?? sc.label,
       style: {
-        ...sc.legendStyle,
+        ...sc?.legend?.style,
         color: sc.stroke
-      },
-      value: sc.label
+      }
     }));
   };
 
@@ -93,14 +92,18 @@ export const ChartComposed = ({
         {payload?.map((entry: any) => {
           const {
             id: dataKey,
-            style: { color, ...styleRest }
+            value,
+            style: { color, borderColor, ...styleRest }
           } = entry;
           const active = Boolean(hiddenSeries && hiddenSeries[dataKey]);
+
+          console.log(styleRest);
+
           const styles = {
+            ...styleRest,
             margin: 5,
             color: `${active ? secondary : color}`,
-            borderColor: color,
-            ...styleRest
+            borderColor: `${active ? secondary : borderColor ?? color}`
           };
 
           return (
@@ -112,31 +115,23 @@ export const ChartComposed = ({
               onClick={onLegendClick(dataKey)}
               style={styles}
             >
-              <Surface
-                width={10}
-                height={10}
-                viewBox={{ x: 0, y: 0, width: 10, height: 10 }}
-              >
-                <Symbols
-                  cx={5}
-                  cy={5}
-                  type='circle'
-                  size={50}
-                  fill={color}
-                  stroke={color}
-                />
-                {active && (
+              {!active && (
+                <Surface
+                  width={10}
+                  height={10}
+                  viewBox={{ x: 0, y: 0, width: 10, height: 10 }}
+                >
                   <Symbols
                     cx={5}
                     cy={5}
                     type='circle'
-                    size={25}
-                    fill={white}
-                    stroke={white}
+                    size={50}
+                    fill={color}
+                    stroke={color}
                   />
-                )}
-              </Surface>
-              <span className='mx-1'>{dataKey}</span>
+                </Surface>
+              )}
+              <span className='mx-1'>{value}</span>
             </span>
           );
         })}
