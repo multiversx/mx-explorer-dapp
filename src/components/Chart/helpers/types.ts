@@ -125,6 +125,7 @@ export interface ChartProps {
 export interface StackedChartConfig {
   stacked?: boolean;
   stackedLabel?: string;
+  customDomain?: boolean;
 }
 
 export interface ChartComposedConfigType {
