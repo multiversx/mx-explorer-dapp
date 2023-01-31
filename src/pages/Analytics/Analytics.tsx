@@ -227,11 +227,11 @@ export const Analytics = () => {
               />
             </div>
           </ChartWrapper>
-          <ChartWrapper>
+          {/* <ChartWrapper>
             <div className='px-3 p-3'>
               <AnalyticsChart title={'Users Metrics'} series={usersChart} />
             </div>
-          </ChartWrapper>
+          </ChartWrapper> */}
           <ChartWrapper>
             <div className='px-3 pb-3'>
               <AnalyticsChart series={dailyActiveUsersChart} />
