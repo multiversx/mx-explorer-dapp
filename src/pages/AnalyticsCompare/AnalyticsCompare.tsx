@@ -10,7 +10,6 @@ import { Loader, useAdapter, Led } from 'components';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
-import { AnalyticsChart } from './AnalyticsChart';
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
 import { ChartResolution } from './AnalyticsChart/components/ChartResolution';
 import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
@@ -32,7 +31,7 @@ export const AnalyticsCompare = () => {
   const navigate = useNavigate();
   const isMainnet = useIsMainnet();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const location = useLocation();
 
   const firstSeriesId = searchParams.get(FIRST_SERIES_ID);
@@ -81,7 +80,6 @@ export const AnalyticsCompare = () => {
     setSelectedPills((pills) => [pills[1], series]);
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(getData, [activeNetworkId]);
 
   useEffect(() => {
@@ -112,79 +110,60 @@ export const AnalyticsCompare = () => {
     navigate('/');
   }
 
+  if (dataReady === undefined) return <Loader />;
+  if (!dataReady) return <FailedAnalytics />;
+  if (dataReady && chartList.length === 0) return <NoAnalytics />;
+  if (selectedPills.length < 2) return <FailedAnalytics />;
+
   return (
-    <>
-      {dataReady === undefined && <Loader />}
-      {dataReady === false && <FailedAnalytics />}
-      {dataReady === true && chartList.length === 0 && <NoAnalytics />}
-      {selectedPills.length < 2 && <FailedAnalytics />}
+    <div ref={ref}>
+      <div className='analytics container page-content'>
+        <div className='card card-lg card-black'>
+          <div className='card-header d-flex align-items-center'>
+            <a
+              href={analyticsRoutes.analytics}
+              className='analytics-nav-item link'
+            >
+              Key Metrics
+            </a>
+            <div className='analytics-nav-item'>Compare</div>
+          </div>
+          <div className='card-body'>
+            <h6 className='text-neutral-400 mb-3'>Select metrics to compare</h6>
+            <div className='d-flex flex-wrap gap-2 mb-5'>
+              {chartList.map((series) => {
+                let selected = '';
+                if (selectedPills[0].id === series.id) {
+                  selected = 'first';
+                }
+                if (selectedPills[1].id === series.id) {
+                  selected = 'second';
+                }
 
-      <div ref={ref}>
-        {dataReady === true && selectedPills.length >= 2 && (
-          <div className='analytics container page-content'>
-            <div className='card card-lg card-black'>
-              <div className='card-header d-flex align-items-center'>
-                <a
-                  href={analyticsRoutes.analytics}
-                  className='analytics-nav-item link'
-                >
-                  Key Metrics
-                </a>
-                <div className='analytics-nav-item'>Compare</div>
-              </div>
-              <div className='card-body'>
-                <h6 className='text-neutral-400 mb-2'>
-                  Select metrics to compare
-                </h6>
-                <div className='d-flex flex-wrap gap-2 mb-3'>
-                  {chartList.map((series) => {
-                    let selected = '';
-                    if (selectedPills[0].id === series.id) {
-                      selected = 'first';
-                    }
-                    if (selectedPills[1].id === series.id) {
-                      selected = 'second';
-                    }
+                return (
+                  <button
+                    type='button'
+                    key={series.id}
+                    onClick={onSelectPill(series)}
+                    className={`badge rounded-pill filter-badge d-flex align-items-center ${selected}`}
+                  >
+                    <Led color='me-2' />
+                    {series.label}
+                  </button>
+                );
+              })}
+            </div>
 
-                    return (
-                      <button
-                        type='button'
-                        key={series.id}
-                        onClick={onSelectPill(series)}
-                        className={`badge rounded-pill filter-badge d-flex align-items-center ${selected}`}
-                      >
-                        <Led color='me-2' />
-                        {series.label}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className='row pb-5'>
-                  <AnalyticsStackedChart
-                    firstSeries={selectedPills[0]}
-                    secondSeries={selectedPills[1]}
-                  />
-                </div>
-                <div className='row mt-5'>
-                  <AnalyticsChart
-                    // charts={chartList.filter((x) =>
-                    //   x.id.includes('transactions')
-                    // )}
-                    series={[
-                      chartList[0],
-                      chartList[1],
-                      chartList[2],
-                      chartList[3]
-                    ]}
-                  />
-                </div>
-              </div>
-              <div className='card-footer'></div>
+            <div className='row pb-5'>
+              <AnalyticsStackedChart
+                firstSeries={selectedPills[0]}
+                secondSeries={selectedPills[1]}
+              />
             </div>
           </div>
-        )}
+          <div className='card-footer'></div>
+        </div>
       </div>
-    </>
+    </div>
   );
 };

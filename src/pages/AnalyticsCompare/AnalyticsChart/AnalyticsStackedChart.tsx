@@ -134,7 +134,7 @@ export const AnalyticsStackedChart = ({
     <>
       <section id={[firstSeries.id, secondSeries.id].join('/')} ref={ref}>
         <div className='d-flex align-items-center flex-wrap justify-content-between mb-md-spacer'>
-          <h3 className='mb-0 pt-4 mb-3 mb-md-0 pt-md-0'>
+          <h5 className='mb-0 pt-4 mb-3 mb-md-0 pt-md-0'>
             <span style={{ color: firstSeriesDefaultConfig.stroke }}>
               {firstSeriesLabel}
             </span>
@@ -142,10 +142,11 @@ export const AnalyticsStackedChart = ({
             <span style={{ color: secondSeriesDefaultConfig.stroke }}>
               {secondSeriesLabel}
             </span>
-          </h3>
+          </h5>
           <div className='d-flex justify-content-end align-items-center me-0'>
             <div className='mb-spacer mb-md-0'>
               <ChartResolutionSelector
+                isResponsive={true}
                 value={range}
                 onChange={(resolution) => {
                   searchParams.set('range', resolution.range);

@@ -63,7 +63,8 @@ export const AccountAnalytics = () => {
       data: chartData,
       showUsdValue: true,
       yAxisConfig: {
-        currency: egldLabel
+        currency: egldLabel,
+        orientation: 'left'
       }
     }
   ];

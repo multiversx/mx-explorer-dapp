@@ -211,7 +211,8 @@ export const ChartComposed = ({
                 axisLine={false}
                 tickLine={false}
                 tickCount={10}
-                stroke={seriesConfig.length !== 2 ? primary : sc.stroke}
+                stroke={sc.stroke}
+                dy={2}
               />
               <Area
                 type='monotone'

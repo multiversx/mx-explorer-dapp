@@ -90,7 +90,7 @@ export const ChartAreaNew = ({
           />
 
           <YAxis
-            orientation='right'
+            orientation={seriesConfig.yAxisConfig?.orientation}
             tickFormatter={(tick) =>
               formatYAxis({
                 tick,
