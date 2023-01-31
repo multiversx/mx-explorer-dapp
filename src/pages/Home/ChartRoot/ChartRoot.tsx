@@ -1,5 +1,12 @@
 import React from 'react';
-import { Area, AreaChart, ResponsiveContainer, Tooltip } from 'recharts';
+import {
+  Area,
+  AreaChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
+} from 'recharts';
 
 import styles from './styles.module.scss';
 import type { ChartRootPropsType } from './types';
@@ -27,16 +34,12 @@ const CustomTooltip = (props: any) => {
 };
 
 export const ChartRoot = (props: ChartRootPropsType) => {
-  const { className, data, color, identifier, syncId, tooltipFormatter } =
+  const { className, data, height, color, identifier, tooltipFormatter } =
     props;
 
   return (
-    <ResponsiveContainer height={75} width='100%' className={className}>
-      <AreaChart
-        data={data}
-        margin={{ left: 0, right: 0 }}
-        {...(syncId ? { syncId } : {})}
-      >
+    <ResponsiveContainer height={height} width='100%' className={className}>
+      <AreaChart data={data} margin={{ left: 0, right: 0, top: 5, bottom: 5 }}>
         <defs>
           <linearGradient id={identifier} x1='0' y1='0' x2='0' y2='1'>
             <stop offset='5%' stopColor={color} stopOpacity={0.15} />
@@ -51,6 +54,8 @@ export const ChartRoot = (props: ChartRootPropsType) => {
           fill={`url(#${identifier})`}
           activeDot={{ stroke: color, fill: color }}
         />
+
+        <YAxis domain={['dataMin', 'dataMax']} hide={true} />
 
         <Tooltip
           cursor={false}

@@ -10,7 +10,7 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
     <div className='card card-black h-100'>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-          <h5 className='table-title d-flex align-items-center'>
+          <h5 className='table-title d-flex align-items-center text-capitalize'>
             Daily most transacted Tokens
           </h5>
         </div>
@@ -64,7 +64,9 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
                       </div>
                     </NetworkLink>
                   </td>
-                  <td>{new BigNumber(token.value).toFormat()}</td>
+                  <td className='text-center'>
+                    {new BigNumber(token.value).toFormat()}
+                  </td>
                 </tr>
               ))}
             </tbody>

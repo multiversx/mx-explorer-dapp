@@ -34,21 +34,7 @@ export const useCheckVersion = () => {
           if (explorerVersion !== latestExplorerVersion) {
             addNotification({
               id: 'newExplorerVersion',
-              text: (
-                <div className='d-flex justify-content-between align-items-center'>
-                  A new version of the Explorer is available.
-                  <a
-                    href='/#'
-                    onClick={(e: React.MouseEvent) => {
-                      e.preventDefault();
-                      window.location.reload();
-                    }}
-                    className='ms-1 text-black'
-                  >
-                    <u>Reload</u>
-                  </a>
-                </div>
-              ),
+              text: 'A new version of the Explorer is available.',
               dismissable: false,
               priority: 1
             });

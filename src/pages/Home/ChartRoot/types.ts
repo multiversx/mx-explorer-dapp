@@ -6,5 +6,5 @@ export interface ChartRootPropsType {
   data: GrowthChartDataType[] | undefined;
   className?: string;
   tooltipFormatter: (option: any) => string;
-  syncId?: string;
+  height: number;
 }

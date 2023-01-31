@@ -1,4 +1,6 @@
 .select {
+  padding-bottom: 1rem;
+
   .control {
     border-radius: 0.5rem;
     background-color: var(--neutral-800);
@@ -51,7 +53,7 @@
 
   .menu {
     background-color: var(--neutral-800);
-    margin-top: 0.25rem;
+    margin-top: -0.75rem;
     overflow: hidden;
     border-radius: 0.5rem;
     margin-bottom: 0;

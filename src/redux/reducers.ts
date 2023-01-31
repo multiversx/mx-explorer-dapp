@@ -43,8 +43,12 @@ const interfacePersisted = {
 };
 
 export const customIgnoredSlices = {
-  networks: persistReducer(networkPersisted, networkReducer),
-  interface: persistReducer(interfacePersisted, interfaceReducer),
+  // networks: persistReducer(networkPersisted, networkReducer),
+  // interface: persistReducer(interfacePersisted, interfaceReducer),
+
+  networks: networkReducer,
+  interface: interfaceReducer,
+
   account: accountReducer,
   accountStaking: accountStakingReducer,
   collection: collectionReducer,

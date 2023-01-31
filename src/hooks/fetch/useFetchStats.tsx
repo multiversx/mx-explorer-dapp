@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAdapter } from 'components';
 import { processStats, getExtraStats } from 'helpers';
@@ -9,34 +9,40 @@ export const useFetchStats = () => {
   const dispatch = useDispatch();
   const { getStats } = useAdapter();
 
-  const fetchStats = () => {
-    getStats().then(({ data, success }) => {
-      if (data && success) {
-        const {
-          epochPercentage,
-          epochTotalTime,
-          epochTimeElapsed,
-          epochTimeRemaining
-        } = getExtraStats(data);
+  const fetchStats = async () => {
+    const { data, success } = await getStats();
 
-        const processedStats = processStats(data);
-        dispatch(
-          setStats({
-            ...processedStats,
+    if (data && success) {
+      const {
+        epochPercentage,
+        epochTotalTime,
+        epochTimeElapsed,
+        epochTimeRemaining
+      } = getExtraStats(data);
 
-            unprocessed: {
-              ...data,
-              epochPercentage,
-              epochTotalTime,
-              epochTimeElapsed,
-              epochTimeRemaining
-            },
-            isFetched: true
-          })
-        );
-      }
-    });
+      const processedStats = processStats(data);
+      dispatch(
+        setStats({
+          ...processedStats,
+
+          unprocessed: {
+            ...data,
+            epochPercentage,
+            epochTotalTime,
+            epochTimeElapsed,
+            epochTimeRemaining
+          },
+          isFetched: true
+        })
+      );
+    }
+
+    return { data, success };
   };
 
-  React.useEffect(fetchStats, []);
+  useEffect(() => {
+    fetchStats();
+  }, []);
+
+  return fetchStats;
 };

@@ -15,7 +15,7 @@ export const MostUsedContracts = ({
     <div className='card card-black h-100'>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-          <h5 className='table-title d-flex align-items-center'>
+          <h5 className='table-title d-flex align-items-center text-capitalize'>
             Daily most used applications
           </h5>
         </div>
@@ -50,7 +50,9 @@ export const MostUsedContracts = ({
                       </NetworkLink>
                     </div>
                   </td>
-                  <td>{new BigNumber(contract.value).toFormat()}</td>
+                  <td className='text-center'>
+                    {new BigNumber(contract.value).toFormat()}
+                  </td>
                 </tr>
               ))}
             </tbody>

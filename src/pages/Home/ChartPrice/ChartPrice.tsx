@@ -113,7 +113,7 @@ export const ChartPrice = () => {
               className={styles.icon}
             />
 
-            <span className={styles.percentage}>{priceChange24h}</span>
+            <span className={styles.percentage}>{priceChange24h} today</span>
           </span>
         </div>
 
@@ -126,19 +126,22 @@ export const ChartPrice = () => {
         </div>
       </div>
 
-      <ChartRoot
-        data={data}
-        color={teal}
-        identifier='priceGradient'
-        tooltipFormatter={(option: any) =>
-          new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            maximumFractionDigits: 2,
-            minimumFractionDigits: 2
-          }).format(option.value)
-        }
-      />
+      <div className={styles.root}>
+        <ChartRoot
+          data={data}
+          height={75}
+          color={teal}
+          identifier='priceGradient'
+          tooltipFormatter={(option: any) =>
+            new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 2
+            }).format(option.value)
+          }
+        />
+      </div>
 
       <div className={styles.statistics}>
         {statistics.map((statistic) => (

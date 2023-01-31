@@ -130,12 +130,30 @@
 .bg-primary-200 {
   background-color: var(--primary-200);
 }
+.text-primary-500 {
+  color: var(--primary-500);
+}
+.bg-primary-500 {
+  background-color: var(--primary-500);
+}
+.text-primary-700 {
+  color: var(--primary-700);
+}
+.bg-primary-700 {
+  background-color: var(--primary-700);
+}
 
 .text-violet {
   color: var(--violet-400);
 }
 .bg-violet {
   background-color: var(--violet-400);
+}
+.text-yellow-spotlight {
+  color: var(--yellow-spotlight);
+}
+.bg-yellow-spotlight {
+  background-color: var(--yellow-spotlight);
 }
 
 // BADGES
@@ -517,7 +535,7 @@ button.badge {
 .filter-badge {
   display: flex;
   color: var(--neutral-300);
-  border: 1px solid rgba(212, 212, 212, 0.3);
+  border: 1px solid rgba(212, 212, 212, 0.1);
   padding: 0.75rem 1.5rem 0.75rem 0.75rem;
   background: rgba(34, 34, 34, 0.5);
   backdrop-filter: blur(6px);

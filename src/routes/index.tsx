@@ -76,8 +76,9 @@ export const accountsRoutes = {
   accountAnalytics: '/accounts/:hash/analytics',
   oldAccountDetails: '/address/:hash',
   accountCode: '/accounts/:hash/code',
+  accountCodeConstructor: '/accounts/:hash/code/contract-constructor',
   accountCodeEndpoints: '/accounts/:hash/code/endpoints',
-  accountCodeViews: '/accounts/:hash/code/views',
+  accountCodeEvents: '/accounts/:hash/code/events',
   accountCodeTypes: '/accounts/:hash/code/types'
 };
 
@@ -219,10 +220,26 @@ const mainRoutes: RouteType[] = [
     component: AccountContractCode
   },
   {
+    path: accountsRoutes.accountCodeConstructor,
+    title: 'Account Smart Contract Constructor',
+    component: AccountContractCode
+  },
+  {
     path: accountsRoutes.accountCodeEndpoints,
     title: 'Account Smart Contract Endpoints',
     component: AccountContractCode
   },
+  {
+    path: accountsRoutes.accountCodeEvents,
+    title: 'Account Smart Contract Events',
+    component: AccountContractCode
+  },
+  {
+    path: accountsRoutes.accountCodeTypes,
+    title: 'Account Smart Contract Types',
+    component: AccountContractCode
+  },
+
   {
     path: accountsRoutes.accountTokens,
     title: 'Account Tokens',

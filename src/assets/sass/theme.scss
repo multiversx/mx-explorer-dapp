@@ -373,14 +373,20 @@ div.side-icon {
   margin-bottom: 0 !important;
 }
 
-.search-filter {
+.search-small {
   @include media-breakpoint-up(xl) {
-    max-width: 12rem;
+    max-width: 11rem;
   }
 }
 
 .nodes-more.show {
   &:hover {
     color: var(--neutral-900) !important;
+  }
+}
+
+.table-width-xl-helper {
+  @include media-breakpoint-up(xl) {
+    width: 9rem;
   }
 }

@@ -13,6 +13,7 @@ import { FailedAnalytics } from '../AnalyticsCompare/FailedAnalytics';
 import { NoAnalytics } from '../AnalyticsCompare/NoAnalytics';
 import { ChartWrapper } from './components/ChartWrapper';
 import { Tabs } from 'components/Tabs';
+import { MostUsed } from 'widgets';
 
 export const Analytics = () => {
   const navigate = useNavigate();
@@ -110,7 +111,7 @@ export const Analytics = () => {
   }, [chartList]);
 
   const stakingMetricsChart = useMemo(() => {
-    const charts = chartList?.filter((sc) => sc.id.includes('staking-'));
+    const charts = chartList?.filter((sc) => sc.id.startsWith('staking-'));
 
     const rightYAxisSeriesIds = [
       'staking-delegated-stake',
@@ -120,6 +121,34 @@ export const Analytics = () => {
 
     const all = charts.reduce((acc, curr) => {
       if (curr.id.includes('staking-')) {
+        if (rightYAxisSeriesIds.includes(curr.id)) {
+          curr.dappConfig = {
+            ...curr.dappConfig,
+            id: 'right-axis',
+            orientation: 'right'
+          };
+        }
+
+        acc.push(curr);
+      }
+
+      return acc;
+    }, [] as ChartListType[]);
+
+    return all;
+  }, [chartList]);
+
+  const usersStakingChart = useMemo(() => {
+    const charts = chartList?.filter((sc) => sc.id.includes('users-staking'));
+
+    const rightYAxisSeriesIds = [
+      'staking-delegated-stake',
+      'staking-active-staked',
+      'staking-total-value-locked-plus-staking'
+    ];
+
+    const all = charts.reduce((acc, curr) => {
+      if (curr.id.includes('users-staking')) {
         if (rightYAxisSeriesIds.includes(curr.id)) {
           curr.dappConfig = {
             ...curr.dappConfig,
@@ -175,7 +204,7 @@ export const Analytics = () => {
           <ChartWrapper>
             <div className='px-3 p-3'>
               <AnalyticsChart
-                title={'Transactions'}
+                title={'Transactions Metrics'}
                 series={transactionsChart}
                 stacked={true}
                 stackedLabel={'Total Transactions'}
@@ -200,7 +229,7 @@ export const Analytics = () => {
           </ChartWrapper>
           <ChartWrapper>
             <div className='px-3 p-3'>
-              <AnalyticsChart title={'Users'} series={usersChart} />
+              <AnalyticsChart title={'Total Accounts'} series={usersChart} />
             </div>
           </ChartWrapper>
           <ChartWrapper>
@@ -208,28 +237,46 @@ export const Analytics = () => {
               <AnalyticsChart series={dailyActiveUsersChart} />
             </div>
           </ChartWrapper>
+
+          <ChartWrapper>
+            <div className='mt-n4 px-3 pb-3'>
+              <MostUsed />
+            </div>
+          </ChartWrapper>
+
           <ChartWrapper>
             <div className='px-3 pb-3'>
               <AnalyticsChart
-                title={'New Applications'}
+                title={'New Applications Deployed'}
                 series={newStuffCreatedChart}
               />
             </div>
           </ChartWrapper>
           <ChartWrapper>
             <div className='px-3 p-3'>
-              <AnalyticsChart title={'Staking'} series={stakingMetricsChart} />
+              <AnalyticsChart
+                title={'Staking Metrics'}
+                series={stakingMetricsChart}
+              />
+            </div>
+          </ChartWrapper>
+          <ChartWrapper>
+            <div className='px-3 p-3'>
+              <AnalyticsChart
+                title={'Users Staking'}
+                series={usersStakingChart}
+              />
             </div>
           </ChartWrapper>
           <ChartWrapper>
             <div className='px-3 pb-3'>
-              <AnalyticsChart title='APR' series={aprsChart} />
+              <AnalyticsChart title='APR Metrics' series={aprsChart} />
             </div>
           </ChartWrapper>
           <ChartWrapper>
             <div className='px-3 pb-3'>
               <AnalyticsChart
-                title={'Rewards'}
+                title={'Fees Metrics'}
                 series={networkAndDeveloperFeesChart}
               />
             </div>
