@@ -7,14 +7,12 @@ import { growthTransactionsSelector } from 'redux/selectors';
 
 import { TransactionsStatisticsLabelEnum } from './enum';
 
+import styles from './styles.module.scss';
 import type { ChartType, StatisticType } from './types';
-import type { ChartSelectOptionType } from '../ChartSelect/types';
-
+import { ChartArea } from '../ChartArea';
 import { ChartRoot } from '../ChartRoot';
 import { ChartSelect } from '../ChartSelect';
-
-import styles from './styles.module.scss';
-import { ChartArea } from '../ChartArea';
+import type { ChartSelectOptionType } from '../ChartSelect/types';
 
 export const ChartContractsTransactions = () => {
   const {
@@ -167,8 +165,6 @@ export const ChartContractsTransactions = () => {
         )
       )
     : [];
-
-  console.log(e);
 
   return (
     <div className={styles.wrapper}>
