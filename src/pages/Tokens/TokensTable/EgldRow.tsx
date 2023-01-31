@@ -162,7 +162,7 @@ export const EgldRow = ({
           </div>
         </div>
       </td>
-      <td>MultiversX (Elrond) {egldLabel}</td>
+      <td>MultiversX {egldLabel}</td>
       <td>{price}</td>
       <td>{circulatingSupply}</td>
       <td>{marketCap}</td>
