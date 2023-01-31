@@ -53,7 +53,10 @@ export const usePageStats = () => {
     const currency = null;
 
     const getCurrency = (id: string) => {
-      if (category === 'blocks' && id === 'totalDeveloperRewards') {
+      if (
+        category === 'blocks' &&
+        (id === 'totalDeveloperRewards' || id === 'totalNetworkFees')
+      ) {
         return 'EGLD';
       }
 
@@ -90,16 +93,16 @@ export const usePageStats = () => {
   const headersAccountsData = useMemo(() => {
     const data = getData('accounts', pageHeadersAccounts);
 
-    const todayActiveAccounts = data.find((x) =>
-      x.id.toLowerCase().includes('ActiveAccountsToday'.toLowerCase())
-    );
+    // const todayActiveAccounts = data.find((x) =>
+    //   x.id.toLowerCase().includes('activeAccountsToday'.toLowerCase())
+    // );
 
-    data.forEach((x) => {
-      if (x.id.toLowerCase().includes('totalAccount'.toLowerCase())) {
-        x.subTitle = `${todayActiveAccounts?.value} active today`;
-        x.icon = <FontAwesomeIcon icon={faCircleBolt} color={teal} />;
-      }
-    });
+    // data.forEach((x) => {
+    //   if (x.id.toLowerCase().includes('totalAccount'.toLowerCase())) {
+    //     x.subTitle = `${todayActiveAccounts?.value} active today`;
+    //     x.icon = <FontAwesomeIcon icon={faCircleBolt} color={teal} />;
+    //   }
+    // });
 
     return data.filter((x) => Boolean(x.title));
   }, [pageHeadersAccounts]);
