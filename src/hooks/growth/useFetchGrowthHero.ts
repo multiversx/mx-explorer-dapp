@@ -11,8 +11,8 @@ export const useFetchGrowthHero = () => {
   const { isFetched } = useSelector(growthHeroSelector);
   const { getGrowthWidget } = useAdapter();
 
-  const fetchGrowthHero = async () => {
-    if (!isFetched) {
+  const fetchGrowthHero = async (refesh?: boolean) => {
+    if (!isFetched || refesh) {
       const { data, success } = await getGrowthWidget('/hero');
 
       if (data && success) {
@@ -26,10 +26,16 @@ export const useFetchGrowthHero = () => {
           })
         );
       }
+
+      return { data, success };
     }
+
+    return { data: [], success: true };
   };
 
   useEffect(() => {
-    (async () => await fetchGrowthHero())();
+    fetchGrowthHero();
   }, []);
+
+  return fetchGrowthHero;
 };
