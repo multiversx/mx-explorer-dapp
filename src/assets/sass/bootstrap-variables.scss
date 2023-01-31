@@ -14,8 +14,11 @@ $enable-rounded: true;
 $enable-shadows: false;
 
 // FONTS
-$headings-font-family: 'Roobert Medium', sans-serif;
-$font-family-sans-serif: 'Inter', sans-serif;
+$headings-font-family: 'Roobert Medium', 'Inter', Roboto, 'Helvetica Neue',
+  'Noto Sans', 'Liberation Sans', sans-serif;
+$font-family-sans-serif: 'Inter', Roboto, 'Helvetica Neue', 'Noto Sans',
+  'Liberation Sans', sans-serif;
+$font-family-base: $font-family-sans-serif;
 
 $font-size-root: 16px;
 $font-size-base: 14px;
