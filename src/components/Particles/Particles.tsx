@@ -133,7 +133,7 @@ export const AnimationCanvas = () => {
         <fog attach='fog' args={['#000000', 1, 250]} />
         <Points pointCount={60} separator={3} />
       </Suspense>
-      {/* <CameraControls /> */}
+      <CameraControls />
     </Canvas>
   );
 };
