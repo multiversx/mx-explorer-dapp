@@ -11,6 +11,7 @@ import {
 } from 'react-three-fiber';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { UAParser } from 'ua-parser-js';
 
 import circleImg from './../../assets/img/three/circle.png';
 extend({ OrbitControls });
@@ -35,8 +36,14 @@ function CameraControls() {
 }
 
 function Points() {
+  const browser = UAParser();
   const imgTex = useLoader(THREE.TextureLoader, circleImg);
   const bufferRef = useRef();
+
+  const excludedOS = ['ubuntu', 'linux'];
+  const isExcludedOS = excludedOS.includes(
+    browser?.os?.name ? browser.os.name?.replaceAll(' ', '-').toLowerCase() : ''
+  );
 
   let t = 0;
   let f = 0.002;
@@ -66,22 +73,24 @@ function Points() {
   }, [count, sep, graph]);
 
   useFrame(() => {
-    t += 10;
+    if (!isExcludedOS) {
+      t += 10;
 
-    const positions = bufferRef.current.array;
+      const positions = bufferRef.current.array;
 
-    let i = 0;
-    for (let xi = 0; xi < count; xi++) {
-      for (let zi = 0; zi < count; zi++) {
-        let x = sep * (xi - count / 2);
-        let z = sep * (zi - count / 2);
+      let i = 0;
+      for (let xi = 0; xi < count; xi++) {
+        for (let zi = 0; zi < count; zi++) {
+          let x = sep * (xi - count / 2);
+          let z = sep * (zi - count / 2);
 
-        positions[i + 1] = graph(x, z);
-        i += 3;
+          positions[i + 1] = graph(x, z);
+          i += 3;
+        }
       }
-    }
 
-    bufferRef.current.needsUpdate = true;
+      bufferRef.current.needsUpdate = true;
+    }
   });
 
   return (
