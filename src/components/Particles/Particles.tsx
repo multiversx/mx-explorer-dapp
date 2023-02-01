@@ -35,15 +35,21 @@ function CameraControls() {
   );
 }
 
-function Points() {
+function isExcluded() {
   const browser = UAParser();
-  const imgTex = useLoader(THREE.TextureLoader, circleImg);
-  const bufferRef = useRef();
-
   const excludedOS = ['ubuntu', 'linux'];
   const isExcludedOS = excludedOS.includes(
     browser?.os?.name ? browser.os.name?.replaceAll(' ', '-').toLowerCase() : ''
   );
+
+  return isExcludedOS;
+}
+
+function Points() {
+  const imgTex = useLoader(THREE.TextureLoader, circleImg);
+  const bufferRef = useRef();
+
+  const isExcludedOS = isExcluded();
 
   let t = 0;
   let f = 0.002;
@@ -55,7 +61,7 @@ function Points() {
     [t, f, a]
   );
 
-  const count = 100;
+  const count = isExcludedOS ? 40 : 100;
   const sep = 3;
   let positions = useMemo(() => {
     let positions = [];
@@ -120,6 +126,8 @@ function Points() {
 }
 
 export const AnimationCanvas = () => {
+  const isExcludedOS = isExcluded();
+
   return (
     <Canvas
       colorManagement={false}
@@ -129,7 +137,7 @@ export const AnimationCanvas = () => {
       <Suspense fallback={null}>
         <Points />
       </Suspense>
-      <CameraControls />
+      {!isExcludedOS && <CameraControls />}
     </Canvas>
   );
 };
