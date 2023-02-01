@@ -11,7 +11,6 @@ import {
 } from 'react-three-fiber';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { UAParser } from 'ua-parser-js';
 
 import circleImg from './../../assets/img/three/circle.png';
 extend({ OrbitControls });
@@ -35,21 +34,9 @@ function CameraControls() {
   );
 }
 
-function isExcluded() {
-  const browser = UAParser();
-  const excludedOS = ['ubuntu', 'linux'];
-  const isExcludedOS = excludedOS.includes(
-    browser?.os?.name ? browser.os.name?.replaceAll(' ', '-').toLowerCase() : ''
-  );
-
-  return isExcludedOS;
-}
-
 function Points() {
   const imgTex = useLoader(THREE.TextureLoader, circleImg);
   const bufferRef = useRef();
-
-  const isExcludedOS = isExcluded();
 
   let t = 0;
   let f = 0.002;
@@ -61,7 +48,7 @@ function Points() {
     [t, f, a]
   );
 
-  const count = isExcludedOS ? 40 : 100;
+  const count = 100;
   const sep = 3;
   let positions = useMemo(() => {
     let positions = [];
@@ -79,24 +66,22 @@ function Points() {
   }, [count, sep, graph]);
 
   useFrame(() => {
-    if (!isExcludedOS) {
-      t += 10;
+    t += 10;
 
-      const positions = bufferRef.current.array;
+    const positions = bufferRef.current.array;
 
-      let i = 0;
-      for (let xi = 0; xi < count; xi++) {
-        for (let zi = 0; zi < count; zi++) {
-          let x = sep * (xi - count / 2);
-          let z = sep * (zi - count / 2);
+    let i = 0;
+    for (let xi = 0; xi < count; xi++) {
+      for (let zi = 0; zi < count; zi++) {
+        let x = sep * (xi - count / 2);
+        let z = sep * (zi - count / 2);
 
-          positions[i + 1] = graph(x, z);
-          i += 3;
-        }
+        positions[i + 1] = graph(x, z);
+        i += 3;
       }
-
-      bufferRef.current.needsUpdate = true;
     }
+
+    bufferRef.current.needsUpdate = true;
   });
 
   return (
@@ -126,8 +111,6 @@ function Points() {
 }
 
 export const AnimationCanvas = () => {
-  const isExcludedOS = isExcluded();
-
   return (
     <Canvas
       colorManagement={false}
@@ -137,7 +120,7 @@ export const AnimationCanvas = () => {
       <Suspense fallback={null}>
         <Points />
       </Suspense>
-      {!isExcludedOS && <CameraControls />}
+      <CameraControls />
     </Canvas>
   );
 };
