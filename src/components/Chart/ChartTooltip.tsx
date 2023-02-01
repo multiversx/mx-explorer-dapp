@@ -115,7 +115,10 @@ export const ChartTooltip = ({
                 </span>
 
                 <span
-                  style={{ color: payload.length > 1 ? entry.color : color }}
+                  style={{
+                    color:
+                      payload.length > 1 ? entry.color : color ?? entry.color
+                  }}
                   className='item-value'
                 >
                   {currentSeries?.yAxisConfig?.currency === '$' ? '$' : ''}
