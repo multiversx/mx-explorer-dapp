@@ -11,6 +11,7 @@ import {
 } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls } from 'three-stdlib';
+import { UAParser } from 'ua-parser-js';
 
 import circleImg from './../../assets/img/three/circle.png';
 
@@ -36,6 +37,16 @@ function CameraControls() {
   );
 }
 
+function isExcluded() {
+  const browser = UAParser();
+  const excludedOS = ['ubuntu', 'linux'];
+  const isExcludedOS = excludedOS.includes(
+    browser?.os?.name ? browser.os.name?.replaceAll(' ', '-').toLowerCase() : ''
+  );
+
+  return isExcludedOS;
+}
+
 function Points({
   pointCount,
   separator
@@ -43,6 +54,8 @@ function Points({
   pointCount: number;
   separator: number;
 }) {
+  const isExcludedOS = isExcluded();
+
   let t = 0;
   let f = 0.002;
   let a = 3.5;
@@ -52,22 +65,24 @@ function Points({
   const points = useRef<THREE.Points>(null);
 
   useFrame(() => {
-    t += 10;
+    if (!isExcludedOS) {
+      t += 10;
 
-    const positions = bufferRef.current.array;
+      const positions = bufferRef.current.array;
 
-    let i = 0;
-    for (let xi = 0; xi < pointCount; xi++) {
-      for (let zi = 0; zi < pointCount; zi++) {
-        let x = separator * (xi - pointCount / 2);
-        let z = separator * (zi - pointCount / 2);
+      let i = 0;
+      for (let xi = 0; xi < pointCount; xi++) {
+        for (let zi = 0; zi < pointCount; zi++) {
+          let x = separator * (xi - pointCount / 2);
+          let z = separator * (zi - pointCount / 2);
 
-        positions[i + 1] = graph(x, z);
-        i += 3;
+          positions[i + 1] = graph(x, z);
+          i += 3;
+        }
       }
-    }
 
-    bufferRef.current.needsUpdate = true;
+      bufferRef.current.needsUpdate = true;
+    }
   });
 
   const graph = useCallback(
@@ -127,7 +142,6 @@ export const AnimationCanvas = () => {
         fov: 45
       }}
       resize={{ scroll: false }}
-      style={{ background: '#000000' }}
     >
       <Suspense fallback={null}>
         <fog attach='fog' args={['#000000', 1, 250]} />
