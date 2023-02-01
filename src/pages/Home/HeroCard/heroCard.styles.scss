@@ -4,12 +4,12 @@
     min-height: 600px;
   }
   .particles {
-    pointer-events: none;
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    border-radius: $border-radius;
   }
   .main-search {
     .form-control,
