@@ -1,9 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  headersPropertiesNamesMapper,
-  headersPropertiesOrderMapper
-} from './constants/headersPropertiesNamesMapper';
+import { headersPropertiesMapper } from './constants/headersPropertiesMapper';
 import { useHeaderAccountsStats } from './useHeaderAccountsStats';
 import { useHeadersBlocksStats } from './useHeadersBlocksStats';
 import { useHeadersCollectionsStats } from './useHeadersCollectionsStats';
@@ -63,49 +60,61 @@ export const usePageStats = () => {
       return undefined;
     };
 
-    return Object.entries(obj).map(([key, value]) => {
-      const currency = getCurrency(key);
+    const data = Object.entries(obj)
+      .map(([key, value]) => {
+        const currency = getCurrency(key);
 
-      let val = value;
-      if (!currency) {
-        val = value;
-      } else if (currency === '$') {
-        val = `$${value}`;
-      } else {
-        val = `${value} ${currency}`;
-      }
+        let val = value;
+        if (!currency) {
+          val = value;
+        } else if (currency === '$') {
+          val = `$${value}`;
+        } else {
+          val = `${value} ${currency}`;
+        }
 
-      return {
-        id: key,
-        title: headersPropertiesNamesMapper[category][key],
-        value: val,
-        order: headersPropertiesOrderMapper[category][key]
-      };
-    });
+        let pageStatsDataObject: PageStatsDataType | null = null;
+
+        try {
+          pageStatsDataObject = {
+            id: key,
+            title: headersPropertiesMapper[category][key].name,
+            order: headersPropertiesMapper[category][key].order,
+            value: val
+          };
+        } catch (e) {
+          console.warn('property not found', category, key);
+        }
+
+        return pageStatsDataObject;
+      })
+      .filter((x) => x != null) as PageStatsDataType[];
+
+    return data;
   };
 
   const headersBlocksData = useMemo(() => {
-    return getData('blocks', pageHeadersBlocks)
-      .filter((x) => Boolean(x.title))
-      .sort((a, b) => a.order - b.order);
+    return getData('blocks', pageHeadersBlocks).sort(
+      (a, b) => a.order - b.order
+    );
   }, [pageHeadersBlocks]);
 
   const headersCollectionsData = useMemo(() => {
-    return getData('collections', pageHeadersCollections)
-      .filter((x) => Boolean(x.title))
-      .sort((a, b) => a.order - b.order);
+    return getData('collections', pageHeadersCollections).sort(
+      (a, b) => a.order - b.order
+    );
   }, [pageHeadersCollections]);
 
   const headersTokensData = useMemo(() => {
-    return getData('tokens', pageHeadersTokens)
-      .filter((x) => Boolean(x.title))
-      .sort((a, b) => a.order - b.order);
+    return getData('tokens', pageHeadersTokens).sort(
+      (a, b) => a.order - b.order
+    );
   }, [pageHeadersTokens]);
 
   const headersAccountsData = useMemo(() => {
-    return getData('accounts', pageHeadersAccounts)
-      .filter((x) => Boolean(x.title))
-      .sort((a, b) => a.order - b.order);
+    return getData('accounts', pageHeadersAccounts).sort(
+      (a, b) => a.order - b.order
+    );
   }, [pageHeadersAccounts]);
 
   const pageStats = useMemo(() => {
