@@ -1,18 +1,19 @@
 // @ts-nocheck
 /* eslint-disable react/no-unknown-property */
 
-import React, { memo, Suspense, useCallback, useMemo, useRef } from 'react';
+import React, { memo, useRef, Suspense, useCallback, useMemo } from 'react';
 import {
-  Canvas,
   extend,
+  Canvas,
+  useThree,
   useFrame,
-  useLoader,
-  useThree
-} from 'react-three-fiber';
+  useLoader
+} from '@react-three/fiber';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from 'three-stdlib';
 
 import circleImg from './../../assets/img/three/circle.png';
+
 extend({ OrbitControls });
 
 function CameraControls() {
@@ -30,40 +31,25 @@ function CameraControls() {
       args={[camera, domElement]}
       autoRotate
       autoRotateSpeed={-0.2}
+      enabled={false}
     />
   );
 }
 
-function Points() {
-  const imgTex = useLoader(THREE.TextureLoader, circleImg);
-  const bufferRef = useRef();
-
+function Points({
+  pointCount,
+  separator
+}: {
+  pointCount: number;
+  separator: number;
+}) {
   let t = 0;
   let f = 0.002;
-  let a = 3;
-  const graph = useCallback(
-    (x, z) => {
-      return Math.sin(f * (x ** 2 + z ** 2 + t)) * a;
-    },
-    [t, f, a]
-  );
+  let a = 3.5;
 
-  const count = 100;
-  const sep = 3;
-  let positions = useMemo(() => {
-    let positions = [];
-
-    for (let xi = 0; xi < count; xi++) {
-      for (let zi = 0; zi < count; zi++) {
-        let x = sep * (xi - count / 2);
-        let z = sep * (zi - count / 2);
-        let y = graph(x, z);
-        positions.push(x, y, z);
-      }
-    }
-
-    return new Float32Array(positions);
-  }, [count, sep, graph]);
+  const imgTex = useLoader(THREE.TextureLoader, circleImg);
+  const bufferRef = useRef<THREE.BufferAttribute>(null);
+  const points = useRef<THREE.Points>(null);
 
   useFrame(() => {
     t += 10;
@@ -71,10 +57,10 @@ function Points() {
     const positions = bufferRef.current.array;
 
     let i = 0;
-    for (let xi = 0; xi < count; xi++) {
-      for (let zi = 0; zi < count; zi++) {
-        let x = sep * (xi - count / 2);
-        let z = sep * (zi - count / 2);
+    for (let xi = 0; xi < pointCount; xi++) {
+      for (let zi = 0; zi < pointCount; zi++) {
+        let x = separator * (xi - pointCount / 2);
+        let z = separator * (zi - pointCount / 2);
 
         positions[i + 1] = graph(x, z);
         i += 3;
@@ -84,14 +70,36 @@ function Points() {
     bufferRef.current.needsUpdate = true;
   });
 
+  const graph = useCallback(
+    (x, z) => {
+      return Math.sin(f * (x ** 2 + z ** 2 + t)) * a;
+    },
+    [t, f, a]
+  );
+
+  const [positions] = useMemo(() => {
+    let positions = [];
+
+    for (let xi = 0; xi < pointCount; xi++) {
+      for (let zi = 0; zi < pointCount; zi++) {
+        let x = separator * (xi - pointCount / 2);
+        let z = separator * (zi - pointCount / 2);
+        let y = graph(x, z);
+        positions.push(x, y, z);
+      }
+    }
+
+    return [new Float32Array(positions)];
+  }, [pointCount, separator, graph]);
+
   return (
-    <points>
-      <bufferGeometry attach='geometry'>
+    <points ref={points}>
+      <bufferGeometry>
         <bufferAttribute
           ref={bufferRef}
-          attachObject={['attributes', 'position']}
-          array={positions}
+          attach='attributes-position'
           count={positions.length / 3}
+          array={positions}
           itemSize={3}
         />
       </bufferGeometry>
@@ -99,6 +107,7 @@ function Points() {
       <pointsMaterial
         attach='material'
         map={imgTex}
+        depthWrite={false}
         color={0x23f7dd}
         size={0.5}
         sizeAttenuation
@@ -113,21 +122,25 @@ function Points() {
 export const AnimationCanvas = () => {
   return (
     <Canvas
-      colorManagement={false}
-      camera={{ position: [100, 30, 0], fov: 45 }}
+      camera={{
+        position: [100, 30, 0],
+        fov: 45
+      }}
       resize={{ scroll: false }}
+      style={{ background: '#000000' }}
     >
       <Suspense fallback={null}>
-        <Points />
+        <fog attach='fog' args={['#000000', 1, 250]} />
+        <Points pointCount={60} separator={3} />
       </Suspense>
-      <CameraControls />
+      {/* <CameraControls /> */}
     </Canvas>
   );
 };
 
 export const Particles = memo(() => (
   <div className='particles'>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={null}>
       <AnimationCanvas />
     </Suspense>
   </div>
