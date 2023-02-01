@@ -94,7 +94,7 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                     />
                     <NetworkLink
                       to={`${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`}
-                      className='side-action ms-2'
+                      className='side-action'
                     >
                       <FontAwesomeIcon icon={faSearch} />
                     </NetworkLink>
@@ -108,7 +108,7 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                   <div className='col-sm-10 d-flex align-items-center'>
                     <NetworkLink
                       to={urlBuilder.miniblockDetails(result.miniBlockHash)}
-                      className='side-action ms-2'
+                      className='trim-wrapper'
                     >
                       <Trim text={result.miniBlockHash} />
                     </NetworkLink>
@@ -125,7 +125,10 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                   <div className='col-sm-2 col-left'>From</div>
                   <div className='col-sm-10 d-flex align-items-center'>
                     <ScAddressIcon initiator={result.sender} />
-                    <NetworkLink to={urlBuilder.accountDetails(result.sender)}>
+                    <NetworkLink
+                      to={urlBuilder.accountDetails(result.sender)}
+                      className='trim-wrapper'
+                    >
                       <AccountName
                         address={result.sender}
                         assets={result.senderAssets}
@@ -146,6 +149,7 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                     <ScAddressIcon initiator={result.receiver} />
                     <NetworkLink
                       to={urlBuilder.accountDetails(result.receiver)}
+                      className='trim-wrapper'
                     >
                       <AccountName
                         address={result.receiver}
