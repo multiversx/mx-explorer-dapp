@@ -20,13 +20,13 @@ import { markersReducer } from './slices/markers';
 import { miniBlockReducer } from './slices/miniBlock';
 import { networkReducer } from './slices/networks';
 import { nodesVersionsReducer } from './slices/nodesVersions';
-import { refreshReducer } from './slices/refresh';
-import { statsReducer } from './slices/stats';
-import { tokenReducer } from './slices/token';
 import { pageHeadersAccountsReducer } from './slices/pageHeadersAccountsStats';
 import { pageHeadersBlocksReducer } from './slices/pageHeadersBlocksStats';
 import { pageHeadersCollectionsReducer } from './slices/pageHeadersCollectionsStats';
 import { pageHeadersTokensReducer } from './slices/pageHeadersTokensStats';
+import { refreshReducer } from './slices/refresh';
+import { statsReducer } from './slices/stats';
+import { tokenReducer } from './slices/token';
 
 const asyncIgnoredSlices = {};
 

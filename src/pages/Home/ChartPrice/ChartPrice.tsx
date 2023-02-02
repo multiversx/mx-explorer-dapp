@@ -13,15 +13,13 @@ import { useFetchGrowthPrice } from 'hooks';
 import { growthPriceSelector } from 'redux/selectors';
 import { TrendEnum } from 'types';
 
-import type { StatisticType } from './types';
-import type { ChartSelectOptionType } from '../ChartSelect/types';
+import { PriceStatisticsLabelEnum } from './enum';
+import styles from './styles.module.scss';
+import { StatisticType } from './types';
 
 import { ChartRoot } from '../ChartRoot';
 import { ChartSelect } from '../ChartSelect';
-
-import { PriceStatisticsLabelEnum } from './enum';
-
-import styles from './styles.module.scss';
+import { ChartSelectOptionType } from '../ChartSelect/types';
 
 export const ChartPrice = () => {
   const {

@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
+import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Select, { components, OnChangeValue } from 'react-select';
-import classNames from 'classnames';
 
-import { networksSelector } from 'redux/selectors';
 import { links as internalLinks, networks } from 'config';
+import { networksSelector } from 'redux/selectors';
 import { changeNetwork } from 'redux/slices';
 
-import type { OptionType, SwitcherPropsType } from './types';
-
 import styles from './styles.module.scss';
+import type { OptionType, SwitcherPropsType } from './types';
 
 const Control: typeof components.Control = (props) => (
   <components.Control

@@ -1,12 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import { NetworkLink } from 'components';
 import { useActiveRoute } from 'hooks';
-import { NetworkLink } from 'components/NetworkLink';
-
-import type { TabsPropsType, TabType } from './types';
 
 import styles from './styles.module.scss';
+import type { TabsPropsType, TabType } from './types';
 
 export const Tabs = (props: TabsPropsType) => {
   const { tabs } = props;

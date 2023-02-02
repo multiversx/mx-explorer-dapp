@@ -2,19 +2,20 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { Loader, useAdapter } from 'components';
 import { ChartListType } from 'components/Chart/helpers/types';
+import { Tabs } from 'components/Tabs';
 import { useIsMainnet } from 'hooks';
+import { ChartContractsTransactions } from 'pages/Home/ChartContractsTransactions';
+import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
+import { MostUsed } from 'widgets';
 
-import { Loader, useAdapter } from '../../components';
-import { activeNetworkSelector } from '../../redux/selectors';
+import { ChartWrapper } from './components/ChartWrapper';
+
 import { AnalyticsChart } from '../AnalyticsCompare/AnalyticsChart';
 import { FailedAnalytics } from '../AnalyticsCompare/FailedAnalytics';
 import { NoAnalytics } from '../AnalyticsCompare/NoAnalytics';
-import { ChartWrapper } from './components/ChartWrapper';
-import { Tabs } from 'components/Tabs';
-import { MostUsed } from 'widgets';
-import { ChartContractsTransactions } from 'pages/Home/ChartContractsTransactions';
 
 export const Analytics = () => {
   const navigate = useNavigate();

@@ -16,9 +16,8 @@ import {
   analyticsRoutes
 } from 'routes';
 
-import type { LinksPropsType } from './types';
-
 import styles from './styles.module.scss';
+import type { LinksPropsType } from './types';
 
 export const Links = (props: LinksPropsType) => {
   const { onClick } = props;
