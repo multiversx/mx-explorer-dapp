@@ -1,10 +1,8 @@
 import React from 'react';
-import classNames from 'classnames';
 
 import { NetworkLink } from 'components';
 import { useActiveRoute } from 'hooks';
 
-import styles from './styles.module.scss';
 import type { TabsPropsType, TabType } from './types';
 
 export const Tabs = (props: TabsPropsType) => {
@@ -22,14 +20,12 @@ export const Tabs = (props: TabsPropsType) => {
   };
 
   return (
-    <div className={styles.tabs}>
+    <div className='tabs'>
       {filteredTabs.map((tab) => (
         <NetworkLink
           key={tab.tabTo}
           to={tab.tabTo}
-          className={classNames(styles.tab, {
-            [styles.active]: checkTabStatus(tab)
-          })}
+          className={`tab ${checkTabStatus(tab) ? 'active' : ''}`}
         >
           {tab.tabLabel}
         </NetworkLink>
