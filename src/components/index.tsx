@@ -55,7 +55,7 @@ export * from './SmallDetailItem';
 export * from './PercentageLed';
 export * from './UsdValue';
 export * from './Filters';
-export * from './Adapter';
+export * from '../hooks/adapter';
 export * from './PulsatingLed';
 export * from './TransactionIcon';
 export * from './Particles';
