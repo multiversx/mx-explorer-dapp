@@ -1,4 +1,4 @@
-import type { GrowthChartDataType } from 'types';
+import { GrowthChartDataType } from 'types';
 
 export interface ChartRootPropsType {
   identifier: string;

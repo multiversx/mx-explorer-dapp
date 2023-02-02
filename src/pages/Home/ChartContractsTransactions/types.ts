@@ -1,5 +1,5 @@
-import type { GrowthChartDataType } from 'types';
-import type { TransactionsStatisticsLabelEnum } from './enum';
+import { GrowthChartDataType } from 'types';
+import { TransactionsStatisticsLabelEnum } from './enum';
 
 export interface StatisticType {
   label: TransactionsStatisticsLabelEnum;

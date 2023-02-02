@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import styles from './styles.module.scss';
-import type { ChartWrapperPropsType } from './types';
+import { ChartWrapperPropsType } from './types';
 
 export const ChartWrapper = (props: ChartWrapperPropsType) => {
   const { size = 'full', children } = props;

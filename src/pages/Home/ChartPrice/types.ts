@@ -1,4 +1,4 @@
-import type { PriceStatisticsLabelEnum } from './enum';
+import { PriceStatisticsLabelEnum } from './enum';
 
 export interface StatisticType {
   label: PriceStatisticsLabelEnum;

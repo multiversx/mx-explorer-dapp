@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Select, { components } from 'react-select';
 
 import styles from './styles.module.scss';
-import type { ChartSelectPropsType } from './types';
+import { ChartSelectPropsType } from './types';
 
 const Control: typeof components.Control = (props) => (
   <components.Control

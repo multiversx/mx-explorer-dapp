@@ -12,10 +12,10 @@ import { StakingStatisticsLabelEnum } from './enum';
 
 import styles from './styles.module.scss';
 
-import type { StatisticType } from './types';
+import { StatisticType } from './types';
 import { ChartRoot } from '../ChartRoot';
 import { ChartSelect } from '../ChartSelect';
-import type { ChartSelectOptionType } from '../ChartSelect/types';
+import { ChartSelectOptionType } from '../ChartSelect/types';
 
 export const ChartStake = ({ className }: WithClassnameType) => {
   const {

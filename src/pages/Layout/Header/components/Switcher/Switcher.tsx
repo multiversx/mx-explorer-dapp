@@ -9,7 +9,7 @@ import { networksSelector } from 'redux/selectors';
 import { changeNetwork } from 'redux/slices';
 
 import styles from './styles.module.scss';
-import type { OptionType, SwitcherPropsType } from './types';
+import { OptionType, SwitcherPropsType } from './types';
 
 const Control: typeof components.Control = (props) => (
   <components.Control

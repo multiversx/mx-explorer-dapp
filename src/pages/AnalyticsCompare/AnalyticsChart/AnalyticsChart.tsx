@@ -12,7 +12,7 @@ import { useAdapter } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 
 import { ChartResolutionSelector } from './components/ChartResolution';
-import type { ChartResolutionRangeType } from './components/ChartResolution/types';
+import { ChartResolutionRangeType } from './components/ChartResolution/types';
 
 import { getChartColorPalette } from '../helpers/getChartColorPalette';
 

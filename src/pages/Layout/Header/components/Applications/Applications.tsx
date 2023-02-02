@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { multiversxApps } from 'config';
 
 import styles from './styles.module.scss';
-import type { ApplicationsPropsType } from './types';
+import { ApplicationsPropsType } from './types';
 
 export const Applications = (props: ApplicationsPropsType) => {
   const { onClick } = props;

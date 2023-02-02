@@ -1,4 +1,4 @@
-import type { SingleValue } from 'react-select';
+import { SingleValue } from 'react-select';
 
 export interface ChartSelectOptionType {
   label: string;

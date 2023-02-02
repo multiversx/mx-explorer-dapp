@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import { Area, AreaChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 import { ChartTooltip } from 'components/Chart/ChartTooltip';
-import type { ChartConfigType } from 'components/Chart/helpers/types';
+import { ChartConfigType } from 'components/Chart/helpers/types';
 
-import type { ChartAreaPropsType } from './types';
+import { ChartAreaPropsType } from './types';
 
 export const ChartArea = (props: ChartAreaPropsType) => {
   const { className, payload } = props;

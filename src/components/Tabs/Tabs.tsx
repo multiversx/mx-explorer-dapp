@@ -3,7 +3,7 @@ import React from 'react';
 import { NetworkLink } from 'components';
 import { useActiveRoute } from 'hooks';
 
-import type { TabsPropsType, TabType } from './types';
+import { TabsPropsType, TabType } from './types';
 
 export const Tabs = (props: TabsPropsType) => {
   const { tabs } = props;
