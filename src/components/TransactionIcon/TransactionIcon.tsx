@@ -1,15 +1,19 @@
 import React from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
-import { faCheck } from '@fortawesome/pro-regular-svg-icons/faCheck';
-import { faHourglass } from '@fortawesome/pro-regular-svg-icons/faHourglass';
-import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
-import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
+import {
+  faBan,
+  faCheck,
+  faHourglass,
+  faSpinnerThird,
+  faTimes
+} from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { useAdapter } from 'components';
+
 import { capitalizeFirstLetter, getTransactionMessages } from 'helpers';
+import { useAdapter } from 'hooks';
 import { UITransactionType, TransactionType } from 'types';
+
 import { txStatus } from '../TransactionStatus/txStatus';
 
 interface TransactionIconType {

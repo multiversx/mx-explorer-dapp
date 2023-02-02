@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAdapter } from 'components';
-import { processGrowthPrice } from 'helpers';
 
+import { processGrowthPrice } from 'helpers';
+import { useAdapter } from 'hooks';
 import { growthPriceSelector } from 'redux/selectors';
 import { setGrowthPrice } from 'redux/slices/growthPrice';
 

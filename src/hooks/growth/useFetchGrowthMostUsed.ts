@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAdapter } from 'components';
 
+import { useAdapter } from 'hooks';
 import { growthMostUsedSelector } from 'redux/selectors';
 import { setGrowthMostUsed } from 'redux/slices/growthMostUsed';
 

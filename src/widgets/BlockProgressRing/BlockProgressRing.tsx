@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import { useSelector } from 'react-redux';
-import { REFRESH_RATE } from 'appConstants';
 
-import { useAdapter, ProgressRing } from 'components';
-import { processStats, validDisplayValue, getExtraStats } from 'helpers';
+import { REFRESH_RATE } from 'appConstants';
+import { ProgressRing } from 'components';
+import { processStats, getExtraStats } from 'helpers';
 import { useFetchStats } from 'hooks';
 import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
-import { getInitialStatsState } from 'redux/slices/stats';
 import { StatsSliceType, WithClassnameType } from 'types';
 
 export const BlockProgressRing = ({ className }: WithClassnameType) => {
@@ -16,20 +14,15 @@ export const BlockProgressRing = ({ className }: WithClassnameType) => {
   const { timestamp } = useSelector(refreshSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { getStats } = useAdapter();
-
   const pageHidden = document.hidden;
-  const initialStats = getInitialStatsState();
 
   const [stateBuffer, setStateBuffer] = useState<StatsSliceType | undefined>();
-  const [state, setState] = useState<StatsSliceType | undefined>(initialStats);
   const [oldTestnetId, setOldTestnetId] = useState(activeNetworkId);
 
   const [blockTimeProgress, setBlockTimeProgress] = useState(0);
   const intervalInSec = REFRESH_RATE / 1000;
 
   const initStates = (stats: StatsSliceType) => {
-    setState(stats);
     setStateBuffer(stats);
     blockTimeInterval();
   };
@@ -74,18 +67,8 @@ export const BlockProgressRing = ({ className }: WithClassnameType) => {
     return () => clearInterval(intervalBlockTime);
   };
 
-  const updateSate = () => {
-    if (ref.current !== null) {
-      if (blockTimeProgress === intervalInSec && stateBuffer !== undefined) {
-        setState(stateBuffer);
-      }
-    }
-  };
-
   useEffect(getData, [timestamp]);
-  useEffect(updateSate, [blockTimeProgress]);
 
-  const play = !pageHidden;
   const progress = (blockTimeProgress * 100) / intervalInSec;
 
   return (

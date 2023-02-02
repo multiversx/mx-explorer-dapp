@@ -4,12 +4,13 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { useAdapter, Loader, PageState, Chart } from 'components';
+import { Loader, PageState, Chart } from 'components';
 import {
   getNormalizedTimeEntries,
   getFrequency
 } from 'components/Chart/helpers/getChartBinnedData';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
+import { useAdapter } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 import { AccountTabs } from './AccountLayout/AccountTabs';

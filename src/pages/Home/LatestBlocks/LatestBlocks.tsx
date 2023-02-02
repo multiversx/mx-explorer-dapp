@@ -1,11 +1,10 @@
 import * as React from 'react';
-
 import { useSelector } from 'react-redux';
+
 import {
   ShardSpan,
   NetworkLink,
   TimeAgo,
-  useAdapter,
   Trim,
   Loader,
   LatestItem,
@@ -14,6 +13,7 @@ import {
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
 import { urlBuilder } from 'helpers';
+import { useAdapter } from 'hooks';
 import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
 import { BlockType } from 'types';
 

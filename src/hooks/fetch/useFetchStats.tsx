@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useAdapter } from 'components';
-import { processStats, getExtraStats } from 'helpers';
 
+import { processStats, getExtraStats } from 'helpers';
+import { useAdapter } from 'hooks';
 import { setStats } from 'redux/slices/stats';
 
 export const useFetchStats = () => {

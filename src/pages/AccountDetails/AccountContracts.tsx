@@ -3,7 +3,6 @@ import { faCode } from '@fortawesome/pro-solid-svg-icons/faCode';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 import {
-  useAdapter,
   Loader,
   Pager,
   PageState,
@@ -14,7 +13,7 @@ import {
 } from 'components';
 
 import { urlBuilder, addressIsBech32 } from 'helpers';
-import { useGetFilters } from 'hooks';
+import { useGetFilters, useAdapter } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 import { AccountTabs } from './AccountLayout/AccountTabs';

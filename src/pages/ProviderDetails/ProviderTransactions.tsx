@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { Loader, TransactionsTable, useAdapter } from 'components';
-
+import { Loader, TransactionsTable } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
-import { useSize, useURLSearchParams } from 'hooks';
+import { useAdapter, useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { UITransactionType, TxFiltersEnum } from 'types';
+
 import { ProviderTabs } from './ProviderLayout/ProviderTabs';
 
 export const ProviderTransactions = () => {

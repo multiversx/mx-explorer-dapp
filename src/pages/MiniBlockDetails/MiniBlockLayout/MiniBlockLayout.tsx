@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Loader, useAdapter } from 'components';
+import { Loader } from 'components';
 import { isHash } from 'helpers';
-import { useSize, useNetworkRoute, useGetHash } from 'hooks';
+import { useAdapter, useSize, useNetworkRoute, useGetHash } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setMiniBlock } from 'redux/slices';
 

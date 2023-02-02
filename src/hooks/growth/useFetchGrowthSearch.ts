@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAdapter } from 'components';
-import { processGrowthSearch } from 'helpers';
 
+import { processGrowthSearch } from 'helpers';
+import { useAdapter } from 'hooks';
 import { growthSearchSelector } from 'redux/selectors';
 import { setGrowthSearch } from 'redux/slices/growthSearch';
 

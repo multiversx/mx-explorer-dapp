@@ -1,20 +1,22 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Loader, useAdapter, PageState } from 'components';
+
+import { Loader, PageState } from 'components';
 import { isHash } from 'helpers';
-import { useNetworkRoute } from 'hooks';
+import { useAdapter, useNetworkRoute } from 'hooks';
+
 import { BlockData, BlockDataType } from './BlockData';
 
 export const BlockDetails = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
   const { getBlock } = useAdapter();
   const { hash: blockId } = useParams() as any;
 
-  const [state, setState] = React.useState<BlockDataType>();
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [state, setState] = useState<BlockDataType>();
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const invalid = blockId && !isHash(blockId);
 
@@ -30,7 +32,7 @@ export const BlockDetails = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchBlock, [blockId]); // run the operation only once since the parameter does not change
+  useEffect(fetchBlock, [blockId]); // run the operation only once since the parameter does not change
 
   return invalid ? (
     navigate(networkRoute('/not-found'))

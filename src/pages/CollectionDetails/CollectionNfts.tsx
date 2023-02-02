@@ -1,11 +1,10 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import {
   Loader,
-  useAdapter,
   Pager,
   NetworkLink,
   Trim,
@@ -13,14 +12,14 @@ import {
   NftBadge
 } from 'components';
 import { urlBuilder, nftText } from 'helpers';
-import { useURLSearchParams, useGetFilters } from 'hooks';
+import { useAdapter, useURLSearchParams, useGetFilters } from 'hooks';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { NftType } from 'types';
 
 import { CollectionTabs } from './CollectionLayout/CollectionTabs';
 
 export const CollectionNfts = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { collectionState } = useSelector(collectionSelector);
@@ -32,10 +31,9 @@ export const CollectionNfts = () => {
 
   const { hash: collection } = useParams() as any;
 
-  const [collectionNfts, setCollectionNfts] = React.useState<NftType[]>([]);
-  const [totalCollectionNfts, setTotalCollectionNfts] =
-    React.useState<number>(0);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [collectionNfts, setCollectionNfts] = useState<NftType[]>([]);
+  const [totalCollectionNfts, setTotalCollectionNfts] = useState<number>(0);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchCollectionNfts = () => {
     if (ref.current !== null) {
@@ -53,7 +51,7 @@ export const CollectionNfts = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchCollectionNfts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, searchParams]);

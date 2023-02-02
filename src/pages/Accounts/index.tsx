@@ -4,7 +4,6 @@ import { useSearchParams } from 'react-router-dom';
 
 import {
   Loader,
-  useAdapter,
   Pager,
   Denominate,
   NetworkLink,
@@ -12,7 +11,7 @@ import {
   AccountName
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useSize, useURLSearchParams } from 'hooks';
+import { useAdapter, useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { AccountType } from 'types';

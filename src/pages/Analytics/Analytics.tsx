@@ -2,10 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Loader, useAdapter } from 'components';
+import { Loader } from 'components';
 import { ChartListType } from 'components/Chart/helpers/types';
 import { Tabs } from 'components/Tabs';
-import { useIsMainnet } from 'hooks';
+import { useAdapter, useIsMainnet } from 'hooks';
 import { ChartContractsTransactions } from 'pages/Home/ChartContractsTransactions';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';

@@ -2,9 +2,9 @@ import * as React from 'react';
 import { faClock, faTrophy } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
+
 import {
   Loader,
-  useAdapter,
   DetailItem,
   Trim,
   NetworkLink,
@@ -17,8 +17,9 @@ import {
   CardItem
 } from 'components';
 import { urlBuilder, dateFormatted } from 'helpers';
-import { useGetFilters, useURLSearchParams } from 'hooks';
+import { useAdapter, useGetFilters, useURLSearchParams } from 'hooks';
 import { NftType, NftEnumType } from 'types';
+
 import { FailedNftDetails } from './FailedNftDetails';
 import { NftPreview } from './NftPreview';
 

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAdapter } from '../../components';
-import { pageHeadersCollectionsStatsSelector } from '../../redux/selectors/pageHeadersCollectionsStats';
-import { setPageHeaderCollectionsStats } from '../../redux/slices/pageHeadersCollectionsStats';
-import { HeadersCollectionsType } from '../../types/headerStats.types';
+
+import { useAdapter } from 'hooks';
+import { pageHeadersCollectionsStatsSelector } from 'redux/selectors/pageHeadersCollectionsStats';
+import { setPageHeaderCollectionsStats } from 'redux/slices/pageHeadersCollectionsStats';
+import { HeadersCollectionsType } from 'types/headerStats.types';
 
 export const useHeadersCollectionsStats = () => {
   const headersCollections = useSelector(pageHeadersCollectionsStatsSelector);

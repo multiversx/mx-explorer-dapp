@@ -2,16 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import {
-  Loader,
-  TransactionsTable,
-  useAdapter,
-  PulsatingLed
-} from 'components';
+import { Loader, TransactionsTable, PulsatingLed } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { MethodList } from 'components/TransactionsTable/TransactionsFilters';
-import { useSize, useURLSearchParams } from 'hooks';
+import { useAdapter, useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { UITransactionType } from 'types';
 

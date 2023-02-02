@@ -1,8 +1,8 @@
 import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
-import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
-import { useIsMainnet, useGetHash } from 'hooks';
+import { Loader, PageState, SharedIdentity } from 'components';
+import { useAdapter, useIsMainnet, useGetHash } from 'hooks';
 import { IdentityType, ProviderType } from 'types';
 
 import { ProviderDetailsCard } from './ProviderDetailsCard';

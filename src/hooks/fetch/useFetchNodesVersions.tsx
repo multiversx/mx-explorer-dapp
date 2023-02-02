@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useAdapter } from 'components';
 import { processNodesVersions } from 'helpers';
+import { useAdapter } from 'hooks';
 import { nodesVersionsSelector } from 'redux/selectors';
 import { setNodesVersions } from 'redux/slices/nodesVersions';
 

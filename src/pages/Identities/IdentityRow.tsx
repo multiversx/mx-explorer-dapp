@@ -6,7 +6,6 @@ import {
   Loader,
   NetworkLink,
   Trim,
-  useAdapter,
   PageState,
   NodesTable,
   SharedIdentity,
@@ -14,6 +13,7 @@ import {
   PercentageBar
 } from 'components';
 import { urlBuilder } from 'helpers';
+import { useAdapter } from 'hooks';
 import { IdentityType, NodeType } from 'types';
 
 export interface IdentityRowType {
