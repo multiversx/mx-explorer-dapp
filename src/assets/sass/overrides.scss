@@ -12,6 +12,7 @@ dd {
 }
 
 .main-content {
+  width: 100vw;
   > .main-content-container {
     &.container-fluid {
       min-height: calc(

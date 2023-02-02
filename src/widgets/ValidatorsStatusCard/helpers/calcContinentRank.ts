@@ -1,10 +1,4 @@
-import { MarkerType } from 'types';
-
-export interface RankType {
-  continent: string;
-  nodes: number;
-  percentage: number;
-}
+import { MarkerType, RankType } from 'types';
 
 export const calcContinentRank = (
   markers: MarkerType[],

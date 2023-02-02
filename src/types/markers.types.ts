@@ -11,6 +11,12 @@ export interface MarkersType {
   markers: MarkerType[];
 }
 
+export interface RankType {
+  continent: string;
+  nodes: number;
+  percentage: number;
+}
+
 export interface MarkersSliceType extends MarkersType {
   isFetched: boolean;
 }

@@ -6,8 +6,12 @@ import {
   Geography,
   Marker
 } from 'react-simple-maps';
-import { MarkerType, MarkersType } from 'types';
+import { MarkerType, MarkersType, WithClassnameType } from 'types';
 import countries from './countries100m.json';
+
+export interface ValidatorMapType extends WithClassnameType {
+  markers: MarkerType[];
+}
 
 const calcRadius = (validators: number) => {
   let radius;
@@ -59,7 +63,7 @@ const MarkerToolTip = ({
   </OverlayTrigger>
 );
 
-export const ValidatorMap = ({ markers }: MarkersType) => {
+export const ValidatorMap = ({ markers, className }: ValidatorMapType) => {
   const ref = React.useRef(null);
   const [localMarkers, setLocalMarkers] = React.useState<MarkerType[]>([]);
   const [pulse, setPulse] = React.useState(0);
@@ -106,7 +110,7 @@ export const ValidatorMap = ({ markers }: MarkersType) => {
   React.useEffect(pulseInterval, []);
 
   return (
-    <div className='validator-map' ref={ref}>
+    <div className={`validator-map ${className ?? ''}`} ref={ref}>
       <ComposableMap
         projectionConfig={{
           scale: 200,

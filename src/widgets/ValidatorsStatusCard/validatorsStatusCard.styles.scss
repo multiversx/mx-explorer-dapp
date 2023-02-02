@@ -4,60 +4,66 @@
   flex-grow: 1;
   border-radius: 1rem;
 
-  .badge-holder {
-    gap: 0.5rem;
-    .badge {
-      padding: 0.375rem;
-      font-size: 0.825rem;
-      background-color: var(--black);
-      color: var(--neutral-600);
+  .marquee-wrapper {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 0;
+    right: 0;
+    .slide {
+      margin-right: 0.5rem;
+    }
+    .badge-holder {
+      gap: 0.5rem;
+      .badge {
+        padding: 0.375rem;
+        font-size: 0.825rem;
+        background-color: var(--black);
+        color: var(--neutral-600);
+      }
     }
   }
 
+  // ------- Specific Styling
+
   &.validators-status-lg {
-    .validator-map {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 1rem;
-      width: 55%;
-      display: flex;
+    .validator-card-title {
+      @include media-breakpoint-up(sm) {
+        position: absolute;
+        z-index: 2;
+      }
     }
     .shard-list {
-      width: 40%;
-      margin-top: -1.5em;
-    }
-    .validators-total {
-      padding-top: 2rem;
-    }
-
-    .marquee-wrapper {
-      position: absolute;
-      bottom: 1.25rem;
-      left: 0;
-      right: 0;
-      .slide {
-        margin-right: 0.5rem;
+      margin-bottom: 2.5rem;
+      @include media-breakpoint-up(md) {
+        margin-top: 4.5rem;
       }
     }
-
-    @include media-breakpoint-down(lg) {
-      min-height: 20rem;
-    }
-
-    @include media-breakpoint-down(md) {
-      .validator-map {
-        position: relative;
-        width: 80%;
-        margin: -3rem auto auto;
-        display: none;
-      }
-      .shard-list {
-        width: 100%;
+    .validator-map {
+      margin-top: -2.5rem;
+      text-align: left;
+      @include media-breakpoint-up(sm) {
         margin-top: 0;
-        margin-bottom: 4rem;
+        text-align: right;
+      }
+      .rsm-svg {
+        max-height: 15rem;
       }
     }
+    // .shard-list {
+    //   width: 40%;
+    //   margin-top: -1.5em;
+    // }
+    // .validators-total {
+    //   padding-top: 2rem;
+    // }
+
+    // @include media-breakpoint-down(md) {
+    //   .shard-list {
+    //     width: 100%;
+    //     margin-top: 0;
+    //     margin-bottom: 4rem;
+    //   }
+    // }
   }
 
   &.validators-status-sm {
@@ -65,8 +71,17 @@
     @include media-breakpoint-up(xxl) {
       max-width: 18rem;
     }
-
+    .validator-card-title {
+      position: absolute;
+      z-index: 2;
+    }
+    .marquee-wrapper {
+      bottom: 0.875rem;
+    }
     .validator-map {
+      position: absolute;
+      right: 0;
+      top: 0;
       .rsm-svg {
         height: 8.5rem;
         margin-left: auto;
@@ -74,25 +89,6 @@
         margin-top: 0.5rem;
         margin-right: 0.5rem;
       }
-    }
-
-    .marquee-wrapper {
-      position: absolute;
-      bottom: 0.875rem;
-      left: 0;
-      right: 0;
-      .slide {
-        margin-right: 0.5rem;
-      }
-    }
-
-    .validators-total {
-      padding: 1.5rem;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
     }
   }
 }
