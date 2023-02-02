@@ -9,7 +9,7 @@ import {
 } from 'recharts';
 
 import styles from './styles.module.scss';
-import type { ChartRootPropsType } from './types';
+import { ChartRootPropsType } from './types';
 
 const CustomTooltip = (props: any) => {
   const { payload, active, formatter } = props;

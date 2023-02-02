@@ -1,4 +1,4 @@
-import type { ReactNode, MouseEvent } from 'react';
+import { ReactNode, MouseEvent } from 'react';
 
 export interface NetworkLinkPropsType {
   className?: string;

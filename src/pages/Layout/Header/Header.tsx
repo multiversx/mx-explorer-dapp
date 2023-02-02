@@ -10,7 +10,7 @@ import { Applications } from './components/Applications';
 import { Links } from './components/Links';
 import { Switcher } from './components/Switcher';
 import styles from './styles.module.scss';
-import type { HeaderPropsType } from './types';
+import { HeaderPropsType } from './types';
 
 export const Header = (props: HeaderPropsType) => {
   const { onExpand } = props;

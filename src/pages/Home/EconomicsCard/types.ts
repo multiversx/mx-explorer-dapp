@@ -1,4 +1,4 @@
-import type { EconomicsLabelsEnum } from './enum';
+import { EconomicsLabelsEnum } from './enum';
 
 export interface EconomicsType {
   label: EconomicsLabelsEnum;

@@ -3,10 +3,10 @@ import classNames from 'classnames';
 import { SingleValue } from 'react-select';
 
 import { ChartSelect } from 'pages/Home/ChartSelect';
-import type { ChartSelectOptionType } from 'pages/Home/ChartSelect/types';
+import { ChartSelectOptionType } from 'pages/Home/ChartSelect/types';
 
 import styles from './styles.module.scss';
-import type {
+import {
   ChartResolutionRangeType,
   ChartResolutionSelectorPropsType,
   ChartResolutionType
