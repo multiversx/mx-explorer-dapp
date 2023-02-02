@@ -55,7 +55,6 @@ export * from './SmallDetailItem';
 export * from './PercentageLed';
 export * from './UsdValue';
 export * from './Filters';
-export * from '../hooks/adapter';
 export * from './PulsatingLed';
 export * from './TransactionIcon';
 export * from './Particles';
@@ -67,5 +66,6 @@ export * from './ProgressRing';
 export * from './ShardList';
 export * from './FormatUSD';
 export * from './CollapsibleArrows';
+export * from './Tabs';
 
 export { Chart, NodesTable, TxActionBlock, SharedIdentity };
