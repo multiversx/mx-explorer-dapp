@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAdapter } from 'components';
-import { processGrowthEconomics } from 'helpers';
 
+import { processGrowthEconomics } from 'helpers';
+import { useAdapter } from 'hooks';
 import { growthEconomicsSelector } from 'redux/selectors';
 import { setGrowthEconomics } from 'redux/slices/growthEconomics';
 

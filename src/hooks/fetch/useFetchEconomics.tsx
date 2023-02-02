@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { useAdapter } from 'components';
-import { processEconomics } from 'helpers';
 
+import { processEconomics } from 'helpers';
+import { useAdapter } from 'hooks';
 import { setEconomics } from 'redux/slices/economics';
 
 export const useFetchEconomics = () => {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { object, string, number } from 'yup';
 
-import { useAdapter } from 'components';
+import { useAdapter } from 'hooks';
 import { markersSelector } from 'redux/selectors';
 import { setMarkers } from 'redux/slices/markers';
 

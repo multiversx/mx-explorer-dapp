@@ -7,10 +7,10 @@ import {
   useSearchParams
 } from 'react-router-dom';
 
-import { Loader, useAdapter, Led } from 'components';
+import { Loader, Led } from 'components';
 import { ChartListType } from 'components/Chart/helpers/types';
 import { Tabs } from 'components/Tabs';
-import { useIsMainnet } from 'hooks';
+import { useAdapter, useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
 

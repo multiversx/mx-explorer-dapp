@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faHexagonCheck } from '@fortawesome/pro-solid-svg-icons/faHexagonCheck';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
@@ -8,7 +8,6 @@ import { useLocation } from 'react-router-dom';
 
 import {
   Loader,
-  useAdapter,
   NetworkLink,
   Trim,
   Pager,
@@ -16,16 +15,22 @@ import {
   TimeAgo
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useGetFilters, useURLSearchParams, useActiveRoute } from 'hooks';
+import {
+  useAdapter,
+  useGetFilters,
+  useURLSearchParams,
+  useActiveRoute
+} from 'hooks';
 import { pageHeadersCollectionsStatsSelector } from 'redux/selectors/pageHeadersCollectionsStats';
 import { collectionRoutes } from 'routes';
 import { NftEnumType, CollectionType } from 'types';
+
 import { FailedCollections } from './FailedCollections';
 import { Filters } from './Filters';
 import { NoCollections } from './NoCollections';
 
 export const Collections = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
   const { search } = useLocation();
@@ -35,11 +40,11 @@ export const Collections = () => {
     pageHeadersCollectionsStatsSelector
   );
 
-  const [collections, setCollections] = React.useState<CollectionType[]>([]);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalCollections, setTotalCollections] = React.useState<
-    number | '...'
-  >('...');
+  const [collections, setCollections] = useState<CollectionType[]>([]);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [totalCollections, setTotalCollections] = useState<number | '...'>(
+    '...'
+  );
 
   const getCollectionType = () => {
     if (activeRoute(collectionRoutes.collectionsNft)) {
@@ -76,7 +81,7 @@ export const Collections = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchCollections, [search]);
+  useEffect(fetchCollections, [search]);
 
   return (
     <>

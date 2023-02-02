@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useLocation, useParams } from 'react-router-dom';
 
-import { useAdapter, Loader, Pager, PageState, NodesTable } from 'components';
-import { useGetFilters } from 'hooks';
+import { Loader, Pager, PageState, NodesTable } from 'components';
+import { useAdapter, useGetFilters } from 'hooks';
 import { ProviderTabs } from 'pages/ProviderDetails/ProviderLayout/ProviderTabs';
 import { NodeType } from 'types';
 
 export const ProviderDetails = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { hash: address } = useParams() as any;
   const { search } = useLocation();
   const { getNodes, getNodesCount } = useAdapter();
   const { getQueryObject, size } = useGetFilters();
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [nodes, setNodes] = React.useState<NodeType[]>([]);
-  const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [nodes, setNodes] = useState<NodeType[]>([]);
+  const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
 
   const fetchNodes = () => {
     const queryObject = getQueryObject();
@@ -36,7 +36,7 @@ export const ProviderDetails = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchNodes, [search]);
+  useEffect(fetchNodes, [search]);
 
   return (
     <div className='card' ref={ref}>

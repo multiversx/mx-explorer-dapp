@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useAdapter } from 'components';
+import { useAdapter } from 'hooks';
 import { interfaceSelector } from 'redux/selectors';
 import { setShards } from 'redux/slices/interface';
 

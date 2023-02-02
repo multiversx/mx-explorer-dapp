@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import {
-  useAdapter,
   DetailItem,
   Loader,
   Pager,
@@ -13,7 +12,7 @@ import {
   NetworkLink
 } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
-import { useGetFilters, useNetworkRoute } from 'hooks';
+import { useAdapter, useGetFilters, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { TokenType, NftType } from 'types';
 

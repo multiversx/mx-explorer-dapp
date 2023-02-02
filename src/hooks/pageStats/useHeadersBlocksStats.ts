@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAdapter } from 'components';
+
+import { useAdapter } from 'hooks';
 import { statsSelector } from 'redux/selectors';
 import { pageHeadersBlocksStatsSelector } from 'redux/selectors/pageHeadersBlocksStats';
 import {
   setPageHeaderBlocksStats,
   setPageHeaderBlocksStatsBlockHeight
-} from '../../redux/slices/pageHeadersBlocksStats';
-import { HeadersBlocksType } from '../../types/headerStats.types';
+} from 'redux/slices/pageHeadersBlocksStats';
+import { HeadersBlocksType } from 'types/headerStats.types';
 
 export const useHeadersBlocksStats = () => {
   const headersBlocks = useSelector(pageHeadersBlocksStatsSelector);

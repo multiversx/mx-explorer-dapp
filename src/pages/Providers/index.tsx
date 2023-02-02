@@ -3,9 +3,9 @@ import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { useAdapter, ProvidersTable, Loader, PageState } from 'components';
+import { ProvidersTable, Loader, PageState } from 'components';
+import { useAdapter } from 'hooks';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
-
 import { activeNetworkSelector } from 'redux/selectors';
 import { IdentityType, ProviderType } from 'types';
 

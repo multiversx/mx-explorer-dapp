@@ -1,17 +1,11 @@
 import React from 'react';
 import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
-
 import { useParams, useSearchParams } from 'react-router-dom';
-import {
-  useAdapter,
-  Loader,
-  Pager,
-  PageState,
-  ProvidersTable
-} from 'components';
+
+import { Loader, Pager, PageState, ProvidersTable } from 'components';
 import { NodesTable, SharedIdentity } from 'components';
-import { useGetFilters } from 'hooks';
+import { useAdapter, useGetFilters } from 'hooks';
 import { IdentityType, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {

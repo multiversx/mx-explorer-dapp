@@ -2,13 +2,15 @@ import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
-import { useAdapter, Loader, PageState, SharedIdentity } from 'components';
+
+import { Loader, PageState, SharedIdentity } from 'components';
 import { BlocksTable } from 'components/BlocksTable';
 import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/NoBlocks';
-import { useIsMainnet } from 'hooks';
+import { useAdapter, useIsMainnet } from 'hooks';
 import { statsSelector } from 'redux/selectors';
 import { BlockType, IdentityType, NodeType } from 'types';
+
 import { NetworkMetrics } from './NetworkMetrics';
 import { NodeInformation } from './NodeInformation';
 import { Rounds, RoundType } from './Rounds';

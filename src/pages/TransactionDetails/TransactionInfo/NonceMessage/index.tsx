@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAdapter } from 'components';
+
 import { txStatus } from 'components/TransactionStatus/txStatus';
+import { useAdapter } from 'hooks';
 import { TransactionType } from 'types';
 
 export const NonceMessage = ({
@@ -10,7 +11,7 @@ export const NonceMessage = ({
 }: {
   transaction: TransactionType;
 }) => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { getAccount } = useAdapter();
   const {
     sender: senderAddress,
@@ -18,9 +19,8 @@ export const NonceMessage = ({
     timestamp,
     status
   } = transaction;
-  const [isDataReady, setIsDataReady] = React.useState<boolean>(false);
-  const [hasUnsyncedNonce, setHasUnsyncedNonce] =
-    React.useState<boolean>(false);
+  const [isDataReady, setIsDataReady] = useState<boolean>(false);
+  const [hasUnsyncedNonce, setHasUnsyncedNonce] = useState<boolean>(false);
 
   const isTxPending =
     status.toLowerCase() === txStatus.pending.toLowerCase() ||
@@ -39,7 +39,7 @@ export const NonceMessage = ({
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       if (senderAddress && isTxPending) {
         getSenderNonce();

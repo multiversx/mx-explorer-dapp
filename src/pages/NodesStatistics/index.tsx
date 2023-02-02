@@ -1,15 +1,9 @@
 import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useLocation } from 'react-router-dom';
-import {
-  useAdapter,
-  Loader,
-  Pager,
-  PageState,
-  NodesTable,
-  NodesFilters
-} from 'components';
-import { useGetFilters } from 'hooks';
+
+import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
+import { useAdapter, useGetFilters } from 'hooks';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
 import { validatorsRoutes } from 'routes';
 import { NodeType } from 'types';

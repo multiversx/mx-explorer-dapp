@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAdapter } from '../../components';
-import { economicsSelector } from '../../redux/selectors';
-import { pageHeaderTokensStatsSelector } from '../../redux/selectors/pageHeadersTokensStats';
+
+import { useAdapter } from 'hooks';
+import { economicsSelector } from 'redux/selectors';
+import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
 import {
   setPageHeaderBlocksStatsEcosystemMarketCap,
   setPageHeaderTokensStats
-} from '../../redux/slices/pageHeadersTokensStats';
-import { HeadersTokensType } from '../../types/headerStats.types';
+} from 'redux/slices/pageHeadersTokensStats';
+import { HeadersTokensType } from 'types/headerStats.types';
 
 export const useHeadersTokensStats = () => {
   const headersTokens = useSelector(pageHeaderTokensStatsSelector);

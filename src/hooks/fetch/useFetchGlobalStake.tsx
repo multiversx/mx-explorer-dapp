@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { useAdapter } from 'components';
-import { processGlobalStake } from 'helpers';
 
+import { processGlobalStake } from 'helpers';
+import { useAdapter } from 'hooks';
 import { setGlobalStake } from 'redux/slices/globalStake';
 
 export const useFetchGlobalStake = () => {

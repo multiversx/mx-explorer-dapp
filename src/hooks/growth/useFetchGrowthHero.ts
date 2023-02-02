@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAdapter } from 'components';
-import { processGrowthHero } from 'helpers';
 
+import { processGrowthHero } from 'helpers';
+import { useAdapter } from 'hooks';
 import { growthHeroSelector } from 'redux/selectors';
 import { setGrowthHero } from 'redux/slices/growthHero';
 

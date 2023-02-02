@@ -3,7 +3,6 @@ import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch'
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAdapter } from 'components';
 import {
   urlBuilder,
   isHash,
@@ -11,7 +10,7 @@ import {
   addressIsBech32,
   bech32
 } from 'helpers';
-import { useNetworkRoute } from 'hooks';
+import { useAdapter, useNetworkRoute } from 'hooks';
 import { WithClassnameType } from 'types';
 
 interface SearchType extends WithClassnameType {

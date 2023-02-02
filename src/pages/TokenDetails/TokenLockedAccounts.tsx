@@ -1,11 +1,10 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import {
   Loader,
-  useAdapter,
   NetworkLink,
   Trim,
   ScAddressIcon,
@@ -13,12 +12,14 @@ import {
   Denominate
 } from 'components';
 import { urlBuilder } from 'helpers';
+import { useAdapter } from 'hooks';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { TokenLockedAccountType } from 'types';
+
 import { TokenTabs } from './TokenLayout/TokenTabs';
 
 export const TokenDetailsLockedAccounts = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { token } = useSelector(tokenSelector);
@@ -27,10 +28,10 @@ export const TokenDetailsLockedAccounts = () => {
 
   const { hash: tokenId } = useParams() as any;
 
-  const [tokenLockedAccounts, setTokenLockedAccounts] = React.useState<
+  const [tokenLockedAccounts, setTokenLockedAccounts] = useState<
     TokenLockedAccountType[]
   >([]);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchTokenLockedAccounts = () => {
     getTokenSupply({ tokenId }).then(({ data, success }) => {
@@ -43,7 +44,7 @@ export const TokenDetailsLockedAccounts = () => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchTokenLockedAccounts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId]);

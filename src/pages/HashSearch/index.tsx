@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAdapter, PageState, Loader } from 'components';
+import { PageState, Loader } from 'components';
 import {
   urlBuilder,
   isHash,
@@ -9,7 +9,7 @@ import {
   addressIsBech32,
   bech32
 } from 'helpers';
-import { useNetworkRoute } from 'hooks';
+import { useAdapter, useNetworkRoute } from 'hooks';
 
 export const HashSearch = () => {
   const { hash: query } = useParams() as any;

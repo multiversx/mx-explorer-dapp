@@ -1,15 +1,18 @@
-import * as React from 'react';
-import BigNumber from 'bignumber.js';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { PAGE_SIZE } from 'appConstants';
-import { Loader, useAdapter, NetworkLink, Pager } from 'components';
-import { useGetFilters, useURLSearchParams, useActiveRoute } from 'hooks';
+import { Loader, NetworkLink, Pager } from 'components';
+import {
+  useAdapter,
+  useGetFilters,
+  useURLSearchParams,
+  useActiveRoute
+} from 'hooks';
 import { economicsSelector } from 'redux/selectors';
 import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
 import { tokensRoutes } from 'routes';
-
 import { TokenType } from 'types';
 
 import { FailedTokens } from './FailedTokens';
@@ -18,7 +21,7 @@ import { NoTokens } from './NoTokens';
 import { TokensTable } from './TokensTable';
 
 export const Tokens = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
 
   const activeRoute = useActiveRoute();
   const { page } = useURLSearchParams();
@@ -29,9 +32,9 @@ export const Tokens = () => {
   const { ecosystemMarketCap } = useSelector(economicsSelector);
   const pageHeadersTokens = useSelector(pageHeaderTokensStatsSelector);
 
-  const [tokens, setTokens] = React.useState<TokenType[]>([]);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalTokens, setTotalTokens] = React.useState<number | '...'>('...');
+  const [tokens, setTokens] = useState<TokenType[]>([]);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [totalTokens, setTotalTokens] = useState<number | '...'>('...');
 
   const fetchTokens = () => {
     const queryObject = getQueryObject();
@@ -51,7 +54,7 @@ export const Tokens = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchTokens, [search]);
+  useEffect(fetchTokens, [search]);
 
   return (
     <>

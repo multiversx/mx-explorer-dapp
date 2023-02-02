@@ -5,7 +5,6 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import {
   Loader,
-  useAdapter,
   Pager,
   Denominate,
   NetworkLink,
@@ -15,9 +14,10 @@ import {
   LockedTokenAddressIcon
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useSize, useURLSearchParams } from 'hooks';
+import { useAdapter, useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { AccountType } from 'types';
+
 import { TokenTabs } from './TokenLayout/TokenTabs';
 
 export const TokenDetailsAccounts = () => {

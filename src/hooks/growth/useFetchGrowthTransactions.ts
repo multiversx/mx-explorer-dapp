@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAdapter } from 'components';
-import { processGrowthTransactions } from 'helpers';
 
+import { processGrowthTransactions } from 'helpers';
+import { useAdapter } from 'hooks';
 import { growthTransactionsSelector } from 'redux/selectors';
 import { setGrowthTransactions } from 'redux/slices/growthTransactions';
 

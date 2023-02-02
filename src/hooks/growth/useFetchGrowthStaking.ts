@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAdapter } from 'components';
-import { processGrowthStaking } from 'helpers';
 
+import { processGrowthStaking } from 'helpers';
+import { useAdapter } from 'hooks';
 import { growthStakingSelector } from 'redux/selectors';
 import { setGrowthStaking } from 'redux/slices/growthStaking';
 

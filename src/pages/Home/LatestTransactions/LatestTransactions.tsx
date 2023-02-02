@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
+
 import {
   ShardSpan,
   NetworkLink,
   TimeAgo,
-  useAdapter,
   Trim,
   Loader,
   LatestItem,
@@ -13,13 +13,12 @@ import {
   PulsatingLed,
   TransactionIcon
 } from 'components';
-
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { TransactionValue } from 'components/TransactionsTable/TransactionValue';
 import { getStatusIconAndColor } from 'components/TransactionStatus';
 import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
-
+import { useAdapter } from 'hooks';
 import { refreshSelector } from 'redux/selectors';
 import { UITransactionType } from 'types';
 

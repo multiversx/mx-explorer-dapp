@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
-
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Loader, useAdapter, PageState } from 'components';
+
+import { Loader, PageState } from 'components';
 import { txStatus } from 'components/TransactionStatus/txStatus';
+import { useAdapter } from 'hooks';
 import { refreshSelector } from 'redux/selectors/refresh';
 import { TransactionType } from 'types';
+
 import { TransactionInfo } from './TransactionInfo';
 
 export const TransactionDetails = () => {

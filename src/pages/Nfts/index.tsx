@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import {
   Loader,
-  useAdapter,
   NetworkLink,
   Trim,
   Pager,
@@ -10,22 +10,23 @@ import {
   NftBadge
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useGetFilters, useURLSearchParams } from 'hooks';
+import { useAdapter, useGetFilters, useURLSearchParams } from 'hooks';
 import { NftType } from 'types';
+
 import { FailedNfts } from './FailedNfts';
 import { Filters } from './Filters';
 import { NoNfts } from './NoNfts';
 
 export const Nfts = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { page } = useURLSearchParams();
   const { search } = useLocation();
   const { getQueryObject, size } = useGetFilters();
   const { getNfts, getNftsCount } = useAdapter();
 
-  const [nfts, setNfts] = React.useState<NftType[]>([]);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalNfts, setTotalNfts] = React.useState<number | '...'>('...');
+  const [nfts, setNfts] = useState<NftType[]>([]);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [totalNfts, setTotalNfts] = useState<number | '...'>('...');
 
   const fetchNfts = () => {
     const queryObject = getQueryObject();
@@ -46,7 +47,7 @@ export const Nfts = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchNfts, [search]);
+  useEffect(fetchNfts, [search]);
 
   return (
     <>

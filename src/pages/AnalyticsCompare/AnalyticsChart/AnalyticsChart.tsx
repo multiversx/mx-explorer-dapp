@@ -1,15 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import { useSelector } from 'react-redux';
-import { PageState, Chart, Loader, useAdapter } from 'components';
+
+import { PageState, Chart, Loader } from 'components';
 import {
   ChartConfigType,
   ChartListType,
   StackedChartConfig
 } from 'components/Chart/helpers/types';
+import { useAdapter } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
+
 import { ChartResolutionSelector } from './components/ChartResolution';
 import type { ChartResolutionRangeType } from './components/ChartResolution/types';
+
 import { getChartColorPalette } from '../helpers/getChartColorPalette';
 
 export interface AnalyticsChartDataType {

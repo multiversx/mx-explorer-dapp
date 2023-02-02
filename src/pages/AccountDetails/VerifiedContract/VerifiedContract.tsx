@@ -4,9 +4,9 @@ import { Tab, Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useMatch } from 'react-router-dom';
 
-import { useAdapter, Loader, PageState } from 'components';
+import { Loader, PageState } from 'components';
 import { urlBuilder } from 'helpers';
-import { useNetworkRoute } from 'hooks';
+import { useAdapter, useNetworkRoute } from 'hooks';
 import { accountSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
 import { VerifiedContractType } from 'types';

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   faClock,
   faExclamationTriangle
@@ -11,13 +10,13 @@ import {
 } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
+
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import {
   CardItem,
   CopyButton,
   Denominate,
   NetworkLink,
-  useAdapter,
   ShardSpan,
   ScAddressIcon,
   Trim,
@@ -26,10 +25,10 @@ import {
   SmallDetailItem,
   UsdValue
 } from 'components';
-
 import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
-
+import { useAdapter } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+
 import { AccountUsdValueCardItem } from './AccountUsdValueCardItem';
 import { LockedAmountCardItem } from './LockedAmountCardItem';
 

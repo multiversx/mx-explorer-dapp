@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { Loader, useAdapter } from 'components';
-import { useSize, useGetHash } from 'hooks';
+import { Loader } from 'components';
+import { useAdapter, useSize, useGetHash } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setCollection } from 'redux/slices';
 
@@ -15,7 +15,7 @@ export const CollectionLayout = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { firstPageTicker } = useSize();
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -24,7 +24,7 @@ export const CollectionLayout = ({
 
   const collection = useGetHash();
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchCollectionDetails = () => {
     if (collection) {
@@ -43,13 +43,13 @@ export const CollectionLayout = ({
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchCollectionDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageTicker, activeNetworkId, collection, searchParams]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setDataReady(undefined);
   }, [collection, activeNetworkId, searchParams]);
 
