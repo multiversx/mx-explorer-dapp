@@ -1,11 +1,12 @@
 .shard-list {
-  margin-bottom: -0.125rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
   .shard-card {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.125rem;
     .shard {
       display: flex;
       flex-direction: row;

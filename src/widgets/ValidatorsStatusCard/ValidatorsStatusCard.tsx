@@ -1,18 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faGlobe } from '@fortawesome/pro-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { useSelector } from 'react-redux';
-import { ValidatorMap, Marquee, ShardList } from 'components';
+
 import { useFetchGlobalStake, useFetchMarkers, useFetchShards } from 'hooks';
 import { globalStakeSelector, markersSelector } from 'redux/selectors';
-import { WithClassnameType } from 'types';
+import { MarkerType, RankType, WithClassnameType } from 'types';
 
-import { calcContinentRank, RankType } from './helpers/calcContinentRank';
-
-export interface ValidatorsStatusType extends WithClassnameType {
-  isSmall?: boolean;
-}
+import { LargeCard } from './components/LargeCard';
+import { SmallCard } from './components/SmallCard';
+import { calcContinentRank } from './helpers/calcContinentRank';
+import { ValidatorsStatusType } from './types';
 
 const placeHolderRank = [
   {
@@ -68,42 +64,19 @@ export const ValidatorsStatusCard = ({
       } ${className ?? ''}`}
       ref={ref}
     >
-      <div className='card-body p-0 overflow-hidden'>
-        <div className='card-body validators-total'>
-          <p className='card-title text-neutral-500 mb-0'>Validators</p>
-          <h2 className='card-value text-primary'>{totalValidators}</h2>
-        </div>
-        {process.env.NODE_ENV !== 'test' && markers.length > 0 && (
-          <ValidatorMap markers={markers} />
-        )}
-        {!isSmall && (
-          <div className='card-body py-0 d-flex'>
-            <ShardList />
-          </div>
-        )}
-
-        <Marquee>
-          <div className='badge-holder d-flex flex-row align-items-center'>
-            {continentsRank.map(({ continent, nodes, percentage }, i) => (
-              <div
-                key={i}
-                className='badge rounded-pill d-flex flex-row align-items-center'
-              >
-                <FontAwesomeIcon icon={faGlobe} />
-                <div className='ms-2'>{continent}</div>
-                <div className='text-secondary mx-1'>
-                  {nodes > 0
-                    ? `${nodes.toLocaleString('en')} node${
-                        nodes === 1 ? '' : 's'
-                      }`
-                    : '...'}
-                </div>
-                <div>({percentage > 0 ? `${percentage}%` : '...'})</div>
-              </div>
-            ))}
-          </div>
-        </Marquee>
-      </div>
+      {isSmall ? (
+        <SmallCard
+          continentsRank={continentsRank}
+          markers={markers}
+          totalValidators={totalValidators}
+        />
+      ) : (
+        <LargeCard
+          continentsRank={continentsRank}
+          markers={markers}
+          totalValidators={totalValidators}
+        />
+      )}
     </div>
   );
 };

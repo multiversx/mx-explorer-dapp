@@ -5,10 +5,6 @@
     margin-right: 0 !important;
   }
 
-  .flex-1 {
-    flex: 1;
-  }
-
   .detail-card {
     flex-basis: 100%;
     @include media-breakpoint-up(md) {
