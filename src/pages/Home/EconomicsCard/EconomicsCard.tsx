@@ -5,10 +5,8 @@ import { useFetchGrowthEconomics } from 'hooks';
 import { growthEconomicsSelector } from 'redux/selectors';
 
 import { EconomicsLabelsEnum } from './enum';
-
-import type { EconomicsType } from './types';
-
 import styles from './styles.module.scss';
+import type { EconomicsType } from './types';
 
 export const EconomicsCard = () => {
   const { developerRewards, applicationsDeployed, feesCaptured } = useSelector(

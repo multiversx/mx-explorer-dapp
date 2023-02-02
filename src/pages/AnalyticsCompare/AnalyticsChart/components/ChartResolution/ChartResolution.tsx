@@ -1,16 +1,16 @@
 import React, { Fragment, useMemo } from 'react';
-import { SingleValue } from 'react-select';
 import classNames from 'classnames';
+import { SingleValue } from 'react-select';
 
-import type { ChartSelectOptionType } from '../../../../Home/ChartSelect/types';
+import { ChartSelect } from 'pages/Home/ChartSelect';
+import type { ChartSelectOptionType } from 'pages/Home/ChartSelect/types';
+
+import styles from './styles.module.scss';
 import type {
   ChartResolutionRangeType,
   ChartResolutionSelectorPropsType,
   ChartResolutionType
 } from './types';
-
-import styles from './styles.module.scss';
-import { ChartSelect } from 'pages/Home/ChartSelect';
 
 export const ChartResolution: ChartResolutionType = {
   all: {

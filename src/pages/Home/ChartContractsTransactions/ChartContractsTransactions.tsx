@@ -6,15 +6,13 @@ import { useFetchGrowthTransactions } from 'hooks';
 import { growthTransactionsSelector } from 'redux/selectors';
 
 import { TransactionsStatisticsLabelEnum } from './enum';
-
-import type { StatisticType } from './types';
-import type { ChartSelectOptionType } from '../ChartSelect/types';
-import type { PayloadType } from '../ChartArea/types';
+import styles from './styles.module.scss';
+import { StatisticType } from './types';
 
 import { ChartArea } from '../ChartArea';
+import { PayloadType } from '../ChartArea/types';
 import { ChartSelect } from '../ChartSelect';
-
-import styles from './styles.module.scss';
+import { ChartSelectOptionType } from '../ChartSelect/types';
 
 export const ChartContractsTransactions = () => {
   const {

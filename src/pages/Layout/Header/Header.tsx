@@ -1,18 +1,16 @@
 import React, { useState, MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGrid, faGrid2 } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 import { ReactComponent as MultiversXLogo } from 'assets/img/logo-full.svg';
 
 import { Applications } from './components/Applications';
 import { Links } from './components/Links';
 import { Switcher } from './components/Switcher';
-
-import type { HeaderPropsType } from './types';
-
 import styles from './styles.module.scss';
+import type { HeaderPropsType } from './types';
 
 export const Header = (props: HeaderPropsType) => {
   const { onExpand } = props;

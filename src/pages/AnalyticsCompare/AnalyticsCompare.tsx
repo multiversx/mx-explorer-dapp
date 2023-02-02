@@ -9,6 +9,7 @@ import {
 
 import { Loader, useAdapter, Led } from 'components';
 import { ChartListType } from 'components/Chart/helpers/types';
+import { Tabs } from 'components/Tabs';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
@@ -18,7 +19,6 @@ import { ChartResolution } from './AnalyticsChart/components/ChartResolution';
 import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
 import { FailedAnalytics } from './FailedAnalytics';
 import { NoAnalytics } from './NoAnalytics';
-import { Tabs } from 'components/Tabs';
 
 export const AnalyticsCompare = () => {
   const ref = useRef(null);
