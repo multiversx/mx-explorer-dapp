@@ -65,15 +65,16 @@ export const Hero = () => {
           <div className='card card-lg card-black'>
             <div className='card-header'>
               <h2 className='title mb-0 text-capitalize'>
-                {pageName !== 'analytics'
-                  ? pageName
-                  : `MultiversX Blockchain ${pageName}`}
-                {pageName === 'analytics' && (
-                  <span className='text-neutral-500'> (Beta)</span>
+                {pageName === 'analytics' ? (
+                  <>
+                    {`MultiversX Blockchain ${pageName}`}{' '}
+                    <span className='text-neutral-500'> (Beta)</span>
+                  </>
+                ) : (
+                  <>{pageName}</>
                 )}
               </h2>
             </div>
-
             {showCustomStats ? (
               <div className='card-body d-flex flex-row flex-wrap gap-3 custom-stats'>
                 {pageStats?.data.map((item) => (
@@ -88,26 +89,21 @@ export const Hero = () => {
                 ))}
               </div>
             ) : (
-              <div className='card-body d-flex flex-row flex-wrap gap-3'>
-                <TransactionsStatsCard />
-                <AccountsStatsCard />
-                <BlockHeightStatsCard neutralColors />
-                {isMainnet && <ValidatorsStatusCard isSmall />}
-              </div>
+              <>
+                {showTransactionsStats && isMainnet ? (
+                  <div className='card-body p-0 mt-nspacer'>
+                    <ChartContractsTransactions />
+                  </div>
+                ) : (
+                  <div className='card-body d-flex flex-row flex-wrap gap-3'>
+                    <TransactionsStatsCard />
+                    <AccountsStatsCard />
+                    <BlockHeightStatsCard neutralColors />
+                    {isMainnet && <ValidatorsStatusCard isSmall />}
+                  </div>
+                )}
+              </>
             )}
-          </div>
-        </div>
-      )}
-
-      {showTransactionsStats && isMainnet && (
-        <div className='container mb-3'>
-          <div className='card card-lg card-black'>
-            <div className='card-header pb-0'>
-              <h2 className='title mb-0 text-capitalize'>{pageName}</h2>
-            </div>
-            <div className='card-body p-0'>
-              <ChartContractsTransactions />
-            </div>
           </div>
         </div>
       )}

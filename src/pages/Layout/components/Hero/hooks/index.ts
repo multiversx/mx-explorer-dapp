@@ -23,9 +23,6 @@ export const useShowGlobalStats = () => {
     case activeRoute('/'):
     case activeRoute(searchRoutes.index):
     case activeRoute(searchRoutes.query):
-    case activeRoute(transactionsRoutes.transactions) && isMainnet:
-    case activeRoute(transactionsRoutes.transactionDetails) && isMainnet:
-    case activeRoute(transactionsRoutes.transactionDetailsLogs) && isMainnet:
     case activeRoute(validatorsRoutes.identities) && isMainnet:
     case activeRoute(validatorsRoutes.identityDetails) && isMainnet:
     case activeRoute(validatorsRoutes.providers) && isMainnet:
