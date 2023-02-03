@@ -61,7 +61,7 @@ export * from './Particles';
 export * from './ValidatorMap';
 export * from './TableWrapper';
 export * from './Marquee';
-export * from './NodesHero';
+export * from '../widgets/HeroNodes';
 export * from './ProgressRing';
 export * from './ShardList';
 export * from './FormatUSD';

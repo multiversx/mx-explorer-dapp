@@ -33,8 +33,7 @@
       }
     }
     .shard-list {
-      margin-bottom: 2.5rem;
-      @include media-breakpoint-up(md) {
+      @include media-breakpoint-up(sm) {
         margin-top: 4.5rem;
       }
     }
@@ -49,21 +48,32 @@
         max-height: 15rem;
       }
     }
-    // .shard-list {
-    //   width: 40%;
-    //   margin-top: -1.5em;
-    // }
-    // .validators-total {
-    //   padding-top: 2rem;
-    // }
-
-    // @include media-breakpoint-down(md) {
-    //   .shard-list {
-    //     width: 100%;
-    //     margin-top: 0;
-    //     margin-bottom: 4rem;
-    //   }
-    // }
+    .weighted-node-card {
+      @include media-breakpoint-up(lg) {
+        position: absolute;
+        right: 2rem;
+        bottom: 3.5rem;
+        width: 300px;
+        background-color: rgba(var(--body-bg-rgb), 0.7);
+        -webkit-backdrop-filter: blur(0.125rem);
+        backdrop-filter: blur(0.125rem);
+        .card-body {
+          padding: 0.5rem;
+        }
+        .multilayer-percentage-ring {
+          flex-wrap: nowrap !important;
+          align-items: start !important;
+        }
+      }
+      @include media-breakpoint-up(xl) {
+        width: 350px;
+      }
+    }
+    &.mainnet-layout {
+      .shard-list {
+        margin-bottom: 2.5rem;
+      }
+    }
   }
 
   &.validators-status-sm {

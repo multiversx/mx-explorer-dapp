@@ -7,7 +7,6 @@ import { ChartContractsTransactions } from './ChartContractsTransactions';
 import { ChartPrice } from './ChartPrice';
 import { ChartStake } from './ChartStake';
 import { EconomicsCard } from './EconomicsCard';
-import { HeroCard } from './HeroCard';
 import { LatestBlocks } from './LatestBlocks';
 import { LatestTransactions } from './LatestTransactions';
 
@@ -16,8 +15,6 @@ export const Home = () => {
 
   return (
     <div className='home page-content container'>
-      <HeroCard />
-
       {isMainnet && (
         <>
           <div className='d-xl-flex mt-3'>

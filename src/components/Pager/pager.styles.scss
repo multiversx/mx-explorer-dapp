@@ -26,7 +26,7 @@
       background-color: var(--neutral-900);
     }
     @include media-breakpoint-down(md) {
-      padding: 0.5rem;
+      padding: 0.625rem;
     }
     @include media-breakpoint-up(md) {
       padding: 0.75rem;
@@ -67,6 +67,13 @@
 
     .btn:first-child {
       margin-right: 1px;
+    }
+
+    @media (max-width: 360px) {
+      .next-btn,
+      .previous-btn {
+        display: none;
+      }
     }
   }
 

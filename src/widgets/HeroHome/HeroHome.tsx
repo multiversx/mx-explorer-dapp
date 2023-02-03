@@ -12,14 +12,14 @@ import {
   EpochProgressRing
 } from 'widgets';
 
-export const HeroCard = () => {
+export const HeroHome = () => {
   const isMainnet = useIsMainnet();
 
   const explorerApp = multiversxApps.find((app) => app.id === 'explorer');
   const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
 
   return (
-    <div className='hero-card card card-lg card-black'>
+    <div className='hero-home card card-lg card-black'>
       <Particles />
       <div className='card-body d-flex flex-column justify-content-between'>
         <div className='row'>
