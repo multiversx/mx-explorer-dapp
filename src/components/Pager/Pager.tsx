@@ -1,10 +1,13 @@
 import React from 'react';
-import { faAngleLeft } from '@fortawesome/pro-solid-svg-icons/faAngleLeft';
-import { faAngleRight } from '@fortawesome/pro-solid-svg-icons/faAngleRight';
-import { faAnglesLeft } from '@fortawesome/pro-solid-svg-icons/faAnglesLeft';
-import { faAnglesRight } from '@fortawesome/pro-solid-svg-icons/faAnglesRight';
+import {
+  faAngleLeft,
+  faAngleRight,
+  faAnglesLeft,
+  faAnglesRight
+} from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
+
 import { pagerHelper } from './pagerHelper';
 
 export const Pager = ({
@@ -81,7 +84,7 @@ export const Pager = ({
 
           {size === 1 ? (
             <div
-              className='btn btn-pager'
+              className='btn btn-pager previous-btn'
               {...(hasTestId
                 ? { 'data-testid': 'disabledPreviousPageButton' }
                 : {})}
@@ -92,7 +95,7 @@ export const Pager = ({
           ) : (
             <button
               type='button'
-              className='btn btn-pager'
+              className='btn btn-pager previous-btn'
               onClick={() =>
                 updatePage(size === 2 ? firstUrlParams : prevUrlParams)
               }
@@ -141,7 +144,7 @@ export const Pager = ({
           {total === '...' || end < total ? (
             <button
               type='button'
-              className='btn btn-pager'
+              className='btn btn-pager next-btn'
               onClick={() => updatePage(nextUrlParams)}
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
             >
@@ -150,7 +153,7 @@ export const Pager = ({
             </button>
           ) : (
             <div
-              className='btn btn-pager'
+              className='btn btn-pager next-btn'
               {...(hasTestId
                 ? { 'data-testid': 'disabledNextPageButton' }
                 : {})}

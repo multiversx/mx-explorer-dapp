@@ -42,8 +42,6 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const pageClass =
     activeNetworkId === defaultNetworkId ? pathArray?.[1] : pathArray?.[2];
 
-  const pageName = getCustomPageName({ pathname, basePage: pageClass });
-
   useEffect(() => {
     if (browser?.browser?.name) {
       document.body.classList.add(formatClassName(browser.browser.name));
@@ -57,11 +55,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <div
-      className={`d-flex scrollbar-thin ${
-        pageName ? pageName : 'home'
-      } ${pageClass}`}
-    >
+    <div className={`d-flex scrollbar-thin ${pageClass}`}>
       <div className='flex-fill vh-100'>
         <main
           className={classNames(

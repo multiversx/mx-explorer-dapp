@@ -2,6 +2,8 @@ export * from './AccountsStatsCard';
 export * from './BlockHeightStatsCard';
 export * from './BlockProgressRing';
 export * from './EpochProgressRing';
+export * from './HeroHome';
+export * from './HeroNodes';
 export * from './HeroPills';
 export * from './MostUsed';
 export * from './StatsCard';

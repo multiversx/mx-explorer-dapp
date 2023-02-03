@@ -13,6 +13,7 @@ import {
   accountsRoutes,
   blocksRoutes,
   collectionRoutes,
+  nftRoutes,
   tokensRoutes
 } from '../../routes';
 import { useActiveRoute } from '../useActiveRoute';
@@ -160,6 +161,7 @@ export const usePageStats = () => {
       case activeRoute(collectionRoutes.collectionsSft):
       case activeRoute(collectionRoutes.collectionDetails):
       case activeRoute(collectionRoutes.collectionDetailsRoles):
+      case activeRoute(nftRoutes.nftDetails):
         return {
           title: headerCollectionsTitle,
           data: headersCollectionsData

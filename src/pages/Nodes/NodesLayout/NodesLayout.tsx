@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Loader, NodesHero } from 'components';
+import { Loader } from 'components';
 import {
   useFetchGlobalStake,
   useFetchNodesVersions,
@@ -41,8 +41,6 @@ export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
       {isDataReady === undefined && <Loader />}
       {isDataReady && (
         <div className='container page-content'>
-          <NodesHero />
-
           <div className='row'>
             <div className='col-12'>{children}</div>
           </div>

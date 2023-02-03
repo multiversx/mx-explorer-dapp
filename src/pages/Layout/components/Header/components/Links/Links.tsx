@@ -119,7 +119,7 @@ export const Links = (props: LinksPropsType) => {
       label: 'Analytics',
       to: analyticsRoutes.analytics,
       show: isAdapterAPI && isMainnet,
-      activeRoutes: [analyticsRoutes.analytics]
+      activeRoutes: [analyticsRoutes.analytics, analyticsRoutes.compare]
     }
   ].filter((link) => link.show);
 
