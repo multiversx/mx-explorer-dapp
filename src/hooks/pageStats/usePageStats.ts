@@ -129,6 +129,7 @@ export const usePageStats = () => {
 
       case activeRoute(accountsRoutes.accounts):
       case activeRoute(accountsRoutes.accountDetails):
+      case activeRoute(accountsRoutes.oldAccountDetails):
       case activeRoute(accountsRoutes.accountTokens):
       case activeRoute(accountsRoutes.accountNfts):
       case activeRoute(accountsRoutes.accountContracts):

@@ -17,3 +17,4 @@ export * from './useGetHash';
 export * from './adapter';
 export * from './fetch';
 export * from './growth';
+export * from './pageStats';
