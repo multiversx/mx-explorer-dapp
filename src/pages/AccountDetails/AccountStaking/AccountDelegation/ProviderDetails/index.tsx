@@ -10,8 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { Trim, PercentageLed } from 'components';
-import { getPercentage, stringIsFloat } from 'helpers';
+import { Trim, PercentageLed, NetworkLink } from 'components';
+import { getPercentage, stringIsFloat, urlBuilder } from 'helpers';
 import { ProviderType } from 'types';
 import { ProviderImage } from './ProviderImage';
 
@@ -24,13 +24,15 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
         <ProviderImage provider={provider} />
         <div className='d-flex flex-column w-100'>
           <div className='provider-title font-primary-medium d-flex align-items-center'>
-            {provider?.identityDetails?.name ? (
-              <div className='text-truncate'>
-                {provider.identityDetails.name}
-              </div>
-            ) : (
-              <Trim text={provider.provider} />
-            )}
+            <NetworkLink to={urlBuilder.providerDetails(provider.provider)}>
+              {provider?.identityDetails?.name ? (
+                <div className='text-truncate'>
+                  {provider.identityDetails.name}
+                </div>
+              ) : (
+                <Trim text={provider.provider} />
+              )}
+            </NetworkLink>
 
             {provider.featured && (
               <OverlayTrigger
