@@ -69,6 +69,8 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
         let bNtotalLegacyDelegation = new BigNumber(0);
         let bNtotalLocked = new BigNumber(0);
         let bNtotalClaimable = new BigNumber(0);
+        let bNtotalActiveStake = new BigNumber(0);
+        let bNtotalUnstakedValue = new BigNumber(0);
 
         const delegationFetched = delegationData.success
           ? delegationData.data
@@ -129,6 +131,8 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
           const activePlusUnStaked = bNtotalUserActiveStake.plus(
             bNtotalUserUnStakedValue
           );
+          bNtotalActiveStake = bNtotalUserActiveStake;
+          bNtotalUnstakedValue = bNtotalUserUnStakedValue;
           bNtotalDelegation = bNtotalClaimableRewards.plus(activePlusUnStaked);
           bNtotalClaimable = bNtotalClaimable.plus(bNtotalClaimableRewards);
         }
@@ -189,7 +193,9 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
           totalDelegation: bNtotalDelegation.toString(),
           totalLegacyDelegation: bNtotalLegacyDelegation.toString(),
           totalLocked: bNtotalLocked.toString(),
-          totalClaimable: bNtotalClaimable.toString()
+          totalClaimable: bNtotalClaimable.toString(),
+          totalActiveStake: bNtotalActiveStake.toString(),
+          totalUnstakedValue: bNtotalUnstakedValue.toString()
         };
 
         if (showDelegation || showDelegationLegacy) {
