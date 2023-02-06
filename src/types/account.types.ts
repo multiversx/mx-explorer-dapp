@@ -44,6 +44,8 @@ export interface AccountStakingSliceType {
   totalLegacyDelegation: string;
   totalLocked: string;
   totalClaimable: string;
+  totalActiveStake: string;
+  totalUnstakedValue: string;
   stake?: StakeType;
   showStake: boolean;
   delegationLegacy?: DelegationLegacyType;

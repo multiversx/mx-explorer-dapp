@@ -11,6 +11,8 @@ export const getInitialAccountStakingState = (): AccountStakingSliceType => {
     totalLegacyDelegation: '0',
     totalLocked: '0',
     totalClaimable: '0',
+    totalActiveStake: '0',
+    totalUnstakedValue: '0',
     providerDataReady: undefined,
     stakingDataReady: undefined,
     delegationProviders: [],
@@ -33,6 +35,8 @@ export const accountStakingSlice = createSlice({
       state.totalLegacyDelegation = action.payload.totalLegacyDelegation;
       state.totalLocked = action.payload.totalLocked;
       state.totalClaimable = action.payload.totalClaimable;
+      state.totalActiveStake = action.payload.totalActiveStake;
+      state.totalUnstakedValue = action.payload.totalUnstakedValue;
       state.stake = action.payload.stake;
       state.showStake = action.payload.showStake;
       state.delegationLegacy = action.payload.delegationLegacy;
