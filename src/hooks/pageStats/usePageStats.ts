@@ -151,6 +151,9 @@ export const usePageStats = () => {
       case activeRoute(tokensRoutes.tokenDetailsAccounts):
       case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
       case activeRoute(tokensRoutes.tokenDetailsRoles):
+      case activeRoute(tokensRoutes.tokensMeta):
+      case activeRoute(tokensRoutes.tokensMetaEsdt):
+      case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
         return {
           title: headersTokensTitle,
           data: headersTokensData

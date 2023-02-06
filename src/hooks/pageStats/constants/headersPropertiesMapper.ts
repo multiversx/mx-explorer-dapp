@@ -31,7 +31,7 @@ export const headersPropertiesMapper: Record<string, any> = {
       order: 2
     },
     newNFTsInLast30d: {
-      name: 'New NFTs Created in last 30 days',
+      name: 'NFTs Created in last 30 days',
       order: 3
     }
   },
@@ -45,7 +45,7 @@ export const headersPropertiesMapper: Record<string, any> = {
       order: 1
     },
     newTokensInLast30d: {
-      name: 'New Tokens Created In Last 30 days',
+      name: 'Tokens Created In Last 30 days',
       order: 2
     },
     tokenTransfersInLast30d: {
