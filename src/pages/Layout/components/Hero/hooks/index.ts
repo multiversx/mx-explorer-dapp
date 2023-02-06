@@ -54,6 +54,9 @@ export const useShowCustomStats = () => {
     case activeRoute(tokensRoutes.tokenDetailsAccounts):
     case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
     case activeRoute(tokensRoutes.tokenDetailsRoles):
+    case activeRoute(tokensRoutes.tokensMeta):
+    case activeRoute(tokensRoutes.tokensMetaEsdt):
+    case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
     case activeRoute(collectionRoutes.collections):
     case activeRoute(collectionRoutes.collectionDetails):
     case activeRoute(collectionRoutes.collectionDetailsRoles):
@@ -121,15 +124,11 @@ export const useCollapseHero = () => {
     case activeRoute(accountsRoutes.accountCodeEvents):
     case activeRoute(collectionRoutes.collectionDetails):
     case activeRoute(collectionRoutes.collectionDetailsRoles):
-    case activeRoute(collectionRoutes.collectionsNft):
-    case activeRoute(collectionRoutes.collectionsSft):
     case activeRoute(nftRoutes.nftDetails):
     case activeRoute(tokensRoutes.tokenDetails):
     case activeRoute(tokensRoutes.tokenDetailsAccounts):
     case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
     case activeRoute(tokensRoutes.tokenDetailsRoles):
-    case activeRoute(tokensRoutes.tokensMeta):
-    case activeRoute(tokensRoutes.tokensMetaEsdt):
     case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
     case activeRoute(transactionsRoutes.transactionDetails):
     case activeRoute(transactionsRoutes.transactionDetailsLogs):
