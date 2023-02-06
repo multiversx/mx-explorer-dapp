@@ -47,10 +47,8 @@ export const TransactionDetails = () => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchTransaction, []);
+  React.useEffect(fetchTransaction, [transactionId]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(checkRefetch, [timestamp]);
 
   return (
