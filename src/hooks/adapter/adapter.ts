@@ -500,6 +500,24 @@ export const useAdapter = () => {
         params: getCollectionsParams(params)
       }),
 
+    getCollectionNfts: ({
+      collection,
+      ...rest
+    }: GetCollectionsType & { collection: string }) =>
+      provider({
+        url: `/collections/${collection}/nfts`,
+        params: getCollectionsParams({ ...rest })
+      }),
+
+    getCollectionNftsCount: ({
+      collection,
+      ...rest
+    }: GetCollectionsType & { collection: string }) =>
+      provider({
+        url: `/collections/${collection}/nfts/c`,
+        params: getCollectionsParams({ ...rest })
+      }),
+
     // Nfts
 
     getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
