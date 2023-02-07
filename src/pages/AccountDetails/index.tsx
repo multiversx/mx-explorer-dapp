@@ -41,8 +41,6 @@ export const AccountDetails = () => {
     '...'
   );
 
-  const inactiveFilters = [TxFiltersEnum.sender, TxFiltersEnum.receiver];
-
   const fetchTransactions = (paramsChange = false) => {
     if (searchParams.toString() && paramsChange) {
       setDataChanged(true);
@@ -129,7 +127,6 @@ export const AccountDetails = () => {
                 size={size}
                 directionCol={true}
                 title={<AccountTabs />}
-                inactiveFilters={inactiveFilters}
                 dataChanged={dataChanged}
               />
             </div>
