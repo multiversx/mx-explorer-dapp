@@ -1,3 +1,5 @@
+import { NftEnumType } from './general.types';
+
 export interface GetBlocksType {
   size?: number;
   shard?: number;
@@ -7,25 +9,33 @@ export interface GetBlocksType {
 }
 
 export interface GetTokensType {
-  search?: string;
   size?: number;
   type?: string;
+  search?: string;
+  name?: string;
+  identifier?: string;
   identifiers?: string;
   sort?: string;
   order?: string;
+  includeMetaESDT?: boolean;
   withUsername?: boolean;
 }
 
 export interface GetNftsType {
-  collection?: string;
-  identifier?: string;
-  search?: string;
   size?: number;
-  type?: string;
-  collections?: string;
+  search?: string;
   identifiers?: string;
+  type?: NftEnumType;
+  collections?: string;
+  name?: string;
+  tags?: string;
+  creator?: string;
+  hasUris?: string;
   includeFlagged?: boolean;
-  sort?: string;
+  withSupply?: boolean;
+  withScamInfo?: boolean;
+  excludeMetaESDT?: boolean;
+  source?: string;
 }
 
 export interface GetNodesType {
@@ -105,6 +115,7 @@ export interface AdapterProviderPropsType {
     online?: boolean;
     collection?: string;
     identifier?: string;
+    identifiers?: string;
     includeFlagged?: boolean;
     fullHistory?: string;
     withUsername?: boolean;
