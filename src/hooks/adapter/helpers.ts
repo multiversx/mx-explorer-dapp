@@ -5,6 +5,7 @@ import {
   GetNodesType,
   GetProvidersType,
   GetTokensType,
+  GetCollectionsType,
   GetNftsType
 } from 'types/adapter.types';
 
@@ -119,6 +120,30 @@ export function getTokensParams({
     ...(order !== undefined ? { order } : {}),
     ...(withUsername !== undefined ? { withUsername } : {}),
     ...(includeMetaESDT !== undefined ? { includeMetaESDT } : {}),
+    ...(size !== undefined
+      ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
+      : {})
+  };
+
+  return params;
+}
+
+export function getCollectionsParams({
+  size,
+  search,
+  identifiers,
+  type,
+  sort,
+  excludeMetaESDT
+}: GetCollectionsType) {
+  const params: AdapterProviderPropsType['params'] = {
+    ...(search !== undefined ? { search } : {}),
+    ...(identifiers !== undefined ? { identifiers } : {}),
+    ...(type !== undefined ? { type } : {}),
+    ...(identifiers !== undefined ? { identifiers } : {}),
+    ...(type !== undefined ? { type } : {}),
+    ...(sort !== undefined ? { sort } : {}),
+    ...(excludeMetaESDT !== undefined ? { excludeMetaESDT } : {}),
     ...(size !== undefined
       ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
       : {})

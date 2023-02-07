@@ -4,6 +4,7 @@ import {
   GetTransactionsType,
   GetNodesType,
   GetProvidersType,
+  GetCollectionsType,
   GetNftsType,
   GetTokensType
 } from 'types/adapter.types';
@@ -15,6 +16,7 @@ import {
   getNodeParams,
   getProviderParams,
   getTokensParams,
+  getCollectionsParams,
   getNftsParams
 } from './helpers';
 import { useAdapterConfig } from './useAdapterConfig';
@@ -486,16 +488,16 @@ export const useAdapter = () => {
     getCollection: (collection: string) =>
       provider({ url: `/collections/${collection}` }),
 
-    getCollections: (params: GetNftsType) =>
+    getCollections: (params: GetCollectionsType) =>
       provider({
         url: '/collections',
-        params: getNftsParams(params)
+        params: getCollectionsParams(params)
       }),
 
-    getCollectionsCount: ({ search, type }: GetNftsType) =>
+    getCollectionsCount: (params: GetCollectionsType) =>
       provider({
         url: '/collections/c',
-        params: getNftsParams({ search, type })
+        params: getCollectionsParams(params)
       }),
 
     // Nfts
