@@ -2,6 +2,7 @@ import { RolesType } from 'types/general.types';
 import { SliceType } from 'types/general.types';
 
 export interface TokenType {
+  type: TokenTypeEnum;
   identifier: string;
   ticker?: string;
   name: string;
@@ -36,6 +37,11 @@ export interface TokenType {
     lockedAccounts?: { [key: string]: string };
   };
   roles?: TokenRolesType[];
+}
+
+export enum TokenTypeEnum {
+  FungibleESDT = 'FungibleESDT',
+  MetaESDT = 'MetaESDT'
 }
 
 export interface TokenRolesType extends RolesType {

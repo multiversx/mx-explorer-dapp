@@ -249,42 +249,37 @@ export const useAdapter = () => {
         })
       }),
 
-    getAccountTokens: ({ address, size }: { address: string; size: number }) =>
+    getAccountTokens: ({
+      address,
+      ...rest
+    }: GetTokensType & { address: string }) =>
       provider({
         url: `/accounts/${address}/tokens`,
-        params: {
-          from: (size - 1) * PAGE_SIZE,
-          size: PAGE_SIZE
-        }
+        params: getTokensParams({ ...rest })
       }),
 
-    getAccountTokensCount: (address: string) =>
-      provider({ url: `/accounts/${address}/tokens/c` }),
-
-    getAccountNfts: ({
+    getAccountTokensCount: ({
       address,
-      size,
-      type
-    }: {
-      address: string;
-      size: number;
-      type?: string;
-    }) =>
+      ...rest
+    }: GetTokensType & { address: string }) =>
+      provider({
+        url: `/accounts/${address}/tokens/c`,
+        params: getTokensParams({ ...rest })
+      }),
+
+    getAccountNfts: ({ address, ...rest }: GetNftsType & { address: string }) =>
       provider({
         url: `/accounts/${address}/nfts`,
-        params: getNftsParams({ size, type, includeFlagged: true })
+        params: getNftsParams({ ...rest, includeFlagged: true })
       }),
 
     getAccountNftsCount: ({
       address,
-      type
-    }: {
-      address: string;
-      type?: string;
-    }) =>
+      ...rest
+    }: GetNftsType & { address: string }) =>
       provider({
         url: `/accounts/${address}/nfts/c`,
-        params: getNftsParams({ type, includeFlagged: true })
+        params: getNftsParams({ ...rest, includeFlagged: true })
       }),
 
     getAccountContracts: ({
@@ -339,10 +334,10 @@ export const useAdapter = () => {
 
     getNode: (key: string) => getNodes({ url: `/nodes/${key}` }),
 
-    getNodes: (props: GetNodesType) =>
+    getNodes: (params: GetNodesType) =>
       getNodes({
         url: '/nodes',
-        params: getNodeParams(props)
+        params: getNodeParams(params)
       }),
 
     getNodesCount: ({
@@ -401,10 +396,10 @@ export const useAdapter = () => {
 
     // Providers
 
-    getProviders: (props: GetProvidersType) =>
+    getProviders: (params: GetProvidersType) =>
       getProviders({
         url: '/providers',
-        params: getProviderParams(props)
+        params: getProviderParams(params)
       }),
 
     getProvider: ({ address }: { address: string }) =>
@@ -414,16 +409,16 @@ export const useAdapter = () => {
 
     getToken: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
 
-    getTokens: (props: GetTokensType) =>
+    getTokens: (params: GetTokensType) =>
       provider({
         url: '/tokens',
-        params: getTokensParams(props)
+        params: getTokensParams(params)
       }),
 
-    getTokensCount: ({ search }: GetTokensType) =>
+    getTokensCount: (params: GetTokensType) =>
       provider({
         url: '/tokens/c',
-        params: getTokensParams({ search })
+        params: getTokensParams(params)
       }),
 
     getTokenTransactions: ({
@@ -491,10 +486,10 @@ export const useAdapter = () => {
     getCollection: (collection: string) =>
       provider({ url: `/collections/${collection}` }),
 
-    getCollections: (props: GetNftsType) =>
+    getCollections: (params: GetNftsType) =>
       provider({
         url: '/collections',
-        params: getNftsParams(props)
+        params: getNftsParams(params)
       }),
 
     getCollectionsCount: ({ search, type }: GetNftsType) =>
@@ -507,28 +502,34 @@ export const useAdapter = () => {
 
     getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
 
-    getNfts: (props: GetNftsType) =>
+    getNfts: (params: GetNftsType) =>
       provider({
         url: '/nfts',
-        params: getNftsParams({ ...props, includeFlagged: true })
+        params: getNftsParams({ ...params, includeFlagged: true })
       }),
 
-    getNftsCount: (props: GetNftsType) =>
+    getNftsCount: (params: GetNftsType) =>
       provider({
         url: '/nfts/c',
-        params: getNftsParams({ ...props, includeFlagged: true })
+        params: getNftsParams({ ...params, includeFlagged: true })
       }),
 
-    getNftAccounts: (props: GetNftsType) =>
+    getNftAccounts: ({
+      identifier,
+      ...rest
+    }: GetNftsType & { identifier: string }) =>
       provider({
-        url: `/nfts/${props.identifier}/accounts`,
-        params: getNftsParams({ ...props, includeFlagged: true })
+        url: `/nfts/${identifier}/accounts`,
+        params: getNftsParams({ ...rest, includeFlagged: true })
       }),
 
-    getNftAccountsCount: (props: GetNftsType) =>
+    getNftAccountsCount: ({
+      identifier,
+      ...rest
+    }: GetNftsType & { identifier: string }) =>
       provider({
-        url: `/nfts/${props.identifier}/accounts/count`,
-        params: getNftsParams({ ...props, includeFlagged: true })
+        url: `/nfts/${identifier}/accounts/count`,
+        params: getNftsParams({ ...rest, includeFlagged: true })
       }),
 
     // General

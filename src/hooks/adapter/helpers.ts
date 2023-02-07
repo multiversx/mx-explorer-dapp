@@ -98,21 +98,27 @@ export function getProviderParams({ identity, providers }: GetProvidersType) {
 }
 
 export function getTokensParams({
-  search,
   size,
   type,
+  search,
+  name,
+  identifier,
   identifiers,
   sort,
   order,
-  withUsername
+  withUsername,
+  includeMetaESDT
 }: GetTokensType) {
   const params: AdapterProviderPropsType['params'] = {
-    ...(search !== undefined ? { search } : {}),
     ...(type !== undefined ? { type } : {}),
+    ...(search !== undefined ? { search } : {}),
+    ...(name !== undefined ? { name } : {}),
+    ...(identifier !== undefined ? { identifier } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
     ...(withUsername !== undefined ? { withUsername } : {}),
+    ...(includeMetaESDT !== undefined ? { includeMetaESDT } : {}),
     ...(size !== undefined
       ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
       : {})
@@ -122,26 +128,38 @@ export function getTokensParams({
 }
 
 export function getNftsParams({
-  search,
   size,
-  type,
-  collection,
+  search,
   identifiers,
+  type,
   collections,
+  name,
+  tags,
+  creator,
+  hasUris,
   includeFlagged,
-  sort
+  withSupply,
+  withScamInfo,
+  excludeMetaESDT,
+  source
 }: GetNftsType) {
   const params: AdapterProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
-    ...(collection !== undefined ? { collection } : {}),
-    ...(type !== undefined ? { type } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
+    ...(type !== undefined ? { type } : {}),
     ...(collections !== undefined ? { collections } : {}),
-    ...(sort !== undefined ? { sort } : {}),
+    ...(name !== undefined ? { name } : {}),
+    ...(tags !== undefined ? { tags } : {}),
+    ...(creator !== undefined ? { creator } : {}),
+    ...(source !== undefined ? { source } : {}),
+    ...(hasUris !== undefined ? { hasUris } : {}),
+    ...(includeFlagged !== undefined ? { includeFlagged } : {}),
+    ...(withSupply !== undefined ? { withSupply } : {}),
+    ...(withScamInfo !== undefined ? { withScamInfo } : {}),
+    ...(excludeMetaESDT !== undefined ? { excludeMetaESDT } : {}),
     ...(size !== undefined
       ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
-      : {}),
-    ...(includeFlagged !== undefined ? { includeFlagged } : {})
+      : {})
   };
 
   return params;
