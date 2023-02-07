@@ -41,6 +41,9 @@ export const useURLSearchParams = () => {
   const receiver = searchParams.get('receiver')
     ? String(searchParams.get('receiver'))
     : '';
+  const token = searchParams.get('token')
+    ? String(searchParams.get('token'))
+    : '';
 
   let senderShard = searchParams.get('senderShard')
     ? String(searchParams.get('senderShard'))
@@ -67,6 +70,7 @@ export const useURLSearchParams = () => {
     status: checkStatus(status),
     miniBlockHash,
     search,
-    method
+    method,
+    token
   };
 };

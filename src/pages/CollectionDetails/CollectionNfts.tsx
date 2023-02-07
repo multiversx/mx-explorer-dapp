@@ -24,7 +24,7 @@ export const CollectionNfts = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { collectionState } = useSelector(collectionSelector);
   const { type } = collectionState;
-  const { getNfts, getNftsCount } = useAdapter();
+  const { getCollectionNfts, getCollectionNftsCount } = useAdapter();
   const { page } = useURLSearchParams();
 
   const { getQueryObject, size } = useGetFilters();
@@ -39,8 +39,8 @@ export const CollectionNfts = () => {
     if (ref.current !== null) {
       const queryObject = getQueryObject();
       Promise.all([
-        getNfts({ ...queryObject, size, collection }),
-        getNftsCount({ ...queryObject, collection })
+        getCollectionNfts({ ...queryObject, size, collection }),
+        getCollectionNftsCount({ ...queryObject, collection })
       ]).then(([nftsData, count]) => {
         if (nftsData.success && count.success) {
           setCollectionNfts(nftsData.data);

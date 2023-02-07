@@ -1,5 +1,3 @@
-import { NftEnumType } from './general.types';
-
 export interface GetBlocksType {
   size?: number;
   shard?: number;
@@ -9,6 +7,7 @@ export interface GetBlocksType {
 }
 
 export interface GetTokensType {
+  fields?: string;
   size?: number;
   type?: string;
   search?: string;
@@ -25,7 +24,7 @@ export interface GetNftsType {
   size?: number;
   search?: string;
   identifiers?: string;
-  type?: NftEnumType;
+  type?: string;
   collections?: string;
   name?: string;
   tags?: string;
@@ -39,6 +38,7 @@ export interface GetNftsType {
 }
 
 export interface GetCollectionsType {
+  fields?: string;
   size?: number;
   search?: string;
   identifiers?: string;
@@ -79,6 +79,7 @@ export interface GetTransactionsType {
   status?: string;
   miniBlockHash?: string;
   search?: string;
+  token?: string;
   withUsername?: boolean;
 }
 

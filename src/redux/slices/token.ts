@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TokenSliceType } from 'types/token.types';
+import { TokenSliceType, TokenTypeEnum } from 'types/token.types';
 
 export const getInitialTokenState = (): TokenSliceType => {
   return {
     token: {
+      type: TokenTypeEnum.FungibleESDT,
       identifier: '',
       ticker: '',
       name: '',

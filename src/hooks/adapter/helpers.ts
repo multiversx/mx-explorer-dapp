@@ -31,6 +31,7 @@ export function getTransactionsParams({
   status,
   miniBlockHash,
   search,
+  token,
   withUsername
 }: GetTransactionsType) {
   const params: AdapterProviderPropsType['params'] = {
@@ -47,6 +48,7 @@ export function getTransactionsParams({
     ...(status ? { status } : {}),
     ...(miniBlockHash ? { miniBlockHash } : {}),
     ...(search ? { search } : {}),
+    ...(token ? { token } : {}),
     ...(withUsername !== undefined ? { withUsername } : {})
   };
 
@@ -99,6 +101,7 @@ export function getProviderParams({ identity, providers }: GetProvidersType) {
 }
 
 export function getTokensParams({
+  fields,
   size,
   type,
   search,
@@ -111,6 +114,7 @@ export function getTokensParams({
   includeMetaESDT
 }: GetTokensType) {
   const params: AdapterProviderPropsType['params'] = {
+    ...(fields !== undefined ? { fields } : {}),
     ...(type !== undefined ? { type } : {}),
     ...(search !== undefined ? { search } : {}),
     ...(name !== undefined ? { name } : {}),
@@ -129,6 +133,7 @@ export function getTokensParams({
 }
 
 export function getCollectionsParams({
+  fields,
   size,
   search,
   identifiers,
@@ -137,6 +142,7 @@ export function getCollectionsParams({
   excludeMetaESDT
 }: GetCollectionsType) {
   const params: AdapterProviderPropsType['params'] = {
+    ...(fields !== undefined ? { fields } : {}),
     ...(search !== undefined ? { search } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
     ...(type !== undefined ? { type } : {}),
