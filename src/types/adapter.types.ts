@@ -38,6 +38,17 @@ export interface GetNftsType {
   source?: string;
 }
 
+export interface GetCollectionsType {
+  size?: number;
+  search?: string;
+  identifiers?: string;
+  type?: string;
+  before?: string;
+  after?: string;
+  sort?: string;
+  excludeMetaESDT?: boolean;
+}
+
 export interface GetNodesType {
   search?: string;
   issues?: string;
