@@ -24,8 +24,7 @@ import {
   useShowCustomStats,
   useShowGlobalStats,
   useShowNodesStats,
-  useShowTransactionStats,
-  useCollapseHero
+  useShowTransactionStats
 } from './hooks';
 import { getCustomPageName } from '../../helpers';
 
@@ -46,18 +45,11 @@ export const Hero = () => {
   const showGlobalStats = useShowGlobalStats();
   const showNodesStats = useShowNodesStats();
   const showTransactionsStats = useShowTransactionStats() && isMainnet;
-  const heroCollapsed = useCollapseHero();
-
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(heroCollapsed);
 
   const pathArray = pathname.split('/');
   const basePage =
     activeNetworkId === defaultNetworkId ? pathArray?.[1] : pathArray?.[2];
   const pageName = getCustomPageName({ pathname, basePage });
-
-  useEffect(() => {
-    setIsCollapsed(heroCollapsed);
-  }, [heroCollapsed]);
 
   let heroTypeClassName = '';
   if (showTransactionsStats) {
@@ -84,9 +76,7 @@ export const Hero = () => {
 
       {showGlobalStats && (
         <div
-          className={`page-hero card card-lg card-black mb-3 ${
-            isCollapsed ? 'collapsed' : ''
-          } ${heroTypeClassName}`}
+          className={`page-hero card card-lg card-black mb-3 ${heroTypeClassName}`}
         >
           <div className='card-header'>
             <h2 className='title mb-0 text-capitalize'>
@@ -132,14 +122,6 @@ export const Hero = () => {
                 </div>
               )}
             </>
-          )}
-          {heroCollapsed && (
-            <FontAwesomeIcon
-              icon={faAngleUp}
-              size='lg'
-              className='indicator'
-              onClick={() => setIsCollapsed((state) => !state)}
-            />
           )}
         </div>
       )}
