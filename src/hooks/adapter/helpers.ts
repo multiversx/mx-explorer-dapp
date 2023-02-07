@@ -1,69 +1,12 @@
 import { PAGE_SIZE } from 'appConstants';
-
-export interface GetNodesType {
-  search?: string;
-  issues?: string;
-  online?: boolean;
-  type?: string;
-  shard?: string;
-  status?: string;
-  count?: boolean;
-  size?: number;
-  identity?: string;
-  sort?: string;
-  order?: string;
-  pagination?: boolean;
-  provider?: string;
-  fullHistory?: string;
-}
-
-export interface GetProvidersType {
-  identity?: string;
-  providers?: string;
-  fields?: string;
-}
-
-export interface ProviderPropsType {
-  baseUrl: string;
-  proxyUrl?: string;
-  metaChainShardId?: number;
-  url?: string;
-  params?: {
-    nonce?: number;
-    shard?: number;
-    epoch?: number;
-    proposer?: string;
-    miniBlockHash?: string;
-    sender?: string;
-    receiver?: string;
-    condition?: string;
-    senderShard?: number;
-    receiverShard?: number;
-    signersIndexes?: number;
-    round?: number;
-    from?: number;
-    size?: number;
-    search?: string;
-    issues?: string;
-    status?: string;
-    type?: string;
-    validator?: string;
-    fields?: any;
-    identity?: string;
-    identities?: string;
-    provider?: string;
-    sort?: string;
-    order?: string;
-    online?: boolean;
-    collection?: string;
-    identifier?: string;
-    includeFlagged?: boolean;
-    fullHistory?: string;
-    withUsername?: boolean;
-  };
-  timeout: number;
-  timestamp?: number;
-}
+import {
+  AdapterProviderPropsType,
+  GetTransactionsType,
+  GetNodesType,
+  GetProvidersType,
+  GetTokensType,
+  GetNftsType
+} from 'types/adapter.types';
 
 export const getAccountParams = (address?: string) =>
   address
@@ -73,22 +16,6 @@ export const getAccountParams = (address?: string) =>
         condition: 'should'
       }
     : {};
-
-export interface TransactionsParamsType {
-  size?: number;
-  address?: string;
-  senderShard?: number;
-  receiverShard?: number;
-  sender?: string;
-  receiver?: string;
-  method?: string;
-  before?: number;
-  after?: number;
-  status?: string;
-  miniBlockHash?: string;
-  search?: string;
-  withUsername?: boolean;
-}
 
 export function getTransactionsParams({
   address = '',
@@ -104,8 +31,8 @@ export function getTransactionsParams({
   miniBlockHash,
   search,
   withUsername
-}: TransactionsParamsType) {
-  const params: ProviderPropsType['params'] = {
+}: GetTransactionsType) {
+  const params: AdapterProviderPropsType['params'] = {
     from: (size - 1) * PAGE_SIZE,
     size: PAGE_SIZE,
     ...getAccountParams(address),
@@ -140,7 +67,7 @@ export function getNodeParams({
   provider,
   fullHistory
 }: GetNodesType) {
-  const params: ProviderPropsType['params'] = {
+  const params: AdapterProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
     ...(type !== undefined ? { type } : {}),
     ...(status !== undefined ? { status } : {}),
@@ -163,14 +90,14 @@ export function getNodeParams({
 }
 
 export function getProviderParams({ identity, providers }: GetProvidersType) {
-  const params: ProviderPropsType['params'] = {
+  const params: AdapterProviderPropsType['params'] = {
     ...(identity !== undefined ? { identity } : {}),
     ...(providers !== undefined ? { providers } : {})
   };
   return params;
 }
 
-export function getTokensParam({
+export function getTokensParams({
   search,
   size,
   type,
@@ -179,7 +106,7 @@ export function getTokensParam({
   order,
   withUsername
 }: GetTokensType) {
-  const params: ProviderPropsType['params'] = {
+  const params: AdapterProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
     ...(type !== undefined ? { type } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
@@ -194,7 +121,7 @@ export function getTokensParam({
   return params;
 }
 
-export function getNftsParam({
+export function getNftsParams({
   search,
   size,
   type,
@@ -204,7 +131,7 @@ export function getNftsParam({
   includeFlagged,
   sort
 }: GetNftsType) {
-  const params: ProviderPropsType['params'] = {
+  const params: AdapterProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
     ...(collection !== undefined ? { collection } : {}),
     ...(type !== undefined ? { type } : {}),
@@ -220,7 +147,7 @@ export function getNftsParam({
   return params;
 }
 
-export const getShardAndEpochParam = (
+export const getShardAndEpochParams = (
   shard: number | undefined,
   epoch: number | undefined
 ) => {
@@ -236,14 +163,6 @@ export const getShardAndEpochParam = (
 
   return result;
 };
-
-export interface GetBlocksType {
-  size?: number;
-  shard?: number;
-  epoch?: number;
-  proposer?: string;
-  withProposerIdentity?: boolean;
-}
 
 export function processBlocks(blocks: any[]) {
   let min = blocks && blocks.length > 0 ? blocks[0].nonce : 0;
@@ -267,29 +186,4 @@ export function processBlocks(blocks: any[]) {
     startBlockNr,
     endBlockNr
   };
-}
-
-export type ProviderType = (
-  props: ProviderPropsType & { url: string }
-) => Promise<any>;
-
-export interface GetTokensType {
-  search?: string;
-  size?: number;
-  type?: string;
-  identifiers?: string;
-  sort?: string;
-  order?: string;
-  withUsername?: boolean;
-}
-export interface GetNftsType {
-  collection?: string;
-  identifier?: string;
-  search?: string;
-  size?: number;
-  type?: string;
-  collections?: string;
-  identifiers?: string;
-  includeFlagged?: boolean;
-  sort?: string;
 }

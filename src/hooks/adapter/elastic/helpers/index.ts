@@ -1,8 +1,13 @@
 import axios from 'axios';
+
 import { bech32 } from 'helpers';
+import {
+  AdapterProviderType,
+  AdapterProviderPropsType
+} from 'types/adapter.types';
+
 import { getShardOfAddress } from './computeShard';
 import { getNodes } from './getNodes';
-import { ProviderType, ProviderPropsType } from '../../helpers';
 
 const createMustQuery = (value: any, boolQuery: any) => {
   const firstKey = Object.keys(value)[0];
@@ -94,7 +99,7 @@ const wrapper = async ({
   url,
   params = {},
   timeout
-}: ProviderPropsType & { url: string }) => {
+}: AdapterProviderPropsType & { url: string }) => {
   const elasticUrl = () => baseUrl;
   const proxyUrl = () => nodeUrl;
   const [, collection, hash] = url.split('/');
@@ -520,7 +525,7 @@ const wrapper = async ({
   return results;
 };
 
-export const elastic: ProviderType = async ({
+export const elastic: AdapterProviderType = async ({
   baseUrl,
   url,
   params,

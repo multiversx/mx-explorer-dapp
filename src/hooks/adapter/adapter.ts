@@ -1,18 +1,21 @@
 import { PAGE_SIZE } from 'appConstants';
 import {
   GetBlocksType,
-  processBlocks,
-  getShardAndEpochParam,
-  getTransactionsParams,
-  TransactionsParamsType,
+  GetTransactionsType,
   GetNodesType,
-  getNodeParams,
   GetProvidersType,
-  getProviderParams,
   GetNftsType,
-  GetTokensType,
-  getTokensParam,
-  getNftsParam
+  GetTokensType
+} from 'types/adapter.types';
+
+import {
+  processBlocks,
+  getShardAndEpochParams,
+  getTransactionsParams,
+  getNodeParams,
+  getProviderParams,
+  getTokensParams,
+  getNftsParams
 } from './helpers';
 import { useAdapterConfig } from './useAdapterConfig';
 
@@ -32,8 +35,6 @@ export const useAdapter = () => {
   return {
     /* Homepage */
 
-    getStats,
-
     getLatestBlocks: ({ size = 5 }: GetBlocksType) =>
       provider({
         url: '/blocks',
@@ -52,10 +53,7 @@ export const useAdapter = () => {
           }
         }
       }),
-    getLatestTransactions: ({
-      size = 5,
-      withUsername
-    }: TransactionsParamsType) =>
+    getLatestTransactions: ({ size = 5, withUsername }: GetTransactionsType) =>
       provider({
         url: '/transactions',
         params: {
@@ -132,7 +130,7 @@ export const useAdapter = () => {
             size: PAGE_SIZE,
             ...(proposer ? { proposer } : {}),
             ...(withProposerIdentity ? { withProposerIdentity } : {}),
-            ...getShardAndEpochParam(shard, epoch),
+            ...getShardAndEpochParams(shard, epoch),
             fields: [
               'hash',
               'nonce',
@@ -168,84 +166,74 @@ export const useAdapter = () => {
     getBlocksCount: ({ shard, epoch }: GetBlocksType) =>
       provider({
         url: '/blocks/c',
-        params: getShardAndEpochParam(shard, epoch)
+        params: getShardAndEpochParams(shard, epoch)
       }),
-
-    /* Transaction */
-
-    getTransaction: (transactionId: string) =>
-      provider({ url: `/transactions/${transactionId}` }),
 
     /* Miniblocks */
 
     getMiniBlock: (miniBlockHash: string) =>
       provider({ url: `/miniblocks/${miniBlockHash}` }),
 
-    getMiniBlockTransactions: ({
-      miniBlockHash,
-      size,
-      withUsername
-    }: {
-      miniBlockHash: string;
-      size: number;
-      withUsername?: boolean;
-    }) =>
-      provider({
-        url: '/transactions',
-        params: {
-          from: (size - 1) * PAGE_SIZE,
-          size: PAGE_SIZE,
-          miniBlockHash,
-          withUsername
-        }
-      }),
-
-    getMiniBlockTransactionsCount: (miniBlockHash: string) =>
-      provider({ url: '/transactions/c', params: { miniBlockHash } }),
-
-    getMiniBlockScResults: ({
-      miniBlockHash,
-      size
-    }: {
-      miniBlockHash: string;
-      size: number;
-    }) =>
-      provider({
-        url: '/sc-results',
-        params: {
-          from: (size - 1) * PAGE_SIZE,
-          size: PAGE_SIZE,
-          miniBlockHash
-        }
-      }),
-
     /* Transactions */
 
-    getTransactions: (params: TransactionsParamsType) =>
+    getTransaction: (transactionId: string) =>
+      provider({ url: `/transactions/${transactionId}` }),
+
+    getTransactions: (params: GetTransactionsType) =>
       provider({
         url: '/transactions',
         params: getTransactionsParams(params)
       }),
 
-    getTransactionsCount: (params: TransactionsParamsType) =>
+    getTransactionsCount: (params: GetTransactionsType) =>
       provider({
         url: '/transactions/c',
         params: getTransactionsParams(params)
       }),
 
-    getTransfers: (params: TransactionsParamsType) =>
+    getTransfers: (params: GetTransactionsType) =>
       provider({
         url: '/transfers',
         params: getTransactionsParams(params)
       }),
 
-    getTransfersCount: (params: TransactionsParamsType) =>
+    getTransfersCount: (params: GetTransactionsType) =>
       provider({
         url: '/transfers/c',
         params: getTransactionsParams(params)
       }),
 
-    getAccountTransfers: ({ address, ...rest }: TransactionsParamsType) =>
+    /* SC Results */
+
+    getScResult: (hash: string) => provider({ url: `/sc-results/${hash}` }),
+
+    getScResults: (size = 1) =>
+      provider({
+        url: '/sc-results',
+        params: {
+          from: (size - 1) * PAGE_SIZE,
+          size: PAGE_SIZE
+        }
+      }),
+
+    getScResultsCount: () => provider({ url: '/sc-results/c' }),
+
+    /* Account */
+
+    getAccount: (address: string) => provider({ url: `/accounts/${address}` }),
+
+    getAccounts: (size = 1) =>
+      provider({
+        url: '/accounts',
+        params: {
+          from: (size - 1) * PAGE_SIZE,
+          size: PAGE_SIZE
+        }
+      }),
+
+    getAccountsCount: () => provider({ url: '/accounts/c' }),
+
+    getAccountTransfers: ({ address, ...rest }: GetTransactionsType) =>
       provider({
         url: `/accounts/${address}/transfers`,
         params: getTransactionsParams({
@@ -253,12 +241,50 @@ export const useAdapter = () => {
         })
       }),
 
-    getAccountTransfersCount: ({ address, ...rest }: TransactionsParamsType) =>
+    getAccountTransfersCount: ({ address, ...rest }: GetTransactionsType) =>
       provider({
         url: `/accounts/${address}/transfers/c`,
         params: getTransactionsParams({
           ...rest
         })
+      }),
+
+    getAccountTokens: ({ address, size }: { address: string; size: number }) =>
+      provider({
+        url: `/accounts/${address}/tokens`,
+        params: {
+          from: (size - 1) * PAGE_SIZE,
+          size: PAGE_SIZE
+        }
+      }),
+
+    getAccountTokensCount: (address: string) =>
+      provider({ url: `/accounts/${address}/tokens/c` }),
+
+    getAccountNfts: ({
+      address,
+      size,
+      type
+    }: {
+      address: string;
+      size: number;
+      type?: string;
+    }) =>
+      provider({
+        url: `/accounts/${address}/nfts`,
+        params: getNftsParams({ size, type, includeFlagged: true })
+      }),
+
+    getAccountNftsCount: ({
+      address,
+      type
+    }: {
+      address: string;
+      type?: string;
+    }) =>
+      provider({
+        url: `/accounts/${address}/nfts/c`,
+        params: getNftsParams({ type, includeFlagged: true })
       }),
 
     getAccountContracts: ({
@@ -298,20 +324,7 @@ export const useAdapter = () => {
         url: `/accounts/${address}/verification`
       }),
 
-    getScResult: (hash: string) => provider({ url: `/sc-results/${hash}` }),
-
-    getScResults: (size = 1) =>
-      provider({
-        url: '/sc-results',
-        params: {
-          from: (size - 1) * PAGE_SIZE,
-          size: PAGE_SIZE
-        }
-      }),
-
-    getScResultsCount: () => provider({ url: '/sc-results/c' }),
-
-    /* Stake */
+    /* Account Stake */
 
     getAccountDelegation: (address: string) =>
       provider({ url: `/accounts/${address}/delegation` }),
@@ -323,8 +336,6 @@ export const useAdapter = () => {
       provider({ url: `/accounts/${address}/stake` }),
 
     /* Validators */
-
-    getShards,
 
     getNode: (key: string) => getNodes({ url: `/nodes/${key}` }),
 
@@ -388,58 +399,37 @@ export const useAdapter = () => {
         }
       }),
 
-    getAccount: (address: string) => provider({ url: `/accounts/${address}` }),
+    // Providers
 
-    getAccounts: (size = 1) =>
-      provider({
-        url: '/accounts',
-        params: {
-          from: (size - 1) * PAGE_SIZE,
-          size: PAGE_SIZE
-        }
+    getProviders: (props: GetProvidersType) =>
+      getProviders({
+        url: '/providers',
+        params: getProviderParams(props)
       }),
 
-    getUsername: (username: string) =>
-      provider({
-        url: `/usernames/${username}`
-      }),
-
-    getAccountsCount: () => provider({ url: '/accounts/c' }),
-
-    getGlobalStake: () => provider({ url: '/stake' }),
+    getProvider: ({ address }: { address: string }) =>
+      getProvider({ url: `/providers/${address}` }),
 
     // Tokens
 
-    getAccountTokens: ({ address, size }: { address: string; size: number }) =>
-      provider({
-        url: `/accounts/${address}/tokens`,
-        params: {
-          from: (size - 1) * PAGE_SIZE,
-          size: PAGE_SIZE
-        }
-      }),
-
-    getAccountTokensCount: (address: string) =>
-      provider({ url: `/accounts/${address}/tokens/c` }),
+    getToken: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
 
     getTokens: (props: GetTokensType) =>
       provider({
         url: '/tokens',
-        params: getTokensParam(props)
+        params: getTokensParams(props)
       }),
 
     getTokensCount: ({ search }: GetTokensType) =>
       provider({
         url: '/tokens/c',
-        params: getTokensParam({ search })
+        params: getTokensParams({ search })
       }),
-
-    getToken: (tokenId: string) => provider({ url: `/tokens/${tokenId}` }),
 
     getTokenTransactions: ({
       tokenId,
       ...rest
-    }: TransactionsParamsType & { tokenId: string }) =>
+    }: GetTransactionsType & { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/transactions`,
         params: getTransactionsParams({
@@ -450,7 +440,7 @@ export const useAdapter = () => {
     getTokenTransactionsCount: ({
       tokenId,
       ...rest
-    }: TransactionsParamsType & { tokenId: string }) =>
+    }: GetTransactionsType & { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/transactions/c`,
         params: getTransactionsParams({
@@ -461,7 +451,7 @@ export const useAdapter = () => {
     getTokenTransfers: ({
       tokenId,
       ...rest
-    }: TransactionsParamsType & { tokenId: string }) =>
+    }: GetTransactionsType & { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/transfers`,
         params: getTransactionsParams({
@@ -472,7 +462,7 @@ export const useAdapter = () => {
     getTokenTransfersCount: ({
       tokenId,
       ...rest
-    }: TransactionsParamsType & { tokenId: string }) =>
+    }: GetTransactionsType & { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/transfers/c`,
         params: getTransactionsParams({
@@ -483,7 +473,7 @@ export const useAdapter = () => {
     getTokenAccounts: ({ size, tokenId }: { size: number; tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/accounts`,
-        params: getTokensParam({ size })
+        params: getTokensParams({ size })
       }),
 
     getTokenAccountsCount: ({ tokenId }: { tokenId: string }) =>
@@ -496,103 +486,79 @@ export const useAdapter = () => {
         url: `/tokens/${tokenId}/supply`
       }),
 
-    // Nfts
+    // Collections
 
-    getAccountNfts: ({
-      address,
-      size,
-      type
-    }: {
-      address: string;
-      size: number;
-      type?: string;
-    }) =>
-      provider({
-        url: `/accounts/${address}/nfts`,
-        params: getNftsParam({ size, type, includeFlagged: true })
-      }),
-
-    getAccountNftsCount: ({
-      address,
-      type
-    }: {
-      address: string;
-      type?: string;
-    }) =>
-      provider({
-        url: `/accounts/${address}/nfts/c`,
-        params: getNftsParam({ type, includeFlagged: true })
-      }),
+    getCollection: (collection: string) =>
+      provider({ url: `/collections/${collection}` }),
 
     getCollections: (props: GetNftsType) =>
       provider({
         url: '/collections',
-        params: getNftsParam(props)
+        params: getNftsParams(props)
       }),
 
     getCollectionsCount: ({ search, type }: GetNftsType) =>
       provider({
         url: '/collections/c',
-        params: getNftsParam({ search, type })
+        params: getNftsParams({ search, type })
       }),
 
-    getCollection: (collection: string) =>
-      provider({ url: `/collections/${collection}` }),
+    // Nfts
+
+    getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
 
     getNfts: (props: GetNftsType) =>
       provider({
         url: '/nfts',
-        params: getNftsParam({ ...props, includeFlagged: true })
+        params: getNftsParams({ ...props, includeFlagged: true })
       }),
 
     getNftsCount: (props: GetNftsType) =>
       provider({
         url: '/nfts/c',
-        params: getNftsParam({ ...props, includeFlagged: true })
+        params: getNftsParams({ ...props, includeFlagged: true })
       }),
 
     getNftAccounts: (props: GetNftsType) =>
       provider({
         url: `/nfts/${props.identifier}/accounts`,
-        params: getNftsParam({ ...props, includeFlagged: true })
+        params: getNftsParams({ ...props, includeFlagged: true })
       }),
 
     getNftAccountsCount: (props: GetNftsType) =>
       provider({
         url: `/nfts/${props.identifier}/accounts/count`,
-        params: getNftsParam({ ...props, includeFlagged: true })
+        params: getNftsParams({ ...props, includeFlagged: true })
       }),
 
-    getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
+    // General
+    getStats,
+    getShards,
 
-    // Providers
-
-    getProviders: (props: GetProvidersType) =>
-      getProviders({
-        url: '/providers',
-        params: getProviderParams(props)
-      }),
-
-    getProvider: ({ address }: { address: string }) =>
-      getProvider({ url: `/providers/${address}` }),
+    getGlobalStake: () => provider({ url: '/stake' }),
 
     getEconomics: () => getEconomics({ url: '/economics' }),
 
-    // Growth Charts
-
-    getAnalyticsChartList: () =>
-      provider({ baseUrl: growthApi, url: '/explorer/analytics' }),
-
-    getAnalyticsChart: (url: string) => provider({ baseUrl: growthApi, url }),
-
-    getGrowthWidget: (url: string) =>
-      provider({ baseUrl: `${growthApi}/explorer/widgets`, url }),
+    getUsername: (username: string) =>
+      provider({
+        url: `/usernames/${username}`
+      }),
 
     getMarkers: () =>
       provider({
         baseUrl: '***REMOVED***',
         url: '/markers'
       }),
+
+    // Growth Charts
+
+    getAnalyticsChart: (url: string) => provider({ baseUrl: growthApi, url }),
+
+    getAnalyticsChartList: () =>
+      provider({ baseUrl: growthApi, url: '/explorer/analytics' }),
+
+    getGrowthWidget: (url: string) =>
+      provider({ baseUrl: `${growthApi}/explorer/widgets`, url }),
 
     getGrowthHeaders: (url: string) =>
       provider({ baseUrl: `${growthApi}/explorer/headers`, url })

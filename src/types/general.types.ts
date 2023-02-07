@@ -135,7 +135,8 @@ export enum TxFiltersEnum {
   before = 'before',
   after = 'after',
   status = 'status',
-  search = 'search'
+  search = 'search',
+  token = 'token'
 }
 
 export interface TransactionTokensType {

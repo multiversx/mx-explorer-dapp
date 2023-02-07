@@ -1,13 +1,17 @@
 import axios from 'axios';
-import { ProviderType, ProviderPropsType } from '../helpers';
 
-const api: ProviderType = ({ baseUrl, url, params, timeout }) => {
+import {
+  AdapterProviderType,
+  AdapterProviderPropsType
+} from 'types/adapter.types';
+
+const api: AdapterProviderType = ({ baseUrl, url, params, timeout }) => {
   return axios.get(`${baseUrl}${url}`, { params, timeout });
 };
 
 export const apiAdapter = {
   provider: api,
-  getStats: ({ baseUrl, timeout }: ProviderPropsType) => {
+  getStats: ({ baseUrl, timeout }: AdapterProviderPropsType) => {
     return api({
       baseUrl,
       url: '/stats',
@@ -15,14 +19,14 @@ export const apiAdapter = {
     });
   },
   getNodes: api,
-  getNodesVersions: ({ baseUrl, timeout }: ProviderPropsType) => {
+  getNodesVersions: ({ baseUrl, timeout }: AdapterProviderPropsType) => {
     return api({
       baseUrl,
       url: '/nodes/versions',
       timeout
     });
   },
-  getShards: ({ baseUrl, timeout }: ProviderPropsType) => {
+  getShards: ({ baseUrl, timeout }: AdapterProviderPropsType) => {
     return api({
       baseUrl,
       url: '/shards',
