@@ -120,40 +120,21 @@ export const usePageStats = () => {
 
   const pageStats = useMemo(() => {
     switch (true) {
-      case activeRoute(blocksRoutes.miniBlockDetails):
       case activeRoute(blocksRoutes.blocks):
-      case activeRoute(blocksRoutes.blocksDetails):
         return {
           title: headersBlocksTitle,
           data: headersBlocksData
         };
 
       case activeRoute(accountsRoutes.accounts):
-      case activeRoute(accountsRoutes.accountDetails):
-      case activeRoute(accountsRoutes.oldAccountDetails):
-      case activeRoute(accountsRoutes.accountTokens):
-      case activeRoute(accountsRoutes.accountNfts):
-      case activeRoute(accountsRoutes.accountContracts):
-      case activeRoute(accountsRoutes.accountStaking):
-      case activeRoute(accountsRoutes.accountAnalytics):
-      case activeRoute(accountsRoutes.accountCode):
-      case activeRoute(accountsRoutes.accountCodeConstructor):
-      case activeRoute(accountsRoutes.accountCodeEndpoints):
-      case activeRoute(accountsRoutes.accountCodeEvents):
-      case activeRoute(accountsRoutes.accountCodeTypes):
         return {
           title: headersAccountsTitle,
           data: headersAccountsData
         };
 
       case activeRoute(tokensRoutes.tokens):
-      case activeRoute(tokensRoutes.tokenDetails):
-      case activeRoute(tokensRoutes.tokenDetailsAccounts):
-      case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
-      case activeRoute(tokensRoutes.tokenDetailsRoles):
       case activeRoute(tokensRoutes.tokensMeta):
       case activeRoute(tokensRoutes.tokensMetaEsdt):
-      case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
         return {
           title: headersTokensTitle,
           data: headersTokensData
@@ -162,9 +143,6 @@ export const usePageStats = () => {
       case activeRoute(collectionRoutes.collections):
       case activeRoute(collectionRoutes.collectionsNft):
       case activeRoute(collectionRoutes.collectionsSft):
-      case activeRoute(collectionRoutes.collectionDetails):
-      case activeRoute(collectionRoutes.collectionDetailsRoles):
-      case activeRoute(nftRoutes.nftDetails):
         return {
           title: headerCollectionsTitle,
           data: headersCollectionsData

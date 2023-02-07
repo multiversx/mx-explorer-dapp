@@ -32,7 +32,8 @@ export const ContractEndpoint = ({
         {endpoint?.mutability && (
           <span className='badge badge-outline badge-outline-grey ms-2 cursor-text'>
             <FontAwesomeIcon icon={faSquarePen} className='me-1 text-primary' />{' '}
-            {endpoint.mutability}
+            {endpoint.mutability === 'mutable' ? 'endpoint' : ''}
+            {endpoint.mutability === 'readonly' ? 'view' : ''}
           </span>
         )}
         {endpoint?.docs && (
