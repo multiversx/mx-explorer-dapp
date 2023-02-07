@@ -580,21 +580,6 @@ export const useAdapter = () => {
 
     // Growth Charts
 
-    getEgldPriceHistory: () =>
-      provider({ baseUrl: growthApi, url: '/charts?types=price' }),
-    getEgldMarketCapHistory: () =>
-      provider({ baseUrl: growthApi, url: '/charts?types=market-cap' }),
-    getTotalStakedHistory: () =>
-      provider({ baseUrl: growthApi, url: '/charts?types=staking-metrics' }),
-    getUsersStaking: () =>
-      provider({ baseUrl: growthApi, url: '/charts?types=staking-metric' }),
-    getTransactionsHistory: () =>
-      provider({
-        baseUrl: growthApi,
-        url: '/charts?types=transaction-metrics'
-      }),
-    getAccountsHistory: () =>
-      provider({ baseUrl: growthApi, url: '/charts?types=address-metrics' }),
     getAnalyticsChartList: () =>
       provider({ baseUrl: growthApi, url: '/explorer/analytics' }),
 
