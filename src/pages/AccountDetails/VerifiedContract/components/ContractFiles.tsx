@@ -44,7 +44,7 @@ export const ContractFiles = ({
               entry={entry}
               index={index}
               totalEntries={filteredEntries.length}
-              isOpen={index === 0}
+              isOpen={index === 0 || selectedFile}
             />
           </div>
         );
