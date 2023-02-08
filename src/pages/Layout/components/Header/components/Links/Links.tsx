@@ -16,7 +16,6 @@ import {
   analyticsRoutes
 } from 'routes';
 
-import styles from './styles.module.scss';
 import { LinksPropsType } from './types';
 
 export const Links = (props: LinksPropsType) => {
@@ -124,14 +123,14 @@ export const Links = (props: LinksPropsType) => {
   ].filter((link) => link.show);
 
   return (
-    <div className={styles.links}>
+    <div className='links'>
       {links.map((link) => (
         <NetworkLink
           key={link.label}
           to={link.to}
           onClick={onClick}
-          className={classNames(styles.link, {
-            [styles.active]: link.activeRoutes.some((item) => activeRoute(item))
+          className={classNames('link', {
+            active: link.activeRoutes.some((item) => activeRoute(item))
           })}
         >
           {link.label}

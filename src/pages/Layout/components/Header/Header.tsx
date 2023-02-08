@@ -9,63 +9,65 @@ import { ReactComponent as MultiversXLogo } from 'assets/img/logo-full.svg';
 import { Applications } from './components/Applications';
 import { Links } from './components/Links';
 import { Switcher } from './components/Switcher';
-import styles from './styles.module.scss';
 import { HeaderPropsType } from './types';
 
 export const Header = (props: HeaderPropsType) => {
   const { onExpand } = props;
 
-  const [menu, setMenu] = useState(false);
-  const [applications, setApplications] = useState(false);
+  const [menuActive, setMenuActive] = useState(false);
+  const [applicationsActive, setApplicationsActive] = useState(false);
 
   const onMenuToggle = (event: MouseEvent) => {
     if (window.innerWidth <= 768) {
-      onExpand(!menu);
+      onExpand(!menuActive);
     }
 
     event.preventDefault();
-    setApplications(false);
-    setTimeout(() => setMenu((menu) => !menu), applications ? 400 : 0);
+    setApplicationsActive(false);
+    setTimeout(
+      () => setMenuActive((menuActive) => !menuActive),
+      applicationsActive ? 400 : 0
+    );
   };
 
   const onApplicationsToggle = (event: MouseEvent) => {
     event.preventDefault();
-    setMenu(false);
+    setMenuActive(false);
 
     setTimeout(
       () => {
         if (window.innerWidth <= 768) {
-          onExpand(!applications);
+          onExpand(!applicationsActive);
         }
 
-        setApplications((applications) => !applications);
+        setApplicationsActive((applicationsActive) => !applicationsActive);
       },
-      menu ? 400 : 0
+      menuActive ? 400 : 0
     );
   };
 
   const onApplicationsClose = () => {
-    setApplications(false);
+    setApplicationsActive(false);
     onExpand(false);
   };
 
   const onMenuClose = () => {
-    setMenu(false);
+    setMenuActive(false);
     onExpand(false);
   };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.wrapper}>
-        <Link to='/' className={styles.logo}>
+    <header className='header'>
+      <div className='wrapper'>
+        <Link to='/' className='logo'>
           <MultiversXLogo />
         </Link>
       </div>
 
-      <div className={styles.burger} onClick={onMenuToggle}>
-        <div className={classNames(styles.bars, { [styles.active]: menu })}>
+      <div className='burger' onClick={onMenuToggle}>
+        <div className={classNames('bars', { active: menuActive })}>
           {Array.from({ length: 3 }).map((item, index) => (
-            <span className={styles.bar} key={`bar-${index}`} />
+            <span className='bar' key={`bar-${index}`} />
           ))}
         </div>
       </div>
@@ -74,25 +76,25 @@ export const Header = (props: HeaderPropsType) => {
         tabIndex={0}
         onClick={onApplicationsToggle}
         onBlur={() => setTimeout(onApplicationsClose, 100)}
-        className={classNames(styles.matrix, {
-          [styles.active]: applications
+        className={classNames('matrix', {
+          active: applicationsActive
         })}
       >
-        <FontAwesomeIcon icon={faGrid} className={styles.desktop} />
-        <FontAwesomeIcon icon={faGrid2} className={styles.mobile} />
+        <FontAwesomeIcon icon={faGrid} className='desktop' />
+        <FontAwesomeIcon icon={faGrid2} className='mobile' />
       </div>
 
       <div
-        className={classNames(styles.applications, {
-          [styles.active]: applications
+        className={classNames('applicationswrapper', {
+          active: applicationsActive
         })}
       >
         <Applications onClick={onApplicationsClose} />
       </div>
 
       <div
-        className={classNames(styles.menu, {
-          [styles.active]: menu
+        className={classNames('menuwrapper', {
+          active: menuActive
         })}
       >
         <Links onClick={onMenuClose} />
