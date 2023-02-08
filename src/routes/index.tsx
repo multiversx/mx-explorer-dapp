@@ -62,7 +62,7 @@ export const blocksRoutes = {
 
 export const transactionsRoutes = {
   transactions: '/transactions',
-  transactionDetails: '/transactions/:hash',
+  transactionDetails: '/transactions/:hash/*',
   transactionDetailsLogs: '/transactions/:hash/logs'
 };
 
@@ -75,7 +75,7 @@ export const accountsRoutes = {
   accountStaking: '/accounts/:hash/staking',
   accountAnalytics: '/accounts/:hash/analytics',
   oldAccountDetails: '/address/:hash',
-  accountCode: '/accounts/:hash/code',
+  accountCode: '/accounts/:hash/code/*',
   accountCodeConstructor: '/accounts/:hash/code/contract-constructor',
   accountCodeEndpoints: '/accounts/:hash/code/endpoints',
   accountCodeEvents: '/accounts/:hash/code/events',
@@ -165,11 +165,6 @@ const mainRoutes: RouteType[] = [
     component: TransactionDetails
   },
   {
-    path: transactionsRoutes.transactionDetailsLogs,
-    title: 'Transaction Logs',
-    component: TransactionDetails
-  },
-  {
     path: validatorsRoutes.identities,
     title: 'Validators',
     component: Identities
@@ -219,27 +214,6 @@ const mainRoutes: RouteType[] = [
     title: 'Account Contract Code',
     component: AccountContractCode
   },
-  {
-    path: accountsRoutes.accountCodeConstructor,
-    title: 'Account Smart Contract Constructor',
-    component: AccountContractCode
-  },
-  {
-    path: accountsRoutes.accountCodeEndpoints,
-    title: 'Account Smart Contract Endpoints',
-    component: AccountContractCode
-  },
-  {
-    path: accountsRoutes.accountCodeEvents,
-    title: 'Account Smart Contract Events',
-    component: AccountContractCode
-  },
-  {
-    path: accountsRoutes.accountCodeTypes,
-    title: 'Account Smart Contract Types',
-    component: AccountContractCode
-  },
-
   {
     path: accountsRoutes.accountTokens,
     title: 'Account Tokens',
