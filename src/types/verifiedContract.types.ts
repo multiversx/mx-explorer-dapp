@@ -43,6 +43,9 @@ export interface ContractType {
 export interface ContractEntryType {
   content: string;
   path: string;
+  module: string;
+  dependencyDepth: number;
+  isTestFile: boolean;
 }
 
 export interface ContractEndpointType {
