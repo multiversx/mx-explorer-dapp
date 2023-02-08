@@ -146,7 +146,7 @@ export const TokensMeta = () => {
                                           to={urlBuilder.tokenMetaEsdtDetails(
                                             metaCollection.collection
                                           )}
-                                          data-testid={`nftsLink${i}`}
+                                          data-testid={`metaEsdtsLink${i}`}
                                           className='side-link'
                                         >
                                           {metaCollection.assets &&
@@ -171,7 +171,7 @@ export const TokensMeta = () => {
                                           to={urlBuilder.tokenMetaEsdtDetails(
                                             metaCollection.collection
                                           )}
-                                          data-testid={`nftsLink${i}`}
+                                          data-testid={`metaEsdtsLink${i}`}
                                           className='d-block token-ticker'
                                         >
                                           {metaCollection.ticker}
