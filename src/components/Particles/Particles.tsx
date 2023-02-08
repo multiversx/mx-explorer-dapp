@@ -1,7 +1,14 @@
 // @ts-nocheck
 /* eslint-disable react/no-unknown-property */
 
-import React, { memo, useRef, Suspense, useCallback, useMemo } from 'react';
+import React, {
+  memo,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef
+} from 'react';
 import {
   extend,
   Canvas,
@@ -13,7 +20,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three-stdlib';
 import { UAParser } from 'ua-parser-js';
 
-import circleImg from './../../assets/img/three/circle.png';
+import circleImg from 'assets/img/three/circle.png';
 
 extend({ OrbitControls });
 
@@ -152,10 +159,21 @@ export const AnimationCanvas = () => {
   );
 };
 
-export const Particles = memo(() => (
-  <div className='particles'>
-    <Suspense fallback={null}>
+export const Particles = memo(() => {
+  const onunload = (e) => {
+    document.getElementById('canvas-container')?.remove();
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', onunload);
+    return () => {
+      window.removeEventListener('beforeunload', onunload);
+    };
+  }, []);
+
+  return (
+    <div className='particles' id='canvas-container'>
       <AnimationCanvas />
-    </Suspense>
-  </div>
-));
+    </div>
+  );
+});
