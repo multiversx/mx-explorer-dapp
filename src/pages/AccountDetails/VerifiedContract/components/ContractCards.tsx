@@ -35,7 +35,11 @@ export const ContractCards = ({
             </CardItem>
           )}
           {contract?.dockerImage && (
-            <CardItem title='Docker Image' icon={faDocker} className='double'>
+            <CardItem
+              title='Docker Image'
+              icon={faDocker}
+              className={!abi?.hasCallback ? 'double' : ''}
+            >
               {contract.dockerImage}
             </CardItem>
           )}
