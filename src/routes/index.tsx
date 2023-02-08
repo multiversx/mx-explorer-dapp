@@ -6,6 +6,7 @@ import { AccountContracts } from 'pages/AccountDetails/AccountContracts';
 import { AccountNfts } from 'pages/AccountDetails/AccountNfts';
 import { AccountStaking } from 'pages/AccountDetails/AccountStaking';
 import { AccountTokens } from 'pages/AccountDetails/AccountTokens';
+import { OldRouteRedirect } from 'pages/AccountDetails/OldRouteRedirect';
 import { Accounts } from 'pages/Accounts';
 import { Analytics } from 'pages/Analytics';
 import { AnalyticsCompare } from 'pages/AnalyticsCompare';
@@ -207,7 +208,7 @@ const mainRoutes: RouteType[] = [
   {
     path: accountsRoutes.oldAccountDetails,
     title: 'Account Details',
-    component: AccountDetails // redirect
+    component: OldRouteRedirect
   },
   {
     path: accountsRoutes.accountCode,

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Provider, useSelector } from 'react-redux';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import { PersistGate } from 'redux-persist/integration/react';
 import { networks } from 'config';
@@ -55,11 +55,14 @@ export const FilteredRoutes = ({
           });
         })}
         <Route
+          path='/address/'
+          element={<Navigate replace to='/accounts/' />}
+        />
+        <Route
           path={`${activeNetworkId}/:any`}
           key={activeNetworkId + '404'}
           element={<PageNotFound />}
         />
-        ,
         {restrictedRoutes.map((route, i) => {
           return (
             <Route

@@ -221,15 +221,12 @@ export const DataDecode = ({
     });
     setDisplayValue(displayValue);
     setValidationWarnings(validationWarnings);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeKey, value]);
 
   useEffect(() => {
     if (setDecodeMethod) {
       setDecodeMethod(activeKey);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeKey]);
 
   return (

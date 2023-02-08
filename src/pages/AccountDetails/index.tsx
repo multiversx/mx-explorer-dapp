@@ -6,7 +6,7 @@ import { Loader, TransactionsTable } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useAdapter, useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
-import { UITransactionType, TxFiltersEnum } from 'types';
+import { UITransactionType } from 'types';
 
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
