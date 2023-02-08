@@ -22,9 +22,9 @@
     }
   }
   .provider-title {
-    width: 16rem;
+    max-width: 16rem;
     @include media-breakpoint-up(sm) {
-      width: 18rem;
+      max-width: 18rem;
     }
   }
   .provider-website {

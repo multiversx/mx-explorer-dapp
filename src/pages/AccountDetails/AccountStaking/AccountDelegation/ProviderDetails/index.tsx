@@ -23,8 +23,11 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
       <div className='d-flex flex-row align-items-center'>
         <ProviderImage provider={provider} />
         <div className='d-flex flex-column w-100'>
-          <div className='provider-title font-primary-medium d-flex align-items-center'>
-            <NetworkLink to={urlBuilder.providerDetails(provider.provider)}>
+          <div className='font-primary-medium d-flex align-items-center'>
+            <NetworkLink
+              to={urlBuilder.providerDetails(provider.provider)}
+              className='provider-title'
+            >
               {provider?.identityDetails?.name ? (
                 <div className='text-truncate'>
                   {provider.identityDetails.name}
