@@ -1,6 +1,7 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
-import { Denominate, NetworkLink, NftBadge } from 'components';
+
+import { Denominate, NetworkLink, NftBadge, Overlay } from 'components';
 import { urlBuilder } from 'helpers';
 import { NftEnumType, TokenArgumentType } from 'types';
 
@@ -16,6 +17,17 @@ export const TxActionNft = ({
   showLastNonZeroDecimal?: boolean;
 }) => {
   const ref = React.useRef(null);
+
+  const TokenInfo = () => (
+    <div className='d-flex align-items-center symbol text-truncate'>
+      {token.svgUrl && (
+        <img src={token.svgUrl} alt={token.name} className='side-icon me-1' />
+      )}
+      <span className='text-truncate'>
+        {token.ticker === token.collection ? token.identifier : token.ticker}
+      </span>
+    </div>
+  );
 
   return (
     <div ref={ref} className='nft-action-block'>
@@ -53,21 +65,17 @@ export const TxActionNft = ({
             className={`d-flex text-truncate ${
               token.svgUrl ? 'side-link' : ''
             }`}
+            {...(token.type === NftEnumType.MetaESDT
+              ? { 'aria-label': token.identifier }
+              : {})}
           >
-            <div className='d-flex align-items-center symbol text-truncate'>
-              {token.svgUrl && (
-                <img
-                  src={token.svgUrl}
-                  alt={token.name}
-                  className='side-icon me-1'
-                />
-              )}
-              <span className='text-truncate'>
-                {token.ticker === token.collection
-                  ? token.identifier
-                  : token.ticker}
-              </span>
-            </div>
+            {token.type === NftEnumType.MetaESDT && token?.svgUrl ? (
+              <Overlay title={token.identifier}>
+                <TokenInfo />
+              </Overlay>
+            ) : (
+              <TokenInfo />
+            )}
           </NetworkLink>
         </>
       )}
