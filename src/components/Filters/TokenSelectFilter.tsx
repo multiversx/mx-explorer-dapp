@@ -8,7 +8,8 @@ import {
   ComponentProps
 } from 'react-select-async-paginate';
 
-import { useAdapter } from 'hooks';
+import { useAdapter, useGetHash, useActiveRoute } from 'hooks';
+import { accountsRoutes } from 'routes';
 import { CollectionType, TokenType, TxFiltersEnum } from 'types';
 
 type AsyncPaginateCreatableProps<
@@ -89,10 +90,17 @@ export const TokenSelectFilter = ({
   showAllPlaceholder = 'Show All',
   noOptionsMessage
 }: TokenSelectFilterType) => {
-  const [value, setValue] = useState<SelectOptionType[]>([]);
   const [defaultValue, setDefaultValue] = useState<SelectOptionType>();
-  const { getTokens, getCollections, getToken, getCollection, getNft } =
-    useAdapter();
+  const activeRoute = useActiveRoute();
+  const address = useGetHash();
+
+  const {
+    getTokens,
+    getCollections,
+    getToken,
+    getCollection,
+    getAccountTokens
+  } = useAdapter();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const paramsObject = Object.fromEntries(searchParams);
@@ -168,12 +176,23 @@ export const TokenSelectFilter = ({
   const loadOptions = async (search: string, page: number) => {
     let tokenOptions: SelectOptionType[] = [];
     let collectionsOptions: SelectOptionType[] = [];
+    let tokenResponse = undefined;
 
-    const tokenResponse = await getTokens({
-      size: page,
-      search,
-      fields: 'identifier,ticker,assets'
-    });
+    if (activeRoute(accountsRoutes.accountDetails) && address) {
+      tokenResponse = await getAccountTokens({
+        address,
+        size: page,
+        search,
+        fields: 'identifier,ticker,assets'
+      });
+    } else {
+      tokenResponse = await getTokens({
+        size: page,
+        search,
+        fields: 'identifier,ticker,assets'
+      });
+    }
+
     if (tokenResponse.success && tokenResponse.data) {
       tokenOptions = tokenResponse.data
         .filter(({ identifier }: TokenType) => {
@@ -260,7 +279,6 @@ export const TokenSelectFilter = ({
           updateSelectValue(values);
         } else {
           if ((e as any)?.value !== undefined) {
-            setValue([e as unknown as SelectOptionType]);
             updateSelectValue((e as any).value.toString());
           } else {
             updateSelectValue('');
