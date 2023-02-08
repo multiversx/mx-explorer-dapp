@@ -60,7 +60,7 @@ export const BlockProgressRing = ({ className }: WithClassnameType) => {
     const intervalBlockTime = setInterval(() => {
       if (ref.current !== null && !pageHidden) {
         setBlockTimeProgress((blockTimeProgress) =>
-          blockTimeProgress === intervalInSec ? 0 : blockTimeProgress + 1
+          blockTimeProgress === intervalInSec ? 1 : blockTimeProgress + 1
         );
       }
     }, 1000);
@@ -73,7 +73,7 @@ export const BlockProgressRing = ({ className }: WithClassnameType) => {
 
   return (
     <div ref={ref} className={`block-progress-ring ${className ?? ''}`}>
-      <ProgressRing progress={progress} size={100} hasBg>
+      <ProgressRing progress={Number(progress.toFixed(2))} size={100} hasBg>
         <div className='label' data-testid='currentEpoch'>
           {stateBuffer !== undefined ? `${blockTimeProgress}s` : '...'}
         </div>
