@@ -19,7 +19,7 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { PageLayout } from './components/PageLayout';
 import { Unavailable } from './components/Unavailable';
-import { getCustomPageName, formatClassName } from './helpers';
+import { formatClassName } from './helpers';
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const [freeze, setFreeze] = useState(false);
@@ -55,7 +55,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <div className={`d-flex flex-fill vh-100 ${pageClass}`}>
+    <div className={`d-flex ${pageClass}`}>
       <main
         className={classNames('main-content', {
           'overflow-hidden vh-100': freeze
