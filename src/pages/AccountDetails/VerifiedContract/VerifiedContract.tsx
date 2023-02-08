@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { faFileAlt } from '@fortawesome/pro-solid-svg-icons/faFileAlt';
 import { Tab, Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useMatch } from 'react-router-dom';
+import { useMatch, useNavigate } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
 import { urlBuilder } from 'helpers';
@@ -28,15 +28,16 @@ export enum VerifiedContractTabsEnum {
 export const VerifiedContract = () => {
   const ref = React.useRef(null);
   const networkRoute = useNetworkRoute();
+  const navigate = useNavigate();
 
   let activeSection: VerifiedContractTabsEnum =
     VerifiedContractTabsEnum.details;
 
   if (useMatch(networkRoute(accountsRoutes.accountCodeEndpoints))) {
-    activeSection = VerifiedContractTabsEnum.contractconstructor;
+    activeSection = VerifiedContractTabsEnum.endpoints;
   }
   if (useMatch(networkRoute(accountsRoutes.accountCodeConstructor))) {
-    activeSection = VerifiedContractTabsEnum.endpoints;
+    activeSection = VerifiedContractTabsEnum.contractconstructor;
   }
   if (useMatch(networkRoute(accountsRoutes.accountCodeEvents))) {
     activeSection = VerifiedContractTabsEnum.events;
@@ -103,11 +104,10 @@ export const VerifiedContract = () => {
                     eventKey='details'
                     className={`tab ${activeKey === 'details' ? 'active' : ''}`}
                     onClick={() => {
-                      window.history.replaceState(
-                        null,
-                        '',
-                        urlBuilder.accountDetailsContractCode(address)
-                      );
+                      const options = {
+                        pathname: urlBuilder.accountDetailsContractCode(address)
+                      };
+                      navigate(options, { replace: true });
                     }}
                   >
                     Code
@@ -120,13 +120,13 @@ export const VerifiedContract = () => {
                         activeKey === 'endpoints' ? 'active' : ''
                       }`}
                       onClick={() => {
-                        window.history.replaceState(
-                          null,
-                          '',
-                          urlBuilder.accountDetailsContractCodeEndpoints(
-                            address
-                          )
-                        );
+                        const options = {
+                          pathname:
+                            urlBuilder.accountDetailsContractCodeEndpoints(
+                              address
+                            )
+                        };
+                        navigate(options, { replace: true });
                       }}
                     >
                       Endpoints
@@ -140,11 +140,11 @@ export const VerifiedContract = () => {
                         activeKey === 'events' ? 'active' : ''
                       }`}
                       onClick={() => {
-                        window.history.replaceState(
-                          null,
-                          '',
-                          urlBuilder.accountDetailsContractCodeEvents(address)
-                        );
+                        const options = {
+                          pathname:
+                            urlBuilder.accountDetailsContractCodeEvents(address)
+                        };
+                        navigate(options, { replace: true });
                       }}
                     >
                       Events
@@ -156,11 +156,11 @@ export const VerifiedContract = () => {
                       eventKey='types'
                       className={`tab ${activeKey === 'types' ? 'active' : ''}`}
                       onClick={() => {
-                        window.history.replaceState(
-                          null,
-                          '',
-                          urlBuilder.accountDetailsContractCodeTypes(address)
-                        );
+                        const options = {
+                          pathname:
+                            urlBuilder.accountDetailsContractCodeTypes(address)
+                        };
+                        navigate(options, { replace: true });
                       }}
                     >
                       Types
@@ -173,13 +173,13 @@ export const VerifiedContract = () => {
                         activeKey === 'contract-constructor' ? 'active' : ''
                       }`}
                       onClick={() => {
-                        window.history.replaceState(
-                          null,
-                          '',
-                          urlBuilder.accountDetailsContractCodeConstructor(
-                            address
-                          )
-                        );
+                        const options = {
+                          pathname:
+                            urlBuilder.accountDetailsContractCodeConstructor(
+                              address
+                            )
+                        };
+                        navigate(options, { replace: true });
                       }}
                     >
                       Constructor

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Anchorme } from 'react-anchorme';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import { DetailItem, ModalLink, DataDecode } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
@@ -15,7 +15,9 @@ export const DataField = ({
   data?: string;
   scamInfo?: ScamInfoType;
 }) => {
+  const navigate = useNavigate();
   const { hash, pathname } = useLocation();
+
   const hashDecodeMethod = hash.replace('#', '');
   const initialDecodeMethod =
     hashDecodeMethod &&
@@ -37,7 +39,11 @@ export const DataField = ({
 
   React.useEffect(() => {
     if (decodeMethod && decodeMethod !== DecodeMethodType.raw) {
-      window.history.replaceState(null, '', `${pathname}#${decodeMethod}`);
+      const options = {
+        pathname: location.pathname,
+        hash: decodeMethod
+      };
+      navigate(options, { replace: true });
     }
   }, [decodeMethod, pathname]);
 

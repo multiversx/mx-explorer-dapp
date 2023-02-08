@@ -1,13 +1,16 @@
 import * as React from 'react';
-import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
-import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
-import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
-import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
+import {
+  faAngleDown,
+  faClock,
+  faSearch,
+  faSpinner
+} from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Tab, Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useMatch } from 'react-router-dom';
+import { useMatch, useNavigate } from 'react-router-dom';
+
 import {
   Denominate,
   ScAddressIcon,
@@ -43,6 +46,7 @@ import {
   VisibleTransactionOperationType,
   ResultType
 } from 'types';
+
 import { DataField } from './DataField';
 import { NonceMessage } from './NonceMessage';
 import { TransactionErrorDisplay } from './TransactionErrorDisplay';
@@ -112,6 +116,7 @@ export const TransactionInfo = ({
 
   const { egldLabel } = useSelector(activeNetworkSelector);
 
+  const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
   const match: any = useMatch(
     networkRoute(transactionsRoutes.transactionDetailsLogs)
@@ -178,11 +183,12 @@ export const TransactionInfo = ({
                   eventKey='details'
                   className={`tab ${activeKey === 'details' ? 'active' : ''}`}
                   onClick={() => {
-                    window.history.replaceState(
-                      null,
-                      '',
-                      urlBuilder.transactionDetails(transaction.txHash)
-                    );
+                    const options = {
+                      pathname: urlBuilder.transactionDetails(
+                        transaction.txHash
+                      )
+                    };
+                    navigate(options, { replace: true });
                   }}
                 >
                   Transaction Details
@@ -192,11 +198,12 @@ export const TransactionInfo = ({
                     eventKey='logs'
                     className={`tab ${activeKey === 'logs' ? 'active' : ''}`}
                     onClick={() => {
-                      window.history.replaceState(
-                        null,
-                        '',
-                        urlBuilder.transactionDetailsLogs(transaction.txHash)
-                      );
+                      const options = {
+                        pathname: urlBuilder.transactionDetailsLogs(
+                          transaction.txHash
+                        )
+                      };
+                      navigate(options, { replace: true });
                     }}
                   >
                     Logs
