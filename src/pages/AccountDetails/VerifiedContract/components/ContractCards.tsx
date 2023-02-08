@@ -1,9 +1,17 @@
 import React from 'react';
+import { faDocker, faRust } from '@fortawesome/free-brands-svg-icons';
 import { faCogs } from '@fortawesome/pro-solid-svg-icons';
-import { CardItem, Trim } from 'components';
-import { ContractAbiType } from 'types';
 
-export const ContractCards = ({ abi }: { abi: ContractAbiType }) => {
+import { CardItem, Trim } from 'components';
+import { VerifiedContractType } from 'types';
+
+export const ContractCards = ({
+  contract
+}: {
+  contract: VerifiedContractType;
+}) => {
+  const abi = contract?.source?.abi;
+
   return (
     <div className='card bg-neutral-900'>
       <div className='card-header'>
@@ -26,31 +34,36 @@ export const ContractCards = ({ abi }: { abi: ContractAbiType }) => {
               {abi.buildInfo?.framework?.version}
             </CardItem>
           )}
+          {contract?.dockerImage && (
+            <CardItem title='Docker Image' icon={faDocker} className='double'>
+              {contract.dockerImage}
+            </CardItem>
+          )}
         </div>
         <h6 className='px-3 py-2 rounded bg-table-header mt-2'>Rust</h6>
         <div className='card-item-container'>
           {abi?.buildInfo?.rustc?.channel && (
-            <CardItem title='Channel' icon={faCogs}>
+            <CardItem title='Channel' icon={faRust}>
               {abi.buildInfo.rustc.channel}
             </CardItem>
           )}
           {abi?.buildInfo?.rustc?.commitDate && (
-            <CardItem title='Commit Date' icon={faCogs}>
+            <CardItem title='Commit Date' icon={faRust}>
               {abi.buildInfo.rustc.commitDate}
             </CardItem>
           )}
           {abi?.buildInfo?.rustc?.version && (
-            <CardItem title='version' icon={faCogs}>
+            <CardItem title='version' icon={faRust}>
               {abi.buildInfo.rustc.version}
             </CardItem>
           )}
           {abi?.buildInfo?.rustc?.short && (
-            <CardItem title='short' icon={faCogs}>
+            <CardItem title='short' icon={faRust}>
               {abi.buildInfo.rustc.short}
             </CardItem>
           )}
           {abi?.buildInfo?.rustc?.commitHash && (
-            <CardItem title='Commit Hash' icon={faCogs}>
+            <CardItem title='Commit Hash' icon={faRust}>
               <Trim text={abi.buildInfo.rustc.commitHash} />
             </CardItem>
           )}

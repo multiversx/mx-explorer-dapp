@@ -1,11 +1,13 @@
 export interface VerifiedContractType {
   codeHash: string;
-  ipfsFileHash: string;
+
   source: {
     abi: ContractAbiType;
     contract: ContractType;
   };
   status: string;
+  ipfsFileHash: string;
+  dockerImage: string;
 }
 
 export interface ContractAbiType {
@@ -31,7 +33,7 @@ export interface ContractAbiType {
   types: ContractTypesType;
   endpoints?: ContractEndpointType[];
   events?: ContractEventType[];
-  ['constructor']?: any;
+  ['constructor']?: ContractConstructorType[];
 }
 
 export interface ContractType {
