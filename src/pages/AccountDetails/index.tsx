@@ -29,7 +29,8 @@ export const AccountDetails = () => {
     after,
     status,
     miniBlockHash,
-    search
+    search,
+    token
   } = useURLSearchParams();
   const { size } = useSize();
   const { hash: address } = useParams();
@@ -60,6 +61,7 @@ export const AccountDetails = () => {
         status,
         miniBlockHash,
         search,
+        token,
         withUsername: true
       }),
       getAccountTransfersCount({
@@ -75,7 +77,8 @@ export const AccountDetails = () => {
         after,
         status,
         miniBlockHash,
-        search
+        search,
+        token
       })
     ])
       .then(([transctionsData, transctionsCountData]) => {
