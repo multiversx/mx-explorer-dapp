@@ -35,7 +35,8 @@ export const ContractFiles = ({
   }, []);
 
   const filteredEntries = entries.filter(
-    ({ path }) => path.endsWith('.rs') && !path.includes('/tests')
+    ({ path, isTestFile }) =>
+      path.endsWith('.rs') && !path.includes('/tests') && !isTestFile
   );
 
   return (
