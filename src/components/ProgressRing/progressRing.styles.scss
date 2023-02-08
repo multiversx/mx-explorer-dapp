@@ -67,3 +67,13 @@
     }
   }
 }
+
+.block-progress-ring {
+  .progress-ring {
+    &.progress-1667 {
+      circle {
+        transition: none !important;
+      }
+    }
+  }
+}

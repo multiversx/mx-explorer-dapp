@@ -36,7 +36,10 @@ export const ProgressRing = ({
       style={{ width: size, height: size }}
     >
       <svg
-        className={`progress-ring progress-${progress}`}
+        className={`progress-ring progress-${String(progress).replace(
+          '.',
+          ''
+        )}`}
         style={{ width: size, height: size, minWidth: size, minHeight: size }}
       >
         <circle
