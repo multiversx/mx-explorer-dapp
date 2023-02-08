@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
-import { faUserCheck, faSquarePen } from '@fortawesome/pro-solid-svg-icons';
+import {
+  faUserCheck,
+  faSquarePen,
+  faSquareV
+} from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse } from 'react-bootstrap';
 
-import { Overlay } from 'components';
+import { Overlay, CollapsibleArrows } from 'components';
 import { ContractEndpointType } from 'types';
 
 export const ContractEndpoint = ({
@@ -22,7 +26,7 @@ export const ContractEndpoint = ({
         aria-expanded={open}
         className='card-header cursor-pointer d-flex align-items-center'
       >
-        <code>{endpoint?.name}</code>{' '}
+        <code>{endpoint?.name}</code>
         {endpoint?.onlyOwner && (
           <span className='badge badge-outline badge-outline-grey ms-2 cursor-text'>
             <FontAwesomeIcon icon={faUserCheck} className='me-1 text-primary' />{' '}
@@ -31,9 +35,28 @@ export const ContractEndpoint = ({
         )}
         {endpoint?.mutability && (
           <span className='badge badge-outline badge-outline-grey ms-2 cursor-text'>
-            <FontAwesomeIcon icon={faSquarePen} className='me-1 text-primary' />{' '}
-            {endpoint.mutability === 'mutable' ? 'endpoint' : ''}
-            {endpoint.mutability === 'readonly' ? 'view' : ''}
+            {endpoint.mutability === 'mutable' ? (
+              <>
+                <FontAwesomeIcon
+                  icon={faSquarePen}
+                  className='me-1 text-primary'
+                />{' '}
+                mutable
+              </>
+            ) : (
+              ''
+            )}
+            {endpoint.mutability === 'readonly' ? (
+              <>
+                <FontAwesomeIcon
+                  icon={faSquareV}
+                  className='me-1 text-primary'
+                />{' '}
+                view
+              </>
+            ) : (
+              ''
+            )}
           </span>
         )}
         {endpoint?.docs && (
@@ -65,6 +88,7 @@ export const ContractEndpoint = ({
             </Overlay>
           </div>
         )}
+        <CollapsibleArrows expanded={open} />
       </div>
       <Collapse in={open}>
         <div id={endpoint.name}>
