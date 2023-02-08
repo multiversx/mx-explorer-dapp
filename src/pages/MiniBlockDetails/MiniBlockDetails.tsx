@@ -26,7 +26,8 @@ export const MiniBlockDetails = () => {
     before,
     after,
     status,
-    search
+    search,
+    token
   } = useURLSearchParams();
   const { size } = useSize();
 
@@ -56,6 +57,7 @@ export const MiniBlockDetails = () => {
           after,
           status,
           search,
+          token,
           withUsername: true
         }),
         getTransfersCount({
@@ -70,7 +72,8 @@ export const MiniBlockDetails = () => {
           before,
           after,
           status,
-          search
+          search,
+          token
         })
       ])
         .then(([transctionsData, transctionsCountData]) => {

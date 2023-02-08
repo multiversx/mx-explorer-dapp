@@ -2136,6 +2136,11 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.2.0.tgz#8be36a1f66f3265389e90b5f9c9962146758f728"
   integrity sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==
 
+"@seznam/compose-react-refs@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@seznam/compose-react-refs/-/compose-react-refs-1.0.6.tgz#6ec4e70bdd6e32f8e70b4100f27267cf306bd8df"
+  integrity sha512-izzOXQfeQLonzrIQb8u6LQ8dk+ymz3WXTIXjvOlTXHq6sbzROg3NWU+9TTAOpEoK9Bth24/6F/XrfHJ5yR5n6Q==
+
 "@sinclair/typebox@^0.25.16":
   version "0.25.21"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.25.21.tgz#763b05a4b472c93a8db29b2c3e359d55b29ce272"
@@ -3154,6 +3159,11 @@
   dependencies:
     "@typescript-eslint/types" "5.50.0"
     eslint-visitor-keys "^3.3.0"
+
+"@vtaits/use-lazy-ref@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@vtaits/use-lazy-ref/-/use-lazy-ref-0.1.0.tgz#0d5fb47a4334ff57f5d2abf00c9919696e382d86"
+  integrity sha512-/m5z3Df6I6i/B0lnv6pB2O1+X/nWVquqbnltq+irW1+Nhpv0PpeMzSNf9lTjzT/eHRZtH2fM1370AdYqc3FTyQ==
 
 "@walletconnect/browser-utils@^1.8.0":
   version "1.8.0"
@@ -12155,6 +12165,16 @@ react-scripts@4.0.3:
   optionalDependencies:
     fsevents "^2.1.3"
 
+react-select-async-paginate@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/react-select-async-paginate/-/react-select-async-paginate-0.7.2.tgz#acdcb74c9701d00f886b5a6ec1f53d526c3cd1e6"
+  integrity sha512-NlF717+Kh/OgSC7YyEYuB0ebsqF2YhyEdcETH1lX6X4INgNKpKH269MI1H5soIThZdCPZl5xz2QSldcPKlPlew==
+  dependencies:
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@vtaits/use-lazy-ref" "^0.1.0"
+    sleep-promise "^9.1.0"
+    use-is-mounted-ref "^1.5.0"
+
 react-select@5.7.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/react-select/-/react-select-5.7.0.tgz#82921b38f1fcf1471a0b62304da01f2896cd8ce6"
@@ -13082,6 +13102,11 @@ slash@^4.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-4.0.0.tgz#2422372176c4c6c5addb5e2ada885af984b396a7"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
 
+sleep-promise@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/sleep-promise/-/sleep-promise-9.1.0.tgz#101ebe65700bcd184709da95d960967b02b79d03"
+  integrity sha512-UHYzVpz9Xn8b+jikYSD6bqvf754xL2uBUzDFwiU6NcdZeifPr6UfgU43xpkPu67VMS88+TI2PSI7Eohgqf2fKA==
+
 slice-ansi@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/slice-ansi/-/slice-ansi-4.0.0.tgz#500e8dd0fd55b05815086255b3195adf2a45fe6b"
@@ -13795,7 +13820,7 @@ thread-stream@^0.15.1:
   dependencies:
     real-require "^0.1.0"
 
-three-stdlib@^2.21.8:
+three-stdlib@2.21.8:
   version "2.21.8"
   resolved "https://registry.yarnpkg.com/three-stdlib/-/three-stdlib-2.21.8.tgz#37b11b7f62d07b10742c212153b14db21433b3c6"
   integrity sha512-kqisiKvO4mSy59v5vWqBQSH8famLxp7Z51LxpMJI9GwDxqODaW02rhIwmjYDEzZWNFpjZpoDHVGbdpeHf8h3SA==
@@ -14280,6 +14305,11 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-is-mounted-ref@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/use-is-mounted-ref/-/use-is-mounted-ref-1.5.0.tgz#d737e7b30f1bbbaca594f21cdd2621dc52ae8180"
+  integrity sha512-p5FksHf/ospZUr5KU9ese6u3jp9fzvZ3wuSb50i0y6fdONaHWgmOqQtxR/PUcwi6hnhQDbNxWSg3eTK3N6m+dg==
 
 use-isomorphic-layout-effect@^1.1.2:
   version "1.1.2"

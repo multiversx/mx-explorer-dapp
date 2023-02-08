@@ -6,7 +6,8 @@ import {
 import {
   faUser,
   faCoins,
-  faLayerGroup
+  faLayerGroup,
+  faHexagonVerticalNft
 } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
@@ -58,6 +59,7 @@ export const AccountDetailsCard = () => {
     useAdapter();
 
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
+  const [accountNftsCount, setAccountNftsCount] = React.useState<number>();
 
   const tokensActive = adapter === 'api';
   const cardItemClass = tokensActive ? 'n4' : '';
@@ -82,29 +84,42 @@ export const AccountDetailsCard = () => {
 
   const fetchAccountTokensCount = () => {
     if (tokensActive) {
-      const type = 'MetaESDT';
-      Promise.all([
-        getAccountTokensCount(address),
-        getAccountNftsCount({ address, type })
-      ]).then(([accountTokensCountData, accountNftsCountData]) => {
-        if (ref.current !== null) {
-          if (accountTokensCountData.success && accountNftsCountData.success) {
-            const accountTokens =
-              typeof accountTokensCountData.data === 'number'
-                ? accountTokensCountData.data
-                : 0;
-            const accountMetaTokens =
-              typeof accountNftsCountData.data === 'number'
-                ? accountNftsCountData.data
-                : 0;
+      getAccountTokensCount({ address, includeMetaESDT: true }).then(
+        (accountTokensCountData) => {
+          if (ref.current !== null) {
+            if (accountTokensCountData.success) {
+              const accountTokens =
+                typeof accountTokensCountData.data === 'number'
+                  ? accountTokensCountData.data
+                  : 0;
 
-            setAccountTokensCount(accountTokens + accountMetaTokens);
+              setAccountTokensCount(accountTokens);
+            }
           }
         }
-      });
+      );
+    }
+  };
+  const fetchAccountNftsCount = () => {
+    if (tokensActive) {
+      getAccountNftsCount({ address, excludeMetaESDT: true }).then(
+        (accountNftsCountData) => {
+          if (ref.current !== null) {
+            if (accountNftsCountData.success) {
+              const accountNfts =
+                typeof accountNftsCountData.data === 'number'
+                  ? accountNftsCountData.data
+                  : 0;
+
+              setAccountNftsCount(accountNfts);
+            }
+          }
+        }
+      );
     }
   };
   React.useEffect(() => {
+    fetchAccountNftsCount();
     fetchAccountTokensCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txCount, activeNetworkId, address]);
@@ -373,6 +388,15 @@ export const AccountDetailsCard = () => {
                   {accountTokensCount !== undefined
                     ? accountTokensCount
                     : '...'}
+                </CardItem>
+              )}
+              {tokensActive && (
+                <CardItem
+                  className={cardItemClass}
+                  title='NFTs'
+                  icon={faHexagonVerticalNft}
+                >
+                  {accountNftsCount !== undefined ? accountNftsCount : '...'}
                 </CardItem>
               )}
               <CardItem
