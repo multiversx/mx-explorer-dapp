@@ -28,7 +28,6 @@ export const useShowGlobalStats = () => {
     case activeRoute(blocksRoutes.blocksDetails):
     case activeRoute(blocksRoutes.miniBlockDetails):
     case activeRoute(accountsRoutes.accountDetails):
-    case activeRoute(accountsRoutes.oldAccountDetails):
     case activeRoute(accountsRoutes.accountTokens):
     case activeRoute(accountsRoutes.accountNfts):
     case activeRoute(accountsRoutes.accountContracts):
