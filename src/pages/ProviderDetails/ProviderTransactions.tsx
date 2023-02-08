@@ -27,7 +27,8 @@ export const ProviderTransactions = () => {
     after,
     status,
     miniBlockHash,
-    search
+    search,
+    token
   } = useURLSearchParams();
   const { size } = useSize();
   const { hash: address } = useParams();
@@ -60,6 +61,7 @@ export const ProviderTransactions = () => {
         status,
         miniBlockHash,
         search,
+        token,
         withUsername: true
       }),
       getTransactionsCount({
@@ -74,7 +76,8 @@ export const ProviderTransactions = () => {
         after,
         status,
         miniBlockHash,
-        search
+        search,
+        token
       })
     ])
       .then(([transctionsData, transctionsCountData]) => {

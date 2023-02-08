@@ -1,5 +1,6 @@
+import { AdapterProviderPropsType } from 'types/adapter.types';
+
 import { getNodes } from './helpers/getNodes';
-import { ProviderPropsType } from '../helpers';
 
 export const nodes = async ({
   nodeUrl,
@@ -8,7 +9,7 @@ export const nodes = async ({
 }: {
   url: string;
   nodeUrl: string;
-  params: ProviderPropsType['params'];
+  params: AdapterProviderPropsType['params'];
 }) => {
   try {
     const proxyUrl = () => nodeUrl;

@@ -1,3 +1,4 @@
+export * from './adapter.types';
 export * from './withClassname.types';
 export * from './explorerOrigin.types';
 export * from './globalStake.types';

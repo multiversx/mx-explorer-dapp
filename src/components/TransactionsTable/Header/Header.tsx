@@ -6,7 +6,8 @@ import {
   ShardColumnFilters,
   StatusColumnFilters,
   MethodColumnFilters,
-  ToColumnFilters
+  ToColumnFilters,
+  ValueColumnFilters
 } from '../TransactionsFilters';
 
 export const Header = ({
@@ -35,7 +36,9 @@ export const Header = ({
         <th scope='col'>
           Method <MethodColumnFilters inactiveFilters={inactiveFilters} />
         </th>
-        <th scope='col'>Value</th>
+        <th scope='col'>
+          Value <ValueColumnFilters inactiveFilters={inactiveFilters} />
+        </th>
       </tr>
     </thead>
   );

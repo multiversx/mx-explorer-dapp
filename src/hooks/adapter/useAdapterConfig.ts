@@ -1,18 +1,20 @@
 import { useSelector } from 'react-redux';
+
 import { METACHAIN_SHARD_ID, TIMEOUT } from 'appConstants';
 import { activeNetworkSelector } from 'redux/selectors';
+import { AdapterProviderPropsType } from 'types/adapter.types';
+
 import { apiAdapter } from './api';
 import { elasticAdapter } from './elastic';
-import { ProviderPropsType } from './helpers';
 
 interface PropsType {
-  baseUrl?: ProviderPropsType['baseUrl'];
-  proxyUrl?: ProviderPropsType['proxyUrl'];
+  baseUrl?: AdapterProviderPropsType['baseUrl'];
+  proxyUrl?: AdapterProviderPropsType['proxyUrl'];
   metaChainShardId?: number;
   url?: string;
-  params?: ProviderPropsType['params'];
-  timeout?: ProviderPropsType['timeout'];
-  timestamp?: ProviderPropsType['timestamp'];
+  params?: AdapterProviderPropsType['params'];
+  timeout?: AdapterProviderPropsType['timeout'];
+  timestamp?: AdapterProviderPropsType['timestamp'];
 }
 
 async function wrap(asyncRequest: () => Promise<any>) {

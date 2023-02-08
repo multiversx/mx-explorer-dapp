@@ -1,12 +1,13 @@
+import { AdapterProviderPropsType } from 'types/adapter.types';
+
 import { elastic } from './helpers';
 import { nodes } from './nodes';
 import { shards } from './shards';
 import { getStats as stats } from './stats';
-import { ProviderPropsType } from '../helpers';
 
 export const elasticAdapter = {
   provider: elastic,
-  getStats: (props: ProviderPropsType & { proxyUrl: string }) => {
+  getStats: (props: AdapterProviderPropsType & { proxyUrl: string }) => {
     const { proxyUrl, baseUrl: elasticUrl, metaChainShardId } = props;
     return stats({
       proxyUrl,
@@ -14,7 +15,7 @@ export const elasticAdapter = {
       metaChainShardId
     });
   },
-  getNodes: (props: ProviderPropsType & { proxyUrl: string }) => {
+  getNodes: (props: AdapterProviderPropsType & { proxyUrl: string }) => {
     const { proxyUrl: nodeUrl, params, url = '' } = props;
     return nodes({
       nodeUrl,
@@ -22,7 +23,7 @@ export const elasticAdapter = {
       params
     });
   },
-  getShards: (props: ProviderPropsType & { proxyUrl: string }) => {
+  getShards: (props: AdapterProviderPropsType & { proxyUrl: string }) => {
     const { proxyUrl } = props;
     return shards({ proxyUrl });
   },

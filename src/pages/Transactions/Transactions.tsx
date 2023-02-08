@@ -27,7 +27,8 @@ export const Transactions = () => {
     after,
     status,
     miniBlockHash,
-    search
+    search,
+    token
   } = useURLSearchParams();
   const { size, firstPageTicker } = useSize();
 
@@ -56,6 +57,7 @@ export const Transactions = () => {
         status,
         miniBlockHash,
         search,
+        token,
         withUsername: true
       }),
       getTransactionsCount({
@@ -68,7 +70,8 @@ export const Transactions = () => {
         after,
         status,
         miniBlockHash,
-        search
+        search,
+        token
       })
     ])
       .then(([transctionsData, transctionsCountData]) => {
