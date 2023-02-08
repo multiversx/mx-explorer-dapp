@@ -514,7 +514,7 @@ export const useAdapter = () => {
       ...rest
     }: GetCollectionsType & { collection: string }) =>
       provider({
-        url: `/collections/${collection}/nfts/c`,
+        url: `/collections/${collection}/nfts/count`,
         params: getCollectionsParams({ ...rest })
       }),
 
