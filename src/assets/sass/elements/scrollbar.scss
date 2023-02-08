@@ -7,6 +7,9 @@
 .blink:not(.ios),
 .webkit:not(.mac-os):not(.ios) {
   &.scrollbar-thin {
+    margin-right: -0.5rem;
+    overflow-x: hidden;
+
     &::-webkit-scrollbar,
     &::-webkit-scrollbar-track,
     &::-webkit-scrollbar-track:hover,

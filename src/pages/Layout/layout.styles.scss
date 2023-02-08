@@ -1,7 +1,9 @@
-.main-content > .main-content-container.container-fluid {
-  @include media-breakpoint-up(md) {
-    min-height: calc(
-      100vh - #{$footer-height + $header-navbar-height}
-    ) !important;
+.main-content {
+  width: 100vw;
+
+  > .main-content-container {
+    @include media-breakpoint-up(md) {
+      min-height: calc(100vh - #{$footer-height + $header-navbar-height});
+    }
   }
 }

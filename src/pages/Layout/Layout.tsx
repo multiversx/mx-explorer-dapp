@@ -57,18 +57,14 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className={`d-flex flex-fill vh-100 ${pageClass}`}>
       <main
-        className={classNames(
-          'main-content',
-          'd-flex',
-          'flex-column',
-          'flex-grow-1',
-          { 'overflow-hidden vh-100': freeze }
-        )}
+        className={classNames('main-content', {
+          'overflow-hidden vh-100': freeze
+        })}
       >
         <Header onExpand={setFreeze} />
 
         <NotificationsBar />
-        <div className='main-content-container container-fluid p-0 d-flex flex-column'>
+        <div className='main-content-container d-flex flex-column'>
           {offline ? (
             <Unavailable />
           ) : (
