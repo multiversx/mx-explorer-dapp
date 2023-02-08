@@ -33,7 +33,7 @@ export interface ContractAbiType {
   types: ContractTypesType;
   endpoints?: ContractEndpointType[];
   events?: ContractEventType[];
-  ['constructor']?: ContractConstructorType[];
+  ['constructor']?: ContractConstructorType;
 }
 
 export interface ContractType {
@@ -56,7 +56,7 @@ export interface ContractEndpointType {
   onlyOwner?: boolean;
   docs?: string[];
   inputs?: ContractEndpointInputType[];
-  outputs?: ContractEndpointOutputType[];
+  outputs?: ContractOutputType[];
   payableInTokens?: string[];
 }
 
@@ -66,14 +66,14 @@ export interface ContractEndpointInputType {
   multi_arg?: boolean;
 }
 
-export interface ContractEndpointOutputType {
-  type: string;
-}
-
 export interface ContractEventType {
   identifier: string;
   inputs: ContractInputType[];
-  outputs?: ContractEndpointOutputType[];
+  outputs?: ContractOutputType[];
+}
+
+export interface ContractOutputType {
+  type: string;
 }
 
 export interface ContractInputType {
@@ -100,4 +100,5 @@ export interface ContractTypeType {
 export interface ContractConstructorType {
   docs: string[];
   inputs: ContractInputType[];
+  outputs: ContractOutputType[];
 }
