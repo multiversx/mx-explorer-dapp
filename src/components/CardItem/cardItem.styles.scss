@@ -71,6 +71,12 @@
       }
     }
 
+    &.double {
+      @include media-breakpoint-up(lg) {
+        flex: 0 0 50%;
+      }
+    }
+
     @include media-breakpoint-up(sm) {
       flex: 0 0 50%;
     }

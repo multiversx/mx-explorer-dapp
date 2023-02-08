@@ -12,7 +12,7 @@ export const ContractCode = ({
 }) => {
   return (
     <div>
-      {contract?.source?.abi && <ContractCards abi={contract.source.abi} />}
+      {contract && <ContractCards contract={contract} />}
       {contract?.source?.contract?.entries && (
         <div className=''>
           <h5 className='d-flex flex-column flex-xl-row flex-wrap align-items-center justify-content-xl-between my-spacer gap-2'>
