@@ -19,7 +19,7 @@ export const BlockProgressRing = ({ className }: WithClassnameType) => {
   const [stateBuffer, setStateBuffer] = useState<StatsSliceType | undefined>();
   const [oldTestnetId, setOldTestnetId] = useState(activeNetworkId);
 
-  const [blockTimeProgress, setBlockTimeProgress] = useState(0);
+  const [blockTimeProgress, setBlockTimeProgress] = useState(1);
   const intervalInSec = REFRESH_RATE / 1000;
 
   const initStates = (stats: StatsSliceType) => {
