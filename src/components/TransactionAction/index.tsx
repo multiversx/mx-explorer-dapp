@@ -94,6 +94,13 @@ const ActionText = ({
       if (entry.address === transaction.receiver) {
         entryAssets = transaction.receiverAssets;
       }
+      if (
+        entry.address === transaction?.action?.arguments?.receiver &&
+        transaction?.action?.arguments?.receiverAssets
+      ) {
+        entryAssets = transaction.action.arguments.receiverAssets;
+      }
+
       return addressIsBech32(entry.address) ? (
         <div className='d-flex align-items-center'>
           <ScAddressIcon initiator={entry.address} />
