@@ -41,7 +41,7 @@ export const ContractEndpoint = ({
                   icon={faSquarePen}
                   className='me-1 text-primary'
                 />{' '}
-                mutable
+                endpoint
               </>
             ) : (
               ''
