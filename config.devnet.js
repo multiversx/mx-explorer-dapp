@@ -76,11 +76,11 @@ const CONFIG = {
       name: 'Docs',
       url: 'https://docs.multiversx.com/',
     },
-    {
-      id: 'growth',
-      name: 'Growth',
-      url: 'https://growth.multiversx.com/',
-    },
+    // {
+    //   id: 'growth',
+    //   name: 'Growth',
+    //   url: 'https://growth.multiversx.com/',
+    // },
   ],
 };
 
