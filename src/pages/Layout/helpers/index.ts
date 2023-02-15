@@ -27,6 +27,8 @@ export const getCustomPageName = ({
       return 'NFTs';
     case 'sfts':
       return 'SFTs';
+    case 'providers':
+      return 'Staking Providers';
     default:
       return basePage.replaceAll('-', ' ').toLowerCase();
   }
