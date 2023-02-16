@@ -48,6 +48,10 @@ export const useShowGlobalStats = () => {
     case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
     case activeRoute(transactionsRoutes.transactionDetails):
     case activeRoute(transactionsRoutes.transactionDetailsLogs):
+    case activeRoute(validatorsRoutes.identityDetails):
+    case activeRoute(validatorsRoutes.providerDetails):
+    case activeRoute(validatorsRoutes.providerTransactions):
+    case activeRoute(validatorsRoutes.nodeDetails):
       return false;
   }
 
@@ -90,12 +94,8 @@ export const useShowNodesStats = () => {
 
   switch (true) {
     case activeRoute(validatorsRoutes.identities):
-    case activeRoute(validatorsRoutes.identityDetails):
     case activeRoute(validatorsRoutes.providers):
-    case activeRoute(validatorsRoutes.providerDetails):
-    case activeRoute(validatorsRoutes.providerTransactions):
     case activeRoute(validatorsRoutes.nodes):
-    case activeRoute(validatorsRoutes.nodeDetails):
     case activeRoute(validatorsRoutes.statistics):
     case activeRoute(validatorsRoutes.queue):
       return true;
