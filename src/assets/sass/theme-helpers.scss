@@ -1,5 +1,6 @@
-// Neutrals
+// COLORS
 
+// Texts
 .text-neutral-100 {
   color: var(--neutral-100);
 }
@@ -27,9 +28,7 @@
 .text-neutral-900 {
   color: var(--neutral-900);
 }
-.text-violet-400 {
-  color: var(--violet-400);
-}
+
 .text-neutral-transparent {
   color: var(--neutral-transparent);
 }
@@ -37,10 +36,36 @@
   color: var(--table-header);
 }
 
-.text-teal {
-  color: var(--teal);
+.text-primary-200 {
+  color: var(--primary-200);
+}
+.text-primary-500 {
+  color: var(--primary-500);
+}
+.text-primary-700 {
+  color: var(--primary-700);
 }
 
+.text-red {
+  color: var(--red);
+}
+.text-orange {
+  color: var(--orange);
+}
+.text-yellow {
+  color: var(--yellow);
+}
+.text-yellow-spotlight {
+  color: var(--yellow-spotlight);
+}
+.text-green {
+  color: var(--green);
+}
+.text-violet {
+  color: var(--violet-400);
+}
+
+// Backgrounds
 .bg-neutral-100 {
   background-color: var(--neutral-100);
 }
@@ -76,7 +101,38 @@
   background-color: var(--table-header);
 }
 
-// Fonts
+.bg-primary-200 {
+  background-color: var(--primary-200);
+}
+
+.bg-primary-500 {
+  background-color: var(--primary-500);
+}
+
+.bg-primary-700 {
+  background-color: var(--primary-700);
+}
+
+.bg-red {
+  background-color: var(--red);
+}
+.bg-orange {
+  background-color: var(--orange);
+}
+.bg-yellow {
+  background-color: var(--yellow);
+}
+.bg-yellow-spotlight {
+  background-color: var(--yellow-spotlight);
+}
+.bg-green {
+  background-color: var(--green);
+}
+.bg-violet {
+  background-color: var(--violet-400);
+}
+
+// FONTS
 
 .font-primary-regular {
   font-family: 'Roobert Regular', 'Inter', Roboto, sans-serif;
@@ -95,65 +151,6 @@
 
 .font-secondary {
   font-family: 'Inter', sans-serif;
-}
-
-// Colors
-
-.text-green {
-  color: var(--green);
-}
-.bg-green {
-  background-color: var(--green);
-}
-.text-yellow {
-  color: var(--yellow);
-}
-.bg-yellow {
-  background-color: var(--yellow);
-}
-.text-orange {
-  color: var(--orange);
-}
-.bg-orange {
-  background-color: var(--orange);
-}
-.text-red {
-  color: var(--red);
-}
-.bg-red {
-  background-color: var(--red);
-}
-
-.text-primary-200 {
-  color: var(--primary-200);
-}
-.bg-primary-200 {
-  background-color: var(--primary-200);
-}
-.text-primary-500 {
-  color: var(--primary-500);
-}
-.bg-primary-500 {
-  background-color: var(--primary-500);
-}
-.text-primary-700 {
-  color: var(--primary-700);
-}
-.bg-primary-700 {
-  background-color: var(--primary-700);
-}
-
-.text-violet {
-  color: var(--violet-400);
-}
-.bg-violet {
-  background-color: var(--violet-400);
-}
-.text-yellow-spotlight {
-  color: var(--yellow-spotlight);
-}
-.bg-yellow-spotlight {
-  background-color: var(--yellow-spotlight);
 }
 
 // BADGES
@@ -383,6 +380,38 @@ button.badge {
   color: var(--neutral-400);
 }
 
+.filter-badge {
+  display: flex;
+  color: var(--neutral-300);
+  border: 1px solid rgba(212, 212, 212, 0.1);
+  padding: 0.75rem 1.5rem 0.75rem 0.75rem;
+  background: rgba(34, 34, 34, 0.5);
+  backdrop-filter: blur(6px);
+  border-radius: 2rem;
+
+  &.first {
+    color: var(--violet-400);
+    border-color: var(--violet-400);
+    .led {
+      background-color: var(--violet-400);
+    }
+  }
+
+  &.second {
+    color: var(--primary);
+    border-color: var(--primary);
+    .led {
+      background-color: var(--primary);
+    }
+  }
+
+  &.legend-item {
+    padding: 0.75rem 1.125rem;
+  }
+}
+
+// INPUTS
+
 .input-group-seamless {
   position: relative;
   .form-control {
@@ -424,10 +453,12 @@ button.badge {
   }
 }
 
+// TABLE
+
 .table {
   th {
     font-weight: 400;
-    background-color: rgba(38, 38, 38, 0.6);
+    background-color: var(--neutral-transparent);
     padding-top: 1rem;
     padding-bottom: 1rem;
     border-bottom-width: 0;
@@ -462,6 +493,8 @@ button.badge {
     }
   }
 }
+
+// CARD
 
 .card {
   .card-header + .card-body {
@@ -501,6 +534,8 @@ button.badge {
   }
 }
 
+// BORDERS
+
 .br-sm {
   border-radius: 0.25rem;
   &.badge-outline:before {
@@ -531,35 +566,3 @@ button.badge {
     border-radius: $font-size-root;
   }
 }
-
-.filter-badge {
-  display: flex;
-  color: var(--neutral-300);
-  border: 1px solid rgba(212, 212, 212, 0.1);
-  padding: 0.75rem 1.5rem 0.75rem 0.75rem;
-  background: rgba(34, 34, 34, 0.5);
-  backdrop-filter: blur(6px);
-  border-radius: 2rem;
-
-  &.first {
-    color: var(--violet-400);
-    border-color: var(--violet-400);
-    .led {
-      background-color: var(--violet-400);
-    }
-  }
-
-  &.second {
-    color: var(--primary);
-    border-color: var(--primary);
-    .led {
-      background-color: var(--primary);
-    }
-  }
-
-  &.legend-item {
-    padding: 0.75rem 1.125rem;
-  }
-}
-
-// BUTTONS
