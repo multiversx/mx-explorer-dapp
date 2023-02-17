@@ -11,7 +11,7 @@ import {
   PageState,
   NftBadge
 } from 'components';
-import { urlBuilder, nftText } from 'helpers';
+import { urlBuilder, getNftText } from 'helpers';
 import { useAdapter, useURLSearchParams, useGetFilters } from 'hooks';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { NftType } from 'types';
@@ -161,7 +161,7 @@ export const CollectionNfts = () => {
             {dataReady === false && (
               <PageState
                 icon={faUser}
-                title={`Unable to load ${nftText(type)}`}
+                title={`Unable to load ${getNftText(type)}`}
                 className='py-spacer my-auto'
                 dataTestId='errorScreen'
               />
@@ -169,7 +169,7 @@ export const CollectionNfts = () => {
             {dataReady === true && collectionNfts.length === 0 && (
               <PageState
                 icon={faUser}
-                title={`No ${nftText(type)}s`}
+                title={`No ${getNftText(type)}s`}
                 className='py-spacer my-auto'
               />
             )}

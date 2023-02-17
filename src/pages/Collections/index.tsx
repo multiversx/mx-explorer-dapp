@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faHexagonCheck } from '@fortawesome/pro-solid-svg-icons/faHexagonCheck';
+import { faHexagonCheck } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -23,7 +23,7 @@ import {
 } from 'hooks';
 import { pageHeadersCollectionsStatsSelector } from 'redux/selectors/pageHeadersCollectionsStats';
 import { collectionRoutes } from 'routes';
-import { NftEnumType, CollectionType } from 'types';
+import { NftTypeEnum, CollectionType } from 'types';
 
 import { FailedCollections } from './FailedCollections';
 import { Filters } from './Filters';
@@ -48,13 +48,13 @@ export const Collections = () => {
 
   const getCollectionType = () => {
     if (activeRoute(collectionRoutes.collectionsNft)) {
-      return NftEnumType.NonFungibleESDT;
+      return NftTypeEnum.NonFungibleESDT;
     }
     if (activeRoute(collectionRoutes.collectionsSft)) {
-      return NftEnumType.SemiFungibleESDT;
+      return NftTypeEnum.SemiFungibleESDT;
     }
 
-    return [NftEnumType.NonFungibleESDT, NftEnumType.SemiFungibleESDT].join();
+    return [NftTypeEnum.NonFungibleESDT, NftTypeEnum.SemiFungibleESDT].join();
   };
 
   const fetchCollections = () => {
@@ -198,7 +198,10 @@ export const Collections = () => {
                                                 className='side-icon me-1'
                                               />
                                             )}
-                                          <div>{collection.collection}</div>
+                                          <div>
+                                            {collection.ticker ??
+                                              collection.collection}
+                                          </div>
                                         </div>
                                       </NetworkLink>
 

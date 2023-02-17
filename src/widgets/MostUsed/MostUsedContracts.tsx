@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 
 import { NetworkLink, ScAddressIcon, AccountName } from 'components';
 import { urlBuilder } from 'helpers';
-import { AssetType } from 'types';
+import { AccountAssetType } from 'types';
 import { MostUsedApplicationsType } from 'types/growthWidgets';
 
 export const MostUsedContracts = ({
@@ -45,7 +45,9 @@ export const MostUsedContracts = ({
                       >
                         <AccountName
                           address={contract.key}
-                          assets={contract?.extraInfo?.assets as AssetType}
+                          assets={
+                            contract?.extraInfo?.assets as AccountAssetType
+                          }
                           dataTestId={`constractLink${i}`}
                         />
                       </NetworkLink>

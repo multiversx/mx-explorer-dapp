@@ -1,6 +1,5 @@
 import {
   ScamInfoType,
-  AssetType,
   StakeType,
   DelegationType,
   DelegationLegacyType,
@@ -27,7 +26,7 @@ export interface AccountType {
   isReadable?: boolean;
   isPayable?: boolean;
   isPayableBySmartContract?: boolean;
-  assets?: AssetType;
+  assets?: AccountAssetType;
   username?: string;
   isVerified?: boolean;
 }
@@ -56,4 +55,12 @@ export interface AccountStakingSliceType {
   stakingDataReady: undefined | boolean;
   delegationProviders: ProviderType[];
   delegationLegacyIdentity: IdentityType | undefined;
+}
+
+export interface AccountAssetType {
+  name: string;
+  description?: string;
+  tags?: string[];
+  iconPng?: string;
+  iconSvg?: string;
 }

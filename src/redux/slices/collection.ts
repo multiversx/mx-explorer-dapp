@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NftEnumType } from 'types';
+import { NftTypeEnum } from 'types';
 import { CollectionSliceType } from 'types/collection.types';
 
 export const getInitialCollectionState = (): CollectionSliceType => {
   return {
     collectionState: {
       collection: '',
-      type: NftEnumType.NonFungibleESDT,
+      type: NftTypeEnum.NonFungibleESDT,
       name: '',
       ticker: '',
       timestamp: 0,

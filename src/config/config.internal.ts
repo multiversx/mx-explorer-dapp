@@ -34,6 +34,13 @@ export const networks: NetworkType[] = [
     apiAddress: '***REMOVED***'
   },
   {
+    id: 'testnet-cp-test02',
+    name: 'ClusterPower Testnet 02',
+    adapter: 'api',
+    egldLabel: 'xEGLD',
+    apiAddress: '***REMOVED***'
+  },
+  {
     id: 'testnet-do-ams',
     name: 'DigitalOcean Amsterdam Testnet',
     adapter: 'api',

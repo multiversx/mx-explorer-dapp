@@ -1,10 +1,13 @@
-import { OperationType, OperationDirectionEnum } from 'types';
+import {
+  TransactionOperationType,
+  TransactionOperationDirectionEnum
+} from 'types';
 
 export const getOperationDirection = ({
   operation,
   address
 }: {
-  operation: OperationType;
+  operation: TransactionOperationType;
   address: string;
 }) => {
   const directionOut = address === operation.sender;
@@ -15,16 +18,16 @@ export const getOperationDirection = ({
   let direction = '';
   switch (true) {
     case directionOut:
-      direction = OperationDirectionEnum.out;
+      direction = TransactionOperationDirectionEnum.out;
       break;
     case directionIn:
-      direction = OperationDirectionEnum.in;
+      direction = TransactionOperationDirectionEnum.in;
       break;
     case directionSelf:
-      direction = OperationDirectionEnum.self;
+      direction = TransactionOperationDirectionEnum.self;
       break;
     case directionInternal:
-      direction = OperationDirectionEnum.internal;
+      direction = TransactionOperationDirectionEnum.internal;
       break;
   }
 

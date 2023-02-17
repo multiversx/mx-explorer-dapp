@@ -1,4 +1,5 @@
 .transaction-action {
+  gap: 0.25rem;
   div:not([class]):not([data-testid]) {
     display: flex;
     flex-direction: row;

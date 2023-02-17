@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
+
 import { isHash, addressIsBech32 } from 'helpers';
-import { TxFiltersEnum } from 'types';
+import { TransactionFiltersEnum } from 'types';
 
 export interface SearchFilterType {
   name: string;
-  filter: TxFiltersEnum;
+  filter: TransactionFiltersEnum;
   placeholder?: string;
   className?: string;
   validation?: 'address' | 'hash';

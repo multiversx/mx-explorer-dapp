@@ -2,8 +2,9 @@ import React from 'react';
 import { faLayerPlus } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { Denominate, TxActionBlock } from 'components';
-import { UITransactionType, NftEnumType, TxActionsEnum } from 'types';
+
+import { Denominate, TransactionActionBlock } from 'components';
+import { UITransactionType, NftTypeEnum, TransactionActionEnum } from 'types';
 
 const getTransactionTokens = (transaction: UITransactionType) => {
   if (transaction.action) {
@@ -74,10 +75,10 @@ const MultipleTokensBadge = ({
           key={`tx-token-tooltip-${index}`}
           className={`d-flex align-items-center ${index > 0 ? 'pt-2' : ''}`}
         >
-          {Object.values(NftEnumType).includes(transactionToken.type) ? (
-            <TxActionBlock.Nft token={transactionToken} showBadge />
+          {Object.values(NftTypeEnum).includes(transactionToken.type) ? (
+            <TransactionActionBlock.Nft token={transactionToken} showBadge />
           ) : (
-            <TxActionBlock.Token token={transactionToken} />
+            <TransactionActionBlock.Token token={transactionToken} />
           )}
         </div>
       ))}
@@ -100,8 +101,8 @@ export const TransactionValue = ({
 }) => {
   if (transaction.action) {
     if (
-      transaction.action.name === TxActionsEnum.wrapEgld ||
-      transaction.action.name === TxActionsEnum.unwrapEgld
+      transaction.action.name === TransactionActionEnum.wrapEgld ||
+      transaction.action.name === TransactionActionEnum.unwrapEgld
     ) {
       return <Denominate value={transaction.value} />;
     }
@@ -112,10 +113,10 @@ export const TransactionValue = ({
       const txToken = transactionTokens[0];
       return (
         <div className='d-flex align-items-center'>
-          {Object.values(NftEnumType).includes(txToken.type) ? (
-            <TxActionBlock.Nft token={txToken} showBadge />
+          {Object.values(NftTypeEnum).includes(txToken.type) ? (
+            <TransactionActionBlock.Nft token={txToken} showBadge />
           ) : (
-            <TxActionBlock.Token token={txToken} />
+            <TransactionActionBlock.Token token={txToken} />
           )}
           {!hideMultipleBadge && transactionTokens.length > 1 && (
             <MultipleTokensBadge transactionTokens={transactionTokens} />

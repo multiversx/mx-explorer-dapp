@@ -7,7 +7,7 @@ import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useAdapter, useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector, miniBlockSelector } from 'redux/selectors';
-import { UITransactionType, TxFiltersEnum } from 'types';
+import { UITransactionType, TransactionFiltersEnum } from 'types';
 
 export const MiniBlockDetails = () => {
   const ref = useRef(null);
@@ -136,7 +136,7 @@ export const MiniBlockDetails = () => {
                   </h5>
                 }
                 dataChanged={dataChanged}
-                inactiveFilters={[TxFiltersEnum.miniBlockHash]}
+                inactiveFilters={[TransactionFiltersEnum.miniBlockHash]}
                 isScResultsTable={isScResult}
               />
             </div>

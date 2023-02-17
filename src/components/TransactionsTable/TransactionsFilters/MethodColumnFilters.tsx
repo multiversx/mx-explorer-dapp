@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,12 +6,12 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
 import { SelectFilter } from 'components';
-import { TxActionsEnum, TxFiltersEnum, TransactionsTableType } from 'types';
+import { TransactionActionEnum, TransactionFiltersEnum } from 'types';
 
 export const MethodColumnFilters = ({
   inactiveFilters = []
 }: {
-  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+  inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
   const { function: method } = Object.fromEntries(searchParams);
@@ -21,17 +20,22 @@ export const MethodColumnFilters = ({
     (string && string[0].toUpperCase() + string.slice(1)) || '';
 
   const searchMethods = (
-    Object.values(TxActionsEnum) as (keyof typeof TxActionsEnum)[]
+    Object.values(
+      TransactionActionEnum
+    ) as (keyof typeof TransactionActionEnum)[]
   )
     .filter((val, index, array) => array.indexOf(val) === index)
     .map((key) => {
       return {
         value: key,
-        label: capitalize(TxActionsEnum[key])
+        label: capitalize(TransactionActionEnum[key])
       };
     });
 
-  if (inactiveFilters && inactiveFilters.includes(TxFiltersEnum.method)) {
+  if (
+    inactiveFilters &&
+    inactiveFilters.includes(TransactionFiltersEnum.method)
+  ) {
     return null;
   }
 
@@ -51,7 +55,7 @@ export const MethodColumnFilters = ({
                   <SelectFilter
                     name='function-filter'
                     options={searchMethods}
-                    filter={TxFiltersEnum.method}
+                    filter={TransactionFiltersEnum.method}
                     placeholder='Search'
                     hasCustomSearch
                   />

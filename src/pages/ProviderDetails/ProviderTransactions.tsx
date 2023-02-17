@@ -6,7 +6,7 @@ import { Loader, TransactionsTable } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useAdapter, useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { UITransactionType, TxFiltersEnum } from 'types';
+import { UITransactionType, TransactionFiltersEnum } from 'types';
 
 import { ProviderTabs } from './ProviderLayout/ProviderTabs';
 
@@ -40,7 +40,10 @@ export const ProviderTransactions = () => {
     '...'
   );
 
-  const inactiveFilters = [TxFiltersEnum.sender, TxFiltersEnum.receiver];
+  const inactiveFilters = [
+    TransactionFiltersEnum.sender,
+    TransactionFiltersEnum.receiver
+  ];
 
   const fetchTransactions = (paramsChange = false) => {
     if (searchParams.toString() && paramsChange) {

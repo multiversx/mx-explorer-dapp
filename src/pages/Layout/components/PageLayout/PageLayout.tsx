@@ -4,6 +4,7 @@ import { useActiveRoute } from 'hooks';
 import { AccountLayout } from 'pages/AccountDetails/AccountLayout';
 import { CollectionLayout } from 'pages/CollectionDetails/CollectionLayout';
 import { MiniBlockLayout } from 'pages/MiniBlockDetails/MiniBlockLayout';
+import { NftLayout } from 'pages/NftDetails/NftLayout';
 import { NodesLayout } from 'pages/Nodes/NodesLayout';
 import { ProviderLayout } from 'pages/ProviderDetails/ProviderLayout';
 import { TokenLayout } from 'pages/TokenDetails/TokenLayout';
@@ -11,6 +12,7 @@ import {
   accountsRoutes,
   blocksRoutes,
   collectionRoutes,
+  nftRoutes,
   tokensRoutes,
   validatorsRoutes
 } from 'routes';
@@ -44,6 +46,10 @@ export const PageLayout = ({ children }: { children: React.ReactNode }) => {
     case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
     case activeRoute(tokensRoutes.tokenDetailsRoles):
       return <TokenLayout>{children}</TokenLayout>;
+
+    case activeRoute(nftRoutes.nftDetails):
+    case activeRoute(nftRoutes.nftDetailsAccounts):
+      return <NftLayout>{children}</NftLayout>;
 
     case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
     case activeRoute(collectionRoutes.collectionDetails):
