@@ -17,11 +17,15 @@ import { DecodeMethodType } from 'components/DataDecode';
 import { urlBuilder } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
 import { transactionsRoutes } from 'routes';
-import { ResultType } from 'types';
+import { TransactionSCResultType } from 'types';
 
 import { decodePart } from './decodePart';
 
-export const ScResultsList = ({ results }: { results: ResultType[] }) => {
+export const ScResultsList = ({
+  results
+}: {
+  results: TransactionSCResultType[];
+}) => {
   const { hash } = useLocation();
   const { egldLabel } = useSelector(activeNetworkSelector);
 
@@ -67,7 +71,7 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
 
   return (
     <div className='sc-results-list detailed-list d-flex flex-column mt-1'>
-      {results.map((result: ResultType, i) => {
+      {results.map((result: TransactionSCResultType, i) => {
         const highlightTx = formattedHash === result.hash;
         return (
           <div

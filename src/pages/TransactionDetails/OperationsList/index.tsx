@@ -6,29 +6,29 @@ import {
   NetworkLink,
   AccountName,
   CopyButton,
-  TxActionBlock,
+  TransactionActionBlock,
   Denominate
 } from 'components';
 import { addressIsBech32, urlBuilder, getOperationDirection } from 'helpers';
 import {
   UITransactionType,
-  OperationType,
-  TransactionOperationActionType,
-  VisibleTransactionOperationType,
-  OperationDirectionEnum
+  TransactionOperationType,
+  TransactionOperationActionEnum,
+  TransactionVisibleOperationEnum,
+  TransactionOperationDirectionEnum
 } from 'types';
 
 const internalTransactionActions = [
-  TransactionOperationActionType.create,
-  TransactionOperationActionType.localMint,
-  TransactionOperationActionType.ESDTLocalMint,
-  TransactionOperationActionType.addQuantity,
-  TransactionOperationActionType.burn,
-  TransactionOperationActionType.localBurn,
-  TransactionOperationActionType.ESDTLocalBurn,
-  TransactionOperationActionType.wipe,
-  TransactionOperationActionType.writeLog,
-  TransactionOperationActionType.signalError
+  TransactionOperationActionEnum.create,
+  TransactionOperationActionEnum.localMint,
+  TransactionOperationActionEnum.ESDTLocalMint,
+  TransactionOperationActionEnum.addQuantity,
+  TransactionOperationActionEnum.burn,
+  TransactionOperationActionEnum.localBurn,
+  TransactionOperationActionEnum.ESDTLocalBurn,
+  TransactionOperationActionEnum.wipe,
+  TransactionOperationActionEnum.writeLog,
+  TransactionOperationActionEnum.signalError
 ];
 
 const getTicker = (identifier: string) => {
@@ -42,7 +42,11 @@ const getTicker = (identifier: string) => {
   return identifier;
 };
 
-const OperationToken = ({ operation }: { operation: OperationType }) => {
+const OperationToken = ({
+  operation
+}: {
+  operation: TransactionOperationType;
+}) => {
   const token = {
     type: operation.esdtType,
     name: operation.name,
@@ -59,9 +63,9 @@ const OperationToken = ({ operation }: { operation: OperationType }) => {
   };
   switch (operation.type) {
     case 'nft':
-      return <TxActionBlock.Nft token={token} />;
+      return <TransactionActionBlock.Nft token={token} />;
     case 'esdt':
-      return <TxActionBlock.Token token={token} />;
+      return <TransactionActionBlock.Token token={token} />;
     default:
       return <></>;
   }
@@ -78,7 +82,7 @@ const OperationBlock = ({
 }: {
   address: string;
   transaction: UITransactionType;
-  operation: OperationType;
+  operation: TransactionOperationType;
   action?: string;
   isFullSize?: boolean;
   direction?: string;
@@ -148,7 +152,7 @@ const OperationText = ({
   operation,
   transaction
 }: {
-  operation: OperationType;
+  operation: TransactionOperationType;
   transaction: UITransactionType;
 }) => {
   const { direction } = getOperationDirection({
@@ -157,55 +161,55 @@ const OperationText = ({
   });
 
   switch (operation.action) {
-    case TransactionOperationActionType.create:
-    case TransactionOperationActionType.localMint:
-    case TransactionOperationActionType.ESDTLocalMint:
+    case TransactionOperationActionEnum.create:
+    case TransactionOperationActionEnum.localMint:
+    case TransactionOperationActionEnum.ESDTLocalMint:
       return (
         <OperationBlock
           transaction={transaction}
           operation={operation}
           address={operation.sender}
           action='Mint by'
-          direction={OperationDirectionEnum.internal}
+          direction={TransactionOperationDirectionEnum.internal}
           isFirst
         />
       );
-    case TransactionOperationActionType.addQuantity:
+    case TransactionOperationActionEnum.addQuantity:
       return (
         <OperationBlock
           transaction={transaction}
           operation={operation}
           address={operation.sender}
           action='Add quantity by'
-          direction={OperationDirectionEnum.internal}
+          direction={TransactionOperationDirectionEnum.internal}
           isFirst
         />
       );
-    case TransactionOperationActionType.burn:
-    case TransactionOperationActionType.localBurn:
-    case TransactionOperationActionType.ESDTLocalBurn:
+    case TransactionOperationActionEnum.burn:
+    case TransactionOperationActionEnum.localBurn:
+    case TransactionOperationActionEnum.ESDTLocalBurn:
       return (
         <OperationBlock
           transaction={transaction}
           operation={operation}
           address={operation.sender}
           action='Burn by'
-          direction={OperationDirectionEnum.internal}
+          direction={TransactionOperationDirectionEnum.internal}
           isFirst
         />
       );
-    case TransactionOperationActionType.wipe:
+    case TransactionOperationActionEnum.wipe:
       return (
         <OperationBlock
           transaction={transaction}
           operation={operation}
           address={operation.receiver}
           action='Wipe from'
-          direction={OperationDirectionEnum.internal}
+          direction={TransactionOperationDirectionEnum.internal}
           isFirst
         />
       );
-    case TransactionOperationActionType.multiTransfer:
+    case TransactionOperationActionEnum.multiTransfer:
       return (
         <>
           <OperationBlock
@@ -224,7 +228,7 @@ const OperationText = ({
           />
         </>
       );
-    case TransactionOperationActionType.transfer:
+    case TransactionOperationActionEnum.transfer:
       return (
         <>
           <OperationBlock
@@ -243,26 +247,26 @@ const OperationText = ({
           />
         </>
       );
-    case TransactionOperationActionType.writeLog:
+    case TransactionOperationActionEnum.writeLog:
       return (
         <OperationBlock
           transaction={transaction}
           operation={operation}
           address={operation.sender}
           action='Write log by'
-          direction={OperationDirectionEnum.internal}
+          direction={TransactionOperationDirectionEnum.internal}
           isFirst
           isFullSize
         />
       );
-    case TransactionOperationActionType.signalError:
+    case TransactionOperationActionEnum.signalError:
       return (
         <OperationBlock
           transaction={transaction}
           operation={operation}
           address={operation.sender}
           action='Signal error by'
-          direction={OperationDirectionEnum.internal}
+          direction={TransactionOperationDirectionEnum.internal}
           isFirst
           isFullSize
         />
@@ -293,12 +297,12 @@ const OperationRow = ({
   operation,
   transaction
 }: {
-  operation: OperationType;
+  operation: TransactionOperationType;
   transaction: UITransactionType;
 }) => {
   switch (operation.type) {
-    case VisibleTransactionOperationType.nft:
-    case VisibleTransactionOperationType.esdt:
+    case TransactionVisibleOperationEnum.nft:
+    case TransactionVisibleOperationEnum.esdt:
       return (
         <DetailedItem operation={operation} transaction={transaction}>
           <>
@@ -317,7 +321,7 @@ const OperationRow = ({
         </DetailedItem>
       );
 
-    case VisibleTransactionOperationType.egld:
+    case TransactionVisibleOperationEnum.egld:
       return (
         <DetailedItem operation={operation} transaction={transaction}>
           <div className='d-flex align-items-center symbol text-truncate'>
@@ -343,7 +347,7 @@ const DetailedItem = ({
   transaction
 }: {
   children?: React.ReactNode;
-  operation: OperationType;
+  operation: TransactionOperationType;
   transaction: UITransactionType;
 }) => {
   return (
@@ -363,7 +367,7 @@ export const OperationsList = ({
   operations
 }: {
   transaction: UITransactionType;
-  operations: OperationType[];
+  operations: TransactionOperationType[];
 }) => {
   const initialDisplay = 25;
   const [expanded, setExpanded] = React.useState(false);
@@ -402,7 +406,7 @@ export const OperationsList = ({
       <div className='operations-list d-flex flex-column text-lh-24'>
         {expanded ? (
           <>
-            {operations.map((operation: OperationType, index) => (
+            {operations.map((operation: TransactionOperationType, index) => (
               <div key={`display-${index}`}>
                 <OperationRow operation={operation} transaction={transaction} />
               </div>
@@ -410,11 +414,16 @@ export const OperationsList = ({
           </>
         ) : (
           <>
-            {displayOperations.map((operation: OperationType, index) => (
-              <div key={`display-${index}`}>
-                <OperationRow operation={operation} transaction={transaction} />
-              </div>
-            ))}
+            {displayOperations.map(
+              (operation: TransactionOperationType, index) => (
+                <div key={`display-${index}`}>
+                  <OperationRow
+                    operation={operation}
+                    transaction={transaction}
+                  />
+                </div>
+              )
+            )}
           </>
         )}
       </div>

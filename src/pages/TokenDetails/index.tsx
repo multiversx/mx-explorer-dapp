@@ -6,7 +6,7 @@ import { Loader, TransactionsTable } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useAdapter, useSize, useURLSearchParams } from 'hooks';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
-import { UITransactionType, TxFiltersEnum } from 'types';
+import { UITransactionType, TransactionFiltersEnum } from 'types';
 
 import { TokenTabs } from './TokenLayout/TokenTabs';
 
@@ -129,7 +129,7 @@ export const TokenDetails = () => {
                 directionCol={true}
                 title={<TokenTabs />}
                 dataChanged={dataChanged}
-                inactiveFilters={[TxFiltersEnum.token]}
+                inactiveFilters={[TransactionFiltersEnum.token]}
               />
             </div>
           </div>
