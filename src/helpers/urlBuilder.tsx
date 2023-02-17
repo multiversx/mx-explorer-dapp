@@ -38,6 +38,7 @@ export const urlBuilder = {
   collectionDetailsRoles: (identifier: string) =>
     `/collections/${identifier}/roles`,
   nftDetails: (identifier: string) => `/nfts/${identifier}`,
+  nftDetailsAccounts: (identifier: string) => `/nfts/${identifier}/accounts`,
   providerDetails: (address: string) => `/providers/${address}`,
   providerDetailsTransactions: (address: string) =>
     `/providers/${address}/transactions`,

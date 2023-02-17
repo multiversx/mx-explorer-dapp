@@ -28,7 +28,7 @@ export * from './downloadFile';
 export * from './getTransactionMessages';
 export * from './getPercentage';
 export * from './formatHerotag';
-export * from './nftText';
+
 export * from './getReceiverAssets';
 
 export * from './truncateMiddle';

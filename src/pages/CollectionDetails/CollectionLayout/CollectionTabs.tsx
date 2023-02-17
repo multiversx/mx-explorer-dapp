@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { Tabs } from 'components/Tabs';
-import { urlBuilder, nftText } from 'helpers';
+import { urlBuilder, getNftText } from 'helpers';
 import { collectionSelector } from 'redux/selectors';
 import { collectionRoutes } from 'routes';
 import { NftTypeEnum } from 'types';
@@ -17,7 +17,7 @@ export const CollectionTabs = () => {
     {
       show: type && type !== NftTypeEnum.MetaESDT,
       tabTo: urlBuilder.collectionDetails(collection),
-      tabLabel: `${nftText(type)}s`,
+      tabLabel: `${getNftText(type)}s`,
       activationRoutes: [collectionRoutes.collectionDetails]
     },
     {

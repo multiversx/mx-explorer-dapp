@@ -10,7 +10,6 @@ export interface SocialDetailItemType extends DetailItemType {
 }
 
 export const SocialDetailItem = ({
-  children,
   title,
   assets,
   ...props
