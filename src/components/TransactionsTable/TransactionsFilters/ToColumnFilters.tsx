@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,12 +7,12 @@ import { useSearchParams } from 'react-router-dom';
 
 import { SelectFilter, SelectFilterType } from 'components';
 import { truncateMiddle } from 'helpers';
-import { TxFiltersEnum, TransactionsTableType } from 'types';
+import { TransactionFiltersEnum } from 'types';
 
 export const ToColumnFilters = ({
   inactiveFilters = []
 }: {
-  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+  inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
   const { receiver } = Object.fromEntries(searchParams);
@@ -23,7 +22,10 @@ export const ToColumnFilters = ({
       return { value: receiver, label: truncateMiddle(receiver, 9) };
     }) ?? [];
 
-  if (inactiveFilters && inactiveFilters.includes(TxFiltersEnum.receiver)) {
+  if (
+    inactiveFilters &&
+    inactiveFilters.includes(TransactionFiltersEnum.receiver)
+  ) {
     return null;
   }
 
@@ -45,7 +47,7 @@ export const ToColumnFilters = ({
                 <SelectFilter
                   name='receiver-filter'
                   options={existingValues}
-                  filter={TxFiltersEnum.receiver}
+                  filter={TransactionFiltersEnum.receiver}
                   placeholder='Search for multiple addresses'
                   validation='address'
                   noOptionsMessage='Invalid Address'

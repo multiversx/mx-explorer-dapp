@@ -1,10 +1,12 @@
-import * as React from 'react';
-import { ScResultType } from 'types';
+import React from 'react';
+
+import { Pager } from 'components';
+import { TransactionSCResultType } from 'types';
+
 import { ScResultRow } from './ScResultRow';
-import { Pager } from '../Pager';
 
 interface ScResultsTableType {
-  scResults: ScResultType[];
+  scResults: TransactionSCResultType[];
   address?: string;
   totalScResults: number | '...';
   size: number;

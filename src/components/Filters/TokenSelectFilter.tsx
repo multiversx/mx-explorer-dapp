@@ -10,7 +10,7 @@ import {
 
 import { useAdapter, useGetHash, useActiveRoute } from 'hooks';
 import { accountsRoutes } from 'routes';
-import { CollectionType, TokenType, TxFiltersEnum } from 'types';
+import { CollectionType, TokenType, TransactionFiltersEnum } from 'types';
 
 type AsyncPaginateCreatableProps<
   OptionType,
@@ -50,7 +50,7 @@ export type SelectOptionType = {
 
 export interface TokenSelectFilterType {
   name: string;
-  filter: TxFiltersEnum;
+  filter: TransactionFiltersEnum;
   options?: SelectOptionType[];
   placeholder?: string;
   hasCustomSearch?: boolean;

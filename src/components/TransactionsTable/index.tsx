@@ -1,14 +1,13 @@
 import React from 'react';
 
-import { TableWrapper } from 'components';
+import { Pager, TableWrapper } from 'components';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
-import { TransactionsTableType } from 'types';
+import { TransactionTableType } from 'types';
 
 import { Header } from './Header';
 import { NoTransactions } from './NoTransactions';
 import { TransactionRow } from './TransactionRow';
 import { MethodList } from './TransactionsFilters';
-import { Pager } from '../Pager';
 
 const ColSpanWrapper = ({
   children,
@@ -37,7 +36,7 @@ export const TransactionsTable = ({
   dataChanged = false,
   isScResultsTable = false,
   inactiveFilters
-}: TransactionsTableType) => {
+}: TransactionTableType) => {
   return (
     <div
       className={`transactions-table ${directionCol ? 'has-direction' : ''}`}

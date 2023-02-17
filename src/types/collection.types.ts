@@ -1,13 +1,9 @@
-import {
-  RolesType,
-  NftEnumType,
-  ScamInfoType,
-  SliceType
-} from './general.types';
+import { RolesType, ScamInfoType, SliceType } from './general.types';
+import { NftTypeEnum } from './nft.types';
 
 export interface CollectionType {
   collection: string;
-  type: NftEnumType;
+  type: NftTypeEnum;
   name: string;
   ticker: string;
   timestamp: number;

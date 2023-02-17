@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,17 +6,20 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
 import { TokenSelectFilter } from 'components';
-import { TxFiltersEnum, TransactionsTableType } from 'types';
+import { TransactionFiltersEnum } from 'types';
 
 export const ValueColumnFilters = ({
   inactiveFilters = []
 }: {
-  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+  inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
   const { token } = Object.fromEntries(searchParams);
 
-  if (inactiveFilters && inactiveFilters.includes(TxFiltersEnum.token)) {
+  if (
+    inactiveFilters &&
+    inactiveFilters.includes(TransactionFiltersEnum.token)
+  ) {
     return null;
   }
 
@@ -38,7 +40,7 @@ export const ValueColumnFilters = ({
                 <div className='mb-1'>Token</div>
                 <TokenSelectFilter
                   name='token-filter'
-                  filter={TxFiltersEnum.token}
+                  filter={TransactionFiltersEnum.token}
                   placeholder='Search for a Token'
                   noOptionsMessage='Invalid Identifier'
                 />

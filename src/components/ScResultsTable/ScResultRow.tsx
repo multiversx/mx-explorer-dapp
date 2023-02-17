@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   ScAddressIcon,
   ShardSpan,
@@ -8,10 +9,10 @@ import {
   Denominate
 } from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import { ScResultType } from 'types';
+import { TransactionSCResultType } from 'types';
 
 export interface ScResultRowType {
-  scResult: ScResultType;
+  scResult: TransactionSCResultType;
   address?: string;
 }
 

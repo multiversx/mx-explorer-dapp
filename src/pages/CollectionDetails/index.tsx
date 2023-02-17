@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 
 import { Loader } from 'components';
 import { collectionSelector } from 'redux/selectors';
-import { NftEnumType } from 'types';
+import { NftTypeEnum } from 'types';
 
 import { CollectionNfts } from './CollectionNfts';
-import { CollectionDetailsRoles } from './CollectionRoles';
+import { CollectionRoles } from './CollectionRoles';
 
 export const CollectionDetails = () => {
   const { collectionState } = useSelector(collectionSelector);
@@ -16,8 +16,8 @@ export const CollectionDetails = () => {
     <>
       {collection ? (
         <>
-          {type === NftEnumType.MetaESDT ? (
-            <CollectionDetailsRoles />
+          {type === NftTypeEnum.MetaESDT ? (
+            <CollectionRoles />
           ) : (
             <CollectionNfts />
           )}

@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Overlay } from 'components';
-import { AssetType } from 'types';
 
-export const AccountDetailsBlock = ({ assets }: { assets: AssetType }) => {
+import { Overlay } from 'components';
+import { AccountAssetType } from 'types';
+
+export const AccountDetailsBlock = ({
+  assets
+}: {
+  assets: AccountAssetType;
+}) => {
   return (
     <div className='d-flex align-items-center'>
       {assets.iconSvg && (

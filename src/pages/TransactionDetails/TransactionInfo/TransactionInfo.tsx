@@ -42,9 +42,9 @@ import { activeNetworkSelector } from 'redux/selectors';
 import { transactionsRoutes } from 'routes';
 import {
   TransactionType,
-  TxActionCategoryEnum,
-  VisibleTransactionOperationType,
-  ResultType
+  TransactionActionCategoryEnum,
+  TransactionVisibleOperationEnum,
+  TransactionSCResultType
 } from 'types';
 
 import { DataField } from './DataField';
@@ -65,7 +65,7 @@ export const getFee = (transaction: TransactionType) => {
 export const getVisibleOperations = (transaction: TransactionType) => {
   const operations =
     transaction?.operations?.filter((operation): operation is any =>
-      Object.values<string>(VisibleTransactionOperationType).includes(
+      Object.values<string>(TransactionVisibleOperationEnum).includes(
         operation.type
       )
     ) ?? [];
@@ -92,7 +92,11 @@ export const AddressDetailItem = ({ address }: { address: string }) => (
   </DetailItem>
 );
 
-export const ScrDetailItem = ({ result }: { result: ResultType }) => (
+export const ScrDetailItem = ({
+  result
+}: {
+  result: TransactionSCResultType;
+}) => (
   <DetailItem title='SC Result Hash' noBorder>
     <div className='d-flex align-items-center'>
       <Trim text={result.hash} />
@@ -375,7 +379,7 @@ export const TransactionInfo = ({
                     </div>
                   </DetailItem>
                   {transaction.action.category !==
-                    TxActionCategoryEnum.scCall && (
+                    TransactionActionCategoryEnum.scCall && (
                     <DetailItem
                       title='Transaction Action'
                       className='text-lh-24'

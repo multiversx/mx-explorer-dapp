@@ -7,7 +7,7 @@ import { collectionSelector } from 'redux/selectors';
 
 import { CollectionTabs } from './CollectionLayout/CollectionTabs';
 
-export const CollectionDetailsRoles = () => {
+export const CollectionRoles = () => {
   const ref = React.useRef(null);
   const { collectionState } = useSelector(collectionSelector);
   const { roles } = collectionState;

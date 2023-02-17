@@ -1,17 +1,22 @@
 import React from 'react';
+
 import { NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
-import { TokenArgumentType, NftEnumType } from 'types';
+import { TransactionTokenArgumentType, NftTypeEnum } from 'types';
 
-export const TxActionCollection = ({ token }: { token: TokenArgumentType }) => {
+export const TransactionActionCollection = ({
+  token
+}: {
+  token: TransactionTokenArgumentType;
+}) => {
   const ref = React.useRef(null);
 
   return (
-    <div ref={ref} className='collection-action-block'>
+    <div ref={ref} className='collection-action-block d-contents'>
       {token && token.collection && (
         <NetworkLink
           to={
-            token?.type === NftEnumType.MetaESDT
+            token?.type === NftTypeEnum.MetaESDT
               ? urlBuilder.tokenMetaEsdtDetails(token.collection)
               : urlBuilder.collectionDetails(token.collection)
           }

@@ -1,5 +1,7 @@
-import * as React from 'react';
-import { TransactionsTableType } from 'types';
+import React from 'react';
+
+import { TransactionTableType } from 'types';
+
 import {
   AgeColumnFilters,
   FromColumnFilters,
@@ -13,7 +15,7 @@ import {
 export const Header = ({
   directionCol = false,
   inactiveFilters
-}: TransactionsTableType) => {
+}: TransactionTableType) => {
   return (
     <thead>
       <tr>

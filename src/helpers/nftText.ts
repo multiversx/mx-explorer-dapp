@@ -1,12 +1,12 @@
-import { NftType, NftEnumType } from 'types';
+import { NftTypeEnum } from 'types';
 
-export const nftText = (type: NftType['type']) => {
+export const nftText = (type: NftTypeEnum) => {
   switch (type) {
-    case NftEnumType.SemiFungibleESDT:
+    case NftTypeEnum.SemiFungibleESDT:
       return 'SFT';
-    case NftEnumType.NonFungibleESDT:
+    case NftTypeEnum.NonFungibleESDT:
       return 'NFT';
-    case NftEnumType.MetaESDT:
+    case NftTypeEnum.MetaESDT:
       return 'Meta-ESDT';
     default:
       return '';

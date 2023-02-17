@@ -1,8 +1,9 @@
 import * as React from 'react';
+
 import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
 import { Trim, Overlay } from 'components';
 import { formatHerotag } from 'helpers';
-import { AssetType } from 'types';
+import { AccountAssetType } from 'types';
 
 export const AccountName = ({
   address,
@@ -11,7 +12,7 @@ export const AccountName = ({
   color
 }: {
   address: string;
-  assets?: AssetType;
+  assets?: AccountAssetType;
   dataTestId?: string;
   color?: 'muted' | 'secondary';
 }) => {

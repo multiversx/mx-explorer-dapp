@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,29 +6,31 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
 import { SelectFilter, SearchFilter } from 'components';
-import { ApiTxStatusEnum, TxFiltersEnum, TransactionsTableType } from 'types';
+import { TransactionApiStatusEnum, TransactionFiltersEnum } from 'types';
 
 export const StatusColumnFilters = ({
   inactiveFilters = []
 }: {
-  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+  inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
   const { status, miniBlockHash } = Object.fromEntries(searchParams);
 
   const searchStatuses = (
-    Object.keys(ApiTxStatusEnum) as (keyof typeof ApiTxStatusEnum)[]
+    Object.keys(
+      TransactionApiStatusEnum
+    ) as (keyof typeof TransactionApiStatusEnum)[]
   ).map((key) => {
     return {
       value: key,
-      label: ApiTxStatusEnum[key]
+      label: TransactionApiStatusEnum[key]
     };
   });
 
   if (
     inactiveFilters &&
-    inactiveFilters.includes(TxFiltersEnum.status) &&
-    inactiveFilters.includes(TxFiltersEnum.miniBlockHash)
+    inactiveFilters.includes(TransactionFiltersEnum.status) &&
+    inactiveFilters.includes(TransactionFiltersEnum.miniBlockHash)
   ) {
     return null;
   }
@@ -44,7 +45,7 @@ export const StatusColumnFilters = ({
         <Popover id='popover-positioned-bottom' className='border popover-xs '>
           <Popover.Body>
             <div className='p-3 '>
-              {!inactiveFilters.includes(TxFiltersEnum.status) && (
+              {!inactiveFilters.includes(TransactionFiltersEnum.status) && (
                 <>
                   {searchStatuses.length > 0 && (
                     <div className='filter-block'>
@@ -52,19 +53,21 @@ export const StatusColumnFilters = ({
                       <SelectFilter
                         name='status-filter'
                         options={searchStatuses}
-                        filter={TxFiltersEnum.status}
+                        filter={TransactionFiltersEnum.status}
                       />
                     </div>
                   )}
                 </>
               )}
 
-              {!inactiveFilters.includes(TxFiltersEnum.miniBlockHash) && (
+              {!inactiveFilters.includes(
+                TransactionFiltersEnum.miniBlockHash
+              ) && (
                 <div className='filter-block'>
                   <div className='mb-1'>Miniblock Hash</div>
                   <SearchFilter
                     name='miniBlockHash-filter'
-                    filter={TxFiltersEnum.miniBlockHash}
+                    filter={TransactionFiltersEnum.miniBlockHash}
                     placeholder='Hash'
                     validation='hash'
                   />
