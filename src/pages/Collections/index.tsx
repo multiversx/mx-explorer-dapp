@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faHexagonCheck } from '@fortawesome/pro-solid-svg-icons/faHexagonCheck';
+import { faHexagonCheck } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -198,7 +198,10 @@ export const Collections = () => {
                                                 className='side-icon me-1'
                                               />
                                             )}
-                                          <div>{collection.collection}</div>
+                                          <div>
+                                            {collection.ticker ??
+                                              collection.collection}
+                                          </div>
                                         </div>
                                       </NetworkLink>
 

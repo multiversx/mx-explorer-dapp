@@ -45,7 +45,6 @@ export * from './PropertyPill';
 export * from './ScResultsTable';
 export * from './LoadingDots';
 export * from './LockedTokenAddressIcon';
-export * from './AccountDetailsBlock';
 export * from './Overlay';
 export * from './AccountName';
 export * from './Sort';
@@ -67,5 +66,6 @@ export * from './ShardList';
 export * from './FormatUSD';
 export * from './CollapsibleArrows';
 export * from './Tabs';
+export * from './AccountLink';
 
 export { Chart, NodesTable, TransactionActionBlock, SharedIdentity };

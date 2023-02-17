@@ -1,6 +1,8 @@
 import React from 'react';
 import { faClock } from '@fortawesome/pro-regular-svg-icons';
+import { faHexagonCheck } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import {
@@ -30,6 +32,7 @@ export const CollectionDetailsCard = () => {
     timestamp,
     decimals,
     owner,
+    isVerified,
     canPause,
     canFreeze,
     canWipe,
@@ -78,6 +81,23 @@ export const CollectionDetailsCard = () => {
                     />
                   )}
                   <div>{name}</div>
+                  {isVerified && (
+                    <OverlayTrigger
+                      placement='top'
+                      delay={{ show: 0, hide: 400 }}
+                      overlay={(props: any) => (
+                        <Tooltip {...props} show={props.show.toString()}>
+                          Verified
+                        </Tooltip>
+                      )}
+                    >
+                      <FontAwesomeIcon
+                        icon={faHexagonCheck}
+                        size='sm'
+                        className='ms-2 text-yellow-spotlight'
+                      />
+                    </OverlayTrigger>
+                  )}
                 </div>
               </DetailItem>
               <DetailItem title='Collection'>{collection}</DetailItem>

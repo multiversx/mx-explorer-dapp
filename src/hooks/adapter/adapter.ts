@@ -552,6 +552,29 @@ export const useAdapter = () => {
         params: getNftsParams({ ...rest, includeFlagged: true })
       }),
 
+    getNftTransactions: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/nfts/${identifier}/transactions`,
+        params: getTransactionsParams({
+          ...rest
+        })
+      }),
+
+    getNftTransactionsCount: ({
+      identifier,
+      size,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/nfts/${identifier}/transactions/count`,
+        params: getTransactionsParams({
+          ...rest
+        })
+      }),
+
     // General
     getStats,
     getShards,

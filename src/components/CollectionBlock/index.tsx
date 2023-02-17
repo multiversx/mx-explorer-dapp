@@ -27,10 +27,14 @@ export const CollectionBlock = ({ nft }: { nft: NftType }) => {
                   alt={nft.collection}
                 />
               )}
-              <div className='text-truncate'>{nft.collection}</div>
+              <div className='text-truncate'>
+                {nft.ticker ?? nft.collection}
+              </div>
             </>
           ) : (
-            <span className='text-truncate'>{nft.collection}</span>
+            <span className='text-truncate'>
+              {nft.ticker ?? nft.collection}
+            </span>
           )}
         </div>
       </NetworkLink>

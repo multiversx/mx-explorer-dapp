@@ -95,7 +95,8 @@ export const Links = (props: LinksPropsType) => {
         collectionRoutes.collectionsSft,
         collectionRoutes.collectionDetailsRoles,
         nftRoutes.nfts,
-        nftRoutes.nftDetails
+        nftRoutes.nftDetails,
+        nftRoutes.nftDetailsAccounts
       ]
     },
     {
