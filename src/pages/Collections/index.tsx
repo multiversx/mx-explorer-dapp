@@ -23,7 +23,7 @@ import {
 } from 'hooks';
 import { pageHeadersCollectionsStatsSelector } from 'redux/selectors/pageHeadersCollectionsStats';
 import { collectionRoutes } from 'routes';
-import { NftEnumType, CollectionType } from 'types';
+import { NftTypeEnum, CollectionType } from 'types';
 
 import { FailedCollections } from './FailedCollections';
 import { Filters } from './Filters';
@@ -48,13 +48,13 @@ export const Collections = () => {
 
   const getCollectionType = () => {
     if (activeRoute(collectionRoutes.collectionsNft)) {
-      return NftEnumType.NonFungibleESDT;
+      return NftTypeEnum.NonFungibleESDT;
     }
     if (activeRoute(collectionRoutes.collectionsSft)) {
-      return NftEnumType.SemiFungibleESDT;
+      return NftTypeEnum.SemiFungibleESDT;
     }
 
-    return [NftEnumType.NonFungibleESDT, NftEnumType.SemiFungibleESDT].join();
+    return [NftTypeEnum.NonFungibleESDT, NftTypeEnum.SemiFungibleESDT].join();
   };
 
   const fetchCollections = () => {

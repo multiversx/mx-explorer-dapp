@@ -26,7 +26,11 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
     setSearchParams(nextUrlParams);
   };
 
-  const TxMethodText = ({ children }: { children: React.ReactNode }) => {
+  const TransactionMethodText = ({
+    children
+  }: {
+    children: React.ReactNode;
+  }) => {
     const method = getTransactionMethod(transaction);
 
     return (
@@ -48,15 +52,15 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
     );
   };
 
-  const TxMethodBadge = (
+  const TransactionMethodBadge = (
     <div className='d-inline-block'>
-      <TxMethodText>
+      <TransactionMethodText>
         <span className='badge badge-outline badge-outline-green'>
           <div className='transaction-function-badge text-truncate text-capitalize'>
             {getTransactionMethod(transaction)}
           </div>
         </span>
-      </TxMethodText>
+      </TransactionMethodText>
     </div>
   );
 
@@ -70,9 +74,9 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
         </Tooltip>
       )}
     >
-      {TxMethodBadge}
+      {TransactionMethodBadge}
     </OverlayTrigger>
   ) : (
-    TxMethodBadge
+    TransactionMethodBadge
   );
 };

@@ -1,6 +1,6 @@
 export enum ThemesEnum {
-  'default' = 'default',
-  'testnet' = 'testnet'
+  default = 'default',
+  testnet = 'testnet'
 }
 
 export interface NotificationType {

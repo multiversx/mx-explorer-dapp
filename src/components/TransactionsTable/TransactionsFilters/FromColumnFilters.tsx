@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,17 +6,20 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
 import { SearchFilter } from 'components';
-import { TxFiltersEnum, TransactionsTableType } from 'types';
+import { TransactionFiltersEnum } from 'types';
 
 export const FromColumnFilters = ({
   inactiveFilters = []
 }: {
-  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+  inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
   const { sender } = Object.fromEntries(searchParams);
 
-  if (inactiveFilters && inactiveFilters.includes(TxFiltersEnum.sender)) {
+  if (
+    inactiveFilters &&
+    inactiveFilters.includes(TransactionFiltersEnum.sender)
+  ) {
     return null;
   }
 
@@ -35,7 +37,7 @@ export const FromColumnFilters = ({
                 <div className='mb-1'>From</div>
                 <SearchFilter
                   name='sender-filter'
-                  filter={TxFiltersEnum.sender}
+                  filter={TransactionFiltersEnum.sender}
                   placeholder='Address'
                   validation='address'
                 />

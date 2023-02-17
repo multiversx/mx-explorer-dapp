@@ -1,5 +1,4 @@
-import { RolesType } from 'types/general.types';
-import { SliceType } from 'types/general.types';
+import { RolesType, SliceType } from 'types/general.types';
 
 export interface TokenType {
   type: TokenTypeEnum;
@@ -26,22 +25,24 @@ export interface TokenType {
   price?: number;
   marketCap?: number;
   valueUsd?: number;
-  assets?: {
-    website?: string;
-    description?: string;
-    status?: string;
-    pngUrl?: string;
-    svgUrl?: string;
-    social?: any;
-    extraTokens?: string[];
-    lockedAccounts?: { [key: string]: string };
-  };
+  assets?: TokenAssetType;
   roles?: TokenRolesType[];
+}
+
+export interface TokenSliceType extends SliceType {
+  token: TokenType;
 }
 
 export enum TokenTypeEnum {
   FungibleESDT = 'FungibleESDT',
   MetaESDT = 'MetaESDT'
+}
+
+export enum TokenSortEnum {
+  price = 'price',
+  marketCap = 'marketCap',
+  accounts = 'accounts',
+  transactions = 'transactions'
 }
 
 export interface TokenRolesType extends RolesType {
@@ -64,6 +65,14 @@ export interface TokenSupplyType {
   lockedAccounts?: TokenLockedAccountType[];
 }
 
-export interface TokenSliceType extends SliceType {
-  token: TokenType;
+export interface TokenAssetType {
+  name?: string;
+  website?: string;
+  description?: string;
+  status?: string;
+  pngUrl?: string;
+  svgUrl?: string;
+  social?: { [key: string]: string };
+  extraTokens?: string[];
+  lockedAccounts?: { [key: string]: string };
 }

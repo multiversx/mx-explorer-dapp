@@ -1,5 +1,14 @@
 import React from 'react';
 
+export interface DetailItemType {
+  children: React.ReactNode;
+  title: string | React.ReactNode;
+  className?: string;
+  colWidth?: string;
+  noBorder?: boolean;
+  verticalCenter?: boolean;
+}
+
 export const DetailItem = ({
   children,
   title,
@@ -7,14 +16,7 @@ export const DetailItem = ({
   colWidth = '2',
   noBorder = false,
   verticalCenter = false
-}: {
-  children: React.ReactNode;
-  title: string | React.ReactNode;
-  className?: string;
-  colWidth?: string;
-  noBorder?: boolean;
-  verticalCenter?: boolean;
-}) => (
+}: DetailItemType) => (
   <div
     className={`row detail-item ${className} ${
       noBorder ? 'pt-3 pb-1' : 'border-bottom py-3'

@@ -1,7 +1,12 @@
 import BigNumber from 'bignumber.js';
+
 import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
-import { TransactionType, TokenArgumentType, NftEnumType } from 'types';
+import {
+  TransactionType,
+  TransactionTokenArgumentType,
+  NftTypeEnum
+} from 'types';
 
 enum TransactionMessagesEnum {
   newNFTData = 'new nft data on sender',
@@ -62,11 +67,11 @@ const getReceiptValue = (transaction: TransactionType) => {
   return '';
 };
 
-const getTokenDisplayType = (type: TokenArgumentType['type']) => {
+const getTokenDisplayType = (type: TransactionTokenArgumentType['type']) => {
   switch (type) {
-    case NftEnumType.NonFungibleESDT:
+    case NftTypeEnum.NonFungibleESDT:
       return 'NFT';
-    case NftEnumType.SemiFungibleESDT:
+    case NftTypeEnum.SemiFungibleESDT:
       return 'SFT';
     default:
       return 'token';

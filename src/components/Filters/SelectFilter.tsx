@@ -4,7 +4,7 @@ import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
 import { isHash, addressIsBech32 } from 'helpers';
-import { TxFiltersEnum } from 'types';
+import { TransactionFiltersEnum } from 'types';
 
 interface SelectOptionType {
   value: string;
@@ -13,7 +13,7 @@ interface SelectOptionType {
 
 export interface SelectFilterType {
   name: string;
-  filter: TxFiltersEnum;
+  filter: TransactionFiltersEnum;
   options: SelectOptionType[];
   placeholder?: string;
   hasCustomSearch?: boolean;

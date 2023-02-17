@@ -6,7 +6,7 @@ import { Tabs } from 'components/Tabs';
 import { urlBuilder, nftText } from 'helpers';
 import { collectionSelector } from 'redux/selectors';
 import { collectionRoutes } from 'routes';
-import { NftEnumType } from 'types';
+import { NftTypeEnum } from 'types';
 
 export const CollectionTabs = () => {
   const { collectionState } = useSelector(collectionSelector);
@@ -15,7 +15,7 @@ export const CollectionTabs = () => {
 
   const tabs = [
     {
-      show: type && type !== NftEnumType.MetaESDT,
+      show: type && type !== NftTypeEnum.MetaESDT,
       tabTo: urlBuilder.collectionDetails(collection),
       tabLabel: `${nftText(type)}s`,
       activationRoutes: [collectionRoutes.collectionDetails]
@@ -26,7 +26,7 @@ export const CollectionTabs = () => {
       tabLabel: 'Roles',
       activationRoutes: [
         collectionRoutes.collectionDetailsRoles,
-        type === NftEnumType.MetaESDT ? pathname : ''
+        type === NftTypeEnum.MetaESDT ? pathname : ''
       ]
     }
   ];

@@ -3,15 +3,15 @@ import BigNumber from 'bignumber.js';
 
 import { Denominate, NetworkLink, NftBadge, Overlay } from 'components';
 import { urlBuilder } from 'helpers';
-import { NftEnumType, TokenArgumentType } from 'types';
+import { NftTypeEnum, TransactionTokenArgumentType } from 'types';
 
-export const TxActionNft = ({
+export const TransactionActionNft = ({
   token,
   showBadge,
   noValue,
   showLastNonZeroDecimal
 }: {
-  token: TokenArgumentType;
+  token: TransactionTokenArgumentType;
   showBadge?: boolean;
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
@@ -30,15 +30,15 @@ export const TxActionNft = ({
   );
 
   return (
-    <div ref={ref} className='nft-action-block'>
+    <div ref={ref} className='nft-action-block d-contents'>
       {token && token.identifier && (
         <>
-          {showBadge && token.type !== NftEnumType.MetaESDT && (
+          {showBadge && token.type !== NftTypeEnum.MetaESDT && (
             <NftBadge type={token.type} className='me-1 my-auto' />
           )}
           {!noValue &&
             token.value &&
-            token.type !== NftEnumType.NonFungibleESDT && (
+            token.type !== NftTypeEnum.NonFungibleESDT && (
               <div className={`me-1  ${token.svgUrl ? 'text-truncate' : ''}`}>
                 {token.decimals !== undefined ? (
                   <Denominate
@@ -58,18 +58,18 @@ export const TxActionNft = ({
             )}
           <NetworkLink
             to={
-              token.type === NftEnumType.MetaESDT && token?.collection
+              token.type === NftTypeEnum.MetaESDT && token?.collection
                 ? urlBuilder.tokenMetaEsdtDetails(token.collection)
                 : urlBuilder.nftDetails(token.identifier)
             }
             className={`d-flex text-truncate ${
               token.svgUrl ? 'side-link' : ''
             }`}
-            {...(token.type === NftEnumType.MetaESDT
+            {...(token.type === NftTypeEnum.MetaESDT
               ? { 'aria-label': token.identifier }
               : {})}
           >
-            {token.type === NftEnumType.MetaESDT && token?.svgUrl ? (
+            {token.type === NftTypeEnum.MetaESDT && token?.svgUrl ? (
               <Overlay title={token.identifier}>
                 <TokenInfo />
               </Overlay>

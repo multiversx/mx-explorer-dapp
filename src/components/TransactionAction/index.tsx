@@ -1,16 +1,23 @@
-import * as React from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
 import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
 import {
   ScAddressIcon,
   NetworkLink,
   AccountName,
   Denominate,
-  TxActionBlock,
+  TransactionActionBlock,
   NftBadge
 } from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import { NftEnumType } from 'types';
-import { TokenArgumentType, TransactionType } from 'types';
+import { activeNetworkSelector } from 'redux/selectors';
+import {
+  NftTypeEnum,
+  TransactionTokenArgumentType,
+  TransactionType
+} from 'types';
+
 import { unwrapper } from './unwrapper';
 
 export const ActionToken = ({
@@ -18,44 +25,44 @@ export const ActionToken = ({
   noValue,
   showLastNonZeroDecimal
 }: {
-  token: TokenArgumentType;
+  token: TransactionTokenArgumentType;
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
 }) => {
   if (
     token.type &&
-    ['MetaESDT', 'SemiFungibleESDT', 'NonFungibleESDT'].includes(token.type)
+    Object.values(NftTypeEnum).includes(token.type as NftTypeEnum)
   ) {
     switch (token.type) {
-      case NftEnumType.SemiFungibleESDT:
+      case NftTypeEnum.SemiFungibleESDT:
         return (
           <div>
             <NftBadge type={token.type} className='me-1' />
-            <TxActionBlock.Nft
+            <TransactionActionBlock.Nft
               token={token}
               noValue={noValue}
               showLastNonZeroDecimal={showLastNonZeroDecimal}
             />
             <span>of collection</span>
-            <TxActionBlock.Collection token={token} />
+            <TransactionActionBlock.Collection token={token} />
           </div>
         );
-      case NftEnumType.NonFungibleESDT:
+      case NftTypeEnum.NonFungibleESDT:
         return (
           <div>
             <NftBadge type={token.type} className='me-1' />
-            <TxActionBlock.Nft
+            <TransactionActionBlock.Nft
               token={token}
               noValue={noValue}
               showLastNonZeroDecimal={showLastNonZeroDecimal}
             />
             <span>of collection</span>
-            <TxActionBlock.Collection token={token} />
+            <TransactionActionBlock.Collection token={token} />
           </div>
         );
-      case NftEnumType.MetaESDT:
+      case NftTypeEnum.MetaESDT:
         return (
-          <TxActionBlock.Nft
+          <TransactionActionBlock.Nft
             token={token}
             noValue={noValue}
             showLastNonZeroDecimal={showLastNonZeroDecimal}
@@ -66,7 +73,7 @@ export const ActionToken = ({
     }
   } else {
     return (
-      <TxActionBlock.Token
+      <TransactionActionBlock.Token
         token={token}
         noValue={noValue}
         showLastNonZeroDecimal={showLastNonZeroDecimal}
@@ -82,9 +89,11 @@ const ActionText = ({
   entry: any;
   transaction: TransactionType;
 }) => {
+  const { egldLabel } = useSelector(activeNetworkSelector);
+
   switch (true) {
     case typeof entry === 'string':
-      return <span>{entry.replace('eGLD', 'EGLD')}</span>;
+      return <span>{entry.replace('eGLD', egldLabel)}</span>;
 
     case Boolean(entry.address):
       let entryAssets;
@@ -117,18 +126,20 @@ const ActionText = ({
       );
 
     case Boolean(entry.token && entry.token.length > 0):
-      return entry.token.map((token: TokenArgumentType, index: number) => (
-        <div key={`tx-${token.identifier}-${index}`}>
-          <ActionToken token={token} showLastNonZeroDecimal />
-          {index < entry.token.length - 1 && (
-            <span className='ms-n1 me-1 d-none d-sm-flex'>,</span>
-          )}
-        </div>
-      ));
+      return entry.token.map(
+        (token: TransactionTokenArgumentType, index: number) => (
+          <div key={`tx-${token.identifier}-${index}`}>
+            <ActionToken token={token} showLastNonZeroDecimal />
+            {index < entry.token.length - 1 && (
+              <span className='ms-n1 me-1 d-none d-sm-flex'>,</span>
+            )}
+          </div>
+        )
+      );
 
     case Boolean(entry.tokenNoValue && entry.tokenNoValue.length > 0):
       return entry.tokenNoValue.map(
-        (tokenNoValue: TokenArgumentType, index: number) => (
+        (tokenNoValue: TransactionTokenArgumentType, index: number) => (
           <div key={`tx-${tokenNoValue.token}-${index}`}>
             <ActionToken token={tokenNoValue} noValue showLastNonZeroDecimal />
             {index < entry.tokenNoValue.length - 1 && (
@@ -140,7 +151,7 @@ const ActionText = ({
 
     case Boolean(entry.tokenNoLink && entry.tokenNoLink.length > 0):
       return entry.tokenNoLink.map(
-        (tokenNoLink: TokenArgumentType, index: number) => (
+        (tokenNoLink: TransactionTokenArgumentType, index: number) => (
           <div key={`tx-${tokenNoLink.token}-${index}`}>
             <span className='me-1'>{tokenNoLink.ticker}</span>
             {index < entry.tokenNoLink.length - 1 && (

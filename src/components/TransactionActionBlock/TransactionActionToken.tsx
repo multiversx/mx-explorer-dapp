@@ -1,15 +1,16 @@
 import React from 'react';
+
 import { Denominate, FormatUSD, NetworkLink } from 'components';
 import { DECIMALS } from 'config';
 import { urlBuilder } from 'helpers';
-import { TokenArgumentType } from 'types';
+import { TransactionTokenArgumentType } from 'types';
 
-export const TxActionToken = ({
+export const TransactionActionToken = ({
   token,
   noValue,
   showLastNonZeroDecimal
 }: {
-  token: TokenArgumentType;
+  token: TransactionTokenArgumentType;
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
 }) => {
@@ -17,7 +18,7 @@ export const TxActionToken = ({
   const denomination = token.decimals !== undefined ? token.decimals : DECIMALS;
 
   return (
-    <div ref={ref} className='token-action-block'>
+    <div ref={ref} className='token-action-block d-contents'>
       {token && token.token && (
         <>
           {!noValue && token.value && (

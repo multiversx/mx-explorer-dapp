@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,12 +10,12 @@ import { SelectFilter } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
 import { useFetchShards } from 'hooks';
 import { shardsSelector } from 'redux/selectors';
-import { TxFiltersEnum, TransactionsTableType } from 'types';
+import { TransactionFiltersEnum } from 'types';
 
 export const ShardColumnFilters = ({
   inactiveFilters = []
 }: {
-  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+  inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
   const { senderShard, receiverShard } = Object.fromEntries(searchParams);
@@ -34,8 +33,8 @@ export const ShardColumnFilters = ({
 
   if (
     inactiveFilters &&
-    inactiveFilters.includes(TxFiltersEnum.senderShard) &&
-    inactiveFilters.includes(TxFiltersEnum.receiverShard)
+    inactiveFilters.includes(TransactionFiltersEnum.senderShard) &&
+    inactiveFilters.includes(TransactionFiltersEnum.receiverShard)
   ) {
     return null;
   }
@@ -51,24 +50,28 @@ export const ShardColumnFilters = ({
           {stateShards.length > 0 && (
             <Popover.Body>
               <div className='p-3 '>
-                {!inactiveFilters.includes(TxFiltersEnum.senderShard) && (
+                {!inactiveFilters.includes(
+                  TransactionFiltersEnum.senderShard
+                ) && (
                   <div className='filter-block'>
                     <div className='mb-1'>Sender Shard</div>
                     <SelectFilter
                       name='senderShard-filter'
                       options={selectShards}
-                      filter={TxFiltersEnum.senderShard}
+                      filter={TransactionFiltersEnum.senderShard}
                     />
                   </div>
                 )}
 
-                {!inactiveFilters.includes(TxFiltersEnum.receiverShard) && (
+                {!inactiveFilters.includes(
+                  TransactionFiltersEnum.receiverShard
+                ) && (
                   <div className='filter-block'>
                     <div className='mb-1'>Receiver Shard</div>
                     <SelectFilter
                       name='receiverShard-filter'
                       options={selectShards}
-                      filter={TxFiltersEnum.receiverShard}
+                      filter={TransactionFiltersEnum.receiverShard}
                     />
                   </div>
                 )}

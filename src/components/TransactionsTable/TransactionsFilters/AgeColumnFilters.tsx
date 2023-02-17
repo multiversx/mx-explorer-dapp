@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
 import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,20 +6,20 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
 import { DateFilter } from 'components';
-import { TxFiltersEnum, TransactionsTableType } from 'types';
+import { TransactionFiltersEnum } from 'types';
 
 export const AgeColumnFilters = ({
   inactiveFilters = []
 }: {
-  inactiveFilters?: TransactionsTableType['inactiveFilters'];
+  inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
   const { before, after } = Object.fromEntries(searchParams);
 
   if (
     inactiveFilters &&
-    inactiveFilters.includes(TxFiltersEnum.before) &&
-    inactiveFilters.includes(TxFiltersEnum.after)
+    inactiveFilters.includes(TransactionFiltersEnum.before) &&
+    inactiveFilters.includes(TransactionFiltersEnum.after)
   ) {
     return null;
   }

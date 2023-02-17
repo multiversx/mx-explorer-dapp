@@ -1,7 +1,7 @@
 import Chart from './Chart';
 import NodesTable from './NodesTable';
 import SharedIdentity from './SharedIdentity';
-import TxActionBlock from './TxActionBlock';
+import TransactionActionBlock from './TransactionActionBlock';
 
 export * from './BlocksTable';
 export * from './Denominate';
@@ -68,4 +68,4 @@ export * from './FormatUSD';
 export * from './CollapsibleArrows';
 export * from './Tabs';
 
-export { Chart, NodesTable, TxActionBlock, SharedIdentity };
+export { Chart, NodesTable, TransactionActionBlock, SharedIdentity };

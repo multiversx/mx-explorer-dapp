@@ -1,15 +1,16 @@
 import React from 'react';
-import { NftType, NftEnumType } from 'types';
+
+import { NftTypeEnum, TokenTypeEnum } from 'types';
 
 export const NftBadge = ({
   type,
   className
 }: {
-  type: NftType['type'] | 'FungibleESDT';
+  type: NftTypeEnum | TokenTypeEnum;
   className?: string;
 }) => {
   switch (type) {
-    case NftEnumType.SemiFungibleESDT:
+    case NftTypeEnum.SemiFungibleESDT:
       return (
         <div
           className={`badge badge-outline badge-outline-orange ${
@@ -19,7 +20,7 @@ export const NftBadge = ({
           SFT
         </div>
       );
-    case NftEnumType.NonFungibleESDT:
+    case NftTypeEnum.NonFungibleESDT:
       return (
         <div
           className={`badge badge-outline badge-outline-yellow ${
@@ -29,7 +30,7 @@ export const NftBadge = ({
           NFT
         </div>
       );
-    case NftEnumType.MetaESDT:
+    case NftTypeEnum.MetaESDT:
       return (
         <div
           className={`badge badge-outline badge-outline-green ${
