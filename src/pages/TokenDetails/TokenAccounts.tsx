@@ -37,15 +37,6 @@ export const TokenDetailsAccounts = () => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchAccounts = () => {
-    getTokenAccounts({ tokenId, size }).then(({ data, success }) => {
-      if (ref.current !== null) {
-        if (success) {
-          setAccounts(data);
-        }
-        setDataReady(success);
-      }
-    });
-
     Promise.all([
       getTokenAccounts({ tokenId, size }),
       getTokenAccountsCount({ tokenId })
@@ -62,7 +53,6 @@ export const TokenDetailsAccounts = () => {
 
   React.useEffect(() => {
     fetchAccounts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, size, totalAccounts, searchParams]);
 
   const showAccounts = dataReady === true && accounts.length > 0;

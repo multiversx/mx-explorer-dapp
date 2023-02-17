@@ -13,7 +13,7 @@ import { AnalyticsCompare } from 'pages/AnalyticsCompare';
 import { BlockDetails } from 'pages/BlockDetails';
 import { Blocks } from 'pages/Blocks';
 import { CollectionDetails } from 'pages/CollectionDetails';
-import { CollectionDetailsRoles } from 'pages/CollectionDetails/CollectionRoles';
+import { CollectionRoles } from 'pages/CollectionDetails/CollectionRoles';
 import { Collections } from 'pages/Collections';
 import { EmptySearch } from 'pages/EmptySearch';
 import { HashSearch } from 'pages/HashSearch';
@@ -21,7 +21,8 @@ import { Home } from 'pages/Home';
 import { Identities } from 'pages/Identities';
 import { IdentityDetails } from 'pages/IdentityDetails';
 import { MiniBlockDetails } from 'pages/MiniBlockDetails';
-import { NftDetails } from 'pages/NftDetails';
+import { NftTransactions } from 'pages/NftDetails';
+import { NftAccounts } from 'pages/NftDetails/NftAccounts';
 import { Nfts } from 'pages/Nfts';
 import { NodeDetails } from 'pages/NodeDetails';
 import { Nodes } from 'pages/Nodes';
@@ -116,7 +117,8 @@ export const collectionRoutes = {
 
 export const nftRoutes = {
   nfts: '/nfts',
-  nftDetails: '/nfts/:hash'
+  nftDetails: '/nfts/:hash',
+  nftDetailsAccounts: '/nfts/:hash/accounts'
 };
 
 export const analyticsRoutes = {
@@ -302,8 +304,8 @@ const mainRoutes: RouteType[] = [
   },
   {
     path: collectionRoutes.collectionDetailsRoles,
-    title: 'Collection Details Roles',
-    component: CollectionDetailsRoles
+    title: 'Collection Roles',
+    component: CollectionRoles
   },
   {
     path: nftRoutes.nfts,
@@ -313,7 +315,12 @@ const mainRoutes: RouteType[] = [
   {
     path: nftRoutes.nftDetails,
     title: 'NFT Details',
-    component: NftDetails
+    component: NftTransactions
+  },
+  {
+    path: nftRoutes.nftDetailsAccounts,
+    title: 'NFT Owners',
+    component: NftAccounts
   },
   {
     path: validatorsRoutes.providers,

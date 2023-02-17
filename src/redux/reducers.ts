@@ -19,6 +19,7 @@ import { interfaceReducer } from './slices/interface';
 import { markersReducer } from './slices/markers';
 import { miniBlockReducer } from './slices/miniBlock';
 import { networkReducer } from './slices/networks';
+import { nftReducer } from './slices/nft';
 import { nodesVersionsReducer } from './slices/nodesVersions';
 import { pageHeadersAccountsReducer } from './slices/pageHeadersAccountsStats';
 import { pageHeadersBlocksReducer } from './slices/pageHeadersBlocksStats';
@@ -66,6 +67,7 @@ export const customIgnoredSlices = {
   token: tokenReducer,
   markers: markersReducer,
   miniBlock: miniBlockReducer,
+  nft: nftReducer,
   nodesVersions: nodesVersionsReducer,
   pageHeadersBlocksStats: pageHeadersBlocksReducer,
   pageHeadersAccountsStats: pageHeadersAccountsReducer,

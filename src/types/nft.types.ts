@@ -75,6 +75,11 @@ export interface NftType {
   scamInfo?: ScamInfoType;
 }
 
+export interface NftAccountType {
+  address: string;
+  balance: string;
+}
+
 export interface NftSliceType extends SliceType {
   nftState: NftType;
 }
