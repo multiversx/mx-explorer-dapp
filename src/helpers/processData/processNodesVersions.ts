@@ -3,11 +3,6 @@ import {
   NodesVersionsType
 } from 'types/nodesVersions.types';
 
-const countDecimals = (value: number) => {
-  if (Math.floor(value) === value) return 0;
-  return value.toString().split('.')[1].length || 0;
-};
-
 const prepareNodesVersions = (data: NodesVersionsApiType) => {
   const versions: NodesVersionsType[] = [];
 
@@ -17,9 +12,7 @@ const prepareNodesVersions = (data: NodesVersionsApiType) => {
     if (percent > 0) {
       versions.push({
         name: version,
-        percent: Math.floor(
-          countDecimals(percent) > 2 ? percent * 10000 : percent * 100
-        )
+        percent: percent * 100
       });
     }
   });
