@@ -33,7 +33,7 @@ export const MultilayerPercentageBar = ({
           <div
             key={`legend-${i}`}
             className={`legend-dot d-flex align-items-center ${
-              trim ? '' : 'me-1 me-lg-3'
+              trim ? '' : 'me-1 me-lg-2'
             }`}
           >
             <Led color={`flex-shrink-0 me-1 step-${i + 1}`} />
