@@ -6,6 +6,11 @@ import { NodesVersionsType } from 'helpers/types';
 import GlobalStakeCard from './GlobalStakeCard';
 import ShardsList from './ShardsList';
 
+const countDecimals = (value: number) => {
+  if (Math.floor(value) === value) return 0;
+  return value.toString().split('.')[1].length || 0;
+};
+
 const prepareNodesVersions = (data: any) => {
   const versions: NodesVersionsType[] = [];
 
@@ -15,7 +20,7 @@ const prepareNodesVersions = (data: any) => {
     if (percent > 0) {
       versions.push({
         name: version,
-        percent: Math.floor(percent * 100),
+        percent: countDecimals(percent) > 2 ? percent * 10000 : percent * 100,
       });
     }
   });
