@@ -1,3 +1,5 @@
+import BigNumber from 'bignumber.js';
+
 import {
   NodesVersionsApiType,
   NodesVersionsType
@@ -12,7 +14,7 @@ const prepareNodesVersions = (data: NodesVersionsApiType) => {
     if (percent > 0) {
       versions.push({
         name: version,
-        percent: percent * 100
+        percent: new BigNumber(percent).times(100).toNumber()
       });
     }
   });
