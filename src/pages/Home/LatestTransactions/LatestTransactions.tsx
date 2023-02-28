@@ -17,7 +17,7 @@ import { FailedTransactions } from 'components/TransactionsTable/FailedTransacti
 import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
 import { TransactionValue } from 'components/TransactionsTable/TransactionValue';
 import { getStatusIconAndColor } from 'components/TransactionStatus';
-import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
+import { addressIsBech32, urlBuilder, getDisplayReceiver } from 'helpers';
 import { useAdapter } from 'hooks';
 import { refreshSelector } from 'redux/selectors';
 import { UITransactionType } from 'types';
@@ -117,12 +117,8 @@ export const LatestTransactions = () => {
             <div className='card-body' data-testid='transactionsList'>
               <div className='latest-items-container'>
                 {transactions.map((transaction, i) => {
-                  let receiver = transaction.receiver;
-                  if (transaction?.action?.arguments?.receiver) {
-                    receiver = transaction.action.arguments.receiver;
-                  }
-
-                  const receiverAssets = getReceiverAssets(transaction);
+                  const { receiver, receiverAssets } =
+                    getDisplayReceiver(transaction);
 
                   return (
                     <LatestItem

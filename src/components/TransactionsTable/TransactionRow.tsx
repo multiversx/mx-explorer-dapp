@@ -11,7 +11,7 @@ import {
   AccountName,
   TransactionIcon
 } from 'components';
-import { addressIsBech32, urlBuilder, getReceiverAssets } from 'helpers';
+import { addressIsBech32, urlBuilder, getDisplayReceiver } from 'helpers';
 import { UITransactionType, TransferTypeEnum } from 'types';
 
 import { TransactionMethod } from './TransactionMethod';
@@ -30,15 +30,11 @@ export const TransactionRow = ({
   directionCol,
   showLockedAccounts
 }: TransactionRowType) => {
-  let receiver = transaction.receiver;
-  if (transaction?.action?.arguments?.receiver) {
-    receiver = transaction.action.arguments.receiver;
-  }
+  const { receiver, receiverAssets } = getDisplayReceiver(transaction);
   const directionOut = address === transaction.sender;
   const directionIn = address === receiver;
   const directionSelf = directionOut && directionIn;
   const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
-  const receiverAssets = getReceiverAssets(transaction);
 
   let direction = 'Out';
   switch (true) {

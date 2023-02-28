@@ -29,7 +29,7 @@ export * from './getTransactionMessages';
 export * from './getPercentage';
 export * from './formatHerotag';
 
-export * from './getReceiverAssets';
+export * from './getDisplayReceiver';
 
 export * from './truncateMiddle';
 export * from './formatUSD';
