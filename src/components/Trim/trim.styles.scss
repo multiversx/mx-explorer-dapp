@@ -64,6 +64,13 @@
     }
   }
 
+  &.text-primary-200 {
+    .left span,
+    .right span {
+      color: var(--primary-200);
+    }
+  }
+
   /* IE fix */
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     .right {
@@ -94,15 +101,15 @@
 // Link Extra Logic
 
 a > .trim span {
-  color: var(--#{$prefix}link-color) !important;
+  color: var(--#{$prefix}link-color);
   &.hidden-text-ref {
-    color: transparent !important;
+    color: transparent;
   }
 }
 a:hover > .trim span {
-  color: var(--#{$prefix}primary) !important;
+  color: var(--#{$prefix}primary);
   &.hidden-text-ref {
-    color: transparent !important;
+    color: transparent;
   }
 }
 

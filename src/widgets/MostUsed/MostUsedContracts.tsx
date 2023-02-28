@@ -48,7 +48,7 @@ export const MostUsedContracts = ({
                           assets={
                             contract?.extraInfo?.assets as AccountAssetType
                           }
-                          dataTestId={`constractLink${i}`}
+                          dataTestId={`contractLink${i}`}
                         />
                       </NetworkLink>
                     </div>
