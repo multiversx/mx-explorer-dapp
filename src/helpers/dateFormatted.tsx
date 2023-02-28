@@ -8,9 +8,9 @@ export const dateFormatted = (
   if (utc) {
     return moment
       .utc(value * 1000)
-      .format(`MMM DD, YYYY HH:mm${noSeconds ? '' : ':ss'} A UTC`);
+      .format(`MMM DD, YYYY HH:mm${noSeconds ? '' : ':ss'} UTC`);
   }
   return moment(value * 1000).format(
-    `MMM DD, YYYY HH:mm${noSeconds ? '' : ':ss'} A`
+    `MMM DD, YYYY HH:mm${noSeconds ? '' : ':ss'}`
   );
 };
