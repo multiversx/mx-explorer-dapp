@@ -73,12 +73,15 @@ export const AccountContractCode = () => {
       {isVerified && <VerifiedContract />}
       <div className='card-body'>
         <h5 className='mb-3'>Contract Code</h5>
-        <textarea
-          readOnly
-          className='form-control col cursor-text'
-          rows={10}
-          defaultValue={code}
-        />
+        <div className='textarea-wrapper'>
+          <textarea
+            readOnly
+            className='form-control col'
+            rows={10}
+            defaultValue={code}
+          />
+        </div>
+
         <DownloadContractCode code={code} fileName={address} />
       </div>
     </div>
