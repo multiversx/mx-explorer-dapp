@@ -63,7 +63,7 @@ export const AccountContractCode = () => {
                 <span className='text-neutral-400'>Code Hash:</span>
                 <div className='d-flex align-items-center text-break-all ms-2'>
                   <span data-testid='address'>{codeHashHexValue}</span>
-                  <CopyButton text={address} />
+                  <CopyButton text={codeHashHexValue} />
                 </div>
               </div>
             </div>

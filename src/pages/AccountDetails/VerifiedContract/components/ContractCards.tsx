@@ -2,7 +2,7 @@ import React from 'react';
 import { faDocker, faRust } from '@fortawesome/free-brands-svg-icons';
 import { faCogs } from '@fortawesome/pro-solid-svg-icons';
 
-import { CardItem, Trim } from 'components';
+import { CardItem, CopyButton, Trim } from 'components';
 import { VerifiedContractType } from 'types';
 
 export const ContractCards = ({
@@ -69,6 +69,7 @@ export const ContractCards = ({
           {abi?.buildInfo?.rustc?.commitHash && (
             <CardItem title='Commit Hash' icon={faRust}>
               <Trim text={abi.buildInfo.rustc.commitHash} />
+              <CopyButton text={abi.buildInfo.rustc.commitHash} />
             </CardItem>
           )}
         </div>
