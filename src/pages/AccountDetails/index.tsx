@@ -128,7 +128,7 @@ export const AccountDetails = () => {
                 address={address}
                 totalTransactions={totalTransactions}
                 size={size}
-                directionCol={true}
+                showDirectionCol={true}
                 title={<AccountTabs />}
                 dataChanged={dataChanged}
               />

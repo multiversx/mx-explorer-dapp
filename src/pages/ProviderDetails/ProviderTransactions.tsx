@@ -130,7 +130,7 @@ export const ProviderTransactions = () => {
                 address={address}
                 totalTransactions={totalTransactions}
                 size={size}
-                directionCol={true}
+                showDirectionCol={true}
                 title={<ProviderTabs />}
                 inactiveFilters={inactiveFilters}
                 dataChanged={dataChanged}

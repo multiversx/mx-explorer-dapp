@@ -126,7 +126,7 @@ export const TokenDetails = () => {
                 transactions={transactions}
                 totalTransactions={totalTransactions}
                 size={size}
-                directionCol={true}
+                showDirectionCol={true}
                 title={<TokenTabs />}
                 dataChanged={dataChanged}
                 inactiveFilters={[TransactionFiltersEnum.token]}

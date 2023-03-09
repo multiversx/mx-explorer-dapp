@@ -13,7 +13,7 @@ import {
 } from '../TransactionsFilters';
 
 export const Header = ({
-  directionCol = false,
+  showDirectionCol = false,
   inactiveFilters
 }: TransactionTableType) => {
   return (
@@ -31,7 +31,7 @@ export const Header = ({
         <th scope='col'>
           From <FromColumnFilters inactiveFilters={inactiveFilters} />
         </th>
-        {directionCol && <th scope='col' />}
+        {showDirectionCol && <th scope='col' />}
         <th scope='col'>
           To <ToColumnFilters inactiveFilters={inactiveFilters} />
         </th>
