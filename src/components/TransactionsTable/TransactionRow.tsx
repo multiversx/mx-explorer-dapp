@@ -19,7 +19,7 @@ import { TransactionValue } from './TransactionValue';
 
 export interface TransactionRowType {
   transaction: UITransactionType;
-  directionCol?: boolean;
+  showDirectionCol?: boolean;
   address?: string;
   showLockedAccounts?: boolean;
 }
@@ -27,7 +27,7 @@ export interface TransactionRowType {
 export const TransactionRow = ({
   transaction,
   address,
-  directionCol,
+  showDirectionCol,
   showLockedAccounts
 }: TransactionRowType) => {
   const { receiver, receiverAssets } = getDisplayReceiver(transaction);
@@ -126,7 +126,7 @@ export const TransactionRow = ({
           )}
         </div>
       </td>
-      {directionCol === true && (
+      {showDirectionCol === true && (
         <td>
           <div className='d-flex'>
             <span

@@ -124,7 +124,7 @@ export const NftTransactions = () => {
                 transactions={transactions}
                 totalTransactions={totalTransactions}
                 size={size}
-                directionCol={true}
+                showDirectionCol={true}
                 title={<NftTabs />}
                 dataChanged={dataChanged}
                 inactiveFilters={[TransactionFiltersEnum.token]}

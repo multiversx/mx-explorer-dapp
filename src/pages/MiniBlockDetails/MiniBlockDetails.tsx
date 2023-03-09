@@ -126,7 +126,7 @@ export const MiniBlockDetails = () => {
                 transactions={transactions}
                 totalTransactions={totalTransactions}
                 size={size}
-                directionCol={true}
+                showDirectionCol={true}
                 title={
                   <h5
                     data-testid='title'

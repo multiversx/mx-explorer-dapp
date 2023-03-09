@@ -11,13 +11,13 @@ import { MethodList } from './TransactionsFilters';
 
 const ColSpanWrapper = ({
   children,
-  directionCol
+  showDirectionCol
 }: {
   children: React.ReactNode;
-  directionCol: boolean;
+  showDirectionCol: boolean;
 }) => (
   <tr>
-    <td colSpan={directionCol ? 8 : 7}>{children}</td>
+    <td colSpan={showDirectionCol ? 8 : 7}>{children}</td>
   </tr>
 );
 
@@ -31,7 +31,7 @@ export const TransactionsTable = ({
       Live Transactions <MethodList />
     </h5>
   ),
-  directionCol = false,
+  showDirectionCol = false,
   showLockedAccounts = false,
   dataChanged = false,
   isScResultsTable = false,
@@ -39,7 +39,9 @@ export const TransactionsTable = ({
 }: TransactionTableType) => {
   return (
     <div
-      className={`transactions-table ${directionCol ? 'has-direction' : ''}`}
+      className={`transactions-table ${
+        showDirectionCol ? 'has-direction' : ''
+      }`}
     >
       <div className='card'>
         <div className='card-header'>
@@ -69,7 +71,7 @@ export const TransactionsTable = ({
                 transactions={transactions}
                 totalTransactions={totalTransactions}
                 size={size}
-                directionCol={directionCol}
+                showDirectionCol={showDirectionCol}
                 showLockedAccounts={showLockedAccounts}
                 inactiveFilters={inactiveFilters}
               />
@@ -81,14 +83,14 @@ export const TransactionsTable = ({
                         transaction={transaction}
                         key={transaction.txHash}
                         address={address}
-                        directionCol={directionCol}
+                        showDirectionCol={showDirectionCol}
                         showLockedAccounts={showLockedAccounts}
                       />
                     ))}
                   </>
                 ) : (
                   <>
-                    <ColSpanWrapper directionCol={directionCol}>
+                    <ColSpanWrapper showDirectionCol={showDirectionCol}>
                       {isScResultsTable ? <NoScResults /> : <NoTransactions />}
                     </ColSpanWrapper>
                   </>

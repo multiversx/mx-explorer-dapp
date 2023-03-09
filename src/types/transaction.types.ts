@@ -146,7 +146,7 @@ export interface TransactionTableType {
   totalTransactions: number | '...';
   size: number;
   title?: React.ReactNode;
-  directionCol?: boolean;
+  showDirectionCol?: boolean;
   dataChanged?: boolean;
   showLockedAccounts?: boolean;
   isScResultsTable?: boolean;
