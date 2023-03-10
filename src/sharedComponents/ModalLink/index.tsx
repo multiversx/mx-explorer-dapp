@@ -38,9 +38,8 @@ const ModalLink = (props: LinkComponentProps) => {
             <p className="lead">You are about to navigate to an external website.</p>
             <div className="mx-auto mb-spacer ">
               <p>
-                This link is not part of MultiversX (previously Elrond). Do not enter your private
-                words, your keystore file or any of your MultiversX (previously Elrond) account
-                information.
+                This link is not part of MultiversX. Do not enter your private words, your keystore
+                file or any of your MultiversX account information.
               </p>
             </div>
             <div className="d-flex align-items-center flex-column mt-spacer">

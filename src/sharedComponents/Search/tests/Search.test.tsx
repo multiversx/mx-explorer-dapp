@@ -22,7 +22,7 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Block Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual('Block Details • MultiversX Explorer');
     });
   });
   test('Search finds transaction', async () => {
@@ -45,7 +45,7 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Transaction Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual('Transaction Details • MultiversX Explorer');
     });
   });
   test('Search finds miniblock', async () => {
@@ -67,7 +67,7 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Miniblock Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual('Miniblock Details • MultiversX Explorer');
     });
   });
   test('Search finds account', async () => {
@@ -85,7 +85,7 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Account Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual('Account Details • MultiversX Explorer');
     });
   });
   test('Search finds node', async () => {
@@ -103,7 +103,7 @@ describe('Search input', () => {
     fireEvent.click(searchButton);
 
     await wait(async () => {
-      expect(document.title).toEqual('Node Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual('Node Details • MultiversX Explorer');
     });
   });
   // TODO enable when tokens go live
@@ -122,7 +122,7 @@ describe('Search input', () => {
   //   fireEvent.click(searchButton);
 
   //   await wait(async () => {
-  //     expect(document.title).toEqual('Token Details • MultiversX (previously Elrond) Explorer');
+  //     expect(document.title).toEqual('Token Details • MultiversX Explorer');
   //   });
   // });
   test('Search does not find anything', async () => {
