@@ -352,8 +352,8 @@ const mainRoutes: RouteType[] = [
 export const routes = () =>
   mainRoutes.map((route) => {
     const title = route.title
-      ? `${route.title} • MultiversX (previously Elrond) Explorer`
-      : 'MultiversX (previously Elrond) Explorer';
+      ? `${route.title} • MultiversX Explorer`
+      : 'MultiversX Explorer';
 
     return {
       path: route.path,
