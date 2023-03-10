@@ -315,9 +315,7 @@ const routes: RouteType[] = [
 
 const wrappedRoutes = () =>
   routes.map((route) => {
-    const title = route.title
-      ? `${route.title} • MultiversX (previously Elrond) Explorer`
-      : 'MultiversX (previously Elrond) Explorer';
+    const title = route.title ? `${route.title} • MultiversX Explorer` : 'MultiversX Explorer';
     return {
       path: route.path,
       component: (withPageTitle(

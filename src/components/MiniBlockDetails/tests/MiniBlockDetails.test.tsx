@@ -10,7 +10,7 @@ describe('MiniBlock Details Page', () => {
         transactions: () => Promise.resolve({ data: miniblockTransactions }),
       },
     });
-    expect(document.title).toEqual('Miniblock Details • MultiversX (previously Elrond) Explorer');
+    expect(document.title).toEqual('Miniblock Details • MultiversX Explorer');
     const pageTitle = await render.findByTestId('pageTitle');
     expect(pageTitle.textContent).toBe('Miniblock Details');
   });

@@ -28,7 +28,7 @@ export const EgldRow = ({
   const { page } = useURLSearchParams();
   const { getQueryObject } = useFilters();
   const queryObject = getQueryObject();
-  const description = `The MultiversX (Elrond) eGold (${erdLabel}) Token is native to the MultiversX (previously Elrond) Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
+  const description = `The MultiversX eGold (${erdLabel}) Token is native to the MultiversX Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
   const { search, sort, order } = queryObject;
 
@@ -120,7 +120,7 @@ export const EgldRow = ({
           </div>
         </div>
       </td>
-      <td>MultiversX (Elrond) {erdLabel}</td>
+      <td>MultiversX {erdLabel}</td>
       <td>${validDisplayValue(economics.price, 2)}</td>
       <td>{economics.circulatingSupply}</td>
       <td>${validDisplayValue(economics.marketCap, 0)}</td>

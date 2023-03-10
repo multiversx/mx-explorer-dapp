@@ -1,4 +1,5 @@
 import React from 'react';
+import BigNumber from 'bignumber.js';
 
 import { useGlobalDispatch, useGlobalState } from 'context';
 import { adapter, Loader } from 'sharedComponents';
@@ -15,7 +16,7 @@ const prepareNodesVersions = (data: any) => {
     if (percent > 0) {
       versions.push({
         name: version,
-        percent: percent * 100,
+        percent: new BigNumber(percent).times(100).toNumber(),
       });
     }
   });
