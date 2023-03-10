@@ -10,7 +10,7 @@ describe('Block Details Page', () => {
         validators: () => Promise.resolve({ data: validatorsdoc }),
       },
     });
-    expect(document.title).toEqual('Block Details • MultiversX (previously Elrond) Explorer');
+    expect(document.title).toEqual('Block Details • MultiversX Explorer');
     await wait(async () => {
       expect(render.queryByTestId('title')!.innerHTML).toBe('Block Details');
     });

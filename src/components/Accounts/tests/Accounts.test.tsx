@@ -6,7 +6,7 @@ describe('Accounts Page', () => {
       route: '/accounts',
     });
 
-    expect(document.title).toEqual('Accounts • MultiversX (previously Elrond) Explorer');
+    expect(document.title).toEqual('Accounts • MultiversX Explorer');
 
     await wait(async () => {
       expect(render.queryByTestId('title')!.innerHTML).toBe('Accounts');
@@ -48,7 +48,7 @@ describe('Accounts Page Links', () => {
 
     fireEvent.click(link);
     await wait(async () => {
-      expect(document.title).toEqual('Account Details • MultiversX (previously Elrond) Explorer');
+      expect(document.title).toEqual('Account Details • MultiversX Explorer');
     });
   });
 });

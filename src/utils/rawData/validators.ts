@@ -685,7 +685,7 @@ export default [
   },
   {
     identity: 'multiversx',
-    name: 'MultiversX (Elrond) Foundational Nodes',
+    name: 'MultiversX Foundational Nodes',
     avatar:
       'https://s3.amazonaws.com/keybase_processed_uploads/0300ffbfa1a598da0a666f7e22990405_360_360.jpg',
     location: '',
@@ -1730,7 +1730,7 @@ export default [
   },
   {
     identity: 'chrisscohn',
-    name: 'MultiversX (previously Elrond) - A European Blockchain Solution',
+    name: 'MultiversX - A European Blockchain Solution',
     avatar:
       'https://s3.amazonaws.com/keybase_processed_uploads/34854c2e4e8cda49d97a8d1fd5f34c05_360_360.jpg',
     location: 'Europe',
