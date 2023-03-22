@@ -9,7 +9,8 @@ import {
   Pager,
   PageState,
   Denominate,
-  NetworkLink
+  NetworkLink,
+  Overlay
 } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { useAdapter, useGetFilters, useNetworkRoute } from 'hooks';
@@ -127,6 +128,27 @@ export const AccountTokens = () => {
                         )
                       : urlBuilder.tokenDetails(identifier);
 
+                  const TokenInfo = () => (
+                    <div className='d-flex align-items-center symbol text-truncate'>
+                      {assets ? (
+                        <>
+                          {assets?.svgUrl && (
+                            <img
+                              src={assets.svgUrl}
+                              alt={name}
+                              className='side-icon me-1'
+                            />
+                          )}
+                          <div className='text-truncate'>
+                            {ticker ? ticker : name}{' '}
+                          </div>
+                        </>
+                      ) : (
+                        <div className='text-truncate'>{identifier}</div>
+                      )}
+                    </div>
+                  );
+
                   return (
                     <DetailItem title={name} key={identifier}>
                       <div className='d-flex align-items-center'>
@@ -151,21 +173,13 @@ export const AccountTokens = () => {
                           }`}
                         >
                           <div className='d-flex align-items-center symbol text-truncate'>
-                            {assets ? (
-                              <>
-                                {assets?.svgUrl && (
-                                  <img
-                                    src={assets.svgUrl}
-                                    alt={name}
-                                    className='side-icon me-1'
-                                  />
-                                )}
-                                <div className='text-truncate'>
-                                  {ticker ? ticker : name}
-                                </div>
-                              </>
+                            {type === TokenTypeEnum.MetaESDT &&
+                            assets?.svgUrl ? (
+                              <Overlay title={identifier}>
+                                <TokenInfo />
+                              </Overlay>
                             ) : (
-                              <div className='text-truncate'>{identifier}</div>
+                              <TokenInfo />
                             )}
                           </div>
                         </NetworkLink>
