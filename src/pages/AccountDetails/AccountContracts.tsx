@@ -2,6 +2,7 @@ import React from 'react';
 import { faCode } from '@fortawesome/pro-solid-svg-icons/faCode';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
+
 import {
   Loader,
   Pager,
@@ -9,20 +10,13 @@ import {
   NetworkLink,
   TimeAgo,
   Trim,
-  ShardSpan
+  AccountLink
 } from 'components';
-
-import { urlBuilder, addressIsBech32 } from 'helpers';
 import { useGetFilters, useAdapter } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+import { AccountSmartContractType } from 'types';
 
 import { AccountTabs } from './AccountLayout/AccountTabs';
-
-export interface AccountSmartContractType {
-  address: string;
-  deployTxHash: string;
-  timestamp: number;
-}
 
 export const AccountContracts = () => {
   const ref = React.useRef(null);
@@ -117,17 +111,10 @@ export const AccountContracts = () => {
                     <tr className='animated-row' key={contract.deployTxHash}>
                       <td>
                         <div className='d-flex align-items-center trim-size-xl'>
-                          {addressIsBech32(contract.address) ? (
-                            <NetworkLink
-                              to={urlBuilder.accountDetails(contract.address)}
-                              data-testid='addressLink'
-                              className='trim-wrapper'
-                            >
-                              <Trim text={contract.address} />
-                            </NetworkLink>
-                          ) : (
-                            <ShardSpan shard={contract.address} />
-                          )}
+                          <AccountLink
+                            address={contract.address}
+                            assets={contract?.assets}
+                          />
                         </div>
                       </td>
                       <td>
