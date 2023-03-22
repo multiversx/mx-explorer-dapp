@@ -18,8 +18,8 @@ export const useHeadersTokensStats = () => {
   const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
 
-  const ecosystemMarketCap = new BigNumber(unprocessed.marketCap).plus(
-    unprocessed.tokenMarketCap
+  const ecosystemMarketCap = new BigNumber(unprocessed.marketCap ?? '0').plus(
+    unprocessed.tokenMarketCap ?? '0'
   );
 
   const getHeadersTokens = async (): Promise<HeadersTokensType> => {
@@ -42,7 +42,9 @@ export const useHeadersTokensStats = () => {
         tokenTransfersInLast30d: new BigNumber(
           result.data.tokenTransfersInLast30d
         ).toFormat(0),
-        ecosystemMarketCap: ecosystemMarketCap.toFormat(0)
+        ecosystemMarketCap: ecosystemMarketCap.isGreaterThan(0)
+          ? ecosystemMarketCap.toFormat(0)
+          : '...'
       })
     );
 
@@ -55,7 +57,11 @@ export const useHeadersTokensStats = () => {
 
   useEffect(() => {
     dispatch(
-      setPageHeaderBlocksStatsEcosystemMarketCap(ecosystemMarketCap.toFormat(0))
+      setPageHeaderBlocksStatsEcosystemMarketCap(
+        ecosystemMarketCap.isGreaterThan(0)
+          ? ecosystemMarketCap.toFormat(0)
+          : '...'
+      )
     );
   }, [ecosystemMarketCap]);
 
