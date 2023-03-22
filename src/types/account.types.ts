@@ -64,3 +64,10 @@ export interface AccountAssetType {
   iconPng?: string;
   iconSvg?: string;
 }
+
+export interface AccountSmartContractType {
+  address: string;
+  deployTxHash: string;
+  timestamp: number;
+  assets?: AccountAssetType;
+}
