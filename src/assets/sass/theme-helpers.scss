@@ -566,3 +566,14 @@ button.badge {
     border-radius: $font-size-root;
   }
 }
+
+.text-lh-24 {
+  line-height: 24px; // must be same as icon height to avoid issues between browsers
+  .trim {
+    .left,
+    .right,
+    .elipsis {
+      height: 24px;
+    }
+  }
+}

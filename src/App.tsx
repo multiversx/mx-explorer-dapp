@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
 import { Provider, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-
 import { PersistGate } from 'redux-persist/integration/react';
+
 import { networks } from 'config';
 import { useIsMainnet } from 'hooks';
-
 // eslint-disable-next-line import/order
 import { AxiosInterceptor } from 'components';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -15,7 +14,6 @@ import { NetworkType } from 'types';
 
 import { Layout } from './pages/Layout';
 import { PageNotFound } from './pages/PageNotFound';
-
 import './assets/sass/theme.scss';
 
 export const FilteredRoutes = ({

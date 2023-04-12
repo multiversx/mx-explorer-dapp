@@ -3,8 +3,9 @@ import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExcl
 import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
 import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { Overlay } from 'components';
-import { nodeIssue } from 'helpers';
+import { getNodeIssue } from 'helpers';
 import { NodeType } from 'types';
 
 export const getIcon = (node: NodeType) => {
@@ -54,7 +55,7 @@ export const RowIssueIcon = ({
 
       case node.issues && node.issues.length > 0: {
         return (
-          <Overlay title={nodeIssue(node)}>
+          <Overlay title={getNodeIssue(node)}>
             <FontAwesomeIcon
               icon={icon}
               className='ms-1 text-warning'

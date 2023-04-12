@@ -3,7 +3,7 @@ import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExcl
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { RowIssueIcon } from 'components/NodesTable/RowIssueIcon';
-import { nodeIssue } from 'helpers';
+import { getNodeIssue } from 'helpers';
 import { NodeType } from 'types';
 
 export const Container = ({ children }: { children: React.ReactNode }) => (
@@ -23,7 +23,7 @@ export const Alert = ({ node }: { node: NodeType }) => {
       return (
         <Container>
           <RowIssueIcon node={node} small={true} />
-          <small className='text-warning ms-1'>{nodeIssue(node)}</small>
+          <small className='text-warning ms-1'>{getNodeIssue(node)}</small>
         </Container>
       );
     case node.online === false:

@@ -1,6 +1,6 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { dateFormatted } from 'helpers';
+import { formatDate } from 'helpers';
 import { timeAgo } from './timeAgo';
 
 export const TimeAgo = ({
@@ -28,7 +28,7 @@ export const TimeAgo = ({
       delay={{ show: 0, hide: 400 }}
       overlay={(props) => (
         <Tooltip id='button-tooltip' {...props}>
-          {dateFormatted(value, false, true)}
+          {formatDate(value, false, true)}
         </Tooltip>
       )}
     >

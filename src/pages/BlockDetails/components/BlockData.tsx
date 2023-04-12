@@ -17,7 +17,7 @@ import {
   IdentityBlock,
   BlockGasUsed
 } from 'components';
-import { dateFormatted, sizeFormat, urlBuilder } from 'helpers';
+import { formatDate, formatSize, urlBuilder } from 'helpers';
 import { BlockType } from 'types';
 
 export interface BlockDataType {
@@ -114,7 +114,7 @@ export const BlockData = (props: BlockDataType) => {
           <TimeAgo value={block.timestamp} />
           &nbsp;
           <span className='text-neutral-400'>
-            ({dateFormatted(block.timestamp, false, true)})
+            ({formatDate(block.timestamp, false, true)})
           </span>
         </DetailItem>
         <DetailItem title='Transactions'>
@@ -133,17 +133,17 @@ export const BlockData = (props: BlockDataType) => {
             delay={{ show: 0, hide: 400 }}
             overlay={(props: any) => (
               <Tooltip id='size' {...props} show={props.show.toString()}>
-                {sizeFormat(block.size)} (size)
+                {formatSize(block.size)} (size)
                 {block.sizeTxs !== undefined && (
-                  <> + {sizeFormat(block.sizeTxs)} (sizetxs)</>
+                  <> + {formatSize(block.sizeTxs)} (sizetxs)</>
                 )}
               </Tooltip>
             )}
           >
             <span>
               {block.sizeTxs !== undefined
-                ? sizeFormat(block.size + block.sizeTxs)
-                : sizeFormat(block.size)}
+                ? formatSize(block.size + block.sizeTxs)
+                : formatSize(block.size)}
             </span>
           </OverlayTrigger>
         </DetailItem>

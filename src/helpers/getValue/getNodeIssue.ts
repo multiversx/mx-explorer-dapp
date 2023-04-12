@@ -1,6 +1,6 @@
 import { NodeType } from 'types';
 
-export const nodeIssue = (node: NodeType) => {
+export const getNodeIssue = (node: NodeType) => {
   if (node.issues)
     switch (true) {
       case node.issues.includes('versionMismatch'):
