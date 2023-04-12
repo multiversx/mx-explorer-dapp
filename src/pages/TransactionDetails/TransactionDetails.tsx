@@ -9,7 +9,7 @@ import { useAdapter } from 'hooks';
 import { refreshSelector } from 'redux/selectors/refresh';
 import { TransactionType } from 'types';
 
-import { TransactionInfo } from './TransactionInfo';
+import { TransactionInfo } from './components/TransactionInfo';
 
 export const TransactionDetails = () => {
   const params: any = useParams();

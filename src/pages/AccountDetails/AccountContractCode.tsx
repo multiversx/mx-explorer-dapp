@@ -8,7 +8,7 @@ import { useNetworkRoute } from 'hooks';
 import { accountSelector } from 'redux/selectors';
 
 import { AccountTabs } from './AccountLayout/AccountTabs';
-import { VerifiedContract } from './VerifiedContract';
+import { AccountVerifiedContract } from './AccountVerifiedContract';
 
 export const DownloadContractCode = ({
   code,
@@ -70,7 +70,7 @@ export const AccountContractCode = () => {
           </div>
         )}
       </div>
-      {isVerified && <VerifiedContract />}
+      {isVerified && <AccountVerifiedContract />}
       <div className='card-body'>
         <h5 className='mb-3'>Contract Code</h5>
         <div className='textarea-wrapper'>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {
   faServer,
   faLock,
@@ -10,8 +10,8 @@ import {
   faUserFriends,
   faUser
 } from '@fortawesome/pro-solid-svg-icons';
-
 import { useSelector } from 'react-redux';
+
 import {
   CardItem,
   CopyButton,
@@ -24,7 +24,6 @@ import { DelegationCap } from 'components/ProvidersTable/DelegationCap';
 import { PercentageFilled } from 'components/ProvidersTable/PercentageFilled';
 import { hasDelegationCap } from 'components/ProvidersTable/PercentageFilled';
 import { urlBuilder } from 'helpers';
-
 import { activeNetworkSelector } from 'redux/selectors';
 import { ProviderType } from 'types';
 

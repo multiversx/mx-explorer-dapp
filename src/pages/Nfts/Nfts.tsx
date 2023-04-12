@@ -13,9 +13,9 @@ import { urlBuilder } from 'helpers';
 import { useAdapter, useGetFilters, useURLSearchParams } from 'hooks';
 import { NftType } from 'types';
 
-import { FailedNfts } from './FailedNfts';
-import { Filters } from './Filters';
-import { NoNfts } from './NoNfts';
+import { FailedNfts } from './components/FailedNfts';
+import { Filters } from './components/Filters';
+import { NoNfts } from './components/NoNfts';
 
 export const Nfts = () => {
   const ref = useRef(null);

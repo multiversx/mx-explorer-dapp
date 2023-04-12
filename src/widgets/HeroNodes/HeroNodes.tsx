@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { MultilayerPercentageRing } from 'components';
 import { useIsMainnet } from 'hooks';
-import { ChartStake } from 'pages/Home/ChartStake';
+import { ChartStake } from 'pages/Home/components/ChartStake';
 import { nodesVersionsSelector } from 'redux/selectors';
 import { ValidatorsStatusCard } from 'widgets';
 
