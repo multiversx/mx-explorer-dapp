@@ -76,6 +76,13 @@ export const networks: NetworkType[] = [
     apiAddress: '***REMOVED***'
   },
   {
+    id: 'testnet-tc-shadowfork-one',
+    name: 'SHADOWFORK 1 Testnet',
+    adapter: 'api',
+    egldLabel: 'xEGLD',
+    apiAddress: 'https://express-api-shadowfork-one.elrond.ro'
+  },
+  {
     id: 'testnet-do-shadowfork-four',
     name: 'SHADOWFORK 4 Testnet',
     adapter: 'api',
