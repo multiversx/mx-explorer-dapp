@@ -55,7 +55,10 @@ export const useAdapter = () => {
           }
         }
       }),
-    getLatestTransactions: ({ size = 5, withUsername }: GetTransactionsType) =>
+    getLatestTransactions: ({
+      size = 5,
+      withUsername = true
+    }: GetTransactionsType) =>
       provider({
         url: '/transactions',
         params: {
