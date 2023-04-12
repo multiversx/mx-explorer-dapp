@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Loader, TransactionsTable } from 'components';
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
-import { useAdapter, useSize, useURLSearchParams } from 'hooks';
+import { useAdapter, useFetchTransactions } from 'hooks';
 import { activeNetworkSelector, miniBlockSelector } from 'redux/selectors';
-import { UITransactionType, TransactionFiltersEnum } from 'types';
+import { TransactionFiltersEnum } from 'types';
 
 export const MiniBlockDetails = () => {
   const ref = useRef(null);
@@ -18,97 +18,20 @@ export const MiniBlockDetails = () => {
   const { getTransfers, getTransfersCount } = useAdapter();
 
   const {
-    senderShard,
-    receiverShard,
-    sender,
-    receiver,
-    method,
-    before,
-    after,
-    status,
-    search,
-    token
-  } = useURLSearchParams();
-  const { size } = useSize();
-
-  const [transactions, setTransactions] = useState<UITransactionType[]>([]);
-  const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
-  const [dataChanged, setDataChanged] = useState<boolean>(false);
-  const [totalTransactions, setTotalTransactions] = useState<number | '...'>(
-    '...'
-  );
-
-  const fetchTransactions = (paramsChange = false) => {
-    if (miniBlockHash) {
-      if (searchParams.toString() && paramsChange) {
-        setDataChanged(true);
-      }
-      Promise.all([
-        getTransfers({
-          size,
-          miniBlockHash,
-
-          senderShard,
-          receiverShard,
-          sender,
-          receiver,
-          method,
-          before,
-          after,
-          status,
-          search,
-          token,
-          withUsername: true
-        }),
-        getTransfersCount({
-          size,
-          miniBlockHash,
-
-          senderShard,
-          receiverShard,
-          sender,
-          receiver,
-          method,
-          before,
-          after,
-          status,
-          search,
-          token
-        })
-      ])
-        .then(([transctionsData, transctionsCountData]) => {
-          if (ref.current !== null) {
-            if (transctionsData.success && transctionsCountData.success) {
-              const existingHashes = transactions.map((b) => b.txHash);
-              const newTransactions = transctionsData.data.map(
-                (transaction: UITransactionType) => ({
-                  ...transaction,
-                  isNew: !existingHashes.includes(transaction.txHash)
-                })
-              );
-              setTransactions(newTransactions);
-              setTotalTransactions(Math.min(transctionsCountData.data, 10000));
-            }
-            setIsDataReady(
-              transctionsData.success && transctionsCountData.success
-            );
-          }
-        })
-        .finally(() => {
-          if (paramsChange) {
-            setDataChanged(false);
-          }
-        });
-    }
-  };
+    fetchTransactions,
+    transactions,
+    totalTransactions,
+    isDataReady,
+    dataChanged
+  } = useFetchTransactions(getTransfers, getTransfersCount, {
+    miniBlockHash
+  });
 
   useEffect(() => {
-    fetchTransactions();
-  }, [activeNetworkId, miniBlockHash]);
-
-  React.useEffect(() => {
-    fetchTransactions(true);
-  }, [searchParams]);
+    if (ref.current !== null) {
+      fetchTransactions(Boolean(searchParams.toString()));
+    }
+  }, [activeNetworkId, miniBlockHash, searchParams]);
 
   const isScResult = type === 'SmartContractResultBlock';
 
@@ -125,7 +48,6 @@ export const MiniBlockDetails = () => {
               <TransactionsTable
                 transactions={transactions}
                 totalTransactions={totalTransactions}
-                size={size}
                 showDirectionCol={true}
                 title={
                   <h5

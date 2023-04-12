@@ -136,3 +136,13 @@ export interface AdapterProviderPropsType {
   timeout: number;
   timestamp?: number;
 }
+
+export type ApiAdapterResponseType =
+  | {
+      data: any;
+      success: boolean;
+    }
+  | {
+      success: boolean;
+      data?: undefined;
+    };

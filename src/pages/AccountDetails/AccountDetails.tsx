@@ -1,22 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { Loader, TransactionsTable } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useAdapter, useFetchTransactions } from 'hooks';
-import { activeNetworkSelector } from 'redux/selectors';
-import { TransactionFiltersEnum } from 'types';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
-import { NftTabs } from './NftLayout/NftTabs';
+import { AccountTabs } from './AccountLayout/AccountTabs';
 
-export const NftTransactions = () => {
+export const AccountDetails = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { account } = useSelector(accountSelector);
+  const { address, txCount, balance } = account;
 
-  const { getNftTransactions, getNftTransactionsCount } = useAdapter();
-  const { hash: identifier } = useParams();
+  const { getAccountTransfers, getAccountTransfersCount } = useAdapter();
 
   const {
     fetchTransactions,
@@ -24,15 +24,15 @@ export const NftTransactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getNftTransactions, getNftTransactionsCount, {
-    identifier
+  } = useFetchTransactions(getAccountTransfers, getAccountTransfersCount, {
+    address
   });
 
   useEffect(() => {
     if (ref.current !== null) {
       fetchTransactions(Boolean(searchParams.toString()));
     }
-  }, [activeNetworkId, identifier, searchParams]);
+  }, [activeNetworkId, address, txCount, balance, searchParams]);
 
   return (
     <>
@@ -45,11 +45,11 @@ export const NftTransactions = () => {
             <div className='col-12'>
               <TransactionsTable
                 transactions={transactions}
+                address={address}
                 totalTransactions={totalTransactions}
                 showDirectionCol={true}
-                title={<NftTabs />}
+                title={<AccountTabs />}
                 dataChanged={dataChanged}
-                inactiveFilters={[TransactionFiltersEnum.token]}
               />
             </div>
           </div>

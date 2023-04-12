@@ -5,18 +5,20 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { Loader, TransactionsTable } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
 import { useAdapter, useFetchTransactions } from 'hooks';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';
 
-import { NftTabs } from './NftLayout/NftTabs';
+import { TokenTabs } from './TokenLayout/TokenTabs';
 
-export const NftTransactions = () => {
+export const TokenDetails = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { token } = useSelector(tokenSelector);
+  const { transactions: transactionsCount } = token;
 
-  const { getNftTransactions, getNftTransactionsCount } = useAdapter();
-  const { hash: identifier } = useParams();
+  const { getTokenTransfers, getTokenTransfersCount } = useAdapter();
+  const { hash: tokenId } = useParams();
 
   const {
     fetchTransactions,
@@ -24,15 +26,15 @@ export const NftTransactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getNftTransactions, getNftTransactionsCount, {
-    identifier
+  } = useFetchTransactions(getTokenTransfers, getTokenTransfersCount, {
+    tokenId
   });
 
   useEffect(() => {
     if (ref.current !== null) {
       fetchTransactions(Boolean(searchParams.toString()));
     }
-  }, [activeNetworkId, identifier, searchParams]);
+  }, [activeNetworkId, tokenId, transactionsCount, searchParams]);
 
   return (
     <>
@@ -47,7 +49,7 @@ export const NftTransactions = () => {
                 transactions={transactions}
                 totalTransactions={totalTransactions}
                 showDirectionCol={true}
-                title={<NftTabs />}
+                title={<TokenTabs />}
                 dataChanged={dataChanged}
                 inactiveFilters={[TransactionFiltersEnum.token]}
               />

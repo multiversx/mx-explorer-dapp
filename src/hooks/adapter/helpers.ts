@@ -32,9 +32,10 @@ export function getTransactionsParams({
   miniBlockHash,
   search,
   token,
-  withUsername
+  withUsername = true
 }: GetTransactionsType) {
   const params: AdapterProviderPropsType['params'] = {
+    withUsername,
     from: (size - 1) * PAGE_SIZE,
     size: PAGE_SIZE,
     ...getAccountParams(address),
@@ -48,8 +49,7 @@ export function getTransactionsParams({
     ...(status ? { status } : {}),
     ...(miniBlockHash ? { miniBlockHash } : {}),
     ...(search ? { search } : {}),
-    ...(token ? { token } : {}),
-    ...(withUsername !== undefined ? { withUsername } : {})
+    ...(token ? { token } : {})
   };
 
   return params;
@@ -110,10 +110,11 @@ export function getTokensParams({
   identifiers,
   sort,
   order,
-  withUsername,
+  withUsername = true,
   includeMetaESDT
 }: GetTokensType) {
   const params: AdapterProviderPropsType['params'] = {
+    withUsername,
     ...(fields !== undefined ? { fields } : {}),
     ...(type !== undefined ? { type } : {}),
     ...(search !== undefined ? { search } : {}),
@@ -122,7 +123,6 @@ export function getTokensParams({
     ...(identifiers !== undefined ? { identifiers } : {}),
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
-    ...(withUsername !== undefined ? { withUsername } : {}),
     ...(includeMetaESDT !== undefined ? { includeMetaESDT } : {}),
     ...(size !== undefined
       ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
