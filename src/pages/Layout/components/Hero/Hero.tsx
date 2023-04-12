@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 import { Search } from 'components';
 import { useActiveRoute, useIsMainnet, usePageStats } from 'hooks';
-import { ChartContractsTransactions } from 'pages/Home/ChartContractsTransactions';
+import { ChartContractsTransactions } from 'pages/Home/components/ChartContractsTransactions';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
 import {

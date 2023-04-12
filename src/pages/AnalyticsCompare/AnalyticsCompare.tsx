@@ -16,9 +16,9 @@ import { analyticsRoutes } from 'routes';
 
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
 import { ChartResolution } from './AnalyticsChart/components/ChartResolution';
+import { FailedAnalytics } from './components/FailedAnalytics';
+import { NoAnalytics } from './components/NoAnalytics';
 import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
-import { FailedAnalytics } from './FailedAnalytics';
-import { NoAnalytics } from './NoAnalytics';
 
 export const AnalyticsCompare = () => {
   const ref = useRef(null);

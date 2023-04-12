@@ -2,8 +2,8 @@ import React, { Fragment, useMemo } from 'react';
 import classNames from 'classnames';
 import { SingleValue } from 'react-select';
 
-import { ChartSelect } from 'pages/Home/ChartSelect';
-import { ChartSelectOptionType } from 'pages/Home/ChartSelect/types';
+import { ChartSelect } from 'pages/Home/components/ChartSelect';
+import { ChartSelectOptionType } from 'pages/Home/components/ChartSelect/types';
 
 import styles from './styles.module.scss';
 import {
