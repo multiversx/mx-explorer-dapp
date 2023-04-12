@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const dateFormatted = (
+export const formatDate = (
   value: number,
   noSeconds?: boolean,
   utc?: boolean

@@ -32,7 +32,7 @@ import { txStatus } from 'components/TransactionStatus/txStatus';
 import { DECIMALS, DIGITS } from 'config';
 import {
   addressIsBech32,
-  dateFormatted,
+  formatDate,
   urlBuilder,
   isContract,
   getTransactionMethod
@@ -257,7 +257,7 @@ export const TransactionInfo = ({
                     <TimeAgo value={transaction.timestamp} />
                     &nbsp;
                     <span>
-                      ({dateFormatted(transaction.timestamp, false, true)})
+                      ({formatDate(transaction.timestamp, false, true)})
                     </span>
                   </div>
                 ) : (

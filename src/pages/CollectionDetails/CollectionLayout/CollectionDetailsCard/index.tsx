@@ -14,7 +14,7 @@ import {
   TimeAgo,
   SocialIcons
 } from 'components';
-import { urlBuilder, dateFormatted } from 'helpers';
+import { urlBuilder, formatDate } from 'helpers';
 import { useActiveRoute } from 'hooks';
 import { collectionSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';
@@ -126,7 +126,7 @@ export const CollectionDetailsCard = () => {
                   <TimeAgo value={timestamp} />
                   &nbsp;
                   <span className='text-neutral-400'>
-                    ({dateFormatted(timestamp, false, true)})
+                    ({formatDate(timestamp, false, true)})
                   </span>
                 </DetailItem>
               )}

@@ -26,7 +26,7 @@ import {
   SmallDetailItem,
   UsdValue
 } from 'components';
-import { isContract, urlBuilder, dateFormatted, formatHerotag } from 'helpers';
+import { isContract, urlBuilder, formatDate, formatHerotag } from 'helpers';
 import { useAdapter } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
@@ -285,7 +285,7 @@ export const AccountDetailsCard = () => {
                       />
                       <TimeAgo value={deployedAt} /> ago &nbsp;
                       <span className='text-neutral-400'>
-                        ({dateFormatted(deployedAt, false, true)})
+                        ({formatDate(deployedAt, false, true)})
                       </span>
                     </div>
                   ) : (

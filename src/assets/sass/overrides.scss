@@ -1,13 +1,24 @@
-// TEMPORARY - css overrides - TODO - move to bootstrap
-
 html {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'calt' 0;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
 dt {
   font-weight: 400;
 }
+
 dd {
   margin-bottom: 0;
 }
@@ -19,17 +30,6 @@ a {
   }
 }
 
-.text-lh-24 {
-  line-height: 24px; // must be same as icon height to avoid issues between browsers
-  .trim {
-    .left,
-    .right,
-    .elipsis {
-      height: 24px;
-    }
-  }
-}
-
 // webkit being webkit
 input {
   color-scheme: dark;
@@ -38,6 +38,7 @@ input:is(:-webkit-autofill, :-webkit-autofill:focus) {
   transition: background-color 600000s 0s, color 600000s 0s;
 }
 
+// recharts fix
 .recharts-tooltip-wrapper {
   background-color: transparent !important;
 

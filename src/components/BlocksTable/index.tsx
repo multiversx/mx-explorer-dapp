@@ -8,7 +8,7 @@ import {
   BlockGasUsed,
   IdentityBlock
 } from 'components';
-import { sizeFormat, urlBuilder } from 'helpers';
+import { formatSize, urlBuilder } from 'helpers';
 import { BlockType } from 'types';
 
 export const BlocksTable = ({
@@ -73,8 +73,8 @@ export const BlocksTable = ({
               </td>
               <td className='text-end'>
                 {block.sizeTxs !== undefined
-                  ? sizeFormat(block.size + block.sizeTxs)
-                  : sizeFormat(block.size)}
+                  ? formatSize(block.size + block.sizeTxs)
+                  : formatSize(block.size)}
               </td>
 
               <td>

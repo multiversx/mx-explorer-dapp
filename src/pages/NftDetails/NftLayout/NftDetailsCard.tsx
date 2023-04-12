@@ -14,7 +14,7 @@ import {
   SocialDetailItem,
   DescriptionDetailItem
 } from 'components';
-import { dateFormatted, getNftText } from 'helpers';
+import { formatDate, getNftText } from 'helpers';
 
 import { nftSelector } from 'redux/selectors';
 import { NftTypeEnum } from 'types';
@@ -91,7 +91,7 @@ export const NftDetailsCard = () => {
                   <TimeAgo value={nftState.timestamp} />
                   &nbsp;
                   <span className='text-neutral-400'>
-                    ({dateFormatted(nftState.timestamp, false, true)})
+                    ({formatDate(nftState.timestamp, false, true)})
                   </span>
                 </DetailItem>
               )}
