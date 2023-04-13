@@ -4,10 +4,9 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
-import { txStatus } from 'components/TransactionStatus/helpers/txStatus';
 import { useAdapter } from 'hooks';
 import { refreshSelector } from 'redux/selectors/refresh';
-import { TransactionType } from 'types';
+import { TransactionType, TransactionApiStatusEnum } from 'types';
 
 import { TransactionInfo } from './components/TransactionInfo';
 
@@ -39,7 +38,7 @@ export const TransactionDetails = () => {
   const checkRefetch = () => {
     if (
       transaction &&
-      (transaction.status.toLowerCase() === txStatus.pending.toLowerCase() ||
+      (transaction.status.toLowerCase() === TransactionApiStatusEnum.pending ||
         transaction.pendingResults) &&
       dataReady
     ) {

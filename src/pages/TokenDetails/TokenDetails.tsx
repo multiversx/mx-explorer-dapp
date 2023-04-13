@@ -32,9 +32,15 @@ export const TokenDetails = () => {
 
   useEffect(() => {
     if (ref.current !== null) {
+      fetchTransactions();
+    }
+  }, [activeNetworkId, tokenId, transactionsCount]);
+
+  React.useEffect(() => {
+    if (searchParams.toString()) {
       fetchTransactions(Boolean(searchParams.toString()));
     }
-  }, [activeNetworkId, tokenId, transactionsCount, searchParams]);
+  }, [searchParams]);
 
   return (
     <>

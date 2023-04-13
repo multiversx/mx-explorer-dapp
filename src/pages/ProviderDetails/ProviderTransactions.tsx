@@ -36,9 +36,15 @@ export const ProviderTransactions = () => {
 
   useEffect(() => {
     if (ref.current !== null) {
+      fetchTransactions();
+    }
+  }, [activeNetworkId, address]);
+
+  React.useEffect(() => {
+    if (searchParams.toString()) {
       fetchTransactions(Boolean(searchParams.toString()));
     }
-  }, [activeNetworkId, address, searchParams]);
+  }, [searchParams]);
 
   return (
     <>

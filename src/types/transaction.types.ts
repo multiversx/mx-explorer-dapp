@@ -161,17 +161,22 @@ export enum TransactionOperationDirectionEnum {
 }
 
 export enum TransactionApiStatusEnum {
-  success = 'Success',
-  pending = 'Pending',
-  invalid = 'Invalid',
-  fail = 'Fail'
+  success = 'success',
+  pending = 'pending',
+  invalid = 'invalid',
+  fail = 'fail'
 }
 
 export enum TransactionExtraStatusEnum {
-  notExecuted = 'Not Executed',
-  failed = 'Failed', // TODO: remove when ready
+  notExecuted = 'notExecuted',
+  failed = 'failed', // TODO: remove when ready
   rewardReverted = 'reward-reverted'
 }
+
+const TransactionStatusEnum = {
+  ...TransactionApiStatusEnum,
+  ...TransactionExtraStatusEnum
+};
 
 export type TransactionStatusEnum =
   | TransactionApiStatusEnum

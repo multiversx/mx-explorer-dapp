@@ -35,9 +35,15 @@ export const Transactions = () => {
 
   React.useEffect(() => {
     if (ref.current !== null) {
+      fetchTransactions();
+    }
+  }, [activeNetworkId, firstPageTicker]);
+
+  React.useEffect(() => {
+    if (searchParams.toString()) {
       fetchTransactions(Boolean(searchParams.toString()));
     }
-  }, [activeNetworkId, firstPageTicker, searchParams]);
+  }, [searchParams]);
 
   useEffect(() => {
     if (senderShard !== undefined || receiverShard !== undefined) {

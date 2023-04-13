@@ -197,7 +197,7 @@ Override Bootstrap variables only above.
   .new td {
     @keyframes highlight {
       from {
-        background-color: var(--neutral-900);
+        background-color: var(--neutral-transparent);
       }
     }
     animation: highlight 1000ms ease-in-out;

@@ -28,8 +28,6 @@ import {
 } from 'components';
 import { denominate } from 'components/Denominate/denominate';
 import { getStatusIconAndColor } from 'components/TransactionStatus';
-import { txStatus } from 'components/TransactionStatus/helpers/txStatus';
-
 import { DECIMALS, DIGITS } from 'config';
 import {
   addressIsBech32,
@@ -45,7 +43,9 @@ import {
   TransactionType,
   TransactionActionCategoryEnum,
   TransactionVisibleOperationEnum,
-  TransactionSCResultType
+  TransactionSCResultType,
+  TransactionApiStatusEnum,
+  TransactionExtraStatusEnum
 } from 'types';
 
 import { DataField } from './DataField';
@@ -131,7 +131,7 @@ export const TransactionInfo = ({
   const [activeKey, setActiveKey] = React.useState(activeSection);
 
   const isTxPending =
-    transaction.status.toLowerCase() === txStatus.pending.toLowerCase() ||
+    transaction.status.toLowerCase() === TransactionApiStatusEnum.pending ||
     transaction.pendingResults;
 
   const transactionFee =
@@ -340,7 +340,8 @@ export const TransactionInfo = ({
                     )}
                   </div>
                   <TransactionErrorDisplay transaction={transaction} />
-                  {transaction.status === txStatus.rewardReverted && (
+                  {transaction.status ===
+                    TransactionExtraStatusEnum.rewardReverted && (
                     <div className='d-flex ms-1 text-break-all'>
                       <FontAwesomeIcon
                         icon={faAngleDown}

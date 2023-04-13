@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { txStatus } from 'components/TransactionStatus/helpers/txStatus';
 import { useAdapter } from 'hooks';
-import { TransactionType } from 'types';
+import { TransactionType, TransactionApiStatusEnum } from 'types';
 
 export const NonceMessage = ({
   transaction
@@ -23,7 +22,7 @@ export const NonceMessage = ({
   const [hasUnsyncedNonce, setHasUnsyncedNonce] = useState<boolean>(false);
 
   const isTxPending =
-    status.toLowerCase() === txStatus.pending.toLowerCase() ||
+    status.toLowerCase() === TransactionApiStatusEnum.pending ||
     transaction.pendingResults;
 
   const getSenderNonce = () => {
@@ -47,7 +46,6 @@ export const NonceMessage = ({
     }, 1000 * 60); // 1 minute
 
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [senderAddress, timestamp, isTxPending]);
 
   return (
