@@ -1,9 +1,9 @@
 import { stringIsInteger } from 'helpers';
 
 interface PagerHelperType {
-  total: number | '...';
+  total: number;
   itemsPerPage: number;
-  page: string;
+  page: number;
 }
 
 const generatePaginationArray = ({
@@ -21,7 +21,9 @@ const generatePaginationArray = ({
   center.unshift(currentPage - 1);
   center.push(currentPage + 1);
 
-  const filteredCenter = center.filter((page) => page > 1 && page < totalPages);
+  const filteredCenter = center.filter(
+    (page) => Number(page) > 1 && Number(page) < totalPages
+  );
 
   const includeLeftGap = currentPage > 4;
   const includeLeftPages = currentPage === 4;
@@ -37,27 +39,25 @@ const generatePaginationArray = ({
 };
 
 export const pagerHelper = ({ total, itemsPerPage, page }: PagerHelperType) => {
-  const numericTotal = total === '...' ? 0 : total;
-  const size = stringIsInteger(page) ? parseInt(page) : 1;
-  const start = (size - 1) * itemsPerPage + (size === 1 ? 1 : 0);
+  const processedPage = stringIsInteger(String(page))
+    ? parseInt(String(page))
+    : 1;
+  const start =
+    (processedPage - 1) * itemsPerPage + (processedPage === 1 ? 1 : 0);
   const end =
-    (size - 1) * itemsPerPage +
-    (numericTotal < itemsPerPage && total !== '...'
-      ? numericTotal
-      : itemsPerPage);
-  const last = !isNaN(parseInt(total.toString()))
-    ? Math.min(end, parseInt(total.toString()))
-    : end;
-  const correction = size >= 2 ? 0 : 1;
-  const lastPage = Math.ceil(numericTotal / (end - start + correction));
+    (processedPage - 1) * itemsPerPage +
+    (total < itemsPerPage ? total : itemsPerPage);
+  const last = Math.min(end, total);
+  const correction = processedPage >= 2 ? 0 : 1;
+  const lastPage = Math.ceil(total / (end - start + correction));
 
   const paginationArray = generatePaginationArray({
-    currentPage: size,
-    totalPages: !isNaN(lastPage) ? lastPage : size
+    currentPage: processedPage,
+    totalPages: !isNaN(lastPage) ? lastPage : processedPage
   });
 
   return {
-    size,
+    processedPage,
     start,
     end,
     last,

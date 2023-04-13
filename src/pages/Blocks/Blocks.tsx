@@ -8,8 +8,8 @@ import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import {
   useAdapter,
   useNetworkRoute,
-  useURLSearchParams,
-  useSize
+  useGetTransactionURLFilters,
+  useGetPage
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { BlockType } from 'types';
@@ -25,8 +25,8 @@ interface StateType {
 export const Blocks = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const { page, shard } = useURLSearchParams();
-  const { size, firstPageTicker } = useSize();
+  const { shard } = useGetTransactionURLFilters();
+  const { page, firstPageRefreshTrigger } = useGetPage();
   const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
 
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ export const Blocks = () => {
   }, [shard]);
 
   useEffect(() => {
-    getBlocks({ size, shard, withProposerIdentity: true }).then(
+    getBlocks({ page, shard, withProposerIdentity: true }).then(
       ({ success, data }) => {
         if (ref.current !== null) {
           if (success && data) {
@@ -65,13 +65,13 @@ export const Blocks = () => {
         }
       }
     );
-    getBlocksCount({ size, shard }).then(({ data: count, success }) => {
+    getBlocksCount({ page, shard }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalBlocks(count);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size, shard, firstPageTicker, searchParams]);
+  }, [activeNetworkId, shard, firstPageRefreshTrigger, searchParams]);
 
   return shard && shard < 0 ? (
     navigate(networkRoute('/not-found'))
@@ -103,13 +103,7 @@ export const Blocks = () => {
                             )}
                           </h5>
                           <Pager
-                            page={String(page)}
-                            total={
-                              totalBlocks !== '...'
-                                ? Math.min(totalBlocks, 10000)
-                                : totalBlocks
-                            }
-                            itemsPerPage={25}
+                            total={totalBlocks}
                             show={state.blocks.length > 0}
                             className='d-flex ms-auto me-auto me-sm-0'
                           />
@@ -126,13 +120,7 @@ export const Blocks = () => {
 
                       <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
                         <Pager
-                          page={String(page)}
-                          total={
-                            totalBlocks !== '...'
-                              ? Math.min(totalBlocks, 10000)
-                              : totalBlocks
-                          }
-                          itemsPerPage={25}
+                          total={totalBlocks}
                           show={state.blocks.length > 0}
                         />
                       </div>

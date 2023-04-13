@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useSize, useURLSearchParams } from 'hooks';
+import { useGetPage, useGetTransactionURLFilters } from 'hooks';
 import { UITransactionType, ApiAdapterResponseType } from 'types';
 
 export const useFetchTransactions = (
@@ -10,8 +10,8 @@ export const useFetchTransactions = (
 ) => {
   const [searchParams] = useSearchParams();
 
-  const urlParams = useURLSearchParams();
-  const { size } = useSize();
+  const urlParams = useGetTransactionURLFilters();
+  const { page } = useGetPage();
 
   const [transactions, setTransactions] = useState<UITransactionType[]>([]);
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
@@ -25,7 +25,7 @@ export const useFetchTransactions = (
       setDataChanged(true);
     }
     Promise.all([
-      transactionPromise({ ...urlParams, ...filters, size }),
+      transactionPromise({ ...urlParams, ...filters, page }),
       transactionCountPromise({ ...urlParams, ...filters })
     ])
       .then(([transactionsData, transactionsCountData]) => {
@@ -38,7 +38,7 @@ export const useFetchTransactions = (
             })
           );
           setTransactions(newTransactions);
-          setTotalTransactions(Math.min(transactionsCountData.data, 10000));
+          setTotalTransactions(transactionsCountData.data);
         }
         setIsDataReady(
           transactionsData.success && transactionsCountData.success

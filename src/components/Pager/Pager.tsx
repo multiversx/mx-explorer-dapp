@@ -8,47 +8,46 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
+import { PAGE_SIZE, MAX_RESULTS } from 'appConstants';
 import { pagerHelper } from './pagerHelper';
 
 export const Pager = ({
   total,
-  show,
-  page,
-  itemsPerPage,
+  show = false,
+  itemsPerPage = PAGE_SIZE,
   className = '',
   hasTestId = true
 }: {
-  page: string;
   total: number | '...';
-  itemsPerPage: number;
-  show: boolean;
+  show?: boolean;
+  itemsPerPage?: number;
   className?: string;
   hasTestId?: boolean;
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
+  const { page, ...rest } = params;
 
-  const { size, lastPage, end, paginationArray } = pagerHelper({
-    total,
+  const processedTotal = total !== '...' ? Math.min(total, MAX_RESULTS) : 0;
+
+  const { processedPage, lastPage, end, paginationArray } = pagerHelper({
+    total: processedTotal,
     itemsPerPage,
-    page
+    page: Number(page)
   });
 
   const nextUrlParams = {
     ...params,
-    page: `${size + 1}`
+    page: `${processedPage + 1}`
   };
-
-  const { page: urlPage, ...rest } = params;
 
   const firstUrlParams = {
     ...rest
   };
   const prevUrlParams = {
     ...params,
-    page: `${size - 1}`
+    page: `${processedPage - 1}`
   };
-
   const lastUrlParams = {
     ...params,
     page: `${lastPage}`
@@ -58,8 +57,8 @@ export const Pager = ({
     setSearchParams(nextUrlParams);
   };
 
-  const leftBtnActive = size !== 1;
-  const rightBtnsActive = end < total;
+  const leftBtnActive = processedPage !== 1;
+  const rightBtnsActive = end < processedTotal;
 
   return show ? (
     <div className={`pager ${className}`}>
@@ -67,7 +66,7 @@ export const Pager = ({
         <div
           className={`btns-contrainer left ${leftBtnActive ? '' : 'inactive'}`}
         >
-          {size === 1 ? (
+          {processedPage === 1 ? (
             <div className='btn btn-pager'>
               <FontAwesomeIcon icon={faAnglesLeft} size='lg' />
             </div>
@@ -82,7 +81,7 @@ export const Pager = ({
             </button>
           )}
 
-          {size === 1 ? (
+          {processedPage === 1 ? (
             <div
               className='btn btn-pager previous-btn'
               {...(hasTestId
@@ -97,7 +96,7 @@ export const Pager = ({
               type='button'
               className='btn btn-pager previous-btn'
               onClick={() =>
-                updatePage(size === 2 ? firstUrlParams : prevUrlParams)
+                updatePage(processedPage === 2 ? firstUrlParams : prevUrlParams)
               }
               {...(hasTestId ? { 'data-testid': 'previousPageButton' } : {})}
             >
@@ -119,9 +118,11 @@ export const Pager = ({
                 {page !== '...' ? (
                   <button
                     type='button'
-                    className={`btn btn-pager ${page === size ? 'active' : ''}`}
+                    className={`btn btn-pager ${
+                      page === processedPage ? 'active' : ''
+                    }`}
                     onClick={() => {
-                      if (page !== size) {
+                      if (page !== processedPage) {
                         updatePage(currentUrlParams);
                       }
                     }}
@@ -141,7 +142,7 @@ export const Pager = ({
             rightBtnsActive ? '' : 'inactive'
           }`}
         >
-          {total === '...' || end < total ? (
+          {total === '...' || end < processedTotal ? (
             <button
               type='button'
               className='btn btn-pager next-btn'
@@ -163,7 +164,7 @@ export const Pager = ({
             </div>
           )}
 
-          {!isNaN(lastPage) && end < total ? (
+          {!isNaN(lastPage) && end < processedTotal ? (
             <button
               type='button'
               className='btn btn-pager'

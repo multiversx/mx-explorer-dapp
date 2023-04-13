@@ -13,7 +13,7 @@ import {
   Overlay
 } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
-import { useAdapter, useGetFilters, useNetworkRoute } from 'hooks';
+import { useAdapter, useGetPage, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { TokenType, TokenTypeEnum } from 'types';
 
@@ -27,7 +27,7 @@ export const AccountTokens = () => {
   const [searchParams] = useSearchParams();
   const { account } = useSelector(accountSelector);
   const { txCount } = account;
-  const { size } = useGetFilters();
+  const { page } = useGetPage();
   const networkRoute = useNetworkRoute();
 
   const { getAccountTokens, getAccountTokensCount } = useAdapter();
@@ -43,7 +43,7 @@ export const AccountTokens = () => {
     if (tokensActive) {
       Promise.all([
         getAccountTokens({
-          size,
+          page,
           address,
           includeMetaESDT: true
         }),
@@ -65,7 +65,7 @@ export const AccountTokens = () => {
   React.useEffect(() => {
     fetchAccountTokens();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txCount, activeNetworkId, address, size, searchParams]);
+  }, [txCount, activeNetworkId, address, searchParams]);
 
   return !tokensActive ? (
     navigate(networkRoute(urlBuilder.accountDetails(address)))
@@ -76,9 +76,7 @@ export const AccountTokens = () => {
           <AccountTabs />
           {dataReady === true && accountTokens.length > 0 && (
             <Pager
-              itemsPerPage={25}
-              page={String(size)}
-              total={Math.min(accountTokensCount, 10000)}
+              total={accountTokensCount}
               show={accountTokens.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
             />
@@ -195,12 +193,7 @@ export const AccountTokens = () => {
 
       {dataReady === true && accountTokens.length > 0 && (
         <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-          <Pager
-            itemsPerPage={25}
-            page={String(size)}
-            total={Math.min(accountTokensCount, 10000)}
-            show={accountTokens.length > 0}
-          />
+          <Pager total={accountTokensCount} show={accountTokens.length > 0} />
         </div>
       )}
     </div>

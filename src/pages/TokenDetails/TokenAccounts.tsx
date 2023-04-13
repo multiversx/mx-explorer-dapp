@@ -14,7 +14,7 @@ import {
   LockedTokenAddressIcon
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useAdapter, useSize, useURLSearchParams } from 'hooks';
+import { useAdapter, useGetPage } from 'hooks';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { AccountType } from 'types';
 
@@ -26,8 +26,8 @@ export const TokenDetailsAccounts = () => {
   const { token } = useSelector(tokenSelector);
   const { decimals, accounts: totalAccounts } = token;
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { page } = useURLSearchParams();
-  const { size } = useSize();
+
+  const { page } = useGetPage();
   const { getTokenAccounts, getTokenAccountsCount } = useAdapter();
 
   const { hash: tokenId } = useParams() as any;
@@ -38,7 +38,7 @@ export const TokenDetailsAccounts = () => {
 
   const fetchAccounts = () => {
     Promise.all([
-      getTokenAccounts({ tokenId, size }),
+      getTokenAccounts({ tokenId, page }),
       getTokenAccountsCount({ tokenId })
     ]).then(([tokenAccountsData, tokenAccountsCountData]) => {
       if (ref.current !== null) {
@@ -53,7 +53,7 @@ export const TokenDetailsAccounts = () => {
 
   React.useEffect(() => {
     fetchAccounts();
-  }, [activeNetworkId, size, totalAccounts, searchParams]);
+  }, [activeNetworkId, totalAccounts, searchParams]);
 
   const showAccounts = dataReady === true && accounts.length > 0;
 
@@ -64,9 +64,7 @@ export const TokenDetailsAccounts = () => {
           <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
             <TokenTabs />
             <Pager
-              page={String(page)}
-              total={accountsCount ? Math.min(accountsCount, 10000) : 0}
-              itemsPerPage={25}
+              total={accountsCount}
               show={accounts.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
             />
@@ -116,12 +114,7 @@ export const TokenDetailsAccounts = () => {
               </div>
             </div>
             <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-              <Pager
-                page={String(page)}
-                total={accountsCount ? Math.min(accountsCount, 10000) : 0}
-                itemsPerPage={25}
-                show={accounts.length > 0}
-              />
+              <Pager total={accountsCount} show={accounts.length > 0} />
             </div>
           </>
         ) : (

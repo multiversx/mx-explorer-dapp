@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Loader } from 'components';
 import { isHash } from 'helpers';
-import { useAdapter, useSize, useNetworkRoute, useGetHash } from 'hooks';
+import { useAdapter, useGetPage, useNetworkRoute, useGetHash } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setMiniBlock } from 'redux/slices';
 
@@ -24,7 +24,7 @@ export const MiniBlockLayout = ({
 
   const miniBlockHash = useGetHash();
 
-  const { firstPageTicker } = useSize();
+  const { firstPageRefreshTrigger } = useGetPage();
   const networkRoute = useNetworkRoute();
 
   const { getMiniBlock } = useAdapter();
@@ -48,7 +48,7 @@ export const MiniBlockLayout = ({
     fetchMiniBlockDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetworkId, miniBlockHash]);
+  }, [firstPageRefreshTrigger, activeNetworkId, miniBlockHash]);
 
   const invalid = miniBlockHash && !isHash(miniBlockHash);
 

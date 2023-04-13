@@ -3,7 +3,7 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { Loader, Pager, PageState, NodesTable } from 'components';
-import { useAdapter, useGetFilters } from 'hooks';
+import { useAdapter, useGetNodeURLFilters, useGetPage } from 'hooks';
 import { ProviderTabs } from 'pages/ProviderDetails/ProviderLayout/ProviderTabs';
 import { NodeType } from 'types';
 
@@ -12,7 +12,8 @@ export const ProviderDetails = () => {
   const { hash: address } = useParams() as any;
   const { search } = useLocation();
   const { getNodes, getNodesCount } = useAdapter();
-  const { getQueryObject, size } = useGetFilters();
+  const { getQueryObject } = useGetNodeURLFilters();
+  const { page } = useGetPage();
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
@@ -23,7 +24,7 @@ export const ProviderDetails = () => {
     setDataReady(undefined);
 
     Promise.all([
-      getNodes({ ...queryObject, provider: address, size }),
+      getNodes({ ...queryObject, provider: address, page }),
       getNodesCount({ ...queryObject, provider: address })
     ]).then(([nodesData, count]) => {
       setNodes(nodesData.data);
@@ -45,8 +46,6 @@ export const ProviderDetails = () => {
           <ProviderTabs />
           {dataReady === true && (
             <Pager
-              itemsPerPage={25}
-              page={String(size)}
               total={totalNodes}
               className='d-flex ms-auto me-auto me-sm-0'
               show
@@ -73,12 +72,7 @@ export const ProviderDetails = () => {
             </NodesTable>
           </div>
           <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-            <Pager
-              itemsPerPage={25}
-              page={String(size)}
-              total={totalNodes}
-              show
-            />
+            <Pager total={totalNodes} show />
           </div>
         </>
       )}

@@ -17,8 +17,8 @@ import {
 import { urlBuilder } from 'helpers';
 import {
   useAdapter,
-  useGetFilters,
-  useURLSearchParams,
+  useGetNodeURLFilters,
+  useGetPage,
   useActiveRoute
 } from 'hooks';
 import { pageHeadersCollectionsStatsSelector } from 'redux/selectors/pageHeadersCollectionsStats';
@@ -32,9 +32,9 @@ import { NoCollections } from './components/NoCollections';
 export const Collections = () => {
   const ref = useRef(null);
   const activeRoute = useActiveRoute();
-  const { page } = useURLSearchParams();
+  const { page } = useGetPage();
   const { search } = useLocation();
-  const { getQueryObject, size } = useGetFilters();
+  const { getQueryObject } = useGetNodeURLFilters();
   const { getCollections, getCollectionsCount } = useAdapter();
   const pageHeadersCollections = useSelector(
     pageHeadersCollectionsStatsSelector
@@ -64,7 +64,7 @@ export const Collections = () => {
     Promise.all([
       getCollections({
         ...queryObject,
-        size,
+        page,
         type,
         sort: 'verifiedAndHolderCount'
       }),
@@ -73,7 +73,7 @@ export const Collections = () => {
       if (ref.current !== null) {
         if (collectionsData.success) {
           setCollections(collectionsData.data);
-          setTotalCollections(Math.min(count.data, 10000));
+          setTotalCollections(count.data);
         }
         setDataReady(collectionsData.success && count.success);
       }
@@ -145,13 +145,7 @@ export const Collections = () => {
                       <div className='d-none d-sm-flex'>
                         {collections && collections.length > 0 && (
                           <Pager
-                            page={String(page)}
-                            total={
-                              totalCollections !== '...'
-                                ? Math.min(totalCollections, 10000)
-                                : totalCollections
-                            }
-                            itemsPerPage={25}
+                            total={totalCollections}
                             show={collections.length > 0}
                           />
                         )}
@@ -276,13 +270,7 @@ export const Collections = () => {
 
                       <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
                         <Pager
-                          page={String(page)}
-                          total={
-                            totalCollections !== '...'
-                              ? Math.min(totalCollections, 10000)
-                              : totalCollections
-                          }
-                          itemsPerPage={25}
+                          total={totalCollections}
                           show={collections.length > 0}
                         />
                       </div>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Loader } from 'components';
-import { useAdapter, useSize, useGetHash } from 'hooks';
+import { useAdapter, useGetPage, useGetHash } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setToken } from 'redux/slices';
 
@@ -11,7 +11,7 @@ import { TokenDetailsCard } from './TokenDetailsCard';
 
 export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
-  const { firstPageTicker } = useSize();
+  const { firstPageRefreshTrigger } = useGetPage();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
@@ -43,7 +43,7 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
     fetchTokenDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetworkId, tokenId]);
+  }, [firstPageRefreshTrigger, activeNetworkId, tokenId]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false;

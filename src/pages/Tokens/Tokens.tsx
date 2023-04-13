@@ -6,9 +6,9 @@ import { PAGE_SIZE } from 'appConstants';
 import { Loader, NetworkLink, Pager } from 'components';
 import {
   useAdapter,
-  useGetFilters,
-  useURLSearchParams,
-  useActiveRoute
+  useGetNodeURLFilters,
+  useActiveRoute,
+  useGetPage
 } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
 import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
@@ -24,9 +24,10 @@ export const Tokens = () => {
   const ref = useRef(null);
 
   const activeRoute = useActiveRoute();
-  const { page } = useURLSearchParams();
+
   const { search } = useLocation();
-  const { getQueryObject, size } = useGetFilters();
+  const { getQueryObject } = useGetNodeURLFilters();
+  const { page } = useGetPage();
   const { getTokens, getTokensCount } = useAdapter();
 
   const { ecosystemMarketCap } = useSelector(economicsSelector);
@@ -40,13 +41,13 @@ export const Tokens = () => {
     const queryObject = getQueryObject();
 
     Promise.all([
-      getTokens({ ...queryObject, size }),
+      getTokens({ ...queryObject, page }),
       getTokensCount(queryObject)
     ]).then(([tokensData, count]) => {
       if (ref.current !== null) {
         if (tokensData.success) {
           setTokens(tokensData.data);
-          setTotalTokens(Math.min(count.data, 10000));
+          setTotalTokens(count.data);
         }
         setDataReady(tokensData.success && count.success);
       }
@@ -122,12 +123,7 @@ export const Tokens = () => {
                       {tokens && tokens.length > 0 && (
                         <div className='d-none d-sm-flex'>
                           <Pager
-                            page={String(page)}
-                            total={
-                              totalTokens !== '...'
-                                ? Math.min(totalTokens, 10000)
-                                : totalTokens
-                            }
+                            total={totalTokens}
                             itemsPerPage={PAGE_SIZE}
                             show={tokens.length > 0}
                           />
@@ -147,12 +143,7 @@ export const Tokens = () => {
 
                       <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
                         <Pager
-                          page={String(page)}
-                          total={
-                            totalTokens !== '...'
-                              ? Math.min(totalTokens, 10000)
-                              : totalTokens
-                          }
+                          total={totalTokens}
                           itemsPerPage={PAGE_SIZE}
                           show={tokens.length > 0}
                         />

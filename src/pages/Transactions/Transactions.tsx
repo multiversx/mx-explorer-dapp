@@ -8,8 +8,8 @@ import { FailedTransactions } from 'components/TransactionsTable/components/Fail
 import { MethodList } from 'components/TransactionsTable/components/TransactionsFilters';
 import {
   useAdapter,
-  useSize,
-  useURLSearchParams,
+  useGetPage,
+  useGetTransactionURLFilters,
   useFetchTransactions
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -17,10 +17,10 @@ import { activeNetworkSelector } from 'redux/selectors';
 export const Transactions = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const urlParams = useURLSearchParams();
+  const urlParams = useGetTransactionURLFilters();
   const { senderShard, receiverShard } = urlParams;
 
-  const { firstPageTicker } = useSize();
+  const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const { getTransactions, getTransactionsCount } = useAdapter();
@@ -37,7 +37,7 @@ export const Transactions = () => {
     if (ref.current !== null) {
       fetchTransactions();
     }
-  }, [activeNetworkId, firstPageTicker]);
+  }, [activeNetworkId, firstPageRefreshTrigger]);
 
   React.useEffect(() => {
     if (searchParams.toString()) {

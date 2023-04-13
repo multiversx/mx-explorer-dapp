@@ -20,7 +20,7 @@ export const getAccountParams = (address?: string) =>
 
 export function getTransactionsParams({
   address = '',
-  size = 1,
+  page = 1,
   senderShard,
   receiverShard,
   sender,
@@ -36,7 +36,7 @@ export function getTransactionsParams({
 }: GetTransactionsType) {
   const params: AdapterProviderPropsType['params'] = {
     withUsername,
-    from: (size - 1) * PAGE_SIZE,
+    from: (page - 1) * PAGE_SIZE,
     size: PAGE_SIZE,
     ...getAccountParams(address),
     ...(senderShard !== undefined ? { senderShard } : {}),
@@ -62,9 +62,8 @@ export function getNodeParams({
   search,
   shard,
   online,
-  size,
+  page,
   identity,
-  pagination = true,
   sort,
   order,
   provider,
@@ -82,10 +81,8 @@ export function getNodeParams({
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
     ...(fullHistory !== undefined ? { fullHistory } : {}),
-    ...(size !== undefined
-      ? pagination
-        ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
-        : { size }
+    ...(page !== undefined
+      ? { from: (page - 1) * PAGE_SIZE, size: PAGE_SIZE }
       : {})
   };
 
@@ -102,7 +99,7 @@ export function getProviderParams({ identity, providers }: GetProvidersType) {
 
 export function getTokensParams({
   fields,
-  size,
+  page,
   type,
   search,
   name,
@@ -124,8 +121,8 @@ export function getTokensParams({
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
     ...(includeMetaESDT !== undefined ? { includeMetaESDT } : {}),
-    ...(size !== undefined
-      ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
+    ...(page !== undefined
+      ? { from: (page - 1) * PAGE_SIZE, size: PAGE_SIZE }
       : {})
   };
 
@@ -134,7 +131,7 @@ export function getTokensParams({
 
 export function getCollectionsParams({
   fields,
-  size,
+  page,
   search,
   identifiers,
   type,
@@ -150,8 +147,8 @@ export function getCollectionsParams({
     ...(type !== undefined ? { type } : {}),
     ...(sort !== undefined ? { sort } : {}),
     ...(excludeMetaESDT !== undefined ? { excludeMetaESDT } : {}),
-    ...(size !== undefined
-      ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
+    ...(page !== undefined
+      ? { from: (page - 1) * PAGE_SIZE, size: PAGE_SIZE }
       : {})
   };
 
@@ -159,7 +156,7 @@ export function getCollectionsParams({
 }
 
 export function getNftsParams({
-  size,
+  page,
   search,
   identifiers,
   type,
@@ -188,8 +185,8 @@ export function getNftsParams({
     ...(withSupply !== undefined ? { withSupply } : {}),
     ...(withScamInfo !== undefined ? { withScamInfo } : {}),
     ...(excludeMetaESDT !== undefined ? { excludeMetaESDT } : {}),
-    ...(size !== undefined
-      ? { from: (size - 1) * PAGE_SIZE, size: PAGE_SIZE }
+    ...(page !== undefined
+      ? { from: (page - 1) * PAGE_SIZE, size: PAGE_SIZE }
       : {})
   };
 

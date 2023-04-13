@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 
 import { NetworkLink, Denominate, Sort } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
-import { useGetFilters } from 'hooks';
+import { useGetNodeURLFilters } from 'hooks';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'types';
 import { EgldRow } from './EgldRow';
 
@@ -16,7 +16,7 @@ export const TokensTable = ({
   tokens: TokenType[];
   totalTokens: '...' | number;
 }) => {
-  const { getQueryObject } = useGetFilters();
+  const { getQueryObject } = useGetNodeURLFilters();
   const queryObject = getQueryObject();
   const { order } = queryObject;
 

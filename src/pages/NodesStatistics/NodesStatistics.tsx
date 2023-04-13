@@ -3,7 +3,7 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useLocation } from 'react-router-dom';
 
 import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
-import { useAdapter, useGetFilters } from 'hooks';
+import { useAdapter, useGetNodeURLFilters, useGetPage } from 'hooks';
 import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
 import { validatorsRoutes } from 'routes';
 import { NodeType } from 'types';
@@ -12,7 +12,8 @@ export const NodesStatistics = () => {
   const ref = useRef(null);
   const { search } = useLocation();
   const { getNodes, getNodesCount } = useAdapter();
-  const { getQueryObject, size } = useGetFilters();
+  const { getQueryObject } = useGetNodeURLFilters();
+  const { page } = useGetPage();
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -26,7 +27,7 @@ export const NodesStatistics = () => {
     setDataReady(undefined);
 
     Promise.all([
-      getNodes({ ...queryObject, size }),
+      getNodes({ ...queryObject, page }),
       getNodesCount(queryObject)
     ]).then(([nodesData, count]) => {
       setNodes(nodesData.data);
@@ -50,8 +51,6 @@ export const NodesStatistics = () => {
           <NodesFilters baseRoute={validatorsRoutes.statistics} onlySearch />
           {dataReady === true && (
             <Pager
-              itemsPerPage={25}
-              page={String(size)}
               total={totalNodes}
               className='d-flex ms-auto me-auto me-sm-0'
               show
@@ -78,12 +77,7 @@ export const NodesStatistics = () => {
             </NodesTable>
           </div>
           <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-            <Pager
-              itemsPerPage={25}
-              page={String(size)}
-              total={totalNodes}
-              show
-            />
+            <Pager total={totalNodes} show />
           </div>
         </>
       )}
