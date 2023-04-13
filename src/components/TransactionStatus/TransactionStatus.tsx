@@ -4,7 +4,8 @@ import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faHourglass } from '@fortawesome/pro-solid-svg-icons/faHourglass';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { txStatus } from './helpers/txStatus';
+
+import { TransactionApiStatusEnum, TransactionExtraStatusEnum } from 'types';
 
 interface TransactionStatusType {
   status: string;
@@ -15,8 +16,7 @@ export const getStatusIconAndColor = (
   status: TransactionStatusType['status'],
   pendingResults: TransactionStatusType['pendingResults']
 ) => {
-  const statusIs = (compareTo: string) =>
-    status.toLowerCase() === compareTo.toLowerCase();
+  const statusIs = (compareTo: string) => status.toLowerCase() === compareTo;
   let Icon = () => <></>;
   let color = '';
 
@@ -27,25 +27,25 @@ export const getStatusIconAndColor = (
         <FontAwesomeIcon icon={faHourglass} className={`me-2 ${color}`} />
       );
       break;
-    case statusIs(txStatus.notExecuted):
+    case statusIs(TransactionExtraStatusEnum.notExecuted):
       color = 'text-danger';
       Icon = () => <FontAwesomeIcon icon={faBan} className={`me-2 ${color}`} />;
       break;
-    case statusIs(txStatus.fail):
-    case statusIs(txStatus.failed):
-    case statusIs(txStatus.rewardReverted):
+    case statusIs(TransactionApiStatusEnum.fail):
+    case statusIs(TransactionExtraStatusEnum.failed):
+    case statusIs(TransactionExtraStatusEnum.rewardReverted):
       color = 'text-danger';
       Icon = () => (
         <FontAwesomeIcon icon={faTimes} className={`me-2 ${color}`} />
       );
       break;
-    case statusIs(txStatus.success):
+    case statusIs(TransactionApiStatusEnum.success):
       color = 'text-success';
       Icon = () => (
         <FontAwesomeIcon icon={faCheckCircle} className={`me-2 ${color}`} />
       );
       break;
-    case statusIs(txStatus.invalid):
+    case statusIs(TransactionApiStatusEnum.invalid):
       color = 'text-danger';
       Icon = () => <FontAwesomeIcon icon={faBan} className={`me-2 ${color}`} />;
       break;
@@ -66,8 +66,8 @@ const getStatusText = ({ status, pendingResults }: TransactionStatusType) => {
   switch (true) {
     case pendingResults:
       return 'Pending (Smart Contract Execution)';
-    case status === txStatus.rewardReverted:
-      return txStatus.fail;
+    case status === TransactionExtraStatusEnum.rewardReverted:
+      return TransactionApiStatusEnum.fail;
     default:
       return status;
   }

@@ -30,9 +30,15 @@ export const NftTransactions = () => {
 
   useEffect(() => {
     if (ref.current !== null) {
+      fetchTransactions();
+    }
+  }, [activeNetworkId, identifier]);
+
+  React.useEffect(() => {
+    if (searchParams.toString()) {
       fetchTransactions(Boolean(searchParams.toString()));
     }
-  }, [activeNetworkId, identifier, searchParams]);
+  }, [searchParams]);
 
   return (
     <>

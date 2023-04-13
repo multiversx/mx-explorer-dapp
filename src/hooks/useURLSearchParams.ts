@@ -1,12 +1,12 @@
 import { useSearchParams } from 'react-router-dom';
-import { txStatus } from 'components/TransactionStatus/helpers/txStatus';
 import { stringIsInteger } from 'helpers';
+import { TransactionApiStatusEnum } from 'types';
 
 const checkValue = (value: string) =>
   stringIsInteger(value) ? parseInt(value) : undefined;
 
 const checkStatus = (status: string) =>
-  Object.keys(txStatus).includes(status.toLowerCase())
+  Object.keys(TransactionApiStatusEnum).includes(status.toLowerCase())
     ? status.toLowerCase()
     : undefined;
 

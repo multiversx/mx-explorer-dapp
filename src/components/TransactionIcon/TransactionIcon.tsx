@@ -12,9 +12,12 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { capitalizeFirstLetter, getTransactionMessages } from 'helpers';
 import { useAdapter } from 'hooks';
-import { UITransactionType, TransactionType } from 'types';
-
-import { txStatus } from '../TransactionStatus/helpers/txStatus';
+import {
+  UITransactionType,
+  TransactionType,
+  TransactionApiStatusEnum,
+  TransactionExtraStatusEnum
+} from 'types';
 
 interface TransactionIconType {
   transaction: UITransactionType;
@@ -37,12 +40,17 @@ export const TransactionIcon = ({
   >();
 
   const statusIs = (compareTo: string) =>
-    transaction.status.toLowerCase() === compareTo.toLowerCase();
+    transaction.status.toLowerCase() === compareTo;
 
-  const success = statusIs(txStatus.success);
-  const failed = statusIs(txStatus.failed) || statusIs(txStatus.fail);
-  const invalid = statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid);
-  const pending = statusIs(txStatus.pending);
+  const success = statusIs(TransactionApiStatusEnum.success);
+  const failed =
+    statusIs(TransactionApiStatusEnum.fail) ||
+    statusIs(TransactionExtraStatusEnum.failed) ||
+    statusIs(TransactionExtraStatusEnum.rewardReverted);
+  const invalid =
+    statusIs(TransactionApiStatusEnum.invalid) ||
+    statusIs(TransactionExtraStatusEnum.notExecuted);
+  const pending = statusIs(TransactionApiStatusEnum.pending);
 
   const fetchTransactionMessages = () => {
     if (transaction.txHash && (failed || invalid)) {

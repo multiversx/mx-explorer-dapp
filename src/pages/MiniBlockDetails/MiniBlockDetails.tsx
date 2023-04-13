@@ -29,9 +29,15 @@ export const MiniBlockDetails = () => {
 
   useEffect(() => {
     if (ref.current !== null) {
+      fetchTransactions();
+    }
+  }, [activeNetworkId, miniBlockHash]);
+
+  React.useEffect(() => {
+    if (searchParams.toString()) {
       fetchTransactions(Boolean(searchParams.toString()));
     }
-  }, [activeNetworkId, miniBlockHash, searchParams]);
+  }, [searchParams]);
 
   const isScResult = type === 'SmartContractResultBlock';
 
