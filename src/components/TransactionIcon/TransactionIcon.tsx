@@ -14,7 +14,7 @@ import { capitalizeFirstLetter, getTransactionMessages } from 'helpers';
 import { useAdapter } from 'hooks';
 import { UITransactionType, TransactionType } from 'types';
 
-import { txStatus } from '../TransactionStatus/txStatus';
+import { txStatus } from '../TransactionStatus/helpers/txStatus';
 
 interface TransactionIconType {
   transaction: UITransactionType;

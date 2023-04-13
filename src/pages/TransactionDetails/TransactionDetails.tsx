@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
-import { txStatus } from 'components/TransactionStatus/txStatus';
+import { txStatus } from 'components/TransactionStatus/helpers/txStatus';
 import { useAdapter } from 'hooks';
 import { refreshSelector } from 'redux/selectors/refresh';
 import { TransactionType } from 'types';

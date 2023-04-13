@@ -144,6 +144,7 @@ export interface TransactionTableType {
   transactions: UITransactionType[];
   address?: string;
   totalTransactions: number | '...';
+
   title?: React.ReactNode;
   showDirectionCol?: boolean;
   dataChanged?: boolean;

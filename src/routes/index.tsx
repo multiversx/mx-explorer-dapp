@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { AccountDetails } from 'pages/AccountDetails';
 import { AccountAnalytics } from 'pages/AccountDetails/AccountAnalytics';
 import { AccountContractCode } from 'pages/AccountDetails/AccountContractCode';

@@ -10,8 +10,8 @@ import {
   LatestItem,
   PulsatingLed
 } from 'components';
-import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
-import { NoBlocks } from 'components/BlocksTable/NoBlocks';
+import { FailedBlocks } from 'components/BlocksTable/components/FailedBlocks';
+import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import { urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
 import { activeNetworkSelector, refreshSelector } from 'redux/selectors';

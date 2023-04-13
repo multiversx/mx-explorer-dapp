@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { txStatus } from 'components/TransactionStatus/txStatus';
+import { txStatus } from 'components/TransactionStatus/helpers/txStatus';
 import { stringIsInteger } from 'helpers';
 
 const checkValue = (value: string) =>

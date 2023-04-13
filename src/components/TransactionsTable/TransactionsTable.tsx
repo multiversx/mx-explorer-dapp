@@ -5,10 +5,10 @@ import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { useSize } from 'hooks';
 import { TransactionTableType } from 'types';
 
-import { Header } from './Header';
-import { NoTransactions } from './NoTransactions';
-import { TransactionRow } from './TransactionRow';
-import { MethodList } from './TransactionsFilters';
+import { Header } from './components/Header';
+import { NoTransactions } from './components/NoTransactions';
+import { TransactionRow } from './components/TransactionRow';
+import { MethodList } from './components/TransactionsFilters';
 
 const ColSpanWrapper = ({
   children,

@@ -28,7 +28,8 @@ import {
 } from 'components';
 import { denominate } from 'components/Denominate/denominate';
 import { getStatusIconAndColor } from 'components/TransactionStatus';
-import { txStatus } from 'components/TransactionStatus/txStatus';
+import { txStatus } from 'components/TransactionStatus/helpers/txStatus';
+
 import { DECIMALS, DIGITS } from 'config';
 import {
   addressIsBech32,
