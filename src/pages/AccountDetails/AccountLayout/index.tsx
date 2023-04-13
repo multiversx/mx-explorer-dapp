@@ -7,7 +7,7 @@ import { LEGACY_DELEGATION_NODES_IDENTITY } from 'appConstants';
 
 import { Loader } from 'components';
 import { addressIsBech32 } from 'helpers';
-import { useAdapter, useNetworkRoute, useSize, useGetHash } from 'hooks';
+import { useAdapter, useNetworkRoute, useGetPage, useGetHash } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setAccount, setAccountStaking } from 'redux/slices';
 import { IdentityType, ProviderType, DelegationType } from 'types';
@@ -19,7 +19,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const ref = React.useRef(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { firstPageTicker } = useSize();
+  const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const dispatch = useDispatch();
   const {
@@ -321,7 +321,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetworkId, address]);
+  }, [firstPageRefreshTrigger, activeNetworkId, address]);
 
   React.useEffect(() => {
     setDataReady(undefined);

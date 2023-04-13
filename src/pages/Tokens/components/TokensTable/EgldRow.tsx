@@ -6,7 +6,7 @@ import { PAGE_SIZE } from 'appConstants';
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import { pagerHelper } from 'components/Pager/pagerHelper';
 
-import { useGetFilters, useURLSearchParams } from 'hooks';
+import { useGetNodeURLFilters, useGetTransactionURLFilters } from 'hooks';
 import {
   economicsSelector,
   statsSelector,
@@ -46,8 +46,8 @@ export const EgldRow = ({
     unprocessed: unProcessedStats
   } = useSelector(statsSelector);
 
-  const { page } = useURLSearchParams();
-  const { getQueryObject } = useGetFilters();
+  const { page } = useGetTransactionURLFilters();
+  const { getQueryObject } = useGetNodeURLFilters();
   const queryObject = getQueryObject();
   const description = `The MultiversX eGold (${egldLabel}) Token is native to the MultiversX Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
@@ -65,7 +65,7 @@ export const EgldRow = ({
   const { lastPage } = pagerHelper({
     total: totalTokens,
     itemsPerPage: PAGE_SIZE,
-    page: String(page)
+    page: Number(page)
   });
   const isLastPage = lastPage === page;
 

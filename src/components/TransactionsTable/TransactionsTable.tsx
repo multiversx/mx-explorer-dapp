@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Pager, TableWrapper } from 'components';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
-import { useSize } from 'hooks';
+import { useGetPage } from 'hooks';
 import { TransactionTableType } from 'types';
 
 import { Header } from './components/Header';
@@ -37,7 +37,7 @@ export const TransactionsTable = ({
   isScResultsTable = false,
   inactiveFilters
 }: TransactionTableType) => {
-  const { size } = useSize();
+  const { page } = useGetPage();
 
   return (
     <div
@@ -50,13 +50,7 @@ export const TransactionsTable = ({
           <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
             {title}
             <Pager
-              itemsPerPage={25}
-              page={String(size)}
-              total={
-                totalTransactions !== '...'
-                  ? Math.min(totalTransactions, 10000)
-                  : totalTransactions
-              }
+              total={totalTransactions}
               show={transactions.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
             />
@@ -102,16 +96,7 @@ export const TransactionsTable = ({
         </div>
 
         <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-          <Pager
-            itemsPerPage={25}
-            page={String(size)}
-            total={
-              totalTransactions !== '...'
-                ? Math.min(totalTransactions, 10000)
-                : totalTransactions
-            }
-            show={transactions.length > 0}
-          />
+          <Pager total={totalTransactions} show={transactions.length > 0} />
         </div>
       </div>
     </div>

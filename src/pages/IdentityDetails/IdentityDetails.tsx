@@ -5,14 +5,15 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageState, ProvidersTable } from 'components';
 import { NodesTable, SharedIdentity } from 'components';
-import { useAdapter, useGetFilters } from 'hooks';
+import { useAdapter, useGetNodeURLFilters, useGetPage } from 'hooks';
 import { IdentityType, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {
   const ref = React.useRef(null);
   const { hash: id } = useParams() as any;
   const { getIdentity, getNodes, getNodesCount, getProviders } = useAdapter();
-  const { getQueryObject, size } = useGetFilters();
+  const { getQueryObject } = useGetNodeURLFilters();
+  const { page } = useGetPage();
   const [searchParams] = useSearchParams();
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>(
@@ -32,7 +33,7 @@ export const IdentityDetails = () => {
     Promise.all([
       getIdentity(id),
       getProviders({ identity: id }),
-      getNodes({ ...queryObject, identity: id, size }),
+      getNodes({ ...queryObject, identity: id, page }),
       getNodesCount({ ...queryObject, identity: id })
     ]).then(([identityData, providersData, nodesData, nodesCount]) => {
       if (ref.current !== null) {
@@ -121,8 +122,6 @@ export const IdentityDetails = () => {
                         Nodes
                       </h5>
                       <Pager
-                        itemsPerPage={25}
-                        page={String(size)}
                         total={totalNodes}
                         className='d-flex ms-auto me-auto me-sm-0'
                         show
@@ -136,12 +135,7 @@ export const IdentityDetails = () => {
                     </NodesTable>
                   </div>
                   <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-                    <Pager
-                      itemsPerPage={25}
-                      page={String(size)}
-                      total={totalNodes}
-                      show
-                    />
+                    <Pager total={totalNodes} show />
                   </div>
                 </div>
               </div>

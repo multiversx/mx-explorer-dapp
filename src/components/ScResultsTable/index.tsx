@@ -9,7 +9,7 @@ interface ScResultsTableType {
   scResults: TransactionSCResultType[];
   address?: string;
   totalScResults: number | '...';
-  size: number;
+  page: number;
   title?: React.ReactNode;
 }
 
@@ -17,7 +17,7 @@ export const ScResultsTable = ({
   scResults,
   address,
   totalScResults,
-  size,
+  page,
   title = (
     <>
       <h5 data-testid='title' className='table-title d-flex align-items-center'>
@@ -26,9 +26,6 @@ export const ScResultsTable = ({
     </>
   )
 }: ScResultsTableType) => {
-  const paginationTotalResults =
-    totalScResults !== '...' ? Math.min(totalScResults, 10000) : totalScResults;
-
   return (
     <div className='transactions-table'>
       <div className='card'>
@@ -36,9 +33,7 @@ export const ScResultsTable = ({
           <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
             <div>{title}</div>
             <Pager
-              itemsPerPage={25}
-              page={String(size)}
-              total={paginationTotalResults}
+              total={totalScResults}
               show={scResults.length > 0}
               hasTestId={false}
               className='d-flex ms-auto me-auto me-sm-0'
@@ -72,12 +67,7 @@ export const ScResultsTable = ({
         </div>
 
         <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-          <Pager
-            itemsPerPage={25}
-            page={String(size)}
-            total={paginationTotalResults}
-            show={scResults.length > 0}
-          />
+          <Pager total={totalScResults} show={scResults.length > 0} />
         </div>
       </div>
     </div>

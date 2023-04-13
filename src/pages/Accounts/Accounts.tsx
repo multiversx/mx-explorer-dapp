@@ -11,7 +11,7 @@ import {
   AccountName
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useAdapter, useSize, useURLSearchParams } from 'hooks';
+import { useAdapter, useGetPage, useGetTransactionURLFilters } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { AccountType } from 'types';
@@ -24,8 +24,8 @@ export const Accounts = () => {
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
-  const { page } = useURLSearchParams();
-  const { size } = useSize();
+
+  const { page } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
 
   const [accounts, setAccounts] = useState<AccountType[]>([]);
@@ -33,7 +33,7 @@ export const Accounts = () => {
   const [totalAccounts, setTotalAccounts] = useState<number | '...'>('...');
 
   const fetchAccounts = () => {
-    getAccounts(size).then(({ data, success }) => {
+    getAccounts(page).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
           setAccounts(data);
@@ -46,7 +46,7 @@ export const Accounts = () => {
   const fetchAccountsCount = () => {
     getAccountsCount().then(({ data: count, success }) => {
       if (ref.current !== null && success) {
-        setTotalAccounts(Math.min(count, 10000));
+        setTotalAccounts(count);
       }
     });
   };
@@ -55,7 +55,7 @@ export const Accounts = () => {
     fetchAccounts();
     fetchAccountsCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size, searchParams]);
+  }, [activeNetworkId, searchParams]);
 
   return (
     <>
@@ -80,13 +80,7 @@ export const Accounts = () => {
                             Accounts
                           </h5>
                           <Pager
-                            page={String(page)}
-                            total={
-                              totalAccounts !== '...'
-                                ? Math.min(totalAccounts, 10000)
-                                : totalAccounts
-                            }
-                            itemsPerPage={25}
+                            total={totalAccounts}
                             show={accounts.length > 0}
                             className='d-flex ms-auto me-auto me-sm-0'
                           />
@@ -136,13 +130,7 @@ export const Accounts = () => {
 
                       <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
                         <Pager
-                          page={String(page)}
-                          total={
-                            totalAccounts !== '...'
-                              ? Math.min(totalAccounts, 10000)
-                              : totalAccounts
-                          }
-                          itemsPerPage={25}
+                          total={totalAccounts}
                           show={accounts.length > 0}
                         />
                       </div>

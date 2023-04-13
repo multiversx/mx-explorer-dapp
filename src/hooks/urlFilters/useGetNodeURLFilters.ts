@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import { stringIsInteger } from 'helpers';
 
-export const useGetFilters = () => {
+export const useGetNodeURLFilters = () => {
   const [searchParams] = useSearchParams();
   const {
     online,

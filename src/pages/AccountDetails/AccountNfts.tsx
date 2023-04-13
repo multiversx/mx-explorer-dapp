@@ -14,7 +14,7 @@ import {
   NetworkLink
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useAdapter, useGetFilters, useNetworkRoute } from 'hooks';
+import { useAdapter, useGetPage, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { NftType } from 'types';
 
@@ -24,7 +24,7 @@ export const AccountNfts = () => {
   const ref = React.useRef(null);
   const navigate = useNavigate();
 
-  const { size } = useGetFilters();
+  const { page } = useGetPage();
   const networkRoute = useNetworkRoute();
   const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
   const [searchParams] = useSearchParams();
@@ -44,7 +44,7 @@ export const AccountNfts = () => {
     if (nftsActive) {
       Promise.all([
         getAccountNfts({
-          size,
+          page,
           address,
           excludeMetaESDT: true
         }),
@@ -64,7 +64,7 @@ export const AccountNfts = () => {
   React.useEffect(() => {
     fetchAccountNfts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txCount, activeNetworkId, address, size, searchParams]);
+  }, [txCount, activeNetworkId, address, searchParams]);
 
   return !nftsActive ? (
     navigate(networkRoute(urlBuilder.accountDetails(address)))
@@ -75,8 +75,6 @@ export const AccountNfts = () => {
           <AccountTabs />
           {dataReady === true && accountNfts.length > 0 && (
             <Pager
-              itemsPerPage={25}
-              page={String(size)}
               total={accountNftsCount}
               show={accountNfts.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
@@ -158,12 +156,7 @@ export const AccountNfts = () => {
 
       {dataReady === true && accountNfts.length > 0 && (
         <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-          <Pager
-            itemsPerPage={25}
-            page={String(size)}
-            total={accountNftsCount}
-            show={accountNfts.length > 0}
-          />
+          <Pager total={accountNftsCount} show={accountNfts.length > 0} />
         </div>
       )}
     </div>

@@ -7,9 +7,9 @@ import { Loader, NetworkLink, Trim, Pager } from 'components';
 import { urlBuilder } from 'helpers';
 import {
   useAdapter,
-  useGetFilters,
-  useURLSearchParams,
-  useActiveRoute
+  useGetNodeURLFilters,
+  useActiveRoute,
+  useGetPage
 } from 'hooks';
 import { tokensRoutes } from 'routes';
 import { CollectionType } from 'types';
@@ -21,9 +21,10 @@ import { NoTokens } from './components/NoTokens';
 export const TokensMeta = () => {
   const ref = React.useRef(null);
   const activeRoute = useActiveRoute();
-  const { page } = useURLSearchParams();
+
   const { search } = useLocation();
-  const { getQueryObject, size } = useGetFilters();
+  const { getQueryObject } = useGetNodeURLFilters();
+  const { page } = useGetPage();
   const { getCollections, getCollectionsCount } = useAdapter();
 
   const [metaCollections, setMetaCollections] = React.useState<
@@ -39,13 +40,13 @@ export const TokensMeta = () => {
     const type = 'MetaESDT';
 
     Promise.all([
-      getCollections({ ...queryObject, size, type }),
+      getCollections({ ...queryObject, page, type }),
       getCollectionsCount({ ...queryObject, type })
     ]).then(([collectionsData, count]) => {
       if (ref.current !== null) {
         if (collectionsData.success) {
           setMetaCollections(collectionsData.data);
-          setTotalMetaCollections(Math.min(count.data, 10000));
+          setTotalMetaCollections(count.data);
         }
         setDataReady(collectionsData.success && count.success);
       }
@@ -108,13 +109,7 @@ export const TokensMeta = () => {
                       {metaCollections && metaCollections.length > 0 && (
                         <div className='d-none d-sm-flex'>
                           <Pager
-                            page={String(page)}
-                            total={
-                              totalMetaCollections !== '...'
-                                ? Math.min(totalMetaCollections, 10000)
-                                : totalMetaCollections
-                            }
-                            itemsPerPage={25}
+                            total={totalMetaCollections}
                             show={metaCollections.length > 0}
                           />
                         </div>
@@ -223,13 +218,7 @@ export const TokensMeta = () => {
 
                       <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
                         <Pager
-                          page={String(page)}
-                          total={
-                            totalMetaCollections !== '...'
-                              ? Math.min(totalMetaCollections, 10000)
-                              : totalMetaCollections
-                          }
-                          itemsPerPage={25}
+                          total={totalMetaCollections}
                           show={metaCollections.length > 0}
                         />
                       </div>

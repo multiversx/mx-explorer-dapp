@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Loader } from 'components';
-import { useAdapter, useSize, useGetHash } from 'hooks';
+import { useAdapter, useGetPage, useGetHash } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setCollection } from 'redux/slices';
 
@@ -16,7 +16,7 @@ export const CollectionLayout = ({
   children: React.ReactNode;
 }) => {
   const ref = useRef(null);
-  const { firstPageTicker } = useSize();
+  const { firstPageRefreshTrigger } = useGetPage();
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ export const CollectionLayout = ({
     fetchCollectionDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstPageTicker, activeNetworkId, collection, searchParams]);
+  }, [firstPageRefreshTrigger, activeNetworkId, collection, searchParams]);
 
   useEffect(() => {
     setDataReady(undefined);

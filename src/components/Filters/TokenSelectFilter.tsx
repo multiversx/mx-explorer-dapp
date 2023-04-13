@@ -181,13 +181,13 @@ export const TokenSelectFilter = ({
     if (activeRoute(accountsRoutes.accountDetails) && address) {
       tokenResponse = await getAccountTokens({
         address,
-        size: page,
+        page,
         search,
         fields: 'identifier,ticker,assets'
       });
     } else {
       tokenResponse = await getTokens({
-        size: page,
+        page,
         search,
         fields: 'identifier,ticker,assets'
       });
@@ -209,7 +209,7 @@ export const TokenSelectFilter = ({
     }
     if (search) {
       const collectionsResponse = await getCollections({
-        size: page,
+        page,
         search,
         fields: 'collection,ticker,assets'
       });

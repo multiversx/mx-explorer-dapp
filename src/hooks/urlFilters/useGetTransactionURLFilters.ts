@@ -10,7 +10,7 @@ const checkStatus = (status: string) =>
     ? status.toLowerCase()
     : undefined;
 
-export const useURLSearchParams = () => {
+export const useGetTransactionURLFilters = () => {
   const [searchParams] = useSearchParams();
 
   const page = searchParams.get('page') ? String(searchParams.get('page')) : '';
