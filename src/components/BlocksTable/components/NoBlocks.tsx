@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
+
 import { PageState } from 'components';
 
 export const NoBlocks = ({ title }: { title?: string }) => {

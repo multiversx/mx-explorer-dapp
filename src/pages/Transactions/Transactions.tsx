@@ -4,8 +4,8 @@ import { useSearchParams } from 'react-router-dom';
 
 import { Loader, TransactionsTable, PulsatingLed } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
-import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
-import { MethodList } from 'components/TransactionsTable/TransactionsFilters';
+import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
+import { MethodList } from 'components/TransactionsTable/components/TransactionsFilters';
 import {
   useAdapter,
   useSize,

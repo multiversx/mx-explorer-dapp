@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Loader, TransactionsTable } from 'components';
-import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
+import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
 import { useAdapter, useFetchTransactions } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 

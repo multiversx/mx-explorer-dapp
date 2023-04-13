@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { Loader, TransactionsTable } from 'components';
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
-import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
+import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
 import { useAdapter, useFetchTransactions } from 'hooks';
 import { activeNetworkSelector, miniBlockSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';

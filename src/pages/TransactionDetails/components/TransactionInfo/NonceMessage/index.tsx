@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { txStatus } from 'components/TransactionStatus/txStatus';
+import { txStatus } from 'components/TransactionStatus/helpers/txStatus';
 import { useAdapter } from 'hooks';
 import { TransactionType } from 'types';
 

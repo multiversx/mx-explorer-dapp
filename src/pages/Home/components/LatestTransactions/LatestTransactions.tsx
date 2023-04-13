@@ -13,10 +13,10 @@ import {
   PulsatingLed,
   TransactionIcon
 } from 'components';
-import { FailedTransactions } from 'components/TransactionsTable/FailedTransactions';
-import { NoTransactions } from 'components/TransactionsTable/NoTransactions';
-import { TransactionValue } from 'components/TransactionsTable/TransactionValue';
-import { getStatusIconAndColor } from 'components/TransactionStatus';
+import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
+import { NoTransactions } from 'components/TransactionsTable/components/NoTransactions';
+import { TransactionValue } from 'components/TransactionsTable/components/TransactionValue';
+import { getStatusIconAndColor } from 'components/TransactionStatus/TransactionStatus';
 import { addressIsBech32, urlBuilder, getDisplayReceiver } from 'helpers';
 import { useAdapter } from 'hooks';
 import { refreshSelector } from 'redux/selectors';

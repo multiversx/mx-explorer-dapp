@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { BlocksTable, Loader, Pager, ShardSpan } from 'components';
-import { FailedBlocks } from 'components/BlocksTable/FailedBlocks';
-import { NoBlocks } from 'components/BlocksTable/NoBlocks';
+import { FailedBlocks } from 'components/BlocksTable/components/FailedBlocks';
+import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import {
   useAdapter,
   useNetworkRoute,

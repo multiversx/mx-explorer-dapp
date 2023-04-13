@@ -1,5 +1,6 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
+
 import { Overlay } from 'components';
 import { DIGITS } from 'config';
 import { formatUSD } from 'helpers';
