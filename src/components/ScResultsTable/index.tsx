@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ELLIPSIS } from 'appConstants';
 import { Pager } from 'components';
 import { TransactionSCResultType } from 'types';
 
@@ -8,7 +9,7 @@ import { ScResultRow } from './ScResultRow';
 interface ScResultsTableType {
   scResults: TransactionSCResultType[];
   address?: string;
-  totalScResults: number | '...';
+  totalScResults: number | typeof ELLIPSIS;
   page: number;
   title?: React.ReactNode;
 }

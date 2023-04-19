@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
-import { PAGE_SIZE, MAX_RESULTS } from 'appConstants';
+import { ELLIPSIS, PAGE_SIZE, MAX_RESULTS } from 'appConstants';
 import { pagerHelper } from './pagerHelper';
 
 export const Pager = ({
@@ -18,7 +18,7 @@ export const Pager = ({
   className = '',
   hasTestId = true
 }: {
-  total: number | '...';
+  total: number | typeof ELLIPSIS;
   show?: boolean;
   itemsPerPage?: number;
   className?: string;
@@ -28,7 +28,7 @@ export const Pager = ({
   const params = Object.fromEntries(searchParams);
   const { page, ...rest } = params;
 
-  const processedTotal = total !== '...' ? Math.min(total, MAX_RESULTS) : 0;
+  const processedTotal = total !== ELLIPSIS ? Math.min(total, MAX_RESULTS) : 0;
 
   const { processedPage, lastPage, end, paginationArray } = pagerHelper({
     total: processedTotal,
@@ -115,7 +115,7 @@ export const Pager = ({
 
             return (
               <React.Fragment key={`${page}-${index}`}>
-                {page !== '...' ? (
+                {page !== ELLIPSIS ? (
                   <button
                     type='button'
                     className={`btn btn-pager ${
@@ -142,7 +142,7 @@ export const Pager = ({
             rightBtnsActive ? '' : 'inactive'
           }`}
         >
-          {total === '...' || end < processedTotal ? (
+          {total === ELLIPSIS || end < processedTotal ? (
             <button
               type='button'
               className='btn btn-pager next-btn'

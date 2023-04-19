@@ -1,3 +1,4 @@
+import { ELLIPSIS } from 'appConstants';
 import { AccountAssetType } from './account.types';
 import { ScamInfoType } from './general.types';
 import { NftTypeEnum } from './nft.types';
@@ -143,7 +144,7 @@ export interface UITransactionType extends TransferType {
 export interface TransactionTableType {
   transactions: UITransactionType[];
   address?: string;
-  totalTransactions: number | '...';
+  totalTransactions: number | typeof ELLIPSIS;
 
   title?: React.ReactNode;
   showDirectionCol?: boolean;

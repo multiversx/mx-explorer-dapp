@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+import { ELLIPSIS } from 'appConstants';
 import { useGetPage, useGetTransactionURLFilters } from 'hooks';
 import { UITransactionType, ApiAdapterResponseType } from 'types';
 
@@ -16,9 +18,9 @@ export const useFetchTransactions = (
   const [transactions, setTransactions] = useState<UITransactionType[]>([]);
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
   const [dataChanged, setDataChanged] = useState<boolean>(false);
-  const [totalTransactions, setTotalTransactions] = useState<number | '...'>(
-    '...'
-  );
+  const [totalTransactions, setTotalTransactions] = useState<
+    number | typeof ELLIPSIS
+  >(ELLIPSIS);
 
   const fetchTransactions = (paramsChange = false) => {
     if (searchParams.toString() && paramsChange) {

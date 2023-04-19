@@ -24,4 +24,3 @@ export * from './truncate';
 export * from './truncateMiddle';
 export * from './urlBuilder';
 export * from './usdValue';
-export * from './validDisplayValue';

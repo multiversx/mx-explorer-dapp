@@ -102,7 +102,7 @@ export const EpochProgressRing = ({
 
   React.useEffect(mount, [nextEpoch]);
 
-  const timeLabel = nextEpoch ? `${hours}h ${minutes}m ${seconds}s` : '...';
+  const timeLabel = nextEpoch ? `${hours}h ${minutes}m ${seconds}s` : ELLIPSIS;
   const epochLabel = new BigNumber(unprocessed?.epoch + resetCount).toFormat(0);
 
   return (
@@ -126,7 +126,7 @@ export const EpochProgressRing = ({
           {roundsLeft ? (
             <>{new BigNumber(roundsLeft).toFormat(0)} Rounds Left</>
           ) : (
-            '...'
+            ELLIPSIS
           )}
         </div>
       </ProgressRing>

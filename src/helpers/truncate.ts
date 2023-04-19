@@ -1,11 +1,13 @@
+import { ELLIPSIS } from 'appConstants';
+
 export const truncate = (
   text: string | undefined,
   length: number,
-  end: string | undefined = '...'
+  end: string | undefined = ELLIPSIS
 ) => {
   if (isNaN(length)) length = 10;
 
-  if (!end) end = '...';
+  if (!end) end = ELLIPSIS;
 
   if (
     text !== undefined &&

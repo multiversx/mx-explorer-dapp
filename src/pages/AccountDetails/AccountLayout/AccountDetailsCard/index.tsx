@@ -12,6 +12,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
+import { ELLIPSIS } from 'appConstants';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import {
   CardItem,
@@ -188,7 +189,7 @@ export const AccountDetailsCard = () => {
 
                 <SmallDetailItem title='Balance'>
                   <div className='d-flex align-items-center'>
-                    {balance !== '...' ? (
+                    {balance !== ELLIPSIS ? (
                       <Denominate value={balance} decimals={4} />
                     ) : (
                       balance
@@ -367,7 +368,7 @@ export const AccountDetailsCard = () => {
                 customIcon={<MultiversXSymbol />}
               >
                 <div className='d-flex align-items-center'>
-                  {balance !== '...' ? (
+                  {balance !== ELLIPSIS ? (
                     <Denominate value={balance} decimals={4} />
                   ) : (
                     balance
@@ -377,7 +378,7 @@ export const AccountDetailsCard = () => {
               <LockedAmountCardItem cardItemClass={cardItemClass} />
               <AccountUsdValueCardItem cardItemClass={cardItemClass} />
               <CardItem className={cardItemClass} title='Nonce' icon={faUser}>
-                {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
+                {nonce !== undefined ? nonce.toLocaleString('en') : ELLIPSIS}
               </CardItem>
               {tokensActive && (
                 <CardItem
@@ -387,7 +388,7 @@ export const AccountDetailsCard = () => {
                 >
                   {accountTokensCount !== undefined
                     ? accountTokensCount
-                    : '...'}
+                    : ELLIPSIS}
                 </CardItem>
               )}
               {tokensActive && (
@@ -396,7 +397,7 @@ export const AccountDetailsCard = () => {
                   title='NFTs'
                   icon={faHexagonVerticalNft}
                 >
-                  {accountNftsCount !== undefined ? accountNftsCount : '...'}
+                  {accountNftsCount !== undefined ? accountNftsCount : ELLIPSIS}
                 </CardItem>
               )}
               <CardItem
