@@ -34,7 +34,7 @@ export const AccountDetails = () => {
     }
   }, [activeNetworkId, address, txCount, balance]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (searchParams.toString()) {
       fetchTransactions(Boolean(searchParams.toString()));
     }

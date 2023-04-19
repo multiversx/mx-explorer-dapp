@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
+
 import { PageState } from 'components';
 
 export const FailedTransactions = () => {

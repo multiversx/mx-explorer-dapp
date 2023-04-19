@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
@@ -29,7 +29,7 @@ export const ScResultsList = ({
   const { hash } = useLocation();
   const { egldLabel } = useSelector(activeNetworkSelector);
 
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const formattedHash = hash
     .substring(0, hash.indexOf('/') > 0 ? hash.indexOf('/') : hash.length)
     .replace('#', '');
@@ -39,7 +39,7 @@ export const ScResultsList = ({
       ? hash.substring(hash.indexOf('/') + 1)
       : DecodeMethodType.raw;
 
-  const [decodeMethod, setDecodeMethod] = React.useState<string>(
+  const [decodeMethod, setDecodeMethod] = useState<string>(
     initialDecodeMethod &&
       Object.values<string>(DecodeMethodType).includes(initialDecodeMethod)
       ? initialDecodeMethod
@@ -60,7 +60,7 @@ export const ScResultsList = ({
     return parts.join('@');
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current && ref.current !== null) {
       window.scrollTo({
         top: ref.current.getBoundingClientRect().top - 86,

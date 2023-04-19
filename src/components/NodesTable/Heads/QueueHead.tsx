@@ -1,5 +1,7 @@
-import * as React from 'react';
+import React from 'react';
+
 import { Sort } from 'components';
+
 import { StatusFilter } from '../StatusFilter';
 
 export const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {

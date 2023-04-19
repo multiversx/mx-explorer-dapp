@@ -1,11 +1,14 @@
-import * as React from 'react';
-import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
-import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
-import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons/faFlagAlt';
-import { faLeaf } from '@fortawesome/pro-regular-svg-icons/faLeaf';
-import { faSnooze } from '@fortawesome/pro-regular-svg-icons/faSnooze';
-import { faSync } from '@fortawesome/pro-regular-svg-icons/faSync';
+import React from 'react';
+import {
+  faClock,
+  faEye,
+  faFlagAlt,
+  faLeaf,
+  faSnooze,
+  faSync
+} from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { Overlay } from 'components';
 import { NodeType } from 'types';
 

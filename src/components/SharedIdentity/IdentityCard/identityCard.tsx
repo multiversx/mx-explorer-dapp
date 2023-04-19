@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { faLink } from '@fortawesome/pro-solid-svg-icons/faLink';
 import { faMapMarkerAlt } from '@fortawesome/pro-solid-svg-icons/faMapMarkerAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

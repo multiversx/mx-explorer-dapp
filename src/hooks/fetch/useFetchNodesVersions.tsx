@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { processNodesVersions } from 'helpers';
@@ -31,5 +31,5 @@ export const useFetchNodesVersions = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchNodesVersions, []);
+  useEffect(fetchNodesVersions, []);
 };

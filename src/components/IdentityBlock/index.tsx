@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { NetworkLink, Trim } from 'components';
 import { urlBuilder } from 'helpers';
 import { BlockType } from 'types';

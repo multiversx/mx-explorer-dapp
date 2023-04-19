@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
@@ -14,7 +14,7 @@ import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { tokenSelector } from 'redux/selectors';
 
 export const TokenDetailsCard = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
 
   const { token } = useSelector(tokenSelector);
   const {

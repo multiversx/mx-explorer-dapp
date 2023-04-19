@@ -16,3 +16,6 @@ export const SC_INIT_CHARACTERS_LENGTH = 13;
 export const N_A = 'N/A';
 export const ZERO = '0';
 export const ELLIPSIS = '...';
+
+export const APP_VERSION_URL =
+  '***REMOVED***';

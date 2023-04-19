@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -33,9 +33,9 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
     getCollection,
     getUsername
   } = useAdapter();
-  const [route, setRoute] = React.useState('');
-  const [searching, setSearching] = React.useState(false);
-  const [hash, setHash] = React.useState<string>('');
+  const [route, setRoute] = useState('');
+  const [searching, setSearching] = useState(false);
+  const [hash, setHash] = useState<string>('');
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -185,7 +185,7 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(reset, [route, pathname]);
+  useEffect(reset, [route, pathname]);
 
   if (route) {
     navigate(route);

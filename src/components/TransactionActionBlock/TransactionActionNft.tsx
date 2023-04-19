@@ -16,8 +16,6 @@ export const TransactionActionNft = ({
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
 }) => {
-  const ref = React.useRef(null);
-
   const TokenInfo = () => (
     <div className='d-flex align-items-center symbol text-truncate'>
       {token.svgUrl && (
@@ -30,7 +28,7 @@ export const TransactionActionNft = ({
   );
 
   return (
-    <div ref={ref} className='nft-action-block d-contents'>
+    <div className='nft-action-block d-contents'>
       {token && token.identifier && (
         <>
           {showBadge && token.type !== NftTypeEnum.MetaESDT && (

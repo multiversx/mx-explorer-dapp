@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
@@ -19,7 +19,7 @@ import { Filters } from './components/Filters';
 import { NoTokens } from './components/NoTokens';
 
 export const TokensMeta = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const activeRoute = useActiveRoute();
 
   const { search } = useLocation();
@@ -27,11 +27,9 @@ export const TokensMeta = () => {
   const { page } = useGetPage();
   const { getCollections, getCollectionsCount } = useAdapter();
 
-  const [metaCollections, setMetaCollections] = React.useState<
-    CollectionType[]
-  >([]);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [totalMetaCollections, setTotalMetaCollections] = React.useState<
+  const [metaCollections, setMetaCollections] = useState<CollectionType[]>([]);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [totalMetaCollections, setTotalMetaCollections] = useState<
     number | '...'
   >('...');
 
@@ -54,7 +52,7 @@ export const TokensMeta = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchMetaCollections, [search]);
+  useEffect(fetchMetaCollections, [search]);
 
   return (
     <>

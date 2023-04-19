@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { faLayerPlus } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -28,7 +28,7 @@ const getTransactionTokens = (transaction: UITransactionType) => {
 };
 
 const OverlayTooltip = ({ tooltip, children }: any) => {
-  const [showTooltip, setShowTooltip] = React.useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const renderTooltip = (props: any) => (
     <Tooltip

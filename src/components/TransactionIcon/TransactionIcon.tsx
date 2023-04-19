@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faBan,
@@ -32,10 +32,9 @@ export const TransactionIcon = ({
 }: TransactionIconType) => {
   const { getTransaction } = useAdapter();
 
-  const [transactionMessages, setTransactionMessages] =
-    React.useState<string[]>();
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [transactionDetails, setTransactionDetails] = React.useState<
+  const [transactionMessages, setTransactionMessages] = useState<string[]>();
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [transactionDetails, setTransactionDetails] = useState<
     TransactionType | undefined
   >();
 

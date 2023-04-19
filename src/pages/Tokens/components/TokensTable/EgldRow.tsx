@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import BigNumber from 'bignumber.js';
-
 import { useSelector } from 'react-redux';
+
 import { PAGE_SIZE } from 'appConstants';
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import { pagerHelper } from 'components/Pager/pagerHelper';

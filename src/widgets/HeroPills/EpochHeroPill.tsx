@@ -96,7 +96,7 @@ export const EpochHeroPill = ({ className }: WithClassnameType) => {
 
   useEffect(init, [isFetched, roundsPerEpoch, roundsPassed]);
 
-  React.useEffect(mount, [nextEpoch]);
+  useEffect(mount, [nextEpoch]);
 
   const timeLabel = nextEpoch ? `${hours}h ${minutes}m ${seconds}s` : ELLIPSIS;
   const epochLabel = new BigNumber(epoch + resetCount).toFormat(0);

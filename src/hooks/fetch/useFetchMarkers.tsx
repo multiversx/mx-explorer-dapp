@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { object, string, number } from 'yup';
 
@@ -43,5 +43,5 @@ export const useFetchMarkers = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchMarkers, []);
+  useEffect(fetchMarkers, []);
 };

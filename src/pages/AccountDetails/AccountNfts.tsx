@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
@@ -21,7 +21,7 @@ import { NftType } from 'types';
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountNfts = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const navigate = useNavigate();
 
   const { page } = useGetPage();
@@ -36,9 +36,9 @@ export const AccountNfts = () => {
   const { hash: address } = useParams() as any;
   const nftsActive = adapter === 'api';
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [accountNfts, setAccountNfts] = React.useState<NftType[]>([]);
-  const [accountNftsCount, setAccountNftsCount] = React.useState(0);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [accountNfts, setAccountNfts] = useState<NftType[]>([]);
+  const [accountNftsCount, setAccountNftsCount] = useState(0);
 
   const fetchAccountNfts = () => {
     if (nftsActive) {
@@ -61,7 +61,7 @@ export const AccountNfts = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAccountNfts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txCount, activeNetworkId, address, searchParams]);

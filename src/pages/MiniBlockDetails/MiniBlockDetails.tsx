@@ -33,7 +33,7 @@ export const MiniBlockDetails = () => {
     }
   }, [activeNetworkId, miniBlockHash]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (searchParams.toString()) {
       fetchTransactions(Boolean(searchParams.toString()));
     }

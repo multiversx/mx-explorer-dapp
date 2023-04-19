@@ -1,13 +1,14 @@
-import * as React from 'react';
-
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
+
 import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
 import { urlBuilder } from 'helpers';
 import { tokenSelector } from 'redux/selectors';
+
 import { TokenTabs } from './TokenLayout/TokenTabs';
 
 export const TokenDetailsRoles = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
 
   const { token } = useSelector(tokenSelector);
   const { roles } = token;

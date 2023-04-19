@@ -1,6 +1,7 @@
 import React from 'react';
 import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { PageState } from 'components';
 
 export const Loader = ({

@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 
-import { ShardSpan, Led } from 'components';
+import { ShardSpan } from 'components';
 import { ProgressRing } from 'components/ProgressRing';
 import { ShardType } from 'types';
 import { computeShardStatus } from './helpers/computeShardStatus';

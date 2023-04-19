@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Loader } from 'components';
@@ -10,7 +10,7 @@ import { FailedTokenDetails } from './FailedTokenDetails';
 import { TokenDetailsCard } from './TokenDetailsCard';
 
 export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { firstPageRefreshTrigger } = useGetPage();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -20,7 +20,7 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
 
   const tokenId = useGetHash();
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchTokenDetails = () => {
     if (tokenId) {
@@ -39,7 +39,7 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchTokenDetails();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

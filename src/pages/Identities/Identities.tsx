@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 
 import { Loader, PageState } from 'components';
@@ -9,13 +9,11 @@ import { IdentityType } from 'types';
 import { IdentityRow } from './components/IdentityRow';
 
 export const Identities = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { getIdentities } = useAdapter();
 
-  const [identities, setIdentities] = React.useState<IdentityType[]>([]);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>(
-    undefined
-  );
+  const [identities, setIdentities] = useState<IdentityType[]>([]);
+  const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
 
   const fetchIdentities = () => {
     getIdentities().then(({ data, success }) => {
@@ -38,7 +36,7 @@ export const Identities = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchIdentities, []);
+  useEffect(fetchIdentities, []);
 
   return (
     <div className='card identities' ref={ref}>

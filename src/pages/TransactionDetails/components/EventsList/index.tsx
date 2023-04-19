@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
@@ -28,14 +28,14 @@ export const EventsList = ({
   id?: string;
 }) => {
   const { hash } = useLocation();
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const hashValues = hash.split('/');
   const formattedHash = hashValues[0] ? hashValues[0].replace('#', '') : '';
   const eventOrder = hashValues[1] ?? 0;
   const initialDecodeMethod = hashValues[2] ?? DecodeMethodType.raw;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current && ref.current !== null) {
       window.scrollTo({
         top: ref.current.getBoundingClientRect().top - 86,

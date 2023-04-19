@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
@@ -210,11 +210,11 @@ export const TransactionAction = ({
 }: {
   transaction: TransactionType;
 }) => {
-  const [unwrappedResult, setUnwrappedResult] = React.useState<
+  const [unwrappedResult, setUnwrappedResult] = useState<
     ReturnType<typeof unwrapper>
   >([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (transaction.action) {
       const result = unwrapper(transaction.action);
       setUnwrappedResult(result);

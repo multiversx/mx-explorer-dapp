@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 
 import { Loader, PageState, SharedIdentity } from 'components';
@@ -17,16 +17,16 @@ const initialState = {
 };
 
 export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const address = useGetHash();
 
   const { getProvider, getIdentity } = useAdapter();
   const isMainnet = useIsMainnet();
 
   const [provider, setProvider] =
-    React.useState<ProviderLayoutType<ProviderType>>(initialState);
+    useState<ProviderLayoutType<ProviderType>>(initialState);
   const [identity, setIdentity] =
-    React.useState<ProviderLayoutType<IdentityType>>(initialState);
+    useState<ProviderLayoutType<IdentityType>>(initialState);
 
   const fetchData = () => {
     if (address) {
@@ -56,7 +56,7 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchData, []);
+  useEffect(fetchData, []);
 
   const showIdentity =
     identity.success === false ||

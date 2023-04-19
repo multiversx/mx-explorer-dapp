@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faFileAlt } from '@fortawesome/pro-solid-svg-icons/faFileAlt';
 import { Tab, Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -26,7 +26,7 @@ export enum VerifiedContractTabsEnum {
 }
 
 export const AccountVerifiedContract = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const networkRoute = useNetworkRoute();
   const navigate = useNavigate();
 
@@ -53,7 +53,7 @@ export const AccountVerifiedContract = () => {
   const [contract, setContract] = useState<VerifiedContractType>();
   const [isDataReady, setIsDataReady] = useState<undefined | boolean>();
   const [activeKey, setActiveKey] =
-    React.useState<VerifiedContractTabsEnum>(activeSection);
+    useState<VerifiedContractTabsEnum>(activeSection);
 
   const fetchContractVerification = () => {
     getAccountContractVerification({ address }).then(({ success, data }) => {
@@ -64,7 +64,7 @@ export const AccountVerifiedContract = () => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (address && isVerified) {
       fetchContractVerification();
     }

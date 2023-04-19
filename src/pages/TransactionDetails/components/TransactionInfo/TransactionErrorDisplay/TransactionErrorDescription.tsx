@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { Overlay } from 'components';
 import { TransactionType } from 'types';
 

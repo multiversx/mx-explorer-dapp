@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faCode } from '@fortawesome/pro-solid-svg-icons/faCode';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -19,7 +19,7 @@ import { AccountSmartContractType } from 'types';
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountContracts = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
 
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -31,11 +31,11 @@ export const AccountContracts = () => {
 
   const { hash: address } = useParams() as any;
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [accountContracts, setAccountContracts] = React.useState<
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [accountContracts, setAccountContracts] = useState<
     AccountSmartContractType[]
   >([]);
-  const [accountContractsCount, setAccountContractsCount] = React.useState(0);
+  const [accountContractsCount, setAccountContractsCount] = useState(0);
 
   const fetchAccountContracts = () => {
     Promise.all([
@@ -57,7 +57,7 @@ export const AccountContracts = () => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAccountContracts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txCount, activeNetworkId, address, searchParams]);

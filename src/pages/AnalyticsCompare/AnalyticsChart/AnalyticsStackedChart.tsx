@@ -42,7 +42,7 @@ export const AnalyticsStackedChart = ({
   const [secondSeriesConfig, setSecondSeriesConfig] =
     useState<ChartConfigType>();
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [firstSeriesData, setFirstSeriesData] = useState<
     AnalyticsStackedChartDataType[]
   >([]);

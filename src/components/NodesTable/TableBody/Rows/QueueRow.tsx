@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+
 import { NetworkLink, Trim, Led } from 'components';
 import { RowIcon } from 'components/NodesTable/RowIcon';
 import { RowIssueIcon } from 'components/NodesTable/RowIssueIcon';

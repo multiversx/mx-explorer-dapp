@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useRef, useState } from 'react';
 import {
   faAngleDown,
   faClock,
@@ -117,7 +117,7 @@ export const TransactionInfo = ({
 }: {
   transaction: TransactionType;
 }) => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
 
   const { egldLabel } = useSelector(activeNetworkSelector);
 
@@ -128,7 +128,7 @@ export const TransactionInfo = ({
   );
 
   const activeSection = match ? 'logs' : 'details';
-  const [activeKey, setActiveKey] = React.useState(activeSection);
+  const [activeKey, setActiveKey] = useState(activeSection);
 
   const isTxPending =
     transaction.status.toLowerCase() === TransactionApiStatusEnum.pending ||
