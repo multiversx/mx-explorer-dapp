@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Loader } from 'components';
@@ -23,14 +23,14 @@ export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
     nodesVersionsSelector
   );
 
-  const [isDataReady, setIsDataReady] = React.useState<undefined | boolean>();
+  const [isDataReady, setIsDataReady] = useState<undefined | boolean>();
 
   useFetchGlobalStake();
   useFetchNodesVersions();
   useFetchShards();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(() => {
+  useEffect(() => {
     if (isGlobalStakeFetched && isNodesVersioonsFetched && shards.length > 0) {
       setIsDataReady(true);
     }

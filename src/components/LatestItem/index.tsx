@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const LatestItem = ({
   children,
@@ -11,15 +11,13 @@ export const LatestItem = ({
   index: number;
   totalItems: number;
 }) => {
-  const ref = React.useRef(null);
-  const [internalIsNew, setInternalIsNew] = React.useState<
-    boolean | undefined
-  >();
+  const ref = useRef(null);
+  const [internalIsNew, setInternalIsNew] = useState<boolean | undefined>();
   const expandDuration = 600;
   const totalAnimationTime = totalItems * expandDuration;
   const itemAnimationDelay = totalAnimationTime - expandDuration * index;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isNew) {
       setTimeout(() => {
         if (ref.current !== null) {

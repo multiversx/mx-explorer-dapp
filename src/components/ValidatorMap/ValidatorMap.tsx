@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import {
   ComposableMap,
@@ -6,7 +6,7 @@ import {
   Geography,
   Marker
 } from 'react-simple-maps';
-import { MarkerType, MarkersType, WithClassnameType } from 'types';
+import { MarkerType, WithClassnameType } from 'types';
 import countries from './countries100m.json';
 
 export interface ValidatorMapType extends WithClassnameType {
@@ -64,14 +64,12 @@ const MarkerToolTip = ({
 );
 
 export const ValidatorMap = ({ markers, className }: ValidatorMapType) => {
-  const ref = React.useRef(null);
-  const [localMarkers, setLocalMarkers] = React.useState<MarkerType[]>([]);
-  const [pulse, setPulse] = React.useState(0);
-  const [pulseMarker, setPulseMarker] = React.useState<
-    MarkerType | undefined
-  >();
+  const ref = useRef(null);
+  const [localMarkers, setLocalMarkers] = useState<MarkerType[]>([]);
+  const [pulse, setPulse] = useState(0);
+  const [pulseMarker, setPulseMarker] = useState<MarkerType | undefined>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setLocalMarkers(markers);
   }, [markers]);
 
@@ -96,7 +94,7 @@ export const ValidatorMap = ({ markers, className }: ValidatorMapType) => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(chooseMarker, [pulse]);
+  useEffect(chooseMarker, [pulse]);
 
   const pulseInterval = () => {
     const interval = setInterval(() => {
@@ -107,7 +105,7 @@ export const ValidatorMap = ({ markers, className }: ValidatorMapType) => {
     return () => clearInterval(interval);
   };
 
-  React.useEffect(pulseInterval, []);
+  useEffect(pulseInterval, []);
 
   return (
     <div className={`validator-map ${className ?? ''}`} ref={ref}>

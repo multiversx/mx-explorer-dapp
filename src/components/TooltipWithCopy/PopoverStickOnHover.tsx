@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Overlay, Popover } from 'react-bootstrap';
 
@@ -9,11 +9,11 @@ export const PopoverStickOnHover = ({
   component,
   placement
 }: any) => {
-  const [showPopover, setShowPopover] = React.useState(false);
-  const childNode = React.useRef(null);
+  const [showPopover, setShowPopover] = useState(false);
+  const childNode = useRef(null);
   let setTimeoutConst: any = null;
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (setTimeoutConst) {
         clearTimeout(setTimeoutConst);

@@ -1,7 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+
 import { PageState } from 'components';
 import { NodeType } from 'types';
+
 import { QueueRow } from './Rows/QueueRow';
 import { StandardRow } from './Rows/StandardRow';
 import { StatisticsRow } from './Rows/StatisticsRow';

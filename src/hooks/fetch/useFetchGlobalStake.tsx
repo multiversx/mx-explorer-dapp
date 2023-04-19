@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { processGlobalStake } from 'helpers';
@@ -27,5 +27,5 @@ export const useFetchGlobalStake = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchGlobalStake, []);
+  useEffect(fetchGlobalStake, []);
 };

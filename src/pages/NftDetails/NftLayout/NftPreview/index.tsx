@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons';
 import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Anchorme } from 'react-anchorme';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import { ModalLink } from 'components';
 import { useScamFlag } from 'hooks';
 import { NftType } from 'types';
@@ -20,7 +21,7 @@ export const Thumbnail = ({
   children: any;
 }) => {
   let thumbnail = '';
-  const [loaded, setLoaded] = React.useState(false);
+  const [loaded, setLoaded] = useState(false);
   if (token.media && token.media.length && link) {
     const found = token.media.find(
       (mediaEntry) => mediaEntry.originalUrl === link

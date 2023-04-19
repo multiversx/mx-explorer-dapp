@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { faLeaf } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
@@ -33,7 +33,7 @@ export const AccountLegacyDelegation = ({
   } = delegationLegacy;
 
   const [legacyDelegationApr, setLegacyDelegationApr] =
-    React.useState<string>(ELLIPSIS);
+    useState<string>(ELLIPSIS);
 
   const getLegacyDelegationApr = () => {
     if (isFetched && identity?.stake && identity?.topUp && identity?.locked) {

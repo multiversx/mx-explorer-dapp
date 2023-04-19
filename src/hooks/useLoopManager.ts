@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { REFRESH_RATE } from 'appConstants';
@@ -29,5 +29,5 @@ export const useLoopManager = () => {
     };
   };
 
-  React.useEffect(setLoopInterval, []);
+  useEffect(setLoopInterval, []);
 };

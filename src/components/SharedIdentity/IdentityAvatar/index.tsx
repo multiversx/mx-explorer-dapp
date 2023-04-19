@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
 interface IdentityAvatarType {
   name?: string;

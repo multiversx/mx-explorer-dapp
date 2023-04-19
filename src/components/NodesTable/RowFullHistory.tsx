@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { faHistory } from '@fortawesome/pro-regular-svg-icons/faHistory';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { Overlay } from 'components';
 import { NodeType } from 'types';
 

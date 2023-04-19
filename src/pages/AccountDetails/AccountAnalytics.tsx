@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
@@ -23,10 +23,10 @@ export const AccountAnalytics = () => {
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { getAccountHistory } = useAdapter();
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
-  const [startDate, setStartDate] = React.useState<string>(ELLIPSIS);
-  const [endDate, setEndDate] = React.useState<string>(ELLIPSIS);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [chartData, setChartData] = useState<ChartDataType[]>([]);
+  const [startDate, setStartDate] = useState<string>(ELLIPSIS);
+  const [endDate, setEndDate] = useState<string>(ELLIPSIS);
 
   const teal = getComputedStyle(document.documentElement)
     .getPropertyValue('--teal')
@@ -72,7 +72,7 @@ export const AccountAnalytics = () => {
   ];
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(getData, [activeNetworkId, searchParams]);
+  useEffect(getData, [activeNetworkId, searchParams]);
 
   return (
     <div className='card'>

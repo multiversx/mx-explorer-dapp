@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
@@ -26,7 +26,7 @@ const initialState = {
 };
 
 export const NodeDetails = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
 
   const { hash: publicKey } = useParams() as any;
   const { search } = useLocation();
@@ -40,15 +40,14 @@ export const NodeDetails = () => {
     unprocessed: { epoch }
   } = stats;
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>(true);
-  const [node, setNode] =
-    React.useState<NodeDetailType<NodeType>>(initialState);
+  const [dataReady, setDataReady] = useState<boolean | undefined>(true);
+  const [node, setNode] = useState<NodeDetailType<NodeType>>(initialState);
   const [identity, setIdentity] =
-    React.useState<NodeDetailType<IdentityType>>(initialState);
+    useState<NodeDetailType<IdentityType>>(initialState);
   const [rounds, setRounds] =
-    React.useState<NodeDetailType<RoundType[]>>(initialState);
+    useState<NodeDetailType<RoundType[]>>(initialState);
   const [blocks, setBlocks] =
-    React.useState<NodeDetailType<BlockType[]>>(initialState);
+    useState<NodeDetailType<BlockType[]>>(initialState);
 
   const fetchNodes = () => {
     setDataReady(undefined);
@@ -120,7 +119,7 @@ export const NodeDetails = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchNodes, [search, publicKey, isFetched]);
+  useEffect(fetchNodes, [search, publicKey, isFetched]);
 
   const showIdentity =
     identity.success === false ||

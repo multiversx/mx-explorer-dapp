@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { BigNumber } from 'bignumber.js';
+
 import { Denominate } from 'components';
 import { nominate } from 'helpers';
 

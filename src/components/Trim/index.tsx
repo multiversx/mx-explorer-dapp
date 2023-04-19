@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
 import { useDebounce } from './useDebounce';
 
 interface TrimType {
@@ -8,11 +9,11 @@ interface TrimType {
 }
 
 export const Trim = ({ text, dataTestId = '', color }: TrimType) => {
-  const [debounce, setDebounce] = React.useState(0);
+  const [debounce, setDebounce] = useState(0);
 
-  const [overflow, setOverflow] = React.useState(false);
-  const trimRef = React.useRef(document.createElement('span'));
-  const hiddenTextRef = React.useRef(document.createElement('span'));
+  const [overflow, setOverflow] = useState(false);
+  const trimRef = useRef(document.createElement('span'));
+  const hiddenTextRef = useRef(document.createElement('span'));
   const debounceTracker = useDebounce(debounce, 300);
 
   const listener = () => {
@@ -27,9 +28,9 @@ export const Trim = ({ text, dataTestId = '', color }: TrimType) => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(effect, [debounce]);
+  useEffect(effect, [debounce]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (trimRef.current && hiddenTextRef.current) {
       const diff =
         hiddenTextRef.current.offsetWidth - trimRef.current.offsetWidth;

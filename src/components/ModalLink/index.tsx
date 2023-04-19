@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LinkComponentProps } from 'react-anchorme';
 import { Modal } from 'react-bootstrap';
 
 export const ModalLink = (props: LinkComponentProps) => {
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
 
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();

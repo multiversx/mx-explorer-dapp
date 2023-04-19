@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
-import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
+import React from 'react';
+import { faCode, faUser } from '@fortawesome/pro-regular-svg-icons';
+
 import { SC_INIT_CHARACTERS_LENGTH } from 'appConstants';
 import { PageState } from 'components';
 

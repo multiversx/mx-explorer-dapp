@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { NetworkLink, Denominate } from 'components';
 import { DECIMALS } from 'config';
 import { urlBuilder } from 'helpers';
@@ -10,13 +10,11 @@ interface TokenBlockType {
 }
 
 export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
-  const ref = React.useRef(null);
-
   const denomination =
     operationToken.decimals !== undefined ? operationToken.decimals : DECIMALS;
 
   return (
-    <div ref={ref} className='token-block d-flex text-truncate'>
+    <div className='token-block d-flex text-truncate'>
       {value && (
         <div className='me-1'>
           <Denominate

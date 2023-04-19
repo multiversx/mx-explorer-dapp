@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import moment from 'moment';
 import { useSelector } from 'react-redux';
@@ -26,7 +26,7 @@ export const PulsatingLed = ({ className }: WithClassnameType) => {
     };
   };
 
-  React.useEffect(setLoopInterval, [timestamp]);
+  useEffect(setLoopInterval, [timestamp]);
 
   return (
     <div className={`pulsating-led ${className}`}>

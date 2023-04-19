@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { ContractEntryType } from 'types';
@@ -10,12 +10,12 @@ export const ContractFiles = ({
 }: {
   entries: ContractEntryType[];
 }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const { hash } = useLocation();
 
   const formattedHash = hash.replace('#', '');
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current && ref.current !== null) {
       window.scrollTo({
         top: ref.current.getBoundingClientRect().top - 86,

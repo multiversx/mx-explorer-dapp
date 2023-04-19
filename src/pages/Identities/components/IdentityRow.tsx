@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 
 import { ReactComponent as CarretDown } from 'assets/img/carret-down.svg';
@@ -21,11 +21,11 @@ export interface IdentityRowType {
 }
 
 export const IdentityRow = ({ identity }: IdentityRowType) => {
-  const ref = React.useRef(null);
-  const [collapsed, setCollapsed] = React.useState(true);
-  const [showDetails, setShowDetails] = React.useState(false);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [identityNodes, setIdentityNodes] = React.useState<NodeType[]>([]);
+  const ref = useRef(null);
+  const [collapsed, setCollapsed] = useState(true);
+  const [showDetails, setShowDetails] = useState(false);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [identityNodes, setIdentityNodes] = useState<NodeType[]>([]);
   const { getNodes, getNode } = useAdapter();
 
   const expand = (identityRow: IdentityType) => () => {

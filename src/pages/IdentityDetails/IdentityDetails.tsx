@@ -1,6 +1,5 @@
-import React from 'react';
-import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
-import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
+import React, { useEffect, useRef, useState } from 'react';
+import { faCity, faCode } from '@fortawesome/pro-regular-svg-icons';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageState, ProvidersTable } from 'components';
@@ -9,23 +8,21 @@ import { useAdapter, useGetNodeURLFilters, useGetPage } from 'hooks';
 import { IdentityType, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { hash: id } = useParams() as any;
   const { getIdentity, getNodes, getNodesCount, getProviders } = useAdapter();
   const { getQueryObject } = useGetNodeURLFilters();
   const { page } = useGetPage();
   const [searchParams] = useSearchParams();
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>(
+  const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
+  const [identity, setIdentity] = useState<IdentityType>();
+  const [providers, setProviders] = useState<ProviderType[]>();
+  const [providersFetched, setProvidersFetched] = useState<boolean | undefined>(
     undefined
   );
-  const [identity, setIdentity] = React.useState<IdentityType>();
-  const [providers, setProviders] = React.useState<ProviderType[]>();
-  const [providersFetched, setProvidersFetched] = React.useState<
-    boolean | undefined
-  >(undefined);
-  const [nodes, setNodes] = React.useState<NodeType[]>([]);
-  const [totalNodes, setTotalNodes] = React.useState<number | '...'>('...');
+  const [nodes, setNodes] = useState<NodeType[]>([]);
+  const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
 
   const fetchData = () => {
     const queryObject = getQueryObject();
@@ -48,7 +45,7 @@ export const IdentityDetails = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchData, [searchParams]);
+  useEffect(fetchData, [searchParams]);
 
   const showProviders =
     providersFetched === false ||

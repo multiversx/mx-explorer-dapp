@@ -14,11 +14,10 @@ export const TransactionActionToken = ({
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
 }) => {
-  const ref = React.useRef(null);
   const denomination = token.decimals !== undefined ? token.decimals : DECIMALS;
 
   return (
-    <div ref={ref} className='token-action-block d-contents'>
+    <div className='token-action-block d-contents'>
       {token && token.token && (
         <>
           {!noValue && token.value && (

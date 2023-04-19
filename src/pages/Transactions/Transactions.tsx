@@ -33,13 +33,13 @@ export const Transactions = () => {
     dataChanged
   } = useFetchTransactions(getTransactions, getTransactionsCount);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current !== null) {
       fetchTransactions();
     }
   }, [activeNetworkId, firstPageRefreshTrigger]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (searchParams.toString()) {
       fetchTransactions(Boolean(searchParams.toString()));
     }

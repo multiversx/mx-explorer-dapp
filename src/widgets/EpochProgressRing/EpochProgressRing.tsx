@@ -100,7 +100,7 @@ export const EpochProgressRing = ({
 
   useEffect(init, [isFetched, unprocessed]);
 
-  React.useEffect(mount, [nextEpoch]);
+  useEffect(mount, [nextEpoch]);
 
   const timeLabel = nextEpoch ? `${hours}h ${minutes}m ${seconds}s` : ELLIPSIS;
   const epochLabel = new BigNumber(unprocessed?.epoch + resetCount).toFormat(0);

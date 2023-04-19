@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
+
 import { PageState } from 'components';
 
 export const FailedCollectionDetails = ({

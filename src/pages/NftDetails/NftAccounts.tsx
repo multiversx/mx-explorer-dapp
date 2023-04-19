@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
@@ -20,7 +20,7 @@ import { AccountType } from 'types';
 import { NftTabs } from './NftLayout/NftTabs';
 
 export const NftAccounts = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const [searchParams] = useSearchParams();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -30,9 +30,9 @@ export const NftAccounts = () => {
 
   const { hash: identifier } = useParams() as any;
 
-  const [accounts, setAccounts] = React.useState<AccountType[]>([]);
-  const [accountsCount, setAccountsCount] = React.useState(0);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [accounts, setAccounts] = useState<AccountType[]>([]);
+  const [accountsCount, setAccountsCount] = useState(0);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchAccounts = () => {
     Promise.all([
@@ -49,7 +49,7 @@ export const NftAccounts = () => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAccounts();
   }, [activeNetworkId, searchParams]);
 

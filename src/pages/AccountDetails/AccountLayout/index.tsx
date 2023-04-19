@@ -1,10 +1,9 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { LEGACY_DELEGATION_NODES_IDENTITY } from 'appConstants';
-
 import { Loader } from 'components';
 import { addressIsBech32 } from 'helpers';
 import { useAdapter, useNetworkRoute, useGetPage, useGetHash } from 'hooks';
@@ -16,7 +15,7 @@ import { AccountDetailsCard } from './AccountDetailsCard';
 import { FailedAccount } from './FailedAccount';
 
 export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { firstPageRefreshTrigger } = useGetPage();
@@ -35,7 +34,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const isOldAddressRoute = pathname.includes('/address/');
   const address = useGetHash();
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchBalanceAndCount = () => {
     if (address) {
@@ -307,7 +306,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isOldAddressRoute && address) {
       fetchStakingDetails();
     }
@@ -315,7 +314,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, activeNetworkId]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isOldAddressRoute && address) {
       fetchBalanceAndCount();
     }
@@ -323,7 +322,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageRefreshTrigger, activeNetworkId, address]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setDataReady(undefined);
   }, [address, activeNetworkId]);
 

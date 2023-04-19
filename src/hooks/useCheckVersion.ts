@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-
 import { useSelector } from 'react-redux';
-import { useNotifications } from 'hooks';
 
+import { APP_VERSION_URL } from 'appConstants';
+import { useNotifications } from 'hooks';
 import { refreshSelector } from 'redux/selectors/refresh';
 
 export const useCheckVersion = () => {
@@ -23,9 +23,7 @@ export const useCheckVersion = () => {
 
   const checkVersion = () => {
     axios
-      .get(
-        `https:***REMOVED***?${Date.now()}`
-      )
+      .get(`https:${APP_VERSION_URL}?${Date.now()}`)
       .then(({ data: latestExplorerVersion }) => {
         if (
           explorerVersion !== undefined &&
@@ -58,5 +56,5 @@ export const useCheckVersion = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(useLoop, []);
+  useEffect(useLoop, []);
 };

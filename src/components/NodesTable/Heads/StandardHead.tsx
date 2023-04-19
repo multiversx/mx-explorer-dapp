@@ -1,6 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+
 import { Sort } from 'components';
 import { NodeType } from 'types';
+
 import { ShardFilter } from '../ShardFilter';
 import { StatusFilter } from '../StatusFilter';
 

@@ -1,15 +1,17 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { faArrowDown } from '@fortawesome/pro-regular-svg-icons/faArrowDown';
 import { faArrowUp } from '@fortawesome/pro-regular-svg-icons/faArrowUp';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
 import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons/faBadgeCheck';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import { Denominate, NetworkLink, PageState, Trim } from 'components';
 import { CopyButton } from 'components/CopyButton';
 import { IdentityAvatar } from 'components/SharedIdentity/IdentityAvatar';
 import { urlBuilder } from 'helpers';
 import { ProviderType } from 'types';
+
 import { DelegationCap } from './DelegationCap';
 import { PercentageFilled, getPercentageFilled } from './PercentageFilled';
 
@@ -44,10 +46,10 @@ export const ProvidersTable = ({
   showIdentity?: boolean;
 }) => {
   const [originalProviders /*setOriginalProviders*/] =
-    React.useState<ProviderType[]>(providers);
+    useState<ProviderType[]>(providers);
   const [displayProviders, setDisplayProviders] =
-    React.useState<ProviderType[]>(providers);
-  const [sort, setSort] = React.useState<SortType>([undefined, undefined]);
+    useState<ProviderType[]>(providers);
+  const [sort, setSort] = useState<SortType>([undefined, undefined]);
   const [sortField, sortDirection] = sort;
 
   const onSort = (field: SortFieldType) => () => {
@@ -133,7 +135,7 @@ export const ProvidersTable = ({
     return displayProviders;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (sortField) {
       setDisplayProviders((existing) => sortProviders([...existing]));
     } else {

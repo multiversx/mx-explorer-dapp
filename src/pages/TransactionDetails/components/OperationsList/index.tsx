@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { faChevronRight } from '@fortawesome/pro-solid-svg-icons/faChevronRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import {
   NetworkLink,
@@ -370,7 +371,7 @@ export const OperationsList = ({
   operations: TransactionOperationType[];
 }) => {
   const initialDisplay = 25;
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const toggleCollapseClick = (e: React.MouseEvent) => {
     setExpanded(!expanded);

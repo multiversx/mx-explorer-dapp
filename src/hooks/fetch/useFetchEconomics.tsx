@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { processEconomics } from 'helpers';
@@ -27,5 +27,5 @@ export const useFetchEconomics = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchEconomics, []);
+  useEffect(fetchEconomics, []);
 };

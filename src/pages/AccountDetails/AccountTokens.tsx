@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
@@ -20,7 +20,7 @@ import { TokenType, TokenTypeEnum } from 'types';
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountTokens = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const navigate = useNavigate();
 
   const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -35,9 +35,9 @@ export const AccountTokens = () => {
   const { hash: address } = useParams() as any;
   const tokensActive = adapter === 'api';
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [accountTokens, setAccountTokens] = React.useState<TokenType[]>([]);
-  const [accountTokensCount, setAccountTokensCount] = React.useState(0);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [accountTokens, setAccountTokens] = useState<TokenType[]>([]);
+  const [accountTokensCount, setAccountTokensCount] = useState(0);
 
   const fetchAccountTokens = () => {
     if (tokensActive) {
@@ -62,7 +62,7 @@ export const AccountTokens = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAccountTokens();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txCount, activeNetworkId, address, searchParams]);

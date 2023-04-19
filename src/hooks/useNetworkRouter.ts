@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -65,5 +65,5 @@ export const useNetworkRouter = () => {
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(changeNetwork, [networkId, activeNetworkId]);
+  useEffect(changeNetwork, [networkId, activeNetworkId]);
 };

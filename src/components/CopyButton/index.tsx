@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { faCheck } from '@fortawesome/pro-regular-svg-icons/faCheck';
-import { faClone } from '@fortawesome/pro-regular-svg-icons/faClone';
+import React, { useState } from 'react';
+import { faCheck, faClone } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { copyTextToClipboard } from './helpers/copyToClipboard';
 
 interface CopyButtonType {
@@ -11,7 +11,7 @@ interface CopyButtonType {
 }
 
 export const CopyButton = ({ text, icon, className = '' }: CopyButtonType) => {
-  const [copyResult, setCopyResut] = React.useState({
+  const [copyResult, setCopyResut] = useState({
     default: true,
     success: false
   });

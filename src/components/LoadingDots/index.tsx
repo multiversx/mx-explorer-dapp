@@ -1,3 +1,3 @@
-import * as React from 'react';
+import React from 'react';
 
 export const LoadingDots = () => <div className='loading-dots'></div>;

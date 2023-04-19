@@ -36,7 +36,7 @@ export const TokenDetails = () => {
     }
   }, [activeNetworkId, tokenId, transactionsCount]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (searchParams.toString()) {
       fetchTransactions(Boolean(searchParams.toString()));
     }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   faClock,
   faExclamationTriangle
@@ -35,7 +35,7 @@ import { AccountUsdValueCardItem } from './AccountUsdValueCardItem';
 import { LockedAmountCardItem } from './LockedAmountCardItem';
 
 export const AccountDetailsCard = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
 
   const { account } = useSelector(accountSelector);
   const {
@@ -59,13 +59,13 @@ export const AccountDetailsCard = () => {
   const { getProvider, getAccountTokensCount, getAccountNftsCount } =
     useAdapter();
 
-  const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
-  const [accountNftsCount, setAccountNftsCount] = React.useState<number>();
+  const [accountTokensCount, setAccountTokensCount] = useState<number>();
+  const [accountNftsCount, setAccountNftsCount] = useState<number>();
 
   const tokensActive = adapter === 'api';
   const cardItemClass = tokensActive ? 'n4' : '';
 
-  const [isProvider, setIsProvider] = React.useState(false);
+  const [isProvider, setIsProvider] = useState(false);
   const fetchProviderDetails = () => {
     if (isContract(address)) {
       getProvider({ address }).then(({ success, data }) => {
@@ -78,7 +78,7 @@ export const AccountDetailsCard = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchProviderDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, address]);
@@ -119,7 +119,7 @@ export const AccountDetailsCard = () => {
       );
     }
   };
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAccountNftsCount();
     fetchAccountTokensCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps

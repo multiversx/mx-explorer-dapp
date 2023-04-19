@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { NetworkLink, Overlay } from 'components';
 import { decodeForDisplay, DecodeMethodType } from 'components/DataDecode';
 import { getTransactionMessages, capitalizeFirstLetter } from 'helpers';
