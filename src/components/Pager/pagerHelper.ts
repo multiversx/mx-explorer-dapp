@@ -1,3 +1,4 @@
+import { ELLIPSIS } from 'appConstants';
 import { stringIsInteger } from 'helpers';
 
 interface PagerHelperType {
@@ -15,7 +16,6 @@ const generatePaginationArray = ({
 }) => {
   if (totalPages <= 1) return [1];
 
-  const placeholder = '...';
   const center: (number | string)[] = [currentPage];
 
   center.unshift(currentPage - 1);
@@ -32,8 +32,8 @@ const generatePaginationArray = ({
 
   if (includeLeftPages) filteredCenter.unshift(2);
   if (includeRightPages) filteredCenter.push(totalPages - 1);
-  if (includeLeftGap) filteredCenter.unshift(placeholder);
-  if (includeRightGap) filteredCenter.push(placeholder);
+  if (includeLeftGap) filteredCenter.unshift(ELLIPSIS);
+  if (includeRightGap) filteredCenter.push(ELLIPSIS);
 
   return [1, ...filteredCenter, totalPages];
 };

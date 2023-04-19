@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { ELLIPSIS } from 'appConstants';
 import { useFetchGlobalStake, useFetchMarkers, useFetchShards } from 'hooks';
 import { globalStakeSelector, markersSelector } from 'redux/selectors';
-import { MarkerType, RankType, WithClassnameType } from 'types';
+import { RankType } from 'types';
 
 import { LargeCard } from './components/LargeCard';
 import { SmallCard } from './components/SmallCard';
@@ -12,22 +13,22 @@ import { ValidatorsStatusType } from './types';
 
 const placeHolderRank = [
   {
-    continent: '...',
+    continent: ELLIPSIS,
     nodes: 0,
     percentage: 0
   },
   {
-    continent: '...',
+    continent: ELLIPSIS,
     nodes: 0,
     percentage: 0
   },
   {
-    continent: '...',
+    continent: ELLIPSIS,
     nodes: 0,
     percentage: 0
   },
   {
-    continent: '...',
+    continent: ELLIPSIS,
     nodes: 0,
     percentage: 0
   }

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
+import { ELLIPSIS } from 'appConstants';
 import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
 import { stringIsInteger, usdValue } from 'helpers';
@@ -21,7 +23,7 @@ export const UsdValue = ({
   return (
     <span className={className} data-testid={dataTestId}>
       {!stringIsInteger(input) || !isFetched
-        ? '...'
+        ? ELLIPSIS
         : usdValue({
             amount: denominate({
               input,

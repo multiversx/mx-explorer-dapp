@@ -3,6 +3,7 @@ import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 
+import { ELLIPSIS } from 'appConstants';
 import { NetworkLink, Denominate, Sort } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { useGetNodeURLFilters } from 'hooks';
@@ -14,7 +15,7 @@ export const TokensTable = ({
   totalTokens
 }: {
   tokens: TokenType[];
-  totalTokens: '...' | number;
+  totalTokens: typeof ELLIPSIS | number;
 }) => {
   const { getQueryObject } = useGetNodeURLFilters();
   const queryObject = getQueryObject();

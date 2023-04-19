@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
+
+import { ELLIPSIS } from 'appConstants';
 import { DIGITS } from 'config';
 import { StatsType } from 'types/stats.types';
 
@@ -37,15 +39,15 @@ export const processStats = (data: StatsType) => {
     epochPercentage: `${new BigNumber(epochPercentage).toFormat(DIGITS)}%`,
     epochTotalTime: check
       ? moment.utc(data.refreshRate * data.roundsPerEpoch).format('HH:mm')
-      : '...',
+      : ELLIPSIS,
     epochTimeElapsed: check
       ? moment.utc(data.refreshRate * data.roundsPassed).format('HH:mm')
-      : '...',
+      : ELLIPSIS,
     epochTimeRemaining: check
       ? moment
           .utc(data.refreshRate * (data.roundsPerEpoch - data.roundsPassed))
           .format('HH:mm')
-      : '...',
+      : ELLIPSIS,
     roundsPerEpoch: new BigNumber(data.roundsPerEpoch).toFormat(),
     roundsPassed: new BigNumber(data.roundsPassed).toFormat()
   };

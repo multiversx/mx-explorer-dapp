@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
+import { ELLIPSIS } from 'appConstants';
 import { Loader, PageState, Chart } from 'components';
 import {
   getNormalizedTimeEntries,
@@ -24,8 +25,8 @@ export const AccountAnalytics = () => {
 
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
   const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
-  const [startDate, setStartDate] = React.useState<string>('...');
-  const [endDate, setEndDate] = React.useState<string>('...');
+  const [startDate, setStartDate] = React.useState<string>(ELLIPSIS);
+  const [endDate, setEndDate] = React.useState<string>(ELLIPSIS);
 
   const teal = getComputedStyle(document.documentElement)
     .getPropertyValue('--teal')

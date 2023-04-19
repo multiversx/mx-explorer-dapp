@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
+import { ELLIPSIS } from 'appConstants';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
 import { Denominate } from 'components';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
@@ -32,7 +33,7 @@ export const AccountLegacyDelegation = ({
   } = delegationLegacy;
 
   const [legacyDelegationApr, setLegacyDelegationApr] =
-    React.useState<string>('...');
+    React.useState<string>(ELLIPSIS);
 
   const getLegacyDelegationApr = () => {
     if (isFetched && identity?.stake && identity?.topUp && identity?.locked) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { REFRESH_RATE } from 'appConstants';
+import { ELLIPSIS, REFRESH_RATE } from 'appConstants';
 import { ProgressRing } from 'components';
 import { processStats, getExtraStats } from 'helpers';
 import { useFetchStats } from 'hooks';
@@ -75,7 +75,7 @@ export const BlockProgressRing = ({ className }: WithClassnameType) => {
     <div ref={ref} className={`block-progress-ring ${className ?? ''}`}>
       <ProgressRing progress={Number(progress.toFixed(2))} size={100} hasBg>
         <div className='label' data-testid='currentEpoch'>
-          {stateBuffer !== undefined ? `${blockTimeProgress}s` : '...'}
+          {stateBuffer !== undefined ? `${blockTimeProgress}s` : ELLIPSIS}
         </div>
         <div className='description'>Block Time</div>
       </ProgressRing>
