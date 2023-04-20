@@ -49,7 +49,7 @@ export const TransactionActionToken = ({
           </NetworkLink>
           {token?.valueUSD && (
             <div className='me-1 text-truncate text-neutral-400 ms-1 text-lh-24'>
-              (<FormatUSD amount={token.valueUSD} digits={2} />)
+              (<FormatUSD amount={token.valueUSD} digits={2} usd={1} />)
             </div>
           )}
         </>

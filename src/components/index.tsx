@@ -63,7 +63,6 @@ export * from './TransactionIcon';
 export * from './TransactionsTable';
 export * from './TransactionStatus/TransactionStatus';
 export * from './Trim';
-export * from './UsdValue';
 export * from './ValidatorMap';
 
 export * from '../widgets/HeroNodes';

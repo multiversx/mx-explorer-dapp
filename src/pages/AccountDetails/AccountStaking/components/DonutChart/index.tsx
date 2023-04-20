@@ -1,8 +1,9 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 
-import { Denominate, UsdValue, Chart } from 'components';
+import { Denominate, FormatUSD, Chart } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
+import { DECIMALS } from 'config';
 import { ProviderType } from 'types';
 import { AccountStakingSliceType } from 'types/account.types';
 
@@ -29,6 +30,8 @@ export const DonutChart = ({
     }
   ];
 
+  console.log('--bNtotalLocked.toString(10)', bNtotalLocked.toString(10));
+
   return (
     <>
       <div className='staking-details-center'>
@@ -39,7 +42,11 @@ export const DonutChart = ({
           <Denominate value={bNtotalLocked.toString(10)} decimals={2} />
         </h6>
         <p className='text-neutral-400 small mb-0'>
-          <UsdValue input={bNtotalLocked.toString(10)} showPrefix />
+          <FormatUSD
+            amount={bNtotalLocked.toString(10)}
+            decimals={DECIMALS}
+            digits={2}
+          />
         </p>
       </div>
       <Chart.Donut config={config} />
