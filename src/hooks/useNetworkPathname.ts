@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const useNetworkPathname = () => {

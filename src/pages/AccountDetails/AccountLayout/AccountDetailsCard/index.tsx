@@ -25,8 +25,9 @@ import {
   TimeAgo,
   PropertyPill,
   SmallDetailItem,
-  UsdValue
+  FormatUSD
 } from 'components';
+import { DECIMALS } from 'config';
 import { isContract, urlBuilder, formatDate, formatHerotag } from 'helpers';
 import { useAdapter } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
@@ -198,7 +199,7 @@ export const AccountDetailsCard = () => {
                 </SmallDetailItem>
 
                 <SmallDetailItem title='Value'>
-                  <UsdValue input={balance} />
+                  <FormatUSD amount={balance} decimals={DECIMALS} digits={2} />
                 </SmallDetailItem>
 
                 <SmallDetailItem title='Properties'>

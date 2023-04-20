@@ -1,9 +1,10 @@
 import React from 'react';
 import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign';
 import BigNumber from 'bignumber.js';
-
 import { useSelector } from 'react-redux';
-import { CardItem, LockedAmountTooltip, UsdValue } from 'components';
+
+import { CardItem, LockedAmountTooltip, FormatUSD } from 'components';
+import { DECIMALS } from 'config';
 import { accountSelector, accountStakingSelector } from 'redux/selectors';
 
 export const AccountUsdValueCardItem = ({
@@ -25,7 +26,11 @@ export const AccountUsdValueCardItem = ({
       <div className='d-flex align-items-center'>
         {balance ? (
           <span className='me-2'>
-            <UsdValue input={totalWorth.toString(10)} />
+            <FormatUSD
+              amount={totalWorth.toString(10)}
+              decimals={DECIMALS}
+              digits={2}
+            />
           </span>
         ) : (
           <>...</>
@@ -35,12 +40,18 @@ export const AccountUsdValueCardItem = ({
             lockedDetails={[
               {
                 label: 'Available Balance',
-                value: <UsdValue input={balance} />
+                value: (
+                  <FormatUSD amount={balance} decimals={DECIMALS} digits={2} />
+                )
               },
               {
                 label: 'Stake',
                 value: (
-                  <UsdValue input={new BigNumber(totalLocked).toString(10)} />
+                  <FormatUSD
+                    amount={new BigNumber(totalLocked).toString(10)}
+                    decimals={DECIMALS}
+                    digits={2}
+                  />
                 )
               }
             ]}
