@@ -52,7 +52,7 @@ export const TokenDetails = () => {
               <TransactionsTable
                 transactions={transactions}
                 totalTransactions={totalTransactions}
-                showDirectionCol={true}
+                showDirectionCol={false}
                 title={<TokenTabs />}
                 dataChanged={dataChanged}
                 inactiveFilters={[TransactionFiltersEnum.token]}

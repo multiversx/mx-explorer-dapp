@@ -52,7 +52,7 @@ export const MiniBlockDetails = () => {
               <TransactionsTable
                 transactions={transactions}
                 totalTransactions={totalTransactions}
-                showDirectionCol={true}
+                showDirectionCol={false}
                 title={
                   <h5
                     data-testid='title'

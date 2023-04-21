@@ -197,7 +197,12 @@ export const AccountDetailsCard = () => {
                 </SmallDetailItem>
 
                 <SmallDetailItem title='Value'>
-                  <FormatUSD amount={balance} decimals={DECIMALS} digits={2} />
+                  <FormatUSD
+                    amount={balance}
+                    decimals={DECIMALS}
+                    digits={2}
+                    showPrefix={false}
+                  />
                 </SmallDetailItem>
 
                 <SmallDetailItem title='Properties'>

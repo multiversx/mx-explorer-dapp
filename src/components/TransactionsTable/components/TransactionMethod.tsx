@@ -64,7 +64,8 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
     </div>
   );
 
-  return transaction.action?.description ? (
+  return transaction.action?.description &&
+    transaction.action.description !== 'Transfer' ? (
     <OverlayTrigger
       placement='top'
       delay={{ show: 0, hide: 400 }}

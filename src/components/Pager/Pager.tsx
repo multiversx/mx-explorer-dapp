@@ -118,7 +118,7 @@ export const Pager = ({
                 {page !== ELLIPSIS ? (
                   <button
                     type='button'
-                    className={`btn btn-pager ${
+                    className={`btn btn-pager page-btn ${
                       page === processedPage ? 'active' : ''
                     }`}
                     onClick={() => {

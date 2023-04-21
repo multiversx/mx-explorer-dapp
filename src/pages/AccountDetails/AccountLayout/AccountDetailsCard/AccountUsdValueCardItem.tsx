@@ -30,6 +30,7 @@ export const AccountUsdValueCardItem = ({
               amount={totalWorth.toString(10)}
               decimals={DECIMALS}
               digits={2}
+              showPrefix={false}
             />
           </span>
         ) : (
@@ -41,7 +42,12 @@ export const AccountUsdValueCardItem = ({
               {
                 label: 'Available Balance',
                 value: (
-                  <FormatUSD amount={balance} decimals={DECIMALS} digits={2} />
+                  <FormatUSD
+                    amount={balance}
+                    decimals={DECIMALS}
+                    digits={2}
+                    showPrefix={false}
+                  />
                 )
               },
               {
@@ -51,6 +57,7 @@ export const AccountUsdValueCardItem = ({
                     amount={new BigNumber(totalLocked).toString(10)}
                     decimals={DECIMALS}
                     digits={2}
+                    showPrefix={false}
                   />
                 )
               }
