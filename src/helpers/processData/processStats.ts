@@ -40,17 +40,17 @@ export const processStats = (data: StatsType) => {
     epochTotalTime: check
       ? moment
           .utc(data.refreshRate * data.roundsPerEpoch)
-          .format('h[h] m[m] ss[s]')
+          .format('H[h] mm[m] ss[s]')
       : ELLIPSIS,
     epochTimeElapsed: check
       ? moment
           .utc(data.refreshRate * data.roundsPassed)
-          .format('h[h] m[m] ss[s]')
+          .format('H[h] mm[m] ss[s]')
       : ELLIPSIS,
     epochTimeRemaining: check
       ? moment
           .utc(data.refreshRate * (data.roundsPerEpoch - data.roundsPassed))
-          .format('h[h] m[m] ss[s]')
+          .format('H[h] mm[m] ss[s]')
       : ELLIPSIS,
     roundsPerEpoch: data.roundsPerEpoch,
     roundsPassed: data.roundsPassed
