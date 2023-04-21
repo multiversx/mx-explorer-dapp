@@ -37,9 +37,7 @@ export const TokenDetails = () => {
   }, [activeNetworkId, tokenId, transactionsCount]);
 
   useEffect(() => {
-    if (searchParams.toString()) {
-      fetchTransactions(Boolean(searchParams.toString()));
-    }
+    fetchTransactions(Boolean(searchParams.toString()));
   }, [searchParams]);
 
   return (
