@@ -54,7 +54,6 @@ export const Accounts = () => {
   useEffect(() => {
     fetchAccounts();
     fetchAccountsCount();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, searchParams]);
 
   return (

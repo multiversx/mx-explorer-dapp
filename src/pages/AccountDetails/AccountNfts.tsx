@@ -63,7 +63,6 @@ export const AccountNfts = () => {
 
   useEffect(() => {
     fetchAccountNfts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txCount, activeNetworkId, address, searchParams]);
 
   return !nftsActive ? (

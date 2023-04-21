@@ -310,16 +310,12 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     if (!isOldAddressRoute && address) {
       fetchStakingDetails();
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, activeNetworkId]);
 
   useEffect(() => {
     if (!isOldAddressRoute && address) {
       fetchBalanceAndCount();
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageRefreshTrigger, activeNetworkId, address]);
 
   useEffect(() => {

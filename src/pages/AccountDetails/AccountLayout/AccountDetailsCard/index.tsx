@@ -81,7 +81,6 @@ export const AccountDetailsCard = () => {
 
   useEffect(() => {
     fetchProviderDetails();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, address]);
 
   const fetchAccountTokensCount = () => {
@@ -123,7 +122,6 @@ export const AccountDetailsCard = () => {
   useEffect(() => {
     fetchAccountNftsCount();
     fetchAccountTokensCount();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txCount, activeNetworkId, address]);
 
   return address !== '' ? (

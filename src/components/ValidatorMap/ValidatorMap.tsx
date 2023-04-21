@@ -93,7 +93,6 @@ export const ValidatorMap = ({ markers, className }: ValidatorMapType) => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(chooseMarker, [pulse]);
 
   const pulseInterval = () => {

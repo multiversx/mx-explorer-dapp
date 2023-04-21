@@ -118,7 +118,6 @@ export const NodeDetails = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchNodes, [search, publicKey, isFetched]);
 
   const showIdentity =

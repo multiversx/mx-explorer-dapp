@@ -29,7 +29,6 @@ export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
   useFetchNodesVersions();
   useFetchShards();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isGlobalStakeFetched && isNodesVersioonsFetched && shards.length > 0) {
       setIsDataReady(true);

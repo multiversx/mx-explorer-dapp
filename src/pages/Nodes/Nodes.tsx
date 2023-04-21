@@ -37,7 +37,6 @@ export const Nodes = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchNodes, [searchParams]);
 
   return (

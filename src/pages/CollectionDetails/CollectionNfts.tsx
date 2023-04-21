@@ -53,7 +53,6 @@ export const CollectionNfts = () => {
 
   useEffect(() => {
     fetchCollectionNfts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, searchParams]);
 
   const showCollectionNfts = dataReady === true && collectionNfts.length > 0;

@@ -71,7 +71,6 @@ export const AccountAnalytics = () => {
     }
   ];
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(getData, [activeNetworkId, searchParams]);
 
   return (

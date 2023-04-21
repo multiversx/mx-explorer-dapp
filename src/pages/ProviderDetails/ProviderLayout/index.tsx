@@ -55,7 +55,6 @@ export const ProviderLayout = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchData, []);
 
   const showIdentity =

@@ -46,7 +46,6 @@ export const Nfts = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchNfts, [searchParams]);
 
   return (

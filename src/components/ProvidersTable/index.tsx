@@ -141,7 +141,6 @@ export const ProvidersTable = ({
     } else {
       setDisplayProviders(originalProviders);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sort]);
 
   const SortTh = ({ field, name }: { field: SortFieldType; name: string }) => (

@@ -41,8 +41,6 @@ export const NftLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     fetchNftDetails();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageRefreshTrigger, activeNetworkId, identifier]);
 
   const loading = dataReady === undefined;
