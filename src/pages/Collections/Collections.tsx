@@ -80,7 +80,6 @@ export const Collections = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchCollections, [search]);
 
   return (

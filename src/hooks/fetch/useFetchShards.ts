@@ -20,6 +20,5 @@ export const useFetchShards = () => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchShards, []);
 };

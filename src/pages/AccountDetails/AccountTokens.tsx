@@ -64,7 +64,6 @@ export const AccountTokens = () => {
 
   useEffect(() => {
     fetchAccountTokens();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txCount, activeNetworkId, address, searchParams]);
 
   return !tokensActive ? (

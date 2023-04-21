@@ -35,7 +35,6 @@ export const Identities = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchIdentities, []);
 
   return (

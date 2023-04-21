@@ -46,7 +46,6 @@ export const TokenDetailsLockedAccounts = () => {
 
   useEffect(() => {
     fetchTokenLockedAccounts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId]);
 
   const showLockedAccounts =

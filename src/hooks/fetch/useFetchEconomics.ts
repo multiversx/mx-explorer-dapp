@@ -26,6 +26,5 @@ export const useFetchEconomics = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchEconomics, []);
 };

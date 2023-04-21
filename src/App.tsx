@@ -73,7 +73,7 @@ export const FilteredRoutes = ({
         <Route path='*' element={<PageNotFound />} />
       </Routes>
     ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [networks, activeNetworkId]
   );
 };

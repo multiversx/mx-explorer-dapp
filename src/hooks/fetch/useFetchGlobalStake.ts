@@ -26,6 +26,5 @@ export const useFetchGlobalStake = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchGlobalStake, []);
 };

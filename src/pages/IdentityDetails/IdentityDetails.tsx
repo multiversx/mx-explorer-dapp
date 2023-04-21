@@ -44,7 +44,6 @@ export const IdentityDetails = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchData, [searchParams]);
 
   const showProviders =

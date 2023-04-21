@@ -49,7 +49,6 @@ export const AccountLegacyDelegation = ({
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(getLegacyDelegationApr, [isFetched, identity]);
 
   return (

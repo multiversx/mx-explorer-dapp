@@ -184,7 +184,6 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(reset, [route, pathname]);
 
   if (route) {

@@ -102,7 +102,6 @@ export const AnalyticsStackedChart = ({
     };
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getData();
   }, [activeNetworkId, range, firstSeries.id, secondSeries.id]);

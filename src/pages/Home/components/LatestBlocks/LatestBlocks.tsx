@@ -65,7 +65,6 @@ export const LatestBlocks = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchBlocks, [activeNetworkId, timestamp]);
 
   const Component = () => {

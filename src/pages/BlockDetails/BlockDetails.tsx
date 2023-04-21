@@ -31,7 +31,6 @@ export const BlockDetails = () => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchBlock, [blockId]); // run the operation only once since the parameter does not change
 
   return invalid ? (

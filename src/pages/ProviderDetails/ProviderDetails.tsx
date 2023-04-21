@@ -36,7 +36,6 @@ export const ProviderDetails = () => {
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchNodes, [search]);
 
   return (

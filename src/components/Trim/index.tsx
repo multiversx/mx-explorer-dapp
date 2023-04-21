@@ -27,7 +27,6 @@ export const Trim = ({ text, dataTestId = '', color }: TrimType) => {
     };
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(effect, [debounce]);
 
   useEffect(() => {

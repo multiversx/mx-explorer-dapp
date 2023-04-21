@@ -64,6 +64,5 @@ export const useNetworkRouter = () => {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(changeNetwork, [networkId, activeNetworkId]);
 };

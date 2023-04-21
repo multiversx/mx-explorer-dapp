@@ -41,8 +41,6 @@ export const TokenLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     fetchTokenDetails();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageRefreshTrigger, activeNetworkId, tokenId]);
 
   const loading = dataReady === undefined;

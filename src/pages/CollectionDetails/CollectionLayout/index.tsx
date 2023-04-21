@@ -45,8 +45,6 @@ export const CollectionLayout = ({
 
   useEffect(() => {
     fetchCollectionDetails();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageRefreshTrigger, activeNetworkId, collection, searchParams]);
 
   useEffect(() => {

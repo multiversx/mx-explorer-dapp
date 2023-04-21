@@ -70,7 +70,6 @@ export const Blocks = () => {
         setTotalBlocks(count);
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, shard, firstPageRefreshTrigger, searchParams]);
 
   return shard && shard < 0 ? (

@@ -59,7 +59,6 @@ export const AccountContracts = () => {
 
   useEffect(() => {
     fetchAccountContracts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txCount, activeNetworkId, address, searchParams]);
 
   return (

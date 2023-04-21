@@ -46,8 +46,6 @@ export const MiniBlockLayout = ({
 
   useEffect(() => {
     fetchMiniBlockDetails();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstPageRefreshTrigger, activeNetworkId, miniBlockHash]);
 
   const invalid = miniBlockHash && !isHash(miniBlockHash);
