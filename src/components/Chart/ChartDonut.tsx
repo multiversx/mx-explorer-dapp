@@ -196,7 +196,11 @@ export const ChartDonut = ({ config }: ChartProps) => {
           <div className='card-body p-3'>
             {activeSector?.name}: {activeSector?.value} {egldLabel}{' '}
             <span className='text-neutral-400'>
-              <FormatUSD amount={activeSector?.value} usd={unprocessed.price} />
+              <FormatUSD
+                amount={activeSector?.value}
+                usd={unprocessed.price}
+                showPrefix={false}
+              />
             </span>
           </div>
         </div>

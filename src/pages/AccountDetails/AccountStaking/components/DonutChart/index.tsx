@@ -44,6 +44,7 @@ export const DonutChart = ({
             amount={bNtotalLocked.toString(10)}
             decimals={DECIMALS}
             digits={2}
+            showPrefix={false}
           />
         </p>
       </div>

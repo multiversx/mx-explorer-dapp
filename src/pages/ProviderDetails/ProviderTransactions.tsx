@@ -57,7 +57,7 @@ export const ProviderTransactions = () => {
                 transactions={transactions}
                 address={address}
                 totalTransactions={totalTransactions}
-                showDirectionCol={true}
+                showDirectionCol={false}
                 title={<ProviderTabs />}
                 inactiveFilters={inactiveFilters}
                 dataChanged={dataChanged}

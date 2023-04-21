@@ -16,12 +16,14 @@ export const FormatUSD = ({
   usd: usdValue,
   digits,
   decimals,
+  showPrefix = true,
   showTooltip = true
 }: {
   amount: string | number;
   usd?: string | number;
   decimals?: number;
   digits?: number;
+  showPrefix?: boolean;
   showTooltip?: boolean;
 }) => {
   const { isFetched, unprocessed } = useSelector(economicsSelector);
@@ -53,10 +55,10 @@ export const FormatUSD = ({
         <>
           {showTooltip && !isEqual ? (
             <Overlay title={`$${value.toFormat()}`}>
-              {formatUSD({ amount, usd, digits, showPrefix: false })}
+              {formatUSD({ amount, usd, digits, showPrefix })}
             </Overlay>
           ) : (
-            formatUSD({ amount, usd, digits, showPrefix: false })
+            formatUSD({ amount, usd, digits, showPrefix })
           )}
         </>
       )}
