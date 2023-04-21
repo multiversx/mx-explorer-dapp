@@ -26,11 +26,11 @@ export const getInitialStatsState = (): StatsSliceType => {
     accounts: ELLIPSIS,
     transactions: ELLIPSIS,
     refreshRate: 0,
-    epoch: ELLIPSIS,
-    roundsPassed: ELLIPSIS,
-    roundsPerEpoch: ELLIPSIS,
+    epoch: 0,
+    roundsPassed: 0,
+    roundsPerEpoch: 0,
 
-    epochPercentage: ELLIPSIS,
+    epochPercentage: 0,
     epochTotalTime: ELLIPSIS,
     epochTimeElapsed: ELLIPSIS,
     epochTimeRemaining: ELLIPSIS

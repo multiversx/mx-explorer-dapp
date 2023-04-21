@@ -35,20 +35,24 @@ export const processStats = (data: StatsType) => {
     accounts: new BigNumber(data.accounts).toFormat(),
     transactions: new BigNumber(data.transactions).toFormat(),
     refreshRate: data.refreshRate,
-    epoch: new BigNumber(data.epoch).toFormat(),
-    epochPercentage: `${new BigNumber(epochPercentage).toFormat(DIGITS)}%`,
+    epoch: data.epoch,
+    epochPercentage,
     epochTotalTime: check
-      ? moment.utc(data.refreshRate * data.roundsPerEpoch).format('HH:mm')
+      ? moment
+          .utc(data.refreshRate * data.roundsPerEpoch)
+          .format('h[h] m[m] ss[s]')
       : ELLIPSIS,
     epochTimeElapsed: check
-      ? moment.utc(data.refreshRate * data.roundsPassed).format('HH:mm')
+      ? moment
+          .utc(data.refreshRate * data.roundsPassed)
+          .format('h[h] m[m] ss[s]')
       : ELLIPSIS,
     epochTimeRemaining: check
       ? moment
           .utc(data.refreshRate * (data.roundsPerEpoch - data.roundsPassed))
-          .format('HH:mm')
+          .format('h[h] m[m] ss[s]')
       : ELLIPSIS,
-    roundsPerEpoch: new BigNumber(data.roundsPerEpoch).toFormat(),
-    roundsPassed: new BigNumber(data.roundsPassed).toFormat()
+    roundsPerEpoch: data.roundsPerEpoch,
+    roundsPassed: data.roundsPassed
   };
 };

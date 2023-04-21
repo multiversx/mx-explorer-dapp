@@ -30,8 +30,6 @@ export const DonutChart = ({
     }
   ];
 
-  console.log('--bNtotalLocked.toString(10)', bNtotalLocked.toString(10));
-
   return (
     <>
       <div className='staking-details-center'>
