@@ -40,9 +40,7 @@ export const Transactions = () => {
   }, [activeNetworkId, firstPageRefreshTrigger]);
 
   useEffect(() => {
-    if (searchParams.toString()) {
-      fetchTransactions(Boolean(searchParams.toString()));
-    }
+    fetchTransactions(Boolean(searchParams.toString()));
   }, [searchParams]);
 
   useEffect(() => {

@@ -35,9 +35,7 @@ export const NftTransactions = () => {
   }, [activeNetworkId, identifier]);
 
   useEffect(() => {
-    if (searchParams.toString()) {
-      fetchTransactions(Boolean(searchParams.toString()));
-    }
+    fetchTransactions(Boolean(searchParams.toString()));
   }, [searchParams]);
 
   return (
