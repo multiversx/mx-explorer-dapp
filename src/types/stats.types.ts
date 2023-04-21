@@ -26,11 +26,11 @@ export interface StatsSliceType extends SliceType {
   accounts: string;
   transactions: string;
   refreshRate: number;
-  epoch: string;
-  roundsPassed: string;
-  roundsPerEpoch: string;
+  epoch: number;
+  roundsPassed: number;
+  roundsPerEpoch: number;
 
-  epochPercentage: string;
+  epochPercentage: number;
   epochTotalTime: string;
   epochTimeElapsed: string;
   epochTimeRemaining: string;

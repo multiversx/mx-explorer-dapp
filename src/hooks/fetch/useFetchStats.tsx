@@ -5,12 +5,34 @@ import { processStats, getExtraStats } from 'helpers';
 import { useAdapter } from 'hooks';
 import { setStats } from 'redux/slices/stats';
 
+let currentRequest: any = null;
+
 export const useFetchStats = () => {
   const dispatch = useDispatch();
   const { getStats } = useAdapter();
 
+  const getStatsOnce = () => {
+    if (currentRequest) {
+      return currentRequest;
+    }
+
+    const requestPromise = new Promise(async (resolve, reject) => {
+      try {
+        const response = await getStats();
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      } finally {
+        currentRequest = null;
+      }
+    });
+
+    currentRequest = requestPromise;
+    return requestPromise;
+  };
+
   const fetchStats = async () => {
-    const { data, success } = await getStats();
+    const { data, success } = await getStatsOnce();
 
     if (data && success) {
       const {
