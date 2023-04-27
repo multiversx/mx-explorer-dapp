@@ -1,0 +1,449 @@
+@import './../../../../../node_modules/bootstrap/scss/functions';
+@import './../../../../../node_modules/bootstrap/scss/variables';
+@import './../../../../../node_modules/bootstrap/scss/mixins';
+
+@import './color-palette-variables';
+
+// Variables
+//
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+// Custom Project Variables
+$header-navbar-height: 4.75rem;
+$footer-height: 5.125rem;
+
+// Plugins
+
+// REACT DATEPICKER
+$datepicker__border-radius: $border-radius;
+$datepicker__border-color: transparent;
+
+// Color system
+// USES Tailwind Color Palette
+
+// scss-docs-start color-variables
+$blue: $blue-400;
+$indigo: $indigo-400;
+$purple: $purple-400;
+$pink: $pink-400;
+$red: $red-500;
+$orange: $orange-400;
+$yellow: $yellow-400;
+$green: $green-400;
+$teal: $teal-400;
+$cyan: $cyan-400;
+// scss-docs-end color-variables
+
+// scss-docs-start colors-map
+$colors: (
+  'blue': $blue,
+  'indigo': $indigo,
+  'purple': $purple,
+  'pink': $pink,
+  'red': $red,
+  'orange': $orange,
+  'yellow': $yellow,
+  'green': $green,
+  'teal': $teal,
+  'cyan': $cyan,
+  'black': $black,
+  'white': $white,
+  'gray': $neutral-600,
+  'gray-dark': $gray-950
+);
+// scss-docs-end colors-map
+
+// scss-docs-start theme-color-variables
+$primary: $primary-400;
+$secondary: $neutral-400;
+$success: $green;
+$info: $cyan;
+$warning: $orange;
+$danger: $red;
+$light: $neutral-100;
+$dark: $neutral-900;
+// scss-docs-end theme-color-variables
+
+// scss-docs-start theme-colors-map
+$theme-colors: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'success': $success,
+  'info': $info,
+  'warning': $warning,
+  'danger': $danger,
+  'light': $light,
+  'dark': $dark
+);
+// scss-docs-end theme-colors-map
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+
+$enable-caret: true;
+$enable-rounded: true;
+$enable-shadows: false;
+$enable-gradients: false;
+$enable-transitions: true;
+$enable-reduced-motion: true;
+$enable-smooth-scroll: true;
+$enable-grid-classes: true;
+$enable-container-classes: true;
+$enable-cssgrid: false;
+$enable-button-pointers: true;
+$enable-rfs: false;
+$enable-validation-icons: false;
+$enable-negative-margins: true;
+$enable-deprecation-messages: false;
+$enable-important-utilities: true;
+
+// Prefix for :root CSS variables
+
+$prefix: '';
+
+// Spacing
+//
+// Control the default styling of most Bootstrap elements by modifying these
+// variables. Mostly focused on spacing.
+// You can add more entries to the $spacers map, should you need more variation.
+
+// scss-docs-start spacer-variables-maps
+$spacer-val: $spacer * 2;
+$spacers: map-merge(
+  $spacers,
+  (
+    spacer: (
+      $spacer-val
+    )
+  )
+);
+// scss-docs-end spacer-variables-maps
+
+// Body
+//
+// Settings for the `<body>` element.
+
+$body-bg: $neutral-900;
+$body-color: $neutral-100;
+
+// Links
+//
+// Style anchor elements.
+
+$link-color: $body-color;
+$link-decoration: none;
+$link-hover-color: $primary;
+$link-hover-decoration: null;
+
+// Paragraphs
+//
+// Style p element.
+
+$paragraph-margin-bottom: 1rem;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+// scss-docs-start grid-breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+// scss-docs-end grid-breakpoints
+
+// sm: 540px,
+// md: 720px,
+// lg: 960px,
+// xl: 1200px,
+// xxl: 1272px,
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+// scss-docs-start container-max-widths
+$container-max-widths: (
+  xl: 1200px,
+  xxl: 1272px
+);
+// scss-docs-end container-max-widths
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+
+$grid-gutter-width: 1rem;
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$border-radius: 8px;
+
+// Typography
+//
+// Font, line-height, and color for body text, headings, and more.
+
+$headings-font-family: 'Roobert Medium', 'Inter', Roboto, 'Helvetica Neue',
+  'Noto Sans', 'Liberation Sans', sans-serif;
+$font-family-sans-serif: 'Inter', Roboto, 'Helvetica Neue', 'Noto Sans',
+  'Liberation Sans', sans-serif;
+$font-family-base: $font-family-sans-serif;
+
+$font-size-root: 16px;
+$font-size-base: 14px;
+
+$font-size-sm: 14px;
+$font-size-lg: 18px;
+
+// Tables
+//
+// Customizes the `.table` component with basic values, each used across all table variations.
+$table-border-color: $neutral-900;
+// scss-docs-end table-variables
+
+// Buttons + Forms
+//
+// Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
+
+// scss-docs-start input-btn-variables
+$input-btn-padding-y: 0.875rem;
+$input-btn-padding-x: 1.25rem;
+$input-btn-font-size: $font-size-base;
+$input-btn-line-height: $line-height-base;
+
+$input-btn-padding-y-sm: 0.375rem;
+$input-btn-padding-x-sm: 0.75rem;
+$input-btn-font-size-sm: $font-size-sm;
+
+$input-btn-padding-y-lg: 0.625rem;
+$input-btn-padding-x-lg: 1.5rem;
+$input-btn-font-size-lg: $font-size-lg;
+
+$input-btn-border-width: 0;
+// scss-docs-end input-btn-variables
+
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background, and border color.
+
+// scss-docs-start btn-variables
+$btn-padding-y: $input-btn-padding-y;
+$btn-padding-x: $input-btn-padding-x;
+$btn-font-size: $input-btn-font-size;
+$btn-line-height: $input-btn-line-height;
+
+$btn-padding-y-sm: $input-btn-padding-y-sm;
+$btn-padding-x-sm: $input-btn-padding-x-sm;
+$btn-font-size-sm: $input-btn-font-size-sm;
+
+$btn-padding-y-lg: $input-btn-padding-y-lg;
+$btn-padding-x-lg: $input-btn-padding-x-lg;
+$btn-font-size-lg: $input-btn-font-size-lg;
+
+$btn-border-width: 0;
+// scss-docs-end btn-variables
+
+// $btn-box-shadow: inset 0 1px 0 rgba($white, 0.15), 0 1px 1px rgba($black, 0.075);
+
+// Allows for customizing button radius independently from global border radius
+$btn-border-radius: 1rem;
+$btn-border-radius-sm: 0.5rem;
+$btn-border-radius-lg: 1rem;
+
+// Forms
+
+// scss-docs-start form-input-variables
+$input-focus-box-shadow: none;
+
+$input-padding-y: $input-btn-padding-y;
+$input-padding-x: $input-btn-padding-x;
+$input-font-size: $input-btn-font-size;
+$input-font-weight: $font-weight-base;
+$input-line-height: $input-btn-line-height;
+
+$input-padding-y-sm: $input-btn-padding-y-sm;
+$input-padding-x-sm: $input-btn-padding-x-sm;
+$input-font-size-sm: $input-btn-font-size-sm;
+
+$input-padding-y-lg: $input-btn-padding-y-lg;
+$input-padding-x-lg: $input-btn-padding-x-lg;
+$input-font-size-lg: $input-btn-font-size-lg;
+
+$input-bg: $body-bg;
+$input-disabled-color: null;
+$input-disabled-bg: $gray-200;
+$input-disabled-border-color: null;
+
+$input-color: $body-color;
+$input-border-color: $gray-400;
+$input-border-width: $input-btn-border-width;
+$input-box-shadow: $box-shadow-inset;
+
+$input-border-radius: $btn-border-radius;
+$input-border-radius-sm: $btn-border-radius-sm;
+$input-border-radius-lg: $btn-border-radius-lg;
+
+$input-placeholder-color: $gray-600;
+$input-plaintext-color: $body-color;
+
+$input-group-addon-padding-y: $input-padding-y;
+$input-group-addon-padding-x: $input-padding-x;
+$input-group-addon-font-weight: $input-font-weight;
+// scss-docs-end form-input-variables
+
+// Z-index master list
+//
+// Warning: Avoid customizing these values. They're used for a bird's eye view
+// of components dependent on the z-axis and are designed to all work together.
+
+// scss-docs-start zindex-stack
+$zindex-sticky: 1100;
+// scss-docs-end zindex-stack
+
+// Dropdowns
+//
+// Dropdown menu container and contents.
+
+// scss-docs-start dropdown-variables
+$dropdown-min-width: 10rem;
+$dropdown-padding-x: 0;
+$dropdown-padding-y: 0.5rem;
+$dropdown-spacer: 0.125rem;
+$dropdown-font-size: $font-size-base;
+$dropdown-border-radius: 8px;
+$dropdown-border-width: $border-width;
+$dropdown-inner-border-radius: subtract(
+  $dropdown-border-radius,
+  $dropdown-border-width
+);
+$dropdown-divider-margin-y: $spacer * 0.5;
+$dropdown-item-padding-y: $spacer * 0.25;
+$dropdown-item-padding-x: $spacer;
+$dropdown-header-padding-x: $dropdown-item-padding-x;
+$dropdown-header-padding-y: $dropdown-padding-y;
+
+// theme-variables
+$dropdown-color: $body-color;
+$dropdown-bg: $neutral-800;
+$dropdown-border-color: transparent;
+$dropdown-divider-bg: $border-color;
+$dropdown-link-color: $body-color;
+$dropdown-link-hover-color: $primary;
+$dropdown-link-hover-bg: $neutral-900;
+$dropdown-link-active-color: $black;
+$dropdown-link-active-bg: $primary;
+$dropdown-link-disabled-color: $neutral-700;
+$dropdown-header-color: $neutral-700;
+// scss-docs-end dropdown-variables
+
+// Cards
+
+// scss-docs-start card-variables
+
+$card-spacer-y: 1.5rem;
+$card-spacer-x: 1.5rem;
+$card-title-spacer-y: 1.5rem;
+$card-border-width: 0;
+$card-border-radius: 1rem;
+$card-inner-border-radius: 1.5rem;
+$card-cap-padding-y: 1.5rem;
+$card-cap-padding-x: 1.5rem;
+$card-height: auto;
+
+// theme-variables
+$card-color: $body-color;
+$card-bg: $gray-950;
+$card-cap-color: $body-color;
+$card-cap-bg: transparent;
+
+// scss-docs-end card-variables
+
+// Accordion
+
+// scss-docs-start accordion-variables
+$accordion-padding-y: 1rem !default;
+$accordion-padding-x: 1.25rem !default;
+$accordion-color: $body-color !default; // Sass variable because of $accordion-button-icon
+$accordion-bg: $body-bg !default;
+$accordion-border-width: $border-width !default;
+$accordion-border-color: var(--#{$prefix}border-color) !default;
+$accordion-border-radius: $border-radius !default;
+$accordion-inner-border-radius: subtract(
+  $accordion-border-radius,
+  $accordion-border-width
+) !default;
+
+$accordion-body-padding-y: $accordion-padding-y !default;
+$accordion-body-padding-x: $accordion-padding-x !default;
+
+$accordion-button-padding-y: $accordion-padding-y !default;
+$accordion-button-padding-x: $accordion-padding-x !default;
+$accordion-button-color: $accordion-color !default;
+$accordion-button-bg: var(--#{$prefix}accordion-bg) !default;
+$accordion-transition: $btn-transition, border-radius 0.15s ease !default;
+$accordion-button-active-bg: tint-color($component-active-bg, 90%) !default;
+$accordion-button-active-color: shade-color($primary, 10%) !default;
+
+$accordion-button-focus-border-color: $input-focus-border-color !default;
+$accordion-button-focus-box-shadow: $btn-focus-box-shadow !default;
+
+$accordion-icon-width: 1.25rem !default;
+$accordion-icon-color: $accordion-button-color !default;
+$accordion-icon-active-color: $accordion-button-active-color !default;
+$accordion-icon-transition: transform 0.2s ease-in-out !default;
+$accordion-icon-transform: rotate(-180deg) !default;
+
+$accordion-button-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !default;
+$accordion-button-active-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-active-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !default;
+// scss-docs-end accordion-variables
+
+// Tooltips
+
+// scss-docs-start tooltip-variables
+$tooltip-font-size: 12px;
+$tooltip-padding-y: 0.5rem;
+$tooltip-padding-x: 0.5rem;
+// scss-docs-end tooltip-variables
+
+// Popovers
+
+// scss-docs-start popover-variables
+$popover-body-padding-y: 0.6rem;
+$popover-body-padding-x: 0;
+$popover-font-size: $font-size-base;
+$popover-max-width: 276px;
+
+// theme-variables
+$popover-bg: $gray-950;
+$popover-border-color: $gray-950;
+$popover-header-bg: $gray-950;
+$popover-header-color: $body-color;
+$popover-body-color: $body-color;
+// scss-docs-end popover-variables
+
+// Badges
+
+// scss-docs-start badge-variables
+$badge-font-size: 12px;
+$badge-font-weight: $font-weight-normal;
+$badge-color: $white;
+$badge-padding-y: 0.25rem;
+$badge-padding-x: 0.5rem;
+$badge-border-radius: 0.25rem;
+
+// theme-variables
+$badge-color: $body-color;
+// scss-docs-end badge-variables
+
+// Code
+
+$code-color: $neutral-200;

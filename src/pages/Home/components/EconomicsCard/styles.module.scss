@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-family: 'Roobert Medium';
+    font-family: var(--headings-font-family);
     font-weight: 500;
 
     @media (min-width: 768px) {

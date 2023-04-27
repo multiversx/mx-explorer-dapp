@@ -76,8 +76,8 @@ export const ChartStake = ({ className }: WithClassnameType) => {
   ]);
 
   const initialFilter = 'totalStaked30d';
-  const teal = getComputedStyle(document.documentElement)
-    .getPropertyValue('--teal')
+  const primary = getComputedStyle(document.documentElement)
+    .getPropertyValue('--primary')
     .trim();
 
   const defaultValue = filters.find((filter) => filter.value === initialFilter);
@@ -125,7 +125,7 @@ export const ChartStake = ({ className }: WithClassnameType) => {
           className={styles.container}
           data={data}
           height={75}
-          color={teal}
+          color={primary}
           identifier='delegationGradient'
           tooltipFormatter={(option: any) =>
             `${new BigNumber(option.value).toFormat(0)} ${egldLabel}`

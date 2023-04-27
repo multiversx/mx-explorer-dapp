@@ -28,8 +28,8 @@ export const AccountAnalytics = () => {
   const [startDate, setStartDate] = useState<string>(ELLIPSIS);
   const [endDate, setEndDate] = useState<string>(ELLIPSIS);
 
-  const teal = getComputedStyle(document.documentElement)
-    .getPropertyValue('--teal')
+  const primary = getComputedStyle(document.documentElement)
+    .getPropertyValue('--primary')
     .trim();
 
   const getData = () => {
@@ -61,7 +61,7 @@ export const AccountAnalytics = () => {
       id: 'balance',
       label: 'balance',
       gradient: 'defaultGradient',
-      stroke: teal,
+      stroke: primary,
       data: chartData,
       showUsdValue: true,
       yAxisConfig: {

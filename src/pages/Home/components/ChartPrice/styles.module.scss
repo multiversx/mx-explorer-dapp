@@ -34,7 +34,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    color: var(--teal);
+    color: var(--primary);
     padding: 0 1rem 1rem;
     position: relative;
     z-index: 2;
@@ -58,7 +58,7 @@
 
   .price {
     font-weight: 500;
-    font-family: 'Roobert Medium';
+    font-family: var(--headings-font-family);
     font-size: 1.5rem;
     line-height: 1.25;
     margin-bottom: 0.5rem;
@@ -73,7 +73,7 @@
     align-items: center;
 
     &.up {
-      color: var(--teal-200);
+      color: var(--primary-200);
     }
 
     &.down {
@@ -112,7 +112,7 @@
 
       .value {
         font-size: 1.25rem;
-        font-family: 'Roobert Medium';
+        font-family: var(--headings-font-family);
         font-weight: 500;
         color: var(--neutral-300);
         line-height: 1;
@@ -131,7 +131,7 @@
   padding: 0.625rem;
   padding-left: 1.75rem;
   line-height: 1;
-  color: var(--teal);
+  color: var(--primary);
   font-family: 'Roobert SemiBold';
   font-weight: 600;
   position: relative;
@@ -146,7 +146,7 @@
     transform: translateY(-50%);
     position: absolute;
     border-radius: 50%;
-    background-color: var(--teal);
+    background-color: var(--primary);
     height: 0.625rem;
   }
 

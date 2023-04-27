@@ -10,4 +10,15 @@
       min-height: calc(100vh - #{$footer-height + $header-navbar-height});
     }
   }
+
+  .page-container {
+    @extend .d-flex;
+    @extend .flex-fill;
+    @extend .flex-column;
+
+    @include media-breakpoint-down(sm) {
+      width: 100vw;
+      max-width: 100%;
+    }
+  }
 }
