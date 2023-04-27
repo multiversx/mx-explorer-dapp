@@ -1,8 +1,8 @@
 export const getChartColorPalette = () => {
   const colorPalette = [
-    'teal-500',
-    'purple',
-    'teal',
+    'primary-500',
+    'violet-500',
+    'primary',
     'green-500',
     'yellow-500',
     'red'

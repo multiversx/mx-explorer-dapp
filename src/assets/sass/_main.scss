@@ -6,13 +6,14 @@
 
 /* Elements
 -------------------------------------------------- */
+
 @import './elements/scrollbar';
 @import './elements/tabs';
+@import './elements/badges';
 
-/* Plugins
+/* Components
 -------------------------------------------------- */
 
-@import './overrides.scss';
-@import './components.scss';
-@import './widgets.scss';
-@import './pages.scss';
+@import './components/components.scss';
+@import './components/widgets.scss';
+@import './components/pages.scss';

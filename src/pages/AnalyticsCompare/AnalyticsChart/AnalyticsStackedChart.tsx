@@ -50,7 +50,7 @@ export const AnalyticsStackedChart = ({
     AnalyticsStackedChartDataType[]
   >([]);
 
-  const [teal, violet400] = ['teal', 'violet-400'].map((color) =>
+  const [primary, violet500] = ['primary', 'violet-500'].map((color) =>
     getComputedStyle(document.documentElement)
       .getPropertyValue(`--${color}`)
       .trim()
@@ -58,20 +58,20 @@ export const AnalyticsStackedChart = ({
 
   const firstSeriesDefaultConfig = {
     gradient: 'firstSeriesGradientId',
-    gradientStopColor: violet400,
-    stroke: violet400,
+    gradientStopColor: violet500,
+    stroke: violet500,
     legendStyle: {
-      color: violet400,
-      borderColor: violet400
+      color: violet500,
+      borderColor: violet500
     }
   };
   const secondSeriesDefaultConfig = {
     gradient: 'secondSeriesGradientId',
-    gradientStopColor: teal,
-    stroke: teal,
+    gradientStopColor: primary,
+    stroke: primary,
     legendStyle: {
-      color: teal,
-      borderColor: teal
+      color: primary,
+      borderColor: primary
     }
   };
 

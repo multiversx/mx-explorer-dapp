@@ -64,7 +64,7 @@
         line-height: 1;
         transition: all 200ms ease;
         margin: 0;
-        font-family: var(--font-secondary);
+        font-family: var(--font-sans-serif);
 
         @include media-breakpoint-up(lg) {
           font-size: 0.75rem;

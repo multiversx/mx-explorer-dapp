@@ -71,11 +71,11 @@
         &:hover,
         &.hover {
           background-color: var(--neutral-700);
-          color: var(--teal);
+          color: var(--primary);
         }
 
         &.selected {
-          background-color: var(--teal);
+          background-color: var(--primary);
           color: var(--neutral-800);
         }
       }

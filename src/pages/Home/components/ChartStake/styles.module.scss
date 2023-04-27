@@ -35,7 +35,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    color: var(--teal);
+    color: var(--primary);
     padding: 0 1rem 1rem;
     pointer-events: none;
     position: relative;
@@ -60,7 +60,7 @@
 
   .price {
     font-weight: 500;
-    font-family: 'Roobert Medium';
+    font-family: var(--headings-font-family);
     font-size: 1.5rem;
     line-height: 1.25;
     margin-bottom: 0.5rem;
@@ -70,7 +70,7 @@
     }
 
     span {
-      color: var(--teal-100);
+      color: var(--primary-100);
       font-size: 1.5rem;
     }
   }
@@ -81,7 +81,7 @@
 
     .percentage {
       font-size: 0.75rem;
-      color: var(--teal-200);
+      color: var(--primary-200);
       margin-left: 0.33rem;
     }
   }
@@ -108,7 +108,7 @@
 
       .value {
         font-size: 1.25rem;
-        font-family: 'Roobert Medium';
+        font-family: var(--headings-font-family);
         font-weight: 500;
         color: var(--neutral-300);
         line-height: 1;
@@ -127,7 +127,7 @@
   padding: 0.625rem;
   padding-left: 1.75rem;
   line-height: 1;
-  color: var(--teal);
+  color: var(--primary);
   font-family: 'Roobert SemiBold';
   font-weight: 600;
   position: relative;
@@ -142,7 +142,7 @@
     transform: translateY(-50%);
     position: absolute;
     border-radius: 50%;
-    background-color: var(--teal);
+    background-color: var(--primary);
     height: 0.625rem;
   }
 

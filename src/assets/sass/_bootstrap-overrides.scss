@@ -1,0 +1,105 @@
+// THEME COLOR OVERRIDES
+
+.card {
+  &.card-black {
+    --#{$prefix}card-bg: var(--#{$prefix}#{$prefix}black);
+  }
+}
+
+.btn-primary {
+  --#{$prefix}btn-color: var(--#{$prefix}neutral-900);
+  --#{$prefix}btn-bg: var(--#{$prefix}primary);
+  --#{$prefix}btn-border-color: transparent;
+  --#{$prefix}btn-hover-border-color: transparent;
+  --#{$prefix}btn-focus-box-shadow: 0 0 0 #{$btn-focus-width} rgba(var(--#{$prefix}btn-focus-shadow-rgb), 0.5);
+
+  --#{$prefix}btn-hover-color: var(--#{$prefix}neutral-900);
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}primary-200);
+}
+
+.btn {
+  --#{$prefix}btn-active-bg: var(--#{$prefix}primary);
+  --#{$prefix}btn-active-border-color: var(--#{$prefix}primary);
+  --#{$prefix}btn-active-color: var(--#{$prefix}neutral-900);
+}
+
+.btn-outline-primary {
+  border-width: 1px;
+  --#{$prefix}btn-color: var(--#{$prefix}primary);
+  --#{$prefix}btn-border-color: var(--#{$prefix}primary);
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}primary-200);
+  --#{$prefix}btn-focus-box-shadow: 0 0 0 #{$btn-focus-width} rgba(var(--#{$prefix}btn-focus-shadow-rgb), 0.5);
+  --#{$prefix}btn-hover-color: var(--#{$prefix}neutral-900);
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}primary);
+}
+
+.btn-dark {
+  --#{$prefix}btn-color: var(--#{$prefix}body-color);
+  --#{$prefix}btn-bg: var(--#{$prefix}neutral-800);
+  --#{$prefix}btn-border-color: transparent;
+  --#{$prefix}btn-hover-border-color: transparent;
+  --#{$prefix}btn-focus-box-shadow: none;
+
+  --#{$prefix}btn-hover-color: var(--#{$prefix}body-color);
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}neutral-900);
+
+  --#{$prefix}btn-active-color: var(--#{$prefix}body-color);
+  --#{$prefix}btn-active-bg: var(--#{$prefix}neutral-900);
+  --#{$prefix}btn-active-border-color: var(--#{$prefix}primary);
+}
+
+.btn-dark-alt {
+  --#{$prefix}btn-bg: var(--#{$prefix}neutral-900);
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}black);
+  --#{$prefix}btn-active-bg: var(--#{$prefix}black);
+}
+
+.form-control {
+  background-color: var(--#{$prefix}neutral-800);
+  color: var(--#{$prefix}neutral-500);
+  &::placeholder {
+    color: var(--#{$prefix}neutral-500);
+  }
+  &:focus {
+    color: var(--#{$prefix}neutral-400);
+    background-color: var(--#{$prefix}neutral-800);
+    box-shadow: 0 0 0 1px rgba(var(--#{$prefix}primary-rgb), 0.5);
+  }
+  &:focus-visible {
+    border: 0;
+    outline: 0;
+  }
+  &.form-control-dark {
+    background-color: var(--#{$prefix}black);
+  }
+}
+
+.input-group-text {
+  background-color: var(--#{$prefix}neutral-800);
+  color: var(--#{$prefix}neutral-500);
+  &:hover {
+    color: var(--#{$prefix}primary);
+  }
+}
+
+.input-group-black {
+  .form-control {
+    background-color: var(--#{$prefix}black);
+    &:focus {
+      background-color: var(--#{$prefix}black);
+    }
+  }
+  .input-group-text {
+    background-color: var(--#{$prefix}black);
+  }
+}
+
+// DROPDOWN
+.dropdown-menu {
+  &.show {
+    margin: 0 !important;
+  }
+  .dropdown-item {
+    cursor: pointer;
+  }
+}

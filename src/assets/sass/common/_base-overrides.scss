@@ -23,13 +23,6 @@ dd {
   margin-bottom: 0;
 }
 
-a {
-  text-decoration: none;
-  &:hover {
-    color: var(--#{$prefix}primary);
-  }
-}
-
 // webkit being webkit
 input {
   color-scheme: dark;

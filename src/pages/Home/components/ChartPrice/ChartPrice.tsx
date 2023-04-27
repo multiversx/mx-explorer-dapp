@@ -73,8 +73,8 @@ export const ChartPrice = () => {
   ]);
 
   const initialFilter = 'price30d';
-  const teal = getComputedStyle(document.documentElement)
-    .getPropertyValue('--teal')
+  const primary = getComputedStyle(document.documentElement)
+    .getPropertyValue('--primary')
     .trim();
 
   const defaultValue = filters.find((filter) => filter.value === initialFilter);
@@ -128,7 +128,7 @@ export const ChartPrice = () => {
         <ChartRoot
           data={data}
           height={75}
-          color={teal}
+          color={primary}
           identifier='priceGradient'
           tooltipFormatter={(option: any) =>
             new Intl.NumberFormat('en-US', {
