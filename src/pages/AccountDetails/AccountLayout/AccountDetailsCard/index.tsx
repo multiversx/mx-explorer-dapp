@@ -136,7 +136,7 @@ export const AccountDetailsCard = () => {
                 }`}
               >
                 <div className='card-header-item d-flex align-items-center justify-content-between'>
-                  <div className='d-flex align-items-center w-100'>
+                  <div className='d-flex align-items-center'>
                     <h5
                       className='mb-0 d-flex align-items-center'
                       data-testid='title'
