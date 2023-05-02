@@ -25,7 +25,7 @@ export const EpochProgressRing = ({
             <>
               Epoch
               <br />
-              {epoch}
+              {new BigNumber(epoch).toFormat(0)}
             </>
           ) : (
             ELLIPSIS
