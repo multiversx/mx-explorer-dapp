@@ -4,7 +4,7 @@
 /* Variables
 -------------------------------------------------- */
 
-@import './common/variables/bootstrap-variables';
+@import './variables';
 
 /* Do not move the imports from here.
 Override Bootstrap variables only above.
@@ -15,6 +15,11 @@ Override Bootstrap variables only above.
 
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 
+/* Themes
+-------------------------------------------------- */
+
+@import './themes/default.scss';
+
 /* Common
 -------------------------------------------------- */
 
@@ -23,12 +28,9 @@ Override Bootstrap variables only above.
 @import './common/theme-helpers.scss';
 @import './common/fonts.scss';
 
-/* Theme
+/* Custom
 -------------------------------------------------- */
 
-@import './themes/default.scss';
-
-// Custom
 @import './bootstrap-overrides.scss';
 @import './shared-styles.scss';
-@import './main.scss';
+@import './custom-components.scss';
