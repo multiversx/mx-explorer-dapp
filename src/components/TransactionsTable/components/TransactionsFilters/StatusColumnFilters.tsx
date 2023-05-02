@@ -6,6 +6,7 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
 import { SelectFilter, SearchFilter } from 'components';
+import { capitalize } from 'helpers';
 import { TransactionApiStatusEnum, TransactionFiltersEnum } from 'types';
 
 export const StatusColumnFilters = ({
@@ -23,7 +24,7 @@ export const StatusColumnFilters = ({
   ).map((key) => {
     return {
       value: key,
-      label: TransactionApiStatusEnum[key]
+      label: capitalize(TransactionApiStatusEnum[key])
     };
   });
 

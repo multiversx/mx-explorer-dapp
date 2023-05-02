@@ -193,12 +193,10 @@ button.badge {
   &.pending {
     border-color: var(--yellow);
   }
-  &.invalid {
-    border-color: var(--orange);
-  }
   &.success {
     border-color: var(--green);
   }
+  &.invalid,
   &.failed,
   &.fail {
     border-color: var(--red);
@@ -211,12 +209,10 @@ button.badge {
   &.pending {
     color: var(--yellow);
   }
-  &.invalid {
-    color: var(--orange);
-  }
   &.success {
     color: var(--green);
   }
+  &.invalid,
   &.failed,
   &.fail {
     color: var(--red);
