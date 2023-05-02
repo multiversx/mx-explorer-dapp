@@ -1,10 +1,10 @@
 import React from 'react';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faLink } from '@fortawesome/pro-solid-svg-icons/faLink';
 import { faMapMarkerAlt } from '@fortawesome/pro-solid-svg-icons/faMapMarkerAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
-import { ReactComponent as TwitterLogo } from 'assets/img/logos/twitter.svg';
 import {
   Denominate,
   MultilayerPercentageRing,
@@ -85,7 +85,10 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
 
                   {identity.twitter && (
                     <div className='d-flex align-items-center me-3'>
-                      <TwitterLogo className='identity-social-logo me-1' />
+                      <FontAwesomeIcon
+                        icon={faTwitter}
+                        className='identity-social-logo me-1'
+                      />
                       <a
                         target='_blank'
                         rel='noreferrer nofollow'
