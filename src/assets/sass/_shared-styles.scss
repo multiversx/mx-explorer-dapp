@@ -82,6 +82,15 @@
 /* Base - TODO: Cleanup / split into files
 -------------------------------------------------- */
 
+.ubuntu,
+.windows,
+.blink:not(.ios),
+.webkit:not(.mac-os):not(.ios) {
+  &.scrollbar {
+    margin-right: -0.5rem;
+  }
+}
+
 .form-control {
   &:focus-visible {
     text-shadow: none;
@@ -114,6 +123,13 @@
   }
 }
 
+.table {
+  td {
+    &:first-of-type {
+      padding-left: 1rem;
+    }
+  }
+}
 .table-wrapper {
   overflow-x: auto;
   color: var(--neutral-400);
@@ -334,5 +350,15 @@ div.side-icon {
     .elipsis {
       height: 24px;
     }
+  }
+}
+
+// recharts fix
+.recharts-tooltip-wrapper {
+  background-color: transparent !important;
+
+  &:before,
+  &:after {
+    content: none !important;
   }
 }

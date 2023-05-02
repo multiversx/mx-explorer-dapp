@@ -43,6 +43,7 @@ $neutral-600: #525252;
 $neutral-700: #404040;
 $neutral-800: #262626;
 $neutral-900: #171717;
+$neutral-950: #121212;
 
 $stone-50: #fafaf9;
 $stone-100: #f5f5f4;
@@ -290,7 +291,8 @@ $neutrals: (
   'neutral-600': $neutral-600,
   'neutral-700': $neutral-700,
   'neutral-800': $neutral-800,
-  'neutral-900': $neutral-900
+  'neutral-900': $neutral-900,
+  'neutral-950': $neutral-950
 );
 
 $stones: (
@@ -535,5 +537,3 @@ $primarys: (
   'primary-800': $primary-800,
   'primary-900': $primary-900
 );
-
-$gray-950: #121212;

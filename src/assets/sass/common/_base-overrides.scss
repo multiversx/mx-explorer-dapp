@@ -10,6 +10,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -29,14 +35,4 @@ input {
 }
 input:is(:-webkit-autofill, :-webkit-autofill:focus) {
   transition: background-color 600000s 0s, color 600000s 0s;
-}
-
-// recharts fix
-.recharts-tooltip-wrapper {
-  background-color: transparent !important;
-
-  &:before,
-  &:after {
-    content: none !important;
-  }
 }

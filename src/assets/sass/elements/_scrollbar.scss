@@ -39,7 +39,6 @@
 .blink:not(.ios),
 .webkit:not(.mac-os):not(.ios) {
   &.scrollbar {
-    margin-right: -0.5rem;
     overflow-x: hidden;
 
     @include webkit-scrollbar;
