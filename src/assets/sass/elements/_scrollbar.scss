@@ -6,7 +6,8 @@
   &::-webkit-scrollbar,
   &::-webkit-scrollbar-track,
   &::-webkit-scrollbar-track:hover,
-  &::-webkit-scrollbar-corner {
+  &::-webkit-scrollbar-corner,
+  &::-webkit-scrollbar:horizontal {
     background-color: transparent;
   }
   &::-webkit-scrollbar {
@@ -41,6 +42,10 @@
   &.scrollbar {
     overflow-x: hidden;
 
+    @include webkit-scrollbar;
+  }
+
+  .table-wrapper {
     @include webkit-scrollbar;
   }
 
