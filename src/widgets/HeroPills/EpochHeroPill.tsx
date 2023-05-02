@@ -18,7 +18,11 @@ export const EpochHeroPill = ({ className }: WithClassnameType) => {
     >
       <div className='d-flex flex-column lext-left me-3'>
         <div className='label' data-testid='currentEpoch'>
-          {isReady && epoch ? <>Epoch {epoch}</> : ELLIPSIS}
+          {isReady && epoch ? (
+            <>Epoch {new BigNumber(epoch).toFormat(0)}</>
+          ) : (
+            ELLIPSIS
+          )}
         </div>
         <div className='description cursor-context' title={epochTimeRemaining}>
           {roundsLeft && roundsLeft >= 0 ? (
