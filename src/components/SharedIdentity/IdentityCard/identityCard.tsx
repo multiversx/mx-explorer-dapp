@@ -90,7 +90,11 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                         target='_blank'
                         rel='noreferrer nofollow'
                         className='text-primary-200'
-                        href={identity.twitter}
+                        href={
+                          identity.twitter.includes('twitter.com')
+                            ? identity.twitter
+                            : `https://twitter.com/${identity.twitter}`
+                        }
                       >
                         {identity.twitter.split('/').pop()}
                       </a>
