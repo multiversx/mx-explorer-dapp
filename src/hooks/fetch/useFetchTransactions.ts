@@ -39,7 +39,8 @@ export const useFetchTransactions = (
             const newTransactions = transactionsData.data.map(
               (transaction: UITransactionType) => ({
                 ...transaction,
-                isNew: !existingHashes.includes(transaction.txHash)
+                isNew:
+                  page === 1 && !existingHashes.includes(transaction.txHash)
               })
             );
             setTransactions(newTransactions);

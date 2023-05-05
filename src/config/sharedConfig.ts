@@ -58,7 +58,7 @@ export const allApps = (props: { id: string; name: string; url: string }[]) => [
   {
     id: 'bridge',
     name: 'Bridge',
-    url: 'https://ad-astra.multiversx.com/'
+    url: 'https://bridge.multiversx.com/'
   },
   {
     id: 'docs',
