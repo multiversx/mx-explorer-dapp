@@ -38,6 +38,8 @@ export interface TransactionType {
   receipt?: TransactionReceiptType;
   senderAssets?: AccountAssetType;
   receiverAssets?: AccountAssetType;
+  guardianAddress?: string;
+  guardianSignature?: string;
 }
 
 // TRANSACTION SC RESULTS

@@ -6,11 +6,11 @@
   .card {
     overflow: visible !important;
   }
-  .status-text-warning {
+  .status-warning {
     @include top-bar($warning);
   }
 
-  .status-text-danger {
+  .status-danger {
     @include top-bar($danger);
   }
 

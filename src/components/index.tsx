@@ -59,9 +59,10 @@ export * from './TimeAgo';
 export * from './TokenBlock';
 export * from './TooltipWithCopy';
 export * from './TransactionAction';
+export * from './TransactionGuardianIcon';
 export * from './TransactionIcon';
 export * from './TransactionsTable';
-export * from './TransactionStatus/TransactionStatus';
+export * from './TransactionStatus';
 export * from './Trim';
 export * from './ValidatorMap';
 

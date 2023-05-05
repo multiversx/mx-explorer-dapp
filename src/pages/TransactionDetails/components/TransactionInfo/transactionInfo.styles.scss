@@ -3,15 +3,15 @@
 }
 
 .transaction-info {
-  .status-text-success {
+  .status-success {
     @include top-bar(var(--success));
   }
 
-  .status-text-warning {
+  .status-warning {
     @include top-bar($warning);
   }
 
-  .status-text-danger {
+  .status-danger {
     @include top-bar($danger);
   }
 
