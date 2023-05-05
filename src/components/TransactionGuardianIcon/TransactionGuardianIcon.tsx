@@ -20,7 +20,7 @@ export const TransactionGuardianIcon = ({
       : 'Guarded';
 
     return (
-      <Overlay title={guardianText}>
+      <Overlay title={guardianText} className='guardian-icon'>
         <FontAwesomeIcon icon={faShieldCheck} className='text-primary me-1' />
       </Overlay>
     );
