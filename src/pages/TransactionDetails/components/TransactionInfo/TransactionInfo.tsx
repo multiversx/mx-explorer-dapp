@@ -24,17 +24,18 @@ import {
   TransactionAction,
   LoadingDots,
   AccountName,
-  FormatUSD
+  FormatUSD,
+  TransactionGuardianIcon
 } from 'components';
 import { denominate } from 'components/Denominate/denominate';
-import { getStatusIconAndColor } from 'components/TransactionStatus';
 import { DECIMALS, DIGITS } from 'config';
 import {
   addressIsBech32,
   formatDate,
   urlBuilder,
   isContract,
-  getTransactionMethod
+  getTransactionMethod,
+  getTransactionStatusIconAndColor
 } from 'helpers';
 import { useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -174,10 +175,7 @@ export const TransactionInfo = ({
       >
         <div
           className={`card-header status-${
-            getStatusIconAndColor(
-              transaction.status,
-              transaction.pendingResults
-            ).color
+            getTransactionStatusIconAndColor({ transaction }).color
           }`}
         >
           <div className='card-header-item d-flex align-items-center'>
@@ -230,6 +228,7 @@ export const TransactionInfo = ({
             <Tab.Pane eventKey='details'>
               <DetailItem title='Hash'>
                 <div className='d-flex align-items-center text-break-all text-neutral-100'>
+                  <TransactionGuardianIcon transaction={transaction} />
                   {transaction.txHash}
                   <CopyButton text={transaction.txHash} />
                 </div>
@@ -237,10 +236,7 @@ export const TransactionInfo = ({
 
               <DetailItem title='Status'>
                 <div className='d-flex flex-wrap align-items-center'>
-                  <TransactionStatus
-                    status={transaction.status}
-                    pendingResults={transaction.pendingResults}
-                  />
+                  <TransactionStatus transaction={transaction} />
                 </div>
               </DetailItem>
 

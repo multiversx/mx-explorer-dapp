@@ -190,34 +190,11 @@ button.badge {
   svg {
     margin-right: 0 !important;
   }
-  &.pending {
-    border-color: var(--yellow);
-  }
-  &.success {
-    border-color: var(--green);
-  }
-  &.invalid,
-  &.failed,
-  &.fail {
-    border-color: var(--red);
-  }
   border-color: var(--neutral-400);
 }
 .tx-badge,
 .tx-status {
   cursor: context-menu;
-  &.pending {
-    color: var(--yellow);
-  }
-  &.success {
-    color: var(--green);
-  }
-  &.invalid,
-  &.failed,
-  &.fail {
-    color: var(--red);
-  }
-  color: var(--neutral-400);
 }
 
 .filter-badge {

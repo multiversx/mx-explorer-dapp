@@ -11,13 +11,18 @@ import {
   AccountName,
   ScAddressIcon,
   PulsatingLed,
-  TransactionIcon
+  TransactionIcon,
+  TransactionGuardianIcon
 } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
 import { NoTransactions } from 'components/TransactionsTable/components/NoTransactions';
 import { TransactionValue } from 'components/TransactionsTable/components/TransactionValue';
-import { getStatusIconAndColor } from 'components/TransactionStatus/TransactionStatus';
-import { addressIsBech32, urlBuilder, getDisplayReceiver } from 'helpers';
+import {
+  addressIsBech32,
+  urlBuilder,
+  getDisplayReceiver,
+  getTransactionStatusIconAndColor
+} from 'helpers';
 import { useAdapter } from 'hooks';
 import { refreshSelector } from 'redux/selectors';
 import { UITransactionType } from 'types';
@@ -126,16 +131,15 @@ export const LatestTransactions = () => {
                     >
                       <div
                         className={`latest-item-card p-4 status-${
-                          getStatusIconAndColor(
-                            transaction.status,
-                            transaction.pendingResults
-                          ).color
+                          getTransactionStatusIconAndColor({ transaction })
+                            .color
                         }`}
                       >
                         <TransactionIcon
                           transaction={transaction}
                           showSuccess
                           withBadge
+                          showGuardian={false}
                         />
 
                         <div className='d-flex flex-column overflow-hidden min-w-0'>
@@ -227,6 +231,10 @@ export const LatestTransactions = () => {
                               <span className='text-neutral-400 me-2'>
                                 Hash:
                               </span>
+
+                              <TransactionGuardianIcon
+                                transaction={transaction}
+                              />
 
                               <NetworkLink
                                 to={`/transactions/${transaction.txHash}`}

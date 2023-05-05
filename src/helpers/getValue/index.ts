@@ -6,4 +6,6 @@ export * from './getPercentage';
 export * from './getTotalTxTokenUsdValue';
 export * from './getTransactionMessages';
 export * from './getTransactionMethod';
+export * from './getTransactionStatusIconAndColor';
+export * from './getTransactionStatusText';
 export * from './getTrend';
