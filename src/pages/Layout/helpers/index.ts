@@ -30,7 +30,7 @@ export const getCustomPageName = ({
     case 'providers':
       return 'Staking Providers';
     default:
-      return basePage.replaceAll('-', ' ').toLowerCase();
+      return basePage ? basePage.replaceAll('-', ' ').toLowerCase() : '';
   }
 };
 

@@ -1,154 +1,94 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { faAngleDown } from '@fortawesome/pro-solid-svg-icons/faAngleDown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Select, { components, OnChangeValue } from 'react-select';
 
-import { links as internalLinks, networks } from 'config';
-import { networksSelector } from 'redux/selectors';
-import { changeNetwork } from 'redux/slices';
+import { Anchor, Dropdown } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
-import { OptionType, SwitcherPropsType } from './types';
+import { networks, links } from 'config';
 
-const Control: typeof components.Control = (props) => (
-  <components.Control
-    {...props}
-    className={classNames('control', {
-      expanded: props.selectProps.menuIsOpen
-    })}
-  />
-);
+import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 
-const ValueContainer: typeof components.ValueContainer = (props) => (
-  <components.ValueContainer {...props} className='value' />
-);
+export const Switcher = () => {
+  const { id: activeNetworkId, name: activeNetworkName } = useSelector(
+    activeNetworkSelector
+  );
+  const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
 
-const SingleValue: typeof components.SingleValue = (props) => (
-  <components.SingleValue {...props} className='single' />
-);
-
-const Menu: typeof components.Menu = (props) => (
-  <components.Menu {...props} className='menu' />
-);
-
-const MenuList: typeof components.MenuList = (props) => (
-  <components.MenuList {...props} className='list' />
-);
-
-const Option: typeof components.Option = (props) => (
-  <components.Option
-    {...props}
-    className={classNames('option', {
-      selected: props.isSelected,
-      hover: props.isFocused
-    })}
-  />
-);
-
-const IndicatorsContainer: typeof components.IndicatorsContainer = (props) => (
-  <components.IndicatorsContainer
-    {...props}
-    className={classNames('indicator', {
-      expanded: props.selectProps.menuIsOpen
-    })}
-  />
-);
-
-export const Switcher = (props: SwitcherPropsType) => {
-  const { activeNetwork, defaultNetwork } = useSelector(networksSelector);
-  const { pathname } = useLocation();
-  const { onSwitch } = props;
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  const isInternal = internalLinks.length === 0;
-
-  const externalLinks = networks.map((network) => ({
-    name: network.name || '',
-    url: network.explorerAddress || '',
-    id: network.id || ''
+  const internalLinks = networks.map(({ name, id }) => ({
+    name,
+    url: id === defaultNetworkId ? '/' : `/${id}`,
+    id
   }));
 
-  const links = isInternal ? externalLinks : internalLinks;
-  const options: OptionType[] = links.map((link) => ({
-    label: link.name,
-    value: link.id,
-    url: link.url
-  }));
-
-  const onLoadSwitchNetwork = () => {
-    const slashIndex = 1;
-    const [networkId] = pathname.substring(slashIndex).split('/');
-
-    const isNotDefault = defaultNetwork && defaultNetwork.id !== networkId;
-    const foundNetwork = networkId
-      ? networks.find((network) => network.id === networkId)
-      : false;
-
-    dispatch(
-      changeNetwork(
-        foundNetwork && isNotDefault ? foundNetwork : defaultNetwork
-      )
-    );
+  type CustomToggleProps = {
+    children?: React.ReactNode;
+    onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   };
 
-  const switchNetwork = (networkId: string) => {
-    document.body.click();
-
-    if (activeNetwork.id !== networkId) {
-      const foundNetwork = networkId
-        ? networks.find((network) => network.id === networkId)
-        : false;
-
-      if (foundNetwork) {
-        dispatch(changeNetwork(foundNetwork));
-        navigate(networkId !== defaultNetwork.id ? `/${networkId}` : '/');
-        onSwitch();
-      }
-    }
-  };
-
-  const onChange = (network: OnChangeValue<OptionType, false>) => {
-    if (isDevelopment || isInternal) {
-      return;
-    }
-
-    if (isInternal && network) {
-      switchNetwork(network.value);
-      return;
-    }
-
-    if (network) {
-      window.open(network.url, '_blank');
-      document.body.click();
-      onSwitch();
-    }
-  };
-
-  useEffect(onLoadSwitchNetwork, []);
+  const CustomToggle = React.forwardRef(
+    (
+      { children, onClick }: CustomToggleProps,
+      ref: React.Ref<HTMLButtonElement>
+    ) => (
+      <button
+        type='button'
+        ref={ref}
+        className='btn-unstyled control'
+        onClick={(e) => {
+          e.preventDefault();
+          onClick(e);
+        }}
+      >
+        <div className='value text-truncate'>{children}</div>
+        <FontAwesomeIcon
+          className='ms-auto indicator'
+          icon={faAngleDown}
+          size='lg'
+        />
+      </button>
+    )
+  );
 
   return (
-    <div className='switcher'>
-      <Select
-        defaultValue={options[0]}
-        value={options[0]}
-        options={options}
-        onChange={onChange}
-        isMulti={false}
-        isSearchable={false}
-        menuPlacement='top'
-        components={{
-          Menu,
-          MenuList,
-          Control,
-          Option,
-          ValueContainer,
-          SingleValue,
-          IndicatorsContainer,
-          IndicatorSeparator: null
-        }}
-      />
-    </div>
+    <Dropdown className='switcher'>
+      <Dropdown.Toggle id='network-switch' as={CustomToggle} variant='dark'>
+        {activeNetworkName}
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        {links.length > 0 ? (
+          <>
+            {links.map((link) => (
+              <a
+                key={link.id}
+                target='_blank'
+                rel='noreferrer nofollow'
+                className={classNames('dropdown-item', {
+                  active: activeNetworkId === link.id
+                })}
+                href={link.url}
+              >
+                {link.name}
+              </a>
+            ))}
+          </>
+        ) : (
+          <>
+            {internalLinks.map((link) => (
+              <Dropdown.Item
+                as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
+                href={link.url}
+                key={link.url}
+                active={activeNetworkId === link.id}
+              >
+                {link.name}
+              </Dropdown.Item>
+            ))}
+          </>
+        )}
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };

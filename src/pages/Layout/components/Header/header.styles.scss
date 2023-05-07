@@ -284,4 +284,27 @@
       }
     }
   }
+
+  .header-symbol {
+    display: flex;
+    align-items: center;
+
+    .header-title {
+      color: var(--white);
+      line-height: 1;
+      font-size: 16px;
+      position: relative;
+      margin-left: 10px;
+      padding-left: 10px;
+      &:before {
+        background-color: var(--white);
+        content: '';
+        position: absolute;
+        right: 100%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+      }
+    }
+  }
 }
