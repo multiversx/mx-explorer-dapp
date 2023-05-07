@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useAdapter } from 'hooks';
+import { useAdapter, useIsMainnet } from 'hooks';
 import { statsSelector } from 'redux/selectors';
 import { pageHeadersBlocksStatsSelector } from 'redux/selectors/pageHeadersBlocksStats';
 import {
@@ -15,6 +15,7 @@ export const useHeadersBlocksStats = () => {
   const headersBlocks = useSelector(pageHeadersBlocksStatsSelector);
   const { unprocessed } = useSelector(statsSelector);
 
+  const isMainnet = useIsMainnet();
   const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
 
@@ -47,8 +48,10 @@ export const useHeadersBlocksStats = () => {
   };
 
   useEffect(() => {
-    getHeadersBlocks();
-  }, []);
+    if (isMainnet) {
+      getHeadersBlocks();
+    }
+  }, [isMainnet]);
 
   useEffect(() => {
     dispatch(

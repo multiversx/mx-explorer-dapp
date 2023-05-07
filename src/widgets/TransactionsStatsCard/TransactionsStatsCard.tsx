@@ -13,10 +13,8 @@ import {
 import { StatsCard } from 'widgets';
 
 export const TransactionsStatsCard = ({
-  className,
-  neutralColors
+  className
 }: {
-  neutralColors?: boolean;
   className?: string;
 }) => {
   const isMainnet = useIsMainnet();
@@ -29,8 +27,10 @@ export const TransactionsStatsCard = ({
   const fetchHero = useFetchGrowthHero();
 
   useEffect(() => {
-    fetchHero(true);
-  }, [timestamp]);
+    if (isMainnet) {
+      fetchHero(true);
+    }
+  }, [timestamp, isMainnet]);
 
   return (
     <>
@@ -38,7 +38,6 @@ export const TransactionsStatsCard = ({
         <StatsCard
           title='Total Transactions'
           value={totalTransactions}
-          neutralColors={neutralColors}
           className={className}
         >
           <FontAwesomeIcon icon={faCirclePlus} className='me-2' />

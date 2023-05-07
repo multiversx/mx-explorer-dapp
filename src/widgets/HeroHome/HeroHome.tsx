@@ -34,15 +34,10 @@ export const HeroHome = () => {
         <div className='d-flex flex-column gap-3'>
           <div className='row'>
             <div className='col-lg-8'>
-              <div className='d-flex flex-row flex-wrap w-100 gap-3 h-100'>
-                <BlockHeightStatsCard neutralColors />
-              </div>
-            </div>
-          </div>
-
-          <div className='row'>
-            <div className='col-lg-8'>
               <div className='d-flex flex-row flex-wrap w-100 gap-3'>
+                <div className='w-100'>
+                  <BlockHeightStatsCard />
+                </div>
                 <TransactionsStatsCard />
                 <AccountsStatsCard />
                 {isMainnet && <ValidatorsStatusCard isSmall />}

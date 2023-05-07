@@ -155,14 +155,12 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                   </>
                 }
                 className='detail-card'
-                neutralColors
               />
 
               <StatsCard
                 title='Computed APR'
                 value={<>{identity.apr ? `${identity.apr}%` : 'N/A'}</>}
                 className='detail-card'
-                neutralColors
               />
 
               <div className='d-flex flex-fill align-items-end justify-content-end stake-card'>

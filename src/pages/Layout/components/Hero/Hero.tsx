@@ -117,7 +117,7 @@ export const Hero = () => {
                 <div className='card-body d-flex flex-row flex-wrap gap-3'>
                   <TransactionsStatsCard />
                   <AccountsStatsCard />
-                  <BlockHeightStatsCard neutralColors />
+                  <BlockHeightStatsCard />
                   {isMainnet && <ValidatorsStatusCard isSmall />}
                 </div>
               )}
