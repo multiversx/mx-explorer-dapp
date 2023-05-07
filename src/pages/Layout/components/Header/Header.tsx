@@ -2,16 +2,23 @@ import React, { useState, MouseEvent } from 'react';
 import { faGrid, faGrid2 } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
 
 import { ReactComponent as MultiversXLogo } from 'assets/img/logo-full.svg';
-
+import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
+import { NetworkLink } from 'components';
+import { multiversxApps } from 'config';
+import { useIsMainnet } from 'hooks';
 import { Applications } from './components/Applications';
 import { Links } from './components/Links';
 import { Switcher } from './components/Switcher';
 import { HeaderPropsType } from './types';
 
 export const Header = (props: HeaderPropsType) => {
+  const isMainnet = useIsMainnet();
+
+  const explorerApp = multiversxApps.find((app) => app.id === 'explorer');
+  const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
+
   const { onExpand } = props;
 
   const [menuActive, setMenuActive] = useState(false);
@@ -59,9 +66,16 @@ export const Header = (props: HeaderPropsType) => {
   return (
     <header className='header'>
       <div className='wrapper'>
-        <Link to='/' className='logo'>
-          <MultiversXLogo />
-        </Link>
+        <NetworkLink to='/' className='logo'>
+          {isMainnet ? (
+            <MultiversXLogo />
+          ) : (
+            <span className='header-symbol'>
+              <MultiversXSymbol />
+              <span className='header-title'>{explorerTitle}</span>
+            </span>
+          )}
+        </NetworkLink>
       </div>
 
       <div className='burger' onClick={onMenuToggle}>
@@ -98,7 +112,7 @@ export const Header = (props: HeaderPropsType) => {
         })}
       >
         <Links onClick={onMenuClose} />
-        <Switcher onSwitch={onMenuClose} />
+        <Switcher />
       </div>
     </header>
   );

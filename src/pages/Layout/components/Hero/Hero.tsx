@@ -46,9 +46,13 @@ export const Hero = () => {
   const showNodesStats = useShowNodesStats();
   const showTransactionsStats = useShowTransactionStats() && isMainnet;
 
-  const pathArray = pathname.split('/');
+  const pathArray = pathname.split('/').filter((path) => path);
+
   const basePage =
-    activeNetworkId === defaultNetworkId ? pathArray?.[1] : pathArray?.[2];
+    activeNetworkId !== defaultNetworkId && pathArray.length > 1
+      ? pathArray?.[1]
+      : pathArray?.[0];
+
   const pageName = getCustomPageName({ pathname, basePage });
 
   let heroTypeClassName = '';
