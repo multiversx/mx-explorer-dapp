@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
-import { useAdapter } from 'hooks';
+import { useAdapter, useIsMainnet } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
 import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
 import {
@@ -16,6 +16,7 @@ export const useHeadersTokensStats = () => {
   const headersTokens = useSelector(pageHeaderTokensStatsSelector);
   const { unprocessed } = useSelector(economicsSelector);
 
+  const isMainnet = useIsMainnet();
   const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
 
@@ -53,7 +54,9 @@ export const useHeadersTokensStats = () => {
   };
 
   useEffect(() => {
-    getHeadersTokens();
+    if (isMainnet) {
+      getHeadersTokens();
+    }
   }, []);
 
   useEffect(() => {

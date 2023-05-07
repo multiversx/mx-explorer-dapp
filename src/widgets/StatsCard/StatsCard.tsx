@@ -7,7 +7,6 @@ export interface StatsCardType extends WithClassnameType {
   subTitle?: string | React.ReactNode;
   icon?: React.ReactNode;
   value?: string | React.ReactNode;
-  neutralColors?: boolean;
   children?: React.ReactNode;
 }
 
@@ -17,7 +16,6 @@ export const StatsCard = ({
   value,
   icon,
   className,
-  neutralColors = false,
   children
 }: StatsCardType) => {
   return (

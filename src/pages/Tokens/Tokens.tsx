@@ -8,7 +8,8 @@ import {
   useAdapter,
   useGetNodeURLFilters,
   useActiveRoute,
-  useGetPage
+  useGetPage,
+  useIsMainnet
 } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
 import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
@@ -24,7 +25,7 @@ export const Tokens = () => {
   const ref = useRef(null);
 
   const activeRoute = useActiveRoute();
-
+  const isMainnet = useIsMainnet();
   const { search } = useLocation();
   const { getQueryObject } = useGetNodeURLFilters();
   const { page } = useGetPage();
@@ -59,7 +60,9 @@ export const Tokens = () => {
   return (
     <>
       {(dataReady === undefined ||
-        Object.keys(pageHeadersTokens).length === 0) && <Loader />}
+        (isMainnet && Object.keys(pageHeadersTokens).length === 0)) && (
+        <Loader />
+      )}
       {dataReady === false && <FailedTokens />}
 
       <div ref={ref}>

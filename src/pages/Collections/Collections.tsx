@@ -19,7 +19,8 @@ import {
   useAdapter,
   useGetNodeURLFilters,
   useGetPage,
-  useActiveRoute
+  useActiveRoute,
+  useIsMainnet
 } from 'hooks';
 import { pageHeadersCollectionsStatsSelector } from 'redux/selectors/pageHeadersCollectionsStats';
 import { collectionRoutes } from 'routes';
@@ -31,6 +32,7 @@ import { NoCollections } from './components/NoCollections';
 
 export const Collections = () => {
   const ref = useRef(null);
+  const isMainnet = useIsMainnet();
   const activeRoute = useActiveRoute();
   const { page } = useGetPage();
   const { search } = useLocation();
@@ -85,7 +87,9 @@ export const Collections = () => {
   return (
     <>
       {(dataReady === undefined ||
-        Object.keys(pageHeadersCollections).length === 0) && <Loader />}
+        (isMainnet && Object.keys(pageHeadersCollections).length === 0)) && (
+        <Loader />
+      )}
       {dataReady === false && <FailedCollections />}
 
       <div ref={ref}>

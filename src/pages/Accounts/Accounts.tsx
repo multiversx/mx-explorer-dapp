@@ -11,7 +11,7 @@ import {
   AccountName
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useAdapter, useGetPage, useGetTransactionURLFilters } from 'hooks';
+import { useAdapter, useGetPage, useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { AccountType } from 'types';
@@ -22,6 +22,7 @@ import { NoAccounts } from './components/NoAccounts';
 export const Accounts = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
+  const isMainnet = useIsMainnet();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
 
@@ -59,7 +60,9 @@ export const Accounts = () => {
   return (
     <>
       {(dataReady === undefined ||
-        Object.keys(pageHeadersAccounts).length === 0) && <Loader />}
+        (isMainnet && Object.keys(pageHeadersAccounts).length === 0)) && (
+        <Loader />
+      )}
       {dataReady === false && <FailedAccounts />}
 
       <div ref={ref}>
