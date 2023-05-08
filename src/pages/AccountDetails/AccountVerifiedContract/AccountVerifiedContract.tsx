@@ -105,7 +105,9 @@ export const AccountVerifiedContract = () => {
                     className={`tab ${activeKey === 'details' ? 'active' : ''}`}
                     onClick={() => {
                       const options = {
-                        pathname: urlBuilder.accountDetailsContractCode(address)
+                        pathname: networkRoute(
+                          urlBuilder.accountDetailsContractCode(address)
+                        )
                       };
                       navigate(options, { replace: true });
                     }}
@@ -121,10 +123,11 @@ export const AccountVerifiedContract = () => {
                       }`}
                       onClick={() => {
                         const options = {
-                          pathname:
+                          pathname: networkRoute(
                             urlBuilder.accountDetailsContractCodeEndpoints(
                               address
                             )
+                          )
                         };
                         navigate(options, { replace: true });
                       }}
@@ -141,8 +144,9 @@ export const AccountVerifiedContract = () => {
                       }`}
                       onClick={() => {
                         const options = {
-                          pathname:
+                          pathname: networkRoute(
                             urlBuilder.accountDetailsContractCodeEvents(address)
+                          )
                         };
                         navigate(options, { replace: true });
                       }}
@@ -157,8 +161,9 @@ export const AccountVerifiedContract = () => {
                       className={`tab ${activeKey === 'types' ? 'active' : ''}`}
                       onClick={() => {
                         const options = {
-                          pathname:
+                          pathname: networkRoute(
                             urlBuilder.accountDetailsContractCodeTypes(address)
+                          )
                         };
                         navigate(options, { replace: true });
                       }}
@@ -174,10 +179,11 @@ export const AccountVerifiedContract = () => {
                       }`}
                       onClick={() => {
                         const options = {
-                          pathname:
+                          pathname: networkRoute(
                             urlBuilder.accountDetailsContractCodeConstructor(
                               address
                             )
+                          )
                         };
                         navigate(options, { replace: true });
                       }}

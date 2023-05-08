@@ -6,7 +6,7 @@ import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import { DetailItem, ModalLink, DataDecode } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
 import { truncate } from 'helpers';
-import { useScamFlag } from 'hooks';
+import { useScamFlag, useNetworkRoute } from 'hooks';
 import { ScamInfoType } from 'types';
 
 export const DataField = ({
@@ -17,6 +17,7 @@ export const DataField = ({
   scamInfo?: ScamInfoType;
 }) => {
   const navigate = useNavigate();
+  const networkRoute = useNetworkRoute();
   const { hash, pathname } = useLocation();
 
   const hashDecodeMethod = hash.replace('#', '');
@@ -40,7 +41,7 @@ export const DataField = ({
   useEffect(() => {
     if (decodeMethod && decodeMethod !== DecodeMethodType.raw) {
       const options = {
-        pathname: location.pathname,
+        pathname: networkRoute(location.pathname),
         hash: decodeMethod
       };
       navigate(options, { replace: true });

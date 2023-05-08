@@ -10,7 +10,7 @@ import {
 import { Loader, Led } from 'components';
 import { ChartListType } from 'components/Chart/helpers/types';
 import { Tabs } from 'components/Tabs';
-import { useAdapter, useIsMainnet } from 'hooks';
+import { useAdapter, useIsMainnet, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
 
@@ -23,6 +23,7 @@ import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
 export const AnalyticsCompare = () => {
   const ref = useRef(null);
   const navigate = useNavigate();
+  const networkRoute = useNetworkRoute();
   const isMainnet = useIsMainnet();
 
   const [searchParams] = useSearchParams();
@@ -59,7 +60,7 @@ export const AnalyticsCompare = () => {
     });
 
     const options = {
-      pathname: location.pathname,
+      pathname: networkRoute(location.pathname),
       search: `?${createSearchParams(newQueryParameters)}`
     };
 
@@ -101,7 +102,7 @@ export const AnalyticsCompare = () => {
   }, [selectedPills]);
 
   if (!isMainnet) {
-    navigate('/');
+    navigate(networkRoute('/'));
   }
 
   const tabs = [

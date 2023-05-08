@@ -187,8 +187,8 @@ export const TransactionInfo = ({
                   className={`tab ${activeKey === 'details' ? 'active' : ''}`}
                   onClick={() => {
                     const options = {
-                      pathname: urlBuilder.transactionDetails(
-                        transaction.txHash
+                      pathname: networkRoute(
+                        urlBuilder.transactionDetails(transaction.txHash)
                       )
                     };
                     navigate(options, { replace: true });
@@ -202,8 +202,8 @@ export const TransactionInfo = ({
                     className={`tab ${activeKey === 'logs' ? 'active' : ''}`}
                     onClick={() => {
                       const options = {
-                        pathname: urlBuilder.transactionDetailsLogs(
-                          transaction.txHash
+                        pathname: networkRoute(
+                          urlBuilder.transactionDetailsLogs(transaction.txHash)
                         )
                       };
                       navigate(options, { replace: true });

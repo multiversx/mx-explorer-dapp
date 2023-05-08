@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { Loader, Tabs } from 'components';
 import { ChartListType } from 'components/Chart/helpers/types';
+import { useAdapter, useIsMainnet, useNetworkRoute } from 'hooks';
 
-import { useAdapter, useIsMainnet } from 'hooks';
 import { AnalyticsChart } from 'pages/AnalyticsCompare/AnalyticsChart';
 import { FailedAnalytics } from 'pages/AnalyticsCompare/components/FailedAnalytics';
 import { NoAnalytics } from 'pages/AnalyticsCompare/components/NoAnalytics';
@@ -18,6 +18,7 @@ import { ChartWrapper } from './components/ChartWrapper';
 
 export const Analytics = () => {
   const navigate = useNavigate();
+  const networkRoute = useNetworkRoute();
   const isMainnet = useIsMainnet();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -190,7 +191,7 @@ export const Analytics = () => {
   useEffect(getData, [activeNetworkId]);
 
   if (!isMainnet) {
-    navigate('/');
+    navigate(networkRoute('/'));
   }
 
   if (dataReady === undefined) return <Loader />;
