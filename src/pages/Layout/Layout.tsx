@@ -10,7 +10,8 @@ import {
   useFetchEconomics,
   useNetworkRouter,
   useLoopManager,
-  useCheckVersion
+  useCheckVersion,
+  useGetURLNetwork
 } from 'hooks';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 
@@ -26,14 +27,16 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
   const browser = UAParser();
   const { pathname } = useLocation();
+  const urlNetwork = useGetURLNetwork();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
 
+  const fetchEconomics = useFetchEconomics();
+  const fetchStats = useFetchStats();
+
   useNetworkRouter();
   useLoopManager();
-  useFetchEconomics();
-  useFetchStats();
   useCheckVersion();
 
   const offline = !window.navigator.onLine;
@@ -53,6 +56,13 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       document.body.classList.add(formatClassName(browser.os.name));
     }
   }, []);
+
+  useEffect(() => {
+    if (urlNetwork && urlNetwork.id === activeNetworkId) {
+      fetchStats();
+      fetchEconomics();
+    }
+  }, [activeNetworkId, urlNetwork]);
 
   return (
     <div className={`d-flex ${pageClass}`}>
