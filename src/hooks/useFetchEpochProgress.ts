@@ -69,7 +69,7 @@ export const useFetchEpochProgress = () => {
     setOldTestnetId(activeNetworkId);
   }, [activeNetworkId]);
 
-  useEffect(updateStats, [timestamp, roundTimeProgress, activeNetworkId]);
+  useEffect(updateStats, [timestamp, roundTimeProgress]);
 
   const roundProgress = (roundTimeProgress * 100) / refreshIntervalSec;
   const roundsLeft = epochRoundsLeft
