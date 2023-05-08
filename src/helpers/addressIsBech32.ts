@@ -1,9 +1,9 @@
-export const addressIsBech32 = (destinationAddress = '') => {
+export const addressIsBech32 = (address = '') => {
   const isValidBech32 = !(
-    !destinationAddress ||
-    !destinationAddress.startsWith('erd') ||
-    destinationAddress.length !== 62 ||
-    /^\w+$/.test(destinationAddress) !== true
+    !address ||
+    !address.startsWith('erd') ||
+    address.length !== 62 ||
+    /^\w+$/.test(address) !== true
   );
   return isValidBech32;
 };

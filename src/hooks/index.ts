@@ -7,6 +7,7 @@ export * from './urlFilters';
 export * from './useActiveRoute';
 export * from './useCheckVersion';
 export * from './useGetHash';
+export * from './useGetURLNetwork';
 export * from './useIsMainnet';
 export * from './useIsTestnet';
 export * from './useLoopManager';
