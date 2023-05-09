@@ -5,7 +5,7 @@ import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
 import { urlBuilder } from 'helpers';
 import { tokenSelector } from 'redux/selectors';
 
-import { TokenTabs } from './TokenLayout/TokenTabs';
+import { TokenTabs } from '../../layouts/TokenLayout/TokenTabs';
 
 export const TokenDetailsRoles = () => {
   const ref = useRef(null);

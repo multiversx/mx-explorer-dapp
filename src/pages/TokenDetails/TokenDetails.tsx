@@ -8,7 +8,7 @@ import { useAdapter, useFetchTransactions } from 'hooks';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';
 
-import { TokenTabs } from './TokenLayout/TokenTabs';
+import { TokenTabs } from '../../layouts/TokenLayout/TokenTabs';
 
 export const TokenDetails = () => {
   const ref = useRef(null);

@@ -18,7 +18,7 @@ import { useAdapter, useGetPage } from 'hooks';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { AccountType } from 'types';
 
-import { TokenTabs } from './TokenLayout/TokenTabs';
+import { TokenTabs } from '../../layouts/TokenLayout/TokenTabs';
 
 export const TokenDetailsAccounts = () => {
   const ref = useRef(null);

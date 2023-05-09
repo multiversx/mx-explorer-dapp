@@ -3,7 +3,7 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 
 import { Loader, PageState } from 'components';
 import { useAdapter } from 'hooks';
-import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
+import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { IdentityType } from 'types';
 
 import { IdentityRow } from './components/IdentityRow';
