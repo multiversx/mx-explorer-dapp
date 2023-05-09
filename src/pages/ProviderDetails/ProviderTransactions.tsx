@@ -8,7 +8,7 @@ import { useAdapter, useFetchTransactions } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';
 
-import { ProviderTabs } from './ProviderLayout/ProviderTabs';
+import { ProviderTabs } from '../../layouts/ProviderLayout/ProviderTabs';
 
 export const ProviderTransactions = () => {
   const ref = useRef(null);

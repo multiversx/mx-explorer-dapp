@@ -8,7 +8,7 @@ import { useAdapter, useFetchTransactions } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';
 
-import { NftTabs } from './NftLayout/NftTabs';
+import { NftTabs } from '../../layouts/NftLayout/NftTabs';
 
 export const NftTransactions = () => {
   const ref = useRef(null);

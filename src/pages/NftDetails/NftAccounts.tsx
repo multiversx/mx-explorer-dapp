@@ -17,7 +17,7 @@ import { useAdapter, useGetPage } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { AccountType } from 'types';
 
-import { NftTabs } from './NftLayout/NftTabs';
+import { NftTabs } from '../../layouts/NftLayout/NftTabs';
 
 export const NftAccounts = () => {
   const ref = useRef(null);
