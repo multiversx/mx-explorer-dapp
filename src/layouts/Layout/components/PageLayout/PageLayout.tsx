@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useActiveRoute } from 'hooks';
-import { AccountLayout } from 'pages/AccountDetails/AccountLayout';
+import { AccountLayout } from 'layouts/AccountLayout';
 import { CollectionLayout } from 'pages/CollectionDetails/CollectionLayout';
 import { MiniBlockLayout } from 'pages/MiniBlockDetails/MiniBlockLayout';
 import { NftLayout } from 'pages/NftDetails/NftLayout';
@@ -28,18 +28,18 @@ export const PageLayout = ({ children }: { children: React.ReactNode }) => {
     case activeRoute(validatorsRoutes.queue):
       return <NodesLayout>{children}</NodesLayout>;
 
-    case activeRoute(accountsRoutes.accountDetails):
-    case activeRoute(accountsRoutes.accountTokens):
-    case activeRoute(accountsRoutes.accountNfts):
-    case activeRoute(accountsRoutes.accountContracts):
-    case activeRoute(accountsRoutes.accountStaking):
-    case activeRoute(accountsRoutes.accountAnalytics):
-    case activeRoute(accountsRoutes.accountCode):
-    case activeRoute(accountsRoutes.accountCodeEndpoints):
-    case activeRoute(accountsRoutes.accountCodeConstructor):
-    case activeRoute(accountsRoutes.accountCodeEvents):
-    case activeRoute(accountsRoutes.accountCodeTypes):
-      return <AccountLayout>{children}</AccountLayout>;
+    // case activeRoute(accountsRoutes.accountDetails):
+    // case activeRoute(accountsRoutes.accountTokens):
+    // case activeRoute(accountsRoutes.accountNfts):
+    // case activeRoute(accountsRoutes.accountContracts):
+    // case activeRoute(accountsRoutes.accountStaking):
+    // case activeRoute(accountsRoutes.accountAnalytics):
+    // case activeRoute(accountsRoutes.accountCode):
+    // case activeRoute(accountsRoutes.accountCodeEndpoints):
+    // case activeRoute(accountsRoutes.accountCodeConstructor):
+    // case activeRoute(accountsRoutes.accountCodeEvents):
+    // case activeRoute(accountsRoutes.accountCodeTypes):
+    //   return <AccountLayout>{children}</AccountLayout>;
 
     case activeRoute(tokensRoutes.tokenDetails):
     case activeRoute(tokensRoutes.tokenDetailsAccounts):

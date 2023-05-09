@@ -14,7 +14,7 @@ import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
 import { useAdapter } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
-import { AccountTabs } from './AccountLayout/AccountTabs';
+import { AccountTabs } from '../../layouts/AccountLayout/AccountTabs';
 
 export const AccountAnalytics = () => {
   const { account } = useSelector(accountSelector);

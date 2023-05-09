@@ -1,7 +1,7 @@
-import React, { useState, ReactNode, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Outlet } from 'react-router-dom';
 import { UAParser } from 'ua-parser-js';
 
 import { NotificationsBar } from 'components';
@@ -18,11 +18,10 @@ import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { PageLayout } from './components/PageLayout';
 import { Unavailable } from './components/Unavailable';
 import { formatClassName } from './helpers';
 
-export const Layout = ({ children }: { children: ReactNode }) => {
+export const Layout = () => {
   const [freeze, setFreeze] = useState(false);
 
   const browser = UAParser();
@@ -81,7 +80,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             <>
               <Hero />
               <div className='page-container' data-testid='mainPageContent'>
-                <PageLayout>{children}</PageLayout>
+                <Outlet />
               </div>
             </>
           )}
