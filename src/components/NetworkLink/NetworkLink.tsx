@@ -7,6 +7,7 @@ import { NetworkLinkPropsType } from './types';
 export const NetworkLink = ({
   to,
   children,
+  preventScrollReset,
   ...rest
 }: NetworkLinkPropsType) => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -27,5 +28,9 @@ export const NetworkLink = ({
     ...rest
   };
 
-  return <Link {...props}>{children}</Link>;
+  return (
+    <Link {...props} preventScrollReset={preventScrollReset}>
+      {children}
+    </Link>
+  );
 };
