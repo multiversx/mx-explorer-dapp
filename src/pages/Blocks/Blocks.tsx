@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, Navigate } from 'react-router-dom';
 
 import { BlocksTable, Loader, Pager, ShardSpan } from 'components';
 import { FailedBlocks } from 'components/BlocksTable/components/FailedBlocks';
@@ -75,7 +75,7 @@ export const Blocks = () => {
   }, [activeNetworkId, shard, firstPageRefreshTrigger, searchParams]);
 
   return shard && shard < 0 ? (
-    navigate(networkRoute('/not-found'))
+    <Navigate to={networkRoute('/not-found')} />
   ) : (
     <>
       {(dataReady === undefined ||

@@ -8,7 +8,7 @@ import { NftTypeEnum } from 'types';
 import { CollectionNfts } from './CollectionNfts';
 import { CollectionRoles } from './CollectionRoles';
 
-export const CollectionDetails = () => {
+export const CollectionAssets = () => {
   const { collectionState } = useSelector(collectionSelector);
   const { collection, type } = collectionState;
 
