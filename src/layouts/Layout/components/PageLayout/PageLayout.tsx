@@ -4,9 +4,9 @@ import { useActiveRoute } from 'hooks';
 import { AccountLayout } from 'layouts/AccountLayout';
 import { CollectionLayout } from 'layouts/CollectionLayout';
 import { MiniBlockLayout } from 'layouts/MiniBlockLayout';
-import { NftLayout } from 'pages/NftDetails/NftLayout';
+import { NftLayout } from 'layouts/NftLayout';
 import { NodesLayout } from 'layouts/NodesLayout';
-import { ProviderLayout } from 'pages/ProviderDetails/ProviderLayout';
+import { ProviderLayout } from 'layouts/ProviderLayout';
 import { TokenLayout } from 'layouts/TokenLayout';
 import {
   accountsRoutes,
