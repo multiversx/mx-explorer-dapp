@@ -16,7 +16,9 @@ import {
 
 export const useShowGlobalStats = () => {
   const activeRoute = useActiveRoute();
-  const routeExists = wrappedRoutes.some(({ path }) => activeRoute(path));
+  const routeExists = wrappedRoutes.some(({ path }) =>
+    activeRoute(path ?? '/')
+  );
 
   switch (true) {
     case !routeExists:

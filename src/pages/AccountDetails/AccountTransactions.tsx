@@ -7,7 +7,7 @@ import { FailedTransactions } from 'components/TransactionsTable/components/Fail
 import { useAdapter, useFetchTransactions } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
-import { AccountTabs } from './AccountLayout/AccountTabs';
+import { AccountTabs } from '../../layouts/AccountLayout/AccountTabs';
 
 export const AccountTransactions = () => {
   const ref = useRef(null);

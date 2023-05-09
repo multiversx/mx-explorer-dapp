@@ -9,7 +9,7 @@ import { AccountLegacyDelegation } from './components/AccountLegacyDelegation';
 import { AccountStake } from './components/AccountStake';
 import { DonutChart } from './components/DonutChart';
 
-import { AccountTabs } from '../AccountLayout/AccountTabs';
+import { AccountTabs } from '../../../layouts/AccountLayout/AccountTabs';
 
 export const AccountStaking = () => {
   const stakingDetails = useSelector(accountStakingSelector);

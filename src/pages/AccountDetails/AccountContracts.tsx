@@ -16,7 +16,7 @@ import { useGetPage, useAdapter } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountSmartContractType } from 'types';
 
-import { AccountTabs } from './AccountLayout/AccountTabs';
+import { AccountTabs } from '../../layouts/AccountLayout/AccountTabs';
 
 export const AccountContracts = () => {
   const ref = useRef(null);

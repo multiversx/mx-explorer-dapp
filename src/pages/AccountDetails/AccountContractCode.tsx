@@ -7,7 +7,7 @@ import { downloadFile, urlBuilder } from 'helpers';
 import { useNetworkRoute } from 'hooks';
 import { accountSelector } from 'redux/selectors';
 
-import { AccountTabs } from './AccountLayout/AccountTabs';
+import { AccountTabs } from '../../layouts/AccountLayout/AccountTabs';
 import { AccountVerifiedContract } from './AccountVerifiedContract';
 
 export const DownloadContractCode = ({

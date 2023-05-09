@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Pager, TableWrapper } from 'components';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
-import { useGetPage } from 'hooks';
 import { TransactionTableType } from 'types';
 
 import { Header } from './components/Header';
@@ -35,10 +34,9 @@ export const TransactionsTable = ({
   showLockedAccounts = false,
   dataChanged = false,
   isScResultsTable = false,
+  isDataReady,
   inactiveFilters
 }: TransactionTableType) => {
-  const { page } = useGetPage();
-
   return (
     <div
       className={`transactions-table ${
