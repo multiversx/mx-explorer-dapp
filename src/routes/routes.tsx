@@ -52,6 +52,18 @@ export const transactionsRoutes = {
   transactionDetailsLogs: '/transactions/:hash/logs'
 };
 
+export const routes = {
+  ...accountsRoutes,
+  ...analyticsRoutes,
+  ...blocksRoutes,
+  ...collectionRoutes,
+  ...nftRoutes,
+  ...searchRoutes,
+  ...transactionsRoutes,
+  ...tokensRoutes,
+  ...validatorsRoutes
+};
+
 const mainRoutes: NonIndexRouteObject[] = [
   {
     path: '/',
