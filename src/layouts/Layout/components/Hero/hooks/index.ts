@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { useActiveRoute, useIsMainnet } from 'hooks';
+import { useActiveRoute } from 'hooks';
 import {
-  wrappedRoutes,
   validatorsRoutes,
   searchRoutes,
   transactionsRoutes,
@@ -11,14 +10,13 @@ import {
   tokensRoutes,
   collectionRoutes,
   nftRoutes,
-  analyticsRoutes
+  analyticsRoutes,
+  routes
 } from 'routes';
 
 export const useShowGlobalStats = () => {
   const activeRoute = useActiveRoute();
-  const routeExists = wrappedRoutes.some(({ path }) =>
-    activeRoute(path ?? '/')
-  );
+  const routeExists = Object.values(routes).some((path) => activeRoute(path));
 
   switch (true) {
     case !routeExists:
