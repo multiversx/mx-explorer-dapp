@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
 import { useAdapter, useGetNodeURLFilters, useGetPage } from 'hooks';
-import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
+import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { validatorsRoutes } from 'routes';
 import { NodeType } from 'types';
 

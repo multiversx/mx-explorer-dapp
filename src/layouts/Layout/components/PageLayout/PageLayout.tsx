@@ -2,12 +2,12 @@ import React from 'react';
 
 import { useActiveRoute } from 'hooks';
 import { AccountLayout } from 'layouts/AccountLayout';
-import { CollectionLayout } from 'pages/CollectionDetails/CollectionLayout';
-import { MiniBlockLayout } from 'pages/MiniBlockDetails/MiniBlockLayout';
+import { CollectionLayout } from 'layouts/CollectionLayout';
+import { MiniBlockLayout } from 'layouts/MiniBlockLayout';
 import { NftLayout } from 'pages/NftDetails/NftLayout';
-import { NodesLayout } from 'pages/Nodes/NodesLayout';
+import { NodesLayout } from 'layouts/NodesLayout';
 import { ProviderLayout } from 'pages/ProviderDetails/ProviderLayout';
-import { TokenLayout } from 'pages/TokenDetails/TokenLayout';
+import { TokenLayout } from 'layouts/TokenLayout';
 import {
   accountsRoutes,
   blocksRoutes,

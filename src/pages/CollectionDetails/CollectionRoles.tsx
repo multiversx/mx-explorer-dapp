@@ -5,7 +5,7 @@ import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
 import { urlBuilder } from 'helpers';
 import { collectionSelector } from 'redux/selectors';
 
-import { CollectionTabs } from './CollectionLayout/CollectionTabs';
+import { CollectionTabs } from '../../layouts/CollectionLayout/CollectionTabs';
 
 export const CollectionRoles = () => {
   const { collectionState } = useSelector(collectionSelector);

@@ -16,7 +16,7 @@ import { useAdapter, useGetPage, useGetNodeURLFilters } from 'hooks';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { NftType } from 'types';
 
-import { CollectionTabs } from './CollectionLayout/CollectionTabs';
+import { CollectionTabs } from '../../layouts/CollectionLayout/CollectionTabs';
 
 export const CollectionNfts = () => {
   const ref = useRef(null);
