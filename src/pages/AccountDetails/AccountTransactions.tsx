@@ -9,7 +9,7 @@ import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 import { AccountTabs } from './AccountLayout/AccountTabs';
 
-export const AccountDetails = () => {
+export const AccountTransactions = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -40,10 +40,9 @@ export const AccountDetails = () => {
 
   return (
     <>
-      {isDataReady === undefined && <Loader />}
-      {isDataReady === false && <FailedTransactions />}
-
-      <div ref={ref}>
+      <div ref={ref} className='card p-0'>
+        {isDataReady === undefined && <Loader />}
+        {isDataReady === false && <FailedTransactions />}
         {isDataReady === true && (
           <div className='row'>
             <div className='col-12'>

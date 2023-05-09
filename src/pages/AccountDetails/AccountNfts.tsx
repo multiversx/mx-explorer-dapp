@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import {
   DetailItem,
@@ -14,7 +14,7 @@ import {
   NetworkLink
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useAdapter, useGetPage, useNetworkRoute } from 'hooks';
+import { useAdapter, useGetPage } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { NftType } from 'types';
 
@@ -22,11 +22,9 @@ import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountNfts = () => {
   const ref = useRef(null);
-  const navigate = useNavigate();
-
   const { page } = useGetPage();
-  const networkRoute = useNetworkRoute();
-  const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const [searchParams] = useSearchParams();
   const { account } = useSelector(accountSelector);
   const { txCount } = account;
@@ -34,40 +32,35 @@ export const AccountNfts = () => {
   const { getAccountNfts, getAccountNftsCount } = useAdapter();
 
   const { hash: address } = useParams() as any;
-  const nftsActive = adapter === 'api';
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [accountNfts, setAccountNfts] = useState<NftType[]>([]);
   const [accountNftsCount, setAccountNftsCount] = useState(0);
 
   const fetchAccountNfts = () => {
-    if (nftsActive) {
-      Promise.all([
-        getAccountNfts({
-          page,
-          address,
-          excludeMetaESDT: true
-        }),
-        getAccountNftsCount({ address })
-      ]).then(([accountNftsData, accountNftsCountData]) => {
-        if (ref.current !== null) {
-          if (accountNftsData.success && accountNftsCountData.success) {
-            setAccountNfts(accountNftsData.data);
-            setAccountNftsCount(accountNftsCountData.data);
-          }
-          setDataReady(accountNftsData.success && accountNftsCountData.success);
+    Promise.all([
+      getAccountNfts({
+        page,
+        address,
+        excludeMetaESDT: true
+      }),
+      getAccountNftsCount({ address })
+    ]).then(([accountNftsData, accountNftsCountData]) => {
+      if (ref.current !== null) {
+        if (accountNftsData.success && accountNftsCountData.success) {
+          setAccountNfts(accountNftsData.data);
+          setAccountNftsCount(accountNftsCountData.data);
         }
-      });
-    }
+        setDataReady(accountNftsData.success && accountNftsCountData.success);
+      }
+    });
   };
 
   useEffect(() => {
     fetchAccountNfts();
   }, [txCount, activeNetworkId, address, searchParams]);
 
-  return !nftsActive ? (
-    navigate(networkRoute(urlBuilder.accountDetails(address)))
-  ) : (
+  return (
     <div className='card' ref={ref}>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>

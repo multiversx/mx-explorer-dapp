@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 
 import { LEGACY_DELEGATION_NODES_IDENTITY } from 'appConstants';
 import { Loader } from 'components';
 import { addressIsBech32 } from 'helpers';
-import { useAdapter, useNetworkRoute, useGetPage, useGetHash } from 'hooks';
+import { useAdapter, useGetPage } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setAccount, setAccountStaking } from 'redux/slices';
 import { IdentityType, ProviderType, DelegationType } from 'types';
@@ -14,13 +14,14 @@ import { IdentityType, ProviderType, DelegationType } from 'types';
 import { AccountDetailsCard } from './AccountDetailsCard';
 import { FailedAccount } from './FailedAccount';
 
-export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
+export const AccountLayout = () => {
   const ref = useRef(null);
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
+
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const dispatch = useDispatch();
+  const { hash: address } = useParams();
+
   const {
     getAccount,
     getAccountDelegationLegacy,
@@ -29,25 +30,19 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     getProviders,
     getIdentities
   } = useAdapter();
-  const networkRoute = useNetworkRoute();
-
-  const isOldAddressRoute = pathname.includes('/address/');
-  const address = useGetHash();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchBalanceAndCount = () => {
     if (address) {
       getAccount(address).then((accountDetailsData) => {
-        if (ref.current !== null) {
-          if (accountDetailsData.success && accountDetailsData?.data) {
-            dispatch(setAccount(accountDetailsData.data));
-            setDataReady(true);
-          }
+        if (accountDetailsData.success && accountDetailsData?.data) {
+          dispatch(setAccount(accountDetailsData.data));
+          setDataReady(true);
+        }
 
-          if (dataReady === undefined) {
-            setDataReady(accountDetailsData.success);
-          }
+        if (dataReady === undefined) {
+          setDataReady(accountDetailsData.success);
         }
       });
     }
@@ -307,15 +302,11 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    if (!isOldAddressRoute && address) {
-      fetchStakingDetails();
-    }
+    fetchStakingDetails();
   }, [address, activeNetworkId]);
 
   useEffect(() => {
-    if (!isOldAddressRoute && address) {
-      fetchBalanceAndCount();
-    }
+    fetchBalanceAndCount();
   }, [firstPageRefreshTrigger, activeNetworkId, address]);
 
   useEffect(() => {
@@ -324,13 +315,6 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 
   const loading = dataReady === undefined;
   const failed = dataReady === false || !addressIsBech32(address);
-
-  if (!address) {
-    navigate(networkRoute('/accounts'));
-  }
-  if (isOldAddressRoute) {
-    navigate(networkRoute(`/accounts/${address}`));
-  }
 
   return (
     <>
@@ -341,7 +325,7 @@ export const AccountLayout = ({ children }: { children: React.ReactNode }) => {
         {!loading && !failed && (
           <div className='container page-content'>
             <AccountDetailsCard />
-            {children}
+            <Outlet />
           </div>
         )}
       </div>

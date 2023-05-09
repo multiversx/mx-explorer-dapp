@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { CopyButton } from 'components';
 import { downloadFile, urlBuilder } from 'helpers';
@@ -37,8 +37,6 @@ export const DownloadContractCode = ({
 };
 
 export const AccountContractCode = () => {
-  const navigate = useNavigate();
-
   const networkRoute = useNetworkRoute();
 
   const { account } = useSelector(accountSelector);
@@ -48,7 +46,7 @@ export const AccountContractCode = () => {
   const codeHashHexValue = codeHashBase64Buffer.toString('hex');
 
   return !code ? (
-    navigate(networkRoute(urlBuilder.accountDetails(address)))
+    <Navigate to={networkRoute(urlBuilder.accountDetails(address))} />
   ) : (
     <div className='card'>
       <div className='card-header'>
