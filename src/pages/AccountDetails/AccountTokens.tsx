@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import {
   DetailItem,
@@ -13,7 +13,7 @@ import {
   Overlay
 } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
-import { useAdapter, useGetPage, useNetworkRoute } from 'hooks';
+import { useAdapter, useGetPage } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { TokenType, TokenTypeEnum } from 'types';
 
@@ -21,54 +21,47 @@ import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountTokens = () => {
   const ref = useRef(null);
-  const navigate = useNavigate();
 
-  const { adapter, id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const [searchParams] = useSearchParams();
   const { account } = useSelector(accountSelector);
   const { txCount } = account;
   const { page } = useGetPage();
-  const networkRoute = useNetworkRoute();
 
   const { getAccountTokens, getAccountTokensCount } = useAdapter();
 
   const { hash: address } = useParams() as any;
-  const tokensActive = adapter === 'api';
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [accountTokens, setAccountTokens] = useState<TokenType[]>([]);
   const [accountTokensCount, setAccountTokensCount] = useState(0);
 
   const fetchAccountTokens = () => {
-    if (tokensActive) {
-      Promise.all([
-        getAccountTokens({
-          page,
-          address,
-          includeMetaESDT: true
-        }),
-        getAccountTokensCount({ address, includeMetaESDT: true })
-      ]).then(([accountTokensData, accountTokensCountData]) => {
-        if (ref.current !== null) {
-          if (accountTokensData.success && accountTokensCountData.success) {
-            setAccountTokens(accountTokensData.data);
-            setAccountTokensCount(accountTokensCountData.data);
-          }
-          setDataReady(
-            accountTokensData.success && accountTokensCountData.success
-          );
+    Promise.all([
+      getAccountTokens({
+        page,
+        address,
+        includeMetaESDT: true
+      }),
+      getAccountTokensCount({ address, includeMetaESDT: true })
+    ]).then(([accountTokensData, accountTokensCountData]) => {
+      if (ref.current !== null) {
+        if (accountTokensData.success && accountTokensCountData.success) {
+          setAccountTokens(accountTokensData.data);
+          setAccountTokensCount(accountTokensCountData.data);
         }
-      });
-    }
+        setDataReady(
+          accountTokensData.success && accountTokensCountData.success
+        );
+      }
+    });
   };
 
   useEffect(() => {
     fetchAccountTokens();
   }, [txCount, activeNetworkId, address, searchParams]);
 
-  return !tokensActive ? (
-    navigate(networkRoute(urlBuilder.accountDetails(address)))
-  ) : (
+  return (
     <div className='card' ref={ref}>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
