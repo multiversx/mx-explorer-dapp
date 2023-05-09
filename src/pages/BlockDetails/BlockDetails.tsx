@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Navigate } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
 import { isHash } from 'helpers';
@@ -34,7 +34,7 @@ export const BlockDetails = () => {
   useEffect(fetchBlock, [blockId]); // run the operation only once since the parameter does not change
 
   return invalid ? (
-    navigate(networkRoute('/not-found'))
+    <Navigate to={networkRoute('/not-found')} />
   ) : (
     <>
       {dataReady === undefined && <Loader />}

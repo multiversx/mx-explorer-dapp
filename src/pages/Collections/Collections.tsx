@@ -35,7 +35,7 @@ export const Collections = () => {
   const isMainnet = useIsMainnet();
   const activeRoute = useActiveRoute();
   const { page } = useGetPage();
-  const { search } = useLocation();
+  const { search, pathname } = useLocation();
   const { getQueryObject } = useGetNodeURLFilters();
   const { getCollections, getCollectionsCount } = useAdapter();
   const pageHeadersCollections = useSelector(
@@ -82,7 +82,7 @@ export const Collections = () => {
     });
   };
 
-  useEffect(fetchCollections, [search]);
+  useEffect(fetchCollections, [search, pathname]);
 
   return (
     <>

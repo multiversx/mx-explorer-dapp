@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
 
 import { Loader } from 'components';
 import {
@@ -14,7 +15,7 @@ import {
   nodesVersionsSelector
 } from 'redux/selectors';
 
-export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
+export const NodesLayout = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const shards = useSelector(shardsSelector);
@@ -41,7 +42,9 @@ export const NodesLayout = ({ children }: { children: React.ReactNode }) => {
       {isDataReady && (
         <div className='container page-content'>
           <div className='row'>
-            <div className='col-12'>{children}</div>
+            <div className='col-12'>
+              <Outlet />
+            </div>
           </div>
         </div>
       )}

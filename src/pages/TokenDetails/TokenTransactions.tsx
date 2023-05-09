@@ -10,7 +10,7 @@ import { TransactionFiltersEnum } from 'types';
 
 import { TokenTabs } from '../../layouts/TokenLayout/TokenTabs';
 
-export const TokenDetails = () => {
+export const TokenTransactions = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -52,7 +52,6 @@ export const TokenDetails = () => {
               <TransactionsTable
                 transactions={transactions}
                 totalTransactions={totalTransactions}
-                showDirectionCol={false}
                 title={<TokenTabs />}
                 dataChanged={dataChanged}
                 inactiveFilters={[TransactionFiltersEnum.token]}

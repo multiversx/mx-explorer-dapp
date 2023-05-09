@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useParams, Outlet } from 'react-router-dom';
 
 import { Loader } from 'components';
 import { isHash } from 'helpers';
@@ -11,18 +11,13 @@ import { setMiniBlock } from 'redux/slices';
 import { MiniBlockDetailsCard } from './MiniBlockDetailsCard';
 import { MiniBlockNotFound } from './MiniBlockNotFound';
 
-export const MiniBlockLayout = ({
-  children
-}: {
-  children: React.ReactNode;
-}) => {
+export const MiniBlockLayout = () => {
   const ref = useRef(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const miniBlockHash = useGetHash();
+  const { hash: miniBlockHash } = useParams();
 
   const { firstPageRefreshTrigger } = useGetPage();
   const networkRoute = useNetworkRoute();
@@ -53,11 +48,9 @@ export const MiniBlockLayout = ({
   const loading = isDataReady === undefined;
   const failed = isDataReady === false;
 
-  if (invalid) {
-    navigate(networkRoute('/not-found'));
-  }
-
-  return (
+  return invalid ? (
+    <Navigate to={networkRoute('/not-found')} />
+  ) : (
     <>
       {loading && <Loader />}
       {!loading && failed && (
@@ -68,7 +61,7 @@ export const MiniBlockLayout = ({
         {!loading && !failed && (
           <div className='container page-content'>
             <MiniBlockDetailsCard />
-            {children}
+            <Outlet />
           </div>
         )}
       </div>

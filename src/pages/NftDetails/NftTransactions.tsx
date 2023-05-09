@@ -50,7 +50,6 @@ export const NftTransactions = () => {
               <TransactionsTable
                 transactions={transactions}
                 totalTransactions={totalTransactions}
-                showDirectionCol={false}
                 title={<NftTabs />}
                 dataChanged={dataChanged}
                 inactiveFilters={[TransactionFiltersEnum.token]}
