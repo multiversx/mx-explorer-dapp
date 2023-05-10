@@ -6,7 +6,7 @@ import { networks } from 'config';
 
 import { activeNetworkSelector } from 'redux/selectors';
 
-const NetworkReady = ({ children }: { children: React.ReactNode }) => {
+export const NetworkReady = ({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);

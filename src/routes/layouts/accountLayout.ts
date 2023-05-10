@@ -1,5 +1,3 @@
-import { RouteObject } from 'react-router-dom';
-
 import { AccountLayout } from 'layouts/AccountLayout';
 import { AccountAnalytics } from 'pages/AccountDetails/AccountAnalytics';
 import { AccountContractCode } from 'pages/AccountDetails/AccountContractCode';
@@ -10,6 +8,8 @@ import { AccountTokens } from 'pages/AccountDetails/AccountTokens';
 import { AccountTransactions } from 'pages/AccountDetails/AccountTransactions';
 import { OldRouteRedirect } from 'pages/AccountDetails/OldRouteRedirect';
 import { Accounts } from 'pages/Accounts';
+
+import { TitledRouteObject } from '../routes';
 
 export const accountsRoutes = {
   accounts: '/accounts',
@@ -27,65 +27,62 @@ export const accountsRoutes = {
   oldAccountDetails: '/address/:hash'
 };
 
-export const accountLayout: RouteObject[] = [
+export const accountLayout: TitledRouteObject[] = [
   {
     path: accountsRoutes.oldAccountDetails,
-    // title: 'Account Details',
+    title: 'Account Details',
     Component: OldRouteRedirect
   },
   {
     path: accountsRoutes.accounts,
-    // title: '',
+    title: 'Accounts',
     Component: Accounts
   },
   {
     path: accountsRoutes.accountDetails,
-    // title: 'Accounts',
+    preventScroll: true,
     Component: AccountLayout,
     children: [
-      // {
-      //   path: accountsRoutes.accountDetails,
-      //   // title: 'Account Details',
-      //   Component: AccountDetails
-      // },
-      // {
-      //   path: accountsRoutes.oldAccountDetails,
-      //   // title: 'Account Details',
-      //   Component: () => <div>OldRouteRedirect</div>
-      // },
       {
         path: accountsRoutes.accountDetails,
-        // title: 'Account Contract Code',
+        title: 'Account Details',
+        preventScroll: true,
         Component: AccountTransactions
       },
       {
         path: accountsRoutes.accountCode,
-        // title: 'Account Contract Code',
+        title: 'Account Contract Code',
+        preventScroll: true,
         Component: AccountContractCode
       },
       {
         path: accountsRoutes.accountTokens,
-        // title: 'Account Tokens',
+        title: 'Account Tokens',
+        preventScroll: true,
         Component: AccountTokens
       },
       {
         path: accountsRoutes.accountNfts,
-        // title: 'Account NFTs',
+        title: 'Account NFTs',
+        preventScroll: true,
         Component: AccountNfts
       },
       {
         path: accountsRoutes.accountStaking,
-        // title: 'Account Staking Details',
+        title: 'Account Staking Details',
+        preventScroll: true,
         Component: AccountStaking
       },
       {
         path: accountsRoutes.accountAnalytics,
-        // title: 'Account Analytics',
+        title: 'Account Analytics',
+        preventScroll: true,
         Component: AccountAnalytics
       },
       {
         path: accountsRoutes.accountContracts,
-        // title: 'Account Smart Contracts',
+        title: 'Account Smart Contracts',
+        preventScroll: true,
         Component: AccountContracts
       }
     ]

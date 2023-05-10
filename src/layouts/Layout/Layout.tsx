@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, Outlet } from 'react-router-dom';
 import { UAParser } from 'ua-parser-js';
 
-import { NotificationsBar } from 'components';
+import { NotificationsBar, NetworkReady } from 'components';
 import {
   useFetchStats,
   useFetchEconomics,
@@ -65,28 +65,31 @@ export const Layout = () => {
 
   return (
     <div className={`d-flex ${pageClass}`}>
-      <main
-        className={classNames('main-content', {
-          'overflow-hidden vh-100': freeze
-        })}
-      >
-        <Header onExpand={setFreeze} />
+      <NetworkReady>
+        {' '}
+        <main
+          className={classNames('main-content', {
+            'overflow-hidden vh-100': freeze
+          })}
+        >
+          <Header onExpand={setFreeze} />
 
-        <NotificationsBar />
-        <div className='main-content-container d-flex flex-column'>
-          {offline ? (
-            <Unavailable />
-          ) : (
-            <>
-              <Hero />
-              <div className='page-container' data-testid='mainPageContent'>
-                <Outlet />
-              </div>
-            </>
-          )}
-        </div>
-        <Footer />
-      </main>
+          <NotificationsBar />
+          <div className='main-content-container d-flex flex-column'>
+            {offline ? (
+              <Unavailable />
+            ) : (
+              <>
+                <Hero />
+                <div className='page-container' data-testid='mainPageContent'>
+                  <Outlet />
+                </div>
+              </>
+            )}
+          </div>
+          <Footer />
+        </main>
+      </NetworkReady>
     </div>
   );
 };
