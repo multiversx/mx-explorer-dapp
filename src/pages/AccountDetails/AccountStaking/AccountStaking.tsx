@@ -1,15 +1,15 @@
 import React from 'react';
 import { faChartPie } from '@fortawesome/pro-solid-svg-icons/faChartPie';
 import { useSelector } from 'react-redux';
+
 import { Loader, PageState } from 'components';
+import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { accountStakingSelector } from 'redux/selectors';
 
 import { AccountDelegation } from './components/AccountDelegation';
 import { AccountLegacyDelegation } from './components/AccountLegacyDelegation';
 import { AccountStake } from './components/AccountStake';
 import { DonutChart } from './components/DonutChart';
-
-import { AccountTabs } from '../../../layouts/AccountLayout/AccountTabs';
 
 export const AccountStaking = () => {
   const stakingDetails = useSelector(accountStakingSelector);

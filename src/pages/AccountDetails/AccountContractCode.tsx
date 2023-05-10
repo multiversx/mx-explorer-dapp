@@ -5,9 +5,9 @@ import { Navigate } from 'react-router-dom';
 import { CopyButton } from 'components';
 import { downloadFile, urlBuilder } from 'helpers';
 import { useNetworkRoute } from 'hooks';
+import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { accountSelector } from 'redux/selectors';
 
-import { AccountTabs } from '../../layouts/AccountLayout/AccountTabs';
 import { AccountVerifiedContract } from './AccountVerifiedContract';
 
 export const DownloadContractCode = ({

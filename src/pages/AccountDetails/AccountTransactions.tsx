@@ -5,9 +5,8 @@ import { useSearchParams } from 'react-router-dom';
 import { Loader, TransactionsTable } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
 import { useAdapter, useFetchTransactions } from 'hooks';
+import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
-
-import { AccountTabs } from '../../layouts/AccountLayout/AccountTabs';
 
 export const AccountTransactions = () => {
   const ref = useRef(null);

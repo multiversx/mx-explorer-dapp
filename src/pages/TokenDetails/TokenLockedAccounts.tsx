@@ -13,10 +13,9 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
+import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { TokenLockedAccountType } from 'types';
-
-import { TokenTabs } from '../../layouts/TokenLayout/TokenTabs';
 
 export const TokenDetailsLockedAccounts = () => {
   const ref = useRef(null);

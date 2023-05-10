@@ -13,10 +13,9 @@ import {
 } from 'components';
 import { urlBuilder, getNftText } from 'helpers';
 import { useAdapter, useGetPage, useGetNodeURLFilters } from 'hooks';
+import { CollectionTabs } from 'layouts/CollectionLayout/CollectionTabs';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { NftType } from 'types';
-
-import { CollectionTabs } from '../../layouts/CollectionLayout/CollectionTabs';
 
 export const CollectionNfts = () => {
   const ref = useRef(null);

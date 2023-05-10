@@ -5,10 +5,9 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { Loader, TransactionsTable } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
 import { useAdapter, useFetchTransactions } from 'hooks';
+import { NftTabs } from 'layouts/NftLayout/NftTabs';
 import { activeNetworkSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';
-
-import { NftTabs } from '../../layouts/NftLayout/NftTabs';
 
 export const NftTransactions = () => {
   const ref = useRef(null);

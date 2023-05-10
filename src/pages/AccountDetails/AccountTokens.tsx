@@ -14,10 +14,9 @@ import {
 } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
+import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { TokenType, TokenTypeEnum } from 'types';
-
-import { AccountTabs } from '../../layouts/AccountLayout/AccountTabs';
 
 export const AccountTokens = () => {
   const ref = useRef(null);
