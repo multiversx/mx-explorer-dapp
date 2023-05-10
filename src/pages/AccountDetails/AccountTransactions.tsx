@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { Loader, TransactionsTable } from 'components';
-import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
+import { TransactionsTable } from 'components';
 import { useAdapter, useFetchTransactions } from 'hooks';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
@@ -40,22 +39,19 @@ export const AccountTransactions = () => {
   return (
     <>
       <div ref={ref} className='card p-0'>
-        {isDataReady === undefined && <Loader />}
-        {isDataReady === false && <FailedTransactions />}
-        {isDataReady === true && (
-          <div className='row'>
-            <div className='col-12'>
-              <TransactionsTable
-                transactions={transactions}
-                address={address}
-                totalTransactions={totalTransactions}
-                showDirectionCol={true}
-                title={<AccountTabs />}
-                dataChanged={dataChanged}
-              />
-            </div>
+        <div className='row'>
+          <div className='col-12'>
+            <TransactionsTable
+              transactions={transactions}
+              address={address}
+              totalTransactions={totalTransactions}
+              showDirectionCol={true}
+              title={<AccountTabs />}
+              dataChanged={dataChanged}
+              isDataReady={isDataReady}
+            />
           </div>
-        )}
+        </div>
       </div>
     </>
   );

@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { Loader, TransactionsTable } from 'components';
-import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
+import { TransactionsTable } from 'components';
 import { useAdapter, useFetchTransactions } from 'hooks';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
@@ -40,25 +39,19 @@ export const TokenTransactions = () => {
   }, [searchParams]);
 
   return (
-    <>
-      {isDataReady === undefined && <Loader />}
-      {isDataReady === false && <FailedTransactions />}
-
-      <div ref={ref}>
-        {isDataReady === true && (
-          <div className='row'>
-            <div className='col-12'>
-              <TransactionsTable
-                transactions={transactions}
-                totalTransactions={totalTransactions}
-                title={<TokenTabs />}
-                dataChanged={dataChanged}
-                inactiveFilters={[TransactionFiltersEnum.token]}
-              />
-            </div>
-          </div>
-        )}
+    <div ref={ref} className='card p-0'>
+      <div className='row'>
+        <div className='col-12'>
+          <TransactionsTable
+            transactions={transactions}
+            totalTransactions={totalTransactions}
+            title={<TokenTabs />}
+            dataChanged={dataChanged}
+            isDataReady={isDataReady}
+            inactiveFilters={[TransactionFiltersEnum.token]}
+          />
+        </div>
       </div>
-    </>
+    </div>
   );
 };

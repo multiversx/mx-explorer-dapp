@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { Loader, TransactionsTable } from 'components';
-import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
+import { TransactionsTable } from 'components';
 import { useAdapter, useFetchTransactions } from 'hooks';
 import { NftTabs } from 'layouts/NftLayout/NftTabs';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -38,25 +37,19 @@ export const NftTransactions = () => {
   }, [searchParams]);
 
   return (
-    <>
-      {isDataReady === undefined && <Loader />}
-      {isDataReady === false && <FailedTransactions />}
-
-      <div ref={ref}>
-        {isDataReady === true && (
-          <div className='row'>
-            <div className='col-12'>
-              <TransactionsTable
-                transactions={transactions}
-                totalTransactions={totalTransactions}
-                title={<NftTabs />}
-                dataChanged={dataChanged}
-                inactiveFilters={[TransactionFiltersEnum.token]}
-              />
-            </div>
-          </div>
-        )}
+    <div ref={ref} className='card p-0'>
+      <div className='row'>
+        <div className='col-12'>
+          <TransactionsTable
+            transactions={transactions}
+            totalTransactions={totalTransactions}
+            title={<NftTabs />}
+            dataChanged={dataChanged}
+            isDataReady={isDataReady}
+            inactiveFilters={[TransactionFiltersEnum.token]}
+          />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
