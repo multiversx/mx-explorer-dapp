@@ -103,6 +103,7 @@ export const Tokens = () => {
                                   ? 'badge-grey'
                                   : 'badge-outline badge-outline-grey'
                               }`}
+                              preventScrollReset={true}
                             >
                               Tokens
                             </NetworkLink>
@@ -115,6 +116,7 @@ export const Tokens = () => {
                                   ? 'badge-grey'
                                   : 'badge-outline badge-outline-grey'
                               }`}
+                              preventScrollReset={true}
                             >
                               Meta-ESDT
                             </NetworkLink>
