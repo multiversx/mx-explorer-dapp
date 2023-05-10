@@ -1,9 +1,9 @@
-import { NonIndexRouteObject } from 'react-router-dom';
-
 import { CollectionLayout } from 'layouts/CollectionLayout';
 import { CollectionAssets } from 'pages/CollectionDetails/CollectionAssets';
 import { CollectionRoles } from 'pages/CollectionDetails/CollectionRoles';
 import { Collections } from 'pages/Collections';
+
+import { TitledRouteObject } from '../routes';
 
 export const collectionRoutes = {
   collections: '/collections',
@@ -13,35 +13,40 @@ export const collectionRoutes = {
   collectionDetailsRoles: '/collections/:hash/roles'
 };
 
-export const collectionLayout: NonIndexRouteObject[] = [
+export const collectionLayout: TitledRouteObject[] = [
   {
     path: collectionRoutes.collections,
-    //title: 'NFTs',
+    title: 'NFTs',
+    preventScroll: true,
     Component: Collections
   },
   {
     path: collectionRoutes.collectionsNft,
-    //title: 'NFT Collections',
+    title: 'NFT Collections',
+    preventScroll: true,
     Component: Collections
   },
   {
     path: collectionRoutes.collectionsSft,
-    //title: 'SFT Collections',
+    title: 'SFT Collections',
+    preventScroll: true,
     Component: Collections
   },
   {
     path: collectionRoutes.collectionDetails,
-    //title: 'Collection Details',
     Component: CollectionLayout,
+    preventScroll: true,
     children: [
       {
         path: collectionRoutes.collectionDetails,
-        //title: 'Collection Details',
+        title: 'Collection Details',
+        preventScroll: true,
         Component: CollectionAssets
       },
       {
         path: collectionRoutes.collectionDetailsRoles,
-        //title: 'Collection Roles',
+        title: 'Collection Roles',
+        preventScroll: true,
         Component: CollectionRoles
       }
     ]

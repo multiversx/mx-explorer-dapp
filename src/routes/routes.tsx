@@ -1,15 +1,20 @@
 import React from 'react';
-import { RouteObject, NonIndexRouteObject } from 'react-router-dom';
+import cloneDeep from 'lodash.clonedeep';
+import { NonIndexRouteObject, RouteObject } from 'react-router-dom';
 
+import { networks } from 'config';
 import { Layout } from 'layouts/Layout';
 import { Analytics } from 'pages/Analytics';
 import { AnalyticsCompare } from 'pages/AnalyticsCompare';
 import { EmptySearch } from 'pages/EmptySearch';
 import { HashSearch } from 'pages/HashSearch';
 import { Home } from 'pages/Home';
+import { PageNotFound } from 'pages/PageNotFound';
 import { TransactionDetails } from 'pages/TransactionDetails';
 import { Transactions } from 'pages/Transactions';
 
+import { generateNetworkRoutes } from './helpers/generateNetworkRoutes';
+import { wrapRoutes } from './helpers/wrapRoutes';
 import {
   accountLayout,
   accountsRoutes,
@@ -25,8 +30,6 @@ import {
   validatorsRoutes
 } from './layouts';
 
-import { withPageTitle, withNetworkReady } from '../components';
-
 export {
   accountsRoutes,
   blocksRoutes,
@@ -35,6 +38,11 @@ export {
   tokensRoutes,
   validatorsRoutes
 };
+export interface TitledRouteObject extends NonIndexRouteObject {
+  title?: string;
+  preventScroll?: boolean;
+  children?: TitledRouteObject[];
+}
 
 export const analyticsRoutes = {
   analytics: '/analytics',
@@ -64,45 +72,46 @@ export const routes = {
   ...validatorsRoutes
 };
 
-const mainRoutes: NonIndexRouteObject[] = [
+const mainRoutes: TitledRouteObject[] = [
   {
     path: '/',
-    // title: '',
+    title: '',
     Component: Layout,
     children: [
+      { path: '*', title: 'Not Found', Component: PageNotFound },
       {
         path: '/',
-        // title: '',
+        title: '',
         Component: Home
       },
       {
         path: analyticsRoutes.analytics,
-        // title: 'Analytics',
+        title: 'Analytics',
         Component: Analytics
       },
       {
         path: analyticsRoutes.compare,
-        // title: 'Analytics',
+        title: 'Analytics',
         Component: AnalyticsCompare
       },
       {
         path: transactionsRoutes.transactions,
-        //title: 'Transactions',
+        title: 'Transactions',
         Component: Transactions
       },
       {
         path: transactionsRoutes.transactionDetails,
-        //title: 'Transaction Details',
+        title: 'Transaction Details',
         Component: TransactionDetails
       },
       {
         path: searchRoutes.index,
-        // title: 'Search',
+        title: 'Search',
         Component: EmptySearch
       },
       {
         path: searchRoutes.query,
-        // title: 'Search',
+        title: 'Search',
         Component: HashSearch
       },
       ...accountLayout,
@@ -115,16 +124,9 @@ const mainRoutes: NonIndexRouteObject[] = [
   }
 ];
 
-// export const routes = (): RouteObject[] =>
-//   mainRoutes.map((route) => {
-//     const title = route.title
-//       ? `${route.title} • MultiversX Explorer`
-//       : 'MultiversX Explorer';
+const layoutRoutes = [...mainRoutes];
+networks.forEach((network) =>
+  layoutRoutes.push(...generateNetworkRoutes(cloneDeep(mainRoutes), network))
+);
 
-//     return {
-//       path: route.path,
-//       Component: withPageTitle(title, withNetworkReady(route.Component))
-//     };
-//   });
-
-export const wrappedRoutes = mainRoutes;
+export const wrappedRoutes = wrapRoutes(layoutRoutes);

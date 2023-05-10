@@ -37,7 +37,6 @@ export * from './NotificationsBar';
 export * from './Overlay';
 export * from './Pager';
 export * from './PageState';
-export * from './PageTitle';
 export * from './Particles';
 export * from './PercentageBar';
 export * from './PercentageLed';
