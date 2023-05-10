@@ -1,9 +1,11 @@
 import React from 'react';
 
-import { Pager, TableWrapper } from 'components';
+import { Pager, TableWrapper, Loader } from 'components';
+import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { TransactionTableType } from 'types';
 
+import { FailedTransactions } from './components/FailedTransactions';
 import { Header } from './components/Header';
 import { NoTransactions } from './components/NoTransactions';
 import { TransactionRow } from './components/TransactionRow';
@@ -69,23 +71,46 @@ export const TransactionsTable = ({
                 inactiveFilters={inactiveFilters}
               />
               <tbody>
-                {transactions.length > 0 ? (
+                {isDataReady === undefined && (
+                  <ColSpanWrapper showDirectionCol={showDirectionCol}>
+                    <Loader />
+                  </ColSpanWrapper>
+                )}
+                {isDataReady === false && (
+                  <ColSpanWrapper showDirectionCol={showDirectionCol}>
+                    {isScResultsTable ? (
+                      <FailedScResults />
+                    ) : (
+                      <FailedTransactions />
+                    )}
+                  </ColSpanWrapper>
+                )}
+
+                {isDataReady === true && (
                   <>
-                    {transactions.map((transaction) => (
-                      <TransactionRow
-                        transaction={transaction}
-                        key={transaction.txHash}
-                        address={address}
-                        showDirectionCol={showDirectionCol}
-                        showLockedAccounts={showLockedAccounts}
-                      />
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    <ColSpanWrapper showDirectionCol={showDirectionCol}>
-                      {isScResultsTable ? <NoScResults /> : <NoTransactions />}
-                    </ColSpanWrapper>
+                    {transactions.length > 0 ? (
+                      <>
+                        {transactions.map((transaction) => (
+                          <TransactionRow
+                            transaction={transaction}
+                            key={transaction.txHash}
+                            address={address}
+                            showDirectionCol={showDirectionCol}
+                            showLockedAccounts={showLockedAccounts}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <ColSpanWrapper showDirectionCol={showDirectionCol}>
+                          {isScResultsTable ? (
+                            <NoScResults />
+                          ) : (
+                            <NoTransactions />
+                          )}
+                        </ColSpanWrapper>
+                      </>
+                    )}
                   </>
                 )}
               </tbody>
