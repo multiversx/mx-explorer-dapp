@@ -15,12 +15,6 @@ export const ProviderApp = () => {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <AxiosInterceptor>
-          {/* <ScrollRestoration
-              getKey={(location) => {
-                return location.pathname;
-              }}
-            /> */}
-
           <Outlet />
         </AxiosInterceptor>
       </PersistGate>
