@@ -48,7 +48,7 @@ export const AccountNfts = () => {
           address,
           excludeMetaESDT: true
         }),
-        getAccountNftsCount({ address })
+        getAccountNftsCount({ address, excludeMetaESDT: true })
       ]).then(([accountNftsData, accountNftsCountData]) => {
         if (ref.current !== null) {
           if (accountNftsData.success && accountNftsCountData.success) {
