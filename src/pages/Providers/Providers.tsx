@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { ProvidersTable, Loader, PageState } from 'components';
 import { useAdapter } from 'hooks';
-import { NodesTabs } from 'pages/Nodes/NodesLayout/NodesTabs';
+import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { activeNetworkSelector } from 'redux/selectors';
 import { IdentityType, ProviderType } from 'types';
 

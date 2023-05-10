@@ -153,6 +153,7 @@ export interface TransactionTableType {
   dataChanged?: boolean;
   showLockedAccounts?: boolean;
   isScResultsTable?: boolean;
+  isDataReady?: boolean;
   inactiveFilters?: TransactionFiltersEnum[];
 }
 

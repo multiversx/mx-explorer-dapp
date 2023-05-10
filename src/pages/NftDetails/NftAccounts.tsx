@@ -14,10 +14,9 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
+import { NftTabs } from 'layouts/NftLayout/NftTabs';
 import { activeNetworkSelector } from 'redux/selectors';
 import { AccountType } from 'types';
-
-import { NftTabs } from './NftLayout/NftTabs';
 
 export const NftAccounts = () => {
   const ref = useRef(null);
