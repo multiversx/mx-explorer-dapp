@@ -5,10 +5,9 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { Loader, TransactionsTable } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
 import { useAdapter, useFetchTransactions } from 'hooks';
+import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';
-
-import { TokenTabs } from '../../layouts/TokenLayout/TokenTabs';
 
 export const TokenTransactions = () => {
   const ref = useRef(null);

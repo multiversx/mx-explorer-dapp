@@ -3,9 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
 import { urlBuilder } from 'helpers';
+import { CollectionTabs } from 'layouts/CollectionLayout/CollectionTabs';
 import { collectionSelector } from 'redux/selectors';
-
-import { CollectionTabs } from '../../layouts/CollectionLayout/CollectionTabs';
 
 export const CollectionRoles = () => {
   const { collectionState } = useSelector(collectionSelector);

@@ -3,9 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
 import { urlBuilder } from 'helpers';
+import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { tokenSelector } from 'redux/selectors';
-
-import { TokenTabs } from '../../layouts/TokenLayout/TokenTabs';
 
 export const TokenDetailsRoles = () => {
   const ref = useRef(null);
