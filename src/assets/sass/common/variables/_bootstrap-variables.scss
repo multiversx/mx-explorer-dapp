@@ -333,7 +333,7 @@ $dropdown-inner-border-radius: subtract(
   $dropdown-border-width
 );
 $dropdown-divider-margin-y: $spacer * 0.5;
-$dropdown-item-padding-y: $spacer * 0.25;
+$dropdown-item-padding-y: $spacer * 0.5;
 $dropdown-item-padding-x: $spacer;
 $dropdown-header-padding-x: $dropdown-item-padding-x;
 $dropdown-header-padding-y: $dropdown-padding-y;
@@ -344,10 +344,10 @@ $dropdown-bg: $neutral-800;
 $dropdown-border-color: transparent;
 $dropdown-divider-bg: $border-color;
 $dropdown-link-color: $body-color;
-$dropdown-link-hover-color: $primary;
-$dropdown-link-hover-bg: $neutral-900;
-$dropdown-link-active-color: $black;
-$dropdown-link-active-bg: $primary;
+$dropdown-link-hover-color: $body-color;
+$dropdown-link-hover-bg: $neutral-700;
+$dropdown-link-active-color: $body-color;
+$dropdown-link-active-bg: $neutral-900;
 $dropdown-link-disabled-color: $neutral-700;
 $dropdown-header-color: $neutral-700;
 // scss-docs-end dropdown-variables
