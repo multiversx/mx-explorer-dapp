@@ -8,7 +8,7 @@ import { MethodList } from 'components/TransactionsTable/components/Transactions
 import {
   useAdapter,
   useGetPage,
-  useGetTransactionURLFilters,
+  useGetTransactionFilters,
   useFetchTransactions
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -16,7 +16,7 @@ import { activeNetworkSelector } from 'redux/selectors';
 export const Transactions = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const urlParams = useGetTransactionURLFilters();
+  const urlParams = useGetTransactionFilters();
   const { senderShard, receiverShard } = urlParams;
 
   const { firstPageRefreshTrigger } = useGetPage();

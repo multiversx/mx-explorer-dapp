@@ -1,5 +1,6 @@
+import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import { useSearchParams } from 'react-router-dom';
-import { stringIsInteger } from 'helpers';
+
 import { TransactionApiStatusEnum } from 'types';
 
 const checkValue = (value: string) =>
@@ -10,10 +11,9 @@ const checkStatus = (status: string) =>
     ? status.toLowerCase()
     : undefined;
 
-export const useGetTransactionURLFilters = () => {
+export const useGetTransactionFilters = () => {
   const [searchParams] = useSearchParams();
 
-  const page = searchParams.get('page') ? String(searchParams.get('page')) : '';
   const shard = searchParams.get('shard')
     ? String(searchParams.get('shard'))
     : '';
@@ -31,9 +31,6 @@ export const useGetTransactionURLFilters = () => {
     : '';
   const miniBlockHash = searchParams.get('miniBlockHash')
     ? String(searchParams.get('miniBlockHash'))
-    : '';
-  const search = searchParams.get('search')
-    ? String(searchParams.get('search'))
     : '';
   const sender = searchParams.get('sender')
     ? String(searchParams.get('sender'))
@@ -59,7 +56,6 @@ export const useGetTransactionURLFilters = () => {
     : receiverShard;
 
   return {
-    page: checkValue(page),
     shard: checkValue(shard),
     senderShard: checkValue(senderShard),
     receiverShard: checkValue(receiverShard),
@@ -69,7 +65,6 @@ export const useGetTransactionURLFilters = () => {
     after: checkValue(after),
     status: checkStatus(status),
     miniBlockHash,
-    search,
     method,
     token
   };

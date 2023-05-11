@@ -51,7 +51,7 @@
 
   .menu {
     background-color: var(--neutral-800);
-    margin-top: -0.75rem;
+    margin-top: 0.25rem;
     overflow: hidden;
     border-radius: 0.5rem;
     margin-bottom: 0;
@@ -60,21 +60,19 @@
       padding: 0;
 
       .option {
-        //padding: 0.75rem;
-        //line-height: 1;
-        //text-align: center;
         font-size: 1rem;
         cursor: pointer;
+        color: var(--neutral-400);
 
         &:hover,
         &.hover {
-          background-color: var(--neutral-700);
           color: var(--body-color);
+          background-color: var(--neutral-700);
         }
 
         &.selected {
-          background-color: var(--neutral-900);
           color: var(--body-color);
+          background-color: var(--neutral-900);
         }
       }
     }

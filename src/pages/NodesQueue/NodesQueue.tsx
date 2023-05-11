@@ -3,30 +3,39 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useLocation } from 'react-router-dom';
 
 import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
-import { useAdapter, useGetNodeURLFilters, useGetPage } from 'hooks';
+import {
+  useAdapter,
+  useGetNodeFilters,
+  useGetPage,
+  useGetSearch,
+  useGetSort
+} from 'hooks';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { validatorsRoutes } from 'routes';
 import { NodeType } from 'types';
 
 export const NodesQueue = () => {
   const ref = useRef(null);
-  const { search } = useLocation();
+  const { search: searchLocation } = useLocation();
   const { getNodes, getNodesCount } = useAdapter();
-  const { getQueryObject } = useGetNodeURLFilters();
+  const { search } = useGetSearch();
   const { page } = useGetPage();
+  const nodeFilters = useGetNodeFilters();
+  const sort = useGetSort();
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
-  const queryParams = getQueryObject();
-  if (!queryParams.sort) {
-    queryParams.sort = 'position';
-    queryParams.order = 'asc';
+  if (!sort.sort) {
+    sort.sort = 'position';
+    sort.order = 'asc';
   }
 
   const fetchNodes = () => {
     const queryObject = {
-      ...queryParams,
+      ...nodeFilters,
+      ...sort,
+      search,
       type: 'validator',
       status: 'queued'
     };
@@ -45,7 +54,7 @@ export const NodesQueue = () => {
     });
   };
 
-  useEffect(fetchNodes, [search]);
+  useEffect(fetchNodes, [searchLocation]);
 
   return (
     <div className='card position-unset' ref={ref}>

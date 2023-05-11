@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS } from 'appConstants';
-import { useGetPage, useGetTransactionURLFilters } from 'hooks';
+import { useGetPage, useGetTransactionFilters } from 'hooks';
 import { UITransactionType, ApiAdapterResponseType } from 'types';
 
 export const useFetchTransactions = (
@@ -12,7 +12,7 @@ export const useFetchTransactions = (
 ) => {
   const [searchParams] = useSearchParams();
 
-  const urlParams = useGetTransactionURLFilters();
+  const urlParams = useGetTransactionFilters();
   const { page } = useGetPage();
 
   const [transactions, setTransactions] = useState<UITransactionType[]>([]);

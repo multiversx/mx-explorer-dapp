@@ -33,6 +33,7 @@
     }
   }
   &__option {
+    color: var(--neutral-400);
     cursor: pointer;
     &--is-focused {
       background-color: var(--neutral-700);

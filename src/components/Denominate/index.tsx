@@ -1,9 +1,9 @@
 import React from 'react';
+import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { DECIMALS, DIGITS } from 'config';
 
-import { stringIsInteger } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
 import { denominate } from './denominate';
 

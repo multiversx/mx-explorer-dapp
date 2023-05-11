@@ -6,7 +6,8 @@ import { PAGE_SIZE } from 'appConstants';
 import { Loader, NetworkLink, Pager } from 'components';
 import {
   useAdapter,
-  useGetNodeURLFilters,
+  useGetSearch,
+  useGetSort,
   useActiveRoute,
   useGetPage,
   useIsMainnet
@@ -26,9 +27,10 @@ export const Tokens = () => {
 
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
-  const { search } = useLocation();
-  const { getQueryObject } = useGetNodeURLFilters();
+  const { search: searchLocation } = useLocation();
+  const { search } = useGetSearch();
   const { page } = useGetPage();
+  const { sort, order } = useGetSort();
   const { getTokens, getTokensCount } = useAdapter();
 
   const { ecosystemMarketCap } = useSelector(economicsSelector);
@@ -39,11 +41,9 @@ export const Tokens = () => {
   const [totalTokens, setTotalTokens] = useState<number | '...'>('...');
 
   const fetchTokens = () => {
-    const queryObject = getQueryObject();
-
     Promise.all([
-      getTokens({ ...queryObject, page }),
-      getTokensCount(queryObject)
+      getTokens({ search, page, sort, order }),
+      getTokensCount({ search })
     ]).then(([tokensData, count]) => {
       if (ref.current !== null) {
         if (tokensData.success) {
@@ -55,7 +55,7 @@ export const Tokens = () => {
     });
   };
 
-  useEffect(fetchTokens, [search]);
+  useEffect(fetchTokens, [searchLocation]);
 
   return (
     <>

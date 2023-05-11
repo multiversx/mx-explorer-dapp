@@ -24,11 +24,13 @@
     }
 
     &.active {
-      background-color: var(--neutral-900);
+      background-color: var(--black);
     }
 
     &:hover,
     &.active {
+      color: var(--primary);
+
       &:first-child {
         border-top-left-radius: 0.5rem;
         border-top-right-radius: 0.5rem;

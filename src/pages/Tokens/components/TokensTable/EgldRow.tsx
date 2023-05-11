@@ -6,7 +6,7 @@ import { PAGE_SIZE } from 'appConstants';
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import { pagerHelper } from 'components/Pager/pagerHelper';
 
-import { useGetNodeURLFilters, useGetTransactionURLFilters } from 'hooks';
+import { useGetNodeFilters, useGetPage, useGetSearch, useGetSort } from 'hooks';
 import {
   economicsSelector,
   statsSelector,
@@ -46,17 +46,16 @@ export const EgldRow = ({
     unprocessed: unProcessedStats
   } = useSelector(statsSelector);
 
-  const { page } = useGetTransactionURLFilters();
-  const { getQueryObject } = useGetNodeURLFilters();
-  const queryObject = getQueryObject();
-  const description = `The MultiversX eGold (${egldLabel}) Token is native to the MultiversX Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
+  const { page } = useGetPage();
+  const { search } = useGetSearch();
+  const { sort, order } = useGetSort();
 
-  const { search, sort, order } = queryObject;
+  const description = `The MultiversX eGold (${egldLabel}) Token is native to the MultiversX Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
   const showOnSearch =
     search &&
     ['egld', 'elrond', 'multiversx', egldLabel].includes(search.toLowerCase());
-  let showOnFilter = !page && index === 0;
+  let showOnFilter = (!page || page === 1) && index === 0;
 
   const previousToken = tokens[index > 0 ? index - 1 : 0];
   const currentToken = tokens[index];

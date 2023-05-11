@@ -3,24 +3,34 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useLocation } from 'react-router-dom';
 
 import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
-import { useAdapter, useGetNodeURLFilters, useGetPage } from 'hooks';
+import {
+  useAdapter,
+  useGetNodeFilters,
+  useGetPage,
+  useGetSearch,
+  useGetSort
+} from 'hooks';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { validatorsRoutes } from 'routes';
 import { NodeType } from 'types';
 
 export const NodesStatistics = () => {
   const ref = useRef(null);
-  const { search } = useLocation();
+  const { search: locationSearch } = useLocation();
   const { getNodes, getNodesCount } = useAdapter();
-  const { getQueryObject } = useGetNodeURLFilters();
+  const { search } = useGetSearch();
   const { page } = useGetPage();
+  const nodeFilters = useGetNodeFilters();
+  const sort = useGetSort();
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchNodes = () => {
     const queryObject = {
-      ...getQueryObject(),
+      ...nodeFilters,
+      ...sort,
+      search,
       type: 'validator',
       status: 'eligible'
     };
@@ -28,7 +38,7 @@ export const NodesStatistics = () => {
 
     Promise.all([
       getNodes({ ...queryObject, page }),
-      getNodesCount(queryObject)
+      getNodesCount({ ...queryObject })
     ]).then(([nodesData, count]) => {
       setNodes(nodesData.data);
       setTotalNodes(count.data);
@@ -39,7 +49,7 @@ export const NodesStatistics = () => {
     });
   };
 
-  useEffect(fetchNodes, [search]);
+  useEffect(fetchNodes, [locationSearch]);
 
   return (
     <div className='card position-unset' ref={ref}>

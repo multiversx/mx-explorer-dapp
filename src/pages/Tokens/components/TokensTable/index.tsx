@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import { ELLIPSIS } from 'appConstants';
 import { NetworkLink, Denominate, Sort } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
-import { useGetNodeURLFilters } from 'hooks';
+import { useGetSort } from 'hooks';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'types';
 import { EgldRow } from './EgldRow';
 
@@ -17,9 +17,7 @@ export const TokensTable = ({
   tokens: TokenType[];
   totalTokens: typeof ELLIPSIS | number;
 }) => {
-  const { getQueryObject } = useGetNodeURLFilters();
-  const queryObject = getQueryObject();
-  const { order } = queryObject;
+  const { order } = useGetSort();
 
   return (
     <div className='table-wrapper tokens-table'>

@@ -12,7 +12,7 @@ import {
   NftBadge
 } from 'components';
 import { urlBuilder, getNftText } from 'helpers';
-import { useAdapter, useGetPage, useGetNodeURLFilters } from 'hooks';
+import { useAdapter, useGetPage, useGetNodeFilters, useGetSearch } from 'hooks';
 import { CollectionTabs } from 'layouts/CollectionLayout/CollectionTabs';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { NftType } from 'types';
@@ -25,8 +25,7 @@ export const CollectionNfts = () => {
   const { type } = collectionState;
   const { getCollectionNfts, getCollectionNftsCount } = useAdapter();
   const { page } = useGetPage();
-
-  const { getQueryObject } = useGetNodeURLFilters();
+  const { search } = useGetSearch();
 
   const { hash: collection } = useParams() as any;
 
@@ -36,10 +35,9 @@ export const CollectionNfts = () => {
 
   const fetchCollectionNfts = () => {
     if (ref.current !== null) {
-      const queryObject = getQueryObject();
       Promise.all([
-        getCollectionNfts({ ...queryObject, page, collection }),
-        getCollectionNftsCount({ ...queryObject, collection })
+        getCollectionNfts({ search, page, collection }),
+        getCollectionNftsCount({ search, collection })
       ]).then(([nftsData, count]) => {
         if (nftsData.success && count.success) {
           setCollectionNfts(nftsData.data);
