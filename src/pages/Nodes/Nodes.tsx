@@ -3,7 +3,13 @@ import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
 import { useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
-import { useAdapter, useGetNodeURLFilters, useGetPage } from 'hooks';
+import {
+  useAdapter,
+  useGetNodeFilters,
+  useGetPage,
+  useGetSearch,
+  useGetSort
+} from 'hooks';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { validatorsRoutes } from 'routes';
 import { NodeType } from 'types';
@@ -12,8 +18,10 @@ export const Nodes = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { getNodes, getNodesCount } = useAdapter();
-  const { getQueryObject } = useGetNodeURLFilters();
+  const { search } = useGetSearch();
   const { page } = useGetPage();
+  const nodeFilters = useGetNodeFilters();
+  const sort = useGetSort();
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -21,12 +29,11 @@ export const Nodes = () => {
   const { type, status } = Object.fromEntries(searchParams);
 
   const fetchNodes = () => {
-    const queryObject = getQueryObject();
     setDataReady(undefined);
 
     Promise.all([
-      getNodes({ ...queryObject, page }),
-      getNodesCount(queryObject)
+      getNodes({ ...nodeFilters, ...sort, search, page }),
+      getNodesCount({ ...nodeFilters, ...sort, search })
     ]).then(([nodesData, count]) => {
       setNodes(nodesData.data);
       setTotalNodes(count.data);

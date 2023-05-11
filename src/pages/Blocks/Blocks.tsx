@@ -8,7 +8,7 @@ import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import {
   useAdapter,
   useNetworkRoute,
-  useGetTransactionURLFilters,
+  useGetTransactionFilters,
   useGetPage,
   useIsMainnet
 } from 'hooks';
@@ -27,7 +27,7 @@ export const Blocks = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const isMainnet = useIsMainnet();
-  const { shard } = useGetTransactionURLFilters();
+  const { shard } = useGetTransactionFilters();
   const { page, firstPageRefreshTrigger } = useGetPage();
   const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
 

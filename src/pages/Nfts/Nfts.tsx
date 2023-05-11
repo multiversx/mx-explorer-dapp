@@ -10,7 +10,7 @@ import {
   NftBadge
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useAdapter, useGetNodeURLFilters, useGetPage } from 'hooks';
+import { useAdapter, useGetSearch, useGetPage } from 'hooks';
 import { NftType } from 'types';
 
 import { FailedNfts } from './components/FailedNfts';
@@ -20,7 +20,7 @@ import { NoNfts } from './components/NoNfts';
 export const Nfts = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const { getQueryObject } = useGetNodeURLFilters();
+  const { search } = useGetSearch();
   const { page } = useGetPage();
   const { getNfts, getNftsCount } = useAdapter();
 
@@ -29,12 +29,11 @@ export const Nfts = () => {
   const [totalNfts, setTotalNfts] = useState<number | '...'>('...');
 
   const fetchNfts = () => {
-    const queryObject = getQueryObject();
     const type = 'SemiFungibleESDT,NonFungibleESDT';
 
     Promise.all([
-      getNfts({ ...queryObject, page, type }),
-      getNftsCount({ ...queryObject, type })
+      getNfts({ search, page, type }),
+      getNftsCount({ search, type })
     ]).then(([nftsData, count]) => {
       if (ref.current !== null) {
         if (nftsData.success) {

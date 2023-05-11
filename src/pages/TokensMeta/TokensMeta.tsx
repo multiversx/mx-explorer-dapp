@@ -5,12 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import { Loader, NetworkLink, Trim, Pager } from 'components';
 import { urlBuilder } from 'helpers';
-import {
-  useAdapter,
-  useGetNodeURLFilters,
-  useActiveRoute,
-  useGetPage
-} from 'hooks';
+import { useAdapter, useGetSearch, useActiveRoute, useGetPage } from 'hooks';
 import { tokensRoutes } from 'routes';
 import { CollectionType } from 'types';
 
@@ -22,8 +17,8 @@ export const TokensMeta = () => {
   const ref = useRef(null);
   const activeRoute = useActiveRoute();
 
-  const { search } = useLocation();
-  const { getQueryObject } = useGetNodeURLFilters();
+  const { search: searchLocation } = useLocation();
+  const { search } = useGetSearch();
   const { page } = useGetPage();
   const { getCollections, getCollectionsCount } = useAdapter();
 
@@ -34,12 +29,11 @@ export const TokensMeta = () => {
   >('...');
 
   const fetchMetaCollections = () => {
-    const queryObject = getQueryObject();
     const type = 'MetaESDT';
 
     Promise.all([
-      getCollections({ ...queryObject, page, type }),
-      getCollectionsCount({ ...queryObject, type })
+      getCollections({ search, page, type }),
+      getCollectionsCount({ search, type })
     ]).then(([collectionsData, count]) => {
       if (ref.current !== null) {
         if (collectionsData.success) {
@@ -51,7 +45,7 @@ export const TokensMeta = () => {
     });
   };
 
-  useEffect(fetchMetaCollections, [search]);
+  useEffect(fetchMetaCollections, [searchLocation]);
 
   return (
     <>

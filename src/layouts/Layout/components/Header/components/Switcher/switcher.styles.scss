@@ -44,6 +44,16 @@
     }
   }
 
+  .dropdown-menu {
+    .dropdown-item {
+      --dropdown-link-color: var(--body-color);
+      --dropdown-link-hover-color: var(--primary);
+      --dropdown-link-hover-bg: var(--neutral-700);
+      --dropdown-link-active-color: var(--primary);
+      --dropdown-link-active-bg: var(--black);
+    }
+  }
+
   .indicator {
     transition: all 200ms ease;
     color: var(--neutral-500);

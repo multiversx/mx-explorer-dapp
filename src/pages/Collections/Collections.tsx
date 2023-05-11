@@ -17,7 +17,7 @@ import {
 import { urlBuilder } from 'helpers';
 import {
   useAdapter,
-  useGetNodeURLFilters,
+  useGetSearch,
   useGetPage,
   useActiveRoute,
   useIsMainnet
@@ -35,8 +35,8 @@ export const Collections = () => {
   const isMainnet = useIsMainnet();
   const activeRoute = useActiveRoute();
   const { page } = useGetPage();
-  const { search, pathname } = useLocation();
-  const { getQueryObject } = useGetNodeURLFilters();
+  const { search } = useGetSearch();
+  const { search: searchLocation, pathname } = useLocation();
   const { getCollections, getCollectionsCount } = useAdapter();
   const pageHeadersCollections = useSelector(
     pageHeadersCollectionsStatsSelector
@@ -60,17 +60,16 @@ export const Collections = () => {
   };
 
   const fetchCollections = () => {
-    const queryObject = getQueryObject();
     const type = getCollectionType();
 
     Promise.all([
       getCollections({
-        ...queryObject,
+        search,
         page,
         type,
         sort: 'verifiedAndHolderCount'
       }),
-      getCollectionsCount({ ...queryObject, type })
+      getCollectionsCount({ search, type })
     ]).then(([collectionsData, count]) => {
       if (ref.current !== null) {
         if (collectionsData.success) {
@@ -82,7 +81,7 @@ export const Collections = () => {
     });
   };
 
-  useEffect(fetchCollections, [search, pathname]);
+  useEffect(fetchCollections, [searchLocation, pathname]);
 
   return (
     <>

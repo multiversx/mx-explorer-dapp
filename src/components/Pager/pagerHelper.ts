@@ -1,5 +1,6 @@
+import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
+
 import { ELLIPSIS } from 'appConstants';
-import { stringIsInteger } from 'helpers';
 
 interface PagerHelperType {
   total: number;

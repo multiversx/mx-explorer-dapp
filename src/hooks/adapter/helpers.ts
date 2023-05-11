@@ -117,7 +117,6 @@ export function getTokensParams({
     ...(search !== undefined ? { search } : {}),
     ...(name !== undefined ? { name } : {}),
     ...(identifier !== undefined ? { identifier } : {}),
-    ...(identifiers !== undefined ? { identifiers } : {}),
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
     ...(includeMetaESDT !== undefined ? { includeMetaESDT } : {}),
@@ -141,8 +140,6 @@ export function getCollectionsParams({
   const params: AdapterProviderPropsType['params'] = {
     ...(fields !== undefined ? { fields } : {}),
     ...(search !== undefined ? { search } : {}),
-    ...(identifiers !== undefined ? { identifiers } : {}),
-    ...(type !== undefined ? { type } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
     ...(type !== undefined ? { type } : {}),
     ...(sort !== undefined ? { sort } : {}),

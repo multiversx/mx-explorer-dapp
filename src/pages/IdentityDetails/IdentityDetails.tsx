@@ -1,19 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { faCity, faCode } from '@fortawesome/pro-regular-svg-icons';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 
 import { Loader, Pager, PageState, ProvidersTable } from 'components';
 import { NodesTable, SharedIdentity } from 'components';
-import { useAdapter, useGetNodeURLFilters, useGetPage } from 'hooks';
+import { useAdapter, useGetNodeFilters, useGetPage, useGetSearch } from 'hooks';
 import { IdentityType, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {
   const ref = useRef(null);
   const { hash: id } = useParams() as any;
   const { getIdentity, getNodes, getNodesCount, getProviders } = useAdapter();
-  const { getQueryObject } = useGetNodeURLFilters();
+
+  const { search: searchLocation } = useLocation();
+  const nodeFilters = useGetNodeFilters();
   const { page } = useGetPage();
-  const [searchParams] = useSearchParams();
+  const { search } = useGetSearch();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
   const [identity, setIdentity] = useState<IdentityType>();
@@ -25,13 +27,11 @@ export const IdentityDetails = () => {
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
 
   const fetchData = () => {
-    const queryObject = getQueryObject();
-
     Promise.all([
       getIdentity(id),
       getProviders({ identity: id }),
-      getNodes({ ...queryObject, identity: id, page }),
-      getNodesCount({ ...queryObject, identity: id })
+      getNodes({ ...nodeFilters, search, identity: id, page }),
+      getNodesCount({ ...nodeFilters, search, identity: id })
     ]).then(([identityData, providersData, nodesData, nodesCount]) => {
       if (ref.current !== null) {
         setIdentity(identityData.data);
@@ -44,7 +44,7 @@ export const IdentityDetails = () => {
     });
   };
 
-  useEffect(fetchData, [searchParams]);
+  useEffect(fetchData, [searchLocation]);
 
   const showProviders =
     providersFetched === false ||
