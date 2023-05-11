@@ -6,7 +6,7 @@
     display: block;
     line-height: 1;
     font-size: 1.125rem;
-    color: var(--neutral-200);
+    color: var(--body-color);
     padding: 0.75rem;
     transition: all 200ms ease;
     background-color: transparent;
@@ -24,13 +24,11 @@
     }
 
     &.active {
-      background-color: var(--black);
+      background-color: var(--neutral-900);
     }
 
     &:hover,
     &.active {
-      color: var(--primary);
-
       &:first-child {
         border-top-left-radius: 0.5rem;
         border-top-right-radius: 0.5rem;

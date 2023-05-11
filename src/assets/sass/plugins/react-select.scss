@@ -35,12 +35,12 @@
   &__option {
     cursor: pointer;
     &--is-focused {
-      background-color: var(--neutral-900);
-      color: var(--primary);
+      background-color: var(--neutral-700);
+      color: var(--body-color);
     }
     &--is-selected {
-      background-color: var(--primary);
-      color: var(--neutral-800);
+      background-color: var(--neutral-900);
+      color: var(--body-color);
     }
   }
 
