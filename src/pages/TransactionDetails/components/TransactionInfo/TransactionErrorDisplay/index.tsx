@@ -56,7 +56,7 @@ export const TransactionErrorDisplay = ({
           />
           &nbsp;
           <div className='d-flex flex-wrap'>
-            <small className='text-danger ms-1'>
+            <small className='text-danger ms-1 text-break'>
               {' '}
               {capitalizeFirstLetter(transactionMessage.toString().trim())}
             </small>
