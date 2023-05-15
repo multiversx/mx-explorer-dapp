@@ -16,7 +16,7 @@ const NonceMessage = ({ transaction }: { transaction: TransactionType }) => {
     status.toLowerCase() === txStatus.pending.toLowerCase() || transaction.pendingResults;
 
   const getSenderNonce = () => {
-    getAccount(senderAddress).then((accountDetailsData) => {
+    getAccount({ address: senderAddress }).then((accountDetailsData) => {
       if (ref.current !== null && accountDetailsData.success) {
         const data = accountDetailsData.data;
         const { nonce: accountNonce } = data;

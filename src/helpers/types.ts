@@ -41,6 +41,9 @@ export interface AccountType {
   isPayableBySmartContract?: boolean;
   assets?: AssetType;
   username?: string;
+  isGuarded?: boolean;
+  activeGuardianAddress?: string;
+  activeGuardianServiceUid?: string;
 }
 
 export enum TokenSortEnum {
@@ -435,6 +438,8 @@ export interface TransactionType {
   receipt?: ReceiptType;
   senderAssets?: AssetType;
   receiverAssets?: AssetType;
+  guardianAddress?: string;
+  guardianSignature?: string;
 }
 
 export enum TransferTypeEnum {

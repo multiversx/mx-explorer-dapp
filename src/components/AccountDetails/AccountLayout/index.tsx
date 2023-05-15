@@ -39,7 +39,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const [dataReady, setDataReady] = React.useState<boolean | undefined>();
 
   const fetchBalanceAndCount = () => {
-    getAccount(address).then((accountDetailsData) => {
+    getAccount({ address, withGuardianInfo: true }).then((accountDetailsData) => {
       const details = accountDetailsData.success ? accountDetailsData.data : {};
 
       if (ref.current !== null) {

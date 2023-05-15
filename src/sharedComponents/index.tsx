@@ -53,6 +53,7 @@ import SmallDetailItem from './SmallDetailItem';
 import PercentageLed from './PercentageLed';
 import Chart from './Chart';
 import UsdValue from './UsdValue';
+import { TransactionGuardianIcon } from './TransactionGuardianIcon';
 
 export {
   Denominate,
@@ -111,4 +112,5 @@ export {
   PercentageLed,
   Chart,
   UsdValue,
+  TransactionGuardianIcon,
 };
