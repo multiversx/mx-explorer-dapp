@@ -50,7 +50,7 @@ export const HashSearch = () => {
 
       switch (true) {
         case isAccount:
-          getAccount(query).then((account) => {
+          getAccount({ address: query }).then((account) => {
             const newRoute = account.success
               ? networkRoute(urlBuilder.accountDetails(query))
               : '';
@@ -119,16 +119,18 @@ export const HashSearch = () => {
                 break;
               default:
                 if (isPubKeyAccount) {
-                  getAccount(bech32.encode(query)).then((account) => {
-                    if (account.success) {
-                      if (isContract(query) || account.data.nonce > 0) {
-                        const newRoute = networkRoute(
-                          urlBuilder.accountDetails(bech32.encode(query))
-                        );
-                        setRoute(newRoute);
+                  getAccount({ address: bech32.encode(query) }).then(
+                    (account) => {
+                      if (account.success) {
+                        if (isContract(query) || account.data.nonce > 0) {
+                          const newRoute = networkRoute(
+                            urlBuilder.accountDetails(bech32.encode(query))
+                          );
+                          setRoute(newRoute);
+                        }
                       }
                     }
-                  });
+                  );
                 }
                 setRoute('');
                 break;
