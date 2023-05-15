@@ -139,6 +139,7 @@ export interface AdapterProviderPropsType {
     fullHistory?: string;
     withUsername?: boolean;
     includeMetaESDT?: boolean;
+    withGuardianInfo?: boolean;
   };
   timeout: number;
   timestamp?: number;

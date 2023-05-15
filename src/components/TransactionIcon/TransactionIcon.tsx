@@ -3,8 +3,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faSpinnerThird,
   faTimes,
-  faCheck,
-  faShieldCheck
+  faCheck
 } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';

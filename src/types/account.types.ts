@@ -29,6 +29,9 @@ export interface AccountType {
   assets?: AccountAssetType;
   username?: string;
   isVerified?: boolean;
+  isGuarded?: boolean;
+  activeGuardianAddress?: string;
+  activeGuardianServiceUid?: string;
 }
 
 export interface AccountSliceType extends SliceType {

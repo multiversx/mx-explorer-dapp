@@ -225,7 +225,13 @@ export const useAdapter = () => {
 
     /* Account */
 
-    getAccount: (address: string) => provider({ url: `/accounts/${address}` }),
+    getAccount: ({
+      address,
+      ...rest
+    }: {
+      address: string;
+      withGuardianInfo?: boolean;
+    }) => provider({ url: `/accounts/${address}`, params: rest }),
 
     getAccounts: (page = 1) =>
       provider({

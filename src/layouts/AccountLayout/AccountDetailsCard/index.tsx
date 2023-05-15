@@ -7,7 +7,8 @@ import {
   faUser,
   faCoins,
   faLayerGroup,
-  faHexagonVerticalNft
+  faHexagonVerticalNft,
+  faShieldCheck
 } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
@@ -54,7 +55,10 @@ export const AccountDetailsCard = () => {
     isPayableBySmartContract,
     assets,
     username,
-    txCount
+    txCount,
+    isGuarded,
+    activeGuardianAddress,
+    activeGuardianServiceUid
   } = account;
   const { id: activeNetworkId, adapter } = useSelector(activeNetworkSelector);
   const { getProvider, getAccountTokensCount, getAccountNftsCount } =
@@ -381,6 +385,26 @@ export const AccountDetailsCard = () => {
               </CardItem>
               <LockedAmountCardItem cardItemClass={cardItemClass} />
               <AccountUsdValueCardItem cardItemClass={cardItemClass} />
+              {isGuarded && (
+                <CardItem
+                  className={cardItemClass}
+                  title={`Guardian ${
+                    activeGuardianServiceUid
+                      ? `(${activeGuardianServiceUid})`
+                      : ''
+                  }`}
+                  icon={faShieldCheck}
+                >
+                  {activeGuardianAddress && (
+                    <NetworkLink
+                      to={urlBuilder.accountDetails(activeGuardianAddress)}
+                      className='trim-wrapper'
+                    >
+                      <Trim text={activeGuardianAddress} />
+                    </NetworkLink>
+                  )}
+                </CardItem>
+              )}
               <CardItem className={cardItemClass} title='Nonce' icon={faUser}>
                 {nonce !== undefined ? nonce.toLocaleString('en') : ELLIPSIS}
               </CardItem>
