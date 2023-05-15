@@ -67,7 +67,7 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
 
       switch (true) {
         case isAccount:
-          getAccount(hash).then((account) => {
+          getAccount({ address: hash }).then((account) => {
             setExpanded(false);
             const newRoute = account.success
               ? networkRoute(urlBuilder.accountDetails(hash))
@@ -136,7 +136,7 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
                 break;
               default:
                 if (isPubKeyAccount) {
-                  getAccount(bech32.encode(hash)).then((account) => {
+                  getAccount({ address: bech32.encode(hash) }).then((account) => {
                     if (account.success) {
                       if (isContract(hash) || account.data.nonce > 0) {
                         const newRoute = networkRoute(
