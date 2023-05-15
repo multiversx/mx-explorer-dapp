@@ -16,7 +16,7 @@ export const Switcher = () => {
   );
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
 
-  const internalLinks = networks.map(({ name, id }) => ({
+  const networkLinks = networks.map(({ name, id }) => ({
     name,
     url: id === defaultNetworkId ? '/' : `/${id}`,
     id
@@ -76,7 +76,7 @@ export const Switcher = () => {
           </>
         ) : (
           <>
-            {internalLinks.map((link) => (
+            {networkLinks.map((link) => (
               <Dropdown.Item
                 as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
                 href={link.url}

@@ -1,8 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { Search, Particles } from 'components';
-import { multiversxApps } from 'config';
 import { useIsMainnet } from 'hooks';
+import { activeNetworkSelector } from 'redux/selectors';
 import {
   AccountsStatsCard,
   BlockHeightStatsCard,
@@ -15,8 +16,8 @@ import {
 export const HeroHome = () => {
   const isMainnet = useIsMainnet();
 
-  const explorerApp = multiversxApps.find((app) => app.id === 'explorer');
-  const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
+  const { id, name } = useSelector(activeNetworkSelector);
+  const explorerTitle = id !== 'mainnet' ? `${name} Explorer` : 'Explorer';
 
   return (
     <div className='hero-home card card-lg card-black'>
