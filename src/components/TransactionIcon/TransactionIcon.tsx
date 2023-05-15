@@ -11,8 +11,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { capitalizeFirstLetter, getTransactionMessages } from 'helpers';
-import { UITransactionType, TransactionType } from 'helpers/types';
-import { adapter, TransactionGuardianIcon } from 'sharedComponents';
+import { useAdapter } from 'hooks';
+import { UITransactionType, TransactionType } from 'types';
+
+import { txStatus } from '../TransactionStatus/txStatus';
 
 interface TransactionIconType {
   transaction: UITransactionType;
@@ -71,56 +73,63 @@ export const TransactionIcon = ({
     icon = faCheck;
   }
 
-  return (
+  return icon === undefined ? null : (
     <>
-      {icon !== undefined && (
-        <OverlayTrigger
-          placement='top'
-          delay={{ show: 0, hide: 400 }}
-          onToggle={() => {
-            fetchTransactionMessages();
-          }}
-          overlay={(props: any) => (
-            <Tooltip {...props} show={props.show.toString()}>
-              {capitalizeFirstLetter(transaction.status)}
-              {(failed || invalid) && (
-                <>
-                  {dataReady ? (
-                    <>
-                      {transactionMessages && transactionMessages.length > 0 && (
-                        <>
-                          :{' '}
-                          {transactionMessages.map((message, messageIndex) => (
-                            <span key={`tx-icon-message-${messageIndex}`}>
-                              {capitalizeFirstLetter(message)}
-                              {messageIndex > 0 ? ', ' : ''}
-                            </span>
-                          ))}
-                        </>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <FontAwesomeIcon
-                        icon={faSpinnerThird}
-                        size={'sm'}
-                        className='ml-2 fa-spin fast-spin'
-                      />
-                    </>
-                  )}
-                </>
-              )}
-            </Tooltip>
-          )}
-        >
+      <OverlayTrigger
+        placement='top'
+        delay={{ show: 0, hide: 400 }}
+        onToggle={() => {
+          fetchTransactionMessages();
+        }}
+        overlay={(props: any) => (
+          <Tooltip {...props} show={props.show.toString()}>
+            {capitalizeFirstLetter(transaction.status)}
+            {(failed || invalid) && (
+              <>
+                {dataReady ? (
+                  <>
+                    {transactionMessages && transactionMessages.length > 0 && (
+                      <>
+                        :{' '}
+                        {transactionMessages.map((message, messageIndex) => (
+                          <span key={`tx-icon-message-${messageIndex}`}>
+                            {capitalizeFirstLetter(message)}
+                            {messageIndex > 0 ? ', ' : ''}
+                          </span>
+                        ))}
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <FontAwesomeIcon
+                      icon={faSpinnerThird}
+                      size={'sm'}
+                      className='ms-2 fa-spin fast-spin'
+                    />
+                  </>
+                )}
+              </>
+            )}
+          </Tooltip>
+        )}
+      >
+        {withBadge ? (
+          <div className={`tx-badge ${transaction.status.toLowerCase()}`}>
+            <FontAwesomeIcon
+              icon={icon as IconProp}
+              size={(icon as IconProp) === faTimes ? '1x' : 'sm'}
+              className={`me-1 tx-status ${transaction.status.toLowerCase()}`}
+            />
+          </div>
+        ) : (
           <FontAwesomeIcon
-            icon={icon}
-            size={icon === faTimes ? '1x' : 'sm'}
-            className='mr-1 text-secondary'
+            icon={icon as IconProp}
+            size={(icon as IconProp) === faTimes ? '1x' : 'sm'}
+            className={`me-1 tx-status ${transaction.status.toLowerCase()}`}
           />
-        </OverlayTrigger>
-      )}
-      <TransactionGuardianIcon transaction={transaction} />
+        )}
+      </OverlayTrigger>
     </>
   );
 };
