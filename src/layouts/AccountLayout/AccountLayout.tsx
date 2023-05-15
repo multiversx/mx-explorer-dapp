@@ -35,16 +35,18 @@ export const AccountLayout = () => {
 
   const fetchBalanceAndCount = () => {
     if (address) {
-      getAccount(address).then((accountDetailsData) => {
-        if (accountDetailsData.success && accountDetailsData?.data) {
-          dispatch(setAccount(accountDetailsData.data));
-          setDataReady(true);
-        }
+      getAccount({ address, withGuardianInfo: true }).then(
+        (accountDetailsData) => {
+          if (accountDetailsData.success && accountDetailsData?.data) {
+            dispatch(setAccount(accountDetailsData.data));
+            setDataReady(true);
+          }
 
-        if (dataReady === undefined) {
-          setDataReady(accountDetailsData.success);
+          if (dataReady === undefined) {
+            setDataReady(accountDetailsData.success);
+          }
         }
-      });
+      );
     }
   };
 
