@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock, faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons';
 import { faUser, faCoins, faLayerGroup, faShieldCheck } from '@fortawesome/pro-solid-svg-icons';
 import {
   CardItem,
