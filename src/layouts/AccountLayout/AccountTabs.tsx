@@ -49,6 +49,12 @@ export const AccountTabs = () => {
       show: !code
     },
     {
+      tabLabel: 'Upgrades',
+      tabTo: urlBuilder.accountDetailsUpgrades(address),
+      activationRoutes: [accountsRoutes.accountUpgrades],
+      show: Boolean(code)
+    },
+    {
       tabTo: urlBuilder.accountDetailsContractCode(address),
       activationRoutes: [
         accountsRoutes.accountCode,
