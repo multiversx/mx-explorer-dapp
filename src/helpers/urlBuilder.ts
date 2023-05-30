@@ -18,6 +18,7 @@ export const urlBuilder = {
     `/accounts/${address}/sc-results`,
   accountDetailsContracts: (address: string) =>
     `/accounts/${address}/contracts`,
+  accountDetailsUpgrades: (address: string) => `/accounts/${address}/upgrades`,
   accountDetailsContractCode: (address: string) => `/accounts/${address}/code`,
   accountDetailsContractCodeConstructor: (address: string) =>
     `/accounts/${address}/code/contract-constructor`,

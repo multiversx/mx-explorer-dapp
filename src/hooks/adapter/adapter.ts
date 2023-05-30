@@ -340,7 +340,6 @@ export const useAdapter = () => {
       provider({
         url: `/accounts/${address}/upgrades`,
         params: {
-          from: (size - 1) * PAGE_SIZE,
           size: size ?? PAGE_SIZE
         }
       }),

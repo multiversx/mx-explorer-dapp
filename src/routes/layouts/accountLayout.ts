@@ -6,6 +6,7 @@ import { AccountNfts } from 'pages/AccountDetails/AccountNfts';
 import { AccountStaking } from 'pages/AccountDetails/AccountStaking';
 import { AccountTokens } from 'pages/AccountDetails/AccountTokens';
 import { AccountTransactions } from 'pages/AccountDetails/AccountTransactions';
+import { AccountUpgrades } from 'pages/AccountDetails/AccountUpgrades';
 import { OldRouteRedirect } from 'pages/AccountDetails/OldRouteRedirect';
 import { Accounts } from 'pages/Accounts';
 
@@ -19,6 +20,7 @@ export const accountsRoutes = {
   accountContracts: '/accounts/:hash/contracts',
   accountStaking: '/accounts/:hash/staking',
   accountAnalytics: '/accounts/:hash/analytics',
+  accountUpgrades: '/accounts/:hash/upgrades',
   accountCode: '/accounts/:hash/code/*',
   accountCodeConstructor: '/accounts/:hash/code/contract-constructor',
   accountCodeEndpoints: '/accounts/:hash/code/endpoints',
@@ -51,9 +53,15 @@ export const accountLayout: TitledRouteObject[] = [
       },
       {
         path: accountsRoutes.accountCode,
-        title: 'Account Contract Code',
+        title: 'Smart Contract Code',
         preventScroll: true,
         Component: AccountContractCode
+      },
+      {
+        path: accountsRoutes.accountUpgrades,
+        title: 'Smart Contract Upgrades',
+        preventScroll: true,
+        Component: AccountUpgrades
       },
       {
         path: accountsRoutes.accountTokens,
@@ -81,7 +89,7 @@ export const accountLayout: TitledRouteObject[] = [
       },
       {
         path: accountsRoutes.accountContracts,
-        title: 'Account Smart Contracts',
+        title: 'Smart Contracts',
         preventScroll: true,
         Component: AccountContracts
       }
