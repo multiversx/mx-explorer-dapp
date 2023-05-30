@@ -330,6 +330,21 @@ export const useAdapter = () => {
         url: `/accounts/${address}/verification`
       }),
 
+    getAccountUpgrades: ({
+      address,
+      size
+    }: {
+      address: string;
+      size: number;
+    }) =>
+      provider({
+        url: `/accounts/${address}/upgrades`,
+        params: {
+          from: (size - 1) * PAGE_SIZE,
+          size: size ?? PAGE_SIZE
+        }
+      }),
+
     /* Account Stake */
 
     getAccountDelegation: (address: string) =>

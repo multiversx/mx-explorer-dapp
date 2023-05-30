@@ -32,6 +32,7 @@ import { DECIMALS } from 'config';
 import { isContract, urlBuilder, formatDate, formatHerotag } from 'helpers';
 import { useAdapter } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+import { AccountUpgradeType } from 'types';
 
 import { AccountUsdValueCardItem } from './AccountUsdValueCardItem';
 import { LockedAmountCardItem } from './LockedAmountCardItem';
@@ -61,11 +62,17 @@ export const AccountDetailsCard = () => {
     activeGuardianServiceUid
   } = account;
   const { id: activeNetworkId, adapter } = useSelector(activeNetworkSelector);
-  const { getProvider, getAccountTokensCount, getAccountNftsCount } =
-    useAdapter();
+  const {
+    getProvider,
+    getAccountTokensCount,
+    getAccountNftsCount,
+    getAccountUpgrades
+  } = useAdapter();
 
-  const [accountTokensCount, setAccountTokensCount] = useState<number>();
-  const [accountNftsCount, setAccountNftsCount] = useState<number>();
+  const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
+  const [accountNftsCount, setAccountNftsCount] = React.useState<number>();
+  const [accountLatestUpgrade, setAccountLatestUpgrade] =
+    React.useState<AccountUpgradeType>();
 
   const tokensActive = adapter === 'api';
   const cardItemClass = tokensActive ? 'n4' : '';
@@ -83,8 +90,22 @@ export const AccountDetailsCard = () => {
     }
   };
 
-  useEffect(() => {
+  const fetchUpgradesDetails = () => {
+    if (isContract(address)) {
+      getAccountUpgrades({ address, size: 1 }).then(({ success, data }) => {
+        if (ref.current !== null) {
+          if (success && data !== undefined && data.length > 0) {
+            setAccountLatestUpgrade(data[0]);
+          }
+        }
+      });
+    }
+  };
+
+  React.useEffect(() => {
     fetchProviderDetails();
+    fetchUpgradesDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, address]);
 
   const fetchAccountTokensCount = () => {
@@ -296,6 +317,37 @@ export const AccountDetailsCard = () => {
                       <span className='text-neutral-400'>
                         ({formatDate(deployedAt, false, true)})
                       </span>
+                    </div>
+                  ) : (
+                    <span className='text-neutral-400'>N/A</span>
+                  )}
+                </SmallDetailItem>
+
+                <SmallDetailItem title='Latest Upgrade'>
+                  {accountLatestUpgrade !== undefined ? (
+                    <div className='d-flex align-items-center'>
+                      {accountLatestUpgrade.txHash && (
+                        <NetworkLink
+                          to={urlBuilder.transactionDetails(
+                            accountLatestUpgrade.txHash
+                          )}
+                          data-testid='upgradeTxHashLink'
+                          className='trim-wrapper'
+                        >
+                          <Trim text={accountLatestUpgrade.txHash} />
+                        </NetworkLink>
+                      )}
+                      <div className='d-flex flex-row flex-shrink-0 align-items-center'>
+                        <FontAwesomeIcon
+                          icon={faClock}
+                          className='mx-2 text-neutral-400'
+                        />
+                        <TimeAgo
+                          value={accountLatestUpgrade.timestamp}
+                          tooltip={true}
+                        />
+                        <span className='ms-1'>ago</span>
+                      </div>
                     </div>
                   ) : (
                     <span className='text-neutral-400'>N/A</span>

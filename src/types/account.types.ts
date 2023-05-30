@@ -74,3 +74,10 @@ export interface AccountSmartContractType {
   timestamp: number;
   assets?: AccountAssetType;
 }
+
+export interface AccountUpgradeType {
+  address: string;
+  txHash: string;
+  timestamp: number;
+  assets?: AccountAssetType;
+}
