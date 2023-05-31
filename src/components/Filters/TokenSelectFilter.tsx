@@ -1,4 +1,5 @@
 import React, { useState, ReactElement, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { components, GroupBase } from 'react-select';
 import Creatable, { CreatableProps } from 'react-select/creatable';
@@ -8,7 +9,9 @@ import {
   ComponentProps
 } from 'react-select-async-paginate';
 
+import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import { useAdapter, useGetHash, useActiveRoute } from 'hooks';
+import { activeNetworkSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
 import { CollectionType, TokenType, TransactionFiltersEnum } from 'types';
 
@@ -62,6 +65,8 @@ export interface TokenSelectFilterType {
   noOptionsMessage?: string;
 }
 
+const egldSearchLabel = 'EGLD';
+
 const Option: typeof components.Option = (props) => {
   return (
     <components.Option {...props}>
@@ -72,6 +77,9 @@ const Option: typeof components.Option = (props) => {
             alt=''
             className='side-icon me-1'
           />
+        )}
+        {(props.data as SelectOptionType).value === egldSearchLabel && (
+          <EgldSymbol className='side-icon me-1' />
         )}
         <span className='text-truncate'>{props.label}</span>
       </div>
@@ -90,6 +98,7 @@ export const TokenSelectFilter = ({
   showAllPlaceholder = 'Show All',
   noOptionsMessage
 }: TokenSelectFilterType) => {
+  const { egldLabel } = useSelector(activeNetworkSelector);
   const [defaultValue, setDefaultValue] = useState<SelectOptionType>();
   const activeRoute = useActiveRoute();
   const address = useGetHash();
@@ -112,51 +121,70 @@ export const TokenSelectFilter = ({
     (option) => option.label === showAllPlaceholder
   );
 
+  const hasExistingEgldOption = options.find(
+    (option) => option.label === egldLabel
+  );
+
   if (hasShowAllOption && !hasExistingShowAllOption) {
     options.push({ value: '', label: showAllPlaceholder });
   }
 
+  if (!hasExistingEgldOption && egldLabel) {
+    options.push({ value: egldSearchLabel, label: egldLabel });
+  }
+
   useEffect(() => {
+    const isEgld =
+      defaultValue?.value === egldSearchLabel ||
+      existingValues[0] === egldSearchLabel;
     if (
       existingValues.length > 0 &&
       (!defaultValue ||
         (defaultValue && existingValues[0] !== defaultValue?.value))
     ) {
-      // get only for first
-      getToken(existingValues[0]).then(({ data, success }) => {
-        if (data && success) {
-          const { identifier, assets, ticker } = data as TokenType;
-          const label = assets && ticker ? ticker : identifier;
-          const defaultVal = {
-            value: identifier,
-            label,
-            ...(assets?.svgUrl ? { svgUrl: assets.svgUrl } : {})
-          };
-          setDefaultValue(defaultVal);
-          options.push(defaultVal);
-        } else {
-          getCollection(existingValues[0]).then(({ data, success }) => {
-            if (data && success) {
-              const { collection, assets, ticker } = data as CollectionType;
-              const label = assets && ticker ? ticker : collection;
-              const defaultVal = {
-                value: collection,
-                label,
-                ...(assets?.svgUrl ? { svgUrl: assets.svgUrl } : {})
-              };
-              setDefaultValue(defaultVal);
-              options.push(defaultVal);
-            } else {
-              const defaultVal = {
-                value: existingValues[0],
-                label: existingValues[0]
-              };
-              setDefaultValue(defaultVal);
-              options.push(defaultVal);
-            }
-          });
-        }
-      });
+      if (isEgld && egldLabel) {
+        const defaultVal = {
+          value: egldSearchLabel,
+          label: egldLabel
+        };
+        setDefaultValue(defaultVal);
+      } else {
+        // get only for first
+        getToken(existingValues[0]).then(({ data, success }) => {
+          if (data && success) {
+            const { identifier, assets, ticker } = data as TokenType;
+            const label = assets && ticker ? ticker : identifier;
+            const defaultVal = {
+              value: identifier,
+              label,
+              ...(assets?.svgUrl ? { svgUrl: assets.svgUrl } : {})
+            };
+            setDefaultValue(defaultVal);
+            options.push(defaultVal);
+          } else {
+            getCollection(existingValues[0]).then(({ data, success }) => {
+              if (data && success) {
+                const { collection, assets, ticker } = data as CollectionType;
+                const label = assets && ticker ? ticker : collection;
+                const defaultVal = {
+                  value: collection,
+                  label,
+                  ...(assets?.svgUrl ? { svgUrl: assets.svgUrl } : {})
+                };
+                setDefaultValue(defaultVal);
+                options.push(defaultVal);
+              } else {
+                const defaultVal = {
+                  value: existingValues[0],
+                  label: existingValues[0]
+                };
+                setDefaultValue(defaultVal);
+                options.push(defaultVal);
+              }
+            });
+          }
+        });
+      }
     }
   }, [existingValues, defaultValue]);
 
