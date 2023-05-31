@@ -9,7 +9,6 @@ import {
 } from '@fortawesome/pro-solid-svg-icons';
 import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
 import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
-import { faHistory } from '@fortawesome/pro-solid-svg-icons/faHistory';
 import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
 import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
 
@@ -100,7 +99,9 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         </CardItem>
         <CardItem title='Type' icon={getIcon(nodeData) || faCogs}>
           <>
-            {type === 'observer' && <>Observer</>}
+            {type === 'observer' && (
+              <>Observer {Boolean(fullHistory) ? ' - Full History' : ''}</>
+            )}
             {type !== 'observer' && (
               <>
                 Validator{' '}
@@ -132,15 +133,6 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             </div>
           </CardItem>
         )}
-        {type === 'observer' && (
-          <CardItem
-            title='Full History'
-            icon={faHistory}
-            className='text-capitalize'
-          >
-            {Boolean(fullHistory).toString()}
-          </CardItem>
-        )}
         {position !== undefined && position > 0 && (
           <CardItem title='Queue Position' icon={faFlagAlt}>
             {position.toLocaleString('en')}
@@ -159,17 +151,21 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             </div>
           </CardItem>
         ) : (
-          <CardItem title='Owner' icon={faUser}>
-            <div className='d-flex align-items-center min-w-0'>
-              <NetworkLink
-                to={urlBuilder.accountDetails(owner)}
-                className='trim-wrapper'
-              >
-                <Trim text={owner} />
-              </NetworkLink>
-              <CopyButton text={owner} />
-            </div>
-          </CardItem>
+          <>
+            {owner && (
+              <CardItem title='Owner' icon={faUser}>
+                <div className='d-flex align-items-center min-w-0'>
+                  <NetworkLink
+                    to={urlBuilder.accountDetails(owner)}
+                    className='trim-wrapper'
+                  >
+                    <Trim text={owner} />
+                  </NetworkLink>
+                  <CopyButton text={owner} />
+                </div>
+              </CardItem>
+            )}
+          </>
         )}
       </div>
     </div>
