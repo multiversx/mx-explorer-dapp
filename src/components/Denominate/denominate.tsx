@@ -1,11 +1,13 @@
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
+import { MAX_DISPLAY_ZERO_DECIMALS } from 'appConstants';
 
 function format(
   big: string,
   denomination: number,
   decimals: number,
   showLastNonZeroDecimal: boolean,
-  addCommas: boolean
+  addCommas: boolean,
+  maxDisplayZeroDecimals = MAX_DISPLAY_ZERO_DECIMALS
 ) {
   showLastNonZeroDecimal =
     typeof showLastNonZeroDecimal !== 'undefined'
@@ -46,8 +48,22 @@ function format(
       const sliceIndex = Math.max(decimalsIndex, nonZeroDigitIndex);
       array = array.slice(0, sliceIndex);
     } else {
-      // trim unnecessary characters after the dot
-      array = array.slice(0, array.indexOf('.') + decimals + 1);
+      let zeroDecimals = 0;
+      const minDecimalLength = Math.min(
+        array.length - array.indexOf('.'),
+        maxDisplayZeroDecimals
+      );
+      for (let i = 1; i <= minDecimalLength; i++) {
+        if (array?.[array.indexOf('.') + i] === '0') {
+          zeroDecimals++;
+        } else {
+          break;
+        }
+      }
+      const displayDecimals =
+        zeroDecimals > 0 ? zeroDecimals + decimals : decimals;
+
+      array = array.slice(0, array.indexOf('.') + displayDecimals + 1);
     }
   }
 

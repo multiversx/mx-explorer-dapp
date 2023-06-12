@@ -8,6 +8,7 @@ export const MAX_RESULTS = 10000;
 
 export const MAX_DISPLAY_TX_DATA_LENGTH = 1_000_000;
 export const MAX_DECODE_TX_DATA_LENGTH = 60_000;
+export const MAX_DISPLAY_ZERO_DECIMALS = 4;
 
 export const LEGACY_DELEGATION_NODES_IDENTITY = 'multiversx';
 
