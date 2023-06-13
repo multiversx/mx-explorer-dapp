@@ -103,7 +103,7 @@ export const Header = (props: HeaderPropsType) => {
           active: applicationsActive
         })}
       >
-        <Applications onClick={onApplicationsClose} />
+        <Applications />
       </div>
 
       <div
