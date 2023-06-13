@@ -1,37 +1,30 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
 import { multiversxApps } from 'config';
 
-import { ApplicationsPropsType } from './types';
-
-export const Applications = (props: ApplicationsPropsType) => {
-  const { onClick } = props;
-
-  const onItemClick = (event: MouseEvent) => {
-    document.body.click();
-
-    if (onClick) {
-      onClick(event);
-    }
-  };
-
+export const Applications = () => {
   return (
     <div className='applications'>
-      {multiversxApps.map((application) => (
-        <a
-          key={application.id}
-          href={application.url}
-          target={`${application.id === 'explorer' ? '' : '_blank'}`}
-          rel='noopener noreferrer'
-          onClick={onItemClick}
-          className={classNames('application', {
-            active: application.id === 'explorer'
-          })}
-        >
-          {application.name}
-        </a>
-      ))}
+      {multiversxApps.map((application) => {
+        return application.id === 'explorer' ? (
+          <span key={application.id} className='application active'>
+            {application.name}
+          </span>
+        ) : (
+          <a
+            key={application.id}
+            href={application.url}
+            target={`${application.id === 'explorer' ? '' : '_blank'}`}
+            rel='noopener noreferrer'
+            className={classNames('application', {
+              active: application.id === 'explorer'
+            })}
+          >
+            {application.name}
+          </a>
+        );
+      })}
     </div>
   );
 };
