@@ -164,21 +164,25 @@ function Points({
 }
 
 export const AnimationCanvas = () => {
-  return (
-    <Canvas
-      camera={{
-        position: [100, 30, 0],
-        fov: 45
-      }}
-      resize={{ scroll: false }}
-    >
-      <Suspense fallback={null}>
-        <fog attach='fog' args={['#000000', 1, 250]} />
-        <Points pointCount={60} separator={3} />
-      </Suspense>
-      <CameraControls />
-    </Canvas>
-  );
+  try {
+    return (
+      <Canvas
+        camera={{
+          position: [100, 30, 0],
+          fov: 45
+        }}
+        resize={{ scroll: false }}
+      >
+        <Suspense fallback={null}>
+          <fog attach='fog' args={['#000000', 1, 250]} />
+          <Points pointCount={60} separator={3} />
+        </Suspense>
+        <CameraControls />
+      </Canvas>
+    );
+  } catch {
+    return null;
+  }
 };
 
 export const Particles = memo(() => {
