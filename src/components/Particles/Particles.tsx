@@ -203,6 +203,10 @@ export const Particles = memo(() => {
     return null;
   }
 
+  if (isExcluded()) {
+    return null;
+  }
+
   return (
     <div className='particles' id='canvas-container'>
       <AnimationCanvas />
