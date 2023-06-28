@@ -164,25 +164,21 @@ function Points({
 }
 
 export const AnimationCanvas = () => {
-  try {
-    return (
-      <Canvas
-        camera={{
-          position: [100, 30, 0],
-          fov: 45
-        }}
-        resize={{ scroll: false }}
-      >
-        <Suspense fallback={null}>
-          <fog attach='fog' args={['#000000', 1, 250]} />
-          <Points pointCount={60} separator={3} />
-        </Suspense>
-        <CameraControls />
-      </Canvas>
-    );
-  } catch {
-    return null;
-  }
+  return (
+    <Canvas
+      camera={{
+        position: [100, 30, 0],
+        fov: 45
+      }}
+      resize={{ scroll: false }}
+    >
+      <Suspense fallback={null}>
+        <fog attach='fog' args={['#000000', 1, 250]} />
+        <Points pointCount={60} separator={3} />
+      </Suspense>
+      <CameraControls />
+    </Canvas>
+  );
 };
 
 export const Particles = memo(() => {
@@ -199,17 +195,14 @@ export const Particles = memo(() => {
     };
   }, []);
 
-  if (!isWebGLReady) {
-    return null;
-  }
-
-  if (isExcluded()) {
-    return null;
-  }
+  const hasAnimation = !(isExcluded() || !isWebGLReady);
 
   return (
-    <div className='particles' id='canvas-container'>
-      <AnimationCanvas />
+    <div
+      className={`particles ${hasAnimation ? '' : 'static-bg'}`}
+      id='canvas-container'
+    >
+      {hasAnimation && <AnimationCanvas />}
     </div>
   );
 });
