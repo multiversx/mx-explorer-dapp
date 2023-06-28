@@ -17,12 +17,34 @@ import {
   useLoader
 } from '@react-three/fiber';
 import * as THREE from 'three';
+
 import { OrbitControls } from 'three-stdlib';
 import { UAParser } from 'ua-parser-js';
 
 import circleImg from 'assets/img/three/circle.png';
 
 extend({ OrbitControls });
+
+function isWebGLAvailable() {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(
+      window.WebGLRenderingContext &&
+      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+    );
+  } catch (e) {
+    return false;
+  }
+}
+
+function isWebGL2Available() {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(window.WebGL2RenderingContext && canvas.getContext('webgl2'));
+  } catch (e) {
+    return false;
+  }
+}
 
 function CameraControls() {
   const {
@@ -164,12 +186,18 @@ export const Particles = memo(() => {
     document.getElementById('canvas-container')?.remove();
   };
 
+  const isWebGLReady = isWebGLAvailable() && isWebGL2Available();
+
   useEffect(() => {
     window.addEventListener('beforeunload', onunload);
     return () => {
       window.removeEventListener('beforeunload', onunload);
     };
   }, []);
+
+  if (!isWebGLReady) {
+    return null;
+  }
 
   return (
     <div className='particles' id='canvas-container'>
