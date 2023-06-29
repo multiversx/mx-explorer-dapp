@@ -1,3 +1,4 @@
+import { CollectionLayout } from 'layouts/CollectionLayout';
 import { TokenLayout } from 'layouts/TokenLayout';
 import { CollectionAssets } from 'pages/CollectionDetails/CollectionAssets';
 import { TokenDetailsAccounts } from 'pages/TokenDetails/TokenAccounts';
@@ -13,8 +14,8 @@ export const tokensRoutes = {
   tokens: '/tokens',
   tokensMeta: '/meta-tokens',
   tokensMetaEsdt: '/meta-esdt',
-  tokenDetails: '/tokens/:hash',
   tokensMetaEsdtDetails: '/meta-esdt/:hash',
+  tokenDetails: '/tokens/:hash',
   tokenDetailsAccounts: '/tokens/:hash/accounts',
   tokenDetailsLockedAccounts: '/tokens/:hash/locked-accounts',
   tokenDetailsRoles: '/tokens/:hash/roles'
@@ -35,8 +36,16 @@ export const tokenLayout: TitledRouteObject[] = [
   },
   {
     path: tokensRoutes.tokensMetaEsdtDetails,
-    title: 'Meta-ESDT Details',
-    Component: CollectionAssets
+    preventScroll: true,
+    Component: CollectionLayout,
+    children: [
+      {
+        path: tokensRoutes.tokensMetaEsdtDetails,
+        title: 'Meta-ESDT Details',
+        preventScroll: true,
+        Component: CollectionAssets
+      }
+    ]
   },
   {
     path: tokensRoutes.tokens,
