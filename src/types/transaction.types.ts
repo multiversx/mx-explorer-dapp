@@ -147,7 +147,6 @@ export interface TransactionTableType {
   transactions: UITransactionType[];
   address?: string;
   totalTransactions: number | typeof ELLIPSIS;
-
   title?: React.ReactNode;
   showDirectionCol?: boolean;
   dataChanged?: boolean;
