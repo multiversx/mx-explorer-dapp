@@ -17,12 +17,34 @@ import {
   useLoader
 } from '@react-three/fiber';
 import * as THREE from 'three';
+
 import { OrbitControls } from 'three-stdlib';
 import { UAParser } from 'ua-parser-js';
 
 import circleImg from 'assets/img/three/circle.png';
 
 extend({ OrbitControls });
+
+function isWebGLAvailable() {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(
+      window.WebGLRenderingContext &&
+      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+    );
+  } catch (e) {
+    return false;
+  }
+}
+
+function isWebGL2Available() {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(window.WebGL2RenderingContext && canvas.getContext('webgl2'));
+  } catch (e) {
+    return false;
+  }
+}
 
 function CameraControls() {
   const {
@@ -164,6 +186,8 @@ export const Particles = memo(() => {
     document.getElementById('canvas-container')?.remove();
   };
 
+  const isWebGLReady = isWebGLAvailable() && isWebGL2Available();
+
   useEffect(() => {
     window.addEventListener('beforeunload', onunload);
     return () => {
@@ -171,9 +195,17 @@ export const Particles = memo(() => {
     };
   }, []);
 
+  const skipAnimation = isExcluded() || !isWebGLReady;
+
   return (
-    <div className='particles' id='canvas-container'>
-      <AnimationCanvas />
+    <div
+      className={`particles ${skipAnimation ? 'static-bg' : ''}`}
+      id='canvas-container'
+      {...(skipAnimation
+        ? { style: { backgroundImage: 'url(/assets/img/three/static-bg.png)' } }
+        : {})}
+    >
+      {!skipAnimation && <AnimationCanvas />}
     </div>
   );
 });
