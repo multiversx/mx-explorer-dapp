@@ -1,1 +1,1 @@
-export * from './TimeAgos';
+export * from './TimeAgo';

@@ -1,1 +1,1 @@
-export * from './Denominates';
+export * from './Denominate';
