@@ -30,19 +30,27 @@ export const CollectionRoles = () => {
                 </thead>
                 <tbody data-testid='tokenRolesTable'>
                   {roles.map((tokenRole, i) => (
-                    <tr key={tokenRole.address}>
+                    <tr key={`${tokenRole?.address}-${i}`}>
                       <td>
                         <div className='d-flex align-items-center'>
-                          <ScAddressIcon initiator={tokenRole.address} />
-                          <NetworkLink
-                            to={urlBuilder.accountDetails(tokenRole.address)}
-                            className='trim-only-sm'
-                          >
-                            <Trim
-                              text={tokenRole.address}
-                              dataTestId={`roleLink${i}`}
-                            />
-                          </NetworkLink>
+                          {tokenRole?.address ? (
+                            <>
+                              <ScAddressIcon initiator={tokenRole.address} />
+                              <NetworkLink
+                                to={urlBuilder.accountDetails(
+                                  tokenRole.address
+                                )}
+                                className='trim-only-sm'
+                              >
+                                <Trim
+                                  text={tokenRole.address}
+                                  dataTestId={`roleLink${i}`}
+                                />
+                              </NetworkLink>
+                            </>
+                          ) : (
+                            <>Anyone</>
+                          )}
                         </div>
                       </td>
                       <td>

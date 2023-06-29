@@ -1,1 +1,1 @@
-export * from './identityCard';
+export * from './IdentityCard';

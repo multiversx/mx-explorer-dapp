@@ -142,7 +142,7 @@ export const NodeDetails = () => {
       )}
       <div ref={ref}>
         {dataReady === true && node.data !== undefined && (
-          <div className='container page-content'>
+          <>
             {showIdentity && (
               <div className='row'>
                 <div className='col mb-3'>
@@ -213,7 +213,7 @@ export const NodeDetails = () => {
                 </div>
               </>
             )}
-          </div>
+          </>
         )}
       </div>
     </>
