@@ -8,7 +8,7 @@ import { AxiosInterceptor } from 'components';
 import { store, persistor } from 'redux/store';
 import { wrappedRoutes } from 'routes';
 
-import './assets/sass/theme.scss';
+import './assets/scss/theme.scss';
 
 export const ProviderApp = () => {
   return (
