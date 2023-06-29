@@ -4,10 +4,8 @@ import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
 import { Overlay } from 'components';
-import { denominate } from 'components/Denominate/denominate';
 import { DIGITS } from 'config';
-import { formatUSD } from 'helpers';
-import { stringIsFloat } from 'helpers';
+import { denominate, formatUSD, stringIsFloat } from 'helpers';
 
 import { economicsSelector } from 'redux/selectors';
 

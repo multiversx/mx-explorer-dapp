@@ -1,7 +1,8 @@
 import moment, { Moment, unitOfTime } from 'moment';
+
 import { ChartDataType } from 'components/Chart/helpers/types';
-import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
+import { denominate } from 'helpers';
 
 interface AccountBalanceHistoryType {
   address: string;

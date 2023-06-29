@@ -17,8 +17,7 @@ import {
   TransactionTokenArgumentType,
   TransactionType
 } from 'types';
-
-import { unwrapper } from './unwrapper';
+import { unwrapper } from './helpers/unwrapper';
 
 export const ActionToken = ({
   token,

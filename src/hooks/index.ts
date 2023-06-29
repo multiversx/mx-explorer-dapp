@@ -6,6 +6,7 @@ export * from './urlFilters';
 
 export * from './useActiveRoute';
 export * from './useCheckVersion';
+export * from './useDebounce';
 export * from './useGetHash';
 export * from './useGetURLNetwork';
 export * from './useIsMainnet';

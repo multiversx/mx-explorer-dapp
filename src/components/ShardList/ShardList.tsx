@@ -5,7 +5,7 @@ import { useFetchShards } from 'hooks';
 import { shardsSelector, globalStakeSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
-import { ShardCard } from './ShardCard';
+import { ShardCard } from './components/ShardCard';
 
 export const ShardList = ({ className }: WithClassnameType) => {
   const shards = useSelector(shardsSelector);

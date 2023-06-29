@@ -1,8 +1,7 @@
 import BigNumber from 'bignumber.js';
 
-import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
-import { truncateMiddle } from 'helpers';
+import { denominate, truncateMiddle } from 'helpers';
 import { ProviderType } from 'types';
 import { AccountStakingSliceType } from 'types/account.types';
 

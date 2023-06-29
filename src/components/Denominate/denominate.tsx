@@ -1,135 +1,131 @@
+import React from 'react';
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
-import { MAX_DISPLAY_ZERO_DECIMALS } from 'appConstants';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { DECIMALS, DIGITS } from 'config';
 
-function format(
-  big: string,
-  denomination: number,
-  decimals: number,
-  showLastNonZeroDecimal: boolean,
-  addCommas: boolean,
-  maxDisplayZeroDecimals = MAX_DISPLAY_ZERO_DECIMALS
-) {
-  showLastNonZeroDecimal =
-    typeof showLastNonZeroDecimal !== 'undefined'
-      ? showLastNonZeroDecimal
-      : false;
+import { denominate } from 'helpers';
+import { activeNetworkSelector } from 'redux/selectors';
 
-  let array = big.toString().split('');
-
-  let negative = false;
-  if (array[0] === '-') {
-    array.shift();
-    negative = true;
-  }
-
-  if (denomination !== 0) {
-    // make sure we have enough characters
-    while (array.length < denomination + 1) {
-      array.unshift('0');
-    }
-
-    // add our dot
-    array.splice(array.length - denomination, 0, '.');
-
-    // make sure there are enough decimals after the dot
-    while (array.length - array.indexOf('.') <= decimals) {
-      array.push('0');
-    }
-
-    if (showLastNonZeroDecimal) {
-      let nonZeroDigitIndex = 0;
-      for (let i = array.length - 1; i > 0; i--) {
-        if (array[i] !== '0') {
-          nonZeroDigitIndex = i + 1;
-          break;
-        }
-      }
-      const decimalsIndex = array.indexOf('.') + decimals + 1;
-      const sliceIndex = Math.max(decimalsIndex, nonZeroDigitIndex);
-      array = array.slice(0, sliceIndex);
-    } else {
-      let zeroDecimals = 0;
-      const minDecimalLength = Math.min(
-        array.length - array.indexOf('.'),
-        maxDisplayZeroDecimals
-      );
-      for (let i = 1; i <= minDecimalLength; i++) {
-        if (array?.[array.indexOf('.') + i] === '0') {
-          zeroDecimals++;
-        } else {
-          break;
-        }
-      }
-      const displayDecimals =
-        zeroDecimals > 0 ? zeroDecimals + decimals : decimals;
-
-      array = array.slice(0, array.indexOf('.') + displayDecimals + 1);
-    }
-  }
-
-  if (addCommas) {
-    // add comas every 3 characters
-    array = array.reverse();
-    const reference = denomination
-      ? array.length - array.indexOf('.') - 1
-      : array.length;
-    const count = Math.floor(reference / 3);
-    for (let i = 1; i <= count; i++) {
-      const position = array.indexOf('.') + 3 * i + i;
-      if (position !== array.length) {
-        array.splice(position, 0, ',');
-      }
-    }
-    array = array.reverse();
-  }
-
-  const allDecimalsZero = array
-    .slice(array.indexOf('.') + 1)
-    .every((digit) => digit.toString() === '0');
-
-  const string = array.join('');
-
-  let output;
-  if (allDecimalsZero) {
-    output = string.split('.')[0];
-  } else {
-    output =
-      decimals === 0 && !showLastNonZeroDecimal
-        ? string.split('.').join('')
-        : string;
-  }
-
-  if (negative) {
-    output = '-' + output;
-  }
-
-  return output;
+export interface DenominateType {
+  value: string;
+  showLastNonZeroDecimal?: boolean;
+  showLabel?: boolean;
+  token?: string | React.ReactNode;
+  decimals?: number;
+  denomination?: number;
+  showTooltip?: boolean;
+  'data-testid'?: string;
 }
 
-interface DenominateType {
-  input: string;
-  denomination: number;
-  decimals: number;
-  showLastNonZeroDecimal: boolean;
-  addCommas?: boolean;
-}
+const CompleteValueTooltip = ({
+  completeValue,
+  children
+}: {
+  completeValue: string;
+  children: React.ReactNode;
+}) => (
+  <OverlayTrigger
+    placement='top'
+    delay={{ show: 0, hide: 400 }}
+    overlay={(props: any) => (
+      <Tooltip {...props} show={props.show.toString()}>
+        {completeValue}
+      </Tooltip>
+    )}
+  >
+    <span>{children}</span>
+  </OverlayTrigger>
+);
 
-export const denominate = ({
-  input,
-  denomination,
-  decimals,
-  showLastNonZeroDecimal = false,
-  addCommas = true
-}: DenominateType) => {
-  if (!stringIsInteger(input, false)) {
-    throw new Error('Invalid input');
-  }
+const denominateInvalid = (props: DenominateType) => {
+  return (
+    <span
+      data-testid={
+        props['data-testid'] ? props['data-testid'] : 'denominateComponent'
+      }
+    >
+      <span className='int-amount'>...</span>
+    </span>
+  );
+};
 
-  return format(
-    input,
+const denominateValid = (props: DenominateType, egldLabel?: string) => {
+  const {
+    value,
+    showLastNonZeroDecimal = false,
+    showLabel = true,
+    showTooltip = true
+  } = props;
+  const decimals = props.decimals !== undefined ? props.decimals : DIGITS;
+  const denomination =
+    props.denomination !== undefined ? props.denomination : DECIMALS;
+
+  const denominatedValue = denominate({
+    input: value,
     denomination,
     decimals,
-    showLastNonZeroDecimal,
-    addCommas
+    showLastNonZeroDecimal
+  });
+
+  const valueParts = denominatedValue.split('.');
+  const hasNoDecimals = valueParts.length === 1;
+  const isNotZero = denominatedValue !== '0';
+
+  if (decimals > 0 && hasNoDecimals && isNotZero) {
+    let zeros = '';
+
+    for (let i = 1; i <= decimals; i++) {
+      zeros = zeros + '0';
+    }
+
+    valueParts.push(zeros);
+  }
+
+  const completeValue = denominate({
+    input: value,
+    denomination,
+    decimals,
+    showLastNonZeroDecimal: true
+  });
+
+  const DisplayValue = () => (
+    <>
+      <span className='int-amount'>{valueParts[0]}</span>
+      {valueParts.length > 1 && (
+        <span className='decimals'>.{valueParts[1]}</span>
+      )}
+    </>
   );
+
+  return (
+    <span
+      data-testid={
+        props['data-testid'] ? props['data-testid'] : 'denominateComponent'
+      }
+    >
+      {showTooltip && completeValue !== denominatedValue ? (
+        <CompleteValueTooltip completeValue={completeValue}>
+          <DisplayValue />
+        </CompleteValueTooltip>
+      ) : (
+        <DisplayValue />
+      )}
+
+      {showLabel && (
+        <span className={`symbol ${props.token ? 'text-muted' : ''}`}>
+          &nbsp;{props.token ? props.token : egldLabel}
+        </span>
+      )}
+    </span>
+  );
+};
+
+export const Denominate = (props: DenominateType) => {
+  const { egldLabel } = useSelector(activeNetworkSelector);
+  const { value } = props;
+
+  return !stringIsInteger(value)
+    ? denominateInvalid(props)
+    : denominateValid(props, egldLabel);
 };

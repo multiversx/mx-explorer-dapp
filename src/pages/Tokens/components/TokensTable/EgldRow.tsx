@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { PAGE_SIZE } from 'appConstants';
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
-import { pagerHelper } from 'components/Pager/pagerHelper';
+import { pagerHelper } from 'components/Pager/helpers/pagerHelper';
 
 import { useGetNodeFilters, useGetPage, useGetSearch, useGetSort } from 'hooks';
 import {

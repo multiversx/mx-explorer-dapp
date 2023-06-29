@@ -12,14 +12,12 @@ import {
   CardItem,
   AccountLink,
   SocialDetailItem,
-  DescriptionDetailItem
+  DescriptionDetailItem,
+  NftPreview
 } from 'components';
 import { formatDate, getNftText } from 'helpers';
-
 import { nftSelector } from 'redux/selectors';
 import { NftTypeEnum } from 'types';
-
-import { NftPreview } from './NftPreview';
 
 export const NftDetailsCard = () => {
   const ref = useRef(null);

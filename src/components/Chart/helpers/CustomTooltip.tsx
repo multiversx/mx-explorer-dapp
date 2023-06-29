@@ -2,9 +2,8 @@ import React from 'react';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { denominate } from 'components/Denominate/denominate';
 
-import { usdValue } from 'helpers';
+import { denominate, usdValue } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 
 const getTooltipLabel = (label: string) => {

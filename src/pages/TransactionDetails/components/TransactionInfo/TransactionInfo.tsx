@@ -27,10 +27,10 @@ import {
   FormatUSD,
   TransactionGuardianIcon
 } from 'components';
-import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
 import {
   addressIsBech32,
+  denominate,
   formatDate,
   urlBuilder,
   isContract,

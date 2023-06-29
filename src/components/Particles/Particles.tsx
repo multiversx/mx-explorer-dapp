@@ -195,14 +195,17 @@ export const Particles = memo(() => {
     };
   }, []);
 
-  const hasAnimation = !(isExcluded() || !isWebGLReady);
+  const skipAnimation = isExcluded() || !isWebGLReady;
 
   return (
     <div
-      className={`particles ${hasAnimation ? '' : 'static-bg'}`}
+      className={`particles ${skipAnimation ? 'static-bg' : ''}`}
       id='canvas-container'
+      {...(skipAnimation
+        ? { style: { backgroundImage: 'url(/assets/img/three/static-bg.png)' } }
+        : {})}
     >
-      {hasAnimation && <AnimationCanvas />}
+      {!skipAnimation && <AnimationCanvas />}
     </div>
   );
 });
