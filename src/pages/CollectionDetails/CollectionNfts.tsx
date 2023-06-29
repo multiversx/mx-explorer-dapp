@@ -12,7 +12,7 @@ import {
   NftBadge
 } from 'components';
 import { urlBuilder, getNftText } from 'helpers';
-import { useAdapter, useGetPage, useGetNodeFilters, useGetSearch } from 'hooks';
+import { useAdapter, useGetPage, useGetSearch } from 'hooks';
 import { CollectionTabs } from 'layouts/CollectionLayout/CollectionTabs';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { NftType } from 'types';
