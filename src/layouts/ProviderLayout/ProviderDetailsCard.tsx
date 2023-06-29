@@ -20,9 +20,11 @@ import {
   NetworkLink,
   Trim
 } from 'components';
-import { DelegationCap } from 'components/ProvidersTable/DelegationCap';
-import { PercentageFilled } from 'components/ProvidersTable/PercentageFilled';
-import { hasDelegationCap } from 'components/ProvidersTable/PercentageFilled';
+import { DelegationCap } from 'components/ProvidersTable/components/DelegationCap';
+import {
+  PercentageFilled,
+  hasDelegationCap
+} from 'components/ProvidersTable/components/PercentageFilled';
 import { urlBuilder } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
 import { ProviderType } from 'types';

@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 
-import { denominate } from 'components/Denominate/denominate';
 import { DECIMALS, DIGITS } from 'config';
+import { denominate } from 'helpers';
 import {
   TransactionType,
   TransactionTokenArgumentType,

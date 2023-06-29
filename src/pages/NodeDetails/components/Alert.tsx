@@ -2,7 +2,7 @@ import React from 'react';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { RowIssueIcon } from 'components/NodesTable/RowIssueIcon';
+import { RowIssueIcon } from 'components/NodesTable/components/RowIssueIcon';
 import { getNodeIssue } from 'helpers';
 import { NodeType } from 'types';
 

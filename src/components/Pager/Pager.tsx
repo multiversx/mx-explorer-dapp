@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS, PAGE_SIZE, MAX_RESULTS } from 'appConstants';
-import { pagerHelper } from './pagerHelper';
+import { pagerHelper } from './helpers/pagerHelper';
 
 export const Pager = ({
   total,

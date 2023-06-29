@@ -21,7 +21,7 @@ import {
   Denominate,
   LockedAmountTooltip
 } from 'components';
-import { getIcon } from 'components/NodesTable/RowIcon';
+import { getIcon } from 'components/NodesTable/components/RowIcon';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'types';
 
