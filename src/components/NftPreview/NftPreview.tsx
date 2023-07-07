@@ -40,24 +40,27 @@ export const Thumbnail = ({
   return thumbnail ? (
     <OverlayTrigger
       placement='top'
-      delay={{ show: 250, hide: 400 }}
+      delay={{ show: 150, hide: 300 }}
       onExited={() => {
         setLoaded(false);
       }}
-      overlay={(props) => (
-        <Tooltip id='nft-tooltip' {...props}>
-          <div style={{ width: '90px' }}>
+      overlay={(props: any) => (
+        <Tooltip
+          {...props}
+          className='nft-tooltip'
+          show={props.show.toString()}
+        >
+          <div className='preview-wrapper'>
             {!loaded && (
               <FontAwesomeIcon
                 icon={faSpinnerThird}
                 size='2x'
-                className='text-white fa-spin fast-spin'
+                className='image-loader text-white fa-spin fast-spin'
               />
             )}
             <img
               src={thumbnail}
               alt=' '
-              height={90}
               onLoad={() => {
                 setLoaded(true);
               }}
@@ -66,7 +69,7 @@ export const Thumbnail = ({
         </Tooltip>
       )}
     >
-      {children}
+      <span>{children}</span>
     </OverlayTrigger>
   ) : (
     <>{children}</>
@@ -94,15 +97,15 @@ export const NftPreview = ({ token }: { token: NftType }) => {
                 {link.startsWith(
                   'https://ipfs.io/ipfs/'
                 ) /* && token.isWhitelistedStorage === true */ ? (
-                  <Thumbnail link={found ? '' : link} token={token} index={i}>
-                    <Anchorme
-                      linkComponent={ModalLink}
-                      target='_blank'
-                      rel='noreferrer noopener'
-                    >
+                  <ModalLink
+                    href={found ? stringWithLinks : link}
+                    target='_blank'
+                    rel='noreferrer noopener'
+                  >
+                    <Thumbnail link={found ? '' : link} token={token} index={i}>
                       {found ? stringWithLinks : link}
-                    </Anchorme>
-                  </Thumbnail>
+                    </Thumbnail>
+                  </ModalLink>
                 ) : (
                   <span className='text-break'>
                     {found ? (
