@@ -104,7 +104,7 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
       );
       const nonZeroDecimals = [];
       for (let i = firstNonZeroIndex; i <= decimalArray.length - 1; i++) {
-        if (nonZeroDecimals.length < decimals) {
+        if (nonZeroDecimals.length < Math.max(decimals, 2)) {
           nonZeroDecimals.push(decimalArray[i]);
         }
       }
