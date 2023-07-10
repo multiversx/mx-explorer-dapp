@@ -177,6 +177,17 @@
     max-width: 15rem;
   }
   @include media-breakpoint-up(xl) {
+    max-width: 26rem;
+  }
+}
+
+.truncate-item-xxl {
+  @extend .text-truncate;
+  max-width: 10rem;
+  @include media-breakpoint-up(lg) {
+    max-width: 15rem;
+  }
+  @include media-breakpoint-up(xl) {
     max-width: 36rem;
   }
 }
