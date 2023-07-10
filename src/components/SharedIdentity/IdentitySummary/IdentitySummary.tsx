@@ -38,7 +38,7 @@ export const IdentitySummary = ({
                         <NetworkLink
                           to={urlBuilder.identityDetails(identity.identity)}
                         >
-                          <span className='truncate-item-xl d-block'>
+                          <span className='truncate-item-xxl d-block'>
                             {identity.name ? identity.name : 'N/A'}
                           </span>
                         </NetworkLink>
