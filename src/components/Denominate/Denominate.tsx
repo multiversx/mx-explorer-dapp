@@ -1,9 +1,11 @@
 import React from 'react';
+
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { DECIMALS, DIGITS } from 'config';
 
+import { MAX_DISPLAY_ZERO_DECIMALS } from 'appConstants';
+import { DECIMALS, DIGITS } from 'config';
 import { denominate } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
 
@@ -68,6 +70,13 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
     showLastNonZeroDecimal
   });
 
+  const completeValue = denominate({
+    input: value,
+    denomination,
+    decimals,
+    showLastNonZeroDecimal: true
+  });
+
   const valueParts = denominatedValue.split('.');
   const hasNoDecimals = valueParts.length === 1;
   const isNotZero = denominatedValue !== '0';
@@ -82,21 +91,43 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
     valueParts.push(zeros);
   }
 
-  const completeValue = denominate({
-    input: value,
-    denomination,
-    decimals,
-    showLastNonZeroDecimal: true
-  });
+  const DisplayValue = () => {
+    if (
+      !showLastNonZeroDecimal &&
+      denominatedValue === '0' &&
+      denominatedValue !== completeValue
+    ) {
+      const valueParts = completeValue.split('.');
+      const decimalArray = valueParts[1].split('');
+      const firstNonZeroIndex = decimalArray.findIndex(
+        (digit) => digit !== '0'
+      );
+      const nonZeroDecimals = [];
+      for (let i = firstNonZeroIndex; i <= decimalArray.length - 1; i++) {
+        if (nonZeroDecimals.length < decimals) {
+          nonZeroDecimals.push(decimalArray[i]);
+        }
+      }
 
-  const DisplayValue = () => (
-    <>
-      <span className='int-amount'>{valueParts[0]}</span>
-      {valueParts.length > 1 && (
-        <span className='decimals'>.{valueParts[1]}</span>
-      )}
-    </>
-  );
+      if (firstNonZeroIndex > MAX_DISPLAY_ZERO_DECIMALS) {
+        return (
+          <>
+            <span className='int-amount'>0</span>
+            <span className='decimals'>.0...0{nonZeroDecimals.join('')}</span>
+          </>
+        );
+      }
+    }
+
+    return (
+      <>
+        <span className='int-amount'>{valueParts[0]}</span>
+        {valueParts.length > 1 && (
+          <span className='decimals'>.{valueParts[1]}</span>
+        )}
+      </>
+    );
+  };
 
   return (
     <span
