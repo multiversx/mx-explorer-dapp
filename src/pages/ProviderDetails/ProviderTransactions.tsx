@@ -13,7 +13,7 @@ export const ProviderTransactions = () => {
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { getTransactions, getTransactionsCount } = useAdapter();
+  const { getAccountTransfers, getAccountTransfersCount } = useAdapter();
 
   const { hash: address } = useParams();
 
@@ -28,7 +28,7 @@ export const ProviderTransactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getTransactions, getTransactionsCount, {
+  } = useFetchTransactions(getAccountTransfers, getAccountTransfersCount, {
     address
   });
 
