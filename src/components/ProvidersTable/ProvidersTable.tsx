@@ -193,9 +193,8 @@ export const ProvidersTable = ({
             <tr key={provider.provider}>
               {showIdentity ? (
                 <td>
-                  <div className='d-flex align-items-center'>
+                  <div className='d-flex align-items-center hash-lg'>
                     <IdentityAvatar identity={provider.identityDetails || {}} />
-
                     <NetworkLink
                       to={urlBuilder.providerDetails(provider.provider)}
                       className='trim-wrapper'
@@ -231,7 +230,7 @@ export const ProvidersTable = ({
                 </td>
               ) : (
                 <td>
-                  <div className='d-flex align-items-center'>
+                  <div className='d-flex align-items-center hash-lg'>
                     <NetworkLink
                       to={urlBuilder.providerDetails(provider.provider)}
                       className='trim-wrapper'

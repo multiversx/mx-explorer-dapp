@@ -44,7 +44,7 @@ export const RowIssueIcon = ({
     switch (true) {
       case node.status === 'jailed':
         return (
-          <Overlay title='Jailed'>
+          <Overlay title='Jailed' className='node-icon'>
             <FontAwesomeIcon
               icon={icon}
               className='text-danger ms-1'
@@ -55,7 +55,7 @@ export const RowIssueIcon = ({
 
       case node.issues && node.issues.length > 0: {
         return (
-          <Overlay title={getNodeIssue(node)}>
+          <Overlay title={getNodeIssue(node)} className='node-icon'>
             <FontAwesomeIcon
               icon={icon}
               className='ms-1 text-warning'

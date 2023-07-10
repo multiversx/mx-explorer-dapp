@@ -79,11 +79,11 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
               </NetworkLink>
             </div>
             {identity.name && identity.name.length > 70 ? (
-              <NetworkLink to={link} className='trim-wrapper'>
+              <NetworkLink to={link} className='trim-wrapper trim-size-xl'>
                 <Trim text={identity.name} />
               </NetworkLink>
             ) : (
-              <NetworkLink to={link}>
+              <NetworkLink to={link} className='trim-wrapper trim-size-xl'>
                 {identity.name ? identity.name : 'N/A'}
               </NetworkLink>
             )}

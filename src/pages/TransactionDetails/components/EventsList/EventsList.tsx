@@ -69,7 +69,10 @@ export const EventsList = ({
                 <div className='row mb-3 d-flex flex-column flex-sm-row'>
                   <div className='col-sm-2 col-left'>Address</div>
                   <div className='col-sm-10 d-flex align-items-center'>
-                    <NetworkLink to={urlBuilder.accountDetails(event.address)}>
+                    <NetworkLink
+                      to={urlBuilder.accountDetails(event.address)}
+                      className='trim-wrapper'
+                    >
                       <Trim text={event.address} />
                     </NetworkLink>
                     <CopyButton

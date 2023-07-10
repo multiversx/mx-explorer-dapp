@@ -52,9 +52,9 @@ export const StandardRow = ({
   return (
     <>
       <td>
-        <div className='d-flex align-items-center'>
+        <div className='d-flex align-items-center hash'>
           <RowIcon node={nodeData} />
-          <RowFullHistory node={nodeData} small={true} />
+          <RowFullHistory node={nodeData} />
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}
             className='trim-wrapper'

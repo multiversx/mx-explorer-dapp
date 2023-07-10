@@ -19,7 +19,7 @@ export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
         )}
       </td>
       <td>
-        <div className='d-flex align-items-center'>
+        <div className='d-flex align-items-center hash'>
           <RowIcon node={nodeData} />
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}

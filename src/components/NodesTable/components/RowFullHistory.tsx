@@ -14,11 +14,11 @@ export const RowFullHistory = ({
 }) => {
   if (node.type === 'observer' && node.fullHistory) {
     return (
-      <Overlay title='Full History'>
+      <Overlay title='Full History' className='node-icon'>
         <div className='d-flex align-items-center justify-content-center'>
           <FontAwesomeIcon
             icon={faHistory}
-            className='text-neutral-400 ms-1 me-2'
+            className='text-neutral-400 mx-1'
             size={small ? 'xs' : '1x'}
           />
         </div>
