@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { faClock, faTrophy } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
@@ -13,7 +13,8 @@ import {
   AccountLink,
   SocialDetailItem,
   DescriptionDetailItem,
-  NftPreview
+  NftPreview,
+  SpotlightButton
 } from 'components';
 import { formatDate, getNftText } from 'helpers';
 import { nftSelector } from 'redux/selectors';
@@ -36,13 +37,16 @@ export const NftDetailsCard = () => {
         <div className='col-12'>
           <div className='card'>
             <div className='card-header'>
-              <div className='card-header-item d-flex align-items-center'>
+              <div className='card-header-item d-flex align-items-center justify-content-between gap-3 flex-wrap'>
                 <h5
                   data-testid='title'
                   className='mb-0 d-flex align-items-center'
                 >
                   {getNftText(nftState.type)} Details
                 </h5>
+                {!nftState.scamInfo && (
+                  <SpotlightButton path={`/nfts/${nftState.identifier}`} />
+                )}
               </div>
             </div>
             <div className='card-body'>

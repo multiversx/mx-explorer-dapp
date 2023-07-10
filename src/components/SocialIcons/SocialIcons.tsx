@@ -94,7 +94,7 @@ export const SocialIcons = ({ assets }: { assets: any }) => {
               className='icon d-flex align-items-center justify-content-center mx-2'
               href={assets[social]}
               aria-label={social}
-              rel='noreferrer nofollow'
+              rel='noreferrer nofollow noopener'
             >
               <Icon icon={social} />
             </a>

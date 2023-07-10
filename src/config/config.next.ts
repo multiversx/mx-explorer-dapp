@@ -15,6 +15,7 @@ export const networks: NetworkType[] = [
     egldLabel: 'EGLD',
     walletAddress: 'https://wallet.multiversx.com',
     explorerAddress: 'https://explorer.multiversx.com',
+    nftExplorerAddress: 'https://xspotlight.com',
     apiAddress: '***REMOVED***',
     extrasApi: '***REMOVED***'
   },
@@ -26,6 +27,7 @@ export const networks: NetworkType[] = [
     egldLabel: 'xEGLD',
     walletAddress: 'https://testnet-wallet.multiversx.com/',
     explorerAddress: 'https://testnet-explorer.multiversx.com/',
+    nftExplorerAddress: 'https://testnet.xspotlight.com',
     apiAddress: 'https://testnet-api.multiversx.com'
   },
   {
@@ -37,6 +39,7 @@ export const networks: NetworkType[] = [
     egldLabel: 'xEGLD',
     walletAddress: 'https://devnet-wallet.multiversx.com',
     explorerAddress: 'https://devnet-explorer.multiversx.com',
+    nftExplorerAddress: 'https://devnet.xspotlight.com',
     apiAddress: 'https://devnet-api.multiversx.com'
   },
   {
@@ -47,6 +50,7 @@ export const networks: NetworkType[] = [
     egldLabel: 'EGLD',
     walletAddress: 'https://wallet.multiversx.com',
     explorerAddress: 'https://explorer.multiversx.com',
+    nftExplorerAddress: 'https://xspotlight.com',
     apiAddress: '***REMOVED***',
     extrasApi: '***REMOVED***',
     growthApi: 'https://tools.multiversx.com/growth-api',

@@ -91,7 +91,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                       />
                       <a
                         target='_blank'
-                        rel='noreferrer nofollow'
+                        rel='noreferrer nofollow noopener'
                         className='text-primary-200'
                         href={
                           identity.twitter.includes('twitter.com')
@@ -112,7 +112,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                       />
                       <a
                         target='_blank'
-                        rel='noreferrer nofollow'
+                        rel='noreferrer nofollow noopener'
                         className='text-primary-200'
                         href={identity.website}
                       >
@@ -171,7 +171,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 <a
                   className='btn btn-block btn-sm btn-primary'
                   target='_blank'
-                  rel='noreferrer nofollow'
+                  rel='noreferrer nofollow noopener'
                   href={walletAddress}
                 >
                   Stake now
