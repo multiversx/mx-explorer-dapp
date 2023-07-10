@@ -34,8 +34,7 @@ export const AccountTabs = () => {
     {
       tabLabel: 'Staking',
       tabTo: urlBuilder.accountDetailsStaking(address),
-      activationRoutes: [accountsRoutes.accountStaking],
-      show: !isContract(address)
+      activationRoutes: [accountsRoutes.accountStaking]
     },
     {
       tabLabel: 'Analytics',
