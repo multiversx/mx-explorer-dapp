@@ -53,11 +53,9 @@ export const TransactionRow = ({
   }
 
   return (
-    <tr
-      className={`animated-row trim-size-sm ${transaction.isNew ? 'new' : ''}`}
-    >
+    <tr className={`animated-row ${transaction.isNew ? 'new' : ''}`}>
       <td>
-        <div className='d-flex align-items-center'>
+        <div className='d-flex align-items-center hash'>
           <TransactionIcon transaction={transaction} />
           <NetworkLink
             to={urlBuilder.transactionDetails(

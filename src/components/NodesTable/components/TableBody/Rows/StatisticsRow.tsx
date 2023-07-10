@@ -10,7 +10,7 @@ export const StatisticsRow = ({ nodeData }: { nodeData: NodeType }) => {
   return (
     <>
       <td>
-        <div className='d-flex align-items-center'>
+        <div className='d-flex align-items-center hash'>
           <RowIcon node={nodeData} />
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}
