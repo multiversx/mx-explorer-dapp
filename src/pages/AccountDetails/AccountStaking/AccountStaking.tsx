@@ -68,7 +68,7 @@ export const AccountStaking = () => {
                       <div className='px-spacer py-3 delegation-title'>
                         Staking List
                       </div>
-                      <div className='d-flex flex-column'>
+                      <div className='d-flex flex-column staking-list'>
                         {displayDelegation.map((delegation, i) => {
                           const provider = delegationProviders?.find(
                             ({ provider }) => delegation.contract === provider
