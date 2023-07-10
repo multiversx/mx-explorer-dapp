@@ -24,7 +24,7 @@ export const CollectionNfts = () => {
   const { collectionState } = useSelector(collectionSelector);
   const { type } = collectionState;
   const { getCollectionNfts, getCollectionNftsCount } = useAdapter();
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const { search } = useGetSearch();
 
   const { hash: collection } = useParams() as any;
@@ -36,7 +36,7 @@ export const CollectionNfts = () => {
   const fetchCollectionNfts = () => {
     if (ref.current !== null) {
       Promise.all([
-        getCollectionNfts({ search, page, collection }),
+        getCollectionNfts({ search, page, size, collection }),
         getCollectionNftsCount({ search, collection })
       ]).then(([nftsData, count]) => {
         if (nftsData.success && count.success) {

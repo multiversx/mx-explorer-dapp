@@ -24,7 +24,7 @@ export const NftAccounts = () => {
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const { getNftAccounts, getNftAccountsCount } = useAdapter();
 
   const { hash: identifier } = useParams() as any;
@@ -35,7 +35,7 @@ export const NftAccounts = () => {
 
   const fetchAccounts = () => {
     Promise.all([
-      getNftAccounts({ identifier, page }),
+      getNftAccounts({ identifier, page, size }),
       getNftAccountsCount({ identifier })
     ]).then(([nftAccountsData, nftAccountsCountData]) => {
       if (ref.current !== null) {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { ELLIPSIS } from 'appConstants';
+import { ELLIPSIS, MAX_TRANSACTIONS_PAGE_SIZE } from 'appConstants';
 import { useGetPage, useGetTransactionFilters } from 'hooks';
 import { UITransactionType, ApiAdapterResponseType } from 'types';
 
@@ -13,7 +13,7 @@ export const useFetchTransactions = (
   const [searchParams] = useSearchParams();
 
   const urlParams = useGetTransactionFilters();
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
 
   const [transactions, setTransactions] = useState<UITransactionType[]>([]);
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
@@ -22,6 +22,8 @@ export const useFetchTransactions = (
     number | typeof ELLIPSIS
   >(ELLIPSIS);
   let isCalled = false;
+  const maxTransactionsSize =
+    size > MAX_TRANSACTIONS_PAGE_SIZE ? MAX_TRANSACTIONS_PAGE_SIZE : size;
 
   const fetchTransactions = (paramsChange = false) => {
     if (!isCalled) {
@@ -30,7 +32,12 @@ export const useFetchTransactions = (
         setDataChanged(true);
       }
       Promise.all([
-        transactionPromise({ ...urlParams, ...filters, page }),
+        transactionPromise({
+          ...urlParams,
+          ...filters,
+          page,
+          size: maxTransactionsSize
+        }),
         transactionCountPromise({ ...urlParams, ...filters })
       ])
         .then(([transactionsData, transactionsCountData]) => {

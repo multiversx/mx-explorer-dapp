@@ -19,7 +19,7 @@ export const TokensMeta = () => {
 
   const { search: searchLocation } = useLocation();
   const { search } = useGetSearch();
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const { getCollections, getCollectionsCount } = useAdapter();
 
   const [metaCollections, setMetaCollections] = useState<CollectionType[]>([]);
@@ -32,7 +32,7 @@ export const TokensMeta = () => {
     const type = 'MetaESDT';
 
     Promise.all([
-      getCollections({ search, page, type }),
+      getCollections({ search, page, size, type }),
       getCollectionsCount({ search, type })
     ]).then(([collectionsData, count]) => {
       if (ref.current !== null) {

@@ -2,11 +2,10 @@ import React from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
-import { PAGE_SIZE } from 'appConstants';
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import { pagerHelper } from 'components/Pager/helpers/pagerHelper';
 
-import { useGetNodeFilters, useGetPage, useGetSearch, useGetSort } from 'hooks';
+import { useGetPage, useGetSearch, useGetSort } from 'hooks';
 import {
   economicsSelector,
   statsSelector,
@@ -46,7 +45,7 @@ export const EgldRow = ({
     unprocessed: unProcessedStats
   } = useSelector(statsSelector);
 
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const { search } = useGetSearch();
   const { sort, order } = useGetSort();
 
@@ -63,7 +62,7 @@ export const EgldRow = ({
 
   const { lastPage } = pagerHelper({
     total: totalTokens,
-    itemsPerPage: PAGE_SIZE,
+    itemsPerPage: size,
     page: Number(page)
   });
   const isLastPage = lastPage === page;

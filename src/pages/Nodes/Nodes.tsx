@@ -19,7 +19,7 @@ export const Nodes = () => {
   const [searchParams] = useSearchParams();
   const { getNodes, getNodesCount } = useAdapter();
   const { search } = useGetSearch();
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const nodeFilters = useGetNodeFilters();
   const sort = useGetSort();
   const [nodes, setNodes] = useState<NodeType[]>([]);
@@ -32,7 +32,7 @@ export const Nodes = () => {
     setDataReady(undefined);
 
     Promise.all([
-      getNodes({ ...nodeFilters, ...sort, search, page }),
+      getNodes({ ...nodeFilters, ...sort, search, page, size }),
       getNodesCount({ ...nodeFilters, ...sort, search })
     ]).then(([nodesData, count]) => {
       setNodes(nodesData.data);

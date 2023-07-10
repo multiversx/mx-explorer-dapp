@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS, PAGE_SIZE, MAX_RESULTS } from 'appConstants';
+import { stringIsInteger } from 'helpers';
 import { pagerHelper } from './helpers/pagerHelper';
 
 export const Pager = ({
@@ -26,13 +27,17 @@ export const Pager = ({
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
-  const { page, ...rest } = params;
+
+  const { page, size, ...rest } = params;
+  const processedSize = stringIsInteger(String(size))
+    ? parseInt(String(size))
+    : itemsPerPage;
 
   const processedTotal = total !== ELLIPSIS ? Math.min(total, MAX_RESULTS) : 0;
 
   const { processedPage, lastPage, end, paginationArray } = pagerHelper({
     total: processedTotal,
-    itemsPerPage,
+    itemsPerPage: processedSize,
     page: Number(page)
   });
 

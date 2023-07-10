@@ -24,7 +24,7 @@ export const AccountContracts = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { account } = useSelector(accountSelector);
   const { txCount } = account;
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
 
   const { getAccountContracts, getAccountContractsCount } = useAdapter();
 
@@ -40,6 +40,7 @@ export const AccountContracts = () => {
     Promise.all([
       getAccountContracts({
         page,
+        size,
         address
       }),
       getAccountContractsCount(address)

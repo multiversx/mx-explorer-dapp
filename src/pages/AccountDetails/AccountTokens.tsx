@@ -25,7 +25,7 @@ export const AccountTokens = () => {
   const [searchParams] = useSearchParams();
   const { account } = useSelector(accountSelector);
   const { txCount } = account;
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
 
   const { getAccountTokens, getAccountTokensCount } = useAdapter();
 
@@ -39,6 +39,7 @@ export const AccountTokens = () => {
     Promise.all([
       getAccountTokens({
         page,
+        size,
         address,
         includeMetaESDT: true
       }),

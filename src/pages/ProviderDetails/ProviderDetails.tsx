@@ -19,7 +19,7 @@ export const ProviderDetails = () => {
   const { search: locationSearch } = useLocation();
   const { getNodes, getNodesCount } = useAdapter();
   const { search } = useGetSearch();
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const nodeFilters = useGetNodeFilters();
   const sort = useGetSort();
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -30,7 +30,14 @@ export const ProviderDetails = () => {
     setDataReady(undefined);
 
     Promise.all([
-      getNodes({ ...nodeFilters, ...sort, search, provider: address, page }),
+      getNodes({
+        ...nodeFilters,
+        ...sort,
+        search,
+        provider: address,
+        page,
+        size
+      }),
       getNodesCount({ ...nodeFilters, ...sort, search, provider: address })
     ]).then(([nodesData, count]) => {
       setNodes(nodesData.data);
