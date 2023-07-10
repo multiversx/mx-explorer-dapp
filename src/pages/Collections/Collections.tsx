@@ -34,7 +34,7 @@ export const Collections = () => {
   const ref = useRef(null);
   const isMainnet = useIsMainnet();
   const activeRoute = useActiveRoute();
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const { search } = useGetSearch();
   const { search: searchLocation, pathname } = useLocation();
   const { getCollections, getCollectionsCount } = useAdapter();
@@ -66,6 +66,7 @@ export const Collections = () => {
       getCollections({
         search,
         page,
+        size,
         type,
         sort: 'verifiedAndHolderCount'
       }),

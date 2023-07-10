@@ -21,7 +21,7 @@ import { NftType } from 'types';
 
 export const AccountNfts = () => {
   const ref = useRef(null);
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const [searchParams] = useSearchParams();
@@ -40,6 +40,7 @@ export const AccountNfts = () => {
     Promise.all([
       getAccountNfts({
         page,
+        size,
         address,
         excludeMetaESDT: true
       }),

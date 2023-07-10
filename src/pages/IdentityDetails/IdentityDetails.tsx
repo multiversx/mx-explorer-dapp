@@ -14,7 +14,7 @@ export const IdentityDetails = () => {
 
   const { search: searchLocation } = useLocation();
   const nodeFilters = useGetNodeFilters();
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const { search } = useGetSearch();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
@@ -30,7 +30,7 @@ export const IdentityDetails = () => {
     Promise.all([
       getIdentity(id),
       getProviders({ identity: id }),
-      getNodes({ ...nodeFilters, search, identity: id, page }),
+      getNodes({ ...nodeFilters, search, identity: id, page, size }),
       getNodesCount({ ...nodeFilters, search, identity: id })
     ]).then(([identityData, providersData, nodesData, nodesCount]) => {
       if (ref.current !== null) {

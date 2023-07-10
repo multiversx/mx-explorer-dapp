@@ -26,7 +26,7 @@ export const Accounts = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
 
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
 
   const [accounts, setAccounts] = useState<AccountType[]>([]);
@@ -34,7 +34,7 @@ export const Accounts = () => {
   const [totalAccounts, setTotalAccounts] = useState<number | '...'>('...');
 
   const fetchAccounts = () => {
-    getAccounts(page).then(({ data, success }) => {
+    getAccounts({ page, size }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
           setAccounts(data);

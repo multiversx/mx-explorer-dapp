@@ -19,7 +19,7 @@ export const NodesQueue = () => {
   const { search: searchLocation } = useLocation();
   const { getNodes, getNodesCount } = useAdapter();
   const { search } = useGetSearch();
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const nodeFilters = useGetNodeFilters();
   const sort = useGetSort();
   const [nodes, setNodes] = useState<NodeType[]>([]);
@@ -42,7 +42,7 @@ export const NodesQueue = () => {
     setDataReady(undefined);
 
     Promise.all([
-      getNodes({ ...queryObject, page }),
+      getNodes({ ...queryObject, page, size }),
       getNodesCount(queryObject)
     ]).then(([nodesData, count]) => {
       setNodes(nodesData.data);

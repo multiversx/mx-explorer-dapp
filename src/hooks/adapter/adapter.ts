@@ -122,6 +122,7 @@ export const useAdapter = () => {
 
     getBlocks: async ({
       page = 1,
+      size = PAGE_SIZE,
       shard,
       epoch,
       proposer,
@@ -131,8 +132,8 @@ export const useAdapter = () => {
         const { data: blocks, success } = await provider({
           url: '/blocks',
           params: {
-            from: (page - 1) * PAGE_SIZE,
-            size: PAGE_SIZE,
+            from: (page - 1) * size,
+            size,
             ...(proposer ? { proposer } : {}),
             ...(withProposerIdentity ? { withProposerIdentity } : {}),
             ...getShardAndEpochParams(shard, epoch),
@@ -212,12 +213,18 @@ export const useAdapter = () => {
 
     getScResult: (hash: string) => provider({ url: `/sc-results/${hash}` }),
 
-    getScResults: (page = 1) =>
+    getScResults: ({
+      page = 1,
+      size = PAGE_SIZE
+    }: {
+      page?: number;
+      size?: number;
+    }) =>
       provider({
         url: '/sc-results',
         params: {
-          from: (page - 1) * PAGE_SIZE,
-          size: PAGE_SIZE
+          from: (page - 1) * size,
+          size
         }
       }),
 
@@ -233,12 +240,18 @@ export const useAdapter = () => {
       withGuardianInfo?: boolean;
     }) => provider({ url: `/accounts/${address}`, params: rest }),
 
-    getAccounts: (page = 1) =>
+    getAccounts: ({
+      page = 1,
+      size = PAGE_SIZE
+    }: {
+      page?: number;
+      size?: number;
+    }) =>
       provider({
         url: '/accounts',
         params: {
-          from: (page - 1) * PAGE_SIZE,
-          size: PAGE_SIZE
+          from: (page - 1) * size,
+          size
         }
       }),
 
@@ -295,16 +308,18 @@ export const useAdapter = () => {
 
     getAccountContracts: ({
       address,
-      page
+      page = 1,
+      size = PAGE_SIZE
     }: {
       address: string;
       page: number;
+      size?: number;
     }) =>
       provider({
         url: `/accounts/${address}/contracts`,
         params: {
-          from: (page - 1) * PAGE_SIZE,
-          size: PAGE_SIZE
+          from: (page - 1) * size,
+          size
         }
       }),
 
@@ -332,7 +347,7 @@ export const useAdapter = () => {
 
     getAccountUpgrades: ({
       address,
-      size
+      size = PAGE_SIZE
     }: {
       address: string;
       size: number;
@@ -340,7 +355,7 @@ export const useAdapter = () => {
       provider({
         url: `/accounts/${address}/upgrades`,
         params: {
-          size: size ?? PAGE_SIZE
+          size
         }
       }),
 

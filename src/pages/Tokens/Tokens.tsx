@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { PAGE_SIZE } from 'appConstants';
 import { Loader, NetworkLink, Pager } from 'components';
 import {
   useAdapter,
@@ -29,7 +28,7 @@ export const Tokens = () => {
   const isMainnet = useIsMainnet();
   const { search: searchLocation } = useLocation();
   const { search } = useGetSearch();
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const { sort, order } = useGetSort();
   const { getTokens, getTokensCount } = useAdapter();
 
@@ -42,7 +41,7 @@ export const Tokens = () => {
 
   const fetchTokens = () => {
     Promise.all([
-      getTokens({ search, page, sort, order }),
+      getTokens({ search, page, size, sort, order }),
       getTokensCount({ search })
     ]).then(([tokensData, count]) => {
       if (ref.current !== null) {
@@ -126,11 +125,7 @@ export const Tokens = () => {
                       </div>
                       {tokens && tokens.length > 0 && (
                         <div className='d-none d-sm-flex'>
-                          <Pager
-                            total={totalTokens}
-                            itemsPerPage={PAGE_SIZE}
-                            show={tokens.length > 0}
-                          />
+                          <Pager total={totalTokens} show={tokens.length > 0} />
                         </div>
                       )}
                     </div>
@@ -146,11 +141,7 @@ export const Tokens = () => {
                       </div>
 
                       <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-                        <Pager
-                          total={totalTokens}
-                          itemsPerPage={PAGE_SIZE}
-                          show={tokens.length > 0}
-                        />
+                        <Pager total={totalTokens} show={tokens.length > 0} />
                       </div>
                     </>
                   ) : (

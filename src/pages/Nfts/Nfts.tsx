@@ -21,7 +21,7 @@ export const Nfts = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { search } = useGetSearch();
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const { getNfts, getNftsCount } = useAdapter();
 
   const [nfts, setNfts] = useState<NftType[]>([]);
@@ -32,7 +32,7 @@ export const Nfts = () => {
     const type = 'SemiFungibleESDT,NonFungibleESDT';
 
     Promise.all([
-      getNfts({ search, page, type }),
+      getNfts({ search, page, size, type }),
       getNftsCount({ search, type })
     ]).then(([nftsData, count]) => {
       if (ref.current !== null) {

@@ -26,7 +26,7 @@ export const TokenDetailsAccounts = () => {
   const { decimals, accounts: totalAccounts } = token;
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { page } = useGetPage();
+  const { page, size } = useGetPage();
   const { getTokenAccounts, getTokenAccountsCount } = useAdapter();
 
   const { hash: tokenId } = useParams() as any;
@@ -37,7 +37,7 @@ export const TokenDetailsAccounts = () => {
 
   const fetchAccounts = () => {
     Promise.all([
-      getTokenAccounts({ tokenId, page }),
+      getTokenAccounts({ tokenId, page, size }),
       getTokenAccountsCount({ tokenId })
     ]).then(([tokenAccountsData, tokenAccountsCountData]) => {
       if (ref.current !== null) {
