@@ -59,7 +59,7 @@ export const ModalLink = (props: LinkComponentProps) => {
                 href={props.href}
                 target={'_blank'}
                 className='mt-3'
-                rel='noreferrer noopener'
+                rel='noreferrer nofollow noopener'
               >
                 Continue to {link}
               </a>

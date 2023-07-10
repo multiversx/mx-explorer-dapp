@@ -55,7 +55,7 @@ export const DataField = ({
           <Anchorme
             linkComponent={ModalLink}
             target='_blank'
-            rel='noreferrer noopener'
+            rel='noreferrer nofollow noopener'
           >
             {stringWithLinks}
           </Anchorme>

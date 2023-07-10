@@ -12,12 +12,14 @@ import {
   DetailItem,
   NftBadge,
   TimeAgo,
-  SocialIcons
+  SocialIcons,
+  SpotlightButton
 } from 'components';
 import { urlBuilder, formatDate } from 'helpers';
 import { useActiveRoute } from 'hooks';
 import { collectionSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';
+import { NftTypeEnum } from 'types';
 
 export const CollectionDetailsCard = () => {
   const activeRoute = useActiveRoute();
@@ -39,7 +41,8 @@ export const CollectionDetailsCard = () => {
     canChangeOwner,
     canUpgrade,
     canAddSpecialRoles,
-    canTransfer
+    canTransfer,
+    scamInfo
   } = collectionState;
 
   const mergedAssets = {
@@ -56,7 +59,7 @@ export const CollectionDetailsCard = () => {
       <div className='col-12'>
         <div className='card'>
           <div className='card-header'>
-            <div className='card-header-item d-flex align-items-center'>
+            <div className='card-header-item d-flex align-items-center justify-content-between gap-3 flex-wrap'>
               <h5
                 data-testid='title'
                 className='mb-0 d-flex align-items-center'
@@ -66,6 +69,9 @@ export const CollectionDetailsCard = () => {
                   : 'Collection'}{' '}
                 Details
               </h5>
+              {!scamInfo && type !== NftTypeEnum.MetaESDT && (
+                <SpotlightButton path={`/collections/${collection}`} />
+              )}
             </div>
           </div>
           <div className='card-body'>

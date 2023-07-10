@@ -64,7 +64,7 @@ export const Switcher = () => {
               <a
                 key={link.id}
                 target='_blank'
-                rel='noreferrer nofollow'
+                rel='noreferrer nofollow noopener'
                 className={classNames('dropdown-item', {
                   active: activeNetworkId === link.id
                 })}

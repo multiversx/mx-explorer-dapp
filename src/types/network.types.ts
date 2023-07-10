@@ -9,6 +9,7 @@ export interface NetworkType extends Partial<NetworkConfigType> {
   growthApi?: string;
   elasticUrl?: string;
   proxyUrl?: string;
+  nftExplorerAddress?: string;
 }
 
 export interface NetworkUrlType {

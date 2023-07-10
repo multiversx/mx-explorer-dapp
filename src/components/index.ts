@@ -53,6 +53,7 @@ export * from './ShardSpan';
 export * from './SmallDetailItem';
 export * from './SocialIcons';
 export * from './Sort';
+export * from './SpotlightButton';
 export * from './TableWrapper';
 export * from './Tabs';
 export * from './TimeAgo';

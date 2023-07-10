@@ -100,7 +100,7 @@ export const NftPreview = ({ token }: { token: NftType }) => {
                   <ModalLink
                     href={found ? stringWithLinks : link}
                     target='_blank'
-                    rel='noreferrer noopener'
+                    rel='noreferrer nofollow noopener'
                   >
                     <Thumbnail link={found ? '' : link} token={token} index={i}>
                       {found ? stringWithLinks : link}
@@ -112,7 +112,7 @@ export const NftPreview = ({ token }: { token: NftType }) => {
                       <Anchorme
                         linkComponent={ModalLink}
                         target='_blank'
-                        rel='noreferrer noopener'
+                        rel='noreferrer nofollow noopener'
                       >
                         {stringWithLinks}
                       </Anchorme>

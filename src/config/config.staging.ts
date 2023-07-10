@@ -12,6 +12,7 @@ export const networks: NetworkType[] = [
     egldLabel: 'EGLD',
     walletAddress: '***REMOVED***',
     explorerAddress: '***REMOVED***',
+    nftExplorerAddress: 'https://devnet.xspotlight.com',
     apiAddress: '***REMOVED***',
     growthApi: 'https://tools.multiversx.com/growth-api'
   }

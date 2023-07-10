@@ -13,6 +13,7 @@ export const networks: NetworkType[] = [
     egldLabel: 'xEGLD',
     walletAddress: 'https://devnet-wallet.multiversx.com',
     explorerAddress: 'https://devnet-explorer.multiversx.com',
+    nftExplorerAddress: 'https://devnet.xspotlight.com',
     apiAddress: 'https://devnet-api.multiversx.com'
   }
 ];
