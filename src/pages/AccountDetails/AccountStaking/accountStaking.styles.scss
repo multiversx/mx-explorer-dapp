@@ -1,5 +1,6 @@
 @import './components/DetailsBlock/detailsBlock.styles.scss';
 @import './components/ProviderDetails/providerDetails.styles.scss';
+@import 'src/assets/scss/elements/scrollbar.scss';
 
 .account-staking {
   .delegation-row {
@@ -65,6 +66,13 @@
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
       }
+    }
+  }
+  .staking-list {
+    @include media-breakpoint-up(lg) {
+      max-height: 33rem;
+      overflow: auto;
+      @include webkit-scrollbar;
     }
   }
 }
