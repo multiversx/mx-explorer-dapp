@@ -1,29 +1,26 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
-import { txStatus } from 'components/TransactionStatus/txStatus';
 import { useAdapter } from 'hooks';
 import { refreshSelector } from 'redux/selectors/refresh';
-import { TransactionType } from 'types';
+import { TransactionType, TransactionApiStatusEnum } from 'types';
 
-import { TransactionInfo } from './TransactionInfo';
+import { TransactionInfo } from './components/TransactionInfo';
 
 export const TransactionDetails = () => {
   const params: any = useParams();
   const { hash: transactionId } = params;
-  const ref = React.useRef(null);
+  const ref = useRef(null);
 
   const { timestamp } = useSelector(refreshSelector);
 
   const { getTransaction } = useAdapter();
 
-  const [transaction, setTransaction] = React.useState<
-    TransactionType | undefined
-  >();
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [transaction, setTransaction] = useState<TransactionType | undefined>();
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchTransaction = () => {
     if (transactionId) {
@@ -39,7 +36,7 @@ export const TransactionDetails = () => {
   const checkRefetch = () => {
     if (
       transaction &&
-      (transaction.status.toLowerCase() === txStatus.pending.toLowerCase() ||
+      (transaction.status.toLowerCase() === TransactionApiStatusEnum.pending ||
         transaction.pendingResults) &&
       dataReady
     ) {
@@ -47,9 +44,9 @@ export const TransactionDetails = () => {
     }
   };
 
-  React.useEffect(fetchTransaction, [transactionId]);
+  useEffect(fetchTransaction, [transactionId]);
 
-  React.useEffect(checkRefetch, [timestamp]);
+  useEffect(checkRefetch, [timestamp]);
 
   return (
     <>

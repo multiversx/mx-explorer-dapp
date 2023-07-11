@@ -15,9 +15,8 @@
     border-radius: 1rem;
     height: 1.5rem;
 
-    &.square {
+    &.page-btn {
       min-width: 1.5rem;
-      width: 1.5rem;
     }
     &.active {
       background-color: var(--neutral-800);
@@ -29,14 +28,13 @@
       padding: 0.625rem;
     }
     @include media-breakpoint-up(md) {
-      padding: 0.75rem;
+      padding: 0.5rem 0.625rem;
       font-size: $font-size-base;
       border-radius: 2rem;
       height: 2rem;
 
-      &.square {
+      &.page-btn {
         min-width: 2rem;
-        width: 2rem;
       }
     }
   }

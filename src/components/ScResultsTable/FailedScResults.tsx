@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
+
 import { PageState } from 'components';
 
 export const FailedScResults = () => {

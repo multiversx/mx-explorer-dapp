@@ -11,7 +11,7 @@ export interface AccountLinkType {
 
 export const AccountLink = ({ address, assets }: AccountLinkType) => {
   return (
-    <div className='d-flex align-items-center'>
+    <div className='d-flex align-items-center hash'>
       <ScAddressIcon initiator={address} />
       {addressIsBech32(address) ? (
         <NetworkLink

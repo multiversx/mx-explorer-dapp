@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useAdapter } from 'hooks';
+import { ELLIPSIS } from 'appConstants';
+import { useAdapter, useIsMainnet } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
 import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
 import {
@@ -15,6 +16,7 @@ export const useHeadersTokensStats = () => {
   const headersTokens = useSelector(pageHeaderTokensStatsSelector);
   const { unprocessed } = useSelector(economicsSelector);
 
+  const isMainnet = useIsMainnet();
   const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
 
@@ -44,7 +46,7 @@ export const useHeadersTokensStats = () => {
         ).toFormat(0),
         ecosystemMarketCap: ecosystemMarketCap.isGreaterThan(0)
           ? ecosystemMarketCap.toFormat(0)
-          : '...'
+          : ELLIPSIS
       })
     );
 
@@ -52,7 +54,9 @@ export const useHeadersTokensStats = () => {
   };
 
   useEffect(() => {
-    getHeadersTokens();
+    if (isMainnet) {
+      getHeadersTokens();
+    }
   }, []);
 
   useEffect(() => {
@@ -60,7 +64,7 @@ export const useHeadersTokensStats = () => {
       setPageHeaderBlocksStatsEcosystemMarketCap(
         ecosystemMarketCap.isGreaterThan(0)
           ? ecosystemMarketCap.toFormat(0)
-          : '...'
+          : ELLIPSIS
       )
     );
   }, [ecosystemMarketCap]);

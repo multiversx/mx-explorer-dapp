@@ -36,8 +36,6 @@ export const ChartComposed = ({
 
   const [neutral800, muted, primary, secondary] = [
     'neutral-800',
-    'teal',
-    'violet-400',
     'muted',
     'primary',
     'secondary'

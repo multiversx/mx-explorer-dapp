@@ -3,12 +3,12 @@ import React from 'react';
 import { useIsMainnet } from 'hooks';
 import { MostUsed } from 'widgets';
 
-import { ChartContractsTransactions } from './ChartContractsTransactions';
-import { ChartPrice } from './ChartPrice';
-import { ChartStake } from './ChartStake';
-import { EconomicsCard } from './EconomicsCard';
-import { LatestBlocks } from './LatestBlocks';
-import { LatestTransactions } from './LatestTransactions';
+import { ChartContractsTransactions } from './components/ChartContractsTransactions';
+import { ChartPrice } from './components/ChartPrice';
+import { ChartStake } from './components/ChartStake';
+import { EconomicsCard } from './components/EconomicsCard';
+import { LatestBlocks } from './components/LatestBlocks';
+import { LatestTransactions } from './components/LatestTransactions';
 
 export const Home = () => {
   const isMainnet = useIsMainnet();

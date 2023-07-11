@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js';
 
+import { ELLIPSIS } from 'appConstants';
+
 export const usdValue = ({
   amount,
   usd,
@@ -12,7 +14,7 @@ export const usdValue = ({
   decimals?: number;
 }) => {
   if (!usd) {
-    return '...';
+    return ELLIPSIS;
   }
 
   const value = new BigNumber(amount).times(usd);

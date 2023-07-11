@@ -1,0 +1,24 @@
+@import './components/Footer/footer.styles.scss';
+@import './components/Header/header.styles.scss';
+@import './components/Hero/hero.styles.scss';
+
+.main-content {
+  width: 100vw;
+
+  > .main-content-container {
+    @include media-breakpoint-up(md) {
+      min-height: calc(100vh - #{$footer-height + $header-navbar-height});
+    }
+  }
+
+  .page-container {
+    @extend .d-flex;
+    @extend .flex-fill;
+    @extend .flex-column;
+
+    @include media-breakpoint-down(sm) {
+      width: 100vw;
+      max-width: 100%;
+    }
+  }
+}

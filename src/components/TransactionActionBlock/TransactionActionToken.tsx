@@ -14,11 +14,10 @@ export const TransactionActionToken = ({
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
 }) => {
-  const ref = React.useRef(null);
   const denomination = token.decimals !== undefined ? token.decimals : DECIMALS;
 
   return (
-    <div ref={ref} className='token-action-block d-contents'>
+    <div className='token-action-block d-contents'>
       {token && token.token && (
         <>
           {!noValue && token.value && (
@@ -50,7 +49,7 @@ export const TransactionActionToken = ({
           </NetworkLink>
           {token?.valueUSD && (
             <div className='me-1 text-truncate text-neutral-400 ms-1 text-lh-24'>
-              (<FormatUSD amount={token.valueUSD} digits={2} />)
+              (<FormatUSD amount={token.valueUSD} digits={2} usd={1} />)
             </div>
           )}
         </>

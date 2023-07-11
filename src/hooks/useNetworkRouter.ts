@@ -1,69 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
-import { networks } from 'config';
-import {
-  activeNetworkSelector,
-  defaultNetworkSelector,
-  activeThemeSelector
-} from 'redux/selectors';
-import {
-  setActiveTheme,
-  changeNetwork as changeStateNetwork
-} from 'redux/slices';
-
-import { ThemesEnum } from 'types';
+import { useGetURLNetwork } from 'hooks';
+import { activeNetworkSelector } from 'redux/selectors';
+import { changeNetwork as changeStateNetwork } from 'redux/slices';
 
 export const useNetworkRouter = () => {
-  const theme = useSelector(activeThemeSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const defaultNetwork = useSelector(defaultNetworkSelector);
-  const { id: defaultNetworkId, theme: defaultNetworkTheme } = defaultNetwork;
 
   const dispatch = useDispatch();
-  const { pathname } = useLocation();
-
-  const locationArray = pathname.substring(1).split('/');
-
-  const networkId = locationArray[0];
-
-  const allNetworkIds = networks.map((network) => network.id);
+  const urlNetwork = useGetURLNetwork();
 
   function changeNetwork() {
-    if (allNetworkIds.includes(networkId) && activeNetworkId !== networkId) {
-      // if route contains a network at the beginning replace the network
-      setTimeout(() => {
-        const foundNetwork = networks.find(({ id }) => id === networkId);
-        const networkTheme = foundNetwork?.theme;
-        if (foundNetwork) {
-          if (
-            networkTheme &&
-            networkTheme !== theme &&
-            theme !== ThemesEnum.default
-          ) {
-            dispatch(setActiveTheme(networkTheme as ThemesEnum));
-          }
-
-          dispatch(changeStateNetwork(foundNetwork));
-        }
-      });
-    } else if (
-      (allNetworkIds.includes(networkId) && defaultNetworkId === networkId) ||
-      (networkId === '' && activeNetworkId !== '')
-    ) {
-      // if selected testnet is the same as the default, reset the default
-      if (
-        defaultNetworkTheme &&
-        defaultNetworkTheme !== theme &&
-        theme !== ThemesEnum.default
-      ) {
-        dispatch(setActiveTheme(defaultNetworkTheme as ThemesEnum));
-        dispatch(changeStateNetwork(defaultNetwork));
-      }
+    if (urlNetwork && activeNetworkId !== urlNetwork.id) {
+      dispatch(changeStateNetwork(urlNetwork));
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(changeNetwork, [networkId, activeNetworkId]);
+  useEffect(changeNetwork, [urlNetwork, activeNetworkId]);
 };

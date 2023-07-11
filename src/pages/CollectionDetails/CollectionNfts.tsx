@@ -12,11 +12,10 @@ import {
   NftBadge
 } from 'components';
 import { urlBuilder, getNftText } from 'helpers';
-import { useAdapter, useURLSearchParams, useGetFilters } from 'hooks';
+import { useAdapter, useGetPage, useGetSearch } from 'hooks';
+import { CollectionTabs } from 'layouts/CollectionLayout/CollectionTabs';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { NftType } from 'types';
-
-import { CollectionTabs } from './CollectionLayout/CollectionTabs';
 
 export const CollectionNfts = () => {
   const ref = useRef(null);
@@ -25,9 +24,8 @@ export const CollectionNfts = () => {
   const { collectionState } = useSelector(collectionSelector);
   const { type } = collectionState;
   const { getCollectionNfts, getCollectionNftsCount } = useAdapter();
-  const { page } = useURLSearchParams();
-
-  const { getQueryObject, size } = useGetFilters();
+  const { page, size } = useGetPage();
+  const { search } = useGetSearch();
 
   const { hash: collection } = useParams() as any;
 
@@ -37,14 +35,13 @@ export const CollectionNfts = () => {
 
   const fetchCollectionNfts = () => {
     if (ref.current !== null) {
-      const queryObject = getQueryObject();
       Promise.all([
-        getCollectionNfts({ ...queryObject, size, collection }),
-        getCollectionNftsCount({ ...queryObject, collection })
+        getCollectionNfts({ search, page, size, collection }),
+        getCollectionNftsCount({ search, collection })
       ]).then(([nftsData, count]) => {
         if (nftsData.success && count.success) {
           setCollectionNfts(nftsData.data);
-          setTotalCollectionNfts(Math.min(count.data, 10000));
+          setTotalCollectionNfts(count.data);
         }
         setDataReady(nftsData.success && count.success);
       });
@@ -53,8 +50,7 @@ export const CollectionNfts = () => {
 
   useEffect(() => {
     fetchCollectionNfts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeNetworkId, size, searchParams]);
+  }, [activeNetworkId, searchParams]);
 
   const showCollectionNfts = dataReady === true && collectionNfts.length > 0;
 
@@ -65,11 +61,7 @@ export const CollectionNfts = () => {
           <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
             <CollectionTabs />
             <Pager
-              page={String(page)}
-              total={
-                totalCollectionNfts ? Math.min(totalCollectionNfts, 10000) : 0
-              }
-              itemsPerPage={25}
+              total={totalCollectionNfts}
               show={collectionNfts.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
             />
@@ -144,11 +136,7 @@ export const CollectionNfts = () => {
 
             <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
               <Pager
-                page={String(page)}
-                total={
-                  totalCollectionNfts ? Math.min(totalCollectionNfts, 10000) : 0
-                }
-                itemsPerPage={25}
+                total={totalCollectionNfts}
                 show={collectionNfts.length > 0}
               />
             </div>

@@ -1,3 +1,4 @@
+import { ELLIPSIS } from 'appConstants';
 import { AccountAssetType } from './account.types';
 import { ScamInfoType } from './general.types';
 import { NftTypeEnum } from './nft.types';
@@ -37,6 +38,8 @@ export interface TransactionType {
   receipt?: TransactionReceiptType;
   senderAssets?: AccountAssetType;
   receiverAssets?: AccountAssetType;
+  guardianAddress?: string;
+  guardianSignature?: string;
 }
 
 // TRANSACTION SC RESULTS
@@ -143,13 +146,13 @@ export interface UITransactionType extends TransferType {
 export interface TransactionTableType {
   transactions: UITransactionType[];
   address?: string;
-  totalTransactions: number | '...';
-  size: number;
+  totalTransactions: number | typeof ELLIPSIS;
   title?: React.ReactNode;
   showDirectionCol?: boolean;
   dataChanged?: boolean;
   showLockedAccounts?: boolean;
   isScResultsTable?: boolean;
+  isDataReady?: boolean;
   inactiveFilters?: TransactionFiltersEnum[];
 }
 
@@ -161,17 +164,22 @@ export enum TransactionOperationDirectionEnum {
 }
 
 export enum TransactionApiStatusEnum {
-  success = 'Success',
-  pending = 'Pending',
-  invalid = 'Invalid',
-  fail = 'Fail'
+  success = 'success',
+  pending = 'pending',
+  invalid = 'invalid',
+  fail = 'fail'
 }
 
 export enum TransactionExtraStatusEnum {
-  notExecuted = 'Not Executed',
-  failed = 'Failed', // TODO: remove when ready
+  notExecuted = 'notExecuted',
+  failed = 'failed', // TODO: remove when ready
   rewardReverted = 'reward-reverted'
 }
+
+const TransactionStatusEnum = {
+  ...TransactionApiStatusEnum,
+  ...TransactionExtraStatusEnum
+};
 
 export type TransactionStatusEnum =
   | TransactionApiStatusEnum

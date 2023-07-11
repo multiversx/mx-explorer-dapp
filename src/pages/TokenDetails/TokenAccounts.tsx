@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -14,31 +14,30 @@ import {
   LockedTokenAddressIcon
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useAdapter, useSize, useURLSearchParams } from 'hooks';
+import { useAdapter, useGetPage } from 'hooks';
+import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { AccountType } from 'types';
 
-import { TokenTabs } from './TokenLayout/TokenTabs';
-
 export const TokenDetailsAccounts = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { token } = useSelector(tokenSelector);
   const { decimals, accounts: totalAccounts } = token;
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { page } = useURLSearchParams();
-  const { size } = useSize();
+
+  const { page, size } = useGetPage();
   const { getTokenAccounts, getTokenAccountsCount } = useAdapter();
 
   const { hash: tokenId } = useParams() as any;
 
-  const [accounts, setAccounts] = React.useState<AccountType[]>([]);
-  const [accountsCount, setAccountsCount] = React.useState(0);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [accounts, setAccounts] = useState<AccountType[]>([]);
+  const [accountsCount, setAccountsCount] = useState(0);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchAccounts = () => {
     Promise.all([
-      getTokenAccounts({ tokenId, size }),
+      getTokenAccounts({ tokenId, page, size }),
       getTokenAccountsCount({ tokenId })
     ]).then(([tokenAccountsData, tokenAccountsCountData]) => {
       if (ref.current !== null) {
@@ -51,9 +50,9 @@ export const TokenDetailsAccounts = () => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAccounts();
-  }, [activeNetworkId, size, totalAccounts, searchParams]);
+  }, [activeNetworkId, totalAccounts, searchParams]);
 
   const showAccounts = dataReady === true && accounts.length > 0;
 
@@ -64,9 +63,7 @@ export const TokenDetailsAccounts = () => {
           <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
             <TokenTabs />
             <Pager
-              page={String(page)}
-              total={accountsCount ? Math.min(accountsCount, 10000) : 0}
-              itemsPerPage={25}
+              total={accountsCount}
               show={accounts.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
             />
@@ -116,12 +113,7 @@ export const TokenDetailsAccounts = () => {
               </div>
             </div>
             <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-              <Pager
-                page={String(page)}
-                total={accountsCount ? Math.min(accountsCount, 10000) : 0}
-                itemsPerPage={25}
-                show={accounts.length > 0}
-              />
+              <Pager total={accountsCount} show={accounts.length > 0} />
             </div>
           </>
         ) : (

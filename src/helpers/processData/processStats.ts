@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
+
+import { ELLIPSIS } from 'appConstants';
 import { DIGITS } from 'config';
 import { StatsType } from 'types/stats.types';
 
@@ -33,20 +35,24 @@ export const processStats = (data: StatsType) => {
     accounts: new BigNumber(data.accounts).toFormat(),
     transactions: new BigNumber(data.transactions).toFormat(),
     refreshRate: data.refreshRate,
-    epoch: new BigNumber(data.epoch).toFormat(),
-    epochPercentage: `${new BigNumber(epochPercentage).toFormat(DIGITS)}%`,
+    epoch: data.epoch,
+    epochPercentage,
     epochTotalTime: check
-      ? moment.utc(data.refreshRate * data.roundsPerEpoch).format('HH:mm')
-      : '...',
+      ? moment
+          .utc(data.refreshRate * data.roundsPerEpoch)
+          .format('H[h] mm[m] ss[s]')
+      : ELLIPSIS,
     epochTimeElapsed: check
-      ? moment.utc(data.refreshRate * data.roundsPassed).format('HH:mm')
-      : '...',
+      ? moment
+          .utc(data.refreshRate * data.roundsPassed)
+          .format('H[h] mm[m] ss[s]')
+      : ELLIPSIS,
     epochTimeRemaining: check
       ? moment
           .utc(data.refreshRate * (data.roundsPerEpoch - data.roundsPassed))
-          .format('HH:mm')
-      : '...',
-    roundsPerEpoch: new BigNumber(data.roundsPerEpoch).toFormat(),
-    roundsPassed: new BigNumber(data.roundsPassed).toFormat()
+          .format('H[h] mm[m] ss[s]')
+      : ELLIPSIS,
+    roundsPerEpoch: data.roundsPerEpoch,
+    roundsPassed: data.roundsPassed
   };
 };

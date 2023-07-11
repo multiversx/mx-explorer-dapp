@@ -1,13 +1,13 @@
-import * as React from 'react';
-
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
+
 import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
 import { urlBuilder } from 'helpers';
+import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { tokenSelector } from 'redux/selectors';
-import { TokenTabs } from './TokenLayout/TokenTabs';
 
 export const TokenDetailsRoles = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
 
   const { token } = useSelector(tokenSelector);
   const { roles } = token;
@@ -33,19 +33,27 @@ export const TokenDetailsRoles = () => {
                   </thead>
                   <tbody data-testid='tokenRolesTable'>
                     {roles.map((tokenRole, i) => (
-                      <tr key={tokenRole.address}>
+                      <tr key={`${tokenRole?.address}-${i}`}>
                         <td>
                           <div className='d-flex align-items-center'>
-                            <ScAddressIcon initiator={tokenRole.address} />
-                            <NetworkLink
-                              to={urlBuilder.accountDetails(tokenRole.address)}
-                              className='trim-only-sm'
-                            >
-                              <Trim
-                                text={tokenRole.address}
-                                dataTestId={`roleLink${i}`}
-                              />
-                            </NetworkLink>
+                            {tokenRole?.address ? (
+                              <>
+                                <ScAddressIcon initiator={tokenRole.address} />
+                                <NetworkLink
+                                  to={urlBuilder.accountDetails(
+                                    tokenRole.address
+                                  )}
+                                  className='trim-only-sm'
+                                >
+                                  <Trim
+                                    text={tokenRole.address}
+                                    dataTestId={`roleLink${i}`}
+                                  />
+                                </NetworkLink>
+                              </>
+                            ) : (
+                              <>Anyone</>
+                            )}
                           </div>
                         </td>
                         <td>

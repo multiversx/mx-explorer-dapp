@@ -26,6 +26,7 @@ export const Tabs = (props: TabsPropsType) => {
           key={tab.tabTo}
           to={tab.tabTo}
           className={`tab ${checkTabStatus(tab) ? 'active' : ''}`}
+          preventScrollReset={true}
         >
           {tab.tabLabel}
         </NetworkLink>

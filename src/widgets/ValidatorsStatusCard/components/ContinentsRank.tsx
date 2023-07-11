@@ -2,6 +2,7 @@ import React from 'react';
 import { faGlobe } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { ELLIPSIS } from 'appConstants';
 import { Marquee } from 'components';
 import { WithClassnameType, RankType } from 'types';
 
@@ -30,9 +31,9 @@ export const ContinentsRank = ({
             <div className='text-secondary mx-1'>
               {nodes > 0
                 ? `${nodes.toLocaleString('en')} node${nodes === 1 ? '' : 's'}`
-                : '...'}
+                : ELLIPSIS}
             </div>
-            <div>({percentage > 0 ? `${percentage}%` : '...'})</div>
+            <div>({percentage > 0 ? `${percentage}%` : ELLIPSIS})</div>
           </div>
         ))}
       </div>

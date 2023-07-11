@@ -2,13 +2,13 @@
   &-nav-item {
     line-height: 1;
     font-weight: 500;
-    font-family: 'Roobert Medium';
+    font-family: var(--headings-font-family);
     margin-right: 1.5rem;
     font-size: 1.25rem;
     transition: all 200ms ease;
 
     &.link {
-      color: var(--teal);
+      color: var(--primary);
     }
   }
 }

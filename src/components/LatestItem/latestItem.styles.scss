@@ -62,7 +62,7 @@
           transparent 75%
         );
       }
-      &.status-text-success {
+      &.status-success {
         &:before {
           background: linear-gradient(
             90deg,
@@ -71,7 +71,7 @@
           );
         }
       }
-      &.status-text-warning {
+      &.status-warning {
         &:before {
           background: linear-gradient(
             90deg,
@@ -80,7 +80,7 @@
           );
         }
       }
-      &.status-text-danger {
+      &.status-danger {
         &:before {
           background: linear-gradient(
             90deg,

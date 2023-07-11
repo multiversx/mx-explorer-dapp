@@ -13,7 +13,6 @@ import {
   accountsRoutes,
   blocksRoutes,
   collectionRoutes,
-  nftRoutes,
   tokensRoutes
 } from '../../routes';
 import { useActiveRoute } from '../useActiveRoute';

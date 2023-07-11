@@ -2,7 +2,10 @@ import { useSelector } from 'react-redux';
 
 import { METACHAIN_SHARD_ID, TIMEOUT } from 'appConstants';
 import { activeNetworkSelector } from 'redux/selectors';
-import { AdapterProviderPropsType } from 'types/adapter.types';
+import {
+  AdapterProviderPropsType,
+  ApiAdapterResponseType
+} from 'types/adapter.types';
 
 import { apiAdapter } from './api';
 import { elasticAdapter } from './elastic';
@@ -17,7 +20,7 @@ interface PropsType {
   timestamp?: AdapterProviderPropsType['timestamp'];
 }
 
-async function wrap(asyncRequest: () => Promise<any>) {
+async function wrap(asyncRequest: () => Promise<ApiAdapterResponseType>) {
   try {
     const { data } = await asyncRequest();
     return {

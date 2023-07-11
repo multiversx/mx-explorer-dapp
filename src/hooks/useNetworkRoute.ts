@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 
 export const useNetworkRoute = () => {

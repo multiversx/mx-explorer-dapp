@@ -7,7 +7,6 @@ export interface StatsCardType extends WithClassnameType {
   subTitle?: string | React.ReactNode;
   icon?: React.ReactNode;
   value?: string | React.ReactNode;
-  neutralColors?: boolean;
   children?: React.ReactNode;
 }
 
@@ -17,14 +16,13 @@ export const StatsCard = ({
   value,
   icon,
   className,
-  neutralColors = false,
   children
 }: StatsCardType) => {
   return (
     <div className={`card d-flex flex-grow-1 ${className ?? ''}`}>
       <div className='card-body p-4'>
         {title && (
-          <p className='text-neutral-500 mb-0 stats-card-title font-secondary'>
+          <p className='text-neutral-500 mb-0 stats-card-title font-regular'>
             {title}
           </p>
         )}

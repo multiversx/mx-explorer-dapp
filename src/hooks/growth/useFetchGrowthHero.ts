@@ -2,11 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { processGrowthHero } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAdapter, useIsMainnet } from 'hooks';
 import { growthHeroSelector } from 'redux/selectors';
 import { setGrowthHero } from 'redux/slices/growthHero';
 
 export const useFetchGrowthHero = () => {
+  const isMainnet = useIsMainnet();
   const dispatch = useDispatch();
   const { isFetched } = useSelector(growthHeroSelector);
   const { getGrowthWidget } = useAdapter();
@@ -34,8 +35,10 @@ export const useFetchGrowthHero = () => {
   };
 
   useEffect(() => {
-    fetchGrowthHero();
-  }, []);
+    if (isMainnet) {
+      fetchGrowthHero();
+    }
+  }, [isMainnet]);
 
   return fetchGrowthHero;
 };

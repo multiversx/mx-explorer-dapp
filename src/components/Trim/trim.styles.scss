@@ -119,8 +119,22 @@ a:hover > .trim span {
 
 // Table Extra Logic
 
-.table .trim {
-  max-width: 10rem;
+// .table .trim {
+//   max-width: 12rem;
+// }
+
+.table {
+  th,
+  td {
+    .hash {
+      min-width: 12rem;
+      max-width: 12rem;
+    }
+    .hash-lg {
+      min-width: 16rem;
+      max-width: 16rem;
+    }
+  }
 }
 
 .table .trim-only-sm .trim {

@@ -32,15 +32,11 @@ export const ChartAreaNew = ({
     chartData[chartData.length - 1].timestamp
   ];
 
-  const [neutral800, teal, muted, primary] = [
-    'neutral-800',
-    'teal',
-    'muted',
-    'primary'
-  ].map((color) =>
-    getComputedStyle(document.documentElement)
-      .getPropertyValue(`--${color}`)
-      .trim()
+  const [neutral800, muted, primary] = ['neutral-800', 'muted', 'primary'].map(
+    (color) =>
+      getComputedStyle(document.documentElement)
+        .getPropertyValue(`--${color}`)
+        .trim()
   );
 
   if (!seriesConfig) {
@@ -62,8 +58,8 @@ export const ChartAreaNew = ({
           </defs>
           <defs>
             <linearGradient id='defaultGradient' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor={teal} stopOpacity={0.15} />
-              <stop offset='95%' stopColor={teal} stopOpacity={0} />
+              <stop offset='5%' stopColor={primary} stopOpacity={0.15} />
+              <stop offset='95%' stopColor={primary} stopOpacity={0} />
             </linearGradient>
           </defs>
 
@@ -120,8 +116,8 @@ export const ChartAreaNew = ({
             key={seriesConfig.id}
             strokeWidth={1.5}
             activeDot={{
-              stroke: teal,
-              fill: teal
+              stroke: primary,
+              fill: primary
             }}
           />
 
@@ -131,7 +127,7 @@ export const ChartAreaNew = ({
                 {...props}
                 seriesConfig={[seriesConfig]}
                 dateFormat={tooltip?.dateFormat}
-                color={teal}
+                color={primary}
               />
             )}
             cursor={{

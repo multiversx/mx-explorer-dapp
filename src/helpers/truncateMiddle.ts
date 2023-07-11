@@ -1,3 +1,5 @@
+import { ELLIPSIS } from 'appConstants';
+
 export const truncateMiddle = (
   fullStr: string,
   strLen: number,
@@ -5,7 +7,7 @@ export const truncateMiddle = (
 ) => {
   if (fullStr.length <= strLen) return fullStr;
 
-  separator = separator || '...';
+  separator = separator || ELLIPSIS;
 
   const sepLen = separator.length,
     charsToShow = strLen - sepLen,

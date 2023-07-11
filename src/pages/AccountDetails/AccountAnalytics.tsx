@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
+import { ELLIPSIS } from 'appConstants';
 import { Loader, PageState, Chart } from 'components';
 import {
   getNormalizedTimeEntries,
@@ -11,9 +12,8 @@ import {
 } from 'components/Chart/helpers/getChartBinnedData';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
 import { useAdapter } from 'hooks';
+import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
-
-import { AccountTabs } from './AccountLayout/AccountTabs';
 
 export const AccountAnalytics = () => {
   const { account } = useSelector(accountSelector);
@@ -22,13 +22,13 @@ export const AccountAnalytics = () => {
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { getAccountHistory } = useAdapter();
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [chartData, setChartData] = React.useState<ChartDataType[]>([]);
-  const [startDate, setStartDate] = React.useState<string>('...');
-  const [endDate, setEndDate] = React.useState<string>('...');
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [chartData, setChartData] = useState<ChartDataType[]>([]);
+  const [startDate, setStartDate] = useState<string>(ELLIPSIS);
+  const [endDate, setEndDate] = useState<string>(ELLIPSIS);
 
-  const teal = getComputedStyle(document.documentElement)
-    .getPropertyValue('--teal')
+  const primary = getComputedStyle(document.documentElement)
+    .getPropertyValue('--primary')
     .trim();
 
   const getData = () => {
@@ -60,7 +60,7 @@ export const AccountAnalytics = () => {
       id: 'balance',
       label: 'balance',
       gradient: 'defaultGradient',
-      stroke: teal,
+      stroke: primary,
       data: chartData,
       showUsdValue: true,
       yAxisConfig: {
@@ -70,8 +70,7 @@ export const AccountAnalytics = () => {
     }
   ];
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(getData, [activeNetworkId, searchParams]);
+  useEffect(getData, [activeNetworkId, searchParams]);
 
   return (
     <div className='card'>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faCode } from '@fortawesome/pro-solid-svg-icons/faCode';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -12,34 +12,34 @@ import {
   Trim,
   AccountLink
 } from 'components';
-import { useGetFilters, useAdapter } from 'hooks';
+import { useGetPage, useAdapter } from 'hooks';
+import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountSmartContractType } from 'types';
 
-import { AccountTabs } from './AccountLayout/AccountTabs';
-
 export const AccountContracts = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
 
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { account } = useSelector(accountSelector);
   const { txCount } = account;
-  const { size } = useGetFilters();
+  const { page, size } = useGetPage();
 
   const { getAccountContracts, getAccountContractsCount } = useAdapter();
 
   const { hash: address } = useParams() as any;
 
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [accountContracts, setAccountContracts] = React.useState<
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [accountContracts, setAccountContracts] = useState<
     AccountSmartContractType[]
   >([]);
-  const [accountContractsCount, setAccountContractsCount] = React.useState(0);
+  const [accountContractsCount, setAccountContractsCount] = useState(0);
 
   const fetchAccountContracts = () => {
     Promise.all([
       getAccountContracts({
+        page,
         size,
         address
       }),
@@ -57,10 +57,9 @@ export const AccountContracts = () => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAccountContracts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txCount, activeNetworkId, address, size, searchParams]);
+  }, [txCount, activeNetworkId, address, searchParams]);
 
   return (
     <div className='card' ref={ref}>
@@ -69,9 +68,7 @@ export const AccountContracts = () => {
           <AccountTabs />
           {dataReady === true && accountContracts.length > 0 && (
             <Pager
-              itemsPerPage={25}
-              page={String(size)}
-              total={Math.min(accountContractsCount, 10000)}
+              total={accountContractsCount}
               show={accountContracts.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
             />
@@ -143,9 +140,7 @@ export const AccountContracts = () => {
       {dataReady === true && accountContracts.length > 0 && (
         <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
           <Pager
-            itemsPerPage={25}
-            page={String(size)}
-            total={Math.min(accountContractsCount, 10000)}
+            total={accountContractsCount}
             show={accountContracts.length > 0}
           />
         </div>

@@ -1,4 +1,6 @@
 import BigNumber from 'bignumber.js';
+
+import { ELLIPSIS } from 'appConstants';
 import { ChartDataType } from 'components/Chart/helpers/types';
 
 export const getLastDayValue = (chartData: ChartDataType[]) => {
@@ -9,5 +11,5 @@ export const getLastDayValue = (chartData: ChartDataType[]) => {
     const day = new BigNumber(lastDay).minus(penultimateDay).toFormat(0);
     return day;
   }
-  return '...';
+  return ELLIPSIS;
 };
