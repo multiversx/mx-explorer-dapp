@@ -2,7 +2,7 @@ name: deploy-internal
 
 on:
   push:
-    branches: [development]
+    branches: [next]
   repository_dispatch:
     types: deploy-internal
   workflow_dispatch:
@@ -14,14 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: development
+          ref: next
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
       - name: Setup yarn
         run: npm install -g yarn
-      - run: yarn install      
+      - run: yarn install
       - run: yarn run build-internal
         env:
           CI: false
