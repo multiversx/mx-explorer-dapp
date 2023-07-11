@@ -210,7 +210,7 @@
 
   .applicationswrapper,
   .menuwrapper {
-    font-family: 'Roobert Regular', 'Inter', Roboto, sans-serif;
+    font-family: var(--headings-font-family);
     font-weight: 400;
 
     transition: transform 400ms ease;
@@ -222,6 +222,7 @@
     right: 0;
     left: 0;
     height: calc(100vh - 4.75rem);
+    height: calc(100dvh - 4.75rem);
     background-color: rgba(23, 23, 23, 0.9);
     padding: 1.5rem 1rem;
 

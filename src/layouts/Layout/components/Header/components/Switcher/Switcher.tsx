@@ -22,39 +22,19 @@ export const Switcher = () => {
     id
   }));
 
-  type CustomToggleProps = {
-    children?: React.ReactNode;
-    onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  };
-
-  const CustomToggle = React.forwardRef(
-    (
-      { children, onClick }: CustomToggleProps,
-      ref: React.Ref<HTMLButtonElement>
-    ) => (
-      <button
-        type='button'
-        ref={ref}
+  return (
+    <Dropdown className='switcher'>
+      <Dropdown.Toggle
+        id='network-switch'
+        variant='dark'
         className='btn-unstyled control'
-        onClick={(e) => {
-          e.preventDefault();
-          onClick(e);
-        }}
       >
-        <div className='value text-truncate'>{children}</div>
+        <div className='value text-truncate'>{activeNetworkName}</div>
         <FontAwesomeIcon
           className='ms-auto indicator'
           icon={faAngleDown}
           size='lg'
         />
-      </button>
-    )
-  );
-
-  return (
-    <Dropdown className='switcher'>
-      <Dropdown.Toggle id='network-switch' as={CustomToggle} variant='dark'>
-        {activeNetworkName}
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
