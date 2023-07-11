@@ -19,7 +19,7 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
 
       <div className='card-body'>
         <div className='table-wrapper animated-list'>
-          <table className='table mb-0'>
+          <table className='table trim-size mb-0'>
             <thead>
               <tr>
                 <th>Rank</th>
