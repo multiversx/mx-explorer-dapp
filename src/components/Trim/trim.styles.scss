@@ -118,10 +118,12 @@ a:hover > .trim span {
 }
 
 // Table Extra Logic
-
-// .table .trim {
-//   max-width: 12rem;
-// }
+.table.trim-size .trim {
+  max-width: 10rem;
+  @include media-breakpoint-up(xxl) {
+    max-width: 12rem;
+  }
+}
 
 .table {
   th,
@@ -137,6 +139,7 @@ a:hover > .trim span {
   }
 }
 
+// TODO: consistent logic/naming
 .table .trim-only-sm .trim {
   max-width: none;
 
@@ -144,13 +147,11 @@ a:hover > .trim span {
     max-width: 13rem;
   }
 }
-
 .table .trim-size-sm .trim {
   @include media-breakpoint-up(md) {
     max-width: 9rem;
   }
 }
-
 .table .trim-size-xl .trim {
   @include media-breakpoint-up(md) {
     max-width: 13rem;
