@@ -6,10 +6,10 @@ export const getCustomPageName = ({
   basePage: string;
 }) => {
   const fullPageName = pathname.substring(1).replaceAll('/', '-');
-  if (fullPageName === 'collections-sft') {
+  if (fullPageName.includes('collections-sft')) {
     return 'SFT Collections';
   }
-  if (fullPageName === 'collections-nft') {
+  if (fullPageName.includes('collections-nft')) {
     return 'NFT Collections';
   }
 
