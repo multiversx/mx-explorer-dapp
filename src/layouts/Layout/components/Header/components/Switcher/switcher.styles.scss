@@ -8,6 +8,9 @@
   }
 
   .control {
+    --btn-bg: var(--neutral-800);
+    --btn-hover-bg: var(--neutral-800);
+    --btn-active-bg: var(--neutral-800);
     background-color: var(--neutral-800);
     border-radius: 2rem;
     padding: 0.75rem 1rem;
@@ -15,6 +18,10 @@
     align-items: center;
     flex-wrap: nowrap;
     max-width: 12rem;
+
+    &:after {
+      display: none;
+    }
 
     @include media-breakpoint-up(lg) {
       padding: 0.5rem 0.75rem;
