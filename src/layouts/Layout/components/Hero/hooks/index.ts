@@ -18,12 +18,18 @@ export const useShowGlobalStats = () => {
   const activeRoute = useActiveRoute();
   const routeExists = Object.values(routes).some((path) => activeRoute(path));
 
+  const isCollectionDetails =
+    activeRoute(collectionRoutes.collectionDetails) &&
+    !(
+      activeRoute(collectionRoutes.collectionsNft) ||
+      activeRoute(collectionRoutes.collectionsSft)
+    );
+
   switch (true) {
     case !routeExists:
     case activeRoute('/'):
     case activeRoute(searchRoutes.index):
     case activeRoute(searchRoutes.query):
-
     case activeRoute(analyticsRoutes.compare):
     case activeRoute(blocksRoutes.blocksDetails):
     case activeRoute(blocksRoutes.miniBlockDetails):
@@ -38,7 +44,7 @@ export const useShowGlobalStats = () => {
     case activeRoute(accountsRoutes.accountCodeTypes):
     case activeRoute(accountsRoutes.accountCodeConstructor):
     case activeRoute(accountsRoutes.accountCodeEvents):
-    case activeRoute(collectionRoutes.collectionDetails):
+    case isCollectionDetails:
     case activeRoute(collectionRoutes.collectionDetailsRoles):
     case activeRoute(nftRoutes.nftDetails):
     case activeRoute(nftRoutes.nftDetailsAccounts):
