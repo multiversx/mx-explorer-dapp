@@ -55,7 +55,10 @@ export const useAdapter = () => {
           }
         }
       }),
-    getLatestTransactions: ({ size = 5, withUsername }: GetTransactionsType) =>
+    getLatestTransactions: ({
+      size = 5,
+      withUsername = true
+    }: GetTransactionsType) =>
       provider({
         url: '/transactions',
         params: {
@@ -118,7 +121,8 @@ export const useAdapter = () => {
     },
 
     getBlocks: async ({
-      size = 1,
+      page = 1,
+      size = PAGE_SIZE,
       shard,
       epoch,
       proposer,
@@ -128,8 +132,8 @@ export const useAdapter = () => {
         const { data: blocks, success } = await provider({
           url: '/blocks',
           params: {
-            from: (size - 1) * PAGE_SIZE,
-            size: PAGE_SIZE,
+            from: (page - 1) * size,
+            size,
             ...(proposer ? { proposer } : {}),
             ...(withProposerIdentity ? { withProposerIdentity } : {}),
             ...getShardAndEpochParams(shard, epoch),
@@ -209,12 +213,18 @@ export const useAdapter = () => {
 
     getScResult: (hash: string) => provider({ url: `/sc-results/${hash}` }),
 
-    getScResults: (size = 1) =>
+    getScResults: ({
+      page = 1,
+      size = PAGE_SIZE
+    }: {
+      page?: number;
+      size?: number;
+    }) =>
       provider({
         url: '/sc-results',
         params: {
-          from: (size - 1) * PAGE_SIZE,
-          size: PAGE_SIZE
+          from: (page - 1) * size,
+          size
         }
       }),
 
@@ -222,14 +232,26 @@ export const useAdapter = () => {
 
     /* Account */
 
-    getAccount: (address: string) => provider({ url: `/accounts/${address}` }),
+    getAccount: ({
+      address,
+      ...rest
+    }: {
+      address: string;
+      withGuardianInfo?: boolean;
+    }) => provider({ url: `/accounts/${address}`, params: rest }),
 
-    getAccounts: (size = 1) =>
+    getAccounts: ({
+      page = 1,
+      size = PAGE_SIZE
+    }: {
+      page?: number;
+      size?: number;
+    }) =>
       provider({
         url: '/accounts',
         params: {
-          from: (size - 1) * PAGE_SIZE,
-          size: PAGE_SIZE
+          from: (page - 1) * size,
+          size
         }
       }),
 
@@ -286,16 +308,18 @@ export const useAdapter = () => {
 
     getAccountContracts: ({
       address,
-      size
+      page = 1,
+      size = PAGE_SIZE
     }: {
       address: string;
-      size: number;
+      page: number;
+      size?: number;
     }) =>
       provider({
         url: `/accounts/${address}/contracts`,
         params: {
-          from: (size - 1) * PAGE_SIZE,
-          size: PAGE_SIZE
+          from: (page - 1) * size,
+          size
         }
       }),
 
@@ -323,7 +347,7 @@ export const useAdapter = () => {
 
     getAccountUpgrades: ({
       address,
-      size
+      size = PAGE_SIZE
     }: {
       address: string;
       size: number;
@@ -331,8 +355,7 @@ export const useAdapter = () => {
       provider({
         url: `/accounts/${address}/upgrades`,
         params: {
-          from: (size - 1) * PAGE_SIZE,
-          size: size ?? PAGE_SIZE
+          size
         }
       }),
 
@@ -482,10 +505,13 @@ export const useAdapter = () => {
         })
       }),
 
-    getTokenAccounts: ({ size, tokenId }: { size: number; tokenId: string }) =>
+    getTokenAccounts: ({
+      tokenId,
+      ...rest
+    }: GetTokensType & { tokenId: string }) =>
       provider({
         url: `/tokens/${tokenId}/accounts`,
-        params: getTokensParams({ size })
+        params: getTokensParams({ ...rest })
       }),
 
     getTokenAccountsCount: ({ tokenId }: { tokenId: string }) =>
@@ -580,7 +606,6 @@ export const useAdapter = () => {
 
     getNftTransactionsCount: ({
       identifier,
-      size,
       ...rest
     }: GetTransactionsType & { identifier: string }) =>
       provider({

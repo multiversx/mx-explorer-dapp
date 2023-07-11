@@ -1,0 +1,20 @@
+/* Plugins
+-------------------------------------------------- */
+
+@import './plugins/react-datepicker';
+@import './plugins/react-select';
+
+/* Elements
+-------------------------------------------------- */
+
+@import './elements/scrollbar';
+@import './elements/tabs';
+@import './elements/badges';
+
+/* Components
+-------------------------------------------------- */
+
+@import './components/layouts.scss';
+@import './components/components.scss';
+@import './components/widgets.scss';
+@import './components/pages.scss';

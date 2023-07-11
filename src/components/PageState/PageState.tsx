@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 
-import { IconState } from '../IconState';
+import { IconState } from './components/IconState';
 
 interface BasicPageStateType {
   title?: string;

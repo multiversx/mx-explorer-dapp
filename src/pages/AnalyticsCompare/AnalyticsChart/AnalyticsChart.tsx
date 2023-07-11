@@ -39,7 +39,7 @@ export const AnalyticsChart = ({
   const { getAnalyticsChart } = useAdapter();
 
   const [seriesConfig, setSeriesConfig] = useState<ChartConfigType[]>();
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const [seriesData, setSeriesData] = useState<{
     [seriesId: string]: AnalyticsChartDataType[];

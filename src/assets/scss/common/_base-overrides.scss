@@ -1,0 +1,39 @@
+html {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'calt' 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+dt {
+  font-weight: 400;
+}
+
+dd {
+  margin-bottom: 0;
+}
+
+// webkit being webkit
+input {
+  color-scheme: dark;
+  font-feature-settings: 'calt' 0;
+}
+input:is(:-webkit-autofill, :-webkit-autofill:focus) {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}

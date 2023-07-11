@@ -1,51 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
-  faBan,
-  faCheck,
-  faHourglass,
   faSpinnerThird,
-  faTimes
+  faTimes,
+  faCheck
 } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { capitalizeFirstLetter, getTransactionMessages } from 'helpers';
+import { TransactionGuardianIcon } from 'components';
+import {
+  capitalizeFirstLetter,
+  getTransactionMessages,
+  getTransactionStatusIconAndColor,
+  getTransactionStatusText
+} from 'helpers';
 import { useAdapter } from 'hooks';
-import { UITransactionType, TransactionType } from 'types';
-
-import { txStatus } from '../TransactionStatus/txStatus';
+import {
+  UITransactionType,
+  TransactionType,
+  TransactionApiStatusEnum,
+  TransactionExtraStatusEnum
+} from 'types';
 
 interface TransactionIconType {
   transaction: UITransactionType;
   showSuccess?: boolean;
+  showGuardian?: boolean;
   withBadge?: boolean;
 }
 
 export const TransactionIcon = ({
   transaction,
   showSuccess = false,
+  showGuardian = true,
   withBadge = false
 }: TransactionIconType) => {
   const { getTransaction } = useAdapter();
 
-  const [transactionMessages, setTransactionMessages] =
-    React.useState<string[]>();
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
-  const [transactionDetails, setTransactionDetails] = React.useState<
+  const [transactionMessages, setTransactionMessages] = useState<string[]>();
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [transactionDetails, setTransactionDetails] = useState<
     TransactionType | undefined
   >();
 
-  const statusIs = (compareTo: string) =>
-    transaction.status.toLowerCase() === compareTo.toLowerCase();
+  const { icon: statusIcon, color } = getTransactionStatusIconAndColor({
+    transaction
+  });
 
-  const success = statusIs(txStatus.success);
-  const failed = statusIs(txStatus.failed) || statusIs(txStatus.fail);
-  const invalid = statusIs(txStatus.notExecuted) || statusIs(txStatus.invalid);
-  const pending = statusIs(txStatus.pending);
+  const statusIs = (compareTo: string) =>
+    transaction.status.toLowerCase() === compareTo;
+
+  const statusFailed =
+    statusIs(TransactionApiStatusEnum.fail) ||
+    statusIs(TransactionExtraStatusEnum.failed) ||
+    statusIs(TransactionExtraStatusEnum.rewardReverted);
+  const statusInvalid =
+    statusIs(TransactionApiStatusEnum.invalid) ||
+    statusIs(TransactionExtraStatusEnum.notExecuted);
 
   const fetchTransactionMessages = () => {
-    if (transaction.txHash && (failed || invalid)) {
+    if (transaction.txHash && (statusFailed || statusInvalid)) {
       if (transaction.txHash !== transactionDetails?.txHash) {
         getTransaction(transaction.txHash).then(({ data, success }) => {
           setDataReady(success);
@@ -58,78 +73,84 @@ export const TransactionIcon = ({
     }
   };
 
-  let icon: any;
+  const StatusIcon = () => {
+    if (statusIs(TransactionApiStatusEnum.success) && !showSuccess) {
+      return <></>;
+    }
 
-  if (failed) {
-    icon = faTimes;
-  }
-  if (invalid) {
-    icon = faBan;
-  }
-  if (pending) {
-    icon = faHourglass;
-  }
-  if (showSuccess && success) {
-    icon = faCheck;
-  }
-
-  return icon === undefined ? null : (
-    <>
-      <OverlayTrigger
-        placement='top'
-        delay={{ show: 0, hide: 400 }}
-        onToggle={() => {
-          fetchTransactionMessages();
-        }}
-        overlay={(props: any) => (
-          <Tooltip {...props} show={props.show.toString()}>
-            {capitalizeFirstLetter(transaction.status)}
-            {(failed || invalid) && (
-              <>
-                {dataReady ? (
+    return (
+      <>
+        {statusIcon && (
+          <OverlayTrigger
+            placement='top'
+            delay={{ show: 0, hide: 400 }}
+            onToggle={() => {
+              fetchTransactionMessages();
+            }}
+            overlay={(props: any) => (
+              <Tooltip {...props} show={props.show.toString()}>
+                {getTransactionStatusText({ transaction })}
+                {(statusFailed || statusInvalid) && (
                   <>
-                    {transactionMessages && transactionMessages.length > 0 && (
+                    {dataReady ? (
                       <>
-                        :{' '}
-                        {transactionMessages.map((message, messageIndex) => (
-                          <span key={`tx-icon-message-${messageIndex}`}>
-                            {capitalizeFirstLetter(message)}
-                            {messageIndex > 0 ? ', ' : ''}
-                          </span>
-                        ))}
+                        {transactionMessages && transactionMessages.length > 0 && (
+                          <>
+                            :{' '}
+                            {transactionMessages.map(
+                              (message, messageIndex) => (
+                                <span key={`tx-icon-message-${messageIndex}`}>
+                                  {capitalizeFirstLetter(message)}
+                                  {messageIndex > 0 ? ', ' : ''}
+                                </span>
+                              )
+                            )}
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <FontAwesomeIcon
+                          icon={faSpinnerThird}
+                          size={'sm'}
+                          className='ms-2 fa-spin fast-spin'
+                        />
                       </>
                     )}
                   </>
-                ) : (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faSpinnerThird}
-                      size={'sm'}
-                      className='ms-2 fa-spin fast-spin'
-                    />
-                  </>
                 )}
-              </>
+              </Tooltip>
             )}
-          </Tooltip>
+          >
+            {withBadge ? (
+              <div className={`tx-badge border-${color}`}>
+                <FontAwesomeIcon
+                  icon={
+                    statusIs(TransactionApiStatusEnum.success)
+                      ? faCheck
+                      : statusIcon
+                  }
+                  size={(statusIcon as IconProp) === faTimes ? '1x' : 'sm'}
+                  className={`me-1 tx-status text-${color}`}
+                />
+              </div>
+            ) : (
+              <FontAwesomeIcon
+                icon={statusIcon}
+                size={(statusIcon as IconProp) === faTimes ? '1x' : 'sm'}
+                className={`me-1 tx-status text-${color}`}
+              />
+            )}
+          </OverlayTrigger>
         )}
-      >
-        {withBadge ? (
-          <div className={`tx-badge ${transaction.status.toLowerCase()}`}>
-            <FontAwesomeIcon
-              icon={icon as IconProp}
-              size={(icon as IconProp) === faTimes ? '1x' : 'sm'}
-              className={`me-1 tx-status ${transaction.status.toLowerCase()}`}
-            />
-          </div>
-        ) : (
-          <FontAwesomeIcon
-            icon={icon as IconProp}
-            size={(icon as IconProp) === faTimes ? '1x' : 'sm'}
-            className={`me-1 tx-status ${transaction.status.toLowerCase()}`}
-          />
-        )}
-      </OverlayTrigger>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <StatusIcon />
+      {showGuardian && <TransactionGuardianIcon transaction={transaction} />}
     </>
   );
 };

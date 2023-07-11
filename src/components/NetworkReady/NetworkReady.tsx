@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
 import { networks } from 'config';
 
 import { activeNetworkSelector } from 'redux/selectors';
 
-const NetworkReady = ({ children }: { children: React.ReactNode }) => {
+export const NetworkReady = ({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -14,9 +15,9 @@ const NetworkReady = ({ children }: { children: React.ReactNode }) => {
   const networkId = locationArray[0];
   const allNetworkIds = networks.map((testnet) => testnet.id);
 
-  const [networkReady, setNetworkReady] = React.useState(false);
+  const [networkReady, setNetworkReady] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (allNetworkIds.includes(networkId) && activeNetworkId !== networkId) {
       setNetworkReady(false);
     } else {

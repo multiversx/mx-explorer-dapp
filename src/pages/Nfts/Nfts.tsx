@@ -10,18 +10,18 @@ import {
   NftBadge
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useAdapter, useGetFilters, useURLSearchParams } from 'hooks';
+import { useAdapter, useGetSearch, useGetPage } from 'hooks';
 import { NftType } from 'types';
 
-import { FailedNfts } from './FailedNfts';
-import { Filters } from './Filters';
-import { NoNfts } from './NoNfts';
+import { FailedNfts } from './components/FailedNfts';
+import { Filters } from './components/Filters';
+import { NoNfts } from './components/NoNfts';
 
 export const Nfts = () => {
   const ref = useRef(null);
-  const { page } = useURLSearchParams();
   const [searchParams] = useSearchParams();
-  const { getQueryObject, size } = useGetFilters();
+  const { search } = useGetSearch();
+  const { page, size } = useGetPage();
   const { getNfts, getNftsCount } = useAdapter();
 
   const [nfts, setNfts] = useState<NftType[]>([]);
@@ -29,24 +29,22 @@ export const Nfts = () => {
   const [totalNfts, setTotalNfts] = useState<number | '...'>('...');
 
   const fetchNfts = () => {
-    const queryObject = getQueryObject();
     const type = 'SemiFungibleESDT,NonFungibleESDT';
 
     Promise.all([
-      getNfts({ ...queryObject, size, type }),
-      getNftsCount({ ...queryObject, type })
+      getNfts({ search, page, size, type }),
+      getNftsCount({ search, type })
     ]).then(([nftsData, count]) => {
       if (ref.current !== null) {
         if (nftsData.success) {
           setNfts(nftsData.data);
-          setTotalNfts(Math.min(count.data, 10000));
+          setTotalNfts(count.data);
         }
         setDataReady(nftsData.success && count.success);
       }
     });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchNfts, [searchParams]);
 
   return (
@@ -65,14 +63,7 @@ export const Nfts = () => {
                       <Filters />
                       {nfts && nfts.length > 0 && (
                         <Pager
-                          page={String(page)}
-                          total={
-                            totalNfts !== '...'
-                              ? Math.min(totalNfts, 10000)
-                              : totalNfts
-                          }
-                          itemsPerPage={25}
-                          show={nfts.length > 0}
+                          total={totalNfts}
                           className='d-flex ms-auto me-auto me-sm-0'
                         />
                       )}
@@ -154,16 +145,7 @@ export const Nfts = () => {
                       </div>
 
                       <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-                        <Pager
-                          page={String(page)}
-                          total={
-                            totalNfts !== '...'
-                              ? Math.min(totalNfts, 10000)
-                              : totalNfts
-                          }
-                          itemsPerPage={25}
-                          show={nfts.length > 0}
-                        />
+                        <Pager total={totalNfts} show={nfts.length > 0} />
                       </div>
                     </>
                   ) : (

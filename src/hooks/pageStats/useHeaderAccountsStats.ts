@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useAdapter } from 'hooks';
+import { useAdapter, useIsMainnet } from 'hooks';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { setPageHeaderAccountsStats } from 'redux/slices/pageHeadersAccountsStats';
 import { HeadersAccountsType } from 'types/headerStats.types';
@@ -10,6 +10,7 @@ import { HeadersAccountsType } from 'types/headerStats.types';
 export const useHeaderAccountsStats = () => {
   const headersAccounts = useSelector(pageHeadersAccountsStatsSelector);
 
+  const isMainnet = useIsMainnet();
   const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
 
@@ -43,8 +44,10 @@ export const useHeaderAccountsStats = () => {
   };
 
   useEffect(() => {
-    getHeadersAccounts();
-  }, []);
+    if (isMainnet) {
+      getHeadersAccounts();
+    }
+  }, [isMainnet]);
 
   return {
     title: 'Accounts',

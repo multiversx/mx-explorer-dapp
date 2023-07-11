@@ -8,32 +8,28 @@ export const TransactionActionCollection = ({
   token
 }: {
   token: TransactionTokenArgumentType;
-}) => {
-  const ref = React.useRef(null);
-
-  return (
-    <div ref={ref} className='collection-action-block d-contents'>
-      {token && token.collection && (
-        <NetworkLink
-          to={
-            token?.type === NftTypeEnum.MetaESDT
-              ? urlBuilder.tokenMetaEsdtDetails(token.collection)
-              : urlBuilder.collectionDetails(token.collection)
-          }
-          className={`d-flex text-truncate ${token.svgUrl ? 'side-link' : ''}`}
-        >
-          <div className='d-flex align-items-center symbol text-truncate'>
-            {token.svgUrl && (
-              <img
-                src={token.svgUrl}
-                alt={token.name}
-                className='side-icon me-1'
-              />
-            )}
-            <span className='text-truncate'>{token.ticker}</span>
-          </div>
-        </NetworkLink>
-      )}
-    </div>
-  );
-};
+}) => (
+  <div className='collection-action-block d-contents'>
+    {token && token.collection && (
+      <NetworkLink
+        to={
+          token?.type === NftTypeEnum.MetaESDT
+            ? urlBuilder.tokenMetaEsdtDetails(token.collection)
+            : urlBuilder.collectionDetails(token.collection)
+        }
+        className={`d-flex text-truncate ${token.svgUrl ? 'side-link' : ''}`}
+      >
+        <div className='d-flex align-items-center symbol text-truncate'>
+          {token.svgUrl && (
+            <img
+              src={token.svgUrl}
+              alt={token.name}
+              className='side-icon me-1'
+            />
+          )}
+          <span className='text-truncate'>{token.ticker}</span>
+        </div>
+      </NetworkLink>
+    )}
+  </div>
+);

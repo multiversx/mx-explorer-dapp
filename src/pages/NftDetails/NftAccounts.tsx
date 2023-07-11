@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
@@ -13,30 +13,29 @@ import {
   PageState
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useAdapter, useSize, useURLSearchParams } from 'hooks';
+import { useAdapter, useGetPage } from 'hooks';
+import { NftTabs } from 'layouts/NftLayout/NftTabs';
 import { activeNetworkSelector } from 'redux/selectors';
 import { AccountType } from 'types';
 
-import { NftTabs } from './NftLayout/NftTabs';
-
 export const NftAccounts = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const [searchParams] = useSearchParams();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { page } = useURLSearchParams();
-  const { size } = useSize();
+
+  const { page, size } = useGetPage();
   const { getNftAccounts, getNftAccountsCount } = useAdapter();
 
   const { hash: identifier } = useParams() as any;
 
-  const [accounts, setAccounts] = React.useState<AccountType[]>([]);
-  const [accountsCount, setAccountsCount] = React.useState(0);
-  const [dataReady, setDataReady] = React.useState<boolean | undefined>();
+  const [accounts, setAccounts] = useState<AccountType[]>([]);
+  const [accountsCount, setAccountsCount] = useState(0);
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchAccounts = () => {
     Promise.all([
-      getNftAccounts({ identifier, size }),
+      getNftAccounts({ identifier, page, size }),
       getNftAccountsCount({ identifier })
     ]).then(([nftAccountsData, nftAccountsCountData]) => {
       if (ref.current !== null) {
@@ -49,9 +48,9 @@ export const NftAccounts = () => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAccounts();
-  }, [activeNetworkId, size, searchParams]);
+  }, [activeNetworkId, searchParams]);
 
   const showAccounts = dataReady === true && accounts.length > 0;
 
@@ -62,9 +61,7 @@ export const NftAccounts = () => {
           <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
             <NftTabs />
             <Pager
-              page={String(page)}
-              total={accountsCount ? Math.min(accountsCount, 10000) : 0}
-              itemsPerPage={25}
+              total={accountsCount}
               show={accounts.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
             />
@@ -106,12 +103,7 @@ export const NftAccounts = () => {
               </div>
             </div>
             <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-              <Pager
-                page={String(page)}
-                total={accountsCount ? Math.min(accountsCount, 10000) : 0}
-                itemsPerPage={25}
-                show={accounts.length > 0}
-              />
+              <Pager total={accountsCount} show={accounts.length > 0} />
             </div>
           </>
         ) : (

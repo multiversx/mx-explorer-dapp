@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React from 'react';
+
 import { NodeType } from 'types';
-import { QueueHead } from './Heads/QueueHead';
-import { StandardHead } from './Heads/StandardHead';
-import { StatisticsHead } from './Heads/StatisticsHead';
-import { TableBody } from './TableBody';
+import { QueueHead } from './components/Heads/QueueHead';
+import { StandardHead } from './components/Heads/StandardHead';
+import { StatisticsHead } from './components/Heads/StatisticsHead';
+import { TableBody } from './components/TableBody';
 
 interface NodesTableType {
   children: React.ReactNode;

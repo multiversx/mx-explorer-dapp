@@ -13,10 +13,9 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
+import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { TokenLockedAccountType } from 'types';
-
-import { TokenTabs } from './TokenLayout/TokenTabs';
 
 export const TokenDetailsLockedAccounts = () => {
   const ref = useRef(null);
@@ -46,7 +45,6 @@ export const TokenDetailsLockedAccounts = () => {
 
   useEffect(() => {
     fetchTokenLockedAccounts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId]);
 
   const showLockedAccounts =

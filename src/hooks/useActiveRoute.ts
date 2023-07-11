@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
+
 import { useMatchPath, useNetworkRoute } from 'hooks';
-import { collectionRoutes, routes } from 'routes';
+import { collectionRoutes } from 'routes';
 
 export const useActiveRoute = () => {
   const networkRoute = useNetworkRoute();

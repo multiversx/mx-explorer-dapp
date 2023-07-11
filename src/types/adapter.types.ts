@@ -1,4 +1,5 @@
 export interface GetBlocksType {
+  page?: number;
   size?: number;
   shard?: number;
   epoch?: number;
@@ -8,6 +9,7 @@ export interface GetBlocksType {
 
 export interface GetTokensType {
   fields?: string;
+  page?: number;
   size?: number;
   type?: string;
   search?: string;
@@ -21,6 +23,7 @@ export interface GetTokensType {
 }
 
 export interface GetNftsType {
+  page?: number;
   size?: number;
   search?: string;
   identifiers?: string;
@@ -39,6 +42,7 @@ export interface GetNftsType {
 
 export interface GetCollectionsType {
   fields?: string;
+  page?: number;
   size?: number;
   search?: string;
   identifiers?: string;
@@ -57,6 +61,7 @@ export interface GetNodesType {
   shard?: string;
   status?: string;
   count?: boolean;
+  page?: number;
   size?: number;
   identity?: string;
   sort?: string;
@@ -67,6 +72,7 @@ export interface GetNodesType {
 }
 
 export interface GetTransactionsType {
+  page?: number;
   size?: number;
   address?: string;
   senderShard?: number;
@@ -112,6 +118,7 @@ export interface AdapterProviderPropsType {
     signersIndexes?: number;
     round?: number;
     from?: number;
+    page?: number;
     size?: number;
     search?: string;
     issues?: string;
@@ -132,7 +139,18 @@ export interface AdapterProviderPropsType {
     fullHistory?: string;
     withUsername?: boolean;
     includeMetaESDT?: boolean;
+    withGuardianInfo?: boolean;
   };
   timeout: number;
   timestamp?: number;
 }
+
+export type ApiAdapterResponseType =
+  | {
+      data: any;
+      success: boolean;
+    }
+  | {
+      success: boolean;
+      data?: undefined;
+    };

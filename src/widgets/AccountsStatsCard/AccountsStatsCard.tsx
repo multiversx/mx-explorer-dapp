@@ -12,11 +12,7 @@ import {
 } from 'redux/selectors';
 import { StatsCard } from 'widgets';
 
-export const AccountsStatsCard = ({
-  neutralColors
-}: {
-  neutralColors?: boolean;
-}) => {
+export const AccountsStatsCard = () => {
   const isMainnet = useIsMainnet();
 
   const { totalAccounts, activeAccountsToday } =
@@ -27,17 +23,15 @@ export const AccountsStatsCard = ({
   const fetchHero = useFetchGrowthHero();
 
   useEffect(() => {
-    fetchHero(true);
-  }, [timestamp]);
+    if (isMainnet) {
+      fetchHero(true);
+    }
+  }, [timestamp, isMainnet]);
 
   return (
     <>
       {isMainnet ? (
-        <StatsCard
-          title='Total Accounts'
-          value={totalAccounts}
-          neutralColors={neutralColors}
-        >
+        <StatsCard title='Total Accounts' value={totalAccounts}>
           <FontAwesomeIcon icon={faCircleBolt} className='me-2' />
           {activeAccountsToday} active today
         </StatsCard>

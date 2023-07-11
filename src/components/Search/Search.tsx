@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -33,9 +33,9 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
     getCollection,
     getUsername
   } = useAdapter();
-  const [route, setRoute] = React.useState('');
-  const [searching, setSearching] = React.useState(false);
-  const [hash, setHash] = React.useState<string>('');
+  const [route, setRoute] = useState('');
+  const [searching, setSearching] = useState(false);
+  const [hash, setHash] = useState<string>('');
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -67,7 +67,7 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
 
       switch (true) {
         case isAccount:
-          getAccount(hash).then((account) => {
+          getAccount({ address: hash }).then((account) => {
             setExpanded(false);
             const newRoute = account.success
               ? networkRoute(urlBuilder.accountDetails(hash))
@@ -136,16 +136,18 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
                 break;
               default:
                 if (isPubKeyAccount) {
-                  getAccount(bech32.encode(hash)).then((account) => {
-                    if (account.success) {
-                      if (isContract(hash) || account.data.nonce > 0) {
-                        const newRoute = networkRoute(
-                          urlBuilder.accountDetails(bech32.encode(hash))
-                        );
-                        setRoute(newRoute);
+                  getAccount({ address: bech32.encode(hash) }).then(
+                    (account) => {
+                      if (account.success) {
+                        if (isContract(hash) || account.data.nonce > 0) {
+                          const newRoute = networkRoute(
+                            urlBuilder.accountDetails(bech32.encode(hash))
+                          );
+                          setRoute(newRoute);
+                        }
                       }
                     }
-                  });
+                  );
                 }
                 setRoute(notFoundRoute);
                 break;
@@ -184,8 +186,7 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(reset, [route, pathname]);
+  useEffect(reset, [route, pathname]);
 
   if (route) {
     navigate(route);

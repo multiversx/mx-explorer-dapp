@@ -2,7 +2,7 @@ name: deploy-staging
 
 on:
   push:
-    branches: [main]
+    branches: [development]
   repository_dispatch:
     types: deploy-staging
   workflow_dispatch:
@@ -14,14 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: main
+          ref: development
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
       - name: Setup yarn
         run: npm install -g yarn
-      - run: yarn install      
+      - run: yarn install
       - run: yarn run build-staging
         env:
           CI: false
