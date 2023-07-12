@@ -152,7 +152,7 @@ export const AccountTokens = () => {
                         </div>
                         {valueUsd && (
                           <span className='text-neutral-400 me-1'>
-                            (${amountWithoutRounding(valueUsd.toString())})
+                            (${amountWithoutRounding(valueUsd)})
                           </span>
                         )}
 

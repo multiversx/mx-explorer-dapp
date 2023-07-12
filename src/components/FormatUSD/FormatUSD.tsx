@@ -36,6 +36,10 @@ export const FormatUSD = ({
         addCommas: false
       })
     : unprocessedAmount;
+  const formattedAmount = new BigNumber(amount).toFormat({
+    groupSeparator: '',
+    decimalSeparator: '.'
+  });
 
   const usd =
     usdValue ?? (isFetched && unprocessed.price ? unprocessed.price : 1);
@@ -47,7 +51,7 @@ export const FormatUSD = ({
 
   return (
     <span className='d-inline-flex'>
-      {!stringIsFloat(String(amount)) || !isFetched ? (
+      {!stringIsFloat(formattedAmount) || !isFetched ? (
         ELLIPSIS
       ) : (
         <>
