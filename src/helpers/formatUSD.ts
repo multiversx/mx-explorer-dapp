@@ -15,5 +15,5 @@ export const formatUSD = ({
 
   return `${
     showPrefix ? (value.isGreaterThan(0) ? '≈' : '=') : ''
-  } $${value.toFormat(digits)}`;
+  }$${value.toFormat(digits)}`;
 };
