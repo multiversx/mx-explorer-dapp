@@ -3,6 +3,9 @@
   @include media-breakpoint-up(md) {
     min-height: 600px;
   }
+  .title {
+    position: relative;
+  }
   .particles {
     position: absolute;
     top: 0;
