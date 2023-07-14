@@ -47,7 +47,7 @@ export const StatusFilter = () => {
         />
       </Dropdown.Toggle>
 
-      <Dropdown.Menu popperConfig={{ strategy: 'fixed' }}>
+      <Dropdown.Menu>
         <Dropdown.Item
           as={Anchor}
           eventKey='true'

@@ -57,7 +57,7 @@ export const ShardFilter = () => {
         />
       </Dropdown.Toggle>
 
-      <Dropdown.Menu popperConfig={{ strategy: 'fixed' }}>
+      <Dropdown.Menu>
         {shards.map((entry, i) => {
           return (
             <Dropdown.Item
