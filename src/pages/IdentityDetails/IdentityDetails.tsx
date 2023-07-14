@@ -1,10 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { faCity, faCode } from '@fortawesome/pro-regular-svg-icons';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageState, ProvidersTable } from 'components';
 import { NodesTable, SharedIdentity } from 'components';
-import { useAdapter, useGetNodeFilters, useGetPage, useGetSearch } from 'hooks';
+import {
+  useAdapter,
+  useGetNodeFilters,
+  useGetPage,
+  useGetSearch,
+  useGetSort
+} from 'hooks';
 import { IdentityType, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {
@@ -12,9 +18,10 @@ export const IdentityDetails = () => {
   const { hash: id } = useParams() as any;
   const { getIdentity, getNodes, getNodesCount, getProviders } = useAdapter();
 
-  const { search: searchLocation } = useLocation();
+  const [searchParams] = useSearchParams();
   const nodeFilters = useGetNodeFilters();
   const { page, size } = useGetPage();
+  const { sort, order } = useGetSort();
   const { search } = useGetSearch();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
@@ -27,24 +34,40 @@ export const IdentityDetails = () => {
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
 
   const fetchData = () => {
+    Promise.all([getIdentity(id), getProviders({ identity: id })]).then(
+      ([identityData, providersData]) => {
+        if (ref.current !== null) {
+          setIdentity(identityData.data);
+          setProviders(providersData.data);
+          setProvidersFetched(providersData.success);
+          setDataReady(identityData.success);
+        }
+      }
+    );
+  };
+
+  const fetchNodes = () => {
     Promise.all([
-      getIdentity(id),
-      getProviders({ identity: id }),
-      getNodes({ ...nodeFilters, search, identity: id, page, size }),
-      getNodesCount({ ...nodeFilters, search, identity: id })
-    ]).then(([identityData, providersData, nodesData, nodesCount]) => {
+      getNodes({
+        ...nodeFilters,
+        search,
+        identity: id,
+        page,
+        size,
+        sort,
+        order
+      }),
+      getNodesCount({ ...nodeFilters, search, identity: id, sort, order })
+    ]).then(([nodesData, nodesCount]) => {
       if (ref.current !== null) {
-        setIdentity(identityData.data);
-        setProviders(providersData.data);
-        setProvidersFetched(providersData.success);
         setNodes(nodesData.data);
         setTotalNodes(nodesCount.data);
-        setDataReady(identityData.success && nodesData.success);
       }
     });
   };
 
-  useEffect(fetchData, [searchLocation]);
+  useEffect(fetchData, []);
+  useEffect(fetchNodes, [searchParams]);
 
   const showProviders =
     providersFetched === false ||
