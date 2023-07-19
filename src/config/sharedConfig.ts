@@ -38,34 +38,61 @@ export const links: NetworkUrlType[] = [
   }
 ];
 
-export const allApps = (props: { id: string; name: string; url: string }[]) => [
-  {
-    id: 'main-site',
-    name: 'Main site',
-    url: 'https://multiversx.com/'
-  },
-  ...props,
-  {
-    id: 'xexchange',
-    name: 'xExchange',
-    url: 'https://xexchange.com/'
-  },
-  {
-    id: 'xlaunchpad',
-    name: 'xLaunchpad',
-    url: 'https://xlaunchpad.com/'
-  },
-  {
-    id: 'bridge',
-    name: 'Bridge',
-    url: 'https://bridge.multiversx.com/'
-  },
-  {
-    id: 'docs',
-    name: 'Docs',
-    url: 'https://docs.multiversx.com/'
+export const allApps = (apps?: { id: string; name: string; url: string }[]) => {
+  const baseApps = [
+    {
+      id: 'main-site',
+      name: 'Main site',
+      url: 'https://multiversx.com/'
+    },
+    {
+      id: 'wallet',
+      name: 'Wallet',
+      url: 'https://wallet.multiversx.com'
+    },
+    {
+      id: 'explorer',
+      name: 'Explorer', // navbar title
+      url: 'http://explorer.multiversx.com'
+    },
+    {
+      id: 'xexchange',
+      name: 'xExchange',
+      url: 'https://xexchange.com/'
+    },
+    {
+      id: 'xlaunchpad',
+      name: 'xLaunchpad',
+      url: 'https://xlaunchpad.com/'
+    },
+    {
+      id: 'xspotlight',
+      name: 'xSpotlight',
+      url: 'https://xspotlight.com/'
+    },
+    {
+      id: 'bridge',
+      name: 'Bridge',
+      url: 'https://bridge.multiversx.com/'
+    },
+    {
+      id: 'docs',
+      name: 'Docs',
+      url: 'https://docs.multiversx.com/'
+    }
+  ];
+
+  if (apps) {
+    const mergedApps = baseApps.map((app) => ({
+      ...app,
+      ...apps.find((configApp) => configApp.id === app.id)
+    }));
+
+    return mergedApps;
   }
-];
+
+  return baseApps;
+};
 
 export const networkBaseSchema = object({
   default: boolean(),

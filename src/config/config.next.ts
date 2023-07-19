@@ -132,13 +132,8 @@ export const networks: NetworkType[] = [
 
 export const multiversxApps = allApps([
   {
-    id: 'wallet',
-    name: 'Wallet', // navbar title
-    url: 'https://wallet.multiversx.com'
-  },
-  {
     id: 'explorer',
-    name: 'Next Explorer',
+    name: 'Next Explorer', // navbar title
     url: 'http://explorer.multiversx.com'
   }
 ]);
