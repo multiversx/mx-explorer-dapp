@@ -43,6 +43,18 @@ export const networks: NetworkType[] = [
     apiAddress: 'https://devnet-api.multiversx.com'
   },
   {
+    id: 'staging',
+    name: 'Staging',
+    adapter: 'api',
+    theme: 'default',
+    egldLabel: 'EGLD',
+    walletAddress: '***REMOVED***',
+    explorerAddress: '***REMOVED***',
+    nftExplorerAddress: 'https://staging.xspotlight.com/',
+    apiAddress: '***REMOVED***',
+    growthApi: 'https://tools.multiversx.com/growth-api'
+  },
+  {
     id: 'mainnet',
     name: 'Mainnet',
     adapter: 'api',
