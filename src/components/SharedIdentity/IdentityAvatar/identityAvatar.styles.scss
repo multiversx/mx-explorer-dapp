@@ -1,0 +1,36 @@
+.identity-avatar {
+  border: 1px solid var(--border-color);
+  min-width: 3rem;
+  min-height: 3rem;
+}
+
+.identity-badge {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  background: var(--primary);
+  border-radius: 0.375rem;
+  padding: 0.188rem 0.75rem 0.188rem 0.313rem;
+  font-family: 'Roobert SemiBold';
+  font-weight: 600;
+  font-size: 0.813rem;
+  line-height: 0.813rem;
+  color: #08302c;
+  margin-right: 3rem;
+  .badge-side {
+    position: absolute;
+    left: 2.375rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 1rem;
+    font-size: $font-size-base;
+    border: 2px solid var(--primary);
+    color: var(--primary-200);
+    background: linear-gradient(
+      90deg,
+      rgba(0, 143, 93, 0.2) 0%,
+      rgba(0, 126, 143, 0.2) 100%
+    );
+    backdrop-filter: blur(5px);
+  }
+}

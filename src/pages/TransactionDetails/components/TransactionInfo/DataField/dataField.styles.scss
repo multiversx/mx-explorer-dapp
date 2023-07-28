@@ -1,0 +1,9 @@
+.data-field {
+  .form-control:disabled,
+  .form-control[readonly] {
+    background-color: var(--neutral-700);
+  }
+  .small-font {
+    font-size: 0.8125rem;
+  }
+}

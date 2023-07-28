@@ -1,0 +1,13 @@
+.wrapper {
+  background-color: var(--neutral-900);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  padding-top: 1.5rem;
+  width: 100%;
+
+  &.half {
+    @media (min-width: 992px) {
+      width: calc(50% - 0.5rem);
+    }
+  }
+}

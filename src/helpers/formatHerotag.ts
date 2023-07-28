@@ -1,7 +1,9 @@
-export default function formatHerotag(address?: string): string {
+export const formatHerotag = (address?: string) => {
   if (!address) {
     return '';
   }
 
-  return address.endsWith('.elrond') ? `${address.replaceAll('.elrond', '')}` : address;
-}
+  return address.endsWith('.elrond')
+    ? `${address.replaceAll('.elrond', '')}`
+    : address;
+};

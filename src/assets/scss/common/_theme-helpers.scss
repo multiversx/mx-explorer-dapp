@@ -1,0 +1,132 @@
+// GENERAL CSS
+.cursor-text {
+  cursor: text !important;
+}
+.cursor-context {
+  cursor: context-menu;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.text-break-all {
+  word-break: break-all;
+}
+
+.min-w-0 {
+  min-width: 0;
+}
+
+.flex-basis-0 {
+  flex-basis: 0;
+}
+
+.position-unset {
+  position: unset;
+}
+
+.d-contents {
+  display: contents;
+}
+
+// FONTS
+.font-primary-regular {
+  font-family: 'Roobert Medium', 'Inter', Roboto, 'Helvetica Neue', 'Noto Sans',
+    'Liberation Sans', sans-serif;
+  font-weight: 400;
+}
+
+.font-primary-medium {
+  font-family: $headings-font-family;
+  font-weight: 500;
+}
+
+.font-primary-semibold {
+  font-family: 'Roobert SemiBold', 'Inter', Roboto, 'Helvetica Neue',
+    'Noto Sans', 'Liberation Sans', sans-serif;
+  font-weight: 600;
+}
+
+.font-regular {
+  font-family: $font-family-base;
+}
+
+// TABLE
+.table {
+  th {
+    font-weight: 400;
+    background-color: var(--neutral-transparent);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom-width: 0;
+    &:first-of-type {
+      padding-left: 1rem;
+      border-top-left-radius: 0.5rem;
+      border-bottom-left-radius: 0.5rem;
+    }
+    &:last-of-type {
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+    }
+  }
+  td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  tr:first-of-type {
+    td:first-of-type {
+      border-top-left-radius: 0.5rem;
+    }
+    td:last-of-type {
+      border-top-right-radius: 0.5rem;
+    }
+  }
+  tr:last-of-type {
+    td {
+      border-bottom: 0;
+    }
+  }
+}
+
+// BORDERS
+.br-sm {
+  border-radius: 0.25rem;
+  &.badge-outline:before {
+    border-radius: 0.25rem;
+  }
+}
+.br-md {
+  border-radius: 0.375rem;
+  &.badge-outline:before {
+    border-radius: 0.375rem;
+  }
+}
+.br-lg {
+  border-radius: 0.5rem;
+  &.badge-outline:before {
+    border-radius: 0.5rem;
+  }
+}
+.br-xl {
+  border-radius: $font-size-base;
+  &.badge-outline:before {
+    border-radius: $font-size-base;
+  }
+}
+.br-xxl {
+  border-radius: $font-size-root;
+  &.badge-outline:before {
+    border-radius: $font-size-root;
+  }
+}
+
+// BUTTONS
+.btn-unstyled {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}

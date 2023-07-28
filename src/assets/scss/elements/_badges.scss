@@ -1,0 +1,228 @@
+// BADGES
+a.badge,
+button.badge {
+  &:hover {
+    color: inherit;
+  }
+}
+
+.badge-green-alt,
+.badge-yellow,
+.badge-orange,
+.badge-grey {
+  border: 0;
+  line-height: 1rem;
+  color: #fafafa;
+  min-width: 1.5rem;
+}
+
+.badge-green-alt {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 245, 160, 0.3),
+    rgba(0, 217, 245, 0.3)
+  );
+}
+.badge-yellow {
+  background: linear-gradient(
+    90deg,
+    rgba(240, 152, 25, 0.4),
+    rgba(237, 222, 93, 0.4)
+  );
+}
+.badge-orange {
+  background: linear-gradient(
+    90deg,
+    rgba(240, 77, 25, 0.2) 0%,
+    rgba(237, 136, 93, 0.2) 100%
+  );
+}
+.badge-grey {
+  color: var(--neutral-400);
+  background: linear-gradient(
+    90deg,
+    rgba(117, 127, 154, 0.3),
+    rgba(215, 221, 232, 0.3)
+  );
+}
+
+.badge-outline {
+  border: 0;
+  position: relative;
+  line-height: 1rem;
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: $badge-border-radius;
+    padding: 1px;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  &-green {
+    color: var(--green-500);
+    background: linear-gradient(
+      90deg,
+      rgba(74, 222, 128, 0.06) 0%,
+      rgba(134, 239, 172, 0.06) 36.32%,
+      rgba(22, 163, 74, 0.06) 100%
+    );
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(134, 239, 172, 0.5),
+        rgba(74, 222, 128, 0.5),
+        rgba(22, 163, 74, 0.5)
+      );
+    }
+  }
+  &-green-alt {
+    color: var(--teal-100);
+    background: linear-gradient(
+      90deg,
+      rgba(0, 245, 160, 0.06) 0%,
+      rgba(0, 217, 245, 0.06) 100%
+    );
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(0, 245, 160, 0.3),
+        rgba(0, 217, 245, 0.3)
+      );
+    }
+  }
+  &-yellow {
+    color: var(--yellow-200);
+    background: var(--neutral-900);
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(240, 152, 25, 0.4),
+        rgba(237, 222, 93, 0.4)
+      );
+    }
+  }
+  &-orange {
+    color: var(--orange-200);
+    background: var(--neutral-900);
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(240, 77, 25, 0.4),
+        rgba(237, 136, 93, 0.4)
+      );
+    }
+  }
+  &-grey {
+    color: var(--neutral-500);
+    background: linear-gradient(
+      90deg,
+      rgba(117, 127, 154, 0.06) 0%,
+      rgba(215, 221, 232, 0.06) 100%
+    );
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(117, 127, 154, 0.3),
+        rgba(215, 221, 232, 0.3)
+      );
+    }
+  }
+  &-primary {
+    color: var(--primary);
+    background: var(--neutral-900);
+    &:before {
+      background: linear-gradient(90deg, var(--teal), #47e8d3);
+    }
+  }
+  &-violet-400 {
+    color: var(--violet-400);
+    background: var(--neutral-900);
+    &:before {
+      background: linear-gradient(90deg, var(--violet-400), #b6a1f3);
+    }
+  }
+
+  &.badge-rounded {
+    line-height: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    &:before {
+      border-radius: 6px;
+    }
+  }
+}
+
+.badge-direction {
+  min-width: 40px;
+  &.out {
+    @extend .badge-outline-yellow;
+  }
+  &.in {
+    @extend .badge-outline-green;
+  }
+  &.self {
+    @extend .badge-outline-grey;
+  }
+  &.internal,
+  &.int {
+    @extend .badge-outline-grey;
+  }
+}
+
+.tx-badge {
+  width: 1.5rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border-width: 1px;
+  border-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--neutral-900);
+  svg {
+    margin-right: 0 !important;
+  }
+  border-color: var(--neutral-400);
+}
+.tx-badge,
+.tx-status {
+  cursor: context-menu;
+}
+
+.filter-badge {
+  display: flex;
+  color: var(--neutral-300);
+  border: 1px solid rgba(212, 212, 212, 0.1);
+  padding: 0.75rem 1.5rem 0.75rem 0.75rem;
+  background: rgba(34, 34, 34, 0.5);
+  backdrop-filter: blur(6px);
+  border-radius: 2rem;
+
+  &.first {
+    color: var(--violet-400);
+    border-color: var(--violet-400);
+    .led {
+      background-color: var(--violet-400);
+    }
+  }
+
+  &.second {
+    color: var(--primary);
+    border-color: var(--primary);
+    .led {
+      background-color: var(--primary);
+    }
+  }
+
+  &.legend-item {
+    padding: 0.75rem 1.125rem;
+  }
+}

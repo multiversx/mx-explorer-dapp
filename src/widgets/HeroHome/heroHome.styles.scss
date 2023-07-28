@@ -1,0 +1,48 @@
+.hero-home {
+  position: relative;
+  @include media-breakpoint-up(md) {
+    min-height: 600px;
+  }
+  .title {
+    position: relative;
+  }
+  .particles {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    &.static-bg {
+      background-size: cover;
+      background-position: center bottom;
+    }
+  }
+  .main-search {
+    .form-control,
+    .input-group-text {
+      background-color: var(--neutral-900);
+    }
+  }
+  .card {
+    @include media-breakpoint-up(xxl) {
+      flex-basis: 20%;
+    }
+    background-color: var(--neutral-900);
+    display: flex;
+
+    .stats-card-value {
+      margin-bottom: 0.5rem;
+    }
+    &.card-solitary {
+      max-width: 100%;
+      @include media-breakpoint-up(sm) {
+        max-width: 50%;
+      }
+      @include media-breakpoint-up(xxl) {
+        max-width: 250px;
+      }
+    }
+  }
+}

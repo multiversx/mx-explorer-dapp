@@ -1,0 +1,33 @@
+.marquee-wrapper {
+  max-width: 100%;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+.marquee-wrapper::-webkit-scrollbar {
+  display: none;
+}
+.marquee-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.marquee {
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  animation: marquee 40s linear infinite;
+}
+
+.marquee .slide {
+  display: inline-block;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}

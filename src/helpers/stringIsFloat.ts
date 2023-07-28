@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 
-const stringIsFloat = (amount: string) => {
+export const stringIsFloat = (amount: string) => {
   if (amount.match(/^[0-9]*\.?[0-9]*$/) === null) {
     return false;
   }
@@ -22,9 +22,7 @@ const stringIsFloat = (amount: string) => {
   const bNparsed = new BigNumber(number);
 
   return (
-    bNparsed.toFormat({ groupSeparator: '', decimalSeparator: '.' }) === number &&
-    bNparsed.comparedTo(0) >= 0
+    bNparsed.toFormat({ groupSeparator: '', decimalSeparator: '.' }) ===
+      number && bNparsed.comparedTo(0) >= 0
   );
 };
-
-export default stringIsFloat;
