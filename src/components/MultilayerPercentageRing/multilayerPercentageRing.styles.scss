@@ -1,0 +1,127 @@
+$first-color: var(--primary);
+$second-color: shade-color($primary, 20%);
+$third-color: shade-color($primary, 30%);
+$fourth-color: shade-color($primary, 40%);
+$fifth-color: shade-color($primary, 45%);
+$sixth-color: shade-color($primary, 50%);
+$seventh-color: shade-color($primary, 55%);
+$eighth-color: shade-color($primary, 60%);
+$ninth-color: shade-color($primary, 65%);
+$tenth-color: shade-color($primary, 70%);
+
+.multilayer-percentage-ring {
+  .composed-pie-chart {
+    .recharts-layer {
+      .recharts-pie-sector:nth-of-type(1) path {
+        fill: $first-color;
+      }
+      .recharts-pie-sector:nth-of-type(2) path {
+        fill: $second-color;
+      }
+      .recharts-pie-sector:nth-of-type(3) path {
+        fill: $third-color;
+      }
+      .recharts-pie-sector:nth-of-type(5) path {
+        fill: $fourth-color;
+      }
+      .recharts-pie-sector:nth-of-type(5) path {
+        fill: $fifth-color;
+      }
+      .recharts-pie-sector:nth-of-type(6) path {
+        fill: $sixth-color;
+      }
+      .recharts-pie-sector:nth-of-type(7) path {
+        fill: $seventh-color;
+      }
+      .recharts-pie-sector:nth-of-type(8) path {
+        fill: $eighth-color;
+      }
+      .recharts-pie-sector:nth-of-type(9) path {
+        fill: $ninth-color;
+      }
+      .recharts-pie-sector:nth-of-type(10) path {
+        fill: $tenth-color;
+      }
+    }
+  }
+
+  .percentage {
+    &.percentage-step-1 {
+      color: $first-color;
+    }
+    &.percentage-step-2 {
+      color: $second-color;
+    }
+    &.percentage-step-3 {
+      color: $third-color;
+    }
+    &.percentage-step-4 {
+      color: $fourth-color;
+    }
+    &.percentage-step-5 {
+      color: $fifth-color;
+    }
+    &.percentage-step-6 {
+      color: $sixth-color;
+    }
+    &.percentage-step-7 {
+      color: $seventh-color;
+    }
+    &.percentage-step-8 {
+      color: $eighth-color;
+    }
+    &.percentage-step-9 {
+      color: $ninth-color;
+    }
+    &.percentage-step-10 {
+      color: $tenth-color;
+    }
+  }
+
+  .step-1 {
+    background-color: $first-color;
+  }
+  .step-2 {
+    background-color: $second-color;
+  }
+  .step-3 {
+    background-color: $third-color;
+  }
+  .step-4 {
+    background-color: $fourth-color;
+  }
+  .step-5 {
+    background-color: $fifth-color;
+  }
+  .step-6 {
+    background-color: $sixth-color;
+  }
+  .step-7 {
+    background-color: $seventh-color;
+  }
+  .step-8 {
+    background-color: $eighth-color;
+  }
+  .step-9 {
+    background-color: $ninth-color;
+  }
+  .step-10 {
+    background-color: $tenth-color;
+  }
+
+  &.two-items {
+    .step-2 {
+      background-color: $third-color;
+    }
+    .percentage.percentage-step-2 {
+      color: $second-color;
+    }
+    .composed-pie-chart {
+      .recharts-layer {
+        .recharts-pie-sector:nth-of-type(2) path {
+          fill: $third-color;
+        }
+      }
+    }
+  }
+}

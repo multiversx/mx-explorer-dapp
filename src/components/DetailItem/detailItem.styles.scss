@@ -1,0 +1,7 @@
+.detail-item {
+  color: var(--neutral-400);
+  &:last-child {
+    border-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}

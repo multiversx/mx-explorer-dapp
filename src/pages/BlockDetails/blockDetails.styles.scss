@@ -1,0 +1,39 @@
+.block-details {
+  .hash-group-row {
+    .col {
+      padding-left: 0;
+      padding-right: 1px !important; // mobile fix
+
+      @include media-breakpoint-up(lg) {
+        padding-right: 1rem !important;
+      }
+    }
+
+    .hash-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-right: -1rem;
+
+      > .hash-item {
+        display: flex;
+        max-width: 100%;
+        overflow: hidden;
+        flex: 1 1 40%;
+        margin-right: 1rem;
+      }
+    }
+
+    .na-item {
+      margin-left: 0.94rem;
+    }
+  }
+
+  .genesis {
+    background-color: $input-disabled-bg;
+    color: var(--neutral-400);
+    font-size: 1rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+}

@@ -1,0 +1,24 @@
+.nft-tooltip {
+  --tooltip-opacity: 1;
+  --tooltip-max-width: 18rem;
+  .preview-wrapper {
+    width: 15rem;
+    height: 15rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: auto;
+      height: 15rem;
+      z-index: 1;
+    }
+    .image-loader {
+      position: absolute;
+    }
+  }
+}
+.nft-preview {
+  a {
+    font-size: 0.8em;
+  }
+}

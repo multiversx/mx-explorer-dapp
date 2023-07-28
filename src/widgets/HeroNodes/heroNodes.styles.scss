@@ -1,0 +1,13 @@
+.hero-nodes {
+  .unstyled-chart-box {
+    margin: 0;
+    @media (min-width: 1200px) {
+      width: 100%;
+    }
+  }
+  .multilayer-percentage-bar {
+    .progress {
+      display: none;
+    }
+  }
+}

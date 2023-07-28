@@ -2,7 +2,7 @@ name: deploy-devnet
 
 on:
   push:
-    branches: [development]
+    branches: [old-template]
   repository_dispatch:
     types: deploy-devnet
   workflow_dispatch:
@@ -14,13 +14,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: development
+          ref: old-template
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
-      - run: npm install
-      - run: npm run build-devnet
+      - name: Setup yarn
+        run: npm install -g yarn
+      - run: yarn install
+      - run: yarn run build-devnet
         env:
           CI: false
       - name: Configure AWS Credentials

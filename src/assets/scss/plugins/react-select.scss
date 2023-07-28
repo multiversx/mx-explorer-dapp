@@ -1,0 +1,93 @@
+@import '../elements/scrollbar.scss';
+
+.styled-select .styled-select {
+  &__control {
+    background-color: var(--neutral-800);
+    color: var(--body-color);
+    border-color: var(--border-color);
+    border-radius: $border-radius;
+    font-size: 0.8125rem;
+    min-height: 1.875rem;
+
+    &:hover,
+    &--is-focused,
+    &--menu-is-open {
+      border-color: var(--primary);
+    }
+    &--is-focused {
+      box-shadow: 0 0 0 0.2rem rgba(35, 247, 221, 0.25);
+    }
+  }
+
+  &__menu {
+    background-color: var(--neutral-800);
+    z-index: 7;
+
+    &-list {
+      max-height: 200px;
+
+      @include webkit-scrollbar;
+      &::-webkit-scrollbar-track {
+        margin: 0.25rem;
+      }
+    }
+  }
+  &__option {
+    color: var(--neutral-400);
+    cursor: pointer;
+    &--is-focused {
+      background-color: var(--neutral-700);
+      color: var(--body-color);
+    }
+    &--is-selected {
+      background-color: var(--neutral-900);
+      color: var(--body-color);
+    }
+  }
+
+  &__clear-indicator,
+  &__dropdown-indicator {
+    padding: 0.125rem 0.65rem;
+    svg {
+      fill: var(--neutral-500);
+      width: 1rem;
+      height: 1rem;
+      &:hover {
+        fill: var(--primary);
+      }
+    }
+  }
+
+  &__multi-value {
+    background-color: var(--neutral-800);
+    border: 1px solid var(--neutral-500);
+    border-radius: $border-radius;
+    &__label {
+      max-width: 44px;
+      color: var(--body-color);
+      text-overflow: clip;
+    }
+    &__remove {
+      background-color: transparent !important;
+    }
+  }
+
+  &__indicator-separator {
+    background-color: var(--neutral-500);
+  }
+
+  &__single-value,
+  &__input-container,
+  &__input {
+    color: var(--body-color);
+  }
+}
+
+.multiple-select {
+  .styled-select__placeholder {
+    font-size: 0.75rem;
+  }
+  .styled-select__multi-value__label {
+    font-size: 0.563rem !important;
+  }
+}

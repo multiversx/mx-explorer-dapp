@@ -1,0 +1,62 @@
+// REACT DATEPICKER
+
+$datepicker__background-color: var(
+  --neutral-900
+); // popup header bg, hover on cell, hover over selected range
+$datepicker__header-color: var(--body-color); // popup header text
+$datepicker__text-color: var(--body-color);
+$datepicker__muted-color: #a3a3a3;
+$datepicker__selected-color: #23f7dd;
+
+@import './../../../../node_modules/react-datepicker/src/stylesheets/datepicker.scss';
+
+.transactions-datepicker {
+  #dates-dropdown {
+    &::after {
+      content: none;
+    }
+  }
+
+  .dropdown-menu {
+    padding: 0;
+    z-index: 1;
+  }
+
+  .react-datepicker {
+    border: navajowhite;
+    background-color: var(--neutral-700);
+
+    .react-datepicker__navigation {
+      outline: none;
+    }
+
+    .react-datepicker__day--outside-month {
+      &:not(.react-datepicker__day--in-range) {
+        color: var(--muted);
+      }
+    }
+
+    .react-datepicker__day--selected,
+    .react-datepicker__day--in-range {
+      color: var(--neutral-900);
+    }
+
+    .react-datepicker__day--keyboard-selected {
+      background-color: var(--primary);
+
+      &:not(.react-datepicker__day--in-range) {
+        background-color: var(--neutral-700);
+        color: var(--body-color);
+      }
+    }
+
+    .react-datepicker__navigation-icon--next::before,
+    .react-datepicker__navigation-icon--previous::before {
+      top: 14px;
+    }
+  }
+
+  .filter-text {
+    margin-top: 0.125rem;
+  }
+}

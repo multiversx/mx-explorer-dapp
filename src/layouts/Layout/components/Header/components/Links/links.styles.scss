@@ -1,0 +1,41 @@
+.links {
+  display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+    margin-right: 0.5rem;
+  }
+
+  .link {
+    display: block;
+    line-height: 1;
+    font-size: 1.125rem;
+    color: var(--neutral-200);
+    padding: 0.75rem;
+    transition: all 200ms ease;
+    background-color: transparent;
+    border-radius: 0.5rem;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 0.75rem;
+      padding: 0.5rem;
+      margin-left: 0.25rem;
+    }
+
+    @include media-breakpoint-up(xl) {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    &:hover,
+    &.active {
+      background-color: var(--black);
+      color: var(--primary);
+
+      @include media-breakpoint-up(lg) {
+        background-color: rgba(black, 0.2);
+      }
+    }
+  }
+}

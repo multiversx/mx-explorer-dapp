@@ -1,21 +1,24 @@
 import BigNumber from 'bignumber.js';
-import { decimals as configDecimals } from 'appConfig';
-import stringIsFloat from './stringIsFloat';
+import { DIGITS } from 'config';
+import { stringIsFloat } from './stringIsFloat';
 
-const amountWithoutRounding = (
-  amount: string,
+export const amountWithoutRounding = (
+  amount: string | number,
   minNonZeroDecimals?: number,
   maxDecimals?: number
 ) => {
-  if (stringIsFloat(amount)) {
-    const bNamount = new BigNumber(amount);
-
+  const bNamount = new BigNumber(amount);
+  const formattedAmount = bNamount.toFormat({
+    groupSeparator: '',
+    decimalSeparator: '.'
+  });
+  if (stringIsFloat(formattedAmount)) {
     if (bNamount.isZero()) {
       return '0';
     }
 
-    let amountDecimals = amount.split('.')?.[1];
-    let displayDecimals = minNonZeroDecimals ?? configDecimals;
+    const amountDecimals = formattedAmount.split('.')?.[1];
+    let displayDecimals = minNonZeroDecimals ?? DIGITS;
     if (amountDecimals) {
       for (let i = 0; i < amountDecimals.length; i++) {
         if (amountDecimals.charAt(i) === '0') {
@@ -31,5 +34,3 @@ const amountWithoutRounding = (
 
   return '0';
 };
-
-export default amountWithoutRounding;

@@ -1,0 +1,107 @@
+.validators-status-card {
+  width: 100%;
+  display: flex;
+  flex-grow: 1;
+  border-radius: 1rem;
+
+  .marquee-wrapper {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 0;
+    right: 0;
+    .slide {
+      margin-right: 0.5rem;
+    }
+    .badge-holder {
+      gap: 0.5rem;
+      .badge {
+        padding: 0.375rem;
+        font-size: 0.825rem;
+        background-color: var(--black);
+        color: var(--neutral-600);
+      }
+    }
+  }
+
+  // ------- Specific Styling
+
+  &.validators-status-lg {
+    .validator-card-title {
+      @include media-breakpoint-up(sm) {
+        position: absolute;
+        z-index: 2;
+      }
+    }
+    .shard-list {
+      @include media-breakpoint-up(sm) {
+        margin-top: 4.5rem;
+      }
+    }
+    .validator-map {
+      margin-top: -2.5rem;
+      text-align: left;
+      @include media-breakpoint-up(sm) {
+        margin-top: 0;
+        text-align: right;
+      }
+      .rsm-svg {
+        max-height: 15rem;
+      }
+    }
+    .weighted-node-card {
+      @include media-breakpoint-up(lg) {
+        position: absolute;
+        right: 2rem;
+        bottom: 3.5rem;
+        width: 300px;
+        background-color: rgba(var(--body-bg-rgb), 0.7);
+        -webkit-backdrop-filter: blur(0.125rem);
+        backdrop-filter: blur(0.125rem);
+        .card-body {
+          padding: 0.5rem;
+        }
+        .multilayer-percentage-ring {
+          flex-wrap: nowrap !important;
+          align-items: start !important;
+          .recharts-wrapper {
+            align-self: center;
+          }
+        }
+      }
+      @include media-breakpoint-up(xl) {
+        width: 350px;
+      }
+    }
+    &.mainnet-layout {
+      .shard-list {
+        margin-bottom: 2.5rem;
+      }
+    }
+  }
+
+  &.validators-status-sm {
+    height: 8.5rem;
+    @include media-breakpoint-up(xxl) {
+      max-width: 18rem;
+    }
+    .validator-card-title {
+      position: absolute;
+      z-index: 2;
+    }
+    .marquee-wrapper {
+      bottom: 0.875rem;
+    }
+    .validator-map {
+      position: absolute;
+      right: 0;
+      top: 0;
+      .rsm-svg {
+        height: 8.5rem;
+        margin-left: auto;
+        display: flex;
+        margin-top: 0.5rem;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

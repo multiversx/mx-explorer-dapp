@@ -1,0 +1,30 @@
+.transaction-action {
+  gap: 0.25rem;
+  div:not([class]):not([data-testid]) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .token-block,
+  .collection-block,
+  .nft-block,
+  .nft-action-block a,
+  .token-action-block a,
+  .collection-action-block a,
+  span:not([class]):not([data-testid]) {
+    margin-right: 0.25rem;
+    margin-left: 0;
+  }
+  span:not([class]):not([data-testid]) {
+    color: var(--neutral-400);
+  }
+  @include media-breakpoint-up(sm) {
+    .action-step {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      display: contents;
+    }
+  }
+}

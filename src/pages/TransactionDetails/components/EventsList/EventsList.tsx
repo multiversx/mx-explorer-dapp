@@ -1,0 +1,124 @@
+import React, { useEffect, useRef } from 'react';
+import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useLocation } from 'react-router-dom';
+
+import { CopyButton, Trim, DataDecode, NetworkLink } from 'components';
+import { DecodeMethodType } from 'components/DataDecode';
+import { urlBuilder } from 'helpers';
+import { EventType } from 'types';
+
+const EventTopics = ({
+  topics,
+  identifier
+}: {
+  topics: EventType['topics'];
+  identifier?: string;
+}) => {
+  const mergedTopics = topics.filter((topic) => topic).join('\n');
+
+  return <DataDecode value={mergedTopics} identifier={identifier} />;
+};
+
+export const EventsList = ({
+  events,
+  id
+}: {
+  events: EventType[];
+  id?: string;
+}) => {
+  const { hash } = useLocation();
+  const ref = useRef<HTMLDivElement>(null);
+
+  const hashValues = hash.split('/');
+  const formattedHash = hashValues[0] ? hashValues[0].replace('#', '') : '';
+  const eventOrder = hashValues[1] ?? 0;
+  const initialDecodeMethod = hashValues[2] ?? DecodeMethodType.raw;
+
+  useEffect(() => {
+    if (ref.current && ref.current !== null) {
+      window.scrollTo({
+        top: ref.current.getBoundingClientRect().top - 86,
+        behavior: 'smooth'
+      });
+    }
+  }, []);
+
+  return (
+    <div className='events-list detailed-list d-flex flex-column mt-1'>
+      {events.map((event: EventType, i) => {
+        const dataBase64Buffer = Buffer.from(String(event?.data), 'base64');
+        const dataHexValue = dataBase64Buffer.toString('hex');
+        const highlightTx =
+          formattedHash === id && event.order === Number(eventOrder);
+
+        return (
+          <div
+            key={i}
+            className={`detailed-item d-flex border-start border-bottom ms-3 py-3 ${
+              highlightTx ? 'highlighted' : ''
+            }`}
+            {...(highlightTx ? { ref: ref } : {})}
+          >
+            <div className='transaction-icon'>
+              <FontAwesomeIcon icon={faExchange} />
+            </div>
+
+            <div className='detailed-item-content'>
+              {event.address !== undefined && (
+                <div className='row mb-3 d-flex flex-column flex-sm-row'>
+                  <div className='col-sm-2 col-left'>Address</div>
+                  <div className='col-sm-10 d-flex align-items-center'>
+                    <NetworkLink
+                      to={urlBuilder.accountDetails(event.address)}
+                      className='trim-wrapper'
+                    >
+                      <Trim text={event.address} />
+                    </NetworkLink>
+                    <CopyButton
+                      text={event.address}
+                      className='side-action ms-2'
+                    />
+                  </div>
+                </div>
+              )}
+
+              {event.identifier !== undefined && (
+                <div className='row mb-3 d-flex flex-column flex-sm-row'>
+                  <div className='col-sm-2 col-left'>Identifier</div>
+                  <div className='col-sm-10 d-flex align-items-center'>
+                    {event.identifier}
+                  </div>
+                </div>
+              )}
+
+              {event.topics !== undefined && event.topics.length > 0 && (
+                <div className='row mb-3 d-flex flex-column flex-sm-row'>
+                  <div className='col-sm-2 col-left'>Topics</div>
+                  <div className='col-sm-10 d-flex flex-column'>
+                    <EventTopics
+                      topics={event.topics}
+                      identifier={event.identifier}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {event.data !== undefined && (
+                <div className='row mb-3 d-flex flex-column flex-sm-row'>
+                  <div className='col-sm-2 col-left'>Data</div>
+                  <div className='col-sm-10 d-flex flex-column'>
+                    <DataDecode
+                      value={dataHexValue}
+                      {...(highlightTx ? { initialDecodeMethod } : {})}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};

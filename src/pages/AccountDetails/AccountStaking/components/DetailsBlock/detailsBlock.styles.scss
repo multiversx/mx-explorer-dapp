@@ -1,0 +1,15 @@
+.details-block {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  @include media-breakpoint-up(md) {
+    text-align: right;
+  }
+  strong {
+    font-weight: 400;
+  }
+  small {
+    color: var(--neutral-400);
+    font-size: 0.825rem;
+  }
+}
