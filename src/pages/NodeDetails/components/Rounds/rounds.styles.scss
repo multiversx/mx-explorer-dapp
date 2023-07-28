@@ -1,0 +1,17 @@
+.squares {
+  margin: -0.15em;
+
+  .square-block {
+    width: 1rem;
+    height: 1rem;
+    display: block;
+    margin: 0.15em;
+    float: left;
+    border: 0.1em solid var(--primary);
+    border-radius: 2px;
+
+    &.full {
+      background-color: var(--primary);
+    }
+  }
+}

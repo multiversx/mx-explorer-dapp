@@ -1,0 +1,23 @@
+.notification-bar {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0;
+  color: $black;
+
+  .close-icon {
+    color: $black;
+    opacity: 0.6;
+    font-size: 1.2rem;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+  &.bg-warning {
+    background: linear-gradient(
+      90deg,
+      rgba(240, 152, 25, 0.8),
+      rgba(237, 222, 93, 0.8)
+    );
+  }
+}

@@ -1,0 +1,27 @@
+.percentage-bar {
+  width: 10.32rem;
+  &.small {
+    .progress {
+      height: 2px;
+    }
+  }
+  .progress {
+    margin: 0 !important;
+    background-color: var(--neutral-600);
+    height: 1rem;
+    border-radius: 0.2rem;
+
+    .progress-bar {
+      height: 100%;
+    }
+  }
+
+  .existing {
+    background-color: var(--primary-700) !important;
+  }
+
+  .new {
+    background-color: var(--primary) !important;
+    min-width: 2px;
+  }
+}

@@ -1,10 +1,12 @@
 import BigNumber from 'bignumber.js';
 
-const usdValue = ({
+import { ELLIPSIS } from 'appConstants';
+
+export const usdValue = ({
   amount,
   usd,
   showPrefix,
-  decimals,
+  decimals
 }: {
   amount: string;
   usd?: number;
@@ -12,11 +14,11 @@ const usdValue = ({
   decimals?: number;
 }) => {
   if (!usd) {
-    return '...';
+    return ELLIPSIS;
   }
 
   const value = new BigNumber(amount).times(usd);
-  return `${showPrefix ? (value.isEqualTo(0) ? '= ' : '≈ ') : ''}$${value.toFormat(decimals ?? 2)}`;
+  return `${
+    showPrefix ? (value.isEqualTo(0) ? '= ' : '≈ ') : ''
+  }$${value.toFormat(decimals ?? 2)}`;
 };
-
-export default usdValue;

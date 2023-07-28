@@ -1,0 +1,114 @@
+.identity-card {
+  .identity-avatar {
+    width: 7.5rem;
+    height: 7.5rem;
+    margin-right: 0 !important;
+  }
+
+  .idenity-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .identity-name {
+    max-width: 14rem;
+    @include media-breakpoint-up(xxl) {
+      max-width: 30rem;
+    }
+    .ellipsis,
+    .trim .left span,
+    .trim .right span {
+      font-size: $h5-font-size;
+      line-height: 3rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .detail-card {
+    display: flex;
+    flex-grow: 1;
+    @include media-breakpoint-up(xxl) {
+      flex-basis: 24%;
+    }
+  }
+  .stake-card {
+    flex-grow: 1;
+    width: 100%;
+    .btn {
+      width: 100%;
+    }
+    @include media-breakpoint-up(lg) {
+      flex-basis: 20%;
+      width: auto;
+      .btn {
+        width: auto;
+      }
+    }
+  }
+  .nodes-card {
+    flex-grow: 1;
+    width: 100%;
+    .nodes-card-title {
+      color: var(--neutral-500);
+    }
+    .nodes-card-value {
+      color: var(--neutral-300);
+    }
+    @include media-breakpoint-up(lg) {
+      flex-basis: 20%;
+      width: auto;
+    }
+  }
+
+  .distribution-card {
+    flex-grow: 1;
+    width: 100%;
+    .distribution-card-title {
+      color: var(--neutral-500);
+    }
+
+    @include media-breakpoint-up(lg) {
+      flex-basis: 65%;
+      width: auto;
+    }
+  }
+
+  .multilayer-percentage-bar {
+    .legend-dot-container {
+      @extend .mt-0;
+      flex-direction: column;
+    }
+
+    .legend-dot {
+      @extend .mt-2;
+
+      small {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  &.multiversx {
+    .detail-card {
+      @include media-breakpoint-up(xxl) {
+        flex-basis: 28%;
+      }
+    }
+  }
+}
+
+.identity-social-logo {
+  width: 1.1rem;
+  height: 1.1rem;
+  opacity: 1;
+  fill: var(--neutral-400);
+  color: var(--neutral-400);
+}
+
+.font-weight-600 {
+  font-family: 'Roobert SemiBold';
+  font-weight: 600;
+}

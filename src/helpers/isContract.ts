@@ -1,9 +1,11 @@
-import { numInitCharactersForScAddress } from 'appConfig';
+import { SC_INIT_CHARACTERS_LENGTH } from 'appConstants';
 
-export default function isContract(hash: string) {
+export const isContract = (hash: string) => {
   return (
     hash &&
-    numInitCharactersForScAddress > 0 &&
-    hash.substr('erd1'.length).startsWith('q'.repeat(numInitCharactersForScAddress))
+    SC_INIT_CHARACTERS_LENGTH > 0 &&
+    hash
+      .substring('erd1'.length)
+      .startsWith('q'.repeat(SC_INIT_CHARACTERS_LENGTH))
   );
-}
+};

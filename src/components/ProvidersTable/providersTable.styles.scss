@@ -1,0 +1,20 @@
+.providers-table {
+  .sort-col {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      .sort-icon {
+        color: var(--primary);
+      }
+    }
+  }
+  .table tr td:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

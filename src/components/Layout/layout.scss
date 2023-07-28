@@ -1,8 +1,0 @@
-.main-content > .main-content-container.container-fluid {
-  @include media-breakpoint-up(md) {
-    $header-navbar-height: 3.75rem;
-    $footer-height: 5rem;
-
-    min-height: calc(100vh - #{$footer-height + $header-navbar-height}) !important;
-  }
-}

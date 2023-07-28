@@ -1,0 +1,26 @@
+.shard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  .shard-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .shard {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 0.25rem;
+      .progress-ring-wrapper {
+        display: flex;
+        background: rgba(23, 23, 23, 0.95);
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+      }
+      h6 {
+        font-size: 1.125rem;
+      }
+    }
+  }
+}
