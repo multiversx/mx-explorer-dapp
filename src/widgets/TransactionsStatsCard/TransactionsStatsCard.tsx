@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { faCirclePlus } from '@fortawesome/pro-solid-svg-icons/faCirclePlus';
+import { faCirclePlus } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 

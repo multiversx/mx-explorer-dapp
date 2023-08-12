@@ -1,5 +1,5 @@
 import React from 'react';
-import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
+import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';

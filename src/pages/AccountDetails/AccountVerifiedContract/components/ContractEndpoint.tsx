@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
+import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons';
 import {
   faUserCheck,
   faSquarePen,

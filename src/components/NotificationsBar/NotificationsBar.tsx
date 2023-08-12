@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
+import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useSelector } from 'react-redux';

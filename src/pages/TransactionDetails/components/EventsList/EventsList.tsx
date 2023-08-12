@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { faExchange } from '@fortawesome/pro-regular-svg-icons/faExchange';
+import { faExchange } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 

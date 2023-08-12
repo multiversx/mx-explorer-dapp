@@ -1,6 +1,5 @@
 import React from 'react';
-import { faBan } from '@fortawesome/pro-regular-svg-icons/faBan';
-import { faWifiSlash } from '@fortawesome/pro-regular-svg-icons/faWifiSlash';
+import { faBan, faWifiSlash } from '@fortawesome/pro-regular-svg-icons';
 import { useSelector } from 'react-redux';
 import { PageState } from 'components';
 

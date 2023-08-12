@@ -1,5 +1,5 @@
 import React from 'react';
-import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
+import { faChartBar } from '@fortawesome/pro-regular-svg-icons';
 
 import { PageState } from 'components';
 

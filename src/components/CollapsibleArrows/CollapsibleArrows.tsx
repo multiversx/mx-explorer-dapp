@@ -1,6 +1,5 @@
 import React from 'react';
-import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
-import { faChevronUp } from '@fortawesome/pro-regular-svg-icons/faChevronUp';
+import { faChevronDown, faChevronUp } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 

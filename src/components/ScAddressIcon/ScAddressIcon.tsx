@@ -1,5 +1,5 @@
 import React from 'react';
-import { faFileAlt } from '@fortawesome/pro-regular-svg-icons/faFileAlt';
+import { faFileAlt } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { SC_INIT_CHARACTERS_LENGTH } from 'appConstants';

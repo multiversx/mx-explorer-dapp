@@ -1,5 +1,5 @@
 import React from 'react';
-import { faPalette } from '@fortawesome/pro-regular-svg-icons/faPalette';
+import { faPalette } from '@fortawesome/pro-regular-svg-icons';
 
 import { PageState } from 'components';
 

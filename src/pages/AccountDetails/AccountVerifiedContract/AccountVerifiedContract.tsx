@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faFileAlt } from '@fortawesome/pro-solid-svg-icons/faFileAlt';
+import { faFileAlt } from '@fortawesome/pro-solid-svg-icons';
 import { Tab, Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useMatch, useNavigate } from 'react-router-dom';

@@ -1,8 +1,5 @@
 import React from 'react';
-import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
-import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
-import { faHourglass } from '@fortawesome/pro-solid-svg-icons/faHourglass';
-import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
+import { faBan, faCheckCircle, faHourglass, faTimes } from '@fortawesome/pro-solid-svg-icons';
 
 import {
   TransactionApiStatusEnum,

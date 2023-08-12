@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { faCircleBolt } from '@fortawesome/pro-solid-svg-icons/faCircleBolt';
+import { faCircleBolt } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 

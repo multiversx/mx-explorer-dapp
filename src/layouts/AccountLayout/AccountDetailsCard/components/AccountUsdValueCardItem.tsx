@@ -1,5 +1,5 @@
 import React from 'react';
-import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign';
+import { faDollarSign } from '@fortawesome/pro-solid-svg-icons';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
