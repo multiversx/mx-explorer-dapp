@@ -15,7 +15,7 @@ export const useCheckVersion = () => {
 
   const isMainnetExplorer =
     window.location.origin === 'https://explorer.multiversx.com';
-  const explorerVersion = process.env.REACT_APP_CACHE_BUST;
+  const explorerVersion = process.env.VITE_APP_CACHE_BUST;
 
   const withinInterval = moment()
     .subtract(refreshRate, 'ms')

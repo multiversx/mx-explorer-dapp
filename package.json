@@ -37,7 +37,6 @@
     "react-helmet": "6.1.0",
     "react-redux": "8.1.2",
     "react-router-dom": "6.15.0",
-    "react-scripts": "4.0.3",
     "react-select": "5.7.4",
     "react-select-async-paginate": "0.7.3",
     "react-simple-maps": "3.0.0",
@@ -47,76 +46,39 @@
     "three": "0.155.0",
     "three-stdlib": "2.24.2",
     "ua-parser-js": "1.0.35",
+    "vite-plugin-mkcert": "1.16.0",
+    "vite-plugin-node-polyfills": "0.9.0",
+    "vite-plugin-svgr": "3.2.0",
+    "vite-tsconfig-paths": "4.2.0",
     "yup": "0.32.11"
   },
   "scripts": {
-    "start": "REACT_APP_CACHE_BUST=$(git describe --always) HTTPS=true PORT=3001 react-scripts start",
-    "start-testnet": "npm run copy-testnet-config & REACT_APP_THEME=testnet npm run start",
-    "start-internal": "npm run copy-internal-config & REACT_APP_THEME=testnet npm run start",
-    "start-devnet": "npm run copy-devnet-config & REACT_APP_THEME=testnet npm run start",
-    "start-mainnet": "npm run copy-mainnet-config & REACT_APP_THEME=light npm run start",
-    "build-mainnet": "npm run copy-mainnet-config & REACT_APP_SHARE_PREFIX= REACT_APP_GA_ID=***REMOVED*** REACT_APP_THEME=light npm run build",
-    "build-staging": "npm run copy-staging-config & REACT_APP_SHARE_PREFIX= REACT_APP_GA_ID=***REMOVED*** REACT_APP_THEME=light REACT_APP_IS_STAGING=true npm run build",
-    "build-testnet": "npm run copy-testnet-config & REACT_APP_SHARE_PREFIX=testnet- REACT_APP_GA_ID=G-EFN7QYSMQS REACT_APP_THEME=testnet npm run build",
-    "build-internal": "npm run copy-internal-config & REACT_APP_SHARE_PREFIX=internal- REACT_APP_GA_ID=G-EFN7QYSMQS REACT_APP_THEME=testnet npm run build",
-    "build-next": "npm run copy-next-config & REACT_APP_SHARE_PREFIX=next- REACT_APP_GA_ID=G-EFN7QYSMQS REACT_APP_THEME=testnet npm run build",
-    "build-devnet": "npm run copy-devnet-config & REACT_APP_SHARE_PREFIX=devnet- REACT_APP_GA_ID=G-QE38EW59B8 REACT_APP_THEME=testnet npm run build",
-    "build": "GENERATE_SOURCEMAP=false REACT_APP_CACHE_BUST=$(git describe --always) react-scripts build",
+    "start": "VITE_APP_CACHE_BUST=$(git describe --always) vite",
+    "start-testnet": "yarn run copy-testnet-config & yarn run start",
+    "start-internal": "yarn run copy-internal-config & yarn run start",
+    "start-devnet": "yarn run copy-devnet-config & yarn run start",
+    "start-mainnet": "yarn run copy-mainnet-config & yarn run start",
+    "build-mainnet": "yarn run copy-mainnet-config & VITE_APP_SHARE_PREFIX= VITE_APP_GA_ID=***REMOVED*** yarn run build",
+    "build-staging": "yarn run copy-staging-config & VITE_APP_SHARE_PREFIX= VITE_APP_GA_ID=***REMOVED*** VITE_APP_IS_STAGING=true yarn run build",
+    "build-testnet": "yarn run copy-testnet-config & VITE_APP_SHARE_PREFIX=testnet- VITE_APP_GA_ID=G-EFN7QYSMQS yarn run build",
+    "build-internal": "yarn run copy-internal-config & VITE_APP_SHARE_PREFIX=internal- VITE_APP_GA_ID=G-EFN7QYSMQS yarn run build",
+    "build-next": "yarn run copy-next-config & VITE_APP_SHARE_PREFIX=next- VITE_APP_GA_ID=G-EFN7QYSMQS yarn run build",
+    "build-devnet": "yarn run copy-devnet-config & VITE_APP_SHARE_PREFIX=devnet- VITE_APP_GA_ID=G-QE38EW59B8 yarn run build",
+    "build": "VITE_APP_CACHE_BUST=$(git describe --always) tsc && vite build && yarn version:make",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
     "copy-mainnet-config": "cp ./src/config/config.mainnet.ts ./src/config/index.ts",
     "copy-staging-config": "cp ./src/config/config.staging.ts ./src/config/index.ts",
     "copy-testnet-config": "cp ./src/config/config.testnet.ts ./src/config/index.ts",
     "copy-internal-config": "cp ./src/config/config.internal.ts ./src/config/index.ts",
     "copy-next-config": "cp ./src/config/config.next.ts ./src/config/index.ts",
     "copy-devnet-config": "cp ./src/config/config.devnet.ts ./src/config/index.ts",
-    "postbuild": "npm run create-version-file",
-    "create-version-file": "git describe --always | sed 's/^/\"/;s/$/\"/' > build/version.json",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint --fix --ext js,ts,tsx src"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "@multiversx/sdk-dapp/(.*)": "<rootDir>/node_modules/@multiversx/sdk-dapp/__commonjs/$1.js"
-    }
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ]
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all"
-  ],
-  "resolutions": {
-    "@ledgerhq/hw-transport-webhid": "6.27.1",
-    "@ledgerhq/hw-transport-webusb": "6.27.1",
-    "tslib": "^2.3.0",
-    "react-error-overlay": "6.0.9"
-  },
-  "overrides": {
-    "react-error-overlay": "6.0.9"
+    "version:make": "printf '{\"shortSha\":\"%s\"}' $(git describe --always) > build/version.json"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-common-types": "6.4.2",
-    "@testing-library/jest-dom": "5.17.0",
-    "@testing-library/react": "14.0.0",
-    "@testing-library/user-event": "14.4.3",
     "@types/file-saver": "2.0.5",
     "@types/lodash.clonedeep": "4.5.7",
-    "@types/node": "18.11.18",
     "@types/numeral": "2.0.2",
     "@types/react": "18.2.20",
     "@types/react-bootstrap": "0.32.32",
@@ -127,23 +89,17 @@
     "@types/react-syntax-highlighter": "15.5.7",
     "@types/three": "0.155.0",
     "@types/ua-parser-js": "0.7.36",
-    "eslint-config-prettier": "8.6.0",
-    "eslint-config-react": "1.1.7",
-    "eslint-config-react-app": "7.0.1",
-    "eslint-config-standard": "17.1.0",
-    "eslint-import-resolver-alias": "1.1.2",
-    "eslint-import-resolver-typescript": "3.6.0",
+    "@vitejs/plugin-react-swc": "3.3.2",
+    "eslint": "8.44.0",
+    "eslint-config-prettier": "8.8.0",
     "eslint-plugin-import": "2.28.0",
-    "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-react": "7.33.1",
     "eslint-plugin-react-hooks": "4.6.0",
-    "prettier": "2.3.2",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-error-overlay": "6.0.9",
+    "prettier": "3.0.0",
+    "run-script-os": "1.1.5",
     "sass": "1.65.1",
-    "typescript": "4.9.4"
+    "typescript": "5.1.6",
+    "vite": "4.4.3"
   }
 }

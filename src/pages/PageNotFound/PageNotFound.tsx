@@ -6,7 +6,7 @@ import { analytics } from 'helpers';
 
 export const PageNotFound = () => {
   const { pathname } = useLocation();
-  const explorerVersion = process.env.REACT_APP_CACHE_BUST;
+  const explorerVersion = process.env.VITE_APP_CACHE_BUST;
 
   if (explorerVersion !== undefined) {
     analytics.sendEvent({
