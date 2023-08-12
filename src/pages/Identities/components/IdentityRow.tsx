@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { faCogs } from '@fortawesome/pro-regular-svg-icons';
 
 import { ReactComponent as CarretDown } from 'assets/img/carret-down.svg';
 import {

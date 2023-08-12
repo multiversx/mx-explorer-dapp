@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
+import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Anchor, Dropdown } from 'react-bootstrap';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons/faExchangeAlt';
+import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons';
 
 import { PageState } from 'components';
 

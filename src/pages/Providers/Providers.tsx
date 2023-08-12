@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
+import { faCode } from '@fortawesome/pro-regular-svg-icons';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 

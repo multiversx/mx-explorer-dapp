@@ -1,6 +1,6 @@
 import React from 'react';
-import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
-import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
+import { faFilter } from '@fortawesome/pro-regular-svg-icons';
+import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSelector } from 'react-redux';

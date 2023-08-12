@@ -1,5 +1,5 @@
 import React from 'react';
-import { faRepeat } from '@fortawesome/pro-regular-svg-icons/faRepeat';
+import { faRepeat } from '@fortawesome/pro-regular-svg-icons';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { PageState } from 'components';

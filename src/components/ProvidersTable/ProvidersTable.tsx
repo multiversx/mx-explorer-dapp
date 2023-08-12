@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { faArrowDown } from '@fortawesome/pro-regular-svg-icons/faArrowDown';
-import { faArrowUp } from '@fortawesome/pro-regular-svg-icons/faArrowUp';
-import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
-import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons/faBadgeCheck';
+import { faArrowDown, faArrowUp, faCode } from '@fortawesome/pro-regular-svg-icons';
+import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 

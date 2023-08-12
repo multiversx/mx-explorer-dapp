@@ -1,5 +1,5 @@
 import React from 'react';
-import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
+import { faDiamond } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 

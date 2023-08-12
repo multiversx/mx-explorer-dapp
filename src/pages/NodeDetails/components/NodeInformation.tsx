@@ -1,16 +1,16 @@
 import React from 'react';
-import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons/faFlagAlt';
+import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons';
 import {
+  faCogs,
+  faExclamationTriangle,
+  faLayerGroup,
+  faStream,
   faLock,
   faServer,
   faCheck,
   faCode,
   faUser
 } from '@fortawesome/pro-solid-svg-icons';
-import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
-import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
-import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
-import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
 
 import {
   ShardSpan,

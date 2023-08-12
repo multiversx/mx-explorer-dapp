@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
+import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LinkComponentProps } from 'react-anchorme';
 import { Modal } from 'react-bootstrap';
