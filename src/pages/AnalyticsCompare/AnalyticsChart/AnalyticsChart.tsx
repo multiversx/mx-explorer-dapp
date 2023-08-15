@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faChartBar } from '@fortawesome/pro-regular-svg-icons';
+import { faChartBar } from 'icons/regular';
 import { useSelector } from 'react-redux';
 
 import { PageState, Chart, Loader } from 'components';
@@ -157,18 +157,19 @@ export const AnalyticsChart = ({
             />
           )}
 
-        {dataReady === true && seriesConfig?.every((x) => x.data?.length > 0) && (
-          <Chart.Composed
-            seriesConfig={seriesConfig}
-            tooltip={{
-              dateFormat: 'dd, MMM D YYYY'
-            }}
-            showLegend={true}
-            stacked={stacked}
-            stackedLabel={stackedLabel}
-            customDomain={customDomain}
-          />
-        )}
+        {dataReady === true &&
+          seriesConfig?.every((x) => x.data?.length > 0) && (
+            <Chart.Composed
+              seriesConfig={seriesConfig}
+              tooltip={{
+                dateFormat: 'dd, MMM D YYYY'
+              }}
+              showLegend={true}
+              stacked={stacked}
+              stackedLabel={stackedLabel}
+              customDomain={customDomain}
+            />
+          )}
       </div>
     </section>
   );

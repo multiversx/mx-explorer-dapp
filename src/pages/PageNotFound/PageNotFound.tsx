@@ -1,5 +1,5 @@
 import React from 'react';
-import { faTimes } from '@fortawesome/pro-regular-svg-icons';
+import { faTimes } from 'icons/regular';
 import { useLocation } from 'react-router-dom';
 import { PageState } from 'components';
 import { analytics } from 'helpers';

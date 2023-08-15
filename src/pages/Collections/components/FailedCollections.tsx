@@ -1,5 +1,5 @@
 import React from 'react';
-import { faCoins } from '@fortawesome/pro-regular-svg-icons';
+import { faCoins } from 'icons/regular';
 
 import { PageState } from 'components';
 

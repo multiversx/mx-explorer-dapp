@@ -1,5 +1,5 @@
 import React from 'react';
-import { faLock } from '@fortawesome/pro-regular-svg-icons';
+import { faLock } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 

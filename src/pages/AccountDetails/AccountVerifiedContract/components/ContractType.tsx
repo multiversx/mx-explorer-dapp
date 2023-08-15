@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faSquarePen } from '@fortawesome/pro-solid-svg-icons';
+import { faSquarePen } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse } from 'react-bootstrap';
 

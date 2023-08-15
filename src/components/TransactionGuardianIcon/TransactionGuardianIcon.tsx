@@ -1,5 +1,5 @@
 import React from 'react';
-import { faShieldCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faShieldCheck } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';

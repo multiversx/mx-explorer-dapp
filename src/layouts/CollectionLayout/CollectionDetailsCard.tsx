@@ -1,6 +1,6 @@
 import React from 'react';
-import { faClock } from '@fortawesome/pro-regular-svg-icons';
-import { faHexagonCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faClock } from 'icons/regular';
+import { faHexagonCheck } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';

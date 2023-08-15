@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { faArrowDown, faArrowUp, faCode } from '@fortawesome/pro-regular-svg-icons';
-import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faArrowDown, faArrowUp, faCode } from 'icons/regular';
+import { faBadgeCheck } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 

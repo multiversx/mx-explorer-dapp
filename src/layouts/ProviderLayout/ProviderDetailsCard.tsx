@@ -9,7 +9,7 @@ import {
   faLeaf,
   faUserFriends,
   faUser
-} from '@fortawesome/pro-solid-svg-icons';
+} from 'icons/solid';
 import { useSelector } from 'react-redux';
 
 import {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons';
+import { faSpinnerThird } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { PageState } from 'components';

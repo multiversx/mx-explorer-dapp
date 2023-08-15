@@ -1,5 +1,5 @@
 import React from 'react';
-import { faCogs } from '@fortawesome/pro-regular-svg-icons';
+import { faCogs } from 'icons/regular';
 
 import { PageState } from 'components';
 import { NodeType } from 'types';

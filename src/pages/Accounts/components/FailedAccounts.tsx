@@ -1,5 +1,5 @@
 import React from 'react';
-import { faUser } from '@fortawesome/pro-regular-svg-icons';
+import { faUser } from 'icons/regular';
 
 import { PageState } from 'components';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { faAngleDown } from '@fortawesome/pro-solid-svg-icons';
+import { faAngleDown } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 

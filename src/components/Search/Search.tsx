@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { faCircleNotch, faSearch } from '@fortawesome/pro-regular-svg-icons';
+import { faCircleNotch, faSearch } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {

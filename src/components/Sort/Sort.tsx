@@ -1,5 +1,5 @@
 import React from 'react';
-import { faSort, faSortDown, faSortUp } from '@fortawesome/pro-duotone-svg-icons';
+import { faSort, faSortDown, faSortUp } from 'icons/duotone';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 

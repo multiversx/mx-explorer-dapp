@@ -1,5 +1,5 @@
 import React from 'react';
-import { faSearch } from '@fortawesome/pro-regular-svg-icons';
+import { faSearch } from 'icons/regular';
 import { useParams } from 'react-router-dom';
 
 import { PageState } from 'components';

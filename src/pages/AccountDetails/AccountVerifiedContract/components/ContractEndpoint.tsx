@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons';
-import {
-  faUserCheck,
-  faSquarePen,
-  faSquareV
-} from '@fortawesome/pro-solid-svg-icons';
+import { faQuestionCircle } from 'icons/regular';
+import { faUserCheck, faSquarePen, faSquareV } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse } from 'react-bootstrap';
 

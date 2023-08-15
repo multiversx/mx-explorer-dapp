@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faExchangeAlt } from '@fortawesome/pro-regular-svg-icons';
+import { faExchangeAlt } from 'icons/regular';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 

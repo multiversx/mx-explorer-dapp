@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
+import { faExchange, faSearch } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';

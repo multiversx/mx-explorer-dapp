@@ -1,5 +1,5 @@
 import React from 'react';
-import { faCode, faUser } from '@fortawesome/pro-regular-svg-icons';
+import { faCode, faUser } from 'icons/regular';
 
 import { SC_INIT_CHARACTERS_LENGTH } from 'appConstants';
 import { PageState } from 'components';

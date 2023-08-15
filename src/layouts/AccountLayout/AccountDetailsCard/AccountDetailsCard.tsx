@@ -1,15 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  faClock,
-  faExclamationTriangle
-} from '@fortawesome/pro-regular-svg-icons';
+import { faClock, faExclamationTriangle } from 'icons/regular';
 import {
   faUser,
   faCoins,
   faLayerGroup,
   faHexagonVerticalNft,
   faShieldCheck
-} from '@fortawesome/pro-solid-svg-icons';
+} from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 

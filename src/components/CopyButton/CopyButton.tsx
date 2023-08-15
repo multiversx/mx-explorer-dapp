@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faCheck, faClone } from '@fortawesome/pro-regular-svg-icons';
+import { faCheck, faClone } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { copyTextToClipboard } from './helpers/copyToClipboard';

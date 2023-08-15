@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faCode } from '@fortawesome/pro-regular-svg-icons';
+import { faCode } from 'icons/regular';
 import { useParams, Outlet } from 'react-router-dom';
 
 import { Loader, PageState, SharedIdentity } from 'components';

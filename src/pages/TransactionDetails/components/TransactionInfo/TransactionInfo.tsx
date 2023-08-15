@@ -1,10 +1,5 @@
 import React, { useRef, useState } from 'react';
-import {
-  faAngleDown,
-  faClock,
-  faSearch,
-  faSpinner
-} from '@fortawesome/pro-regular-svg-icons';
+import { faAngleDown, faClock, faSearch, faSpinner } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Tab, Nav } from 'react-bootstrap';

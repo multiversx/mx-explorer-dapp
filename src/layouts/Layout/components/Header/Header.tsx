@@ -1,5 +1,5 @@
 import React, { useState, MouseEvent } from 'react';
-import { faGrid, faGrid2 } from '@fortawesome/pro-solid-svg-icons';
+import { faGrid, faGrid2 } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons';
+import { faInfoCircle } from 'icons/regular';
 
 import { IconState } from './components/IconState';
 

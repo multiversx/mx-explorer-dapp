@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { faLeaf } from '@fortawesome/pro-regular-svg-icons';
+import { faLeaf } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';

@@ -1,6 +1,6 @@
 import React from 'react';
-import { faAngleRight, faCity } from '@fortawesome/pro-regular-svg-icons';
-import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faAngleRight, faCity } from 'icons/regular';
+import { faBadgeCheck } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
