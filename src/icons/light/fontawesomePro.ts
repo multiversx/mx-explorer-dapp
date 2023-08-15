@@ -1,3 +1,3 @@
-import { faSort, faSortDown, faSortUp } from '@fortawesome/pro-duotone-svg-icons';
+import { faTimes, faCheck } from '@fortawesome/pro-light-svg-icons';
 
-export {faSort, faSortDown, faSortUp}
+export { faTimes, faCheck };

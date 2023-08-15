@@ -1,3 +1,7 @@
-import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSort,
+  faSortDown,
+  faSortUp
+} from '@fortawesome/free-solid-svg-icons';
 
-export {faSort, faSortDown, faSortUp}
+export { faSort, faSortDown, faSortUp };
