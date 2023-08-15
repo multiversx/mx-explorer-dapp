@@ -1,3 +1,3 @@
-import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 
-export {faSort, faSortDown, faSortUp}
+export { faTimes, faCheck };
