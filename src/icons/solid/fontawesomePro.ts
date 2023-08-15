@@ -48,6 +48,8 @@ import {
   faUser,
   faUserCheck,
   faUserFriends
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
 } from '@fortawesome/pro-solid-svg-icons';
 
 export {
