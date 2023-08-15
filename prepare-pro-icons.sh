@@ -3,9 +3,9 @@
 packages='@fortawesome/pro-duotone-svg-icons@6.4.2 @fortawesome/pro-light-svg-icons@6.4.2 @fortawesome/pro-regular-svg-icons@6.4.2 @fortawesome/pro-solid-svg-icons@6.4.2'
 if [[ "$(npm list $packages)" =~ "empty" ]]; then
     echo "Installing $packages ..."
-    yarn add $packages
+    yarn add $packages --registry https://npm.fontawesome.com/ --peer
 else
-    echo "$packages is already installed"
+    echo "Required packages are already installed: $packages"
 fi
 
 cp ./src/icons/duotone/fontawesomePro.ts ./src/icons/duotone/index.ts
