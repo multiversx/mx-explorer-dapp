@@ -84,7 +84,9 @@
     "copy-devnet-config:windows": "copy .\\src\\config\\config.devnet.ts .\\src\\config\\index.ts",
     "copy-internal-config:windows": "copy .\\src\\config\\config.internal.ts .\\src\\config\\index.ts",
     "copy-next-config:windows": "copy .\\src\\config\\config.next.ts .\\src\\config\\index.ts",
-    "version:make": "printf '{\"shortSha\":\"%s\"}' $(git describe --always) > build/version.json"
+    "version:make": "printf '{\"shortSha\":\"%s\"}' $(git describe --always) > build/version.json",
+    "prepare-free-icons": "./prepare-free-icons.sh",
+    "prepare-pro-icons": "./prepare-pro-icons.sh"
   },
   "devDependencies": {
     "@types/file-saver": "2.0.5",
