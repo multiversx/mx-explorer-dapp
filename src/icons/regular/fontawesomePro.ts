@@ -50,6 +50,8 @@ import {
   faTrophy,
   faUser,
   faWifiSlash
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
 } from '@fortawesome/pro-regular-svg-icons';
 
 export {
