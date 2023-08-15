@@ -1,6 +1,6 @@
 import React from 'react';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faLink, faMapMarkerAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faLink, faMapMarkerAlt } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 

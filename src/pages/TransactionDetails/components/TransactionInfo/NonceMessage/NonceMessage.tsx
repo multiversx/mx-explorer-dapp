@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faAngleDown } from '@fortawesome/pro-regular-svg-icons';
+import { faAngleDown } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAdapter } from 'hooks';

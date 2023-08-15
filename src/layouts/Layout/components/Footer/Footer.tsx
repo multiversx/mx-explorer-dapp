@@ -1,5 +1,5 @@
 import React from 'react';
-import { faHeart } from '@fortawesome/pro-solid-svg-icons';
+import { faHeart } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Footer = () => {

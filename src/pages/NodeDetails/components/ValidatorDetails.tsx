@@ -1,5 +1,5 @@
 import React from 'react';
-import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
+import { faCheck, faTimes } from 'icons/solid';
 
 import { CardItem } from 'components';
 import { NodeType } from 'types';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faFileAlt, faLink } from '@fortawesome/pro-solid-svg-icons';
+import { faFileAlt, faLink } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';

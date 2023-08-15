@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { faClock, faTrophy } from '@fortawesome/pro-regular-svg-icons';
+import { faClock, faTrophy } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
@@ -164,48 +164,49 @@ export const NftDetailsCard = () => {
                   </a>
                 </DetailItem>
               )}
-              {nftState?.rarities && Object.keys(nftState.rarities).length > 0 && (
-                <DetailItem title='Rarities'>
-                  <div className='card-item-container my-n2'>
-                    {nftState?.rarities?.openRarity?.rank && (
-                      <CardItem
-                        title='Open Rarity Rank'
-                        icon={faTrophy}
-                        className='nft-card-item'
-                      >
-                        {nftState.rarities.openRarity.rank}
-                      </CardItem>
-                    )}
-                    {nftState?.rarities?.statistical?.rank && (
-                      <CardItem
-                        title='Statistical Rank'
-                        icon={faTrophy}
-                        className='nft-card-item'
-                      >
-                        {nftState.rarities.statistical.rank}
-                      </CardItem>
-                    )}
-                    {nftState?.rarities?.jaccardDistances?.rank && (
-                      <CardItem
-                        title='Jaccard Distances Rank'
-                        icon={faTrophy}
-                        className='nft-card-item'
-                      >
-                        {nftState.rarities.jaccardDistances.rank}
-                      </CardItem>
-                    )}
-                    {nftState?.rarities?.trait?.rank && (
-                      <CardItem
-                        title='Trait Rank'
-                        icon={faTrophy}
-                        className='nft-card-item'
-                      >
-                        {nftState.rarities.trait.rank}
-                      </CardItem>
-                    )}
-                  </div>
-                </DetailItem>
-              )}
+              {nftState?.rarities &&
+                Object.keys(nftState.rarities).length > 0 && (
+                  <DetailItem title='Rarities'>
+                    <div className='card-item-container my-n2'>
+                      {nftState?.rarities?.openRarity?.rank && (
+                        <CardItem
+                          title='Open Rarity Rank'
+                          icon={faTrophy}
+                          className='nft-card-item'
+                        >
+                          {nftState.rarities.openRarity.rank}
+                        </CardItem>
+                      )}
+                      {nftState?.rarities?.statistical?.rank && (
+                        <CardItem
+                          title='Statistical Rank'
+                          icon={faTrophy}
+                          className='nft-card-item'
+                        >
+                          {nftState.rarities.statistical.rank}
+                        </CardItem>
+                      )}
+                      {nftState?.rarities?.jaccardDistances?.rank && (
+                        <CardItem
+                          title='Jaccard Distances Rank'
+                          icon={faTrophy}
+                          className='nft-card-item'
+                        >
+                          {nftState.rarities.jaccardDistances.rank}
+                        </CardItem>
+                      )}
+                      {nftState?.rarities?.trait?.rank && (
+                        <CardItem
+                          title='Trait Rank'
+                          icon={faTrophy}
+                          className='nft-card-item'
+                        >
+                          {nftState.rarities.trait.rank}
+                        </CardItem>
+                      )}
+                    </div>
+                  </DetailItem>
+                )}
               {nftState?.metadata?.attributes && (
                 <DetailItem title='Attributes'>
                   <div className='attributes-holder'>

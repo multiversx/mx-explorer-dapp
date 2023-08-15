@@ -1,5 +1,5 @@
 import React from 'react';
-import { faAngleDown, faInfoCircle } from '@fortawesome/pro-regular-svg-icons';
+import { faAngleDown, faInfoCircle } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { NetworkLink, Overlay } from 'components';

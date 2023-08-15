@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faChevronRight } from '@fortawesome/pro-solid-svg-icons';
+import { faChevronRight } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';

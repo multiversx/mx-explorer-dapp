@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { faChevronLeft, faChevronRight, faClock } from '@fortawesome/pro-regular-svg-icons';
+import { faChevronLeft, faChevronRight, faClock } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Collapse, OverlayTrigger, Tooltip } from 'react-bootstrap';

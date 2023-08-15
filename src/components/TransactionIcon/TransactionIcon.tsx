@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import {
-  faSpinnerThird,
-  faTimes,
-  faCheck
-} from '@fortawesome/pro-regular-svg-icons';
+import { faSpinnerThird, faTimes, faCheck } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
@@ -94,19 +90,20 @@ export const TransactionIcon = ({
                   <>
                     {dataReady ? (
                       <>
-                        {transactionMessages && transactionMessages.length > 0 && (
-                          <>
-                            :{' '}
-                            {transactionMessages.map(
-                              (message, messageIndex) => (
-                                <span key={`tx-icon-message-${messageIndex}`}>
-                                  {capitalizeFirstLetter(message)}
-                                  {messageIndex > 0 ? ', ' : ''}
-                                </span>
-                              )
-                            )}
-                          </>
-                        )}
+                        {transactionMessages &&
+                          transactionMessages.length > 0 && (
+                            <>
+                              :{' '}
+                              {transactionMessages.map(
+                                (message, messageIndex) => (
+                                  <span key={`tx-icon-message-${messageIndex}`}>
+                                    {capitalizeFirstLetter(message)}
+                                    {messageIndex > 0 ? ', ' : ''}
+                                  </span>
+                                )
+                              )}
+                            </>
+                          )}
                       </>
                     ) : (
                       <>

@@ -4,7 +4,7 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight
-} from '@fortawesome/pro-solid-svg-icons';
+} from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 

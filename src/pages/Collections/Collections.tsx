@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faHexagonCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faHexagonCheck } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';

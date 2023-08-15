@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faSearch, faTimes } from '@fortawesome/pro-regular-svg-icons';
+import { faSearch, faTimes } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown, Anchor } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';

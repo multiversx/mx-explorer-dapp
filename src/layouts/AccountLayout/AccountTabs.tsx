@@ -1,5 +1,5 @@
 import React from 'react';
-import { faCircleCheck } from '@fortawesome/pro-solid-svg-icons';
+import { faCircleCheck } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 

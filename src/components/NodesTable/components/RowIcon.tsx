@@ -6,7 +6,7 @@ import {
   faLeaf,
   faSnooze,
   faSync
-} from '@fortawesome/pro-regular-svg-icons';
+} from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';

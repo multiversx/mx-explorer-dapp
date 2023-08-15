@@ -1,5 +1,5 @@
 import React from 'react';
-import { faArrowRight } from '@fortawesome/pro-regular-svg-icons';
+import { faArrowRight } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   ScAddressIcon,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons';
+import { faFlagAlt } from 'icons/regular';
 import {
   faCogs,
   faExclamationTriangle,
@@ -10,7 +10,7 @@ import {
   faCheck,
   faCode,
   faUser
-} from '@fortawesome/pro-solid-svg-icons';
+} from 'icons/solid';
 
 import {
   ShardSpan,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { faLayerPlus } from '@fortawesome/pro-regular-svg-icons';
+import { faLayerPlus } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 

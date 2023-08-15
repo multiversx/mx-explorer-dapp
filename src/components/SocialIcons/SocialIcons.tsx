@@ -11,12 +11,7 @@ import {
   faMedium,
   faDiscord
 } from '@fortawesome/free-brands-svg-icons';
-import {
-  faGlobe,
-  faEnvelope,
-  faPencil,
-  faFileAlt
-} from '@fortawesome/pro-regular-svg-icons';
+import { faGlobe, faEnvelope, faPencil, faFileAlt } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ReactComponent as CoinGecko } from 'assets/img/logos/coingecko.svg';

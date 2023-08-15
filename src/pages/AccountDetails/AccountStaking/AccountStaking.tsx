@@ -1,5 +1,5 @@
 import React from 'react';
-import { faChartPie } from '@fortawesome/pro-solid-svg-icons';
+import { faChartPie } from 'icons/solid';
 import { useSelector } from 'react-redux';
 
 import { Loader, PageState } from 'components';
