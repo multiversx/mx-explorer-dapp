@@ -11,6 +11,8 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.4.2",
     "@fortawesome/free-brands-svg-icons": "6.4.2",
+    "@fortawesome/free-regular-svg-icons": "6.4.2",
+    "@fortawesome/free-solid-svg-icons": "6.4.2",
     "@fortawesome/pro-duotone-svg-icons": "6.4.2",
     "@fortawesome/pro-light-svg-icons": "6.4.2",
     "@fortawesome/pro-regular-svg-icons": "6.4.2",
@@ -49,6 +51,7 @@
     "yup": "0.32.11"
   },
   "scripts": {
+    "prepare": "./prepare-pro-icons.sh",
     "start": "VITE_APP_CACHE_BUST=$(git describe --always) vite",
     "start-testnet": "yarn run copy-testnet-config & yarn run start",
     "start-internal": "yarn run copy-internal-config & yarn run start",

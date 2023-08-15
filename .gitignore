@@ -23,6 +23,13 @@ dist-ssr
 # Production
 /build
 
+# Icons
+
+/src/icons/solid/index.ts
+/src/icons/regular/index.ts
+/src/icons/light/index.ts
+/src/icons/duotone/index.ts
+
 # Misc
 .DS_Store
 .env.local
