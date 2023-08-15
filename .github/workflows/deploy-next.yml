@@ -21,7 +21,8 @@ jobs:
           node-version: '16.x'
       - name: Setup yarn
         run: npm install -g yarn
-      - run: yarn install
+      - run: yarn install --ignore-scripts
+      - run: yarn run prepare-free-icons
       - run: yarn run build-next
         env:
           CI: false
