@@ -1,3 +1,5 @@
+import { GetTokensType, GetCollectionsType } from 'types';
+
 export const urlBuilder = {
   shard: (shard: number | string) => `/blocks?shard=${shard}`,
   receiverShard: (shard: number | string) =>
@@ -29,12 +31,33 @@ export const urlBuilder = {
   accountDetailsContractCodeEvents: (address: string) =>
     `/accounts/${address}/code/events`,
   identityDetails: (id: string) => `/identities/${id}`,
+  tokens: (params?: GetTokensType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/tokens/?${urlSearch}`;
+  },
+  tokensMetaESDT: (params?: GetTokensType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/meta-esdt/?${urlSearch}`;
+  },
   tokenDetails: (tokenId: string) => `/tokens/${tokenId}`,
   tokenMetaEsdtDetails: (tokenId: string) => `/meta-esdt/${tokenId}`,
   tokenDetailsAccounts: (tokenId: string) => `/tokens/${tokenId}/accounts`,
   tokenDetailsLockedAccounts: (tokenId: string) =>
     `/tokens/${tokenId}/locked-accounts`,
   tokenDetailsRoles: (tokenId: string) => `/tokens/${tokenId}/roles`,
+  collections: (params?: GetCollectionsType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/collections/?${urlSearch}`;
+  },
   collectionDetails: (identifier: string) => `/collections/${identifier}`,
   collectionDetailsRoles: (identifier: string) =>
     `/collections/${identifier}/roles`,
