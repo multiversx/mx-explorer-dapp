@@ -14,7 +14,7 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
   const { function: filteredFunction } = Object.fromEntries(searchParams);
 
   const updateMethod = (method: string) => {
-    const { ...rest } = Object.fromEntries(searchParams);
+    const { page, size, ...rest } = Object.fromEntries(searchParams);
     if (method) {
       delete rest.page;
     }
