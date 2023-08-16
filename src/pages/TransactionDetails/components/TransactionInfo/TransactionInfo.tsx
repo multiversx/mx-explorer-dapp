@@ -340,22 +340,9 @@ export const TransactionInfo = ({
                       </NetworkLink>
                     )}
                   </div>
-                  <TransactionErrorDisplay transaction={transaction} />
-                  {transaction.status ===
-                    TransactionExtraStatusEnum.rewardReverted && (
-                    <div className='d-flex ms-1 text-break-all'>
-                      <FontAwesomeIcon
-                        icon={faAngleDown}
-                        style={{ marginTop: '2px' }}
-                        transform={{ rotate: 45 }}
-                      />
-                      &nbsp;
-                      <small className='text-danger ms-1'>
-                        {' '}
-                        Block Reverted
-                      </small>
-                    </div>
-                  )}
+                  <div className='d-flex flex-column gap-1'>
+                    <TransactionErrorDisplay transaction={transaction} />
+                  </div>
                 </div>
               </DetailItem>
 
