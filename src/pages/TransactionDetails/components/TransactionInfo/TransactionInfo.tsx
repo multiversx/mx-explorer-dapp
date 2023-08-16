@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   faAngleDown,
   faClock,
@@ -164,11 +164,16 @@ export const TransactionInfo = ({
   const showLogs =
     transaction.logs || (transaction.results && transaction.results.length > 0);
 
+  useEffect(() => {
+    setActiveKey(activeSection);
+  }, [activeSection]);
+
   return (
     <div className='transaction-info card' ref={ref}>
       <Tab.Container
         id='transaction-tabs'
         defaultActiveKey={activeKey}
+        activeKey={activeKey}
         onSelect={(selectedKey) => {
           return selectedKey ? setActiveKey(selectedKey) : 'details';
         }}
