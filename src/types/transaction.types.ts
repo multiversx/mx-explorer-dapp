@@ -20,7 +20,7 @@ export interface TransactionType {
   sender: string;
   senderShard: number;
   signature: string;
-  status: string;
+  status: TransactionStatusEnum;
   timestamp: number;
   value: string;
   price: number;

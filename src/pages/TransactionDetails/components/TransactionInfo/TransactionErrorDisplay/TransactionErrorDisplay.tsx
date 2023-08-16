@@ -7,7 +7,7 @@ import { NetworkLink, Overlay } from 'components';
 import { decodeForDisplay, DecodeMethodType } from 'components/DataDecode';
 import { getTransactionMessages, capitalizeFirstLetter } from 'helpers';
 import { transactionsRoutes } from 'routes';
-import { TransactionType } from 'types';
+import { TransactionType, TransactionApiStatusEnum } from 'types';
 import { TransactionErrorDescription } from './TransactionErrorDescription';
 
 export const InternalErrorDisplay = ({ data }: { data: string }) => {
@@ -37,9 +37,16 @@ export const TransactionErrorDisplay = ({
     transaction?.logs?.events?.filter(
       (log) => log.identifier === 'internalVMErrors'
     )[0] ?? null;
+
   const logsLink = internalVMErrorEvent
     ? `${transactionsRoutes.transactions}/${transaction.txHash}/logs#${transaction?.logs?.id}/${internalVMErrorEvent.order}/text`
     : '';
+
+  const messageColor =
+    transaction.status === TransactionApiStatusEnum.success ||
+    transaction.status === TransactionApiStatusEnum.pending
+      ? ''
+      : 'text-danger';
 
   return (
     <>
@@ -56,7 +63,7 @@ export const TransactionErrorDisplay = ({
           />
           &nbsp;
           <div className='d-flex flex-wrap'>
-            <small className='text-danger ms-1 text-break'>
+            <small className={`${messageColor} ms-1 text-break`}>
               {' '}
               {capitalizeFirstLetter(transactionMessage.toString().trim())}
             </small>
