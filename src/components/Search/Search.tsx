@@ -11,7 +11,7 @@ import {
   bech32
 } from 'helpers';
 import { useAdapter, useNetworkRoute } from 'hooks';
-import { WithClassnameType } from 'types';
+import { TokenTypeEnum, WithClassnameType } from 'types';
 
 interface SearchType extends WithClassnameType {
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,9 +28,11 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
     getNode,
     getMiniBlock,
     getToken,
+    getTokens,
     getNft,
     getScResult,
     getCollection,
+    getCollections,
     getUsername
   } = useAdapter();
   const [route, setRoute] = useState('');
@@ -40,13 +42,13 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      onClick();
+      search();
     }
   };
 
   const notFoundRoute = networkRoute(`/search/${hash}`);
 
-  const onClick = async () => {
+  const search = async () => {
     if (Boolean(hash)) {
       setSearching(true);
       const validHashChars = /^[0-9A-Fa-f]+$/i;
@@ -157,12 +159,52 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
           break;
 
         default:
-          getUsername(hash.replaceAll('.elrond', '')).then((account) => {
+          Promise.all([
+            getTokens({ search: hash, includeMetaESDT: true }),
+            getCollections({ search: hash, excludeMetaESDT: true }),
+            getUsername(hash.replaceAll('.elrond', ''))
+          ]).then(([tokens, collections, account]) => {
             setExpanded(false);
-            const newRoute = account.success
-              ? networkRoute(urlBuilder.accountDetails(account?.data?.address))
-              : notFoundRoute;
-            setRoute(newRoute);
+            switch (true) {
+              case Boolean(tokens.success && tokens?.data?.[0]):
+                const isFirstMetaESDT =
+                  tokens.data[0].type === TokenTypeEnum.MetaESDT;
+
+                if (tokens.data.length === 1) {
+                  const route = isFirstMetaESDT
+                    ? urlBuilder.tokenMetaEsdtDetails(tokens.data[0].identifier)
+                    : urlBuilder.tokenDetails(tokens.data[0].identifier);
+                  setRoute(networkRoute(route));
+                } else {
+                  const route = isFirstMetaESDT
+                    ? urlBuilder.tokensMetaESDT({ search: hash })
+                    : urlBuilder.tokens({ search: hash });
+                  setRoute(networkRoute(route));
+                }
+
+                break;
+              case Boolean(collections.success && collections?.data?.[0]):
+                const route =
+                  collections.data.length === 1
+                    ? urlBuilder.collectionDetails(
+                        collections.data[0].collection
+                      )
+                    : urlBuilder.collections({ search: hash });
+
+                setRoute(networkRoute(route));
+
+                break;
+              case account.success:
+                setRoute(
+                  networkRoute(
+                    urlBuilder.accountDetails(account?.data?.address)
+                  )
+                );
+                break;
+              default:
+                setRoute(notFoundRoute);
+                break;
+            }
           });
 
           break;
@@ -216,7 +258,7 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
           className='input-group-text'
           onClick={(e) => {
             e.preventDefault();
-            onClick();
+            search();
           }}
           data-testid='searchButton'
         >
