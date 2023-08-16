@@ -87,7 +87,7 @@ export const TransactionErrorDisplay = ({
                       >
                         <FontAwesomeIcon
                           icon={faInfoCircle}
-                          className='small text-neutral-400 ms-1'
+                          className='small text-neutral-400 ms-1 cursor-context'
                         />
                       </Overlay>
                     </div>

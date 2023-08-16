@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { faLayerPlus } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { Denominate, TransactionActionBlock } from 'components';
+import { Denominate, TransactionActionBlock, Overlay } from 'components';
 import { UITransactionType, NftTypeEnum, TransactionActionEnum } from 'types';
 
 const getTransactionTokens = (transaction: UITransactionType) => {
@@ -27,48 +26,12 @@ const getTransactionTokens = (transaction: UITransactionType) => {
   return [];
 };
 
-const OverlayTooltip = ({ tooltip, children }: any) => {
-  const [showTooltip, setShowTooltip] = useState(false);
-
-  const renderTooltip = (props: any) => (
-    <Tooltip
-      className='extra-tokens-tooltip'
-      id='extra-tokens-tooltip'
-      onMouseEnter={() => setShowTooltip(true)}
-      onMouseLeave={() => setShowTooltip(false)}
-      {...props}
-    >
-      {tooltip}
-    </Tooltip>
-  );
-
-  const child = children ?? null;
-  if (tooltip === undefined) {
-    return child;
-  }
-  return (
-    <OverlayTrigger
-      show={showTooltip}
-      trigger={['hover', 'focus']}
-      delay={{ show: 250, hide: 300 }}
-      overlay={renderTooltip}
-    >
-      <span
-        onMouseEnter={() => setShowTooltip(true)}
-        onMouseLeave={() => setShowTooltip(false)}
-      >
-        {child}
-      </span>
-    </OverlayTrigger>
-  );
-};
-
 const MultipleTokensBadge = ({
   transactionTokens
 }: {
   transactionTokens: any[];
 }) => {
-  const Tooltip = (
+  const Tooltip = () => (
     <div className='py-2 px-1'>
       {transactionTokens.map((transactionToken, index) => (
         <div
@@ -86,9 +49,12 @@ const MultipleTokensBadge = ({
   );
 
   return (
-    <OverlayTooltip tooltip={Tooltip}>
-      <FontAwesomeIcon icon={faLayerPlus} className='ms-2 text-neutral-400' />
-    </OverlayTooltip>
+    <Overlay title={<Tooltip />}>
+      <FontAwesomeIcon
+        icon={faLayerPlus}
+        className='ms-2 text-neutral-400 cursor-context'
+      />
+    </Overlay>
   );
 };
 
