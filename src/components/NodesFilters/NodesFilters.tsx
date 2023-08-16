@@ -25,7 +25,7 @@ export const NodesFilters = ({
   };
 
   const updateSearchValue = (searchValue: string) => {
-    const { search, page, ...rest } = Object.fromEntries(searchParams);
+    const { search, page, size, ...rest } = Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
       ...(searchValue ? { search: searchValue } : {})

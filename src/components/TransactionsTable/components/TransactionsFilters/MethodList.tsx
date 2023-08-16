@@ -6,7 +6,7 @@ export const MethodList = () => {
   const { function: method } = Object.fromEntries(searchParams);
 
   const setMethod = (method: string) => {
-    const { ...rest } = Object.fromEntries(searchParams);
+    const { page, size, ...rest } = Object.fromEntries(searchParams);
 
     if (method === '' && rest?.function) {
       delete rest.function;

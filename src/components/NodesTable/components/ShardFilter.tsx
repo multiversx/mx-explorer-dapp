@@ -30,7 +30,7 @@ export const ShardFilter = () => {
   const shards = useSelector(shardsSelector);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const { shard, page, ...rest } = Object.fromEntries(searchParams);
+  const { shard, page, size, ...rest } = Object.fromEntries(searchParams);
 
   useFetchShards();
 
