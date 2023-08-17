@@ -32,6 +32,7 @@ export interface AccountType {
   isGuarded?: boolean;
   activeGuardianAddress?: string;
   activeGuardianServiceUid?: string;
+  tokenBalance?: string;
 }
 
 export interface AccountSliceType extends SliceType {
