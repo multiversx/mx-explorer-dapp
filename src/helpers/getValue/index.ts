@@ -3,6 +3,7 @@ export * from './getNftText';
 export * from './getNodeIssue';
 export * from './getOperationDirection';
 export * from './getPercentage';
+export * from './getTotalTokenUsdValue';
 export * from './getTotalTxTokenUsdValue';
 export * from './getTransactionMessages';
 export * from './getTransactionMethod';
