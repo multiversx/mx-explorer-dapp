@@ -261,6 +261,7 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
             search();
           }}
           data-testid='searchButton'
+          aria-label='Search'
         >
           {searching ? (
             <FontAwesomeIcon
