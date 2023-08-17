@@ -10,7 +10,6 @@ export type HeadersAccountsType = {
   activeAccountsToday?: number | string;
   // newAccountsToday?: number | string;
   usersStaking?: number | string;
-  accountsBalanceGt1000?: number | string;
 };
 
 export type HeadersCollectionsType = {
