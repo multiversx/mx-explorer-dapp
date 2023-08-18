@@ -26,6 +26,7 @@ const ColSpanWrapper = ({
 export const TransactionsTable = ({
   transactions,
   address,
+  token,
   totalTransactions,
   title = (
     <h5 data-testid='title' className='table-title d-flex align-items-center'>
@@ -95,6 +96,7 @@ export const TransactionsTable = ({
                             transaction={transaction}
                             key={transaction.txHash}
                             address={address}
+                            token={token}
                             showDirectionCol={showDirectionCol}
                             showLockedAccounts={showLockedAccounts}
                           />

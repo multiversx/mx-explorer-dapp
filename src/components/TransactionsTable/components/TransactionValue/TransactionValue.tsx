@@ -3,28 +3,8 @@ import { faLayerPlus } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Denominate, TransactionActionBlock, Overlay } from 'components';
+import { getTransactionTokens } from 'helpers';
 import { UITransactionType, NftTypeEnum, TransactionActionEnum } from 'types';
-
-const getTransactionTokens = (transaction: UITransactionType) => {
-  if (transaction.action) {
-    return [
-      ...(transaction.action.arguments?.token
-        ? [transaction.action.arguments?.token]
-        : []),
-      ...(transaction.action.arguments?.token1
-        ? [transaction.action.arguments?.token1]
-        : []),
-      ...(transaction.action.arguments?.token2
-        ? [transaction.action.arguments?.token2]
-        : []),
-      ...(transaction.action.arguments?.transfers
-        ? transaction.action.arguments?.transfers
-        : [])
-    ];
-  }
-
-  return [];
-};
 
 const MultipleTokensBadge = ({
   transactionTokens
@@ -60,9 +40,11 @@ const MultipleTokensBadge = ({
 
 export const TransactionValue = ({
   transaction,
+  token,
   hideMultipleBadge
 }: {
   transaction: UITransactionType;
+  token?: string;
   hideMultipleBadge?: boolean;
 }) => {
   if (transaction.action) {
@@ -73,16 +55,16 @@ export const TransactionValue = ({
       return <Denominate value={transaction.value} />;
     }
 
-    const transactionTokens = getTransactionTokens(transaction);
+    const transactionTokens = getTransactionTokens({ transaction, token });
 
     if (transactionTokens.length) {
-      const txToken = transactionTokens[0];
+      const firstToken = transactionTokens[0];
       return (
         <div className='d-flex align-items-center'>
-          {Object.values(NftTypeEnum).includes(txToken.type) ? (
-            <TransactionActionBlock.Nft token={txToken} showBadge />
+          {Object.values(NftTypeEnum).includes(firstToken.type) ? (
+            <TransactionActionBlock.Nft token={firstToken} showBadge />
           ) : (
-            <TransactionActionBlock.Token token={txToken} />
+            <TransactionActionBlock.Token token={firstToken} />
           )}
           {!hideMultipleBadge && transactionTokens.length > 1 && (
             <MultipleTokensBadge transactionTokens={transactionTokens} />
