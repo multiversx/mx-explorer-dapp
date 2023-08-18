@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  faAngleDown,
   faClock,
   faSearch,
   faSpinner
@@ -35,7 +34,8 @@ import {
   urlBuilder,
   isContract,
   getTransactionMethod,
-  getTransactionStatusIconAndColor
+  getTransactionStatusIconAndColor,
+  getTotalTxTokenUsdValue
 } from 'helpers';
 import { useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -163,6 +163,10 @@ export const TransactionInfo = ({
   const visibleOperations = getVisibleOperations(transaction);
   const showLogs =
     transaction.logs || (transaction.results && transaction.results.length > 0);
+
+  const totalTxTokenUsdValue = getTotalTxTokenUsdValue(transaction);
+  const showTotalTxTokenUsdValue =
+    totalTxTokenUsdValue !== new BigNumber(0).toString();
 
   useEffect(() => {
     setActiveKey(activeSection);
@@ -396,6 +400,12 @@ export const TransactionInfo = ({
                     transaction={transaction}
                     operations={visibleOperations}
                   />
+                </DetailItem>
+              )}
+
+              {showTotalTxTokenUsdValue && (
+                <DetailItem title='Total Token Value'>
+                  <FormatUSD amount={totalTxTokenUsdValue} usd={1} digits={4} />
                 </DetailItem>
               )}
 
