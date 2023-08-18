@@ -146,6 +146,7 @@ export interface UITransactionType extends TransferType {
 export interface TransactionTableType {
   transactions: UITransactionType[];
   address?: string;
+  token?: string;
   totalTransactions: number | typeof ELLIPSIS;
   title?: React.ReactNode;
   showDirectionCol?: boolean;
