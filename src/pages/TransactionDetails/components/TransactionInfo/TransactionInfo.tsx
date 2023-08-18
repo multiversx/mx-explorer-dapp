@@ -405,7 +405,13 @@ export const TransactionInfo = ({
 
               {showTotalTxTokenUsdValue && (
                 <DetailItem title='Total Token Value'>
-                  <FormatUSD amount={totalTxTokenUsdValue} usd={1} digits={4} />
+                  <span className='text-neutral-100'>
+                    <FormatUSD
+                      amount={totalTxTokenUsdValue}
+                      usd={1}
+                      digits={4}
+                    />
+                  </span>
                 </DetailItem>
               )}
 
