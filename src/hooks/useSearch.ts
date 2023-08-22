@@ -202,5 +202,5 @@ export const useSearch = (searchHash: string) => {
     }
   }, [searchRoute]);
 
-  return { search, isSearching, searchRoute };
+  return { search, isSearching, searchRoute, setSearchRoute };
 };
