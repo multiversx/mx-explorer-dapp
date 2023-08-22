@@ -5,6 +5,7 @@ export interface TabType {
   tabLabel: ReactNode;
   activationRoutes?: string[];
   show?: boolean;
+  extra?: boolean;
 }
 
 export interface TabsPropsType {
