@@ -18,3 +18,4 @@ export * from './useNetworkRoute';
 export * from './useNetworkRouter';
 export * from './useNotifications';
 export * from './useScamFlag';
+export * from './useSearch';
