@@ -3,9 +3,12 @@ import BigNumber from 'bignumber.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 
-import { LEGACY_DELEGATION_NODES_IDENTITY } from 'appConstants';
+import {
+  LEGACY_DELEGATION_NODES_IDENTITY,
+  MAX_ACOUNT_TOKENS_BALANCE
+} from 'appConstants';
 import { Loader } from 'components';
-import { addressIsBech32 } from 'helpers';
+import { addressIsBech32, getTotalTokenUsdValue } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setAccount, setAccountStaking } from 'redux/slices';
@@ -24,6 +27,7 @@ export const AccountLayout = () => {
 
   const {
     getAccount,
+    getAccountTokens,
     getAccountDelegationLegacy,
     getAccountDelegation,
     getAccountStake,
@@ -35,18 +39,32 @@ export const AccountLayout = () => {
 
   const fetchBalanceAndCount = () => {
     if (address) {
-      getAccount({ address, withGuardianInfo: true }).then(
-        (accountDetailsData) => {
-          if (accountDetailsData.success && accountDetailsData?.data) {
-            dispatch(setAccount(accountDetailsData.data));
-            setDataReady(true);
+      Promise.all([
+        getAccount({ address, withGuardianInfo: true }),
+        getAccountTokens({
+          address,
+          size: MAX_ACOUNT_TOKENS_BALANCE,
+          fields: 'valueUsd',
+          includeMetaESDT: false
+        })
+      ]).then(([accountDetailsData, accountTokensValueUsdData]) => {
+        if (accountDetailsData.success && accountDetailsData?.data) {
+          let tokenBalance = new BigNumber(0).toString();
+          const accountData = accountDetailsData?.data;
+          if (
+            accountTokensValueUsdData.success &&
+            accountTokensValueUsdData?.data
+          ) {
+            const totalTokenUsdValue = getTotalTokenUsdValue(
+              accountTokensValueUsdData.data
+            );
+            tokenBalance = totalTokenUsdValue;
           }
 
-          if (dataReady === undefined) {
-            setDataReady(accountDetailsData.success);
-          }
+          dispatch(setAccount({ ...accountData, tokenBalance }));
         }
-      );
+        setDataReady(accountDetailsData.success);
+      });
     }
   };
 

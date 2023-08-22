@@ -1,6 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  faAngleDown,
   faClock,
   faSearch,
   faSpinner
@@ -35,7 +34,8 @@ import {
   urlBuilder,
   isContract,
   getTransactionMethod,
-  getTransactionStatusIconAndColor
+  getTransactionStatusIconAndColor,
+  getTotalTxTokenUsdValue
 } from 'helpers';
 import { useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -164,11 +164,20 @@ export const TransactionInfo = ({
   const showLogs =
     transaction.logs || (transaction.results && transaction.results.length > 0);
 
+  const totalTxTokenUsdValue = getTotalTxTokenUsdValue(transaction);
+  const showTotalTxTokenUsdValue =
+    totalTxTokenUsdValue !== new BigNumber(0).toString();
+
+  useEffect(() => {
+    setActiveKey(activeSection);
+  }, [activeSection]);
+
   return (
     <div className='transaction-info card' ref={ref}>
       <Tab.Container
         id='transaction-tabs'
         defaultActiveKey={activeKey}
+        activeKey={activeKey}
         onSelect={(selectedKey) => {
           return selectedKey ? setActiveKey(selectedKey) : 'details';
         }}
@@ -335,22 +344,9 @@ export const TransactionInfo = ({
                       </NetworkLink>
                     )}
                   </div>
-                  <TransactionErrorDisplay transaction={transaction} />
-                  {transaction.status ===
-                    TransactionExtraStatusEnum.rewardReverted && (
-                    <div className='d-flex ms-1 text-break-all'>
-                      <FontAwesomeIcon
-                        icon={faAngleDown}
-                        style={{ marginTop: '2px' }}
-                        transform={{ rotate: 45 }}
-                      />
-                      &nbsp;
-                      <small className='text-danger ms-1'>
-                        {' '}
-                        Block Reverted
-                      </small>
-                    </div>
-                  )}
+                  <div className='d-flex flex-column gap-1'>
+                    <TransactionErrorDisplay transaction={transaction} />
+                  </div>
                 </div>
               </DetailItem>
 
@@ -369,24 +365,19 @@ export const TransactionInfo = ({
                 </span>
               </DetailItem>
 
-              {transaction.action && transaction.action.category && (
-                <>
-                  <DetailItem title='Method'>
-                    <div className='badge badge-outline badge-outline-green-alt'>
-                      {getTransactionMethod(transaction)}
-                    </div>
+              <DetailItem title='Method'>
+                <div className='badge badge-outline badge-outline-green-alt'>
+                  {getTransactionMethod(transaction)}
+                </div>
+              </DetailItem>
+
+              {transaction?.action?.category &&
+                transaction.action.category !==
+                  TransactionActionCategoryEnum.scCall && (
+                  <DetailItem title='Transaction Action' className='text-lh-24'>
+                    <TransactionAction transaction={transaction} />
                   </DetailItem>
-                  {transaction.action.category !==
-                    TransactionActionCategoryEnum.scCall && (
-                    <DetailItem
-                      title='Transaction Action'
-                      className='text-lh-24'
-                    >
-                      <TransactionAction transaction={transaction} />
-                    </DetailItem>
-                  )}
-                </>
-              )}
+                )}
 
               {Boolean(visibleOperations.length) && (
                 <DetailItem
@@ -404,6 +395,18 @@ export const TransactionInfo = ({
                     transaction={transaction}
                     operations={visibleOperations}
                   />
+                </DetailItem>
+              )}
+
+              {showTotalTxTokenUsdValue && (
+                <DetailItem title='Total Token Value'>
+                  <span className='text-neutral-100'>
+                    <FormatUSD
+                      amount={totalTxTokenUsdValue}
+                      usd={1}
+                      digits={4}
+                    />
+                  </span>
                 </DetailItem>
               )}
 
