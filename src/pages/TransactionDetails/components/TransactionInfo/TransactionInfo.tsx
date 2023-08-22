@@ -365,24 +365,19 @@ export const TransactionInfo = ({
                 </span>
               </DetailItem>
 
-              {transaction.action && transaction.action.category && (
-                <>
-                  <DetailItem title='Method'>
-                    <div className='badge badge-outline badge-outline-green-alt'>
-                      {getTransactionMethod(transaction)}
-                    </div>
+              <DetailItem title='Method'>
+                <div className='badge badge-outline badge-outline-green-alt'>
+                  {getTransactionMethod(transaction)}
+                </div>
+              </DetailItem>
+
+              {transaction?.action?.category &&
+                transaction.action.category !==
+                  TransactionActionCategoryEnum.scCall && (
+                  <DetailItem title='Transaction Action' className='text-lh-24'>
+                    <TransactionAction transaction={transaction} />
                   </DetailItem>
-                  {transaction.action.category !==
-                    TransactionActionCategoryEnum.scCall && (
-                    <DetailItem
-                      title='Transaction Action'
-                      className='text-lh-24'
-                    >
-                      <TransactionAction transaction={transaction} />
-                    </DetailItem>
-                  )}
-                </>
-              )}
+                )}
 
               {Boolean(visibleOperations.length) && (
                 <DetailItem
