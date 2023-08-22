@@ -10,7 +10,8 @@ export const Search = ({ className }: WithClassnameType) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [searchHash, setSearchHash] = useState<string>('');
-  const { search, isSearching, searchRoute } = useSearch(searchHash);
+  const { search, isSearching, searchRoute, setSearchRoute } =
+    useSearch(searchHash);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -25,6 +26,7 @@ export const Search = ({ className }: WithClassnameType) => {
 
   useEffect(() => {
     if (searchRoute) {
+      setSearchRoute('');
       setSearchHash('');
       navigate(searchRoute);
     }
