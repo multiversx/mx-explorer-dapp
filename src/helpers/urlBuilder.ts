@@ -30,6 +30,10 @@ export const urlBuilder = {
     `/accounts/${address}/code/types`,
   accountDetailsContractCodeEvents: (address: string) =>
     `/accounts/${address}/code/events`,
+  accountDetailsTokenRoles: (address: string) =>
+    `/accounts/${address}/roles/tokens`,
+  accountDetailsCollectionRoles: (address: string) =>
+    `/accounts/${address}/roles/collections`,
   identityDetails: (id: string) => `/identities/${id}`,
   tokens: (params?: GetTokensType) => {
     const urlSearch = params
