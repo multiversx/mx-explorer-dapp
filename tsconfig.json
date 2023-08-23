@@ -19,9 +19,9 @@
     "esModuleInterop": true,
 
     /* Linting */
-    "strict": false, // TODO - REVERT
-    "noUnusedLocals": false, // TODO - REVERT
-    "noUnusedParameters": false, // TODO - REVERT
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
     "allowSyntheticDefaultImports": true,
