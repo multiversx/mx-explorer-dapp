@@ -62,5 +62,11 @@ export const elasticAdapter = {
   },
   getAccountContractVerification: () => {
     throw new Error('not defined');
+  },
+  getAccountUpgrades: () => {
+    throw new Error('not defined');
+  },
+  getAccounRoles: () => {
+    throw new Error('not defined');
   }
 };

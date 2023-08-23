@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faHexagonCheck } from 'icons/solid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -11,7 +8,7 @@ import {
   NetworkLink,
   Trim,
   Pager,
-  NftBadge,
+  CollectionLink,
   TimeAgo
 } from 'components';
 import { urlBuilder } from 'helpers';
@@ -180,52 +177,7 @@ export const Collections = () => {
                                 >
                                   <td>
                                     <div className='d-flex align-items-center'>
-                                      <NetworkLink
-                                        to={urlBuilder.collectionDetails(
-                                          collection.collection
-                                        )}
-                                        data-testid={`collectionsLink${i}`}
-                                      >
-                                        <div className='d-flex align-items-center'>
-                                          {collection.assets &&
-                                            collection.assets.svgUrl && (
-                                              <img
-                                                src={collection.assets.svgUrl}
-                                                alt={collection.name}
-                                                className='side-icon me-1'
-                                              />
-                                            )}
-                                          <div>
-                                            {collection.ticker ??
-                                              collection.collection}
-                                          </div>
-                                        </div>
-                                      </NetworkLink>
-
-                                      {collection.isVerified && (
-                                        <OverlayTrigger
-                                          placement='top'
-                                          delay={{ show: 0, hide: 400 }}
-                                          overlay={(props: any) => (
-                                            <Tooltip
-                                              {...props}
-                                              show={props.show.toString()}
-                                            >
-                                              Verified
-                                            </Tooltip>
-                                          )}
-                                        >
-                                          <FontAwesomeIcon
-                                            icon={faHexagonCheck}
-                                            size='sm'
-                                            className='ms-2 text-yellow-spotlight'
-                                          />
-                                        </OverlayTrigger>
-                                      )}
-                                      <NftBadge
-                                        type={collection.type}
-                                        className='ms-2'
-                                      />
+                                      <CollectionLink collection={collection} />
                                     </div>
                                   </td>
                                   <td>{collection.name}</td>

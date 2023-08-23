@@ -2,7 +2,7 @@ import {
   faChartBar,
   faClock,
   faQuestionCircle,
-  faUser
+  faUser,
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faAngleDown,
@@ -24,6 +24,7 @@ import {
   faCoins,
   faCube,
   faDiamond,
+  faEllipsis,
   faEnvelope,
   faExchange,
   faExchangeAlt,
@@ -76,6 +77,7 @@ export {
   faCoins,
   faCube,
   faDiamond,
+  faEllipsis,
   faEnvelope,
   faExchange,
   faExchangeAlt,

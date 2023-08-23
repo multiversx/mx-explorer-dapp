@@ -32,8 +32,23 @@
     &.active {
       color: var(--neutral-100);
       background-color: var(--black);
+    }
+
+    &.active:not(.extra-tab) {
       cursor: default;
       pointer-events: none;
+    }
+
+    &.extra-tab {
+      color: var(--primary);
+
+      &.active {
+        color: var(--primary);
+      }
+      @media (min-width: 768px) {
+        font-size: 1.5rem;
+        padding: 0.5rem 0.75rem;
+      }
     }
   }
 }

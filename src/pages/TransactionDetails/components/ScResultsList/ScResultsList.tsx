@@ -61,13 +61,15 @@ export const ScResultsList = ({
   };
 
   useEffect(() => {
-    if (ref.current && ref.current !== null) {
-      window.scrollTo({
-        top: ref.current.getBoundingClientRect().top - 86,
-        behavior: 'smooth'
-      });
-    }
-  }, []);
+    setTimeout(() => {
+      if (formattedHash && ref.current && ref.current !== null) {
+        window.scrollTo({
+          top: ref.current.getBoundingClientRect().top - 86,
+          behavior: 'smooth'
+        });
+      }
+    }, 200);
+  }, [formattedHash]);
 
   return (
     <div className='sc-results-list detailed-list d-flex flex-column mt-1'>
