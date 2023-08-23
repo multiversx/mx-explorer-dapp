@@ -21,7 +21,7 @@
     "axios": "0.24.0",
     "bech32": "2.0.0",
     "bignumber.js": "9.1.1",
-    "bootstrap": "5.3.1",
+    "bootstrap": "5.2.3",
     "classnames": "2.3.2",
     "file-saver": "2.0.5",
     "lodash.clonedeep": "4.5.0",
@@ -29,7 +29,7 @@
     "numeral": "2.0.6",
     "react": "18.2.0",
     "react-anchorme": "2.2.1",
-    "react-bootstrap": "2.8.0",
+    "react-bootstrap": "2.7.0",
     "react-datepicker": "4.16.0",
     "react-dom": "18.2.0",
     "react-helmet": "6.1.0",
@@ -47,7 +47,7 @@
     "yup": "0.32.11"
   },
   "scripts": {
-    "prepare": "./prepare-pro-icons.sh",
+    "prepare": "./prepare-free-icons.sh",
     "start": "VITE_APP_CACHE_BUST=$(git describe --always) vite",
     "start-testnet": "yarn run copy-testnet-config & yarn run start",
     "start-internal": "yarn run copy-internal-config & yarn run start",

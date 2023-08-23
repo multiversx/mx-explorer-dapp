@@ -10,7 +10,6 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Dependencies
-yarn.lock
 /node_modules
 /.pnp
 .pnp.js
