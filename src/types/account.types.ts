@@ -5,7 +5,10 @@ import {
   DelegationLegacyType,
   ProviderType,
   IdentityType,
-  SliceType
+  SliceType,
+  RolesType,
+  TokenType,
+  CollectionType
 } from 'types';
 
 export interface AccountType {
@@ -32,6 +35,7 @@ export interface AccountType {
   isGuarded?: boolean;
   activeGuardianAddress?: string;
   activeGuardianServiceUid?: string;
+  tokenBalance?: string;
 }
 
 export interface AccountSliceType extends SliceType {
@@ -80,4 +84,17 @@ export interface AccountUpgradeType {
   txHash: string;
   timestamp: number;
   assets?: AccountAssetType;
+}
+
+export interface AccountTokenRolesType extends TokenType {
+  role?: RolesType;
+}
+
+export interface AccountCollectionRolesType extends CollectionType {
+  role?: RolesType;
+}
+
+export enum AccountRolesTypeEnum {
+  tokens = 'tokens',
+  collections = 'collections'
 }

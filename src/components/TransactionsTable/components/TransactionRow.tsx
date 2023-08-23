@@ -21,12 +21,14 @@ export interface TransactionRowType {
   transaction: UITransactionType;
   showDirectionCol?: boolean;
   address?: string;
+  token?: string;
   showLockedAccounts?: boolean;
 }
 
 export const TransactionRow = ({
   transaction,
   address,
+  token,
   showDirectionCol,
   showLockedAccounts
 }: TransactionRowType) => {
@@ -157,7 +159,7 @@ export const TransactionRow = ({
         <TransactionMethod transaction={transaction} />
       </td>
       <td className='transaction-value'>
-        <TransactionValue transaction={transaction} />
+        <TransactionValue transaction={transaction} token={token} />
       </td>
     </tr>
   );

@@ -2,194 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { faCircleNotch, faSearch } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {
-  urlBuilder,
-  isHash,
-  isContract,
-  addressIsBech32,
-  bech32
-} from 'helpers';
-import { useAdapter, useNetworkRoute } from 'hooks';
+import { useSearch } from 'hooks';
 import { WithClassnameType } from 'types';
 
-interface SearchType extends WithClassnameType {
-  setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export const Search = ({ setExpanded = () => null, className }: SearchType) => {
-  const { pathname } = useLocation();
+export const Search = ({ className }: WithClassnameType) => {
   const navigate = useNavigate();
-  const networkRoute = useNetworkRoute();
-  const {
-    getAccount,
-    getBlock,
-    getTransaction,
-    getNode,
-    getMiniBlock,
-    getToken,
-    getNft,
-    getScResult,
-    getCollection,
-    getUsername
-  } = useAdapter();
-  const [route, setRoute] = useState('');
-  const [searching, setSearching] = useState(false);
-  const [hash, setHash] = useState<string>('');
+  const { pathname } = useLocation();
+  const [searchHash, setSearchHash] = useState<string>('');
+  const { search, isSearching, searchRoute, setSearchRoute } =
+    useSearch(searchHash);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      onClick();
-    }
-  };
-
-  const notFoundRoute = networkRoute(`/search/${hash}`);
-
-  const onClick = async () => {
-    if (Boolean(hash)) {
-      setSearching(true);
-      const validHashChars = /^[0-9A-Fa-f]+$/i;
-
-      const isAccount = addressIsBech32(hash);
-      const isValidHash = isHash(hash);
-      const isNode = validHashChars.test(hash) === true && hash.length === 192;
-      const isToken =
-        hash.includes('-') &&
-        hash.split('-')[1].length === 6 &&
-        validHashChars.test(hash.split('-')[1]) === true;
-
-      let isPubKeyAccount = false;
-      try {
-        isPubKeyAccount =
-          hash.length < 65 && addressIsBech32(bech32.encode(hash));
-      } catch {}
-
-      switch (true) {
-        case isAccount:
-          getAccount({ address: hash }).then((account) => {
-            setExpanded(false);
-            const newRoute = account.success
-              ? networkRoute(urlBuilder.accountDetails(hash))
-              : notFoundRoute;
-            setRoute(newRoute);
-          });
-          break;
-
-        case isNode:
-          getNode(hash).then((node) => {
-            setExpanded(false);
-            const newRoute = node.success
-              ? networkRoute(urlBuilder.nodeDetails(hash))
-              : notFoundRoute;
-            setRoute(newRoute);
-          });
-          break;
-
-        case isToken:
-          Promise.all([getToken(hash), getNft(hash), getCollection(hash)]).then(
-            ([token, nft, collection]) => {
-              setExpanded(false);
-              switch (true) {
-                case token.success:
-                  setRoute(networkRoute(urlBuilder.tokenDetails(hash)));
-                  break;
-                case nft.success:
-                  setRoute(networkRoute(urlBuilder.nftDetails(hash)));
-                  break;
-                case collection.success:
-                  setRoute(networkRoute(urlBuilder.collectionDetails(hash)));
-                  break;
-                default:
-                  setRoute(notFoundRoute);
-                  break;
-              }
-            }
-          );
-
-          break;
-
-        case isValidHash:
-          Promise.all([
-            getBlock(hash),
-            getScResult(hash),
-            getTransaction(hash),
-            getMiniBlock(hash)
-          ]).then(([block, scResult, transaction, miniblock]) => {
-            setExpanded(false);
-            switch (true) {
-              case block.success:
-                setRoute(networkRoute(`/blocks/${hash}`));
-                break;
-              case scResult.success:
-                setRoute(
-                  networkRoute(
-                    `/transactions/${scResult.data.originalTxHash}#${hash}`
-                  )
-                );
-                break;
-              case transaction.success:
-                setRoute(networkRoute(`/transactions/${hash}`));
-                break;
-              case miniblock.success:
-                setRoute(networkRoute(`/miniblocks/${hash}`));
-                break;
-              default:
-                if (isPubKeyAccount) {
-                  getAccount({ address: bech32.encode(hash) }).then(
-                    (account) => {
-                      if (account.success) {
-                        if (isContract(hash) || account.data.nonce > 0) {
-                          const newRoute = networkRoute(
-                            urlBuilder.accountDetails(bech32.encode(hash))
-                          );
-                          setRoute(newRoute);
-                        }
-                      }
-                    }
-                  );
-                }
-                setRoute(notFoundRoute);
-                break;
-            }
-          });
-
-          break;
-
-        default:
-          getUsername(hash.replaceAll('.elrond', '')).then((account) => {
-            setExpanded(false);
-            const newRoute = account.success
-              ? networkRoute(urlBuilder.accountDetails(account?.data?.address))
-              : notFoundRoute;
-            setRoute(newRoute);
-          });
-
-          break;
-      }
+      search();
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHash(e.target.value);
+    setSearchHash(e.target.value);
   };
 
-  const reset = () => {
-    if (route) {
-      setRoute('');
+  useEffect(() => {
+    if (searchRoute) {
+      setSearchRoute('');
+      setSearchHash('');
+      navigate(searchRoute);
     }
-    if (hash) {
-      setHash('');
-    }
-    if (searching) {
-      setSearching(false);
-    }
-  };
-
-  useEffect(reset, [route, pathname]);
-
-  if (route) {
-    navigate(route);
-  }
+  }, [searchRoute, pathname]);
 
   return (
     <form
@@ -204,7 +44,7 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
           name='requestType'
           data-testid='search'
           required
-          value={hash}
+          value={searchHash}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           aria-label='Search for an address, transaction/block hash, validator key or token id'
@@ -215,11 +55,12 @@ export const Search = ({ setExpanded = () => null, className }: SearchType) => {
           className='input-group-text'
           onClick={(e) => {
             e.preventDefault();
-            onClick();
+            search();
           }}
           data-testid='searchButton'
+          aria-label='Search'
         >
-          {searching ? (
+          {isSearching ? (
             <FontAwesomeIcon
               icon={faCircleNotch}
               spin

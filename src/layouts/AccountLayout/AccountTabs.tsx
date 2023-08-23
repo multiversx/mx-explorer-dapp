@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
 import { Tabs } from 'components/Tabs';
-import { urlBuilder, isContract } from 'helpers';
+import { urlBuilder } from 'helpers';
+import { useNetworkRoute } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
 
 export const AccountTabs = () => {
+  const networkRoute = useNetworkRoute();
   const { account } = useSelector(accountSelector);
   const { address, code, isVerified } = account;
   const { adapter } = useSelector(activeNetworkSelector);
@@ -29,7 +31,8 @@ export const AccountTabs = () => {
     {
       tabLabel: 'NFTs',
       tabTo: urlBuilder.accountDetailsNfts(address),
-      activationRoutes: [accountsRoutes.accountNfts]
+      activationRoutes: [accountsRoutes.accountNfts],
+      show: tokensRouteActive
     },
     {
       tabLabel: 'Staking',
@@ -72,6 +75,20 @@ export const AccountTabs = () => {
           )}
         </>
       )
+    },
+    {
+      tabLabel: 'Token Roles',
+      tabTo: networkRoute(urlBuilder.accountDetailsTokenRoles(address)),
+      activationRoutes: [accountsRoutes.accountRolesTokens],
+      show: tokensRouteActive,
+      extra: true
+    },
+    {
+      tabLabel: 'Collection Roles',
+      tabTo: networkRoute(urlBuilder.accountDetailsCollectionRoles(address)),
+      activationRoutes: [accountsRoutes.accountRolesCollections],
+      show: tokensRouteActive,
+      extra: true
     }
   ];
 
