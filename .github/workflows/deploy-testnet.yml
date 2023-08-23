@@ -21,7 +21,9 @@ jobs:
           node-version: '16.x'
       - name: Setup yarn
         run: npm install -g yarn
+      - run: npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}"
       - run: yarn install
+      - run: yarn run prepare-pro-icons
       - run: yarn run build-testnet
         env:
           CI: false
