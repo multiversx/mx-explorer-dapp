@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faCode } from '@fortawesome/pro-solid-svg-icons/faCode';
+import { faCode } from 'icons/solid';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
