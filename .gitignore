@@ -24,13 +24,13 @@ dist-ssr
 /build
 
 # Icons
-
 /src/icons/solid/index.ts
 /src/icons/regular/index.ts
 /src/icons/light/index.ts
 /src/icons/duotone/index.ts
 
 # Misc
+.npmrc
 .DS_Store
 .env.local
 .env.development.local
