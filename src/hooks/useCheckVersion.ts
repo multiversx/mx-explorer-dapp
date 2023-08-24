@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
@@ -40,7 +40,7 @@ export const useCheckVersion = () => {
         }
       })
       .catch((err) => {
-        console.error('Unable to get version');
+        console.error('Unable to get version', err);
       });
   };
 

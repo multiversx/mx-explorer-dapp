@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faUser } from 'icons/regular';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -13,6 +12,7 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
+import { faUser } from 'icons/regular';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { TokenLockedAccountType } from 'types';

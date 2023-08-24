@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { faArrowDown, faArrowUp, faCode } from 'icons/regular';
-import { faBadgeCheck } from 'icons/solid';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { Denominate, NetworkLink, PageState, Trim } from 'components';
-import { CopyButton } from 'components/CopyButton';
+import {
+  CopyButton,
+  Denominate,
+  NetworkLink,
+  PageState,
+  Trim
+} from 'components';
 import { IdentityAvatar } from 'components/SharedIdentity/IdentityAvatar';
 import { urlBuilder } from 'helpers';
+import { faArrowDown, faArrowUp, faCode } from 'icons/regular';
+import { faBadgeCheck } from 'icons/solid';
 import { ProviderType } from 'types';
 
 import { DelegationCap } from './components/DelegationCap';

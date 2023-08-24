@@ -1,11 +1,10 @@
-import React from 'react';
-import { faFilter } from 'icons/regular';
-import { faFilter as faFilterSolid } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
 import { DateFilter } from 'components';
+import { faFilter } from 'icons/regular';
+import { faFilter as faFilterSolid } from 'icons/solid';
 import { TransactionFiltersEnum } from 'types';
 
 export const AgeColumnFilters = ({

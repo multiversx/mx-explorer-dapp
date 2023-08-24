@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faChartBar } from 'icons/regular';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { PageState, Chart, Loader } from 'components';
 import { ChartConfigType, ChartListType } from 'components/Chart/helpers/types';
 import { useAdapter } from 'hooks';
+import { faChartBar } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 
 import { ChartResolutionSelector } from './components/ChartResolution';

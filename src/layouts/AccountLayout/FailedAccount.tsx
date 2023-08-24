@@ -1,8 +1,6 @@
-import React from 'react';
-import { faCode, faUser } from 'icons/regular';
-
 import { SC_INIT_CHARACTERS_LENGTH } from 'appConstants';
 import { PageState } from 'components';
+import { faCode, faUser } from 'icons/regular';
 
 export const FailedAccount = ({ address }: { address: string | undefined }) => {
   const showIcon =

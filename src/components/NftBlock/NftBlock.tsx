@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { NetworkLink, Denominate } from 'components';
 import { urlBuilder } from 'helpers';
 import { NftType, NftTypeEnum } from 'types';

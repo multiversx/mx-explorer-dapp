@@ -1,12 +1,4 @@
-import React from 'react';
-import {
-  Area,
-  AreaChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis
-} from 'recharts';
+import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
 
 import styles from './styles.module.scss';
 import { ChartRootPropsType } from './types';

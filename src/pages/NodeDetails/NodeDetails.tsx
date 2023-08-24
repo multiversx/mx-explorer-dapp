@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faCogs } from 'icons/regular';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -8,6 +7,7 @@ import { BlocksTable } from 'components/BlocksTable/BlocksTable';
 import { FailedBlocks } from 'components/BlocksTable/components/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import { useAdapter, useIsMainnet } from 'hooks';
+import { faCogs } from 'icons/regular';
 import { statsSelector } from 'redux/selectors';
 import { BlockType, IdentityType, NodeType } from 'types';
 

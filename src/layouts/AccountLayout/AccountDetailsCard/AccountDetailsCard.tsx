@@ -1,12 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faClock, faExclamationTriangle } from 'icons/regular';
-import {
-  faUser,
-  faCoins,
-  faLayerGroup,
-  faHexagonVerticalNft,
-  faShieldCheck
-} from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
@@ -28,6 +20,14 @@ import {
 import { DECIMALS } from 'config';
 import { isContract, urlBuilder, formatDate, formatHerotag } from 'helpers';
 import { useAdapter } from 'hooks';
+import { faClock, faExclamationTriangle } from 'icons/regular';
+import {
+  faUser,
+  faCoins,
+  faLayerGroup,
+  faHexagonVerticalNft,
+  faShieldCheck
+} from 'icons/solid';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountUpgradeType } from 'types';
 

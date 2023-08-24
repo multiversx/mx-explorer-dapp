@@ -1,8 +1,7 @@
-import React from 'react';
-import { faHistory } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';
+import { faHistory } from 'icons/regular';
 import { NodeType } from 'types';
 
 export const RowFullHistory = ({

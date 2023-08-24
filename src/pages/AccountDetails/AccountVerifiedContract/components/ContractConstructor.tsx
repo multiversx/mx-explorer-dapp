@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { VerifiedContractType } from 'types';
 
 export const ContractConstructor = ({

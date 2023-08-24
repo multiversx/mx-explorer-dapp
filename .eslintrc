@@ -85,6 +85,7 @@
     "react/jsx-curly-newline": "off",
     "react/jsx-wrap-multilines": "off",
     "react/destructuring-assignment": "off",
+    "react/react-in-jsx-scope": "off",
     "no-shadow": "off", // TODO - Enable once theme ready
     "prefer-const": "off", // TODO - Enable once theme ready
     "@typescript-eslint/no-shadow": "off", // TODO - Enable once theme ready

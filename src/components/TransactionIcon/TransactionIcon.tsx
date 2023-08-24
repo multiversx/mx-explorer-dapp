@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faSpinnerThird, faTimes, faCheck } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
@@ -12,6 +11,7 @@ import {
   getTransactionStatusText
 } from 'helpers';
 import { useAdapter } from 'hooks';
+import { faSpinnerThird, faTimes, faCheck } from 'icons/regular';
 import {
   UITransactionType,
   TransactionType,

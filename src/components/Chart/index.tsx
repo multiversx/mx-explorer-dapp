@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { ChartArea } from './ChartArea';
 import { ChartAreaNew } from './ChartAreaNew';
 import { ChartBar } from './ChartBar';

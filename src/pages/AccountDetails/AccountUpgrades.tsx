@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faCode } from 'icons/solid';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -13,6 +12,7 @@ import {
 } from 'components';
 import { isContract } from 'helpers';
 import { useAdapter } from 'hooks';
+import { faCode } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountUpgradeType } from 'types';

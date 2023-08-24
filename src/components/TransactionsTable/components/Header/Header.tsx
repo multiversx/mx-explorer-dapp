@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { TransactionTableType } from 'types';
 
 import {

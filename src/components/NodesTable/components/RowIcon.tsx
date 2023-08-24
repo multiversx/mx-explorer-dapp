@@ -1,4 +1,6 @@
-import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { Overlay } from 'components';
 import {
   faClock,
   faEye,
@@ -7,9 +9,6 @@ import {
   faSnooze,
   faSync
 } from 'icons/regular';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { Overlay } from 'components';
 import { NodeType } from 'types';
 
 export const getIcon = (node: NodeType) => {

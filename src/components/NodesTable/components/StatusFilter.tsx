@@ -1,24 +1,23 @@
-import React from 'react';
-import { faFilter } from 'icons/regular';
-import { faFilter as faFilterSolid } from 'icons/solid';
+import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Anchor, Dropdown } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
-const CustomToggle = React.forwardRef(
-  ({ children, onClick }: any, ref: any) => (
-    <a
-      href=''
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </a>
-  )
-);
+import { faFilter } from 'icons/regular';
+import { faFilter as faFilterSolid } from 'icons/solid';
+
+const CustomToggle = forwardRef(({ children, onClick }: any, ref: any) => (
+  <a
+    href=''
+    ref={ref}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  >
+    {children}
+  </a>
+));
 
 export const StatusFilter = () => {
   const [searchParams, setSearchParams] = useSearchParams();

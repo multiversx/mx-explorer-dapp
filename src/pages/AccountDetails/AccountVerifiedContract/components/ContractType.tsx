@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { faSquarePen } from 'icons/solid';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse } from 'react-bootstrap';
 
 import { CollapsibleArrows } from 'components';
+import { faSquarePen } from 'icons/solid';
 import { ContractTypeType } from 'types';
 
 export const ContractType = ({

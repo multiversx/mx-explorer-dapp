@@ -1,9 +1,8 @@
-import React from 'react';
-import { faExternalLink } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
 import { ReactComponent as SpotlightLogo } from 'assets/img/logos/xspotlight.svg';
+import { faExternalLink } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const SpotlightButton = ({ path }: { path: string }) => {

@@ -1,6 +1,3 @@
-import React from 'react';
-import { faClock } from 'icons/regular';
-import { faHexagonCheck } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -17,6 +14,8 @@ import {
 } from 'components';
 import { urlBuilder, formatDate } from 'helpers';
 import { useActiveRoute } from 'hooks';
+import { faClock } from 'icons/regular';
+import { faHexagonCheck } from 'icons/solid';
 import { collectionSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';
 import { NftTypeEnum } from 'types';

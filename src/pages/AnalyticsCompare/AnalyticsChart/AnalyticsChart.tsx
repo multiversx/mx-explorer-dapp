@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { faChartBar } from 'icons/regular';
 import { useSelector } from 'react-redux';
 
 import { PageState, Chart, Loader } from 'components';
@@ -9,6 +8,7 @@ import {
   StackedChartConfig
 } from 'components/Chart/helpers/types';
 import { useAdapter } from 'hooks';
+import { faChartBar } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 
 import { ChartResolutionSelector } from './components/ChartResolution';

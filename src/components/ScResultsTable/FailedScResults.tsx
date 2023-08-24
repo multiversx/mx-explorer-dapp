@@ -1,7 +1,5 @@
-import React from 'react';
-import { faCode } from 'icons/regular';
-
 import { PageState } from 'components';
+import { faCode } from 'icons/regular';
 
 export const FailedScResults = () => {
   return (

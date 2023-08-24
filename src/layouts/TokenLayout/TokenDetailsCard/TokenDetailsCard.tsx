@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef } from 'react';
 import BigNumber from 'bignumber.js';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';

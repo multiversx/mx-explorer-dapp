@@ -1,9 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  faClock,
-  faSearch,
-  faSpinner
-} from 'icons/regular';
+import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Tab, Nav } from 'react-bootstrap';
@@ -38,6 +33,7 @@ import {
   getTotalTxTokenUsdValue
 } from 'helpers';
 import { useNetworkRoute } from 'hooks';
+import { faClock, faSearch, faSpinner } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 import { transactionsRoutes } from 'routes';
 import {
@@ -45,8 +41,7 @@ import {
   TransactionActionCategoryEnum,
   TransactionVisibleOperationEnum,
   TransactionSCResultType,
-  TransactionApiStatusEnum,
-  TransactionExtraStatusEnum
+  TransactionApiStatusEnum
 } from 'types';
 
 import { DataField } from './DataField';

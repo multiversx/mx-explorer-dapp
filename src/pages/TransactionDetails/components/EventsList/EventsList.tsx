@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import { faExchange } from 'icons/regular';
+import { useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 
 import { CopyButton, Trim, DataDecode, NetworkLink } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
 import { urlBuilder } from 'helpers';
+import { faExchange } from 'icons/regular';
 import { EventType } from 'types';
 
 const EventTopics = ({

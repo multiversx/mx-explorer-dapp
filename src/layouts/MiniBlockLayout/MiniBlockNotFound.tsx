@@ -1,6 +1,5 @@
-import React from 'react';
-import { faCube } from 'icons/regular';
 import { PageState } from 'components';
+import { faCube } from 'icons/regular';
 
 interface MiniBlockNotFoundType {
   miniBlockHash: string | undefined;

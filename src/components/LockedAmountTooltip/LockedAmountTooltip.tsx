@@ -1,7 +1,6 @@
-import React from 'react';
-import { faInfoCircle } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { faInfoCircle } from 'icons/regular';
 
 interface LockedItemType {
   label: string;

@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faFileAlt } from 'icons/solid';
+import { useEffect, useState } from 'react';
 import { Tab, Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useMatch, useNavigate } from 'react-router-dom';
@@ -7,6 +6,7 @@ import { useMatch, useNavigate } from 'react-router-dom';
 import { Loader, PageState } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useNetworkRoute } from 'hooks';
+import { faFileAlt } from 'icons/solid';
 import { accountSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
 import { VerifiedContractType } from 'types';
@@ -26,7 +26,6 @@ export enum VerifiedContractTabsEnum {
 }
 
 export const AccountVerifiedContract = () => {
-  const ref = useRef(null);
   const networkRoute = useNetworkRoute();
   const navigate = useNavigate();
 

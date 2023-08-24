@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faExchangeAlt } from 'icons/regular';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
 import { useAdapter } from 'hooks';
+import { faExchangeAlt } from 'icons/regular';
 import { refreshSelector } from 'redux/selectors/refresh';
 import { TransactionType, TransactionApiStatusEnum } from 'types';
 

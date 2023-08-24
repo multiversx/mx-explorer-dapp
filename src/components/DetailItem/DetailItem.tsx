@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface DetailItemType {
   children?: React.ReactNode;
   title?: string | React.ReactNode;

@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { useFetchShards } from 'hooks';
 import { shardsSelector, globalStakeSelector } from 'redux/selectors';
@@ -15,9 +14,9 @@ export const ShardList = ({ className }: WithClassnameType) => {
   return (
     <div className={`shard-list ${className ?? ''}`}>
       {shards.map((shard, i) => (
-        <React.Fragment key={shard.shard + i}>
+        <Fragment key={shard.shard + i}>
           <ShardCard shard={shard} />
-        </React.Fragment>
+        </Fragment>
       ))}
       <ShardCard customTitle='Queue' customValue={queueSize} />
     </div>

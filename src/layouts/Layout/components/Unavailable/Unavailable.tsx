@@ -1,8 +1,6 @@
-import React from 'react';
-import { faBan, faWifiSlash } from 'icons/regular';
 import { useSelector } from 'react-redux';
 import { PageState } from 'components';
-
+import { faBan, faWifiSlash } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const Unavailable = () => {

@@ -1,5 +1,3 @@
-import React from 'react';
-import { faArrowRight } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   ScAddressIcon,
@@ -12,6 +10,7 @@ import {
   TransactionIcon
 } from 'components';
 import { addressIsBech32, urlBuilder, getDisplayReceiver } from 'helpers';
+import { faArrowRight } from 'icons/regular';
 import { UITransactionType, TransferTypeEnum } from 'types';
 
 import { TransactionMethod } from './TransactionMethod';

@@ -1,9 +1,8 @@
-import React from 'react';
-import { faExclamationTriangle } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { RowIssueIcon } from 'components/NodesTable/components/RowIssueIcon';
 import { getNodeIssue } from 'helpers';
+import { faExclamationTriangle } from 'icons/regular';
 import { NodeType } from 'types';
 
 export const Container = ({ children }: { children: React.ReactNode }) => (

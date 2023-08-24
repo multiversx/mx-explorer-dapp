@@ -2,7 +2,7 @@ import {
   faChartBar,
   faClock,
   faQuestionCircle,
-  faUser,
+  faUser
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faAngleDown,

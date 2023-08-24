@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faDiamond } from 'icons/regular';
+import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 
 import { Loader, NetworkLink, Trim, Pager } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetSearch, useActiveRoute, useGetPage } from 'hooks';
+import { faDiamond } from 'icons/regular';
 import { tokensRoutes } from 'routes';
 import { CollectionType } from 'types';
 
