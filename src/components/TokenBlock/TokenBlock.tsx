@@ -1,7 +1,6 @@
 import React from 'react';
-import { NetworkLink, Denominate } from 'components';
+import { Denominate, TokenLink } from 'components';
 import { DECIMALS } from 'config';
-import { urlBuilder } from 'helpers';
 import { TokenType } from 'types';
 
 interface TokenBlockType {
@@ -25,39 +24,7 @@ export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
           />
         </div>
       )}
-      <NetworkLink
-        to={urlBuilder.tokenDetails(operationToken.identifier)}
-        className={`d-flex text-truncate ${
-          operationToken?.assets?.svgUrl ? 'side-link' : ''
-        }`}
-      >
-        <div className='d-flex align-items-center symbol text-truncate'>
-          {operationToken && (
-            <>
-              {operationToken.assets ? (
-                <>
-                  {operationToken.assets.svgUrl && (
-                    <img
-                      src={operationToken.assets.svgUrl}
-                      alt={operationToken.name}
-                      className='side-icon me-1'
-                    />
-                  )}
-                  <div className='text-truncate'>
-                    {operationToken.ticker
-                      ? operationToken.ticker
-                      : operationToken.name}
-                  </div>
-                </>
-              ) : (
-                <span className='text-truncate'>
-                  {operationToken.identifier}
-                </span>
-              )}
-            </>
-          )}
-        </div>
-      </NetworkLink>
+      <TokenLink token={operationToken} />
     </div>
   );
 };

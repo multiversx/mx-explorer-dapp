@@ -1,33 +1,38 @@
 import BigNumber from 'bignumber.js';
-import { TransactionType } from 'types';
+import { isContract } from 'helpers';
+import {
+  TransactionType,
+  TransactionVisibleOperationEnum,
+  TransactionHiddenOperationEnum
+} from 'types';
 
 export const getTotalTxTokenUsdValue = (transaction: TransactionType) => {
-  if (!transaction?.operations) {
-    return '';
+  if (!transaction?.operations || isContract(transaction.sender)) {
+    return new BigNumber(0).toString();
   }
 
-  const userArray = [transaction.sender, transaction.receiver];
+  const allOperationsAreValid = transaction.operations.every(
+    (operation) =>
+      (operation?.valueUSD !== undefined &&
+        transaction.sender === operation.receiver &&
+        Object.values<string>(TransactionVisibleOperationEnum).includes(
+          operation.type
+        )) ||
+      Object.values<string>(TransactionHiddenOperationEnum).includes(
+        operation.type
+      )
+  );
+
+  if (!allOperationsAreValid) {
+    return new BigNumber(0).toString();
+  }
 
   const totalUsdValue = transaction.operations
-    .map((operation) => {
-      const { valueUSD } = operation;
+    .map((operation) => new BigNumber(operation?.valueUSD ?? 0).toString())
+    .reduce(
+      (a, b) => new BigNumber(a).plus(new BigNumber(b)),
+      new BigNumber(0)
+    );
 
-      if (valueUSD) {
-        const operationArray = [operation.sender, operation.receiver];
-        const isUserInvolved =
-          [
-            ...Array.from(
-              new Set(userArray.filter((i) => operationArray.includes(i)))
-            )
-          ].length > 0;
-
-        if (isUserInvolved) {
-          return valueUSD;
-        }
-      }
-      return '0';
-    })
-    .reduce((a, b) => new BigNumber(a).plus(b), new BigNumber('0'));
-
-  return totalUsdValue.toNumber();
+  return totalUsdValue.toString();
 };

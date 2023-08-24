@@ -13,8 +13,13 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { function: filteredFunction } = Object.fromEntries(searchParams);
 
+  const transactionMethodText = getTransactionMethod(transaction);
+  if (!transactionMethodText) {
+    return null;
+  }
+
   const updateMethod = (method: string) => {
-    const { ...rest } = Object.fromEntries(searchParams);
+    const { page, size, ...rest } = Object.fromEntries(searchParams);
     if (method) {
       delete rest.page;
     }
@@ -31,14 +36,14 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
   }: {
     children: React.ReactNode;
   }) => {
-    const method = getTransactionMethod(transaction);
-
     return (
       <span>
-        {method !== 'transaction' && method !== filteredFunction ? (
+        {!['transaction', 'transfer', filteredFunction].includes(
+          transactionMethodText
+        ) ? (
           <div
             onClick={() => {
-              updateMethod(getTransactionMethod(transaction));
+              updateMethod(transactionMethodText);
             }}
             data-testid='filterByTransactionMethod'
             className='text-decoration-none cursor-pointer'
@@ -57,7 +62,7 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
       <TransactionMethodText>
         <span className='badge badge-outline badge-outline-green'>
           <div className='transaction-function-badge text-truncate text-capitalize'>
-            {getTransactionMethod(transaction)}
+            {transactionMethodText}
           </div>
         </span>
       </TransactionMethodText>

@@ -20,7 +20,7 @@ export interface TransactionType {
   sender: string;
   senderShard: number;
   signature: string;
-  status: string;
+  status: TransactionStatusEnum;
   timestamp: number;
   value: string;
   price: number;
@@ -146,6 +146,7 @@ export interface UITransactionType extends TransferType {
 export interface TransactionTableType {
   transactions: UITransactionType[];
   address?: string;
+  token?: string;
   totalTransactions: number | typeof ELLIPSIS;
   title?: React.ReactNode;
   showDirectionCol?: boolean;
@@ -235,6 +236,7 @@ export enum TransactionActionEnum {
   swapTokensFixedInput = 'swapTokensFixedInput',
   swapTokensFixedOutput = 'swapTokensFixedOutput',
   swap = 'swap',
+  multiPairSwap = 'multiPairSwap',
   addLiquidity = 'addLiquidity',
   addLiquidityProxy = 'addLiquidityProxy',
   removeLiquidity = 'removeLiquidity',
@@ -251,8 +253,20 @@ export enum TransactionActionEnum {
   compoundRewardsProxy = 'compoundRewardsProxy',
   wrapEgld = 'wrapEgld',
   unwrapEgld = 'unwrapEgld',
+  lockAssets = 'lockAssets',
   unlockAssets = 'unlockAssets',
-  mergeLockedAssetTokens = 'mergeLockedAssetTokens'
+  mergeLockedAssetTokens = 'mergeLockedAssetTokens',
+  stakeFarm = 'stakeFarm',
+  stakeFarmProxy = 'stakeFarmProxy',
+  stakeFarmTokens = 'stakeFarmTokens',
+  stakeFarmTokensProxy = 'stakeFarmTokensProxy',
+  unstakeFarm = 'unstakeFarm',
+  unstakeFarmProxy = 'unstakeFarmProxy',
+  unstakeFarmTokens = 'unstakeFarmTokens',
+  unstakeFarmTokensProxy = 'unstakeFarmTokensProxy',
+  claimDualYield = 'claimDualYield',
+  claimDualYieldProxy = 'claimDualYieldProxy',
+  unbondFarm = 'unbondFarm'
 }
 
 export enum TransactionActionCategoryEnum {

@@ -3,6 +3,8 @@ import { AccountAnalytics } from 'pages/AccountDetails/AccountAnalytics';
 import { AccountContractCode } from 'pages/AccountDetails/AccountContractCode';
 import { AccountContracts } from 'pages/AccountDetails/AccountContracts';
 import { AccountNfts } from 'pages/AccountDetails/AccountNfts';
+import { AccountCollectionRoles } from 'pages/AccountDetails/AccountRoles/AccountCollectionRoles';
+import { AccountTokenRoles } from 'pages/AccountDetails/AccountRoles/AccountTokenRoles';
 import { AccountStaking } from 'pages/AccountDetails/AccountStaking';
 import { AccountTokens } from 'pages/AccountDetails/AccountTokens';
 import { AccountTransactions } from 'pages/AccountDetails/AccountTransactions';
@@ -26,6 +28,8 @@ export const accountsRoutes = {
   accountCodeEndpoints: '/accounts/:hash/code/endpoints',
   accountCodeEvents: '/accounts/:hash/code/events',
   accountCodeTypes: '/accounts/:hash/code/types',
+  accountRolesTokens: '/accounts/:hash/roles/tokens',
+  accountRolesCollections: '/accounts/:hash/roles/collections',
   oldAccountDetails: '/address/:hash'
 };
 
@@ -92,6 +96,18 @@ export const accountLayout: TitledRouteObject[] = [
         title: 'Smart Contracts',
         preventScroll: true,
         Component: AccountContracts
+      },
+      {
+        path: accountsRoutes.accountRolesTokens,
+        title: 'Token Roles',
+        preventScroll: true,
+        Component: AccountTokenRoles
+      },
+      {
+        path: accountsRoutes.accountRolesCollections,
+        title: 'Collection Roles',
+        preventScroll: true,
+        Component: AccountCollectionRoles
       }
     ]
   }

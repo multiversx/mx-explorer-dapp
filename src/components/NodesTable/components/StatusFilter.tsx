@@ -22,7 +22,7 @@ const CustomToggle = React.forwardRef(
 
 export const StatusFilter = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { online, page, ...rest } = Object.fromEntries(searchParams);
+  const { online, page, size, ...rest } = Object.fromEntries(searchParams);
 
   const onlineLink = (onlineValue: string) => {
     const nextUrlParams = {
