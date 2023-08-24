@@ -102,7 +102,6 @@ export const AccountDetailsCard = () => {
   React.useEffect(() => {
     fetchProviderDetails();
     fetchUpgradesDetails();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, address]);
 
   const fetchAccountTokensCount = () => {

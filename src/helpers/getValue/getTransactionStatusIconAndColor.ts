@@ -15,7 +15,7 @@ export const getTransactionStatusIconAndColor = ({
 }: TransactionStatusType) => {
   const statusIs = (compareTo: string) => transaction.status === compareTo;
   let icon;
-  let color = '';
+  const color = '';
 
   if (!transaction) {
     return {
