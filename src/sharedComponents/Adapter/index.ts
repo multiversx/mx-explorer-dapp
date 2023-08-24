@@ -410,7 +410,8 @@ export default function useAdapter() {
         },
       }),
 
-    getAccount: (address: string) => provider({ url: `/accounts/${address}` }),
+    getAccount: ({ address, ...rest }: { address: string; withGuardianInfo?: boolean }) =>
+      provider({ url: `/accounts/${address}`, params: rest }),
 
     getAccounts: (size = 1) =>
       provider({

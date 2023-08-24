@@ -60,6 +60,7 @@ export interface ProviderPropsType {
     includeFlagged?: boolean;
     fullHistory?: string;
     withUsername?: boolean;
+    withGuardianInfo?: boolean;
   };
   timeout: number;
   timestamp?: number;

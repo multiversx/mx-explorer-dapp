@@ -40,7 +40,7 @@ const HashSearch = () => {
 
       switch (true) {
         case isAccount:
-          getAccount(query).then((account) => {
+          getAccount({ address: query }).then((account) => {
             const newRoute = account.success ? networkRoute(urlBuilder.accountDetails(query)) : '';
             setRoute(newRoute);
             setSearching(false);
@@ -99,7 +99,7 @@ const HashSearch = () => {
                 break;
               default:
                 if (isPubKeyAccount) {
-                  getAccount(bech32.encode(query)).then((account) => {
+                  getAccount({ address: bech32.encode(query) }).then((account) => {
                     if (account.success) {
                       if (isContract(query) || account.data.nonce > 0) {
                         const newRoute = networkRoute(

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons';
-import { faUser, faCoins, faLayerGroup } from '@fortawesome/pro-solid-svg-icons';
+import { faUser, faCoins, faLayerGroup, faShieldCheck } from '@fortawesome/pro-solid-svg-icons';
 import {
   CardItem,
   CopyButton,
@@ -46,6 +46,9 @@ const AccountDetailsCard = () => {
     isPayableBySmartContract,
     assets,
     username,
+    isGuarded,
+    activeGuardianAddress,
+    activeGuardianServiceUid,
   } = accountDetails;
   const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
 
@@ -307,6 +310,24 @@ const AccountDetailsCard = () => {
               </CardItem>
               <LockedAmountCardItem cardItemClass={cardItemClass} />
               <AccountUsdValueCardItem cardItemClass={cardItemClass} />
+              {isGuarded && (
+                <CardItem
+                  className={cardItemClass}
+                  title={`Guardian ${
+                    activeGuardianServiceUid ? `(${activeGuardianServiceUid})` : ''
+                  }`}
+                  icon={faShieldCheck}
+                >
+                  {activeGuardianAddress && (
+                    <NetworkLink
+                      to={urlBuilder.accountDetails(activeGuardianAddress)}
+                      className="trim-wrapper"
+                    >
+                      <Trim text={activeGuardianAddress} />
+                    </NetworkLink>
+                  )}
+                </CardItem>
+              )}
               <CardItem className={cardItemClass} title="Nonce" icon={faUser}>
                 {nonce !== undefined ? nonce.toLocaleString('en') : '...'}
               </CardItem>

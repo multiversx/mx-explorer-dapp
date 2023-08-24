@@ -34,6 +34,7 @@ import {
   TransactionAction,
   LoadingDots,
   AccountName,
+  TransactionGuardianIcon,
 } from 'sharedComponents';
 import { getStatusIconAndColor } from 'sharedComponents/TransactionStatus';
 import txStatus from 'sharedComponents/TransactionStatus/txStatus';
@@ -206,6 +207,7 @@ const TransactionInfo = ({ transaction }: { transaction: TransactionType }) => {
               <Tab.Pane eventKey="details">
                 <DetailItem title="Hash">
                   <div className="d-flex align-items-center text-break-all">
+                    <TransactionGuardianIcon transaction={transaction} />
                     {transaction.txHash}
                     <CopyButton text={transaction.txHash} />
                   </div>
