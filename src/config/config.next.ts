@@ -1,5 +1,5 @@
 import { NetworkType } from 'types/network.types';
-import { allApps, schema } from './sharedConfig';
+import { allApps, schema, getInternalNetworks } from './sharedConfig';
 import { links as sharedLinks } from './sharedConfig';
 export * from './sharedConfig';
 
@@ -68,78 +68,8 @@ export const networks: NetworkType[] = [
     growthApi: 'https://tools.multiversx.com/growth-api',
     accessToken: true
   },
-  // Testnets
-  {
-    id: 'testnet-tc-shadowfork-one',
-    name: 'SHADOWFORK 1 Testnet',
-    adapter: 'api',
-    egldLabel: 'xEGLD',
-    apiAddress: 'https://express-api-shadowfork-one.elrond.ro'
-  },
-  {
-    id: 'testnet-do-shadowfork-four',
-    name: 'SHADOWFORK 4 Testnet',
-    adapter: 'api',
-    egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***'
-  },
-  {
-    id: 'testnet-azure-all-in-one-maiar',
-    name: 'Maiar API All-In-One Testnet',
-    adapter: 'elastic',
-    egldLabel: 'xEGLD',
-    proxyUrl: 'https://proxy-maiar.multiversx.com',
-    elasticUrl: 'https://elastic-maiar.multiversx.com'
-  },
-  {
-    id: 'testnet-cp-test01',
-    name: 'ClusterPower Testnet 01',
-    adapter: 'api',
-    egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***'
-  },
-  {
-    id: 'testnet-cp-test02',
-    name: 'ClusterPower Testnet 02',
-    adapter: 'api',
-    egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***'
-  },
-  {
-    id: 'testnet-do-ams',
-    name: 'DigitalOcean Amsterdam Testnet',
-    adapter: 'api',
-    egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***'
-  },
-  {
-    id: 'testnet-upcloud-fra',
-    name: 'Upcloud Frankfurt Testnet',
-    adapter: 'api',
-    egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***'
-  },
-  {
-    id: 'testnet-do-lon',
-    name: 'DigitalOcean London Testnet',
-    adapter: 'api',
-    egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***'
-  },
-  {
-    id: 'testnet-upcloud-mad',
-    name: 'Upcloud Madrid Testnet',
-    adapter: 'api',
-    egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***'
-  },
-  {
-    id: 'testnet-do-multi',
-    name: 'DigitalOcean MULTI Testnet',
-    adapter: 'api',
-    egldLabel: 'xEGLD',
-    apiAddress: '***REMOVED***'
-  }
+  // Internal Testnets
+  ...getInternalNetworks()
 ];
 
 export const multiversxApps = allApps([
