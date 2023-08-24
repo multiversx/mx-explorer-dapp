@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
+      - run: npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}"
       - run: npm install
       - run: npm run build-internal
         env:
