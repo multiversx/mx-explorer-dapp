@@ -52,8 +52,9 @@ export const DateFilter = () => {
     if (paramsObject['after']) {
       delete paramsObject['after'];
     }
+    const { page, size, ...rest } = paramsObject;
     const nextUrlParams = {
-      ...paramsObject
+      ...rest
     };
 
     setSearchParams(nextUrlParams);
@@ -62,8 +63,9 @@ export const DateFilter = () => {
   const onApply = () => {
     hidePopover();
     const paramsObject = Object.fromEntries(searchParams);
+    const { page, size, ...rest } = paramsObject;
     const nextUrlParams = {
-      ...paramsObject,
+      ...rest,
       ...(startDate !== null
         ? { after: moment.utc(startDate).unix().toString() }
         : {}),

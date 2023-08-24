@@ -191,9 +191,10 @@ export const TokenSelectFilter = ({
   const updateSelectValue = (selectValue: string) => {
     const paramsObject = Object.fromEntries(searchParams);
     delete paramsObject[filter];
+    const { page, size, ...rest } = paramsObject;
 
     const nextUrlParams = {
-      ...paramsObject,
+      ...rest,
       ...(selectValue ? { [filter]: selectValue } : {})
     };
 

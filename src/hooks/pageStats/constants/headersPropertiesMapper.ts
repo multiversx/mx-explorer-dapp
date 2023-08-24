@@ -70,9 +70,5 @@ export const headersPropertiesMapper: Record<string, any> = {
       name: 'New Accounts Today',
       order: 3
     }
-    // accountsBalanceGt1000: {
-    // name: 'Accounts Balance GT11000',
-    // order: 4
-    // }
   }
 };

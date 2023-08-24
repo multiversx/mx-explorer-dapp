@@ -9,7 +9,7 @@ import {
 export const mexUnwrapper = (
   action: TransactionActionType
 ): Array<string | TransactionUnwrapperType> => {
-  switch (action.name) {
+  switch (action?.arguments?.functionName) {
     // distribution
     case TransactionActionEnum.claimLockedAssets:
       return ['Claim locked assets'];
@@ -33,24 +33,41 @@ export const mexUnwrapper = (
     case TransactionActionEnum.compoundRewards:
     case TransactionActionEnum.compoundRewardsProxy:
       return ['Reinvest rewards', { token: action.arguments?.transfers }];
+    case TransactionActionEnum.stakeFarm:
+    case TransactionActionEnum.stakeFarmProxy:
+      return ['Stake farm with', { token: action.arguments?.transfers }];
+    case TransactionActionEnum.stakeFarmTokens:
+    case TransactionActionEnum.stakeFarmTokensProxy:
+      return ['Stake farm tokens with', { token: action.arguments?.transfers }];
+    case TransactionActionEnum.unstakeFarmTokens:
+    case TransactionActionEnum.unstakeFarmTokensProxy:
+      return [
+        'Unstake farm tokens with',
+        { token: action.arguments?.transfers }
+      ];
+    case TransactionActionEnum.claimDualYield:
+    case TransactionActionEnum.claimDualYieldProxy:
+      return ['Claim dual yield for', { token: action.arguments?.transfers }];
+    case TransactionActionEnum.unbondFarm:
+      return ['Unbond farm with', { token: action.arguments?.transfers }];
+
     // pairs
-    case TransactionActionEnum.swapTokensFixedInput:
     case TransactionActionEnum.swap:
-      // return [
-      //   'Swap',
-      //   { token: [action.arguments?.transfers[0]] },
-      //   'for a minimum of',
-      //   { token: [action.arguments?.transfers[1]] },
-      // ];
       return action.description ? [action.description] : [];
+    case TransactionActionEnum.swapTokensFixedInput:
+      return [
+        'Swap',
+        { token: [action.arguments?.transfers[0]] },
+        'for a minimum of',
+        { token: [action.arguments?.transfers[1]] }
+      ];
     case TransactionActionEnum.swapTokensFixedOutput:
-      // return [
-      //   'Swap',
-      //   { token: [action.arguments?.transfers[0]] },
-      //   'for a maximum of',
-      //   { token: [action.arguments?.transfers[1]] },
-      // ];
-      return action.description ? [action.description] : [];
+      return [
+        'Swap',
+        { token: [action.arguments?.transfers[0]] },
+        'for a maximum of',
+        { token: [action.arguments?.transfers[1]] }
+      ];
     case TransactionActionEnum.addLiquidity:
     case TransactionActionEnum.addLiquidityProxy:
       return [
@@ -65,13 +82,6 @@ export const mexUnwrapper = (
         'Removed liquidity with ',
         { token: action.arguments?.transfers }
       ];
-    // wrap - commented for now until we have the proper tokens from the Api
-    // case TransactionActionEnum.wrapEgld:
-    //   return ['Wrap' /* EGLD value */];
-    // case TransactionActionEnum.unwrapEgld:
-    //   return ['Unwrap' /* EGLD value */];
-    // case TransactionActionEnum.unlockAssets:
-    //   return ['Unlock', { token: action.arguments?.transfers }];
     case TransactionActionEnum.mergeLockedAssetTokens:
       let value = '0';
       if (action.arguments?.transfers) {
@@ -88,8 +98,7 @@ export const mexUnwrapper = (
         'position of value',
         { value }
       ];
-    case TransactionActionEnum.wrapEgld:
-    case TransactionActionEnum.unwrapEgld:
+
     default:
       return action.description ? [action.description] : [];
   }

@@ -27,9 +27,6 @@ export const useHeaderAccountsStats = () => {
 
     dispatch(
       setPageHeaderAccountsStats({
-        accountsBalanceGt1000: new BigNumber(
-          result.data.accountsBalanceGt1000
-        ).toFormat(0),
         activeAccountsToday: new BigNumber(
           result.data.activeAccountsToday
         ).toFormat(0),

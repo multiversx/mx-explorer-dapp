@@ -44,6 +44,7 @@ export const TokenTransactions = () => {
         <div className='col-12'>
           <TransactionsTable
             transactions={transactions}
+            token={tokenId}
             totalTransactions={totalTransactions}
             title={<TokenTabs />}
             dataChanged={dataChanged}
