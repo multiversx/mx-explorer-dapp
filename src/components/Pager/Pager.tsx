@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS, PAGE_SIZE, MAX_RESULTS } from 'appConstants';
-import { stringIsInteger } from 'helpers';
+import { stringIsInteger, formatOrdinals } from 'helpers';
 import { pagerHelper } from './helpers/pagerHelper';
 
 export const Pager = ({
@@ -73,13 +73,18 @@ export const Pager = ({
         >
           {processedPage === 1 ? (
             <div className='btn btn-pager'>
-              <FontAwesomeIcon icon={faAnglesLeft} size='lg' />
+              <FontAwesomeIcon
+                icon={faAnglesLeft}
+                size='lg'
+                aria-label='No First Page'
+              />
             </div>
           ) : (
             <button
               type='button'
               className='btn btn-pager'
               onClick={() => updatePage(firstUrlParams)}
+              aria-label='First Page'
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
             >
               <FontAwesomeIcon icon={faAnglesLeft} size='lg' />
@@ -89,6 +94,7 @@ export const Pager = ({
           {processedPage === 1 ? (
             <div
               className='btn btn-pager previous-btn'
+              aria-label='No Previous Page'
               {...(hasTestId
                 ? { 'data-testid': 'disabledPreviousPageButton' }
                 : {})}
@@ -100,6 +106,7 @@ export const Pager = ({
             <button
               type='button'
               className='btn btn-pager previous-btn'
+              aria-label='Previous Page'
               onClick={() =>
                 updatePage(processedPage === 2 ? firstUrlParams : prevUrlParams)
               }
@@ -126,6 +133,7 @@ export const Pager = ({
                     className={`btn btn-pager page-btn ${
                       page === processedPage ? 'active' : ''
                     }`}
+                    aria-label={`${formatOrdinals(Number(page))} Page`}
                     onClick={() => {
                       if (page !== processedPage) {
                         updatePage(currentUrlParams);
@@ -152,6 +160,7 @@ export const Pager = ({
               type='button'
               className='btn btn-pager next-btn'
               onClick={() => updatePage(nextUrlParams)}
+              aria-label='Next Page'
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
             >
               <span className='d-none d-sm-flex pe-2'>Next</span>
@@ -160,6 +169,7 @@ export const Pager = ({
           ) : (
             <div
               className='btn btn-pager next-btn'
+              aria-label='No Next Page'
               {...(hasTestId
                 ? { 'data-testid': 'disabledNextPageButton' }
                 : {})}
@@ -174,13 +184,18 @@ export const Pager = ({
               type='button'
               className='btn btn-pager'
               onClick={() => updatePage(lastUrlParams)}
+              aria-label='Last Page'
               {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
             >
               <FontAwesomeIcon icon={faAnglesRight} size='lg' />
             </button>
           ) : (
             <span className='btn btn-pager'>
-              <FontAwesomeIcon icon={faAnglesRight} size='lg' />
+              <FontAwesomeIcon
+                icon={faAnglesRight}
+                size='lg'
+                aria-label='No Last Page'
+              />
             </span>
           )}
         </div>

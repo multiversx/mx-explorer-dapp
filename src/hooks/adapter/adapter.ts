@@ -1,4 +1,5 @@
 import { PAGE_SIZE } from 'appConstants';
+import { AccountRolesTypeEnum } from 'types';
 import {
   GetBlocksType,
   GetTransactionsType,
@@ -369,6 +370,35 @@ export const useAdapter = () => {
 
     getAccountStake: (address: string) =>
       provider({ url: `/accounts/${address}/stake` }),
+
+    /* Account Roles */
+
+    getAccountRoles: ({
+      address,
+      type,
+      page = 1,
+      size = PAGE_SIZE
+    }: {
+      address: string;
+      type: AccountRolesTypeEnum;
+      page?: number;
+      size?: number;
+    }) =>
+      provider({
+        url: `/accounts/${address}/roles/${type}`,
+        params: {
+          from: (page - 1) * size,
+          size
+        }
+      }),
+
+    getAccountRolesCount: ({
+      address,
+      type
+    }: {
+      address: string;
+      type: AccountRolesTypeEnum;
+    }) => provider({ url: `/accounts/${address}/roles/${type}/c` }),
 
     /* Validators */
 

@@ -16,13 +16,15 @@ export const ContractFiles = ({
   const formattedHash = hash.replace('#', '');
 
   useEffect(() => {
-    if (ref.current && ref.current !== null) {
-      window.scrollTo({
-        top: ref.current.getBoundingClientRect().top - 86,
-        behavior: 'smooth'
-      });
-    }
-  }, []);
+    setTimeout(() => {
+      if (formattedHash && ref.current && ref.current !== null) {
+        window.scrollTo({
+          top: ref.current.getBoundingClientRect().top - 86,
+          behavior: 'smooth'
+        });
+      }
+    }, 200);
+  }, [formattedHash]);
 
   const filteredEntries = entries.filter(
     ({ path, isTestFile }) =>
