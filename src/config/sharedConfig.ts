@@ -6,7 +6,7 @@ import {
   GAS_PRICE as DEFAULT_GAS_PRICE
 } from '@multiversx/sdk-dapp/constants/index';
 import { object, string, boolean } from 'yup';
-import { NetworkUrlType } from 'types/network.types';
+import { NetworkUrlType, NetworkType } from 'types/network.types';
 
 const GAS_PRICE = String(DEFAULT_GAS_PRICE);
 const DIGITS = 2;
@@ -92,6 +92,31 @@ export const allApps = (apps?: { id: string; name: string; url: string }[]) => {
   }
 
   return baseApps;
+};
+
+export const getInternalNetworks = (): NetworkType[] => {
+  if (process.env.VITE_APP_INTERNAL_NETWORKS) {
+    try {
+      const decodedNetworks = atob(
+        String(process.env.VITE_APP_INTERNAL_NETWORKS)
+      );
+
+      const parsedNetworks = JSON.parse(decodedNetworks);
+      if (parsedNetworks && parsedNetworks.length > 0) {
+        return parsedNetworks.map((network: NetworkType) => {
+          return {
+            ...network,
+            ...(!network?.adapter ? { adapter: 'api' } : {}),
+            ...(!network?.egldLabel ? { egldLabel: 'xEGLD' } : {})
+          };
+        });
+      }
+    } catch {
+      return [];
+    }
+  }
+
+  return [];
 };
 
 export const networkBaseSchema = object({
