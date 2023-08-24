@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faAngleDown } from 'icons/regular';
+import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAdapter } from 'hooks';
+import { faAngleDown } from 'icons/regular';
 import { TransactionType, TransactionApiStatusEnum } from 'types';
 
 export const NonceMessage = ({

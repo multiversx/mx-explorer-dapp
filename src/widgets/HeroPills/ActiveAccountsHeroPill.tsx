@@ -1,11 +1,10 @@
-import React from 'react';
-import { faCircleBolt } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
 import { useFetchGrowthSearch } from 'hooks';
+import { faCircleBolt } from 'icons/solid';
 import { growthSearchSelector } from 'redux/selectors';
-import { WithClassnameType, TrendEnum } from 'types';
+import { WithClassnameType } from 'types';
 
 export const ActiveAccountsHeroPill = ({ className }: WithClassnameType) => {
   const { activeAccountsToday } = useSelector(growthSearchSelector);

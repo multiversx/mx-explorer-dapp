@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';

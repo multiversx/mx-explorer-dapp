@@ -1,7 +1,5 @@
-import React from 'react';
-import { faCogs } from 'icons/regular';
-
 import { PageState } from 'components';
+import { faCogs } from 'icons/regular';
 import { NodeType } from 'types';
 
 import { QueueRow } from './Rows/QueueRow';

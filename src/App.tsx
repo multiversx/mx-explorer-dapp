@@ -1,9 +1,7 @@
-import React from 'react';
 import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 
-// eslint-disable-next-line import/order
 import { AxiosInterceptor } from 'components';
 import { store, persistor } from 'redux/store';
 import { wrappedRoutes } from 'routes';

@@ -1,6 +1,3 @@
-import React from 'react';
-import { faFilter } from 'icons/regular';
-import { faFilter as faFilterSolid } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -9,6 +6,8 @@ import { useSearchParams } from 'react-router-dom';
 import { SelectFilter } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
 import { useFetchShards } from 'hooks';
+import { faFilter } from 'icons/regular';
+import { faFilter as faFilterSolid } from 'icons/solid';
 import { shardsSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';
 

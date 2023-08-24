@@ -1,8 +1,7 @@
-import React from 'react';
-import { faSpinnerThird } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { PageState } from 'components';
+import { faSpinnerThird } from 'icons/regular';
 
 export const Loader = ({
   dataTestId = 'loader',

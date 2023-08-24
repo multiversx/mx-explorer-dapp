@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faExclamationTriangle } from 'icons/regular';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Anchor, Dropdown } from 'react-bootstrap';
 import { MAX_DECODE_TX_DATA_LENGTH } from 'appConstants';
 import { CopyButton } from 'components';
 import { addressIsBech32, bech32, isUtf8 } from 'helpers';
+import { faExclamationTriangle } from 'icons/regular';
 import { TransactionTokensType } from 'types';
 
 export enum DecodeMethodType {
@@ -144,7 +144,7 @@ export const decodeForDisplay = ({
     }
     if (input.includes('\n')) {
       const parts = input.split('\n');
-      const initialDecodedParts = parts.map((part, index) => {
+      const initialDecodedParts = parts.map((part) => {
         const base64Buffer = Buffer.from(String(part), 'base64');
         if (decodeMethod === DecodeMethodType.raw) {
           return part;

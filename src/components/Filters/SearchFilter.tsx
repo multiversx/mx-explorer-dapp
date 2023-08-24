@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { faSearch } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
 import { isHash, addressIsBech32 } from 'helpers';
+import { faSearch } from 'icons/regular';
 import { TransactionFiltersEnum } from 'types';
 
 export interface SearchFilterType {

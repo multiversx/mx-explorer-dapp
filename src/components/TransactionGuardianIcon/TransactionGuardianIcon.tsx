@@ -1,8 +1,7 @@
-import React from 'react';
-import { faShieldCheck } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';
+import { faShieldCheck } from 'icons/solid';
 import { UITransactionType } from 'types';
 
 export const TransactionGuardianIcon = ({

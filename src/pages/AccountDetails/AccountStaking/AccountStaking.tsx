@@ -1,8 +1,7 @@
-import React from 'react';
-import { faChartPie } from 'icons/solid';
 import { useSelector } from 'react-redux';
 
 import { Loader, PageState } from 'components';
+import { faChartPie } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { accountStakingSelector } from 'redux/selectors';
 

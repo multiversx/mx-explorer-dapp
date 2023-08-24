@@ -1,7 +1,5 @@
-import React from 'react';
-import { faCheck, faTimes } from 'icons/solid';
-
 import { CardItem } from 'components';
+import { faCheck, faTimes } from 'icons/solid';
 import { NodeType } from 'types';
 
 export const ValidatorDetails = ({ nodeData }: { nodeData: NodeType }) => {

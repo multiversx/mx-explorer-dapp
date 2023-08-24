@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { ResponsiveContainer, PieChart, Pie, Sector, Cell } from 'recharts';

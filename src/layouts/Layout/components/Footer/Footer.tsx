@@ -1,6 +1,5 @@
-import React from 'react';
-import { faHeart } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from 'icons/solid';
 
 export const Footer = () => {
   const explorerVersion = process.env.VITE_APP_CACHE_BUST;

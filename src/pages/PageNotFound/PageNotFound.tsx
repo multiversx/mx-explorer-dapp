@@ -1,8 +1,7 @@
-import React from 'react';
-import { faTimes } from 'icons/regular';
 import { useLocation } from 'react-router-dom';
 import { PageState } from 'components';
 import { analytics } from 'helpers';
+import { faTimes } from 'icons/regular';
 
 export const PageNotFound = () => {
   const { pathname } = useLocation();

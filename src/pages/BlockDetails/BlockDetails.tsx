@@ -1,16 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faCube } from 'icons/regular';
-import { useNavigate, useParams, Navigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useParams, Navigate } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
 import { isHash } from 'helpers';
 import { useAdapter, useNetworkRoute } from 'hooks';
+import { faCube } from 'icons/regular';
 
 import { BlockData, BlockDataType } from './components/BlockData';
 
 export const BlockDetails = () => {
   const ref = useRef(null);
-  const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
   const { getBlock } = useAdapter();
   const { hash: blockId } = useParams() as any;

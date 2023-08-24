@@ -1,12 +1,11 @@
-import React from 'react';
-import { faFilter } from 'icons/regular';
-import { faFilter as faFilterSolid } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
 import { SelectFilter, SelectFilterType } from 'components';
 import { truncateMiddle } from 'helpers';
+import { faFilter } from 'icons/regular';
+import { faFilter as faFilterSolid } from 'icons/solid';
 import { TransactionFiltersEnum } from 'types';
 
 export const ToColumnFilters = ({

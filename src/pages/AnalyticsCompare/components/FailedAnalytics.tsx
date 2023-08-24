@@ -1,7 +1,5 @@
-import React from 'react';
-import { faChartBar } from 'icons/regular';
-
 import { PageState } from 'components';
+import { faChartBar } from 'icons/regular';
 
 export const FailedAnalytics = () => {
   return (

@@ -1,7 +1,5 @@
-import React from 'react';
-import { faExchangeAlt } from 'icons/regular';
-
 import { PageState } from 'components';
+import { faExchangeAlt } from 'icons/regular';
 
 export const FailedTransactions = () => {
   return (

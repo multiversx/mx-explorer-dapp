@@ -1,6 +1,3 @@
-import React from 'react';
-import { faAngleRight, faCity } from 'icons/regular';
-import { faBadgeCheck } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
@@ -12,6 +9,8 @@ import {
   Trim
 } from 'components';
 import { urlBuilder } from 'helpers';
+import { faAngleRight, faCity } from 'icons/regular';
+import { faBadgeCheck } from 'icons/solid';
 import { IdentityType } from 'types';
 
 export const IdentitySummary = ({

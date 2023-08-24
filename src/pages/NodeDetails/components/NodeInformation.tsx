@@ -1,4 +1,14 @@
-import React from 'react';
+import {
+  ShardSpan,
+  NetworkLink,
+  Trim,
+  CopyButton,
+  CardItem,
+  Denominate,
+  LockedAmountTooltip
+} from 'components';
+import { getIcon } from 'components/NodesTable/components/RowIcon';
+import { urlBuilder } from 'helpers';
 import { faFlagAlt } from 'icons/regular';
 import {
   faCogs,
@@ -11,18 +21,6 @@ import {
   faCode,
   faUser
 } from 'icons/solid';
-
-import {
-  ShardSpan,
-  NetworkLink,
-  Trim,
-  CopyButton,
-  CardItem,
-  Denominate,
-  LockedAmountTooltip
-} from 'components';
-import { getIcon } from 'components/NodesTable/components/RowIcon';
-import { urlBuilder } from 'helpers';
 import { NodeType } from 'types';
 
 import { Alert } from './Alert';

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { faSearch } from 'icons/regular';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PageState, Loader } from 'components';
 import { useSearch, useNetworkRoute } from 'hooks';
+import { faSearch } from 'icons/regular';
 
 export const HashSearch = () => {
   const { hash: query } = useParams() as any;

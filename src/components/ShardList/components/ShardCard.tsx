@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ShardSpan } from 'components';
 import { ProgressRing } from 'components/ProgressRing';
 import { ShardType } from 'types';

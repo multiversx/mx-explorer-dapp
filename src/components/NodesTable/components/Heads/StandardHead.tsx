@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Sort } from 'components';
 import { NodeType } from 'types';
 

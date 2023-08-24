@@ -1,8 +1,7 @@
-import React from 'react';
-import { faSort, faSortDown, faSortUp } from 'icons/duotone';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
+import { faSort, faSortDown, faSortUp } from 'icons/duotone';
 import { SortOrderEnum } from 'types';
 
 export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {

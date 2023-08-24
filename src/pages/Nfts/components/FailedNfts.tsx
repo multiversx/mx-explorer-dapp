@@ -1,7 +1,5 @@
-import React from 'react';
-import { faPalette } from 'icons/regular';
-
 import { PageState } from 'components';
+import { faPalette } from 'icons/regular';
 
 export const FailedNfts = () => {
   return (

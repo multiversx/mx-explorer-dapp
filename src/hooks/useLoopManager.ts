@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { REFRESH_RATE } from 'appConstants';

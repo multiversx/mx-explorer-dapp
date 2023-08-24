@@ -1,9 +1,8 @@
-import React from 'react';
-import { faGlobe } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ELLIPSIS } from 'appConstants';
 import { Marquee } from 'components';
+import { faGlobe } from 'icons/regular';
 import { WithClassnameType, RankType } from 'types';
 
 export interface ContinentsRankType extends WithClassnameType {

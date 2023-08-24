@@ -1,4 +1,3 @@
-import React from 'react';
 import { Denominate, TokenLink } from 'components';
 import { DECIMALS } from 'config';
 import { TokenType } from 'types';

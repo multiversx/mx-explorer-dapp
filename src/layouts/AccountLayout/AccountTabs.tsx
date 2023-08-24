@@ -1,11 +1,10 @@
-import React from 'react';
-import { faCircleCheck } from 'icons/solid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
 import { Tabs } from 'components/Tabs';
 import { urlBuilder } from 'helpers';
 import { useNetworkRoute } from 'hooks';
+import { faCircleCheck } from 'icons/solid';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
 

@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faUser } from 'icons/regular';
+import { useEffect, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -14,6 +13,7 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
+import { faUser } from 'icons/regular';
 import { NftTabs } from 'layouts/NftLayout/NftTabs';
 import { activeNetworkSelector } from 'redux/selectors';
 import { AccountType } from 'types';

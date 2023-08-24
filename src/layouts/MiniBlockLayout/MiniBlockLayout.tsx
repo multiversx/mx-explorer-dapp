@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useParams, Outlet } from 'react-router-dom';
 
 import { Loader } from 'components';
 import { isHash } from 'helpers';
-import { useAdapter, useGetPage, useNetworkRoute, useGetHash } from 'hooks';
+import { useAdapter, useGetPage, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setMiniBlock } from 'redux/slices';
 

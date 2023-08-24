@@ -1,30 +1,27 @@
-import React from 'react';
-import { faFilter } from 'icons/regular';
-import { faFilter as faFilterSolid } from 'icons/solid';
+import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { Dropdown, Anchor } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+
 import { ShardSpan } from 'components';
 import { useFetchShards } from 'hooks';
-
+import { faFilter } from 'icons/regular';
+import { faFilter as faFilterSolid } from 'icons/solid';
 import { shardsSelector } from 'redux/selectors';
 
-const CustomToggle = React.forwardRef(
-  ({ children, onClick }: any, ref: any) => (
-    <a
-      href=''
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </a>
-  )
-);
+const CustomToggle = forwardRef(({ children, onClick }: any, ref: any) => (
+  <a
+    href=''
+    ref={ref}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  >
+    {children}
+  </a>
+));
 
 export const ShardFilter = () => {
   const shards = useSelector(shardsSelector);

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ELLIPSIS } from 'appConstants';
 import { ProgressRing } from 'components';
 import { useFetchEpochProgress } from 'hooks/useFetchEpochProgress';

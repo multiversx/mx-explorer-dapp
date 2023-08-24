@@ -1,7 +1,5 @@
-import React from 'react';
-import { faUser } from 'icons/regular';
-
 import { PageState } from 'components';
+import { faUser } from 'icons/regular';
 
 export const FailedAccounts = () => {
   return (

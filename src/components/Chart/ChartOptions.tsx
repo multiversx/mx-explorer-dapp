@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { useCallback } from 'react';
 import { ToggleType, OptionType } from './helpers/types';
 
 export const ChartOptions = ({
@@ -13,7 +12,7 @@ export const ChartOptions = ({
   setToggle: React.Dispatch<React.SetStateAction<ToggleType>>;
   className?: string;
 }) => {
-  const onToggle = React.useCallback(
+  const onToggle = useCallback(
     (needle: string) => {
       setToggle((currentToggle) => ({
         ...currentToggle,

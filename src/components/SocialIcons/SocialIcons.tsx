@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   faTwitter,
   faLinkedin,
@@ -11,11 +10,12 @@ import {
   faMedium,
   faDiscord
 } from '@fortawesome/free-brands-svg-icons';
-import { faGlobe, faEnvelope, faPencil, faFileAlt } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import { ReactComponent as CoinGecko } from 'assets/img/logos/coingecko.svg';
 import { ReactComponent as CoinMarketCap } from 'assets/img/logos/coinmarketcap.svg';
+import { faGlobe, faEnvelope, faPencil, faFileAlt } from 'icons/regular';
 
 const getFaIcon = (icon: string) => {
   switch (icon) {

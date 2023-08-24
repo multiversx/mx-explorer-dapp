@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { capitalizeFirstLetter } from 'helpers';
 import {
   TransactionApiStatusEnum,

@@ -1,4 +1,3 @@
-import React from 'react';
 import { faBan, faCheckCircle, faHourglass, faTimes } from 'icons/solid';
 
 import {

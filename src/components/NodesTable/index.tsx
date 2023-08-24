@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { NodeType } from 'types';
 import { QueueHead } from './components/Heads/QueueHead';
 import { StandardHead } from './components/Heads/StandardHead';

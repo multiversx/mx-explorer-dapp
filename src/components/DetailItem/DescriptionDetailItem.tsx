@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { DetailItem, DetailItemType } from './DetailItem';
 
 export interface DescriptionDetailItemType extends DetailItemType {

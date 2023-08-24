@@ -1,15 +1,15 @@
-import React from 'react';
+import { Fragment } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSearchParams } from 'react-router-dom';
+
+import { ELLIPSIS, PAGE_SIZE, MAX_RESULTS } from 'appConstants';
+import { stringIsInteger, formatOrdinals } from 'helpers';
 import {
   faAngleLeft,
   faAngleRight,
   faAnglesLeft,
   faAnglesRight
 } from 'icons/solid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSearchParams } from 'react-router-dom';
-
-import { ELLIPSIS, PAGE_SIZE, MAX_RESULTS } from 'appConstants';
-import { stringIsInteger, formatOrdinals } from 'helpers';
 import { pagerHelper } from './helpers/pagerHelper';
 
 export const Pager = ({
@@ -126,7 +126,7 @@ export const Pager = ({
             };
 
             return (
-              <React.Fragment key={`${page}-${index}`}>
+              <Fragment key={`${page}-${index}`}>
                 {page !== ELLIPSIS ? (
                   <button
                     type='button'
@@ -145,7 +145,7 @@ export const Pager = ({
                 ) : (
                   <span>...</span>
                 )}
-              </React.Fragment>
+              </Fragment>
             );
           })}
         </div>

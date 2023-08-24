@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { faClock, faTrophy } from 'icons/regular';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
@@ -17,6 +16,7 @@ import {
   SpotlightButton
 } from 'components';
 import { formatDate, getNftText } from 'helpers';
+import { faClock, faTrophy } from 'icons/regular';
 import { nftSelector } from 'redux/selectors';
 import { NftTypeEnum } from 'types';
 
