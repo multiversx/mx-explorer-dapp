@@ -5,7 +5,6 @@ export interface DescriptionDetailItemType extends DetailItemType {
 }
 
 export const DescriptionDetailItem = ({
-  children,
   title,
   description,
   ...props

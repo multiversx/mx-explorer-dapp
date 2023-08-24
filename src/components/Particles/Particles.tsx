@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 /* eslint-disable react/no-unknown-property */
 
@@ -85,9 +86,9 @@ function Points({
 }) {
   const isExcludedOS = isExcluded();
 
-  let t = 0;
-  let f = 0.002;
-  let a = 3.5;
+  const t = 0;
+  const f = 0.002;
+  const a = 3.5;
 
   const imgTex = useLoader(THREE.TextureLoader, circleImg);
   const bufferRef = useRef<THREE.BufferAttribute>(null);
@@ -102,8 +103,8 @@ function Points({
       let i = 0;
       for (let xi = 0; xi < pointCount; xi++) {
         for (let zi = 0; zi < pointCount; zi++) {
-          let x = separator * (xi - pointCount / 2);
-          let z = separator * (zi - pointCount / 2);
+          const x = separator * (xi - pointCount / 2);
+          const z = separator * (zi - pointCount / 2);
 
           positions[i + 1] = graph(x, z);
           i += 3;
@@ -122,13 +123,13 @@ function Points({
   );
 
   const [positions] = useMemo(() => {
-    let positions = [];
+    const positions = [];
 
     for (let xi = 0; xi < pointCount; xi++) {
       for (let zi = 0; zi < pointCount; zi++) {
-        let x = separator * (xi - pointCount / 2);
-        let z = separator * (zi - pointCount / 2);
-        let y = graph(x, z);
+        const x = separator * (xi - pointCount / 2);
+        const z = separator * (zi - pointCount / 2);
+        const y = graph(x, z);
         positions.push(x, y, z);
       }
     }

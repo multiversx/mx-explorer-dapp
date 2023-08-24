@@ -307,9 +307,9 @@ const wrapper = async ({
           const url = `${elasticUrl()}/${collection}/_doc/${hash}`;
 
           try {
-            let {
-              data: { _id, _source }
-            } = await axios.get(url, { timeout });
+            const { data } = await axios.get(url, { timeout });
+            const { _id } = data;
+            let { _source } = data;
 
             const hash: any = {};
             if (key) {
@@ -456,7 +456,8 @@ const wrapper = async ({
 
         // tslint:disable-next-line
         for (const index in hits) {
-          let { _id, _source } = hits[index];
+          const { _id } = hits[index];
+          let { _source } = hits[index];
           const hash: any = {};
           if (key) {
             hash[key] = _id;
