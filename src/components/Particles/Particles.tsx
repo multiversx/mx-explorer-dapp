@@ -86,7 +86,7 @@ function Points({
 }) {
   const isExcludedOS = isExcluded();
 
-  const t = 0;
+  let t = 0;
   const f = 0.002;
   const a = 3.5;
 
