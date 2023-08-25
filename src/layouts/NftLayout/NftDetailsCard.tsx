@@ -151,30 +151,24 @@ export const NftDetailsCard = () => {
                     )}
                   </DetailItem>
                 )}
-                {nftState.tags !== undefined && nftState.tags.length > 0 && (
-                  <DetailItem title='Tags'>
-                    {nftState.tags.map((tag) => (
-                      <div
-                        key={tag}
-                        className='badge badge-outline badge-outline-grey me-2'
-                      >
-                        #{tag}
+                {showData &&
+                  nftState.tags !== undefined &&
+                  nftState.tags.length > 0 && (
+                    <DetailItem title='Tags'>
+                      <div className='d-flex flex-wrap gap-2'>
+                        {nftState.tags.map((tag) => (
+                          <div
+                            key={tag}
+                            className='badge badge-outline badge-outline-grey gap-2'
+                          >
+                            #{tag}
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </DetailItem>
-                )}
-                {nftState.scamInfo && (
-                  <DetailItem title=''>
-                    <a
-                      href='/#'
-                      onClick={show}
-                      className='small-font text-neutral-400'
-                    >
-                      {!showData ? 'Show' : 'Hide'} original content
-                    </a>
-                  </DetailItem>
-                )}
-                {nftState?.rarities &&
+                    </DetailItem>
+                  )}
+                {showData &&
+                  nftState?.rarities &&
                   Object.keys(nftState.rarities).length > 0 && (
                     <DetailItem title='Rarities'>
                       <div className='card-item-container my-n2'>
@@ -217,7 +211,7 @@ export const NftDetailsCard = () => {
                       </div>
                     </DetailItem>
                   )}
-                {nftState?.metadata?.attributes && (
+                {showData && nftState?.metadata?.attributes && (
                   <DetailItem title='Attributes'>
                     <div className='attributes-holder'>
                       {nftState.metadata.attributes.map(
@@ -236,6 +230,17 @@ export const NftDetailsCard = () => {
                         )
                       )}
                     </div>
+                  </DetailItem>
+                )}
+                {nftState.scamInfo && (
+                  <DetailItem title=''>
+                    <a
+                      href='/#'
+                      onClick={show}
+                      className='small-font text-neutral-400'
+                    >
+                      {!showData ? 'Show' : 'Hide'} original content
+                    </a>
                   </DetailItem>
                 )}
               </div>
