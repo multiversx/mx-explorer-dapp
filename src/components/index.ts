@@ -5,6 +5,7 @@ import TransactionActionBlock from './TransactionActionBlock';
 
 export * from './AccountLink';
 export * from './AccountName';
+export * from './AssetsHelmet';
 export * from './AxiosInterceptor';
 export * from './BlockGasUsed';
 export * from './BlocksTable';
