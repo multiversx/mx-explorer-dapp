@@ -91,6 +91,12 @@
   }
 }
 
+.ios {
+  .form-control {
+    font-size: 1rem;
+  }
+}
+
 .form-control {
   &:focus-visible {
     text-shadow: none;
