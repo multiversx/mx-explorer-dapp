@@ -32,14 +32,20 @@ dist-ssr
 # Misc
 .npmrc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-
+# Other
 /sam/build.yaml
 /src/config/index.ts
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
 
 # Editor directories and files
 .vscode/*
