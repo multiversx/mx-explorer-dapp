@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <base href="/" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title data-rh="true">MultiversX Explorer</title>
+    <meta
+      name="description"
+      content="A highly scalable, fast and secure blockchain platform for distributed apps, enterprise use cases and the new internet economy."
+      data-rh="true"
+    />
+
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#23f7dd" />
+    <meta name="msapplication-TileColor" content="#18191a" />
+    <meta name="theme-color" content="#18191a" />
+
+    <!-- Social Cards -->
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" data-rh="true" />
+    <meta name="twitter:site" content="@MultiversX" />
+    <meta name="twitter:creator" content="@MultiversX" />
+    <meta name="twitter:title" content="MultiversX Explorer" data-rh="true" />
+    <meta
+      name="twitter:description"
+      content="A highly scalable, fast and secure blockchain platform for distributed apps, enterprise use cases and the new internet economy."
+      data-rh="true"
+    />
+    <meta
+      name="twitter:image"
+      content="https://%VITE_APP_SHARE_PREFIX%explorer.multiversx.com/%VITE_APP_SHARE_PREFIX%share.jpg"
+      data-rh="true"
+    />
+
+    <!-- Other Cards -->
+    <meta
+      property="og:url"
+      content="https://%VITE_APP_SHARE_PREFIX%explorer.multiversx.com"
+    />
+    <meta property="og:title" content="MultiversX Explorer" data-rh="true" />
+    <meta
+      property="og:description"
+      content="A highly scalable, fast and secure blockchain platform for distributed apps, enterprise use cases and the new internet economy."
+      data-rh="true"
+    />
+    <meta
+      property="og:image"
+      content="https://%VITE_APP_SHARE_PREFIX%explorer.multiversx.com/%VITE_APP_SHARE_PREFIX%share.jpg"
+      data-rh="true"
+    />
+
+    <link rel="preconnect" href="https://cdn.multiversx.com" crossorigin />
+    <link rel="preconnect" href="https://media.elrond.com" crossorigin />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "url": "https://%VITE_APP_SHARE_PREFIX%explorer.multiversx.com",
+        "logo": "https://%VITE_APP_SHARE_PREFIX%explorer.multiversx.com/apple-touch-icon.png"
+      }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=%VITE_APP_GA_ID%"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', '%VITE_APP_GA_ID%');
+    </script>
+  </head>
+  <body class="scrollbar">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>

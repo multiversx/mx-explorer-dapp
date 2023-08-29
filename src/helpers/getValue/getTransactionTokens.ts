@@ -1,4 +1,3 @@
-import { isContract } from 'helpers';
 import { UITransactionType } from 'types';
 
 export const getTransactionTokens = ({

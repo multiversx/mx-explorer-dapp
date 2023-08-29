@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  HeadersBlocksType,
-  PageHeaderStatsType
-} from '../../types/headerStats.types';
+import { HeadersBlocksType } from '../../types/headerStats.types';
 
 export const getInitialHeaderBlocksStatsState = (): HeadersBlocksType => {
   return {};

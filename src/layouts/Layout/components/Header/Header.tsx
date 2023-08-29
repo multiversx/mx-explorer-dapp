@@ -1,5 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
-import { faGrid, faGrid2 } from '@fortawesome/pro-solid-svg-icons';
+import { useState, MouseEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
@@ -8,6 +7,7 @@ import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { NetworkLink } from 'components';
 import { multiversxApps } from 'config';
 import { useIsMainnet } from 'hooks';
+import { faGrid, faGrid2 } from 'icons/solid';
 import { Applications } from './components/Applications';
 import { Links } from './components/Links';
 import { Switcher } from './components/Switcher';
@@ -80,7 +80,7 @@ export const Header = (props: HeaderPropsType) => {
 
       <div className='burger' onClick={onMenuToggle}>
         <div className={classNames('bars', { active: menuActive })}>
-          {Array.from({ length: 3 }).map((item, index) => (
+          {Array.from({ length: 3 }).map((_item, index) => (
             <span className='bar' key={`bar-${index}`} />
           ))}
         </div>

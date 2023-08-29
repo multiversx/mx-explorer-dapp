@@ -1,10 +1,9 @@
-import React from 'react';
-import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-
 import { useSelector } from 'react-redux';
+
 import { addressIsBech32 } from 'helpers';
+import { faLock } from 'icons/regular';
 import { tokenSelector } from 'redux/selectors';
 
 export const LockedTokenAddressIcon = ({ address }: { address: string }) => {
@@ -15,7 +14,7 @@ export const LockedTokenAddressIcon = ({ address }: { address: string }) => {
 
   if (lockedAccounts) {
     const validLockedAccounts = Object.keys(lockedAccounts).filter(
-      (account, i) => {
+      (account) => {
         const validAddress = addressIsBech32(account)
           ? account
           : addressIsBech32(lockedAccounts[account])

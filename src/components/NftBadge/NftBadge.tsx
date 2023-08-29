@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { NftTypeEnum, TokenTypeEnum } from 'types';
 
 export const NftBadge = ({

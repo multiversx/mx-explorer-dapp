@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
-import { faCircleBolt } from '@fortawesome/pro-solid-svg-icons/faCircleBolt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
 import { useFetchGrowthHero, useIsMainnet } from 'hooks';
+import { faCircleBolt } from 'icons/solid';
 import {
   growthHeroSelector,
   refreshSelector,

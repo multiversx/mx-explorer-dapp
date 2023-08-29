@@ -1,15 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  faClock,
-  faExclamationTriangle
-} from '@fortawesome/pro-regular-svg-icons';
-import {
-  faUser,
-  faCoins,
-  faLayerGroup,
-  faHexagonVerticalNft,
-  faShieldCheck
-} from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
@@ -31,6 +20,14 @@ import {
 import { DECIMALS } from 'config';
 import { isContract, urlBuilder, formatDate, formatHerotag } from 'helpers';
 import { useAdapter } from 'hooks';
+import { faClock, faExclamationTriangle } from 'icons/regular';
+import {
+  faUser,
+  faCoins,
+  faLayerGroup,
+  faHexagonVerticalNft,
+  faShieldCheck
+} from 'icons/solid';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountUpgradeType } from 'types';
 
@@ -105,7 +102,6 @@ export const AccountDetailsCard = () => {
   React.useEffect(() => {
     fetchProviderDetails();
     fetchUpgradesDetails();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeNetworkId, address]);
 
   const fetchAccountTokensCount = () => {

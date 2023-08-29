@@ -1,8 +1,6 @@
-import React from 'react';
-import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
-import { faChevronUp } from '@fortawesome/pro-regular-svg-icons/faChevronUp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import { faChevronDown, faChevronUp } from 'icons/regular';
 
 export interface CollapsibleArrowsPropsType {
   className?: string;

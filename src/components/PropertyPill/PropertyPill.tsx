@@ -1,6 +1,5 @@
-import React from 'react';
-import { faTimes, faCheck } from '@fortawesome/pro-light-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faCheck } from 'icons/light';
 
 export const PropertyPill = ({
   name,

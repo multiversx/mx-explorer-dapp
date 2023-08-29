@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { useRef, useState } from 'react';
 
 import { ReactComponent as CarretDown } from 'assets/img/carret-down.svg';
 import {
@@ -14,6 +13,7 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
+import { faCogs } from 'icons/regular';
 import { IdentityType, NodeType } from 'types';
 
 export interface IdentityRowType {

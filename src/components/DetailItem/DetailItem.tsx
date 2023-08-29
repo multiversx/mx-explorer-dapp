@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface DetailItemType {
   children?: React.ReactNode;
   title?: string | React.ReactNode;
@@ -32,7 +30,7 @@ export const DetailItem = ({
           verticalCenter
             ? 'd-flex align-items-center justify-content-lg-end'
             : ''
-        } text-lg-end  text-neutral-400`}
+        } text-lg-end text-neutral-400`}
       >
         {title}
       </div>

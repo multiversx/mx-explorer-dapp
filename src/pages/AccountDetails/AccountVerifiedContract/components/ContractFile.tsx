@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { faFileAlt, faLink } from '@fortawesome/pro-solid-svg-icons';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
@@ -8,6 +7,7 @@ import rust from 'react-syntax-highlighter/dist/esm/languages/hljs/rust';
 import androidstudio from 'react-syntax-highlighter/dist/esm/styles/hljs/androidstudio';
 
 import { CopyButton, CollapsibleArrows } from 'components';
+import { faFileAlt, faLink } from 'icons/solid';
 import { ContractEntryType } from 'types';
 
 SyntaxHighlighter.registerLanguage('rust', rust);

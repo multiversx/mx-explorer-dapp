@@ -1,11 +1,9 @@
-import React from 'react';
-import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
-import { faInfoCircle } from '@fortawesome/pro-regular-svg-icons/faInfoCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { NetworkLink, Overlay } from 'components';
 import { decodeForDisplay, DecodeMethodType } from 'components/DataDecode';
 import { getTransactionMessages, capitalizeFirstLetter } from 'helpers';
+import { faAngleDown, faInfoCircle } from 'icons/regular';
 import { transactionsRoutes } from 'routes';
 import {
   TransactionType,
@@ -95,10 +93,7 @@ export const TransactionErrorDisplay = ({
                 </>
               )}
               {transactionMessage && (
-                <TransactionErrorDescription
-                  message={transactionMessage}
-                  transaction={transaction}
-                />
+                <TransactionErrorDescription message={transactionMessage} />
               )}
             </div>
           </div>

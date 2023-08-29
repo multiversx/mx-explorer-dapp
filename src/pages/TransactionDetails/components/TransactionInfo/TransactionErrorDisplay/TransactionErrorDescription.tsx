@@ -1,22 +1,14 @@
-import React from 'react';
-import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';
-import { TransactionType } from 'types';
+import { faQuestionCircle } from 'icons/regular';
 
 enum ErrorDescriptionEnum {
   nonPayableContract = 'sending value to non payable contract',
   protectedKey = 'not allowed to write under protected key'
 }
 
-const getErrorDescription = ({
-  message,
-  transaction
-}: {
-  message: string;
-  transaction: TransactionType;
-}) => {
+const getErrorDescription = ({ message }: { message: string }) => {
   switch (true) {
     case message === ErrorDescriptionEnum.nonPayableContract:
       return 'Token transfers to a non-payable contract without calling an endpoint that accepts the tokens, will be rejected. You either tried to transfer some tokens to a non-payable smart contract without calling an endpoint or the endpoint you attempted to call along with the transfer has been ignored due to malformed call data contents. Possible reasons for malformed endpoint call data would be: uneven hex value padding, stray spaces/newlines, invalid values (e.g. -1, non-hex strings, etc)';
@@ -28,13 +20,11 @@ const getErrorDescription = ({
 };
 
 export const TransactionErrorDescription = ({
-  message,
-  transaction
+  message
 }: {
   message: string;
-  transaction: TransactionType;
 }) => {
-  const description = getErrorDescription({ message, transaction });
+  const description = getErrorDescription({ message });
 
   if (!description) {
     return null;

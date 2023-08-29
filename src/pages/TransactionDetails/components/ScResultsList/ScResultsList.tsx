@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faExchange, faSearch } from '@fortawesome/pro-regular-svg-icons';
+import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -15,6 +14,7 @@ import {
 } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
 import { urlBuilder } from 'helpers';
+import { faExchange, faSearch } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 import { transactionsRoutes } from 'routes';
 import { TransactionSCResultType } from 'types';

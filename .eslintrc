@@ -66,6 +66,7 @@
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/prop-types": "off",
@@ -85,11 +86,7 @@
     "react/jsx-curly-newline": "off",
     "react/jsx-wrap-multilines": "off",
     "react/destructuring-assignment": "off",
-    "no-shadow": "off", // TODO - Enable once theme ready
-    "prefer-const": "off", // TODO - Enable once theme ready
-    "@typescript-eslint/no-shadow": "off", // TODO - Enable once theme ready
-    "@typescript-eslint/no-unused-vars": "off", // TODO - Enable once theme ready
-    "@typescript-eslint/ban-ts-comment": "off", // TODO - Enable once theme ready
+    "react/react-in-jsx-scope": "off",
     "react/no-array-index-key": "off"
   }
 }

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ScAddressIcon, ShardSpan, NetworkLink, AccountName } from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { AccountAssetType } from 'types';

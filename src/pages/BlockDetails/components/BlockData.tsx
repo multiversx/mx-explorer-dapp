@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons/faChevronLeft';
-import { faChevronRight } from '@fortawesome/pro-regular-svg-icons/faChevronRight';
-import { faClock } from '@fortawesome/pro-regular-svg-icons/faClock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Collapse, OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -18,6 +15,7 @@ import {
   BlockGasUsed
 } from 'components';
 import { formatDate, formatSize, urlBuilder } from 'helpers';
+import { faChevronLeft, faChevronRight, faClock } from 'icons/regular';
 import { BlockType } from 'types';
 
 export interface BlockDataType {

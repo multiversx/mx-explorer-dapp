@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';

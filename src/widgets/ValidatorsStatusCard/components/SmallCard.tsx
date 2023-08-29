@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ValidatorMap } from 'components';
 
 import { ContinentsRank } from './ContinentsRank';
