@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faCoins } from '@fortawesome/pro-solid-svg-icons/faCoins';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
@@ -14,6 +13,7 @@ import {
 } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
+import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { TokenType, TokenTypeEnum } from 'types';

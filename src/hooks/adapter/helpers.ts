@@ -106,7 +106,6 @@ export function getTokensParams({
   search,
   name,
   identifier,
-  identifiers,
   sort,
   order,
   withUsername = true,

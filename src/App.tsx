@@ -1,9 +1,10 @@
-import React from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
+
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+
 import { PersistGate } from 'redux-persist/integration/react';
 
-// eslint-disable-next-line import/order
 import { AxiosInterceptor } from 'components';
 import { store, persistor } from 'redux/store';
 import { wrappedRoutes } from 'routes';
@@ -12,13 +13,15 @@ import './assets/scss/theme.scss';
 
 export const ProviderApp = () => {
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor} loading={null}>
-        <AxiosInterceptor>
-          <Outlet />
-        </AxiosInterceptor>
-      </PersistGate>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <PersistGate persistor={persistor} loading={null}>
+          <AxiosInterceptor>
+            <Outlet />
+          </AxiosInterceptor>
+        </PersistGate>
+      </Provider>
+    </HelmetProvider>
   );
 };
 

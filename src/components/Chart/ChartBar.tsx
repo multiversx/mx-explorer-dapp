@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import moment from 'moment';
 import {
   BarChart,
@@ -137,7 +137,7 @@ export const ChartBar = ({
                 ? { strokeDasharray: chartConfig.strokeDasharray }
                 : {})}
             >
-              {chartData.map((entry: any, index: number) => (
+              {chartData.map((_entry: any, index: number) => (
                 <Cell
                   fill={
                     focusBar === index

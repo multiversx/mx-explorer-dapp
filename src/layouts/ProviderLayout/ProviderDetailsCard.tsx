@@ -1,15 +1,3 @@
-import React from 'react';
-import {
-  faServer,
-  faLock,
-  faArrowToTop,
-  faCoins,
-  faChartPieAlt,
-  faReceipt,
-  faLeaf,
-  faUserFriends,
-  faUser
-} from '@fortawesome/pro-solid-svg-icons';
 import { useSelector } from 'react-redux';
 
 import {
@@ -26,6 +14,17 @@ import {
   hasDelegationCap
 } from 'components/ProvidersTable/components/PercentageFilled';
 import { urlBuilder } from 'helpers';
+import {
+  faServer,
+  faLock,
+  faArrowToTop,
+  faCoins,
+  faChartPieAlt,
+  faReceipt,
+  faLeaf,
+  faUserFriends,
+  faUser
+} from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { ProviderType } from 'types';
 

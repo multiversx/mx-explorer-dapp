@@ -1,5 +1,4 @@
-import React from 'react';
-import { faDiamond } from '@fortawesome/pro-regular-svg-icons/faDiamond';
+import { Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 
@@ -7,6 +6,7 @@ import { ELLIPSIS } from 'appConstants';
 import { NetworkLink, Denominate, Sort } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { useGetSort } from 'hooks';
+import { faDiamond } from 'icons/regular';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'types';
 import { EgldRow } from './EgldRow';
 
@@ -43,7 +43,7 @@ export const TokensTable = ({
         </thead>
         <tbody data-testid='tokensTable'>
           {tokens.map((token, i) => (
-            <React.Fragment key={token.identifier}>
+            <Fragment key={token.identifier}>
               {typeof totalTokens === 'number' &&
                 (order ? order === SortOrderEnum.desc : true) && (
                   <EgldRow
@@ -138,7 +138,7 @@ export const TokensTable = ({
                     totalTokens={totalTokens}
                   />
                 )}
-            </React.Fragment>
+            </Fragment>
           ))}
         </tbody>
       </table>

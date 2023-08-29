@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Tabs } from 'components/Tabs';
 import { useIsMainnet } from 'hooks';
 import { validatorsRoutes } from 'routes';

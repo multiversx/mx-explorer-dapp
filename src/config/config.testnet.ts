@@ -28,6 +28,16 @@ export const multiversxApps = allApps([
     id: 'explorer',
     name: 'Testnet Explorer',
     url: 'http://testnet-explorer.multiversx.com'
+  },
+  {
+    id: 'xspotlight',
+    name: 'Testnet xSpotlight',
+    url: 'https://testnet.xspotlight.com/'
+  },
+  {
+    id: 'bridge',
+    name: 'Testnet Bridge',
+    url: 'https://testnet-bridge.multiversx.com/'
   }
 ]);
 

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { PieChart, Pie, Legend, Tooltip } from 'recharts';
+import { useEffect } from 'react';
+import { PieChart, Pie } from 'recharts';
 
 import { Led, Trim } from 'components';
 import { truncateMiddle } from 'helpers';

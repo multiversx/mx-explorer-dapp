@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
-import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown, Anchor } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
+import { faSearch, faTimes } from 'icons/regular';
 
 export const NodesFilters = ({
-  baseRoute,
   onlySearch
 }: {
   baseRoute: string;

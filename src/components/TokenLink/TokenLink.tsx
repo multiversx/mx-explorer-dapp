@@ -1,4 +1,3 @@
-import React from 'react';
 import { NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
 import { TokenType } from 'types';

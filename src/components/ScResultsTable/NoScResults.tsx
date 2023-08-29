@@ -1,7 +1,5 @@
-import React from 'react';
-import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
-
 import { PageState } from 'components';
+import { faCode } from 'icons/regular';
 
 export const NoScResults = () => {
   return (

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Sort } from 'components';
 
 export const StatisticsHead = () => {

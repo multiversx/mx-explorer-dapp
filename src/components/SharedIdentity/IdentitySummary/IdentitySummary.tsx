@@ -1,7 +1,3 @@
-import React from 'react';
-import { faAngleRight } from '@fortawesome/pro-regular-svg-icons/faAngleRight';
-import { faCity } from '@fortawesome/pro-regular-svg-icons/faCity';
-import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons/faBadgeCheck';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
@@ -13,6 +9,8 @@ import {
   Trim
 } from 'components';
 import { urlBuilder } from 'helpers';
+import { faAngleRight, faCity } from 'icons/regular';
+import { faBadgeCheck } from 'icons/solid';
 import { IdentityType } from 'types';
 
 export const IdentitySummary = ({

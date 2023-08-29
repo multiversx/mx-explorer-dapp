@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { ProvidersTable, Loader, PageState } from 'components';
 import { useAdapter } from 'hooks';
+import { faCode } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { activeNetworkSelector } from 'redux/selectors';
 import { IdentityType, ProviderType } from 'types';

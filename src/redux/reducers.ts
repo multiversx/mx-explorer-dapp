@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import sessionStorage from 'redux-persist/lib/storage/session';
+// import sessionStorage from 'redux-persist/lib/storage/session';
 
 import { accountReducer } from './slices/account';
 import { accountStakingReducer } from './slices/accountStaking';
@@ -31,17 +31,17 @@ import { tokenReducer } from './slices/token';
 
 const asyncIgnoredSlices = {};
 
-const networkPersisted = {
-  key: 'networks',
-  storage: sessionStorage,
-  blacklist: []
-};
+// const networkPersisted = {
+//   key: 'networks',
+//   storage: sessionStorage,
+//   blacklist: []
+// };
 
-const interfacePersisted = {
-  key: 'interface',
-  storage,
-  blacklist: []
-};
+// const interfacePersisted = {
+//   key: 'interface',
+//   storage,
+//   blacklist: []
+// };
 
 export const customIgnoredSlices = {
   // networks: persistReducer(networkPersisted, networkReducer),
@@ -98,13 +98,16 @@ function wrapReducer<
   return persistReducerFunc(persistedSlice(name), sliceObject);
 }
 
-const ignoredSlices = Object.keys(asyncIgnoredSlices).reduce((acc, entry) => {
-  const name = entry as keyof typeof asyncIgnoredSlices;
-  return {
-    ...acc,
-    [name]: wrapReducer(persistReducer as any, asyncIgnoredSlices[name], name)
-  };
-}, {} as typeof asyncIgnoredSlices);
+const ignoredSlices = Object.keys(asyncIgnoredSlices).reduce(
+  (acc, entry) => {
+    const name = entry as keyof typeof asyncIgnoredSlices;
+    return {
+      ...acc,
+      [name]: wrapReducer(persistReducer as any, asyncIgnoredSlices[name], name)
+    };
+  },
+  {} as typeof asyncIgnoredSlices
+);
 
 export const rootReducer = combineReducers({
   ...ignoredSlices,
