@@ -1,4 +1,3 @@
-import React from 'react';
 import { formatAmount } from '@multiversx/sdk-dapp/utils';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';

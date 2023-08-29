@@ -2,7 +2,6 @@ import anchorme from 'anchorme';
 
 import { ScamInfoType } from 'types';
 
-// eslint-disable-next-line
 const cleanLink = (input: string) =>
   input.toLocaleLowerCase().replace(/[^\x00-\x7F]/g, '');
 

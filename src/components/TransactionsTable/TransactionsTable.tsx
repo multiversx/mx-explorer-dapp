@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Pager, TableWrapper, Loader } from 'components';
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';

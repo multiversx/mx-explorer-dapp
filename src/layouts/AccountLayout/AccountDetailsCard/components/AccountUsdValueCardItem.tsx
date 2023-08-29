@@ -1,11 +1,10 @@
-import React from 'react';
-import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { CardItem, LockedAmountTooltip, FormatUSD } from 'components';
 import { DECIMALS } from 'config';
 import { denominate } from 'helpers';
+import { faDollarSign } from 'icons/solid';
 import {
   accountSelector,
   accountStakingSelector,

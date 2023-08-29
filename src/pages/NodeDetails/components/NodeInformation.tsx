@@ -1,17 +1,3 @@
-import React from 'react';
-import { faFlagAlt } from '@fortawesome/pro-regular-svg-icons/faFlagAlt';
-import {
-  faLock,
-  faServer,
-  faCheck,
-  faCode,
-  faUser
-} from '@fortawesome/pro-solid-svg-icons';
-import { faCogs } from '@fortawesome/pro-solid-svg-icons/faCogs';
-import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
-import { faLayerGroup } from '@fortawesome/pro-solid-svg-icons/faLayerGroup';
-import { faStream } from '@fortawesome/pro-solid-svg-icons/faStream';
-
 import {
   ShardSpan,
   NetworkLink,
@@ -23,6 +9,18 @@ import {
 } from 'components';
 import { getIcon } from 'components/NodesTable/components/RowIcon';
 import { urlBuilder } from 'helpers';
+import { faFlagAlt } from 'icons/regular';
+import {
+  faCogs,
+  faExclamationTriangle,
+  faLayerGroup,
+  faStream,
+  faLock,
+  faServer,
+  faCheck,
+  faCode,
+  faUser
+} from 'icons/solid';
 import { NodeType } from 'types';
 
 import { Alert } from './Alert';

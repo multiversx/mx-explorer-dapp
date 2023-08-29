@@ -6,7 +6,7 @@ import {
   GAS_PRICE as DEFAULT_GAS_PRICE
 } from '@multiversx/sdk-dapp/constants/index';
 import { object, string, boolean } from 'yup';
-import { NetworkUrlType } from 'types/network.types';
+import { NetworkUrlType, NetworkType } from 'types/network.types';
 
 const GAS_PRICE = String(DEFAULT_GAS_PRICE);
 const DIGITS = 2;
@@ -38,34 +38,86 @@ export const links: NetworkUrlType[] = [
   }
 ];
 
-export const allApps = (props: { id: string; name: string; url: string }[]) => [
-  {
-    id: 'main-site',
-    name: 'Main site',
-    url: 'https://multiversx.com/'
-  },
-  ...props,
-  {
-    id: 'xexchange',
-    name: 'xExchange',
-    url: 'https://xexchange.com/'
-  },
-  {
-    id: 'xlaunchpad',
-    name: 'xLaunchpad',
-    url: 'https://xlaunchpad.com/'
-  },
-  {
-    id: 'bridge',
-    name: 'Bridge',
-    url: 'https://bridge.multiversx.com/'
-  },
-  {
-    id: 'docs',
-    name: 'Docs',
-    url: 'https://docs.multiversx.com/'
+export const allApps = (apps?: { id: string; name: string; url: string }[]) => {
+  const baseApps = [
+    {
+      id: 'main-site',
+      name: 'Main site',
+      url: 'https://multiversx.com/'
+    },
+    {
+      id: 'wallet',
+      name: 'Wallet',
+      url: 'https://wallet.multiversx.com'
+    },
+    {
+      id: 'explorer',
+      name: 'Explorer', // navbar title
+      url: 'http://explorer.multiversx.com'
+    },
+    {
+      id: 'xexchange',
+      name: 'xExchange',
+      url: 'https://xexchange.com/'
+    },
+    {
+      id: 'xlaunchpad',
+      name: 'xLaunchpad',
+      url: 'https://xlaunchpad.com/'
+    },
+    {
+      id: 'xspotlight',
+      name: 'xSpotlight',
+      url: 'https://xspotlight.com/'
+    },
+    {
+      id: 'bridge',
+      name: 'Bridge',
+      url: 'https://bridge.multiversx.com/'
+    },
+    {
+      id: 'docs',
+      name: 'Docs',
+      url: 'https://docs.multiversx.com/'
+    }
+  ];
+
+  if (apps) {
+    const mergedApps = baseApps.map((app) => ({
+      ...app,
+      ...apps.find((configApp) => configApp.id === app.id)
+    }));
+
+    return mergedApps;
   }
-];
+
+  return baseApps;
+};
+
+export const getInternalNetworks = (): NetworkType[] => {
+  if (process.env.VITE_APP_INTERNAL_NETWORKS) {
+    try {
+      const decodedNetworks = atob(
+        String(process.env.VITE_APP_INTERNAL_NETWORKS)
+      );
+
+      const parsedNetworks = JSON.parse(decodedNetworks);
+      if (parsedNetworks && parsedNetworks.length > 0) {
+        return parsedNetworks.map((network: NetworkType) => {
+          return {
+            ...network,
+            ...(!network?.adapter ? { adapter: 'api' } : {}),
+            ...(!network?.egldLabel ? { egldLabel: 'xEGLD' } : {})
+          };
+        });
+      }
+    } catch {
+      return [];
+    }
+  }
+
+  return [];
+};
 
 export const networkBaseSchema = object({
   default: boolean(),

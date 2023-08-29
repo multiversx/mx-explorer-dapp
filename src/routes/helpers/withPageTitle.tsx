@@ -1,4 +1,5 @@
 import React, { useEffect, memo } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 export const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
@@ -15,13 +16,12 @@ export const withPageTitle =
   () => {
     const Memoized = memo(() => (
       <ScrollToTop>
+        <Helmet>
+          <title>{title}</title>
+        </Helmet>
         <Component />
       </ScrollToTop>
     ));
-
-    useEffect(() => {
-      document.title = title;
-    }, []);
 
     return preventScroll ? <Component /> : <Memoized />;
   };

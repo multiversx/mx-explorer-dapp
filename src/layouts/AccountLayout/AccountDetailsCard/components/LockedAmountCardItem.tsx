@@ -1,9 +1,8 @@
-import React from 'react';
-import { faLock } from '@fortawesome/pro-solid-svg-icons/faLock';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { CardItem, Denominate, LockedAmountTooltip } from 'components';
 
+import { faLock } from 'icons/solid';
 import { accountStakingSelector } from 'redux/selectors';
 
 export const LockedAmountCardItem = ({
@@ -14,7 +13,6 @@ export const LockedAmountCardItem = ({
   const {
     stakingDataReady,
     totalStaked,
-    totalDelegation,
     totalLegacyDelegation,
     totalLocked,
     totalClaimable,

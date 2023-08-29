@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { WithClassnameType } from 'types';
 
 export interface StatsCardType extends WithClassnameType {

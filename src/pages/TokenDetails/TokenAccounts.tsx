@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
@@ -15,6 +14,7 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
+import { faUser } from 'icons/regular';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { AccountType } from 'types';

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { faChevronRight } from '@fortawesome/pro-solid-svg-icons/faChevronRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
@@ -11,6 +10,7 @@ import {
   Denominate
 } from 'components';
 import { addressIsBech32, urlBuilder, getOperationDirection } from 'helpers';
+import { faChevronRight } from 'icons/solid';
 import {
   UITransactionType,
   TransactionOperationType,
@@ -373,7 +373,7 @@ export const OperationsList = ({
   const initialDisplay = 25;
   const [expanded, setExpanded] = useState(false);
 
-  const toggleCollapseClick = (e: React.MouseEvent) => {
+  const toggleCollapseClick = () => {
     setExpanded(!expanded);
   };
 

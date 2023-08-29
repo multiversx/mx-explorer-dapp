@@ -1,6 +1,4 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
 import { Tabs } from 'components/Tabs';
 import { urlBuilder } from 'helpers';
@@ -11,7 +9,6 @@ import { NftTypeEnum } from 'types';
 export const NftTabs = () => {
   const { nftState } = useSelector(nftSelector);
   const { identifier, type } = nftState;
-  const { pathname } = useLocation();
 
   const tabs = [
     {

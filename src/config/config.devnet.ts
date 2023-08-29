@@ -28,6 +28,16 @@ export const multiversxApps = allApps([
     id: 'explorer',
     name: 'Devnet Explorer',
     url: 'http://devnet-explorer.multiversx.com'
+  },
+  {
+    id: 'xexchange',
+    name: 'Devnet xExchange',
+    url: 'http://devnet.xexchange.com'
+  },
+  {
+    id: 'xspotlight',
+    name: 'Devnet xSpotlight',
+    url: 'https://devnet.xspotlight.com/'
   }
 ]);
 

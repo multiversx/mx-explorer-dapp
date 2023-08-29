@@ -1,7 +1,5 @@
-import React from 'react';
-import { faCube } from '@fortawesome/pro-regular-svg-icons/faCube';
-
 import { PageState } from 'components';
+import { faCube } from 'icons/regular';
 
 export const FailedBlocks = () => {
   return (

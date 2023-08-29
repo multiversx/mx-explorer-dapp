@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ELLIPSIS } from 'appConstants';
 import { Pager } from 'components';
 import { TransactionSCResultType } from 'types';
@@ -18,7 +16,6 @@ export const ScResultsTable = ({
   scResults,
   address,
   totalScResults,
-  page,
   title = (
     <>
       <h5 data-testid='title' className='table-title d-flex align-items-center'>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Led, Trim } from 'components';
 import { NodesVersionsType } from 'types';
 

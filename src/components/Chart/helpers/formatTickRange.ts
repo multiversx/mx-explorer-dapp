@@ -24,7 +24,7 @@ export const formatTickRange = ({ config, filter }: TickRangeType) => {
     { min: 0, max: 0 }
   );
 
-  const inbetweens = Array.from({ length: 3 }).map((item, index, total) =>
+  const inbetweens = Array.from({ length: 3 }).map((_item, index, total) =>
     Math.round(max - ((max - min) / 4) * (total.length - index))
   );
 
