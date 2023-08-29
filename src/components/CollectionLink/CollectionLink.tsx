@@ -1,10 +1,9 @@
-import React from 'react';
-import { faHexagonCheck } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { NetworkLink, NftBadge } from 'components';
 import { urlBuilder } from 'helpers';
+import { faHexagonCheck } from 'icons/solid';
 
 import { CollectionType } from 'types';
 

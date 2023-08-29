@@ -1,4 +1,3 @@
-import React from 'react';
 import { WithClassnameType } from 'types';
 
 interface MarqueeType extends WithClassnameType {

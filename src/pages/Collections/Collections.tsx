@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';

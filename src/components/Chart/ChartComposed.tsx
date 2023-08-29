@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable import/order */
+import { Fragment, useState } from 'react';
 import moment from 'moment';
 import {
   ResponsiveContainer,
@@ -202,7 +203,7 @@ export const ChartComposed = ({
           />
 
           {seriesConfig.map((sc) => (
-            <React.Fragment key={`y-axis-chart-${sc.id}`}>
+            <Fragment key={`y-axis-chart-${sc.id}`}>
               <YAxis
                 yAxisId={sc.yAxisConfig?.id}
                 orientation={sc.yAxisConfig?.orientation ?? 'left'}
@@ -241,7 +242,7 @@ export const ChartComposed = ({
                 opacity={getSeriesOpacity(sc)}
                 visibility={getSeriesVisibility(sc)}
               />
-            </React.Fragment>
+            </Fragment>
           ))}
 
           <Tooltip

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ export const useCheckVersion = () => {
 
   const isMainnetExplorer =
     window.location.origin === 'https://explorer.multiversx.com';
-  const explorerVersion = process.env.REACT_APP_CACHE_BUST;
+  const explorerVersion = process.env.VITE_APP_CACHE_BUST;
 
   const withinInterval = moment()
     .subtract(refreshRate, 'ms')
@@ -40,7 +40,7 @@ export const useCheckVersion = () => {
         }
       })
       .catch((err) => {
-        console.error('Unable to get version');
+        console.error('Unable to get version', err);
       });
   };
 

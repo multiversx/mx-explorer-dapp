@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Area, AreaChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 import { ChartTooltip } from 'components/Chart/ChartTooltip';
@@ -38,7 +38,7 @@ export const ChartArea = (props: ChartAreaPropsType) => {
   return (
     <ResponsiveContainer height={200} width='100%' className={className}>
       <AreaChart data={data} margin={{ left: 0, right: 0 }}>
-        {sortedPayload.map((item, index) => (
+        {sortedPayload.map((item) => (
           <Fragment key={item.key}>
             <defs>
               <linearGradient

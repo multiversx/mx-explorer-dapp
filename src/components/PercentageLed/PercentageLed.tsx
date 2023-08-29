@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const PercentageLed = ({ percentage }: { percentage: string }) => {
   return (
     <div className='percentage-led me-1' data-percentage={parseInt(percentage)}>

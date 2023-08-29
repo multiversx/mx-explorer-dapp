@@ -1,7 +1,4 @@
-import React from 'react';
-
 import { DetailItem, Led } from 'components';
-
 import { NodeType } from 'types';
 
 // import { PercentageBar } from './components/PercentageBar';

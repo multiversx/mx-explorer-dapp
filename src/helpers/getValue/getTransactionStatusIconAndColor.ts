@@ -1,8 +1,4 @@
-import React from 'react';
-import { faBan } from '@fortawesome/pro-solid-svg-icons/faBan';
-import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
-import { faHourglass } from '@fortawesome/pro-solid-svg-icons/faHourglass';
-import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
+import { faBan, faCheckCircle, faHourglass, faTimes } from 'icons/solid';
 
 import {
   TransactionApiStatusEnum,
@@ -19,7 +15,7 @@ export const getTransactionStatusIconAndColor = ({
 }: TransactionStatusType) => {
   const statusIs = (compareTo: string) => transaction.status === compareTo;
   let icon;
-  let color = '';
+  const color = '';
 
   if (!transaction) {
     return {

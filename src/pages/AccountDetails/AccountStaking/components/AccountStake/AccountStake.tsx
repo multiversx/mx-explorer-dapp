@@ -1,4 +1,3 @@
-import React from 'react';
 import BigNumber from 'bignumber.js';
 
 import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useIsMainnet } from 'hooks';
 import { MostUsed } from 'widgets';
 

@@ -1,8 +1,7 @@
-import React from 'react';
-import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { useParams } from 'react-router-dom';
 
 import { PageState } from 'components';
+import { faSearch } from 'icons/regular';
 
 export const EmptySearch = () => {
   const { hash: query } = useParams() as any;

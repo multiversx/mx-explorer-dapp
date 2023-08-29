@@ -1,4 +1,3 @@
-import React from 'react';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { useSelector } from 'react-redux';

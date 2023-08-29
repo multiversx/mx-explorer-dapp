@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { IdentityAvatar } from './IdentityAvatar';
 import { IdentityCard } from './IdentityCard';
 import { IdentitySummary } from './IdentitySummary';

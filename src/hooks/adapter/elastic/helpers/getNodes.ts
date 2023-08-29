@@ -70,9 +70,7 @@ export const getNodes = async (args: any & { proxyUrl: () => string }) => {
     }
   });
 
-  // tslint:disable-next-line
   for (const i in publicKeys) {
-    // eslint-disable-line
     const publicKey = publicKeys[i];
 
     let node: any = {};
@@ -88,7 +86,8 @@ export const getNodes = async (args: any & { proxyUrl: () => string }) => {
       node = { ...node, ...found };
     }
 
-    let {
+    let { shardId: shard, peerType } = node;
+    const {
       nodeDisplayName: nodeName,
       versionNumber,
       identity,
@@ -97,10 +96,8 @@ export const getNodes = async (args: any & { proxyUrl: () => string }) => {
       ratingModifier,
       totalUpTimeSec,
       totalDownTimeSec,
-      shardId: shard,
       receivedShardID,
       computedShardID,
-      peerType,
       isActive,
       validatorStatus,
       fullHistory

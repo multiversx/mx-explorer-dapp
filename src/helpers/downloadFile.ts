@@ -28,7 +28,7 @@ export const downloadFile = ({ data, name, fileType }: DownloadFileType) => {
       FileSaver.saveAs(blob, name + '.' + fileType);
     } else {
       const reader = new FileReader();
-      reader.onload = function onload(e) {
+      reader.onload = function onload() {
         (window.location.href as any) = reader.result;
       };
       reader.readAsDataURL(blob);

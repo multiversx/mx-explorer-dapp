@@ -1,4 +1,4 @@
-const putCache = async ({ key, value, ttl }: any) => {
+const putCache = async (_cache: any) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(undefined);
@@ -6,7 +6,7 @@ const putCache = async ({ key, value, ttl }: any) => {
   });
 };
 
-const getCache = async ({ key }: any) => {
+const getCache = async (_cache: any) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(undefined);

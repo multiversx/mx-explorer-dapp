@@ -1,17 +1,11 @@
-import React from 'react';
-import {
-  faExternalLink,
-  faLeaf,
-  faReceipt,
-  faInfinity
-} from '@fortawesome/pro-regular-svg-icons';
-import { faBadgeCheck } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { Trim, PercentageLed, NetworkLink } from 'components';
 import { getPercentage, stringIsFloat, urlBuilder } from 'helpers';
+import { faExternalLink, faLeaf, faReceipt, faInfinity } from 'icons/regular';
+import { faBadgeCheck } from 'icons/solid';
 import { ProviderType } from 'types';
 import { ProviderImage } from './ProviderImage';
 

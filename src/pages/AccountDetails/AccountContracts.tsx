@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faCode } from '@fortawesome/pro-solid-svg-icons/faCode';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
@@ -13,6 +12,7 @@ import {
   AccountLink
 } from 'components';
 import { useGetPage, useAdapter } from 'hooks';
+import { faCode } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountSmartContractType } from 'types';

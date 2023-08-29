@@ -1,4 +1,3 @@
-import React from 'react';
 import { METACHAIN_SHARD_ID, ALL_SHARDS_SHARD_ID } from 'appConstants';
 
 interface ShardSpanType {

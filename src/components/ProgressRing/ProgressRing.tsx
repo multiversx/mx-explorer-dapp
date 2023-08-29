@@ -1,4 +1,3 @@
-import React from 'react';
 import { WithClassnameType } from 'types';
 
 export interface ProgressRingType extends WithClassnameType {

@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
-import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
-import {
-  faUserCheck,
-  faSquarePen,
-  faSquareV
-} from '@fortawesome/pro-solid-svg-icons';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse } from 'react-bootstrap';
 
 import { Overlay, CollapsibleArrows } from 'components';
+import { faQuestionCircle } from 'icons/regular';
+import { faUserCheck, faSquarePen, faSquareV } from 'icons/solid';
 import { ContractEndpointType } from 'types';
 
 export const ContractEndpoint = ({

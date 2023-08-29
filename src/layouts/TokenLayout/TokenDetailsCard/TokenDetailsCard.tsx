@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react';
+import { useRef } from 'react';
 import BigNumber from 'bignumber.js';
-import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
 import {
   Trim,
   NetworkLink,
   SocialIcons,
   PropertyPill,
-  SmallDetailItem
+  SmallDetailItem,
+  AssetsHelmet
 } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 
@@ -54,29 +54,7 @@ export const TokenDetailsCard = () => {
 
   return identifier !== '' ? (
     <>
-      <Helmet>
-        <title>{`${title} • MultiversX Explorer`}</title>
-        {assets && assets.description && (
-          <meta name='description' content={assets.description} />
-        )}
-
-        <meta name='twitter:title' content={`${title} • MultiversX Explorer`} />
-        <meta name='twitter:card' content='summary' />
-        {assets && assets.description && (
-          <meta name='twitter:description' content={assets.description} />
-        )}
-        {assets && assets.pngUrl && (
-          <meta name='twitter:image' content={assets.pngUrl} />
-        )}
-
-        <meta property='og:title' content={`${title} • MultiversX Explorer`} />
-        {assets && assets.description && (
-          <meta property='og:description' content={assets.description} />
-        )}
-        {assets && assets.pngUrl && (
-          <meta property='og:image' content={assets.pngUrl} />
-        )}
-      </Helmet>
+      <AssetsHelmet text='Token' assets={assets} ticker={ticker} name={name} />
       <div ref={ref}>
         <div className='token-details-card row mb-3'>
           <div className='col-12 col-lg-6 mb-spacer mb-lg-0'>

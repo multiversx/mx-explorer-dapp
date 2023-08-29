@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Denominate, FormatUSD, NetworkLink } from 'components';
 import { DECIMALS } from 'config';
 import { urlBuilder } from 'helpers';

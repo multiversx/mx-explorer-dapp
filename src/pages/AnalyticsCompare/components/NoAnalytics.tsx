@@ -1,7 +1,5 @@
-import React from 'react';
-import { faChartBar } from '@fortawesome/pro-regular-svg-icons/faChartBar';
-
 import { PageState } from 'components';
+import { faChartBar } from 'icons/regular';
 
 export const NoAnalytics = () => {
   return (

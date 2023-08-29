@@ -1,4 +1,4 @@
-import React, { useState, ReactElement, useEffect } from 'react';
+import { useState, ReactElement, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { components, GroupBase } from 'react-select';
@@ -269,7 +269,7 @@ export const TokenSelectFilter = ({
 
   const loadPageOptions = async (
     search: string,
-    prevOptions: unknown,
+    _prevOptions: unknown,
     { page }: AdditionalType
   ) => {
     const { options, hasMore } = await loadOptions(search, page);
