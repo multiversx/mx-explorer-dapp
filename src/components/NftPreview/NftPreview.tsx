@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { faSpinnerThird } from '@fortawesome/pro-regular-svg-icons';
-import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Anchorme } from 'react-anchorme';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { ModalLink } from 'components';
 import { useScamFlag } from 'hooks';
+import { faSpinnerThird } from 'icons/regular';
+import { faCaretRight } from 'icons/solid';
 import { NftType } from 'types';
 
 export const Thumbnail = ({

@@ -1,4 +1,3 @@
-import React from 'react';
 import BigNumber from 'bignumber.js';
 
 import { NetworkLink } from 'components';
@@ -32,7 +31,7 @@ export const MostUsedCollections = ({
               </tr>
             </thead>
             <tbody data-testid='collectionsTable'>
-              {data.map((collection, i) => (
+              {data.map((collection) => (
                 <tr key={collection.rank} className='text-lh-24'>
                   <td>{collection.rank}</td>
                   <td>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { NetworkLink, Trim } from 'components';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'types';

@@ -1,7 +1,4 @@
-import React from 'react';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faLink } from '@fortawesome/pro-solid-svg-icons/faLink';
-import { faMapMarkerAlt } from '@fortawesome/pro-solid-svg-icons/faMapMarkerAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
@@ -11,6 +8,7 @@ import {
   SharedIdentity,
   Trim
 } from 'components';
+import { faLink, faMapMarkerAlt } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { NodesVersionsType, IdentityType } from 'types';
 import { StatsCard } from 'widgets';

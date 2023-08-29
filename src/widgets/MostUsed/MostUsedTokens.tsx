@@ -1,4 +1,3 @@
-import React from 'react';
 import BigNumber from 'bignumber.js';
 
 import { NetworkLink } from 'components';
@@ -28,7 +27,7 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
               </tr>
             </thead>
             <tbody data-testid='tokensTable'>
-              {data.map((token, i) => (
+              {data.map((token) => (
                 <tr key={token.rank} className='text-lh-24'>
                   <td>{token.rank}</td>
                   <td>

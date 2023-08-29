@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons/faCircleNotch';
-import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSearch } from 'hooks';
+import { faCircleNotch, faSearch } from 'icons/regular';
 import { WithClassnameType } from 'types';
 
 export const Search = ({ className }: WithClassnameType) => {

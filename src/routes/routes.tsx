@@ -1,6 +1,5 @@
-import React from 'react';
 import cloneDeep from 'lodash.clonedeep';
-import { NonIndexRouteObject, RouteObject } from 'react-router-dom';
+import { NonIndexRouteObject } from 'react-router-dom';
 
 import { networks } from 'config';
 import { Layout } from 'layouts/Layout';

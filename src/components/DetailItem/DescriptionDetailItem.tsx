@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { DetailItem, DetailItemType } from './DetailItem';
 
 export interface DescriptionDetailItemType extends DetailItemType {
@@ -7,7 +5,6 @@ export interface DescriptionDetailItemType extends DetailItemType {
 }
 
 export const DescriptionDetailItem = ({
-  children,
   title,
   description,
   ...props

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { SocialIcons } from 'components';
 import { TokenAssetType } from 'types';
 

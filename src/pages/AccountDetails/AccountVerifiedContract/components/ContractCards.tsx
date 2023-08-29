@@ -1,8 +1,7 @@
-import React from 'react';
 import { faDocker, faRust } from '@fortawesome/free-brands-svg-icons';
-import { faCogs } from '@fortawesome/pro-solid-svg-icons';
 
 import { CardItem, CopyButton, Trim } from 'components';
+import { faCogs } from 'icons/solid';
 import { VerifiedContractType } from 'types';
 
 export const ContractCards = ({

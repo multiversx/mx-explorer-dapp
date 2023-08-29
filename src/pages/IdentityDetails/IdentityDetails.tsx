@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faCity, faCode } from '@fortawesome/pro-regular-svg-icons';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageState, ProvidersTable } from 'components';
@@ -11,6 +10,7 @@ import {
   useGetSearch,
   useGetSort
 } from 'hooks';
+import { faCity, faCode } from 'icons/regular';
 import { IdentityType, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {

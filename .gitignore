@@ -1,29 +1,53 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
 /node_modules
 /.pnp
 .pnp.js
+dist
+dist-ssr
+*.local
 
-# testing
+# Testing
 /coverage
 
-# production
+# Production
 /build
-public/config.js
 
-# misc
+# Icons
+/src/icons/solid/index.ts
+/src/icons/regular/index.ts
+/src/icons/light/index.ts
+/src/icons/duotone/index.ts
+
+# Misc
+.npmrc
 .DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 /sam/build.yaml
 /src/config/index.ts
 
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
 .idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

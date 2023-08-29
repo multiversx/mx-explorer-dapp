@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { faLeaf } from '@fortawesome/pro-regular-svg-icons';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
@@ -7,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
 import { Denominate } from 'components';
+import { faLeaf } from 'icons/regular';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
 import { DelegationLegacyType, IdentityType } from 'types';
 

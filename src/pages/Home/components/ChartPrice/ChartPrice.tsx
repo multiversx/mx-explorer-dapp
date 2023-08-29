@@ -1,15 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  faCircleUp,
-  faCircleDown,
-  faCircleMinus
-} from '@fortawesome/pro-solid-svg-icons';
+import { useCallback, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
 import { useFetchGrowthPrice } from 'hooks';
+import { faCircleUp, faCircleDown, faCircleMinus } from 'icons/solid';
 import { growthPriceSelector } from 'redux/selectors';
 import { TrendEnum } from 'types';
 

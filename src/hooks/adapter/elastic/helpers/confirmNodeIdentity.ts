@@ -1,3 +1,3 @@
-export const confirmNodeIdentity = async (indentity: any, publicKey: any) => {
+export const confirmNodeIdentity = async (_indentity: any, _publicKey: any) => {
   return true;
 };

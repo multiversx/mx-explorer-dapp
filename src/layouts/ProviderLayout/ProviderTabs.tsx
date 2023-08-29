@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Tabs } from 'components/Tabs';
 import { urlBuilder } from 'helpers';

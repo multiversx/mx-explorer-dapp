@@ -1,15 +1,15 @@
-import React from 'react';
-import { faEllipsis } from '@fortawesome/pro-regular-svg-icons';
+import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Anchor, Dropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 import { NetworkLink } from 'components';
 import { useActiveRoute } from 'hooks';
+import { faEllipsis } from 'icons/regular';
 
 import { TabsPropsType, TabType } from './types';
 
-const CustomToggle = React.forwardRef(
+const CustomToggle = forwardRef(
   ({ children, onClick, isExtraTabActive }: any, ref: any) => (
     <button
       type='button'

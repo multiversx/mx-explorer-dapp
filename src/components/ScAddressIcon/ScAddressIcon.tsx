@@ -1,8 +1,8 @@
-import React from 'react';
-import { faFileAlt } from '@fortawesome/pro-regular-svg-icons/faFileAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import { SC_INIT_CHARACTERS_LENGTH } from 'appConstants';
+import { faFileAlt } from 'icons/regular';
 
 interface ScAddressIconType {
   initiator: string;

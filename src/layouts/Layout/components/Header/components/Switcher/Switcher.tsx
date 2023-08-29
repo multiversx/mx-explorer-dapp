@@ -1,12 +1,10 @@
-import React from 'react';
-import { faAngleDown } from '@fortawesome/pro-solid-svg-icons/faAngleDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
 import { Anchor, Dropdown } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import { networks, links } from 'config';
+import { faAngleDown } from 'icons/solid';
 
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 

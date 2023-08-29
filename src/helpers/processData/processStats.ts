@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js';
 import moment from 'moment';
 
 import { ELLIPSIS } from 'appConstants';
-import { DIGITS } from 'config';
 import { StatsType } from 'types/stats.types';
 
 export const getExtraStats = (data: StatsType) => {

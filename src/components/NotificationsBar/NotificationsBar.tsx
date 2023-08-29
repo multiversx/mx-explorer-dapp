@@ -1,10 +1,8 @@
-import React from 'react';
-
-import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useSelector } from 'react-redux';
 import { useNotifications } from 'hooks';
+import { faTimes } from 'icons/light';
 import { interfaceSelector } from 'redux/selectors';
 import { NotificationType } from 'types';
 

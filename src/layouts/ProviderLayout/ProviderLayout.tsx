@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faCode } from '@fortawesome/pro-regular-svg-icons/faCode';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, Outlet } from 'react-router-dom';
 
 import { Loader, PageState, SharedIdentity } from 'components';
 import { useAdapter, useIsMainnet } from 'hooks';
+import { faCode } from 'icons/regular';
 import { IdentityType, ProviderType } from 'types';
 
 import { ProviderDetailsCard } from './ProviderDetailsCard';

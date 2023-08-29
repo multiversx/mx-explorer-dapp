@@ -1,12 +1,11 @@
-import React from 'react';
-import { faFilter } from '@fortawesome/pro-regular-svg-icons/faFilter';
-import { faFilter as faFilterSolid } from '@fortawesome/pro-solid-svg-icons/faFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
 import { SelectFilter, SearchFilter } from 'components';
 import { capitalize } from 'helpers';
+import { faFilter } from 'icons/regular';
+import { faFilter as faFilterSolid } from 'icons/solid';
 import { TransactionApiStatusEnum, TransactionFiltersEnum } from 'types';
 
 export const StatusColumnFilters = ({

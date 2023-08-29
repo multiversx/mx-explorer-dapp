@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,9 +40,9 @@ export const Analytics = () => {
     });
   };
 
-  const transactionsChart = useMemo(() => {
-    return chartList?.filter((sc) => sc.id.includes('-transactions'));
-  }, [chartList]);
+  // const transactionsChart = useMemo(() => {
+  //   return chartList?.filter((sc) => sc.id.includes('-transactions'));
+  // }, [chartList]);
 
   const tokenTransfersChart = useMemo(() => {
     return chartList?.filter((sc) => sc.id.includes('token-transfers'));

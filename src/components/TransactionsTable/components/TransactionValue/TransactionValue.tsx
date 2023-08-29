@@ -1,9 +1,8 @@
-import React from 'react';
-import { faLayerPlus } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Denominate, TransactionActionBlock, Overlay } from 'components';
 import { getTransactionTokens } from 'helpers';
+import { faLayerPlus } from 'icons/regular';
 import { UITransactionType, NftTypeEnum, TransactionActionEnum } from 'types';
 
 const MultipleTokensBadge = ({

@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { faCogs } from '@fortawesome/pro-regular-svg-icons/faCogs';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
@@ -10,6 +9,7 @@ import {
   useGetSearch,
   useGetSort
 } from 'hooks';
+import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { validatorsRoutes } from 'routes';
 import { NodeType } from 'types';

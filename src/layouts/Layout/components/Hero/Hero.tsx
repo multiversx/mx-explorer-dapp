@@ -1,6 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import { faAngleUp } from '@fortawesome/pro-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 

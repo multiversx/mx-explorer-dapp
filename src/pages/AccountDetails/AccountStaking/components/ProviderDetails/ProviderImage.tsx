@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
 import { ProviderType } from 'types';
 

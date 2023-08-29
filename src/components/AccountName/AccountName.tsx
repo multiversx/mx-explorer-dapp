@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
 import { Trim, Overlay } from 'components';
 import { formatHerotag } from 'helpers';

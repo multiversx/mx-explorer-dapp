@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useSearchParams, Navigate } from 'react-router-dom';
+import { useSearchParams, Navigate } from 'react-router-dom';
 
 import { BlocksTable, Loader, Pager, ShardSpan } from 'components';
 import { FailedBlocks } from 'components/BlocksTable/components/FailedBlocks';
@@ -31,7 +31,6 @@ export const Blocks = () => {
   const { page, firstPageRefreshTrigger } = useGetPage();
   const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
 
-  const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
 
   const [state, setState] = useState<StateType>();
