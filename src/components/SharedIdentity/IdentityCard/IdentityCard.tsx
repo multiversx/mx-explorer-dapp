@@ -1,6 +1,5 @@
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { useSelector } from 'react-redux';
 
 import {
@@ -11,7 +10,6 @@ import {
 } from 'components';
 import { getValidLink } from 'helpers';
 import { faLink, faMapMarkerAlt } from 'icons/solid';
-
 import { activeNetworkSelector } from 'redux/selectors';
 import { NodesVersionsType, IdentityType } from 'types';
 import { StatsCard } from 'widgets';
@@ -151,7 +149,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
 
               <StatsCard
                 title='Stake Percentage'
-                value={<>{formatStakePercentLabel(identity.stakePercent)}</>}
+                value={formatStakePercentLabel(identity?.stakePercent)}
                 className='detail-card'
               />
 

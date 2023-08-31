@@ -96,7 +96,7 @@ export const IdentitySummary = ({
                   <div className='d-flex align-items-center card p-3 flex-grow-1 detail-card'>
                     <span className='text-neutral-500'>Stake percent</span>
                     <h5 className='mb-0'>
-                      {formatStakePercentLabel(identity.stakePercent)}
+                      {formatStakePercentLabel(identity?.stakePercent)}
                     </h5>
                   </div>
                   <div className='d-flex align-items-center card p-3 flex-grow-1 detail-card'>
