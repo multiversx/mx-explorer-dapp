@@ -11,6 +11,7 @@ import {
   Denominate,
   PercentageBar
 } from 'components';
+import { formatStakePercentLabel } from 'components/SharedIdentity/helpers';
 import { urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faCogs } from 'icons/regular';
@@ -58,11 +59,6 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
     ? urlBuilder.identityDetails(identity.identity)
     : urlBuilder.nodeDetails(identity.name);
 
-  const stakePercentLabel =
-    Math.round(identity.stakePercent) > 0
-      ? `${Math.round(identity.stakePercent)}%`
-      : '< 1 %';
-
   return (
     <>
       <tr
@@ -98,10 +94,12 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
             <PercentageBar
               overallPercent={identity.overallStakePercent || 0}
               fillPercent={identity.stakePercent}
-              fillPercentLabel={stakePercentLabel}
+              fillPercentLabel={formatStakePercentLabel(identity?.stakePercent)}
             />
 
-            <div className='ms-3'>{stakePercentLabel}</div>
+            <div className='ms-3'>
+              {formatStakePercentLabel(identity?.stakePercent)}
+            </div>
           </div>
         </td>
         <td className='text-end'>{identity.validators.toLocaleString('en')}</td>

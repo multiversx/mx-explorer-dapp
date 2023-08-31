@@ -11,3 +11,4 @@ export * from './getTransactionStatusIconAndColor';
 export * from './getTransactionStatusText';
 export * from './getTransactionTokens';
 export * from './getTrend';
+export * from './getValidLink';

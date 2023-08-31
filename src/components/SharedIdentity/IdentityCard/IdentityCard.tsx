@@ -8,10 +8,12 @@ import {
   SharedIdentity,
   Trim
 } from 'components';
+import { getValidLink } from 'helpers';
 import { faLink, faMapMarkerAlt } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { NodesVersionsType, IdentityType } from 'types';
 import { StatsCard } from 'widgets';
+import { formatStakePercentLabel } from '../helpers';
 
 const prepareStakeDistribution = (identity: IdentityType) => {
   const distribution: NodesVersionsType[] = [];
@@ -32,6 +34,15 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
   const { walletAddress } = useSelector(activeNetworkSelector);
   const distribution = prepareStakeDistribution(identity);
   const identityName = identity?.name ?? 'N/A';
+
+  const twitterLink = getValidLink({
+    link: identity?.twitter,
+    baseDomain: 'twitter.com',
+    altBaseDomain: 'x.com'
+  });
+  const websiteLink = getValidLink({
+    link: identity?.website
+  });
 
   return identity !== undefined ? (
     <div
@@ -67,9 +78,9 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 </div>
               )}
 
-              {(identity.location || identity.twitter || identity.website) && (
+              {(identity?.location || twitterLink || websiteLink) && (
                 <div className='d-flex align-items-center flex-wrap'>
-                  {identity.location && (
+                  {identity?.location && (
                     <div className='d-flex align-items-center me-3'>
                       <FontAwesomeIcon
                         icon={faMapMarkerAlt}
@@ -81,7 +92,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                     </div>
                   )}
 
-                  {identity.twitter && (
+                  {twitterLink && (
                     <div className='d-flex align-items-center me-3'>
                       <FontAwesomeIcon
                         icon={faTwitter}
@@ -91,18 +102,14 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                         target='_blank'
                         rel='noreferrer nofollow noopener'
                         className='text-primary-200'
-                        href={
-                          identity.twitter.includes('twitter.com')
-                            ? identity.twitter
-                            : `https://twitter.com/${identity.twitter}`
-                        }
+                        href={twitterLink}
                       >
-                        {identity.twitter.split('/').pop()}
+                        {twitterLink.split('/').pop()}
                       </a>
                     </div>
                   )}
 
-                  {identity.website && (
+                  {websiteLink && (
                     <div className='d-flex align-items-center me-1'>
                       <FontAwesomeIcon
                         icon={faLink}
@@ -112,9 +119,9 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                         target='_blank'
                         rel='noreferrer nofollow noopener'
                         className='text-primary-200'
-                        href={identity.website}
+                        href={websiteLink}
                       >
-                        {identity.website.split('//').pop()}
+                        {websiteLink.split('//').pop()}
                       </a>
                     </div>
                   )}
@@ -142,20 +149,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
 
               <StatsCard
                 title='Stake Percentage'
-                value={
-                  <>
-                    {identity.stakePercent ? (
-                      <>
-                        {Math.round(identity.stakePercent) > 0
-                          ? Math.round(identity.stakePercent)
-                          : '< 1'}
-                        %
-                      </>
-                    ) : (
-                      'N/A'
-                    )}
-                  </>
-                }
+                value={formatStakePercentLabel(identity?.stakePercent)}
                 className='detail-card'
               />
 
