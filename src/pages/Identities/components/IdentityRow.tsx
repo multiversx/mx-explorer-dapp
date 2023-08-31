@@ -59,11 +59,6 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
     ? urlBuilder.identityDetails(identity.identity)
     : urlBuilder.nodeDetails(identity.name);
 
-  const stakePercentLabel =
-    Math.round(identity.stakePercent) > 0
-      ? `${Math.round(identity.stakePercent)}%`
-      : '< 1 %';
-
   return (
     <>
       <tr
