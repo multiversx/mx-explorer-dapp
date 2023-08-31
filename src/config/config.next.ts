@@ -43,6 +43,17 @@ export const networks: NetworkType[] = [
     apiAddress: 'https://devnet-api.multiversx.com'
   },
   {
+    id: 'devnet2',
+    name: 'Devnet2',
+    chainId: 'D',
+    adapter: 'api',
+    theme: 'testnet',
+    egldLabel: 'xEGLD',
+    walletAddress: 'https://devnet2-wallet.multiversx.com',
+    explorerAddress: 'https://devnet2-explorer.multiversx.com',
+    apiAddress: 'https://devnet2-api.multiversx.com'
+  },
+  {
     id: 'staging',
     name: 'Staging',
     adapter: 'api',
