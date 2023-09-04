@@ -1,8 +1,9 @@
 {
   "name": "mx-explorer-dapp",
+  "description": "MultiversX Blockchain Explorer",
   "version": "2.0.0",
-  "private": true,
   "author": "MultiversX",
+  "license": "GPL-3.0-or-later",
   "repository": "multiversx/mx-explorer-dapp",
   "keywords": [
     "multiversx",
@@ -14,7 +15,7 @@
     "@fortawesome/free-regular-svg-icons": "6.4.2",
     "@fortawesome/free-solid-svg-icons": "6.4.2",
     "@fortawesome/react-fontawesome": "0.2.0",
-    "@multiversx/sdk-dapp": "2.19.3",
+    "@multiversx/sdk-dapp": "2.19.7",
     "@react-three/fiber": "8.13.6",
     "@reduxjs/toolkit": "1.9.5",
     "anchorme": "3.0.5",
@@ -61,7 +62,7 @@
     "build-next": "yarn run copy-next-config & cross-env VITE_APP_SHARE_PREFIX=next- VITE_APP_GA_ID=G-EFN7QYSMQS yarn run build",
     "build-devnet": "yarn run copy-devnet-config & cross-env VITE_APP_SHARE_PREFIX=devnet- VITE_APP_GA_ID=G-QE38EW59B8 yarn run build",
     "build-devnet2": "yarn run copy-devnet2-config & cross-env VITE_APP_SHARE_PREFIX=devnet2- VITE_APP_GA_ID=G-QE38EW59B8 yarn run build",
-    "build": "cross-env VITE_APP_CACHE_BUST=$(git rev-parse --short HEAD || echo 'local') tsc && vite build && yarn version:make",
+    "build": "cross-env VITE_APP_CACHE_BUST=$(git rev-parse --short HEAD || echo 'local') vite build && yarn version:make",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "copy-mainnet-config": "run-script-os",
