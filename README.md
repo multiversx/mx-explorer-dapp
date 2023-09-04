@@ -7,10 +7,16 @@ This project was bootstrapped with [Vite](https://vitejs.dev/guide/).
 [![deploy-devnet](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/deploy-devnet.yml/badge.svg)](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/deploy-devnet.yml)
 [![deploy-testnet](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/deploy-testnet.yml/badge.svg)](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/deploy-testnet.yml)
 
+## Requirements
+
+- a `git` client installed
+- `nodejs` (v18.17.0 LTS), `npm` and `yarn` installed
+- optional, but useful: an IDE (Visual Code for example)
+
 ## Quick start
 
 1. run `yarn` in the project directory.
-2. run `npm run start-testnet` fot the Testnet network.
+2. run `npm run start-testnet` fot the `Testnet` network.
 3. optionally make edits to `networks` or other configurations found in newly created `index.ts` in the `src/config` folder.
 
 - One can use any of the existing network setups by running one of the `npm run start-*` scripts available in the `package.json` file.

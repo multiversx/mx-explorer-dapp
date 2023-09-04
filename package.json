@@ -1,8 +1,9 @@
 {
   "name": "mx-explorer-dapp",
+  "description": "MultiversX Blockchain Explorer",
   "version": "2.0.0",
-  "private": true,
   "author": "MultiversX",
+  "license": "GPL-3.0-or-later",
   "repository": "multiversx/mx-explorer-dapp",
   "keywords": [
     "multiversx",
