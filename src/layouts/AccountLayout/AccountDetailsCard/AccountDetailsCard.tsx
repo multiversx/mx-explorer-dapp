@@ -15,12 +15,13 @@ import {
   TimeAgo,
   PropertyPill,
   SmallDetailItem,
-  FormatUSD
+  FormatUSD,
+  Overlay
 } from 'components';
 import { DECIMALS } from 'config';
 import { isContract, urlBuilder, formatDate, formatHerotag } from 'helpers';
 import { useAdapter } from 'hooks';
-import { faClock, faExclamationTriangle } from 'icons/regular';
+import { faClock, faExclamationTriangle, faInfoCircle } from 'icons/regular';
 import {
   faUser,
   faCoins,
@@ -436,21 +437,35 @@ export const AccountDetailsCard = () => {
               {isGuarded && (
                 <CardItem
                   className={cardItemClass}
-                  title={`Guardian ${
-                    activeGuardianServiceUid
-                      ? `(${activeGuardianServiceUid})`
-                      : ''
-                  }`}
+                  title=''
                   icon={faShieldCheck}
                 >
-                  {activeGuardianAddress && (
-                    <NetworkLink
-                      to={urlBuilder.accountDetails(activeGuardianAddress)}
-                      className='trim-wrapper'
-                    >
-                      <Trim text={activeGuardianAddress} />
-                    </NetworkLink>
-                  )}
+                  Guarded
+                  <Overlay
+                    title={
+                      <>
+                        {activeGuardianServiceUid && (
+                          <p className='mb-0'>{activeGuardianServiceUid}</p>
+                        )}
+                        {activeGuardianAddress && (
+                          <NetworkLink
+                            to={urlBuilder.accountDetails(
+                              activeGuardianAddress
+                            )}
+                          >
+                            ({activeGuardianAddress})
+                          </NetworkLink>
+                        )}
+                      </>
+                    }
+                    className='cursor-context ms-2'
+                    tooltipClassName='account-name'
+                  >
+                    <FontAwesomeIcon
+                      icon={faInfoCircle}
+                      className='text-primary'
+                    />
+                  </Overlay>
                 </CardItem>
               )}
               <CardItem className={cardItemClass} title='Nonce' icon={faUser}>
