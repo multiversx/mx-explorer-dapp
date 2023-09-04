@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from 'icons/solid';
 
+import { version } from '../../../../../package.json';
+
 export const Footer = () => {
   const explorerVersion = process.env.VITE_APP_CACHE_BUST;
 
@@ -24,7 +26,7 @@ export const Footer = () => {
       </div>
       {explorerVersion && (
         <small className='text-muted version mt-1'>
-          Build {explorerVersion}
+          Build {version}-{explorerVersion}
         </small>
       )}
     </footer>
