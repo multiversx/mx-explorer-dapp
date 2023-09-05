@@ -8,7 +8,7 @@ Cypress.Commands.add('checkUrl', (url) => {
 
 // Add the custom command for api intercepts
 Cypress.Commands.add('apiIntercept', (method, param) => {
-  cy.intercept(method, `${TESTNET_API}${param}/*`).as(param);
+  cy.intercept(method, `${TESTNET_API}${param}*`).as(param);
 });
 //Login with keystore global function
 Cypress.Commands.add('getSelector', (selector, ...cypressAction) => {

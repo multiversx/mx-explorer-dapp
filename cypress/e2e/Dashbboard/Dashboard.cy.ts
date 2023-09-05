@@ -2,17 +2,17 @@ import {
   ApiEndpointsEnum,
   ApiMethodsEnum,
   AssertionEnum,
-  RoutesEnum,
-} from "../../constants/enums";
-describe("Dashboard", () => {
+  RoutesEnum
+} from '../../constants/enums';
+describe('Dashboard', () => {
   beforeEach(() => {
-    cy.visit("/");
+    cy.visit('/');
     cy.apiIntercept(ApiMethodsEnum.GET, ApiEndpointsEnum.blocks);
     cy.apiIntercept(ApiMethodsEnum.GET, ApiEndpointsEnum.transactions);
     cy.apiIntercept(ApiMethodsEnum.GET, ApiEndpointsEnum.stats);
   });
 
-  it("should successfully return the API responses", () => {
+  it('should successfully return the API responses', () => {
     cy.verifyApiResponse(ApiEndpointsEnum.blocks, (xhr) => {
       expect(xhr?.response?.body).to.have.lengthOf(5);
     });
@@ -27,19 +27,19 @@ describe("Dashboard", () => {
       expect(xhr?.response?.body?.shards).to.be.at.least(3);
     });
   });
-  it("should successfully display the DOM elements", () => {
-    cy.get("h1").should(
+  it('should successfully display the DOM elements', () => {
+    cy.get('h1').should(
       AssertionEnum.contain,
-      "MultiversX Blockchain Testnet Explorer"
+      'MultiversX Blockchain Testnet Explorer'
     );
-    cy.getSelector("blocksList").should(AssertionEnum.exist);
-    cy.getSelector("transactionsList").should(AssertionEnum.exist);
+    cy.getSelector('blocksList').should(AssertionEnum.exist);
+    cy.getSelector('transactionsList').should(AssertionEnum.exist);
     cy.get('a:contains("View All")')
-      .should("have.attr", "href")
+      .should('have.attr', 'href')
       .and(AssertionEnum.include, RoutesEnum.blocks);
     cy.get('a:contains("View All")')
       .last()
-      .should("have.attr", "href")
+      .should('have.attr', 'href')
       .and(AssertionEnum.include, RoutesEnum.transactions);
   });
 });

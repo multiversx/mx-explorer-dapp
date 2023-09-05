@@ -1,15 +1,15 @@
 import {
   ApiEndpointsEnum,
   ApiMethodsEnum,
-  RoutesEnum,
-} from "../../constants/enums";
+  RoutesEnum
+} from '../../constants/enums';
 
-describe("Blocks", () => {
+describe('Blocks', () => {
   beforeEach(() => {
-    cy.visit("/");
+    cy.visit('/');
     cy.get('.links > [href="/blocks"]').click();
     cy.checkUrl(RoutesEnum.blocks);
   });
 
-  it("should", () => {});
+  it('should', () => {});
 });
