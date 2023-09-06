@@ -3,15 +3,7 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import {
-  Loader,
-  Pager,
-  NetworkLink,
-  Trim,
-  ScAddressIcon,
-  PageState
-} from 'components';
-import { urlBuilder } from 'helpers';
+import { Loader, Pager, AccountLink, PageState } from 'components';
 import { useAdapter, useGetPage } from 'hooks';
 import { faUser } from 'icons/regular';
 import { NftTabs } from 'layouts/NftLayout/NftTabs';
@@ -82,18 +74,12 @@ export const NftAccounts = () => {
                     {accounts.map((account, i) => (
                       <tr key={account.address}>
                         <td>
-                          <div className='d-flex align-items-center'>
-                            <ScAddressIcon initiator={account.address} />
-                            <NetworkLink
-                              to={urlBuilder.accountDetails(account.address)}
-                              className='trim-only-sm'
-                            >
-                              <Trim
-                                text={account.address}
-                                dataTestId={`accountLink${i}`}
-                              />
-                            </NetworkLink>
-                          </div>
+                          <AccountLink
+                            address={account.address}
+                            assets={account?.assets}
+                            className='full-hash'
+                            linkClassName='trim-only-sm'
+                          />
                         </td>
                         <td>{new BigNumber(account.balance).toFormat()}</td>
                       </tr>
