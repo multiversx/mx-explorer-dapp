@@ -1,5 +1,7 @@
+import BigNumber from 'bignumber.js';
 import { SearchDataEnums } from './enums';
 import { searchHandler } from './helpers';
+
 import {
   ApiEndpointsEnum,
   ApiMethodsEnum,
@@ -26,11 +28,12 @@ describe('Search', () => {
     cy.checkUrl(RoutesEnum.accounts);
     cy.verifyApiResponse(ApiEndpointsEnum.accounts, (xhr) => {
       expect(xhr?.response.body.address).to.eq(SearchDataEnums.address);
-      balance = xhr?.response.body.balance;
+      const amount = xhr?.response.body.balance;
+      balance = new BigNumber(amount)
+        .dividedBy('1000000000000000000')
+        .toFixed(4);
     }).then(() => {
-      cy.get(
-        '.d-flex > [data-testid="denominateComponent"] > .int-amount'
-      ).should('contain', balance);
+      cy.getSelector('balance').first().should('contain', balance, 'xEGLD');
     });
   });
 
@@ -56,7 +59,7 @@ describe('Search', () => {
   it('should return the token details page', () => {
     searchHandler(SearchDataEnums.token);
     cy.checkUrl(RoutesEnum.tokens);
-    cy.contains('UTK Token');
+    cy.contains('ASH Token');
     cy.verifyApiResponse(ApiEndpointsEnum.tokens, (xhr) => {
       expect(xhr?.response.body.identifier).to.eq(SearchDataEnums.token);
     });

@@ -1,5 +1,5 @@
 import { AssertionEnum } from '../constants/enums';
-import { TESTNET_API } from '../constants/globalLinks';
+import { DEVNET_API } from '../constants/globalLinks';
 
 // Check the url global function
 Cypress.Commands.add('checkUrl', (url) => {
@@ -8,7 +8,7 @@ Cypress.Commands.add('checkUrl', (url) => {
 
 // Add the custom command for api intercepts
 Cypress.Commands.add('apiIntercept', (method, param) => {
-  cy.intercept(method, `${TESTNET_API}${param}*`).as(param);
+  cy.intercept(method, `${DEVNET_API}${param}*`).as(param);
 });
 //Login with keystore global function
 Cypress.Commands.add('getSelector', (selector, ...cypressAction) => {
@@ -38,5 +38,22 @@ Cypress.Commands.add('verifyApiResponse', (alias, ...additionalExpects) => {
 Cypress.Commands.add('coveredElementHandler', (selector) => {
   cy.getSelector(selector).invoke('css', {
     paddingTop: '10rem'
+  });
+});
+
+Cypress.Commands.add('paginationHandler', () => {
+  cy.viewport(1000, 3000);
+  cy.contains('button', '2').click();
+  cy.checkUrl('?page=2');
+  cy.contains('button', '1').click();
+  cy.checkUrl('?page=1');
+  cy.contains('button', 'Next').click();
+  cy.checkUrl('?page=2');
+  cy.contains('button', 'Prev').click();
+});
+
+Cypress.Commands.add('checkTableHead', (payload: string[]) => {
+  payload.forEach((el, index) => {
+    cy.get(`thead > tr > :nth-child(${index + 1})`).should('contain', el);
   });
 });

@@ -30,7 +30,7 @@ describe('Dashboard', () => {
   it('should successfully display the DOM elements', () => {
     cy.get('h1').should(
       AssertionEnum.contain,
-      'MultiversX Blockchain Testnet Explorer'
+      'MultiversX Blockchain Devnet Explorer'
     );
     cy.getSelector('blocksList').should(AssertionEnum.exist);
     cy.getSelector('transactionsList').should(AssertionEnum.exist);

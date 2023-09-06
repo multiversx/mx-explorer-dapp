@@ -1,10 +1,10 @@
 export enum SearchDataEnums {
-  address = 'erd1hvd5d9l065zf4rvwh7tguqvfaatdu2q6ngkcgwhl4dtr60sxq9vqx06fzg',
-  transactionHash = 'c0532cae5eab26e7c4f977641af5c31f0777aabded27f96d3415734d0b50bf4e',
-  blockHash = '71671fde27a00b74cdf8618cef10562339018814718e379e5499fb4faed10ec5',
-  validatorKey = '005fac4beab21f1fd8492c2509570ef563b901ab94d2a2aeffbcb25c82f094c160021283007cf577e989b20923a9ef1150151e931e62eec0a61cbeb8d3d673eec6cdb0031c1c061d25cbeec65fdb26d1e6563966a8321626f18fa2bdc662c889',
-  token = 'UTK-b97480',
-  collectionName = 'CTST-ac838e'
+  address = 'erd1wgxxclk0v8xnyj0fm6hx830q77za4mf0036sjuxan7h99v4tla9q3n2mz5',
+  transactionHash = 'ec6babc0d7c597502c5b93a5cda39ecbaf6f1f9ac2c4fc1a8b4b11c179a330cb',
+  blockHash = '635523c1dca5abca8e029bdac492041e7853011f0655b567e089a96394c0d862',
+  validatorKey = '10696e162905998ae1ac65096091f584e6c817660f259e637e14a7edd6f71ffa26f49c672d09b348e826f7ce495d04018581bb356c4eff4f00382d42c2ba2e3e334adaf6bad5c839021a9bdc3443decb802796becc61741c59e59ef6fa5c2a14',
+  token = 'ASH-4ce444',
+  collectionName = 'HYBRIDS-859353'
 }
 
 export enum SearchSelectorsEnum {
