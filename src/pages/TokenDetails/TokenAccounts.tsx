@@ -2,17 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import {
-  Loader,
-  Pager,
-  Denominate,
-  NetworkLink,
-  Trim,
-  ScAddressIcon,
-  PageState,
-  LockedTokenAddressIcon
-} from 'components';
-import { urlBuilder } from 'helpers';
+import { Loader, Pager, Denominate, PageState, AccountLink } from 'components';
 import { useAdapter, useGetPage } from 'hooks';
 import { faUser } from 'icons/regular';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
@@ -84,19 +74,12 @@ export const TokenDetailsAccounts = () => {
                     {accounts.map((account, i) => (
                       <tr key={account.address}>
                         <td>
-                          <div className='d-flex align-items-center'>
-                            <LockedTokenAddressIcon address={account.address} />
-                            <ScAddressIcon initiator={account.address} />
-                            <NetworkLink
-                              to={urlBuilder.accountDetails(account.address)}
-                              className='trim-only-sm'
-                            >
-                              <Trim
-                                text={account.address}
-                                dataTestId={`accountLink${i}`}
-                              />
-                            </NetworkLink>
-                          </div>
+                          <AccountLink
+                            address={account.address}
+                            assets={account?.assets}
+                            className='full-hash'
+                            linkClassName='trim-only-sm'
+                          />
                         </td>
                         <td>
                           <Denominate
