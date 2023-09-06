@@ -1,4 +1,4 @@
-import { RolesType, SliceType } from 'types/general.types';
+import { RolesType, SliceType, AccountAssetType } from 'types';
 
 export interface TokenType {
   type: TokenTypeEnum;
@@ -54,6 +54,7 @@ export interface TokenLockedAccountType {
   address: string;
   name: string;
   balance: string;
+  assets?: AccountAssetType;
 }
 
 export interface TokenSupplyType {

@@ -1,3 +1,5 @@
+import { AccountAssetType } from 'types';
+
 export enum NetworkIdType {
   mainnet = 'mainnet',
   testnet = 'testnet',
@@ -16,6 +18,7 @@ export interface ScamInfoType {
 
 export interface RolesType {
   address: string;
+  assets?: AccountAssetType;
   roles: string[];
 }
 

@@ -1,8 +1,7 @@
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Loader, NetworkLink, Trim, ScAddressIcon } from 'components';
-import { urlBuilder } from 'helpers';
+import { Loader, AccountLink } from 'components';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { tokenSelector } from 'redux/selectors';
 
@@ -37,20 +36,12 @@ export const TokenDetailsRoles = () => {
                         <td>
                           <div className='d-flex align-items-center'>
                             {tokenRole?.address ? (
-                              <>
-                                <ScAddressIcon initiator={tokenRole.address} />
-                                <NetworkLink
-                                  to={urlBuilder.accountDetails(
-                                    tokenRole.address
-                                  )}
-                                  className='trim-only-sm'
-                                >
-                                  <Trim
-                                    text={tokenRole.address}
-                                    dataTestId={`roleLink${i}`}
-                                  />
-                                </NetworkLink>
-                              </>
+                              <AccountLink
+                                address={tokenRole.address}
+                                assets={tokenRole?.assets}
+                                className='full-hash'
+                                linkClassName='trim-only-sm'
+                              />
                             ) : (
                               <>Anyone</>
                             )}

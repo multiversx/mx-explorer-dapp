@@ -2,15 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import {
-  Loader,
-  NetworkLink,
-  Trim,
-  ScAddressIcon,
-  PageState,
-  Denominate
-} from 'components';
-import { urlBuilder } from 'helpers';
+import { Loader, AccountLink, PageState, Denominate } from 'components';
 import { useAdapter } from 'hooks';
 import { faUser } from 'icons/regular';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
@@ -74,20 +66,12 @@ export const TokenDetailsLockedAccounts = () => {
                     {tokenLockedAccounts.map((lockedAccount, i) => (
                       <tr key={lockedAccount.address}>
                         <td>
-                          <div className='d-flex align-items-center'>
-                            <ScAddressIcon initiator={lockedAccount.address} />
-                            <NetworkLink
-                              to={urlBuilder.accountDetails(
-                                lockedAccount.address
-                              )}
-                              className='trim-only-sm'
-                            >
-                              <Trim
-                                text={lockedAccount.address}
-                                dataTestId={`lockedAccountLink${i}`}
-                              />
-                            </NetworkLink>
-                          </div>
+                          <AccountLink
+                            address={lockedAccount.address}
+                            assets={lockedAccount?.assets}
+                            className='full-hash'
+                            linkClassName='trim-only-sm'
+                          />
                         </td>
                         <td>{lockedAccount.name}</td>
                         <td>

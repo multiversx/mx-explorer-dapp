@@ -2,15 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import {
-  Loader,
-  Pager,
-  Denominate,
-  NetworkLink,
-  ScAddressIcon,
-  AccountName
-} from 'components';
-import { urlBuilder } from 'helpers';
+import { Loader, Pager, Denominate, AccountLink } from 'components';
 import { useAdapter, useGetPage, useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
@@ -102,23 +94,12 @@ export const Accounts = () => {
                               {accounts.map((account, i) => (
                                 <tr key={account.address}>
                                   <td>
-                                    <div className='d-flex align-items-center'>
-                                      <ScAddressIcon
-                                        initiator={account.address}
-                                      />
-                                      <NetworkLink
-                                        to={urlBuilder.accountDetails(
-                                          account.address
-                                        )}
-                                        className='trim-only-sm'
-                                      >
-                                        <AccountName
-                                          address={account.address}
-                                          assets={account.assets}
-                                          dataTestId={`accountLink${i}`}
-                                        />
-                                      </NetworkLink>
-                                    </div>
+                                    <AccountLink
+                                      address={account.address}
+                                      assets={account?.assets}
+                                      className='full-hash'
+                                      linkClassName='trim-only-sm'
+                                    />
                                   </td>
                                   <td>
                                     <Denominate value={account.balance} />

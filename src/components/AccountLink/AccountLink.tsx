@@ -5,16 +5,25 @@ import { AccountAssetType } from 'types';
 export interface AccountLinkType {
   address: string;
   assets?: AccountAssetType;
+  className?: string;
+  linkClassName?: string;
 }
 
-export const AccountLink = ({ address, assets }: AccountLinkType) => {
+export const AccountLink = ({
+  address,
+  assets,
+  className,
+  linkClassName
+}: AccountLinkType) => {
   return (
-    <div className='d-flex align-items-center hash'>
+    <div
+      className={`d-flex align-items-center ${className ? className : 'hash'}`}
+    >
       <ScAddressIcon initiator={address} />
       {addressIsBech32(address) ? (
         <NetworkLink
           to={urlBuilder.accountDetails(address)}
-          className='trim-wrapper'
+          className={`trim-wrapper ${linkClassName ?? ''}`}
         >
           <AccountName address={address} assets={assets} />
         </NetworkLink>
