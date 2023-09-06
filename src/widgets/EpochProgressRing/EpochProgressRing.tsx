@@ -20,7 +20,7 @@ export const EpochProgressRing = ({
     <div className={`epoch-progress-ring ${className ?? ''}`}>
       <ProgressRing progress={epochPercentage} size={140} hasBg>
         <div className='label' data-testid='currentEpoch'>
-          {isReady && epoch ? (
+          {isReady && epoch !== undefined ? (
             <>
               Epoch
               <br />
