@@ -54,6 +54,9 @@ Cypress.Commands.add('paginationHandler', () => {
 
 Cypress.Commands.add('checkTableHead', (payload: string[]) => {
   payload.forEach((el, index) => {
-    cy.get(`thead > tr > :nth-child(${index + 1})`).should('contain', el);
+    cy.get(`thead > tr > :nth-child(${index + 1})`).should(
+      AssertionEnum.contain,
+      el
+    );
   });
 });
