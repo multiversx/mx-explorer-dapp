@@ -10,7 +10,7 @@ export const getValidLink = ({
   replaceAlt?: boolean;
 }) => {
   const formatLink = (link: string) => {
-    return link.replace(/(^\w+:|^)\/\//, '');
+    return link.replace(/^https?:\/\//, '');
   };
 
   if (link) {
