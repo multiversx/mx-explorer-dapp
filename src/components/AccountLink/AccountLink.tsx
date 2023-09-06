@@ -1,11 +1,12 @@
+import classNames from 'classnames';
+
 import { ScAddressIcon, ShardSpan, NetworkLink, AccountName } from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
-import { AccountAssetType } from 'types';
+import { AccountAssetType, WithClassnameType } from 'types';
 
-export interface AccountLinkType {
+export interface AccountLinkType extends WithClassnameType {
   address: string;
   assets?: AccountAssetType;
-  className?: string;
   linkClassName?: string;
 }
 
@@ -17,13 +18,15 @@ export const AccountLink = ({
 }: AccountLinkType) => {
   return (
     <div
-      className={`d-flex align-items-center ${className ? className : 'hash'}`}
+      className={classNames('d-flex', 'align-items-center', className, {
+        hash: !className
+      })}
     >
       <ScAddressIcon initiator={address} />
       {addressIsBech32(address) ? (
         <NetworkLink
           to={urlBuilder.accountDetails(address)}
-          className={`trim-wrapper ${linkClassName ?? ''}`}
+          className={classNames('trim-wrapper', linkClassName)}
         >
           <AccountName address={address} assets={assets} />
         </NetworkLink>
