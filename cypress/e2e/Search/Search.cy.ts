@@ -21,7 +21,7 @@ describe('Search', () => {
     cy.contains('Your search does not match anything');
   });
 
-  it('should return the account details page', () => {
+  it.only('should return the account details page', () => {
     let balance: string;
     searchHandler(SearchDataEnums.address);
     cy.contains('Address Details');

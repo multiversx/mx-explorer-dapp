@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DECIMALS } from 'config';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
@@ -18,7 +19,6 @@ import {
   FormatUSD,
   Overlay
 } from 'components';
-import { DECIMALS } from 'config';
 import { isContract, urlBuilder, formatDate, formatHerotag } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faClock, faExclamationTriangle, faInfoCircle } from 'icons/regular';
@@ -209,7 +209,10 @@ export const AccountDetailsCard = () => {
                 )}
 
                 <SmallDetailItem title='Balance'>
-                  <div className='d-flex align-items-center'>
+                  <div
+                    data-testid='balance'
+                    className='d-flex align-items-center'
+                  >
                     {balance !== ELLIPSIS ? (
                       <Denominate value={balance} decimals={4} />
                     ) : (

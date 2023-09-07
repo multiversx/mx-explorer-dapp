@@ -4,8 +4,10 @@ declare namespace Cypress {
     checkUrl: (url: string) => void;
     apiIntercept: (method: string, param: string) => void;
     coveredElementHandler: (selector: string) => void;
-    paginationHandler: () => void;
+    paginationHandler: (route: string) => void;
     checkTableHead: (payload: string[]) => void;
+    checkHeaderElements: (payload: string) => void;
+    accesPage: (page: string) => void;
     verifyApiResponse: (
       alias: string,
       ...additionalExpects: ((xhr: any) => void)[]
