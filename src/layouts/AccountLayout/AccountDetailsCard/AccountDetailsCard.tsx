@@ -426,7 +426,11 @@ export const AccountDetailsCard = () => {
               >
                 <div className='d-flex align-items-center'>
                   {balance !== ELLIPSIS ? (
-                    <Denominate value={balance} decimals={4} />
+                    <Denominate
+                      data-testid='balance'
+                      value={balance}
+                      decimals={4}
+                    />
                   ) : (
                     balance
                   )}
