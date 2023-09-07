@@ -1,4 +1,9 @@
-import { AssertionEnum } from '../constants/enums';
+import {
+  ApiEndpointsEnum,
+  ApiMethodsEnum,
+  AssertionEnum,
+  RoutesEnum
+} from '../constants/enums';
 import { DEVNET_API } from '../constants/globalLinks';
 
 // Check the url global function
@@ -41,15 +46,21 @@ Cypress.Commands.add('coveredElementHandler', (selector) => {
   });
 });
 
-Cypress.Commands.add('paginationHandler', () => {
-  cy.viewport(1000, 3000);
+Cypress.Commands.add('paginationHandler', (route) => {
+  cy.get('header').invoke('css', {
+    display: 'none'
+  });
   cy.contains('button', '2').click();
   cy.checkUrl('?page=2');
   cy.contains('button', '1').click();
   cy.checkUrl('?page=1');
-  cy.contains('button', 'Next').click();
+  cy.contains('button', 'Next').last().click();
   cy.checkUrl('?page=2');
   cy.contains('button', 'Prev').click();
+  cy.checkUrl(route);
+  cy.apiIntercept(ApiMethodsEnum.GET, `${route}/`);
+  cy.get('[aria-label="Last Page"]').first().click();
+  cy.verifyApiResponse(`${route}/`);
 });
 
 Cypress.Commands.add('checkTableHead', (payload: string[]) => {
@@ -59,4 +70,17 @@ Cypress.Commands.add('checkTableHead', (payload: string[]) => {
       el
     );
   });
+});
+
+Cypress.Commands.add('checkHeaderElements', (payload: string) => {
+  cy.contains(payload);
+  cy.contains('Total Accounts');
+  cy.contains('Total Transactions');
+  cy.contains('Block Height');
+});
+
+Cypress.Commands.add('accesPage', (page: string) => {
+  cy.visit('/');
+  cy.get(`.links > [href="${page}"]`).click();
+  cy.checkUrl(page);
 });

@@ -5,35 +5,34 @@ import {
   RoutesEnum
 } from '../../constants/enums';
 
-describe('Blocks', () => {
+describe('NFTs', () => {
   beforeEach(() => {
-    cy.accesPage(RoutesEnum.blocks);
+    cy.accesPage(RoutesEnum.collections);
   });
-
   it('should display de header elements', () => {
-    cy.checkHeaderElements('Blocks');
-    cy.checkUrl(RoutesEnum?.blocks);
+    cy.checkHeaderElements('collections');
+    cy.checkUrl(RoutesEnum?.collections);
   });
 
   it('should properly display the table', () => {
     const tableHead = [
-      'Block',
+      'Collection',
+      'Name',
       'Age',
-      'Txns',
-      'Shard',
-      'Size',
-      'Gas Used',
-      'Block Hash',
-      'Leader'
+      'Items',
+      'Holders',
+      'Owner'
     ];
     cy.checkTableHead(tableHead);
   });
+
   it('should properly change the table page', () => {
-    cy.paginationHandler(RoutesEnum.blocks);
+    cy.paginationHandler(RoutesEnum.collections);
   });
+
   it('should acces the block details page', () => {
     cy.viewport(1000, 3000);
-    cy.getSelector('blockLink11').click();
-    cy.getSelector('title').should(AssertionEnum.contain, 'Block Details');
+    cy.get('img').first().click();
+    cy.getSelector('title').should(AssertionEnum.contain, 'Collection Details');
   });
 });
