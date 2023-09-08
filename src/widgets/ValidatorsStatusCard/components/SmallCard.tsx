@@ -20,7 +20,9 @@ export const SmallCard = ({
           <ValidatorMap markers={markers} />
         )}
       </div>
-      <ContinentsRank continentsRank={continentsRank} />
+      {continentsRank && continentsRank.length > 0 && (
+        <ContinentsRank continentsRank={continentsRank} />
+      )}
     </>
   );
 };

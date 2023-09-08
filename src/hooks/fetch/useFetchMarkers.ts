@@ -17,12 +17,13 @@ const schema = object({
 
 export const useFetchMarkers = () => {
   const dispatch = useDispatch();
+  const markerUrl = process.env.MARKERS_API_URL;
   const { getMarkers } = useAdapter();
   const { isFetched } = useSelector(markersSelector);
 
   const fetchMarkers = () => {
-    if (!isFetched) {
-      getMarkers().then(({ data, success }) => {
+    if (!isFetched && markerUrl) {
+      getMarkers(markerUrl).then(({ data, success }) => {
         if (data && success) {
           schema
             .validate((data as any)[Object.keys(data)[0]], { strict: true })

@@ -658,9 +658,9 @@ export const useAdapter = () => {
         url: `/usernames/${username}`
       }),
 
-    getMarkers: () =>
+    getMarkers: (baseUrl: string) =>
       provider({
-        baseUrl: '***REMOVED***',
+        baseUrl,
         url: ''
       }),
 
