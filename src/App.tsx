@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 import { PersistGate } from 'redux-persist/integration/react';
 
-import { AxiosInterceptor } from 'components';
+import { AxiosInterceptor } from 'interceptors';
 import { store, persistor } from 'redux/store';
 import { wrappedRoutes } from 'routes';
 
