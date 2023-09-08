@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { ReactComponent as MultiversXLogo } from 'assets/img/logo-full.svg';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { NetworkLink } from 'components';
+import { capitalize } from 'helpers';
 import { useIsMainnet } from 'hooks';
 import { faGrid, faGrid2 } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -17,8 +18,16 @@ import { HeaderPropsType } from './types';
 export const Header = (props: HeaderPropsType) => {
   const isMainnet = useIsMainnet();
 
-  const { id, name } = useSelector(activeNetworkSelector);
-  const explorerTitle = id !== 'mainnet' ? `${name} Explorer` : 'Explorer';
+  const { id } = useSelector(activeNetworkSelector);
+  const customLinkPrefix = process.env.VITE_APP_SHARE_PREFIX
+    ? `${capitalize(
+        String(process.env.VITE_APP_SHARE_PREFIX).replace('-', ' ')
+      )}`
+    : '';
+  const explorerTitle =
+    id !== 'mainnet' && customLinkPrefix
+      ? `${customLinkPrefix} Explorer`
+      : 'Explorer';
 
   const { onExpand } = props;
 
