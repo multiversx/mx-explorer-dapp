@@ -27,6 +27,7 @@ jobs:
       - run: yarn run build-devnet2
         env:
           CI: false
+          VITE_APP_MARKERS_API_URL: ${{ secrets.MARKERS_API_URL }}
       # - name: Configure AWS Credentials
       #   uses: aws-actions/configure-aws-credentials@v1
       #   with:

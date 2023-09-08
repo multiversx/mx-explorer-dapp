@@ -27,7 +27,8 @@ jobs:
       - run: yarn run build-internal
         env:
           CI: false
-      #     VITE_APP_INTERNAL_NETWORKS: ${{ secrets.INTERNAL_NETWORKS }}
+          VITE_APP_INTERNAL_NETWORKS: ${{ secrets.INTERNAL_NETWORK_LIST }}
+          VITE_APP_MARKERS_API_URL: ${{ secrets.MARKERS_API_URL }}
       # - name: Configure AWS Credentials
       #   uses: aws-actions/configure-aws-credentials@v1
       #   with:
