@@ -661,7 +661,7 @@ export const useAdapter = () => {
     getMarkers: () =>
       provider({
         baseUrl: '***REMOVED***',
-        url: '/markers'
+        url: ''
       }),
 
     // Growth Charts
