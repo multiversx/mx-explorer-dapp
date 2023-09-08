@@ -16,7 +16,7 @@ This project was bootstrapped with [Vite](https://vitejs.dev/guide/).
 ## Quick start
 
 1. run `yarn` in the project directory.
-2. run `npm run start-testnet` fot the `Testnet` network.
+2. run `npm run start-devnet` fot the `Devnet` network.
 3. optionally make edits to `networks` or other configurations found in newly created `index.ts` in the `src/config` folder.
 
 - One can use any of the existing network setups by running one of the `npm run start-*` scripts available in the `package.json` file.
