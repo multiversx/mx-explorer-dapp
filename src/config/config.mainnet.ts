@@ -13,10 +13,8 @@ export const networks: NetworkType[] = [
     walletAddress: 'https://wallet.multiversx.com',
     explorerAddress: 'https://explorer.multiversx.com',
     nftExplorerAddress: 'https://xspotlight.com',
-    apiAddress: '***REMOVED***',
-    extrasApi: '***REMOVED***',
-    growthApi: 'https://tools.multiversx.com/growth-api',
-    accessToken: true
+    apiAddress: 'https://api.multiversx.com',
+    growthApi: 'https://tools.multiversx.com/growth-api'
   }
 ];
 

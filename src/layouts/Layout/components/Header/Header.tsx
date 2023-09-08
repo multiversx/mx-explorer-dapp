@@ -1,13 +1,14 @@
 import { useState, MouseEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
 import { ReactComponent as MultiversXLogo } from 'assets/img/logo-full.svg';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { NetworkLink } from 'components';
-import { multiversxApps } from 'config';
 import { useIsMainnet } from 'hooks';
 import { faGrid, faGrid2 } from 'icons/solid';
+import { activeNetworkSelector } from 'redux/selectors';
 import { Applications } from './components/Applications';
 import { Links } from './components/Links';
 import { Switcher } from './components/Switcher';
@@ -16,8 +17,8 @@ import { HeaderPropsType } from './types';
 export const Header = (props: HeaderPropsType) => {
   const isMainnet = useIsMainnet();
 
-  const explorerApp = multiversxApps.find((app) => app.id === 'explorer');
-  const explorerTitle = explorerApp ? explorerApp.name : 'Explorer';
+  const { id, name } = useSelector(activeNetworkSelector);
+  const explorerTitle = id !== 'mainnet' ? `${name} Explorer` : 'Explorer';
 
   const { onExpand } = props;
 

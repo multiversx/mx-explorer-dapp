@@ -20,12 +20,10 @@ export const networks: NetworkType[] = [
 export const multiversxApps = allApps([
   {
     id: 'wallet',
-    name: 'Devnet2 Wallet', // navbar title
     url: 'https://devnet2-wallet.multiversx.com'
   },
   {
     id: 'explorer',
-    name: 'Devnet2 Explorer',
     url: 'http://devnet2-explorer.multiversx.com'
   }
 ]);
