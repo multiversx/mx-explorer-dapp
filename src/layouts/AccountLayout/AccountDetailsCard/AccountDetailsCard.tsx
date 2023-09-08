@@ -209,12 +209,13 @@ export const AccountDetailsCard = () => {
                 )}
 
                 <SmallDetailItem title='Balance'>
-                  <div
-                    data-testid='balance'
-                    className='d-flex align-items-center'
-                  >
+                  <div className='d-flex align-items-center'>
                     {balance !== ELLIPSIS ? (
-                      <Denominate value={balance} decimals={4} />
+                      <Denominate
+                        value={balance}
+                        decimals={4}
+                        data-testid='balance'
+                      />
                     ) : (
                       balance
                     )}
