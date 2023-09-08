@@ -48,7 +48,6 @@
     "yup": "0.32.11"
   },
   "scripts": {
-    "prepare": "yarn run prepare-free-icons && yarn run copy-base-interceptor",
     "start": "cross-env VITE_APP_CACHE_BUST=$(git rev-parse --short HEAD || echo 'local') vite",
     "start-devnet": "yarn run copy-devnet-config & cross-env VITE_APP_SHARE_PREFIX=devnet- yarn run start",
     "start-devnet2": "yarn run copy-devnet2-config & cross-env VITE_APP_SHARE_PREFIX=devnet2- yarn run start",
@@ -83,6 +82,7 @@
     "copy-multiple-config:windows": "copy .\\src\\config\\config.internal.ts .\\src\\config\\index.ts",
     "copy-base-interceptor:windows": "copy .\\src\\interceptors\\Interceptor.tsx .\\src\\interceptors\\index.tsx",
     "version:make": "git rev-parse --short HEAD | sed 's/^/\"/;s/$/\"/' > build/version.json",
+    "prepare": "yarn run prepare-free-icons && yarn run copy-base-interceptor",
     "prepare-free-icons": "run-script-os",
     "prepare-free-icons:nix": "cp ./src/icons/duotone/fontawesomeFree.ts ./src/icons/duotone/index.ts && cp ./src/icons/light/fontawesomeFree.ts ./src/icons/light/index.ts && cp ./src/icons/regular/fontawesomeFree.ts ./src/icons/regular/index.ts && cp ./src/icons/solid/fontawesomeFree.ts ./src/icons/solid/index.ts",
     "prepare-free-icons:windows": "copy .\\src\\icons\\duotone\\fontawesomeFree.ts .\\src\\icons\\duotone\\index.ts && copy .\\src\\icons\\light\\fontawesomeFree.ts .\\src\\icons\\light\\index.ts && copy .\\src\\icons\\regular\\fontawesomeFree.ts .\\src\\icons\\regular\\index.ts && copy .\\src\\icons\\solid\\fontawesomeFree.ts .\\src\\icons\\solid\\index.ts",
