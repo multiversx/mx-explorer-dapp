@@ -6,14 +6,10 @@ import {
 } from '../../constants/enums';
 describe('Transactions', () => {
   beforeEach(() => {
-    cy.visit('/');
-    cy.get('.links > [href="/transactions"]').click();
-    cy.checkUrl(RoutesEnum.transactions);
+    cy.accesPage(RoutesEnum.transactions);
   });
   it('should display de header elements', () => {
-    cy.contains('Transactions');
-    cy.contains('Total Accounts');
-    cy.contains('Block Height');
+    cy.checkHeaderElements('Transactions');
     cy.getSelector('title').should(AssertionEnum.contain, 'Live Transactions');
   });
 
@@ -31,11 +27,7 @@ describe('Transactions', () => {
   });
 
   it('should properly change the table page', () => {
-    cy.paginationHandler();
-    cy.checkUrl(RoutesEnum.transactions);
-    cy.apiIntercept(ApiMethodsEnum.GET, `${ApiEndpointsEnum.transactions}/`);
-    cy.get('[aria-label="Last Page"]').first().click();
-    cy.verifyApiResponse(`${ApiEndpointsEnum.transactions}/`);
+    cy.paginationHandler(RoutesEnum.transactions);
   });
 
   it('should acces the transaction details page', () => {
