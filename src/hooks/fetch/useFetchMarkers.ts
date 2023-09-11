@@ -17,7 +17,7 @@ const schema = object({
 
 export const useFetchMarkers = () => {
   const dispatch = useDispatch();
-  const markerUrl = process.env.MARKERS_API_URL;
+  const markerUrl = process.env.VITE_APP_MARKERS_API_URL;
   const { getMarkers } = useAdapter();
   const { isFetched } = useSelector(markersSelector);
 
