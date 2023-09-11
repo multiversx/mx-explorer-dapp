@@ -20,6 +20,13 @@ export {
   GAS_PRICE
 };
 
+interface AppLinksType {
+  id: string;
+  url: string;
+  name?: string;
+  custom?: boolean;
+}
+
 export const links: NetworkUrlType[] = [
   {
     id: 'mainnet',
@@ -38,7 +45,7 @@ export const links: NetworkUrlType[] = [
   }
 ];
 
-export const allApps = (apps?: { id: string; name: string; url: string }[]) => {
+export const allApps = (apps?: AppLinksType[]): AppLinksType[] => {
   const baseApps = [
     {
       id: 'main-site',
@@ -83,10 +90,13 @@ export const allApps = (apps?: { id: string; name: string; url: string }[]) => {
   ];
 
   if (apps) {
-    const mergedApps = baseApps.map((app) => ({
-      ...app,
-      ...apps.find((configApp) => configApp.id === app.id)
-    }));
+    const mergedApps = baseApps.map((app) => {
+      const updated = apps.find((configApp) => configApp.id === app.id);
+      return {
+        ...app,
+        ...(updated && !updated?.name ? { ...updated, custom: true } : updated)
+      };
+    });
 
     return mergedApps;
   }

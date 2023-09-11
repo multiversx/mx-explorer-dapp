@@ -21,22 +21,18 @@ export const networks: NetworkType[] = [
 export const multiversxApps = allApps([
   {
     id: 'wallet',
-    name: 'Devnet Wallet', // navbar title
     url: 'https://devnet-wallet.multiversx.com'
   },
   {
     id: 'explorer',
-    name: 'Devnet Explorer',
     url: 'http://devnet-explorer.multiversx.com'
   },
   {
     id: 'xexchange',
-    name: 'Devnet xExchange',
     url: 'http://devnet.xexchange.com'
   },
   {
     id: 'xspotlight',
-    name: 'Devnet xSpotlight',
     url: 'https://devnet.xspotlight.com/'
   }
 ]);

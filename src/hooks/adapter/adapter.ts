@@ -658,10 +658,10 @@ export const useAdapter = () => {
         url: `/usernames/${username}`
       }),
 
-    getMarkers: () =>
+    getMarkers: (baseUrl: string) =>
       provider({
-        baseUrl: '***REMOVED***',
-        url: '/markers'
+        baseUrl,
+        url: ''
       }),
 
     // Growth Charts
