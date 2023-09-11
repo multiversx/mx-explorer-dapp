@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 import { PersistGate } from 'redux-persist/integration/react';
 
-import { AxiosInterceptor } from 'components';
+import { Interceptor } from 'interceptors';
 import { store, persistor } from 'redux/store';
 import { wrappedRoutes } from 'routes';
 
@@ -16,9 +16,9 @@ export const ProviderApp = () => {
     <HelmetProvider>
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
-          <AxiosInterceptor>
+          <Interceptor>
             <Outlet />
-          </AxiosInterceptor>
+          </Interceptor>
         </PersistGate>
       </Provider>
     </HelmetProvider>

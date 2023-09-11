@@ -14,6 +14,7 @@ export * from './isContract';
 export * from './isHash';
 export * from './isUtf8';
 export * from './nominate';
+export * from './parseJwt';
 export * from './processData';
 export * from './storage';
 export * from './stringIsFloat';

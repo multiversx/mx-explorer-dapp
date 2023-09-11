@@ -3,7 +3,6 @@ import axios from 'axios';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
-import { APP_VERSION_URL } from 'appConstants';
 import { useNotifications } from 'hooks';
 import { refreshSelector } from 'redux/selectors/refresh';
 
@@ -16,6 +15,7 @@ export const useCheckVersion = () => {
   const isMainnetExplorer =
     window.location.origin === 'https://explorer.multiversx.com';
   const explorerVersion = process.env.VITE_APP_CACHE_BUST;
+  const explorerVersionUrl = process.env.VITE_APP_VERSION_URL;
 
   const withinInterval = moment()
     .subtract(refreshRate, 'ms')
@@ -23,7 +23,7 @@ export const useCheckVersion = () => {
 
   const checkVersion = () => {
     axios
-      .get(`https:${APP_VERSION_URL}?${Date.now()}`)
+      .get(`https:${explorerVersionUrl}?${Date.now()}`)
       .then(({ data: latestExplorerVersion }) => {
         if (
           explorerVersion !== undefined &&
@@ -46,7 +46,12 @@ export const useCheckVersion = () => {
 
   const useLoop = () => {
     const intervalId = setInterval(() => {
-      if (!withinInterval && !document.hidden && isMainnetExplorer) {
+      if (
+        !withinInterval &&
+        !document.hidden &&
+        isMainnetExplorer &&
+        explorerVersionUrl
+      ) {
         checkVersion();
       }
     }, refreshRate);
