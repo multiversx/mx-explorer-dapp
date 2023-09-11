@@ -20,7 +20,7 @@ import adapter from './Adapter';
 import DetailItem from './DetailItem';
 import Trim from './Trim';
 import Led from './Led';
-import AxiosInterceptor from './AxiosInterceptor';
+import Interceptor from './Interceptor';
 import SharedIdentity from './SharedIdentity';
 import ProvidersTable from './ProvidersTable';
 import MultilayerPercentageBar from './MultilayerPercentageBar';
@@ -79,7 +79,7 @@ export {
   DetailItem,
   Trim,
   Led,
-  AxiosInterceptor,
+  Interceptor,
   SharedIdentity,
   ProvidersTable,
   MultilayerPercentageBar,

@@ -33,7 +33,6 @@ import useActiveRoute from './useActiveRoute';
 import isUtf8 from './isUtf8';
 import useScamFlag from './useScamFlag';
 import useNotifications from './useNotifications';
-import useCheckVersion from './useCheckVersion';
 import getTransactionMethod from './getTransactionMethod';
 import capitalizeFirstLetter from './capitalizeFirstLetter';
 import amountWithoutRounding from './amountWithoutRounding';
@@ -81,7 +80,6 @@ export {
   isUtf8,
   useScamFlag,
   useNotifications,
-  useCheckVersion,
   getTransactionMethod,
   capitalizeFirstLetter,
   amountWithoutRounding,

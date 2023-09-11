@@ -2,7 +2,7 @@ import { useIsMainnet } from 'helpers';
 import React, { useMemo } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { AxiosInterceptor } from 'sharedComponents';
+import { Interceptor } from 'sharedComponents';
 import Layout from './components/Layout';
 import PageNotFoud from './components/PageNotFoud';
 import { GlobalProvider, useGlobalState } from './context';
@@ -74,11 +74,11 @@ export const Routes = ({
 export const App = ({ optionalConfig }: { optionalConfig?: ConfigType }) => {
   return (
     <GlobalProvider optionalConfig={optionalConfig}>
-      <AxiosInterceptor>
+      <Interceptor>
         <Layout>
           <Routes routes={routes} />
         </Layout>
-      </AxiosInterceptor>
+      </Interceptor>
     </GlobalProvider>
   );
 };

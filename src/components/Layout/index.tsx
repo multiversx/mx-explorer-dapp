@@ -15,7 +15,6 @@ import {
   useLoopManager,
   useActiveRoute,
   useIsMainnet,
-  useCheckVersion,
 } from 'helpers';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -55,7 +54,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   useLoopManager();
   useFetchEconomics();
   useFetchStats();
-  useCheckVersion();
 
   const offline = !window.navigator.onLine;
 
