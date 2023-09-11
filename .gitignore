@@ -50,7 +50,9 @@ dist-ssr
 
 # Other
 /sam/*
-deploy-*.sh
+*.sh
+!prepare-free-icons.sh
+!prepare-pro-icons.sh
 
 # Editor directories and files
 .vscode/*
