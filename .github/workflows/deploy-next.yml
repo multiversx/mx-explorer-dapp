@@ -29,22 +29,22 @@ jobs:
           VITE_APP_INTERNAL_NETWORKS: ${{ secrets.INTERNAL_NETWORK_LIST }}
           VITE_APP_MARKERS_API_URL: ${{ secrets.MARKERS_API_URL }}
           VITE_APP_VERSION_URL: ${{ secrets.APP_VERSION_URL }}
-      # - name: Configure AWS Credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: 'us-east-1'
-      # - name: Deploy to S3 bucket
-      #   run: aws s3 sync ./build/ s3://${{ secrets.AWS_S3_BUCKET_NEXT }} --delete
-      # - name: No-cache index.html
-      #   run: aws s3 cp s3://${{ secrets.AWS_S3_BUCKET_NEXT }}/index.html s3://${{ secrets.AWS_S3_BUCKET_NEXT }}/index.html --metadata-directive REPLACE --cache-control max-age=0 --content-type "text/html"
-      # - name: Slack Notification
-      #   uses: rtCamp/action-slack-notify@master
-      #   env:
-      #     SLACK_ICON_EMOJI: ':globe_with_meridians:'
-      #     SLACK_USERNAME: ${{ secrets.AWS_S3_BUCKET_NEXT }}
-      #     SLACK_MESSAGE: ${{ secrets.AWS_S3_BUCKET_NEXT }}
-      #     SLACK_FOOTER: ''
-      #     MSG_MINIMAL: true
-      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-east-1'
+      - name: Deploy to S3 bucket
+        run: aws s3 sync ./build/ s3://${{ secrets.AWS_S3_BUCKET_NEXT }} --delete
+      - name: No-cache index.html
+        run: aws s3 cp s3://${{ secrets.AWS_S3_BUCKET_NEXT }}/index.html s3://${{ secrets.AWS_S3_BUCKET_NEXT }}/index.html --metadata-directive REPLACE --cache-control max-age=0 --content-type "text/html"
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_ICON_EMOJI: ':globe_with_meridians:'
+          SLACK_USERNAME: ${{ secrets.AWS_S3_BUCKET_NEXT }}
+          SLACK_MESSAGE: ${{ secrets.AWS_S3_BUCKET_NEXT }}
+          SLACK_FOOTER: ''
+          MSG_MINIMAL: true
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
