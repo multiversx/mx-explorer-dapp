@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { HEROTAG_SUFFIX } from 'appConstants';
 import {
   urlBuilder,
   isHash,
   isContract,
   addressIsBech32,
-  bech32
+  bech32,
+  formatHerotag
 } from 'helpers';
 import { useAdapter, useNetworkRoute } from 'hooks';
 import { TokenTypeEnum } from 'types';
@@ -43,6 +45,8 @@ export const useSearch = (searchHash: string) => {
         searchHash.includes('-') &&
         searchHash.split('-')[1].length === 6 &&
         validHashChars.test(searchHash.split('-')[1]) === true;
+      const isUsername =
+        searchHash.startsWith('@') || searchHash.endsWith(HEROTAG_SUFFIX);
 
       let isPubKeyAccount = false;
       try {
@@ -51,6 +55,15 @@ export const useSearch = (searchHash: string) => {
       } catch {}
 
       switch (true) {
+        case isUsername:
+          getUsername(formatHerotag(searchHash)).then((account) => {
+            const newRoute = account?.data?.address
+              ? networkRoute(urlBuilder.accountDetails(account.data.address))
+              : notFoundRoute;
+            setSearchRoute(newRoute);
+          });
+          break;
+
         case isAccount:
           getAccount({ address: searchHash }).then((account) => {
             const newRoute = account.success
@@ -147,7 +160,7 @@ export const useSearch = (searchHash: string) => {
           Promise.all([
             getTokens({ search: searchHash, includeMetaESDT: true }),
             getCollections({ search: searchHash, excludeMetaESDT: true }),
-            getUsername(searchHash.replaceAll('.elrond', ''))
+            getUsername(formatHerotag(searchHash))
           ]).then(([tokens, collections, account]) => {
             switch (true) {
               case Boolean(tokens.success && tokens?.data?.[0]):
