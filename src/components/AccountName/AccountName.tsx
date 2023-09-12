@@ -1,3 +1,4 @@
+import { HEROTAG_SUFFIX } from 'appConstants';
 import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
 import { Trim, Overlay } from 'components';
 import { formatHerotag } from 'helpers';
@@ -21,7 +22,7 @@ export const AccountName = ({
 
     return (
       <>
-        {cleanName.endsWith('.elrond') && (
+        {cleanName.endsWith(HEROTAG_SUFFIX) && (
           <Overlay
             title='Herotag'
             className='herotag'
