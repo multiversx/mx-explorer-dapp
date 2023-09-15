@@ -39,6 +39,7 @@ dist-ssr
 .env.production.local
 
 # Config
+/public/config.js
 /src/config/*
 !/src/config.devnet.ts
 !/src/config.devnet2.ts
