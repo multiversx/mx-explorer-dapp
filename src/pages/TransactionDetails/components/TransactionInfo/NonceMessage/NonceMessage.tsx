@@ -22,7 +22,7 @@ export const NonceMessage = ({
   const [hasUnsyncedNonce, setHasUnsyncedNonce] = useState<boolean>(false);
 
   const isTxPending =
-    status.toLowerCase() === TransactionApiStatusEnum.pending ||
+    (status && status.toLowerCase() === TransactionApiStatusEnum.pending) ||
     transaction.pendingResults;
 
   const getSenderNonce = () => {

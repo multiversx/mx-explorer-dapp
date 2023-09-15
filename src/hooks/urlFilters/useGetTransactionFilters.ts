@@ -7,7 +7,7 @@ const checkValue = (value: string) =>
   stringIsInteger(value) ? parseInt(value) : undefined;
 
 const checkStatus = (status: string) =>
-  Object.keys(TransactionApiStatusEnum).includes(status.toLowerCase())
+  status && Object.keys(TransactionApiStatusEnum).includes(status.toLowerCase())
     ? status.toLowerCase()
     : undefined;
 
