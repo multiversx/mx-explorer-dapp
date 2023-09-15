@@ -127,7 +127,8 @@ export const TransactionInfo = ({
   const [activeKey, setActiveKey] = useState(activeSection);
 
   const isTxPending =
-    transaction.status.toLowerCase() === TransactionApiStatusEnum.pending ||
+    (transaction?.status &&
+      transaction.status.toLowerCase() === TransactionApiStatusEnum.pending) ||
     transaction.pendingResults;
 
   const transactionFee =
@@ -238,11 +239,13 @@ export const TransactionInfo = ({
                 </div>
               </DetailItem>
 
-              <DetailItem title='Status'>
-                <div className='d-flex flex-wrap align-items-center'>
-                  <TransactionStatus transaction={transaction} />
-                </div>
-              </DetailItem>
+              {transaction?.status && (
+                <DetailItem title='Status'>
+                  <div className='d-flex flex-wrap align-items-center'>
+                    <TransactionStatus transaction={transaction} />
+                  </div>
+                </DetailItem>
+              )}
 
               <DetailItem title='Age' className='text-neutral-400'>
                 {transaction.timestamp !== undefined ? (

@@ -45,7 +45,7 @@ export const TransactionIcon = ({
   });
 
   const statusIs = (compareTo: string) =>
-    transaction.status.toLowerCase() === compareTo;
+    transaction?.status && transaction.status.toLowerCase() === compareTo;
 
   const statusFailed =
     statusIs(TransactionApiStatusEnum.fail) ||
