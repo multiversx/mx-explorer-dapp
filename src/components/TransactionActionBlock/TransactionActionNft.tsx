@@ -6,74 +6,91 @@ import { NftTypeEnum, TransactionTokenArgumentType } from 'types';
 
 export const TransactionActionNft = ({
   token,
+  transactionActionValue,
   showBadge,
   noValue,
   showLastNonZeroDecimal
 }: {
   token: TransactionTokenArgumentType;
   showBadge?: boolean;
+  transactionActionValue?: number;
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
 }) => {
+  const displayIdentifier =
+    token?.identifier && token.ticker === token.collection
+      ? token.identifier
+      : token.ticker;
+
+  const tokenValue =
+    token?.value !== undefined
+      ? token.value
+      : transactionActionValue !== undefined
+      ? transactionActionValue
+      : undefined;
+
   const TokenInfo = () => (
     <div className='d-flex align-items-center symbol text-truncate'>
       {token.svgUrl && (
         <img src={token.svgUrl} alt={token.name} className='side-icon me-1' />
       )}
-      <span className='text-truncate'>
-        {token.ticker === token.collection ? token.identifier : token.ticker}
-      </span>
+      <span className='text-truncate'>{displayIdentifier}</span>
     </div>
   );
 
   return (
     <div className='nft-action-block d-contents'>
-      {token && token.identifier && (
+      {token && (
         <>
           {showBadge && token.type !== NftTypeEnum.MetaESDT && (
             <NftBadge type={token.type} className='me-1 my-auto' />
           )}
-          {!noValue &&
-            token.value &&
-            token.type !== NftTypeEnum.NonFungibleESDT && (
-              <div className={`me-1  ${token.svgUrl ? 'text-truncate' : ''}`}>
-                {token.decimals !== undefined ? (
-                  <Denominate
-                    value={token.value}
-                    showLabel={false}
-                    denomination={token.decimals}
-                    showLastNonZeroDecimal={showLastNonZeroDecimal}
-                  />
-                ) : Number(token.value).toLocaleString('en') !== '∞' ? (
-                  <span className='badge badge-orange'>
-                    {new BigNumber(token.value).toFormat()}
-                  </span>
-                ) : (
-                  ''
-                )}
-              </div>
-            )}
-          <NetworkLink
-            to={
-              token.type === NftTypeEnum.MetaESDT && token?.collection
-                ? urlBuilder.tokenMetaEsdtDetails(token.collection)
-                : urlBuilder.nftDetails(token.identifier)
-            }
-            className={`d-flex text-truncate ${
-              token.svgUrl ? 'side-link' : ''
-            }`}
-            {...(token.type === NftTypeEnum.MetaESDT
-              ? { 'aria-label': token.identifier }
-              : {})}
-          >
-            {token.type === NftTypeEnum.MetaESDT && token?.svgUrl ? (
-              <Overlay title={token.identifier}>
+          {!noValue && token.type !== NftTypeEnum.NonFungibleESDT && (
+            <div className={`me-1  ${token.svgUrl ? 'text-truncate' : ''}`}>
+              {token.decimals !== undefined && tokenValue !== undefined ? (
+                <Denominate
+                  value={String(tokenValue)}
+                  showLabel={false}
+                  denomination={token.decimals}
+                  showLastNonZeroDecimal={showLastNonZeroDecimal}
+                />
+              ) : (
+                <>
+                  {tokenValue &&
+                    Number(tokenValue).toLocaleString('en') !== '∞' && (
+                      <span className='badge badge-orange'>
+                        {new BigNumber(tokenValue).toFormat()}
+                      </span>
+                    )}
+                </>
+              )}
+            </div>
+          )}
+          {token.identifier ? (
+            <NetworkLink
+              to={
+                token.type === NftTypeEnum.MetaESDT && token?.collection
+                  ? urlBuilder.tokenMetaEsdtDetails(token.collection)
+                  : urlBuilder.nftDetails(token.identifier)
+              }
+              className={`d-flex text-truncate ${
+                token.svgUrl ? 'side-link' : ''
+              }`}
+              {...(token.type === NftTypeEnum.MetaESDT
+                ? { 'aria-label': displayIdentifier }
+                : {})}
+            >
+              {token.type === NftTypeEnum.MetaESDT && token?.svgUrl ? (
+                <Overlay title={displayIdentifier}>
+                  <TokenInfo />
+                </Overlay>
+              ) : (
                 <TokenInfo />
-              </Overlay>
-            ) : (
-              <TokenInfo />
-            )}
-          </NetworkLink>
+              )}
+            </NetworkLink>
+          ) : (
+            <TokenInfo />
+          )}
         </>
       )}
     </div>

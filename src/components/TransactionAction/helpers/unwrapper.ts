@@ -6,6 +6,16 @@ import {
   TransactionUnwrapperType
 } from 'types';
 
+export const defaultAction = (action: TransactionActionType) => {
+  if (action?.description) {
+    return [action.description];
+  }
+  if (action?.name) {
+    return [action.name];
+  }
+  return [];
+};
+
 export const mexUnwrapper = (
   action: TransactionActionType
 ): Array<string | TransactionUnwrapperType> => {
@@ -100,7 +110,7 @@ export const mexUnwrapper = (
       ];
 
     default:
-      return action.description ? [action.description] : [];
+      return defaultAction(action);
   }
 };
 
@@ -117,7 +127,7 @@ export const esdtNftUnwrapper = (
       ];
 
     default:
-      return [];
+      return defaultAction(action);
   }
 };
 
@@ -172,7 +182,7 @@ export const stakeUnwrapper = (
       ];
 
     default:
-      return [];
+      return defaultAction(action);
   }
 };
 
@@ -188,9 +198,9 @@ export const unwrapper = (
       case TransactionActionCategoryEnum.stake:
         return stakeUnwrapper(action);
       default:
-        return action.description ? [action.description] : [];
+        return defaultAction(action);
     }
   } else {
-    return action.description ? [action.description] : [action.name];
+    return defaultAction(action);
   }
 };

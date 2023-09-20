@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { SelectFilter } from 'components';
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
-import { TransactionActionEnum, TransactionFiltersEnum } from 'types';
+import { TransactionMethodsEnum, TransactionFiltersEnum } from 'types';
 
 export const MethodColumnFilters = ({
   inactiveFilters = []
@@ -20,14 +20,14 @@ export const MethodColumnFilters = ({
 
   const searchMethods = (
     Object.values(
-      TransactionActionEnum
-    ) as (keyof typeof TransactionActionEnum)[]
+      TransactionMethodsEnum
+    ) as (keyof typeof TransactionMethodsEnum)[]
   )
     .filter((val, index, array) => array.indexOf(val) === index)
     .map((key) => {
       return {
         value: key,
-        label: capitalize(TransactionActionEnum[key])
+        label: capitalize(TransactionMethodsEnum[key])
       };
     });
 

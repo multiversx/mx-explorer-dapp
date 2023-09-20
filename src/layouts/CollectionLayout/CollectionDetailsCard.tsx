@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import {
   Trim,
   NetworkLink,
-  PropertyPill,
+  RolesBadges,
   DetailItem,
   NftBadge,
   TimeAgo,
@@ -34,14 +34,6 @@ export const CollectionDetailsCard = () => {
     decimals,
     owner,
     isVerified,
-    canPause,
-    canFreeze,
-    canWipe,
-    canTransferNftCreateRole,
-    canChangeOwner,
-    canUpgrade,
-    canAddSpecialRoles,
-    canTransfer,
     scamInfo
   } = collectionState;
 
@@ -146,28 +138,7 @@ export const CollectionDetailsCard = () => {
                 <DetailItem title='Decimals'>{decimals}</DetailItem>
               )}
               <DetailItem title='Properties'>
-                <div className='d-flex alig-items-center flex-wrap gap-2 mt-1 mt-lg-0'>
-                  <PropertyPill name={'Can Pause'} active={canPause} />
-                  <PropertyPill name={'Can Freeze'} active={canFreeze} />
-                  <PropertyPill name={'Can Wipe'} active={canWipe} />
-                  <PropertyPill
-                    name={'Can Transfer NFT Create Role'}
-                    active={canTransferNftCreateRole}
-                  />
-                  <PropertyPill
-                    name={'Can Change Owner'}
-                    active={canChangeOwner}
-                  />
-                  <PropertyPill name={'Can Upgrade'} active={canUpgrade} />
-                  <PropertyPill
-                    name={'Can Add Special Roles'}
-                    active={canAddSpecialRoles}
-                  />
-                  <PropertyPill
-                    name={'Can Transfer'}
-                    active={Boolean(canTransfer)}
-                  />
-                </div>
+                <RolesBadges {...collectionState} />
               </DetailItem>
               <DetailItem title='Social'>
                 {Object.keys(mergedAssets).length > 0 ? (
