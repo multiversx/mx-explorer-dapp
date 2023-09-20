@@ -192,6 +192,7 @@ export interface TransactionActionType {
   category: string;
   name: TransactionActionEnum;
   description?: string;
+  value?: number;
   arguments?: { [key: string]: any };
 }
 
