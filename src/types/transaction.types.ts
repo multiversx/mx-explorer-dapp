@@ -104,6 +104,84 @@ export enum TransactionFiltersEnum {
   token = 'token'
 }
 
+// Avoid issues with differences between methods and actions
+export enum TransactionMethodsEnum {
+  // esdtNft category
+  transfer = 'transfer',
+  // stake category
+  delegate = 'delegate',
+  stake = 'stake',
+  unDelegate = 'unDelegate',
+  stakeClaimRewards = 'claimRewards',
+  reDelegateRewards = 'reDelegateRewards',
+  withdraw = 'withdraw',
+  // exchange category
+  claimLockedAssets = 'claimLockedAssets',
+  swapTokensFixedInput = 'swapTokensFixedInput',
+  swapTokensFixedOutput = 'swapTokensFixedOutput',
+  swap = 'swap',
+  multiPairSwap = 'multiPairSwap',
+  addLiquidity = 'addLiquidity',
+  addLiquidityProxy = 'addLiquidityProxy',
+  removeLiquidity = 'removeLiquidity',
+  removeLiquidityProxy = 'removeLiquidityProxy',
+  enterFarm = 'enterFarm',
+  enterFarmProxy = 'enterFarmProxy',
+  enterFarmAndLockRewards = 'enterFarmAndLockRewards',
+  enterFarmAndLockRewardsProxy = 'enterFarmAndLockRewardsProxy',
+  exitFarm = 'exitFarm',
+  exitFarmProxy = 'exitFarmProxy',
+  claimRewards = 'claimRewards',
+  claimRewardsProxy = 'claimRewardsProxy',
+  compoundRewards = 'compoundRewards',
+  compoundRewardsProxy = 'compoundRewardsProxy',
+  wrapEgld = 'wrapEgld',
+  unwrapEgld = 'unwrapEgld',
+  lockAssets = 'lockAssets',
+  unlockAssets = 'unlockAssets',
+  mergeLockedAssetTokens = 'mergeLockedAssetTokens',
+  stakeFarm = 'stakeFarm',
+  stakeFarmProxy = 'stakeFarmProxy',
+  stakeFarmTokens = 'stakeFarmTokens',
+  stakeFarmTokensProxy = 'stakeFarmTokensProxy',
+  unstakeFarm = 'unstakeFarm',
+  unstakeFarmProxy = 'unstakeFarmProxy',
+  unstakeFarmTokens = 'unstakeFarmTokens',
+  unstakeFarmTokensProxy = 'unstakeFarmTokensProxy',
+  claimDualYield = 'claimDualYield',
+  claimDualYieldProxy = 'claimDualYieldProxy',
+  unbondFarm = 'unbondFarm',
+  // builtin
+  ClaimDeveloperRewards = 'ClaimDeveloperRewards',
+  ChangeOwnerAddress = 'ChangeOwnerAddress',
+  SetUserName = 'SetUserName',
+  SaveKeyValue = 'SaveKeyValue',
+  ESDTTransfer = 'ESDTTransfer',
+  ESDTBurn = 'ESDTBurn',
+  ESDTFreeze = 'ESDTFreeze',
+  ESDTUnFreeze = 'ESDTUnFreeze',
+  ESDTWipe = 'ESDTWipe',
+  ESDTPause = 'ESDTPause',
+  ESDTUnPause = 'ESDTUnPause',
+  ESDTSetRole = 'ESDTSetRole',
+  ESDTUnSetRole = 'ESDTUnSetRole',
+  ESDTSetLimitedTransfer = 'ESDTSetLimitedTransfer',
+  ESDTUnSetLimitedTransfer = 'ESDTUnSetLimitedTransfer',
+  ESDTLocalBurn = 'ESDTLocalBurn',
+  ESDTLocalMint = 'ESDTLocalMint',
+  ESDTNFTTransfer = 'ESDTNFTTransfer',
+  ESDTNFTCreate = 'ESDTNFTCreate',
+  ESDTNFTAddQuantity = 'ESDTNFTAddQuantity',
+  ESDTNFTBurn = 'ESDTNFTBurn',
+  ESDTNFTAddURI = 'ESDTNFTAddURI',
+  ESDTNFTUpdateAttributes = 'ESDTNFTUpdateAttributes',
+  MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
+  // guardian
+  SetGuardian = 'SetGuardian',
+  GuardAccount = 'GuardAccount',
+  UnGuardAccount = 'UnGuardAccount'
+}
+
 export interface EventType {
   address: string;
   identifier: string;
