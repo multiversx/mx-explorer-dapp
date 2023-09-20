@@ -1,4 +1,5 @@
 import { RouteObject } from 'react-router-dom';
+import { ErrorElement } from 'components/ErrorElement';
 import { withPageTitle } from '../helpers/withPageTitle';
 
 import { TitledRouteObject } from '../routes';
@@ -20,8 +21,12 @@ export const wrapRoutes = (routes: TitledRouteObject[]): RouteObject[] =>
 
       delete route['title'];
 
+      route.errorElement = <ErrorElement />;
+
       return route;
     }
+
+    route.errorElement = <ErrorElement />;
 
     return route;
   });

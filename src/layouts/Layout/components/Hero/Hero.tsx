@@ -2,7 +2,12 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { Search } from 'components';
-import { useActiveRoute, useIsMainnet, usePageStats } from 'hooks';
+import {
+  useActiveRoute,
+  useIsMainnet,
+  usePageStats,
+  useGetSubdomainNetwork
+} from 'hooks';
 import { ChartContractsTransactions } from 'pages/Home/components/ChartContractsTransactions';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
@@ -27,7 +32,7 @@ import { getCustomPageName } from '../../helpers';
 
 export const Hero = () => {
   const { pathname } = useLocation();
-
+  const subdomainNetwork = useGetSubdomainNetwork();
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -46,7 +51,9 @@ export const Hero = () => {
   const pathArray = pathname.split('/').filter((path) => path);
 
   const basePage =
-    activeNetworkId !== defaultNetworkId && pathArray.length > 1
+    activeNetworkId !== defaultNetworkId &&
+    pathArray.length > 1 &&
+    !subdomainNetwork
       ? pathArray?.[1]
       : pathArray?.[0];
 

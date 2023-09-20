@@ -50,7 +50,7 @@ export const FormatUSD = ({
 
   return (
     <span className='d-inline-flex'>
-      {!stringIsFloat(formattedAmount) || !isFetched ? (
+      {!stringIsFloat(formattedAmount) || (!usdValue && !isFetched) ? (
         ELLIPSIS
       ) : (
         <>

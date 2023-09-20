@@ -36,7 +36,9 @@ export const TransactionDetails = () => {
   const checkRefetch = () => {
     if (
       transaction &&
-      (transaction.status.toLowerCase() === TransactionApiStatusEnum.pending ||
+      ((transaction?.status &&
+        transaction.status.toLowerCase() ===
+          TransactionApiStatusEnum.pending) ||
         transaction.pendingResults) &&
       dataReady
     ) {

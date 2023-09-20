@@ -55,13 +55,22 @@ export const TransactionValue = ({
     }
 
     const transactionTokens = getTransactionTokens({ transaction, token });
+    const transactionActionValue =
+      transactionTokens.length === 1 &&
+      transaction?.action?.arguments?.value !== undefined
+        ? transaction.action.arguments.value
+        : undefined;
 
     if (transactionTokens.length) {
       const firstToken = transactionTokens[0];
       return (
         <div className='d-flex align-items-center'>
           {Object.values(NftTypeEnum).includes(firstToken.type) ? (
-            <TransactionActionBlock.Nft token={firstToken} showBadge />
+            <TransactionActionBlock.Nft
+              token={firstToken}
+              transactionActionValue={transactionActionValue}
+              showBadge
+            />
           ) : (
             <TransactionActionBlock.Token token={firstToken} />
           )}

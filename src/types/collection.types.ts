@@ -8,13 +8,6 @@ export interface CollectionType {
   ticker: string;
   timestamp: number;
   owner: string;
-  canFreeze: boolean;
-  canWipe: boolean;
-  canPause: boolean;
-  canTransferNftCreateRole: boolean;
-  canChangeOwner: boolean;
-  canUpgrade: boolean;
-  canAddSpecialRoles: boolean;
   decimals?: number;
   assets?: {
     website?: string;
@@ -26,13 +19,19 @@ export interface CollectionType {
   };
   scamInfo?: ScamInfoType;
   roles?: CollectionRolesType[];
+  canFreeze?: boolean;
+  canWipe?: boolean;
+  canPause?: boolean;
+  canTransferNftCreateRole?: boolean;
+  canChangeOwner?: boolean;
+  canUpgrade?: boolean;
+  canAddSpecialRoles?: boolean;
   canTransfer?: boolean;
   canCreate?: boolean;
   canBurn?: boolean;
   canAddQuantity?: boolean;
   canUpdateAttributes?: boolean;
   canAddUri?: boolean;
-
   isVerified?: boolean;
   nftCount?: number;
   holderCount?: number;

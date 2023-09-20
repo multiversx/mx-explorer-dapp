@@ -127,7 +127,8 @@ export const TransactionInfo = ({
   const [activeKey, setActiveKey] = useState(activeSection);
 
   const isTxPending =
-    transaction.status.toLowerCase() === TransactionApiStatusEnum.pending ||
+    (transaction?.status &&
+      transaction.status.toLowerCase() === TransactionApiStatusEnum.pending) ||
     transaction.pendingResults;
 
   const transactionFee =
@@ -238,11 +239,13 @@ export const TransactionInfo = ({
                 </div>
               </DetailItem>
 
-              <DetailItem title='Status'>
-                <div className='d-flex flex-wrap align-items-center'>
-                  <TransactionStatus transaction={transaction} />
-                </div>
-              </DetailItem>
+              {transaction?.status && (
+                <DetailItem title='Status'>
+                  <div className='d-flex flex-wrap align-items-center'>
+                    <TransactionStatus transaction={transaction} />
+                  </div>
+                </DetailItem>
+              )}
 
               <DetailItem title='Age' className='text-neutral-400'>
                 {transaction.timestamp !== undefined ? (
@@ -347,17 +350,15 @@ export const TransactionInfo = ({
 
               <DetailItem title='Value' className='text-neutral-100'>
                 {formattedTxValue} {egldLabel}{' '}
-                <span className='text-neutral-400'>
-                  {transaction.price !== undefined ? (
+                {transaction.price !== undefined && (
+                  <span className='text-neutral-400'>
                     <FormatUSD
                       amount={txValue}
                       usd={transaction.price}
                       digits={2}
                     />
-                  ) : (
-                    <>N/A</>
-                  )}
-                </span>
+                  </span>
+                )}
               </DetailItem>
 
               <DetailItem title='Method'>
@@ -410,32 +411,28 @@ export const TransactionInfo = ({
                   <>
                     <span className='text-neutral-100'>{transactionFee}</span>{' '}
                     {egldLabel}{' '}
-                    <span className='text-neutral-400'>
-                      {transaction.price !== undefined ? (
+                    {transaction.price !== undefined && (
+                      <span className='text-neutral-400'>
                         <FormatUSD
                           amount={transactionFee}
                           usd={transaction.price}
                           digits={4}
                         />
-                      ) : (
-                        <>N/A</>
-                      )}
-                    </span>
+                      </span>
+                    )}
                   </>
                 ) : (
                   <span>N/A</span>
                 )}
               </DetailItem>
 
-              <DetailItem title={`${egldLabel} Price`}>
-                {transaction.price !== undefined ? (
+              {transaction.price !== undefined && (
+                <DetailItem title={`${egldLabel} Price`}>
                   <span className='text-neutral-100'>{`$${new BigNumber(
                     transaction.price
                   ).toFormat(2)}`}</span>
-                ) : (
-                  <span>N/A</span>
-                )}
-              </DetailItem>
+                </DetailItem>
+              )}
 
               <DetailItem title='Gas Limit'>
                 {transaction.gasLimit !== undefined ? (
