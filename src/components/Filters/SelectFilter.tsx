@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
-import { isHash, addressIsBech32 } from 'helpers';
+import { isHash, addressIsBech32, capitalize } from 'helpers';
 import { TransactionFiltersEnum } from 'types';
 
 interface SelectOptionType {
@@ -39,9 +39,28 @@ export const SelectFilter = ({
 }: SelectFilterType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const paramsObject = Object.fromEntries(searchParams);
-  const existingValue = paramsObject[filter]
+  const existingValues = paramsObject[filter]
     ? paramsObject[filter].split(',')
     : [];
+
+  if (hasCustomSearch && existingValues.length > 0) {
+    const searchedOptions = existingValues.map((value) => {
+      return {
+        value: value,
+        label: capitalize(value)
+      };
+    });
+
+    searchedOptions.forEach((value) => {
+      if (options.some((option) => option.label !== value.label)) {
+        options.push(value);
+      }
+    });
+  }
+
+  const defaultValues = options.filter(
+    (option) => existingValues && existingValues.includes(option.value)
+  );
 
   const updateSelectValue = (selectValue: string) => {
     const paramsObject = Object.fromEntries(searchParams);
@@ -88,9 +107,7 @@ export const SelectFilter = ({
           }
         }
       }}
-      defaultValue={options.filter(
-        (option) => existingValue.includes(option.value) && existingValue
-      )}
+      defaultValue={defaultValues}
       isValidNewOption={(option) => {
         if (validation && option) {
           if (validation === 'address') {
@@ -128,9 +145,7 @@ export const SelectFilter = ({
           }
         }
       }}
-      defaultValue={options.filter(
-        (option) => existingValue.includes(option.value) && existingValue
-      )}
+      defaultValue={defaultValues}
       {...(isMulti ? { isMulti: true } : {})}
     />
   );

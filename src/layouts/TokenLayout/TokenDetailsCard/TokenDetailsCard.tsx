@@ -5,7 +5,7 @@ import {
   Trim,
   NetworkLink,
   SocialIcons,
-  PropertyPill,
+  RolesBadges,
   SmallDetailItem,
   AssetsHelmet
 } from 'components';
@@ -23,14 +23,6 @@ export const TokenDetailsCard = () => {
     name,
     decimals,
     owner,
-    canBurn,
-    canChangeOwner,
-    canFreeze,
-    canMint,
-    canPause,
-    canUpgrade,
-    canWipe,
-    isPaused,
     assets,
     supply,
     circulatingSupply,
@@ -105,19 +97,7 @@ export const TokenDetailsCard = () => {
                   </SmallDetailItem>
 
                   <SmallDetailItem title='Properties'>
-                    <div className='d-flex alig-items-center flex-wrap gap-2 mt-1 mt-lg-0'>
-                      <PropertyPill name={'Can Upgrade'} active={canUpgrade} />
-                      <PropertyPill name={'Can Mint'} active={canMint} />
-                      <PropertyPill name={'Can Burn'} active={canBurn} />
-                      <PropertyPill
-                        name={'Can Change Owner'}
-                        active={canChangeOwner}
-                      />
-                      <PropertyPill name={'Can Pause'} active={canPause} />
-                      <PropertyPill name={'Can Freeze'} active={canFreeze} />
-                      <PropertyPill name={'Can Wipe'} active={canWipe} />
-                      <PropertyPill name={'Not Paused'} active={!isPaused} />
-                    </div>
+                    <RolesBadges {...token} />
                   </SmallDetailItem>
                 </dl>
               </div>
