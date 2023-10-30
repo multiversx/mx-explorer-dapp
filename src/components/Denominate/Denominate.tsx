@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -24,19 +25,40 @@ const CompleteValueTooltip = ({
 }: {
   completeValue: string;
   children: React.ReactNode;
-}) => (
-  <OverlayTrigger
-    placement='top'
-    delay={{ show: 0, hide: 400 }}
-    overlay={(props: any) => (
-      <Tooltip {...props} show={props.show.toString()}>
-        {completeValue}
-      </Tooltip>
-    )}
-  >
-    <span>{children}</span>
-  </OverlayTrigger>
-);
+}) => {
+  const [show, setShow] = useState(false);
+  const handleOnMouseEnter = () => {
+    setShow(true);
+  };
+  const handleOnMouseLeave = () => {
+    setShow(false);
+  };
+  const ref = useRef(null);
+
+  return (
+    <OverlayTrigger
+      placement='top'
+      show={show}
+      delay={{ show: 0, hide: 400 }}
+      overlay={
+        <Tooltip
+          onMouseEnter={handleOnMouseEnter}
+          onMouseLeave={handleOnMouseLeave}
+        >
+          {completeValue}
+        </Tooltip>
+      }
+    >
+      <span
+        ref={ref}
+        onMouseEnter={handleOnMouseEnter}
+        onMouseLeave={handleOnMouseLeave}
+      >
+        {children}
+      </span>
+    </OverlayTrigger>
+  );
+};
 
 const denominateInvalid = (props: DenominateType) => {
   return (
