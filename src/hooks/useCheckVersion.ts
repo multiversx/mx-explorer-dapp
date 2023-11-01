@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
+import { NEW_VERSION_NOTIFICATION } from 'appConstants';
 import { useNotifications } from 'hooks';
 import { refreshSelector } from 'redux/selectors/refresh';
 
@@ -31,7 +32,7 @@ export const useCheckVersion = () => {
         ) {
           if (explorerVersion !== latestExplorerVersion) {
             addNotification({
-              id: 'newExplorerVersion',
+              id: NEW_VERSION_NOTIFICATION,
               text: 'A new version of the Explorer is available.',
               dismissable: false,
               priority: 1

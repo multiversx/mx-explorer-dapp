@@ -11,7 +11,8 @@ import {
   useNetworkRouter,
   useLoopManager,
   useCheckVersion,
-  useGetURLNetwork
+  useGetURLNetwork,
+  useTempStorageNotification
 } from 'hooks';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 
@@ -37,6 +38,7 @@ export const Layout = () => {
   useNetworkRouter();
   useLoopManager();
   useCheckVersion();
+  useTempStorageNotification();
 
   const offline = !window.navigator.onLine;
 
@@ -66,14 +68,12 @@ export const Layout = () => {
   return (
     <div className={`d-flex ${pageClass}`}>
       <NetworkReady>
-        {' '}
         <main
           className={classNames('main-content', {
             'overflow-hidden vh-100': freeze
           })}
         >
           <Header onExpand={setFreeze} />
-
           <NotificationsBar />
           <div className='main-content-container d-flex flex-column'>
             {offline ? (
