@@ -7,6 +7,7 @@ export const networks: NetworkType[] = [
     default: true,
     id: 'mainnet',
     name: 'Mainnet',
+    chainId: '1',
     adapter: 'api',
     theme: 'default',
     egldLabel: 'EGLD',
