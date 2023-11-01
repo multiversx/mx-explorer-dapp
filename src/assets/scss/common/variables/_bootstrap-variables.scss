@@ -49,7 +49,7 @@ $primary: $primary-400;
 $secondary: $neutral-400;
 $success: $green;
 $info: $cyan;
-$warning: $amber-400;
+$warning: $amber-500;
 $danger: $red;
 $light: $neutral-100;
 $dark: $neutral-900;
@@ -180,6 +180,9 @@ $progress-border-radius: $border-radius;
 $list-group-border-radius: $border-radius;
 $alert-border-radius: $border-radius;
 
+$component-active-color: $body-color;
+$component-active-bg: $primary-400;
+
 // Typography
 //
 // Font, line-height, and color for body text, headings, and more.
@@ -220,7 +223,8 @@ $input-btn-padding-y-lg: 0.625rem;
 $input-btn-padding-x-lg: $input-btn-padding-x;
 $input-btn-font-size-lg: $font-size-lg;
 
-$input-btn-border-width: 0;
+$input-btn-focus-box-shadow: none;
+
 // scss-docs-end input-btn-variables
 
 // Buttons
@@ -276,15 +280,21 @@ $input-padding-y-lg: $input-btn-padding-y-lg;
 $input-padding-x-lg: $input-btn-padding-x-lg;
 $input-font-size-lg: $input-btn-font-size-lg;
 
-$input-bg: $body-bg;
-$input-disabled-color: null;
-$input-disabled-bg: $neutral-200;
-$input-disabled-border-color: null;
-
 $input-color: $body-color;
-$input-border-color: $neutral-400;
-$input-border-width: $input-btn-border-width;
+$input-bg: $body-bg;
 $input-box-shadow: $box-shadow-inset;
+$input-border-color: $neutral-400;
+$input-btn-border-width: 0;
+$input-border-width: $input-btn-border-width;
+
+$input-focus-width: 1px;
+
+$input-disabled-color: $neutral-600;
+$input-disabled-bg: $input-bg;
+$input-disabled-border-color: null;
+$input-focus-color: $body-color;
+$input-focus-bg: $input-bg;
+$input-focus-border-color: $component-active-bg;
 
 // $input-border-radius: $btn-border-radius;
 // $input-border-radius-sm: $btn-border-radius-sm;
@@ -298,6 +308,29 @@ $input-group-addon-padding-x: $input-padding-x;
 $input-group-addon-font-weight: $input-font-weight;
 // scss-docs-end form-input-variables
 
+// scss-docs-start form-check-variables
+
+$form-check-input-bg: $input-bg;
+$form-check-input-border: 1px solid rgba($black, 0.25);
+$form-check-input-focus-border: $input-focus-border-color;
+$form-check-input-focus-box-shadow: $input-btn-focus-box-shadow;
+
+$form-check-input-checked-color: $component-active-color;
+$form-check-input-checked-bg-color: $component-active-bg;
+$form-check-input-checked-border-color: $form-check-input-checked-bg-color;
+$form-check-input-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$form-check-input-checked-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/></svg>");
+$form-check-radio-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='#{$form-check-input-checked-color}'/></svg>");
+
+$form-check-input-indeterminate-color: $component-active-color;
+$form-check-input-indeterminate-bg-color: $component-active-bg;
+$form-check-input-indeterminate-border-color: $form-check-input-indeterminate-bg-color;
+$form-check-input-indeterminate-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$form-check-input-indeterminate-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/></svg>");
+
+$form-check-label-disabled-opacity: $form-check-input-disabled-opacity;
+$form-check-btn-check-disabled-opacity: $btn-disabled-opacity;
+
+// scss-docs-end form-check-variables
+
 // scss-docs-start form-select-variables
 $form-select-bg: $neutral-800;
 $form-select-color: $body-color;
@@ -305,6 +338,8 @@ $form-select-indicator-color: $neutral-400;
 $form-select-border-color: $neutral-800;
 $form-select-box-shadow: unset;
 $form-select-focus-box-shadow: unset;
+$form-select-disabled-color: $neutral-600;
+$form-select-disabled-bg: $input-bg;
 // scss-docs-end form-select-variables
 
 // Z-index master list
@@ -443,7 +478,7 @@ $badge-color: $body-color;
 
 // scss-docs-start modal-variables
 $modal-content-border-radius: $border-radius-lg;
-$modal-backdrop-opacity: 0.55;
+$modal-backdrop-opacity: 0.75;
 $modal-backdrop-bg: $card-bg;
 $modal-content-border-radius: 0.75rem;
 $modal-content-bg: $black;
