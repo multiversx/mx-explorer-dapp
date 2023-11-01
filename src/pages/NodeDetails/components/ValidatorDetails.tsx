@@ -20,7 +20,7 @@ export const ValidatorDetails = ({ nodeData }: { nodeData: NodeType }) => {
           </h5>
         </div>
       </div>
-      <div className='card-body card-item-container mx-spacing'>
+      <div className='card-body card-item-container my-n2 mx-spacing'>
         <CardItem title='Ignored Signature' icon={faTimes}>
           {validatorIgnoredSignatures ? validatorIgnoredSignatures : <>N/A</>}
         </CardItem>

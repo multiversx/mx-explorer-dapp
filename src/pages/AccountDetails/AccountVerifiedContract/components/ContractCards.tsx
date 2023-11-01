@@ -17,7 +17,7 @@ export const ContractCards = ({
         <h5 className='mb-0'>Build Info</h5>
       </div>
       <div className='card-body'>
-        <div className='card-item-container'>
+        <div className='card-item-container my-n2'>
           {abi?.name && (
             <CardItem title='Name' icon={faCogs}>
               {abi.name}
@@ -44,7 +44,7 @@ export const ContractCards = ({
           )}
         </div>
         <h6 className='px-3 py-2 rounded bg-table-header mt-2'>Rust</h6>
-        <div className='card-item-container'>
+        <div className='card-item-container my-n2'>
           {abi?.buildInfo?.rustc?.channel && (
             <CardItem title='Channel' icon={faRust}>
               {abi.buildInfo.rustc.channel}
