@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { METACHAIN_SHARD_ID } from 'appConstants';
+import moment from 'moment';
+
+import {
+  METACHAIN_SHARD_ID,
+  TEMP_LOCAL_NOTIFICATION_DISMISSED
+} from 'appConstants';
+import { storage } from 'helpers';
 import { sortShards } from 'helpers/sortShards';
 import {
   ExplorerOriginType,
@@ -74,6 +80,14 @@ export const interfaceSlice = createSlice({
       action: PayloadAction<string>
     ) => {
       const removedNotificationId = action.payload;
+      if (removedNotificationId === TEMP_LOCAL_NOTIFICATION_DISMISSED) {
+        const in30Days = new Date(moment().add(30, 'days').toDate());
+        storage.saveToLocal({
+          key: TEMP_LOCAL_NOTIFICATION_DISMISSED,
+          data: TEMP_LOCAL_NOTIFICATION_DISMISSED,
+          expirationDate: in30Days
+        });
+      }
       state.notifications = state.notifications.filter(
         (n) => n.id !== removedNotificationId
       );
