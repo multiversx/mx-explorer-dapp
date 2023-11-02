@@ -27,8 +27,7 @@ export const decode = (
       } catch {}
       return part;
     case DecodeMethodType.decimal:
-      const bn = new BigNumber(part, 16);
-      return bn.toString(10);
+      return part !== '' ? new BigNumber(part, 16).toString(10) : '';
     case DecodeMethodType.smart:
       try {
         const bech32Encoded = bech32.encode(part);
