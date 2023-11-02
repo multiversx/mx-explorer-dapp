@@ -42,7 +42,6 @@ dist-ssr
 /public/config.js
 /src/config/*
 !/src/config.devnet.ts
-!/src/config.devnet2.ts
 !/src/config.devnet-old.ts
 !/src/config.testnet.ts
 !/src/config.mainnet.ts
