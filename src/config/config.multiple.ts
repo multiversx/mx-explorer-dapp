@@ -35,15 +35,15 @@ export const networks: NetworkType[] = [
     apiAddress: 'https://devnet-api.multiversx.com'
   },
   {
-    id: 'devnet2',
-    name: 'Devnet2',
+    id: 'devnet',
+    name: 'Devnet Old',
     chainId: 'D',
     adapter: 'api',
     theme: 'testnet',
     egldLabel: 'xEGLD',
-    walletAddress: 'https://devnet2-wallet.multiversx.com',
-    explorerAddress: 'https://devnet2-explorer.multiversx.com',
-    apiAddress: 'https://devnet2-api.multiversx.com'
+    walletAddress: 'https://devnet-old-wallet.multiversx.com',
+    explorerAddress: 'https://devnet-old-explorer.multiversx.com',
+    apiAddress: 'https://devnet-old-api.multiversx.com'
   },
 
   // Internal Testnets

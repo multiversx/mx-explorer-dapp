@@ -21,9 +21,9 @@ describe('Dashboard', () => {
     });
     cy.verifyApiResponse(ApiEndpointsEnum.stats, (xhr) => {
       expect(xhr?.response?.body?.accounts).to.be.at.least(3200);
-      expect(xhr?.response?.body?.scResults).to.be.at.least(191275);
-      expect(xhr?.response?.body?.blocks).to.be.at.least(14078875);
-      expect(xhr?.response?.body?.epoch).to.be.at.least(2947);
+      expect(xhr?.response?.body?.scResults).to.be.at.least(191274);
+      expect(xhr?.response?.body?.blocks).to.be.at.least(3333177);
+      expect(xhr?.response?.body?.epoch).to.be.at.least(346);
       expect(xhr?.response?.body?.shards).to.be.at.least(3);
     });
   });
