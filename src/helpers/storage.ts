@@ -1,6 +1,10 @@
 import moment from 'moment';
+import { TEMP_LOCAL_NOTIFICATION_DISMISSED } from 'appConstants';
 
-type KeyType = 'theme' | 'accessToken';
+type KeyType =
+  | 'theme'
+  | 'accessToken'
+  | typeof TEMP_LOCAL_NOTIFICATION_DISMISSED;
 
 export const storage = {
   saveToLocal: ({

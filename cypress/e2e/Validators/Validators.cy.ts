@@ -22,7 +22,7 @@ describe('Validators', () => {
     cy.paginationHandler(RoutesEnum.nodes);
   });
 
-  it('should acces the block details page', () => {
+  it('should acces the validator details page', () => {
     cy.get('header').invoke('css', {
       display: 'none'
     });

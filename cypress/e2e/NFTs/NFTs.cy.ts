@@ -30,9 +30,9 @@ describe('NFTs', () => {
     cy.paginationHandler(RoutesEnum.collections);
   });
 
-  it('should acces the block details page', () => {
+  it('should acces the nft details page', () => {
     cy.viewport(1000, 3000);
-    cy.get('img').first().click();
+    cy.get('collectionLink1').click();
     cy.getSelector('title').should(AssertionEnum.contain, 'Collection Details');
   });
 });

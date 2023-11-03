@@ -5,26 +5,26 @@ export * from './sharedConfig';
 export const networks: NetworkType[] = [
   {
     default: true,
-    id: 'devnet2',
-    name: 'Devnet2',
+    id: 'devnet-old',
+    name: 'Devnet Old',
     chainId: 'D',
     adapter: 'api',
     theme: 'testnet',
     egldLabel: 'xEGLD',
-    walletAddress: 'https://devnet2-wallet.multiversx.com',
-    explorerAddress: 'https://devnet2-explorer.multiversx.com',
-    apiAddress: 'https://devnet2-api.multiversx.com'
+    walletAddress: 'https://devnet-old-wallet.multiversx.com',
+    explorerAddress: 'https://devnet-old-explorer.multiversx.com',
+    apiAddress: 'https://devnet-old-api.multiversx.com'
   }
 ];
 
 export const multiversxApps = allApps([
   {
     id: 'wallet',
-    url: 'https://devnet2-wallet.multiversx.com'
+    url: 'https://devnet-old-wallet.multiversx.com'
   },
   {
     id: 'explorer',
-    url: 'http://devnet2-explorer.multiversx.com'
+    url: 'http://devnet-old-explorer.multiversx.com'
   }
 ]);
 

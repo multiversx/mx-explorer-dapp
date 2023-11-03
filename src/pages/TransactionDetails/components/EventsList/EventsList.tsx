@@ -15,7 +15,7 @@ const EventTopics = ({
   topics: EventType['topics'];
   identifier?: string;
 }) => {
-  const mergedTopics = topics.filter((topic) => topic).join('\n');
+  const mergedTopics = topics.join('\n');
 
   return <DataDecode value={mergedTopics} identifier={identifier} />;
 };

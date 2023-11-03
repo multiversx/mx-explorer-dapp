@@ -177,7 +177,10 @@ export const Collections = () => {
                                 >
                                   <td>
                                     <div className='d-flex align-items-center'>
-                                      <CollectionLink collection={collection} />
+                                      <CollectionLink
+                                        collection={collection}
+                                        data-testid={`collectionLink${i}`}
+                                      />
                                     </div>
                                   </td>
                                   <td>{collection.name}</td>
