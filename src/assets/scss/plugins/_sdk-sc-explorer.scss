@@ -374,9 +374,7 @@ $package-name: 'mx-sdk-sc';
         --card-spacer-y: 0.5rem;
       }
     }
-
     &.card > .card-header {
-      cursor: pointer;
       @include media-breakpoint-down(md) {
         --card-cap-padding-x: 0.5rem;
         --card-cap-padding-y: 0.75rem;
@@ -430,6 +428,11 @@ $package-name: 'mx-sdk-sc';
           color: var(--body-color);
         }
       }
+    }
+  }
+  &-collapsible-card {
+    &.card > .card-header {
+      cursor: pointer;
     }
   }
   /* ----------------- Card Item ----------------- */
@@ -636,6 +639,9 @@ $package-name: 'mx-sdk-sc';
   /* ----------------- Badge ----------------- */
 
   /* ----------------- Modals ----------------- */
+  &-modal {
+    --modal-zindex: 1100;
+  }
   &-modal-dialog {
     --modal-width: 480px;
     --modal-bg: var(--black);
