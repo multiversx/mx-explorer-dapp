@@ -5,15 +5,18 @@ import { NetworkLink, NftBadge } from 'components';
 import { urlBuilder } from 'helpers';
 import { faHexagonCheck } from 'icons/solid';
 
-import { CollectionType } from 'types';
+import { CollectionType, WithClassnameType } from 'types';
 
-export const CollectionLink = ({
-  collection
-}: {
+export interface CollectionLinkType extends WithClassnameType {
   collection: CollectionType;
-}) => (
+}
+
+export const CollectionLink = ({ collection, ...rest }: CollectionLinkType) => (
   <>
-    <NetworkLink to={urlBuilder.collectionDetails(collection.collection)}>
+    <NetworkLink
+      to={urlBuilder.collectionDetails(collection.collection)}
+      {...rest}
+    >
       <div className='d-flex align-items-center'>
         {collection?.assets?.svgUrl && (
           <img
