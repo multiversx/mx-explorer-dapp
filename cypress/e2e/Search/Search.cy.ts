@@ -59,7 +59,7 @@ describe('Search', () => {
   it('should return the token details page', () => {
     searchHandler(SearchDataEnums.token);
     cy.checkUrl(RoutesEnum.tokens);
-    cy.contains('ASH Token');
+    cy.contains('USDC Token');
     cy.verifyApiResponse(ApiEndpointsEnum.tokens, (xhr) => {
       expect(xhr?.response.body.identifier).to.eq(SearchDataEnums.token);
     });
