@@ -9,8 +9,7 @@ import {
   Trim,
   NetworkLink,
   DataDecode,
-  AccountName,
-  ScAddressIcon
+  AccountLink
 } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
 import { urlBuilder } from 'helpers';
@@ -130,16 +129,10 @@ export const ScResultsList = ({
                 <div className='row mb-3 d-flex flex-column flex-sm-row'>
                   <div className='col-sm-2 col-left'>From</div>
                   <div className='col-sm-10 d-flex align-items-center'>
-                    <ScAddressIcon initiator={result.sender} />
-                    <NetworkLink
-                      to={urlBuilder.accountDetails(result.sender)}
-                      className='trim-wrapper'
-                    >
-                      <AccountName
-                        address={result.sender}
-                        assets={result.senderAssets}
-                      />
-                    </NetworkLink>
+                    <AccountLink
+                      address={result.sender}
+                      assets={result.senderAssets}
+                    />
                     <CopyButton
                       text={result.sender}
                       className='side-action ms-2'
@@ -152,16 +145,10 @@ export const ScResultsList = ({
                 <div className='row mb-3 d-flex flex-column flex-sm-row'>
                   <div className='col-sm-2 col-left'>To</div>
                   <div className='col-sm-10 d-flex align-items-center'>
-                    <ScAddressIcon initiator={result.receiver} />
-                    <NetworkLink
-                      to={urlBuilder.accountDetails(result.receiver)}
-                      className='trim-wrapper'
-                    >
-                      <AccountName
-                        address={result.receiver}
-                        assets={result.receiverAssets}
-                      />
-                    </NetworkLink>
+                    <AccountLink
+                      address={result.receiver}
+                      assets={result.receiverAssets}
+                    />
                     <CopyButton
                       text={result.receiver}
                       className='side-action ms-2'

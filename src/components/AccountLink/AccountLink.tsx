@@ -14,13 +14,21 @@ export const AccountLink = ({
   address,
   assets,
   className,
-  linkClassName
+  linkClassName,
+  'data-testid': testId
 }: AccountLinkType) => {
   return (
     <div
-      className={classNames('d-flex', 'align-items-center', className, {
-        hash: !className
-      })}
+      className={classNames(
+        'd-flex',
+        'align-items-center',
+        'trim-wrapper',
+        className,
+        {
+          hash: !className
+        }
+      )}
+      data-testid={testId}
     >
       <ScAddressIcon initiator={address} />
       {addressIsBech32(address) ? (

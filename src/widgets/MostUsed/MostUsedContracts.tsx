@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js';
 
-import { NetworkLink, ScAddressIcon, AccountName } from 'components';
-import { urlBuilder } from 'helpers';
+import { AccountLink } from 'components';
 import { AccountAssetType } from 'types';
 import { MostUsedApplicationsType } from 'types/growthWidgets';
 
@@ -36,21 +35,12 @@ export const MostUsedContracts = ({
                 <tr key={contract.rank} className='text-lh-24'>
                   <td>{contract.rank}</td>
                   <td>
-                    <div className='d-flex align-items-center'>
-                      <ScAddressIcon initiator={contract.key} />
-                      <NetworkLink
-                        to={urlBuilder.accountDetails(contract.key)}
-                        className='trim text-primary-200'
-                      >
-                        <AccountName
-                          address={contract.key}
-                          assets={
-                            contract?.extraInfo?.assets as AccountAssetType
-                          }
-                          dataTestId={`contractLink${i}`}
-                        />
-                      </NetworkLink>
-                    </div>
+                    <AccountLink
+                      address={contract.key}
+                      assets={contract?.extraInfo?.assets as AccountAssetType}
+                      data-testid={`contractLink${i}`}
+                      linkClassName='text-primary-200'
+                    />
                   </td>
                   <td className='text-center'>
                     {new BigNumber(contract.value).toFormat()}

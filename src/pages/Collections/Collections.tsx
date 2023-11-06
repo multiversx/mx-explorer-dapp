@@ -6,12 +6,11 @@ import { useLocation } from 'react-router-dom';
 import {
   Loader,
   NetworkLink,
-  Trim,
+  AccountLink,
   Pager,
   CollectionLink,
   TimeAgo
 } from 'components';
-import { urlBuilder } from 'helpers';
 import {
   useAdapter,
   useGetSearch,
@@ -206,17 +205,7 @@ export const Collections = () => {
                                   </td>
                                   <td>
                                     <div className='d-flex trim-size-xl'>
-                                      <NetworkLink
-                                        to={urlBuilder.accountDetails(
-                                          collection.owner
-                                        )}
-                                        className='trim-wrapper'
-                                      >
-                                        <Trim
-                                          text={collection.owner}
-                                          dataTestId={`accountLink${i}`}
-                                        />
-                                      </NetworkLink>
+                                      <AccountLink address={collection.owner} />
                                     </div>
                                   </td>
                                 </tr>

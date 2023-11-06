@@ -33,6 +33,7 @@ export function getTransactionsParams({
   miniBlockHash,
   search,
   token,
+  order,
   withUsername = true
 }: GetTransactionsType) {
   const params: AdapterProviderPropsType['params'] = {
@@ -50,7 +51,8 @@ export function getTransactionsParams({
     ...(status ? { status } : {}),
     ...(miniBlockHash ? { miniBlockHash } : {}),
     ...(search ? { search } : {}),
-    ...(token ? { token } : {})
+    ...(token ? { token } : {}),
+    ...(order ? { order } : {})
   };
 
   return params;
@@ -136,7 +138,8 @@ export function getCollectionsParams({
   identifiers,
   type,
   sort,
-  excludeMetaESDT
+  excludeMetaESDT,
+  withOwner
 }: GetCollectionsType) {
   const params: AdapterProviderPropsType['params'] = {
     ...(fields !== undefined ? { fields } : {}),
@@ -146,7 +149,8 @@ export function getCollectionsParams({
     ...(sort !== undefined ? { sort } : {}),
     ...(excludeMetaESDT !== undefined ? { excludeMetaESDT } : {}),
     ...(page !== undefined ? { from: (page - 1) * size } : {}),
-    ...(size !== undefined ? { size } : {})
+    ...(size !== undefined ? { size } : {}),
+    ...(withOwner !== undefined ? { withOwner } : {})
   };
 
   return params;

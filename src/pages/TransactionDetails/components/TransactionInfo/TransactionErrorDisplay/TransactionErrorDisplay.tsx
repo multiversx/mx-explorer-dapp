@@ -50,6 +50,10 @@ export const TransactionErrorDisplay = ({
       ? ''
       : 'text-danger';
 
+  if (transactionMessages.length === 0 && internalVMErrorEvent) {
+    transactionMessages.push('Internal VM Error');
+  }
+
   return (
     <>
       {transactionMessages.map((transactionMessage, messageIndex) => (
