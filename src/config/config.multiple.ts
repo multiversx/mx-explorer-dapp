@@ -36,7 +36,7 @@ export const networks: NetworkType[] = [
     apiAddress: 'https://devnet-api.multiversx.com'
   },
   {
-    id: 'devnet',
+    id: 'devnet-old',
     name: 'Devnet Old',
     chainId: 'D',
     adapter: 'api',

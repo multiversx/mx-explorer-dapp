@@ -5,11 +5,13 @@ import { timeAgo } from './helpers/timeAgo';
 export const TimeAgo = ({
   value,
   short = false,
-  tooltip = false
+  tooltip = false,
+  showAgo = false
 }: {
   value: number;
   short?: boolean;
   tooltip?: boolean;
+  showAgo?: boolean;
 }) => {
   const ms = value * 1000;
   let result = timeAgo(ms);
@@ -31,9 +33,15 @@ export const TimeAgo = ({
         </Tooltip>
       )}
     >
-      <span>{result}</span>
+      <span>
+        {result}
+        {showAgo ? ' ago' : ''}
+      </span>
     </OverlayTrigger>
   ) : (
-    <>{result}</>
+    <>
+      {result}
+      {showAgo ? ' ago' : ''}
+    </>
   );
 };

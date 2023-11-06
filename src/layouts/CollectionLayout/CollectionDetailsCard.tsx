@@ -3,8 +3,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import {
-  Trim,
-  NetworkLink,
+  AccountLink,
   RolesBadges,
   DetailItem,
   NftBadge,
@@ -13,7 +12,7 @@ import {
   SpotlightButton,
   AssetsHelmet
 } from 'components';
-import { urlBuilder, formatDate } from 'helpers';
+import { formatDate } from 'helpers';
 import { useActiveRoute } from 'hooks';
 import { faClock } from 'icons/regular';
 import { faHexagonCheck } from 'icons/solid';
@@ -112,14 +111,7 @@ export const CollectionDetailsCard = () => {
                 <NftBadge type={type} />
               </DetailItem>
               <DetailItem title='Owner'>
-                <div className='d-flex'>
-                  <NetworkLink
-                    to={urlBuilder.accountDetails(owner)}
-                    className='trim-wrapper'
-                  >
-                    <Trim text={owner} />
-                  </NetworkLink>
-                </div>
+                <AccountLink address={owner} />
               </DetailItem>
               {timestamp !== undefined && (
                 <DetailItem title='Created'>

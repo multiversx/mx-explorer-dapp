@@ -1,37 +1,17 @@
 import {
   ScAddressIcon,
-  ShardSpan,
   NetworkLink,
   TimeAgo,
   Trim,
-  Denominate
+  Denominate,
+  AccountLink
 } from 'components';
-import { addressIsBech32, urlBuilder } from 'helpers';
 import { TransactionSCResultType } from 'types';
 
 export interface ScResultRowType {
   scResult: TransactionSCResultType;
   address?: string;
 }
-
-export const ScAccountLink = ({
-  address,
-  testId
-}: {
-  address: string;
-  testId?: string;
-}) =>
-  addressIsBech32(address) ? (
-    <NetworkLink
-      to={urlBuilder.accountDetails(address)}
-      data-testid={testId ? testId : 'addressLink'}
-      className='trim-wrapper'
-    >
-      <Trim text={address} />
-    </NetworkLink>
-  ) : (
-    <ShardSpan shard={address} />
-  );
 
 export const ScResultRow = ({ scResult, address }: ScResultRowType) => {
   const directionOut = address === scResult.sender;
@@ -65,7 +45,7 @@ export const ScResultRow = ({ scResult, address }: ScResultRowType) => {
           {directionOut ? (
             <Trim text={scResult.sender} />
           ) : (
-            <ScAccountLink address={scResult.sender} testId='senderLink' />
+            <AccountLink address={scResult.sender} data-testid='senderLink' />
           )}
         </div>
       </td>
@@ -75,7 +55,10 @@ export const ScResultRow = ({ scResult, address }: ScResultRowType) => {
           {directionIn ? (
             <Trim text={scResult.receiver} />
           ) : (
-            <ScAccountLink address={scResult.receiver} testId='receiverLink' />
+            <AccountLink
+              address={scResult.receiver}
+              data-testid='receiverLink'
+            />
           )}
         </div>
       </td>

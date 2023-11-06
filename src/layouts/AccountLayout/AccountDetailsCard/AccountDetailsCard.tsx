@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DECIMALS } from 'config';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
@@ -19,6 +18,7 @@ import {
   FormatUSD,
   Overlay
 } from 'components';
+import { DECIMALS } from 'config';
 import { isContract, urlBuilder, formatDate, formatHerotag } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faClock, faExclamationTriangle, faInfoCircle } from 'icons/regular';
@@ -29,7 +29,11 @@ import {
   faHexagonVerticalNft,
   faShieldCheck
 } from 'icons/solid';
-import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+import {
+  activeNetworkSelector,
+  accountSelector,
+  accountExtraSelector
+} from 'redux/selectors';
 import { AccountUpgradeType } from 'types';
 
 import { AccountUsdValueCardItem } from './components/AccountUsdValueCardItem';
@@ -39,6 +43,7 @@ export const AccountDetailsCard = () => {
   const ref = useRef(null);
 
   const { account } = useSelector(accountSelector);
+  const { accountExtra } = useSelector(accountExtraSelector);
   const {
     address,
     balance,
@@ -59,6 +64,7 @@ export const AccountDetailsCard = () => {
     activeGuardianAddress,
     activeGuardianServiceUid
   } = account;
+  const { firstTransactionDate } = accountExtra;
   const { id: activeNetworkId, adapter } = useSelector(activeNetworkSelector);
   const {
     getProvider,
@@ -100,11 +106,6 @@ export const AccountDetailsCard = () => {
     }
   };
 
-  React.useEffect(() => {
-    fetchProviderDetails();
-    fetchUpgradesDetails();
-  }, [activeNetworkId, address]);
-
   const fetchAccountTokensCount = () => {
     if (tokensActive) {
       getAccountTokensCount({ address, includeMetaESDT: true }).then(
@@ -141,6 +142,12 @@ export const AccountDetailsCard = () => {
       );
     }
   };
+
+  useEffect(() => {
+    fetchProviderDetails();
+    fetchUpgradesDetails();
+  }, [activeNetworkId, address]);
+
   useEffect(() => {
     fetchAccountNftsCount();
     fetchAccountTokensCount();
@@ -515,6 +522,15 @@ export const AccountDetailsCard = () => {
                   <>N/A</>
                 )}
               </CardItem>
+              {firstTransactionDate && (
+                <CardItem
+                  className={cardItemClass}
+                  title='First Transaction'
+                  icon={faClock}
+                >
+                  <TimeAgo value={firstTransactionDate} tooltip showAgo />
+                </CardItem>
+              )}
             </div>
           </div>
         </div>

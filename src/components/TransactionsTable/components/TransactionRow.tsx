@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  AccountLink,
   ScAddressIcon,
   ShardSpan,
   NetworkLink,
@@ -9,7 +10,7 @@ import {
   AccountName,
   TransactionIcon
 } from 'components';
-import { addressIsBech32, urlBuilder, getDisplayReceiver } from 'helpers';
+import { urlBuilder, getDisplayReceiver } from 'helpers';
 import { faArrowRight } from 'icons/regular';
 import { UITransactionType, TransferTypeEnum } from 'types';
 
@@ -99,29 +100,21 @@ export const TransactionRow = ({
           {showLockedAccounts && (
             <LockedTokenAddressIcon address={transaction.sender} />
           )}
-          <ScAddressIcon initiator={transaction.sender} />
+
           {directionOut ? (
-            <AccountName
+            <>
+              <ScAddressIcon initiator={transaction.sender} />
+              <AccountName
+                address={transaction.sender}
+                assets={transaction.senderAssets}
+              />
+            </>
+          ) : (
+            <AccountLink
               address={transaction.sender}
               assets={transaction.senderAssets}
+              data-testid='senderLink'
             />
-          ) : (
-            <>
-              {addressIsBech32(transaction.sender) ? (
-                <NetworkLink
-                  to={urlBuilder.accountDetails(transaction.sender)}
-                  data-testid='senderLink'
-                  className='trim-wrapper'
-                >
-                  <AccountName
-                    address={transaction.sender}
-                    assets={transaction.senderAssets}
-                  />
-                </NetworkLink>
-              ) : (
-                <ShardSpan shard={transaction.sender} />
-              )}
-            </>
           )}
         </div>
       </td>
@@ -140,17 +133,18 @@ export const TransactionRow = ({
       <td>
         <div className='d-flex align-items-center receiver'>
           {showLockedAccounts && <LockedTokenAddressIcon address={receiver} />}
-          <ScAddressIcon initiator={receiver} />
+
           {directionIn ? (
-            <AccountName address={receiver} assets={receiverAssets} />
-          ) : (
-            <NetworkLink
-              to={urlBuilder.accountDetails(receiver)}
-              data-testid='receiverLink'
-              className='trim-wrapper'
-            >
+            <>
+              <ScAddressIcon initiator={receiver} />
               <AccountName address={receiver} assets={receiverAssets} />
-            </NetworkLink>
+            </>
+          ) : (
+            <AccountLink
+              address={receiver}
+              assets={receiverAssets}
+              data-testid='receiverLink'
+            />
           )}
         </div>
       </td>

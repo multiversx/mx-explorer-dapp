@@ -5,7 +5,8 @@ import {
   CopyButton,
   CardItem,
   Denominate,
-  LockedAmountTooltip
+  LockedAmountTooltip,
+  AccountLink
 } from 'components';
 import { getIcon } from 'components/NodesTable/components/RowIcon';
 import { urlBuilder } from 'helpers';
@@ -153,12 +154,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             {owner && (
               <CardItem title='Owner' icon={faUser}>
                 <div className='d-flex align-items-center min-w-0'>
-                  <NetworkLink
-                    to={urlBuilder.accountDetails(owner)}
-                    className='trim-wrapper'
-                  >
-                    <Trim text={owner} />
-                  </NetworkLink>
+                  <AccountLink address={owner} />
                   <CopyButton text={owner} />
                 </div>
               </CardItem>

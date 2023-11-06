@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 // import sessionStorage from 'redux-persist/lib/storage/session';
 
 import { accountReducer } from './slices/account';
+import { accountExtraReducer } from './slices/accountExtra';
 import { accountStakingReducer } from './slices/accountStaking';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
@@ -51,6 +52,7 @@ export const customIgnoredSlices = {
   interface: interfaceReducer,
 
   account: accountReducer,
+  accountExtra: accountExtraReducer,
   accountStaking: accountStakingReducer,
   collection: collectionReducer,
   economics: economicsReducer,
