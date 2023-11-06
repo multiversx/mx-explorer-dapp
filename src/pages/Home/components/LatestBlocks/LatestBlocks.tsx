@@ -106,7 +106,7 @@ export const LatestBlocks = () => {
                         </div>
 
                         <span className='text-neutral-400'>
-                          <TimeAgo value={block.timestamp} /> ago
+                          <TimeAgo value={block.timestamp} showAgo />
                         </span>
                       </div>
                       <div className='d-flex'>
