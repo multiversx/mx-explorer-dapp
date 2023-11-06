@@ -33,6 +33,7 @@ export function getTransactionsParams({
   miniBlockHash,
   search,
   token,
+  order,
   withUsername = true
 }: GetTransactionsType) {
   const params: AdapterProviderPropsType['params'] = {
@@ -50,7 +51,8 @@ export function getTransactionsParams({
     ...(status ? { status } : {}),
     ...(miniBlockHash ? { miniBlockHash } : {}),
     ...(search ? { search } : {}),
-    ...(token ? { token } : {})
+    ...(token ? { token } : {}),
+    ...(order ? { order } : {})
   };
 
   return params;

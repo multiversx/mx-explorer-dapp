@@ -1,30 +1,32 @@
-export interface GetBlocksType {
+import { SortOrderEnum } from 'types';
+
+export interface BaseApiType {
   page?: number;
   size?: number;
+  fields?: string;
+  extract?: string;
+}
+
+export interface GetBlocksType extends BaseApiType {
   shard?: number;
   epoch?: number;
   proposer?: string;
   withProposerIdentity?: boolean;
 }
 
-export interface GetTokensType {
-  fields?: string;
-  page?: number;
-  size?: number;
+export interface GetTokensType extends BaseApiType {
   type?: string;
   search?: string;
   name?: string;
   identifier?: string;
   identifiers?: string;
   sort?: string;
-  order?: string;
+  order?: SortOrderEnum;
   includeMetaESDT?: boolean;
   withUsername?: boolean;
 }
 
-export interface GetNftsType {
-  page?: number;
-  size?: number;
+export interface GetNftsType extends BaseApiType {
   search?: string;
   identifiers?: string;
   type?: string;
@@ -40,10 +42,7 @@ export interface GetNftsType {
   source?: string;
 }
 
-export interface GetCollectionsType {
-  fields?: string;
-  page?: number;
-  size?: number;
+export interface GetCollectionsType extends BaseApiType {
   search?: string;
   identifiers?: string;
   type?: string;
@@ -54,7 +53,7 @@ export interface GetCollectionsType {
   withOwner?: boolean;
 }
 
-export interface GetNodesType {
+export interface GetNodesType extends BaseApiType {
   search?: string;
   issues?: string;
   online?: boolean;
@@ -62,19 +61,15 @@ export interface GetNodesType {
   shard?: string;
   status?: string;
   count?: boolean;
-  page?: number;
-  size?: number;
   identity?: string;
   sort?: string;
-  order?: string;
+  order?: SortOrderEnum;
   pagination?: boolean;
   provider?: string;
   fullHistory?: string;
 }
 
-export interface GetTransactionsType {
-  page?: number;
-  size?: number;
+export interface GetTransactionsType extends BaseApiType {
   address?: string;
   senderShard?: number;
   receiverShard?: number;
@@ -88,12 +83,12 @@ export interface GetTransactionsType {
   search?: string;
   token?: string;
   withUsername?: boolean;
+  order?: SortOrderEnum;
 }
 
-export interface GetProvidersType {
+export interface GetProvidersType extends BaseApiType {
   identity?: string;
   providers?: string;
-  fields?: string;
 }
 
 export type AdapterProviderType = (
@@ -131,7 +126,7 @@ export interface AdapterProviderPropsType {
     identities?: string;
     provider?: string;
     sort?: string;
-    order?: string;
+    order?: SortOrderEnum;
     online?: boolean;
     collection?: string;
     identifier?: string;

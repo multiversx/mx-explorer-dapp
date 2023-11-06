@@ -64,6 +64,12 @@ export interface AccountStakingSliceType {
   delegationLegacyIdentity: IdentityType | undefined;
 }
 
+export interface AccountExtraSliceType extends SliceType {
+  accountExtra: {
+    firstTransactionDate: number | undefined;
+  };
+}
+
 export interface AccountAssetType {
   name: string;
   description?: string;
