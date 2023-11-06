@@ -8,11 +8,10 @@ import {
   Trim,
   Loader,
   LatestItem,
-  AccountName,
-  ScAddressIcon,
   PulsatingLed,
   TransactionIcon,
-  TransactionGuardianIcon
+  TransactionGuardianIcon,
+  AccountLink
 } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
 import { NoTransactions } from 'components/TransactionsTable/components/NoTransactions';
@@ -162,19 +161,11 @@ export const LatestTransactions = () => {
                           <div className='mb-2'>
                             <div className='d-flex flex-row align-items-center text-neutral-400'>
                               <span className='me-2'>To:</span>
-                              <ScAddressIcon initiator={receiver} />
-                              <NetworkLink
-                                to={urlBuilder.accountDetails(
-                                  transaction.receiver
-                                )}
+                              <AccountLink
+                                address={receiver}
+                                assets={receiverAssets}
                                 data-testid={`transactionLinkTo${i}`}
-                                className='trim-wrapper'
-                              >
-                                <AccountName
-                                  address={receiver}
-                                  assets={receiverAssets}
-                                />
-                              </NetworkLink>
+                              />
                               <span className='px-2 text-muted ms-auto'>•</span>
                               <NetworkLink
                                 to={urlBuilder.receiverShard(
@@ -192,20 +183,11 @@ export const LatestTransactions = () => {
                               <span className='me-2'>From:</span>
                               {addressIsBech32(transaction.sender) ? (
                                 <>
-                                  <ScAddressIcon
-                                    initiator={transaction.sender}
+                                  <AccountLink
+                                    address={transaction.sender}
+                                    assets={transaction.senderAssets}
+                                    data-testid={`transactionLinkTo${i}`}
                                   />
-                                  <NetworkLink
-                                    to={urlBuilder.accountDetails(
-                                      transaction.sender
-                                    )}
-                                    className='trim-wrapper'
-                                  >
-                                    <AccountName
-                                      address={transaction.sender}
-                                      assets={transaction.senderAssets}
-                                    />
-                                  </NetworkLink>
                                   <span className='px-2 text-muted ms-auto'>
                                     •
                                   </span>

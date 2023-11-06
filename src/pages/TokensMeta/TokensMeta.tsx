@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 
-import { Loader, NetworkLink, Trim, Pager } from 'components';
+import { Loader, NetworkLink, AccountLink, Pager } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetSearch, useActiveRoute, useGetPage } from 'hooks';
 import { faDiamond } from 'icons/regular';
@@ -187,17 +187,9 @@ export const TokensMeta = () => {
                                   </td>
                                   <td>
                                     <div className='d-flex trim-size-xl'>
-                                      <NetworkLink
-                                        to={urlBuilder.accountDetails(
-                                          metaCollection.owner
-                                        )}
-                                        className='trim-wrapper'
-                                      >
-                                        <Trim
-                                          text={metaCollection.owner}
-                                          dataTestId={`accountLink${i}`}
-                                        />
-                                      </NetworkLink>
+                                      <AccountLink
+                                        address={metaCollection.owner}
+                                      />
                                     </div>
                                   </td>
                                 </tr>

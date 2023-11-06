@@ -5,15 +5,13 @@ import {
   CopyButton,
   Denominate,
   LockedAmountTooltip,
-  NetworkLink,
-  Trim
+  AccountLink
 } from 'components';
 import { DelegationCap } from 'components/ProvidersTable/components/DelegationCap';
 import {
   PercentageFilled,
   hasDelegationCap
 } from 'components/ProvidersTable/components/PercentageFilled';
-import { urlBuilder } from 'helpers';
 import {
   faServer,
   faLock,
@@ -54,12 +52,7 @@ export const ProviderDetailsCard = ({
         <div className='card-header-item compact card card-sm bg-table-header p-3 d-flex flex-row align-items-center mt-3'>
           <span className='text-neutral-400 flex-shrink-0'>Address:</span>
           <div className='d-flex align-items-center text-break-all ms-2'>
-            <NetworkLink
-              to={urlBuilder.accountDetails(provider.provider)}
-              data-testid='address'
-            >
-              {provider.provider}
-            </NetworkLink>
+            <AccountLink address={provider.provider} data-testid='address' />
             <CopyButton text={provider.provider} />
           </div>
         </div>
@@ -153,12 +146,8 @@ export const ProviderDetailsCard = ({
         {provider?.owner && (
           <CardItem title='Owner' icon={faUser}>
             <div className='d-flex align-items-center min-w-0'>
-              <NetworkLink
-                to={urlBuilder.accountDetails(provider.owner)}
-                className='trim-wrapper'
-              >
-                <Trim text={provider.owner} />
-              </NetworkLink>
+              <AccountLink address={provider.owner} />
+
               <CopyButton text={provider.owner} />
             </div>
           </CardItem>

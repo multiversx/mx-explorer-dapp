@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import {
   Loader,
   NetworkLink,
-  Trim,
+  AccountLink,
   Pager,
   CollectionBlock,
   NftBadge
@@ -124,17 +124,7 @@ export const Nfts = () => {
                                   </td>
                                   <td>
                                     <div className='d-flex trim-size-xl'>
-                                      <NetworkLink
-                                        to={urlBuilder.accountDetails(
-                                          nft.creator
-                                        )}
-                                        className='trim-wrapper'
-                                      >
-                                        <Trim
-                                          text={nft.creator}
-                                          dataTestId={`accountLink${i}`}
-                                        />
-                                      </NetworkLink>
+                                      <AccountLink address={nft.creator} />
                                     </div>
                                   </td>
                                 </tr>

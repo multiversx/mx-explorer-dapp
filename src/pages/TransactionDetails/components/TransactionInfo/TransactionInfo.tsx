@@ -19,7 +19,8 @@ import {
   LoadingDots,
   AccountName,
   FormatUSD,
-  TransactionGuardianIcon
+  TransactionGuardianIcon,
+  AccountLink
 } from 'components';
 import { DECIMALS, DIGITS } from 'config';
 import {
@@ -73,18 +74,8 @@ export const getVisibleOperations = (transaction: TransactionType) => {
 export const AddressDetailItem = ({ address }: { address: string }) => (
   <DetailItem title='Address' noBorder>
     <div className='d-flex align-items-center'>
-      <ScAddressIcon initiator={address} />
-      {addressIsBech32(address) ? (
-        <>
-          <NetworkLink
-            to={urlBuilder.accountDetails(address)}
-            className='trim-wrapper'
-          >
-            <Trim text={address} />
-          </NetworkLink>
-          <CopyButton className='me-2' text={address} />
-        </>
-      ) : null}
+      <AccountLink address={address} />
+      <CopyButton text={address} />
     </div>
   </DetailItem>
 );
@@ -292,15 +283,10 @@ export const TransactionInfo = ({
                   <ScAddressIcon initiator={transaction.sender} />
                   {addressIsBech32(transaction.sender) ? (
                     <>
-                      <NetworkLink
-                        to={urlBuilder.accountDetails(transaction.sender)}
-                        className='trim-wrapper'
-                      >
-                        <AccountName
-                          address={transaction.sender}
-                          assets={transaction.senderAssets}
-                        />
-                      </NetworkLink>
+                      <AccountLink
+                        address={transaction.sender}
+                        assets={transaction.senderAssets}
+                      />
                       <CopyButton className='me-2' text={transaction.sender} />
                       <NetworkLink
                         to={urlBuilder.senderShard(transaction.senderShard)}
@@ -323,15 +309,10 @@ export const TransactionInfo = ({
                     ) : (
                       ''
                     )}
-                    <NetworkLink
-                      to={urlBuilder.accountDetails(transaction.receiver)}
-                      className='trim-wrapper'
-                    >
-                      <AccountName
-                        address={transaction.receiver}
-                        assets={transaction.receiverAssets}
-                      />
-                    </NetworkLink>
+                    <AccountLink
+                      address={transaction.receiver}
+                      assets={transaction.receiverAssets}
+                    />
                     <CopyButton className='me-2' text={transaction.receiver} />
                     {!isNaN(transaction.receiverShard) && (
                       <NetworkLink
