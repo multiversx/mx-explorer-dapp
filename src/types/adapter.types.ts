@@ -51,6 +51,7 @@ export interface GetCollectionsType {
   after?: string;
   sort?: string;
   excludeMetaESDT?: boolean;
+  withOwner?: boolean;
 }
 
 export interface GetNodesType {

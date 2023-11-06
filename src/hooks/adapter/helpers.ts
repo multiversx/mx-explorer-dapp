@@ -136,7 +136,8 @@ export function getCollectionsParams({
   identifiers,
   type,
   sort,
-  excludeMetaESDT
+  excludeMetaESDT,
+  withOwner
 }: GetCollectionsType) {
   const params: AdapterProviderPropsType['params'] = {
     ...(fields !== undefined ? { fields } : {}),
@@ -146,7 +147,8 @@ export function getCollectionsParams({
     ...(sort !== undefined ? { sort } : {}),
     ...(excludeMetaESDT !== undefined ? { excludeMetaESDT } : {}),
     ...(page !== undefined ? { from: (page - 1) * size } : {}),
-    ...(size !== undefined ? { size } : {})
+    ...(size !== undefined ? { size } : {}),
+    ...(withOwner !== undefined ? { withOwner } : {})
   };
 
   return params;
