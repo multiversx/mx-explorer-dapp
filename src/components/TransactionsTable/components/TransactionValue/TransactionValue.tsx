@@ -28,11 +28,8 @@ const MultipleTokensBadge = ({
   );
 
   return (
-    <Overlay title={<Tooltip />}>
-      <FontAwesomeIcon
-        icon={faLayerPlus}
-        className='ms-2 text-neutral-400 cursor-context'
-      />
+    <Overlay title={<Tooltip />} className='cursor-context multiple-tokens'>
+      <FontAwesomeIcon icon={faLayerPlus} className='ms-1 text-neutral-400' />
     </Overlay>
   );
 };
