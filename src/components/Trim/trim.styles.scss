@@ -153,6 +153,7 @@ a:hover > .trim span {
   }
 }
 .table .trim-size-xl .trim {
+  max-width: 10rem;
   @include media-breakpoint-up(md) {
     max-width: 13rem;
   }

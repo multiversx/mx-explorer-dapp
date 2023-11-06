@@ -11,8 +11,13 @@ import { Loader } from 'components';
 import { addressIsBech32, getTotalTokenUsdValue } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { setAccount, setAccountStaking } from 'redux/slices';
-import { IdentityType, ProviderType, DelegationType } from 'types';
+import { setAccount, setAccountExtra, setAccountStaking } from 'redux/slices';
+import {
+  IdentityType,
+  ProviderType,
+  DelegationType,
+  SortOrderEnum
+} from 'types';
 
 import { AccountDetailsCard } from './AccountDetailsCard';
 import { FailedAccount } from './FailedAccount';
@@ -28,6 +33,7 @@ export const AccountLayout = () => {
   const {
     getAccount,
     getAccountTokens,
+    getAccountTransfers,
     getAccountDelegationLegacy,
     getAccountDelegation,
     getAccountStake,
@@ -64,6 +70,30 @@ export const AccountLayout = () => {
           dispatch(setAccount({ ...accountData, tokenBalance }));
         }
         setDataReady(accountDetailsData.success);
+      });
+    }
+  };
+
+  const fetchFirstTransactionDate = () => {
+    if (address) {
+      getAccountTransfers({
+        address,
+        size: 1,
+        order: SortOrderEnum.asc,
+        fields: 'timestamp'
+      }).then(({ data, success }) => {
+        let firstTransactionDate = undefined;
+        if (success && data && data.length > 0) {
+          firstTransactionDate = data[0]?.['timestamp'];
+        }
+        dispatch(
+          setAccountExtra({
+            accountExtra: {
+              firstTransactionDate
+            },
+            isFetched: success
+          })
+        );
       });
     }
   };
@@ -323,6 +353,7 @@ export const AccountLayout = () => {
 
   useEffect(() => {
     fetchStakingDetails();
+    fetchFirstTransactionDate();
   }, [address, activeNetworkId]);
 
   useEffect(() => {

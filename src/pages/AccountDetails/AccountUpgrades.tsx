@@ -99,7 +99,7 @@ export const AccountUpgrades = () => {
                           </div>
                         </td>
                         <td>
-                          <TimeAgo value={upgrade.timestamp} tooltip /> ago
+                          <TimeAgo value={upgrade.timestamp} tooltip showAgo />
                           &nbsp;
                         </td>
                         <td>

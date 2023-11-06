@@ -3,13 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import {
-  NetworkLink,
-  AccountName,
+  AccountLink,
   CopyButton,
   TransactionActionBlock,
   Denominate
 } from 'components';
-import { addressIsBech32, urlBuilder, getOperationDirection } from 'helpers';
+import { addressIsBech32, getOperationDirection } from 'helpers';
 import { faChevronRight } from 'icons/solid';
 import {
   UITransactionType,
@@ -134,12 +133,7 @@ const OperationBlock = ({
       )}
       {addressIsBech32(address) ? (
         <>
-          <NetworkLink
-            to={urlBuilder.accountDetails(address)}
-            className='trim-wrapper'
-          >
-            <AccountName address={address} assets={operationAssets} />
-          </NetworkLink>
+          <AccountLink address={address} assets={operationAssets} />
           <CopyButton text={address} className='side-action ms-2' />
         </>
       ) : (

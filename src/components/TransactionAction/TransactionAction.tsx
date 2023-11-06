@@ -3,9 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
 import {
-  ScAddressIcon,
   NetworkLink,
-  AccountName,
+  AccountLink,
   Denominate,
   TransactionActionBlock,
   NftBadge
@@ -110,16 +109,11 @@ const ActionText = ({
       }
 
       return addressIsBech32(entry.address) ? (
-        <div className='d-flex align-items-center'>
-          <ScAddressIcon initiator={entry.address} />
-          <NetworkLink
-            to={urlBuilder.accountDetails(entry.address)}
-            data-testid='receiverLink'
-            className='trim-wrapper'
-          >
-            <AccountName address={entry.address} assets={entryAssets} />
-          </NetworkLink>
-        </div>
+        <AccountLink
+          address={entry.address}
+          assets={entryAssets}
+          data-testid='receiverLink'
+        />
       ) : (
         ''
       );

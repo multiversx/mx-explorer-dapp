@@ -115,7 +115,7 @@ export const AccountContracts = () => {
                         </div>
                       </td>
                       <td>
-                        <TimeAgo value={contract.timestamp} tooltip /> ago
+                        <TimeAgo value={contract.timestamp} tooltip showAgo />
                         &nbsp;
                       </td>
                       <td>

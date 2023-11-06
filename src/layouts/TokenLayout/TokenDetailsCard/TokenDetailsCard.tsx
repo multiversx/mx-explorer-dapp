@@ -2,14 +2,13 @@ import { useRef } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import {
-  Trim,
-  NetworkLink,
+  AccountLink,
   SocialIcons,
   RolesBadges,
   SmallDetailItem,
   AssetsHelmet
 } from 'components';
-import { urlBuilder, amountWithoutRounding } from 'helpers';
+import { amountWithoutRounding } from 'helpers';
 
 import { tokenSelector } from 'redux/selectors';
 
@@ -118,14 +117,7 @@ export const TokenDetailsCard = () => {
               <div className='card-body'>
                 <dl className='px-0'>
                   <SmallDetailItem title='Owner'>
-                    <div className='d-flex'>
-                      <NetworkLink
-                        to={urlBuilder.accountDetails(owner)}
-                        className='trim-wrapper'
-                      >
-                        <Trim text={owner} />
-                      </NetworkLink>
-                    </div>
+                    <AccountLink address={owner} />
                   </SmallDetailItem>
 
                   {supply && (

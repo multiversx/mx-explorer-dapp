@@ -6,7 +6,7 @@ import {
   Loader,
   Pager,
   NetworkLink,
-  Trim,
+  AccountLink,
   PageState,
   NftBadge
 } from 'components';
@@ -15,7 +15,7 @@ import { useAdapter, useGetPage, useGetSearch } from 'hooks';
 import { faUser } from 'icons/regular';
 import { CollectionTabs } from 'layouts/CollectionLayout/CollectionTabs';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
-import { NftType } from 'types';
+import { NftType, NftTypeEnum } from 'types';
 
 export const CollectionNfts = () => {
   const ref = useRef(null);
@@ -36,7 +36,13 @@ export const CollectionNfts = () => {
   const fetchCollectionNfts = () => {
     if (ref.current !== null) {
       Promise.all([
-        getCollectionNfts({ search, page, size, collection }),
+        getCollectionNfts({
+          search,
+          page,
+          size,
+          collection,
+          ...(type === NftTypeEnum.NonFungibleESDT ? { withOwner: true } : {})
+        }),
         getCollectionNftsCount({ search, collection })
       ]).then(([nftsData, count]) => {
         if (nftsData.success && count.success) {
@@ -77,6 +83,7 @@ export const CollectionNfts = () => {
                       <th>Identifier</th>
                       <th>Name</th>
                       <th>Creator</th>
+                      {type === NftTypeEnum.NonFungibleESDT && <th>Owner</th>}
                     </tr>
                   </thead>
                   <tbody data-testid='nftsTable'>
@@ -114,18 +121,16 @@ export const CollectionNfts = () => {
                         </td>
                         <td>
                           <div className='d-flex trim-size-xl'>
-                            <NetworkLink
-                              to={urlBuilder.accountDetails(
-                                nft.owner ? nft.owner : nft.creator
-                              )}
-                              className='trim-wrapper'
-                            >
-                              <Trim
-                                text={nft.owner ? nft.owner : nft.creator}
-                                dataTestId={`accountLink${i}`}
-                              />
-                            </NetworkLink>
+                            <AccountLink address={nft.creator} />
                           </div>
+                        </td>
+                        <td>
+                          {type === NftTypeEnum.NonFungibleESDT &&
+                            nft?.owner && (
+                              <div className='d-flex trim-size-xl'>
+                                <AccountLink address={nft.owner} />
+                              </div>
+                            )}
                         </td>
                       </tr>
                     ))}

@@ -9,8 +9,6 @@ export function dhms(ms: number) {
   const minsms = hrsms % (60 * 1000);
   const secs = Math.floor(minsms / 1000);
 
-  // let diff = ' ago';
-  const diff = '';
   let secsString = secs + ' sec';
   let minsString = mins + ' min';
   let hrsString = hrs + ' hr';
@@ -21,17 +19,17 @@ export function dhms(ms: number) {
   if (hrs > 1) hrsString = hrs + ' hrs';
   if (days > 1) daysString = days + ' days';
 
-  if (days >= 1) return daysString + ' ' + hrsString + diff;
+  if (days >= 1) return daysString + ' ' + hrsString;
   if (hrs >= 1) {
-    const minutesString = mins === 0 ? '' : ' ' + minsString + diff;
+    const minutesString = mins === 0 ? '' : ' ' + minsString;
     return hrsString + minutesString;
   }
   if (mins >= 1) {
-    const secString = secs === 0 ? '' : ' ' + secsString + diff;
+    const secString = secs === 0 ? '' : ' ' + secsString;
     return minsString + secString;
   }
 
-  return secsString + diff;
+  return secsString;
 }
 
 export const timeAgo = (timestamp: number) => {

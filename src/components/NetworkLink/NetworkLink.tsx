@@ -9,6 +9,7 @@ export const NetworkLink = ({
   to,
   children,
   preventScrollReset = false,
+  'data-testid': dataTestId,
   ...rest
 }: NetworkLinkPropsType) => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -32,7 +33,11 @@ export const NetworkLink = ({
   };
 
   return (
-    <Link {...props} preventScrollReset={preventScrollReset}>
+    <Link
+      {...props}
+      preventScrollReset={preventScrollReset}
+      {...(dataTestId ? { 'data-testid': dataTestId } : {})}
+    >
       {children}
     </Link>
   );
