@@ -6,9 +6,9 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     strategy:
-      # fail-fast: false # https://github.com/cypress-io/github-action/issues/48
+      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
       matrix:
-        containers: [1, 2, 3, 4, 5]
+        containers: [1]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
