@@ -525,7 +525,7 @@ export const AccountDetailsCard = () => {
               {firstTransactionDate && (
                 <CardItem
                   className={cardItemClass}
-                  title='First Transaction'
+                  title='Active Since'
                   icon={faClock}
                 >
                   <TimeAgo value={firstTransactionDate} tooltip showAgo />
