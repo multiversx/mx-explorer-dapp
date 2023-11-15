@@ -42,7 +42,7 @@ export const AccountVerifiedContract = () => {
   const pathActiveSection = useGetActiveSection();
   const { getAccountContractVerification } = useAdapter();
   const { account } = useSelector(accountSelector);
-  const { address, isVerified, ownerAddress } = account;
+  const { address, isVerified } = account;
   const { apiAddress } = useSelector(activeNetworkSelector);
   const environment = useGetEnvironment();
 
@@ -153,10 +153,9 @@ export const AccountVerifiedContract = () => {
             <SignTransactionsModals />
             <ScExplorerContainer
               smartContract={{
-                allowMutate: true,
+                canMutate: true,
                 verifiedContract: contract,
-                contractAddress: address,
-                ownerAddress
+                deployedContractDetails: account
               }}
               accountConsumerHandlers={{
                 useGetLoginInfo,
