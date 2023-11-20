@@ -1,4 +1,8 @@
 .social-icons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
   a {
     &:after {
       display: none;
