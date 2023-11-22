@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
-import { useAdapter, useNetworkRoute } from 'hooks';
+import { useAdapter, useNetworkRoute, useIsMainnet } from 'hooks';
 import { faClone } from 'icons/regular';
 import {
   faAngleDown,
@@ -40,6 +40,7 @@ export const AccountVerifiedContract = () => {
   const networkRoute = useNetworkRoute();
   const navigate = useNavigate();
   const pathActiveSection = useGetActiveSection();
+  const isMainnet = useIsMainnet();
   const { getAccountContractVerification } = useAdapter();
   const { account } = useSelector(accountSelector);
   const { address, isVerified } = account;
@@ -81,21 +82,16 @@ export const AccountVerifiedContract = () => {
   }
 
   const customClassNames = {
-    wrapperClassName: '',
     cardClassName: 'card card-black',
     cardHeaderClassName: 'card-header',
     cardBodyClassName: 'card-body',
-    listClassName: '',
-    listItemClassName: '',
     badgeClassName: 'badge',
     badgePrimaryClassName: 'badge-outline badge-outline-primary-alt',
     badgeSecondaryClassName: 'badge-outline badge-outline-grey',
-    badgeIconClassName: '',
     cardItemClassName: 'card-item',
     cardItemIconClassName: 'card-item-icon',
     cardItemTitleClassName: 'card-item-title',
     cardItemValueClassName: 'card-item-value',
-    cardItemContainerClassName: '',
     buttonClassName: 'btn btn-sm',
     buttonPrimaryClassName: 'btn-primary',
     buttonSecondaryClassName: 'btn-dark',
@@ -104,7 +100,7 @@ export const AccountVerifiedContract = () => {
     inputInvalidFeedbackClassName: 'invalid-feedback',
     inputGroupClassName: 'input-group input-group-seamless has-validation',
     inputGroupAppendClassName: 'input-group-text',
-    inputGroupPrependClassName: ''
+    selectClassName: 'form-control form-select'
   };
 
   const icons = {
@@ -154,6 +150,9 @@ export const AccountVerifiedContract = () => {
             <ScExplorerContainer
               smartContract={{
                 canMutate: true,
+                canLoadAbi: false,
+                canDeploy: false,
+                canUpgrade: false,
                 verifiedContract: contract,
                 deployedContractDetails: account
               }}

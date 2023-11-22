@@ -570,9 +570,13 @@ $package-name: 'mx-sdk-sc';
   /* ----------------- Forms ----------------- */
 
   /* ----------------- Inputs ----------------- */
-  &-input {
+  &-input,
+  &-select {
     height: 2.5rem;
     padding: 0.5rem 0.75rem;
+  }
+  &-select{
+    border-radius: 1rem;
   }
   &-input-group-append.input-group-text {
     top: 0;
