@@ -58,7 +58,7 @@ export const ProviderDetailsCard = ({
         </div>
       </div>
 
-      <div className='card-body card-item-container mx-spacing'>
+      <div className='card-body card-item-container my-n2 mx-spacing'>
         <CardItem title='Number of nodes' icon={faServer}>
           {provider.numNodes !== undefined ? (
             <>

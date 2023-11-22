@@ -117,7 +117,8 @@ export const getInternalNetworks = (): NetworkType[] => {
           return {
             ...network,
             ...(!network?.adapter ? { adapter: 'api' } : {}),
-            ...(!network?.egldLabel ? { egldLabel: 'xEGLD' } : {})
+            ...(!network?.egldLabel ? { egldLabel: 'xEGLD' } : {}),
+            ...(!network?.chainId ? { chainId: 'T' } : {})
           };
         });
       }
@@ -132,8 +133,9 @@ export const getInternalNetworks = (): NetworkType[] => {
 export const networkBaseSchema = object({
   default: boolean(),
   id: string().defined().required(),
-  egldLabel: string().defined().required(),
   name: string().defined().required(),
+  chainId: string().defined().required(),
+  egldLabel: string().defined().required(),
   theme: string().oneOf(['default', 'testnet']),
   walletAddress: string(),
   explorerAddress: string(),

@@ -53,7 +53,7 @@
   --#{$prefix}btn-hover-bg: var(--#{$prefix}black);
   --#{$prefix}btn-active-bg: var(--#{$prefix}black);
 }
-
+.form-select,
 .form-control {
   background-color: var(--#{$prefix}neutral-800);
   color: var(--#{$prefix}neutral-500);

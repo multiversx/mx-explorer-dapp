@@ -16,7 +16,6 @@ export * from './stake.types';
 export * from './stats.types';
 export * from './token.types';
 export * from './transaction.types';
-export * from './verifiedContract.types';
 export * from './withClassname.types';
 
 export * from './growthWidgets';
