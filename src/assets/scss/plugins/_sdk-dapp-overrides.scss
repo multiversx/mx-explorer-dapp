@@ -1,0 +1,578 @@
+// modal
+.dapp-modal-dialog-wrapper {
+  z-index: 1055 !important;
+  background-color: transparent !important;
+  backdrop-filter: blur(4px) !important;
+
+  .dapp-modal-dialog-content {
+    border: 0 !important;
+    background: transparent !important;
+
+    .dapp-modal-dialog-header {
+      display: none;
+    }
+
+    .dapp-modal-dialog-content-body {
+      @extend .card;
+      background-color: var(--card-bg);
+    }
+
+    .dapp-core-component__dapp-modal__dappModalBody {
+      @extend .card-body;
+      @extend .p-0;
+
+      .dapp-core-component__main__textarea {
+        background-color: var(--neutral-800) !important;
+        color: var(--neutral-200) !important;
+      }
+    }
+  }
+}
+
+// card
+.dapp-core-component__main__card {
+  @extend .card;
+
+  .dapp-core-component__main__card-body {
+    @extend .card-body;
+    @extend .p-0;
+    background: var(--card-bg);
+  }
+}
+
+// custom modals
+.dapp-modal-dialog-wrapper {
+  .dapp-modal-dialog-content {
+    .dapp-core-component__main__card {
+      @extend .my-0;
+    }
+
+    .dapp-core-component__main__card-body {
+      @extend .py-0;
+    }
+
+    .dapp-core-component__main__justify-content-end {
+      justify-content: space-between !important;
+
+      .dapp-core-component__main__btn {
+        @extend .flex-even !optional;
+        justify-content: center;
+        box-shadow: none !important;
+      }
+    }
+  }
+}
+
+// ledger
+.dapp-core-component__progressBarStyles__ledger-progress-bar {
+  width: 250px;
+  @extend .mt-3;
+
+  .ledger-progressbar-track {
+    background-color: var(--neutral-500);
+  }
+  .ledger-progressbar-thumb {
+    background-color: var(--neutral-800);
+  }
+}
+
+.dapp-ledger-address-table {
+  @extend .px-2;
+  background-color: var(--modal-bg) !important;
+  padding-bottom: 0 !important;
+
+  .ledger-address-row {
+    &.ledger-address-row-selected {
+      background-color: rgba(255, 170, 0, 0.2);
+    }
+    &:not(.ledger-address-row-selected) {
+      color: var(--secondary) !important;
+    }
+
+    .dapp-core-component__addressRowStyles__ledger-address-table-body-item-data-input:checked::before {
+      border-color: var(--primary) !important;
+    }
+    .dapp-core-component__addressRowStyles__ledger-address-table-body-item-data-value
+      > span {
+      @include media-breakpoint-down(sm) {
+        max-width: 8rem !important;
+      }
+      @media (max-width: 420px) {
+        max-width: 6rem !important;
+      }
+      @media (max-width: 360px) {
+        max-width: 4rem !important;
+      }
+      @include media-breakpoint-up(sm) {
+        max-width: 175px !important;
+      }
+    }
+  }
+
+  .ledger-address-header {
+    background-color: var(--neutral-800) !important;
+  }
+
+  .ledger-address-navigation-button {
+    display: flex;
+    align-items: center;
+    @extend .link-style !optional;
+  }
+
+  .dapp-core-component__addressTableStyles__ledger-address-table-navigation {
+    @extend .mt-3;
+  }
+}
+
+.ledger-connect-icon {
+  .st2,
+  .st3 {
+    fill: var(--secondary) !important;
+  }
+}
+
+.dapp-ledger-confirm-address {
+  .ledger-confirm-address-footer,
+  .ledger-confirm-address-description {
+    color: var(--secondary) !important;
+  }
+
+  .ledger-confirm-address-data {
+    background-color: var(--neutral-800) !important;
+    color: var(--neutral-200) !important;
+    font-size: $font-size-base !important;
+    font-family: $font-family-sans-serif !important;
+  }
+
+  .ledger-confirm-address-footer a {
+    @extend .link-style !optional;
+  }
+}
+
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-loader,
+.dapp-core-component__ledgerLoadingStyles__ledger-loading-wrapper {
+  .dapp-core-component__main__icon-state svg {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+// WC
+.dapp-core-component__walletConnectLoginContainerStyles__login-container {
+  .dapp-core-component__main__card {
+    background-color: var(--modal-bg) !important;
+  }
+}
+
+.dapp-wallet-connect-modal,
+.dapp-extension-modal {
+  .dapp-core-component__main__btn {
+    color: var(--body-color);
+  }
+}
+
+.dapp-core-component__main__pair-list {
+  padding: 0 1rem 0.5rem 1rem;
+  .dapp-core-component__main__btn-light {
+    .dapp-core-component__main__pair-image {
+      width: 3rem;
+    }
+    @extend .btn-unlock !optional;
+  }
+}
+
+.dapp-core-component__pageState-styles__state {
+  font-family: $headings-font-family;
+  &:not(.dapp-loader) {
+    @extend .card;
+    @extend .card-body;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    flex-grow: 0;
+  }
+  .dapp-core-component__main__text-primary {
+    color: var(--primary) !important;
+  }
+}
+.dapp-core-component__main__text-primary {
+  color: var(--primary) !important;
+}
+
+.dapp-core-component__main__progress-steps {
+  display: flex;
+
+  hr {
+    border-color: var(--neutral-400) !important;
+  }
+
+  .dapp-core-component__main__steps {
+    display: flex;
+
+    .dapp-core-component__main__dot {
+      background-color: var(--secondary);
+
+      &.dapp-core-component__main__bg-primary {
+        background-color: var(--primary) !important;
+      }
+    }
+  }
+}
+
+// toasts
+.dapp-failed-transaction-status-toast {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+.dapp-failed-transaction-status-toast,
+.transactions-toast-list {
+  right: 2rem !important;
+  bottom: 1rem !important;
+  .dapp-core-component__transactionsToastList-styles__toasts {
+    border-radius: var(--border-radius) !important;
+    background-color: var(--card-bg) !important;
+    overflow: hidden !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: unset !important;
+  }
+
+  .dapp-core-component__styles__content {
+    color: var(--body-color) !important;
+  }
+
+  .dapp-core-component__transactionStatusToastStyles__transactions-status-toast-icon {
+    width: 3rem !important;
+    min-width: 3rem !important;
+    height: 3rem !important;
+    padding: 0 !important;
+    margin-right: 0.25rem;
+    svg {
+      width: 25px !important;
+    }
+  }
+
+  .dapp-core-component__customToast-styles__close {
+    opacity: 1;
+    margin-right: 0.675rem !important;
+    &:hover {
+      opacity: 0.75;
+    }
+    svg {
+      color: var(--secondary) !important;
+      fill: var(--secondary) !important;
+    }
+  }
+
+  .dapp-core-component__main__warning {
+    background-color: var(--warning) !important;
+  }
+}
+
+.toast-messages {
+  .dapp-core-component__transactionsToastList-styles__toasts {
+    left: 0 !important;
+    bottom: 0 !important;
+  }
+}
+
+// buttons
+.dapp-core-component__main__btn {
+  &:hover {
+    text-decoration: none !important;
+  }
+
+  &.dapp-core-component__main__btn-primary {
+    @extend .btn;
+    @extend .btn-primary;
+  }
+
+  &.dapp-core-component__main__btn-link {
+    @extend .btn;
+    @extend .link-style !optional;
+  }
+
+  &.dapp-core-component__main__btn-dark {
+    @extend .btn;
+    @extend .btn-dark;
+  }
+}
+
+// table
+.dapp-core-component__main__table {
+  @extend .mb-0;
+  color: var(--body-color) !important;
+
+  td {
+    border-color: var(--border-color) !important;
+  }
+
+  th {
+    color: var(--body-color) !important;
+  }
+}
+
+// borders
+.dapp-core-component__main__card {
+  .dapp-core-component__tokenSymbol__token-symbol,
+  .dapp-core-component__main__border,
+  .dapp-core-component__main__border-bottom {
+    border-color: var(--border-color) !important;
+  }
+}
+
+// misc
+.dapp-core-component__ledgerConnectStyles__login-connect-container-link,
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-legacy-link,
+.dapp-core-component__main__link-style {
+  @extend .link-style !optional;
+}
+
+.dapp-core-component__main__warning {
+  color: var(--warning) !important;
+}
+
+.dapp-core-component__main__bg-warning {
+  background-color: var(--warning) !important;
+}
+
+.dapp-core-component__main__lead {
+  font-size: 1rem !important;
+}
+
+.dapp-core-component__main__text-black-50 {
+  color: var(--body-color) !important;
+}
+
+.dapp-core-component__main__textarea {
+  @include webkit-scrollbar;
+  background-color: var(--neutral-800) !important;
+  color: var(--neutral-200) !important;
+  border-color: var(--border-color) !important;
+  font-weight: 400 !important;
+  font-size: $font-size-base !important;
+  width: 100% !important;
+  text-align: left;
+  border-radius: var(--border-radius);
+  font-family: $font-family-sans-serif !important;
+  &::-webkit-scrollbar,
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-track:hover,
+  &::-webkit-scrollbar-corner {
+    background-color: var(--neutral-800);
+  }
+}
+
+.dapp-core-component__main__text-secondary {
+  color: var(--secondary) !important;
+}
+
+.dapp-core-component__styles__icon,
+.dapp-core-component__styles__search,
+.dapp-core-component__transactionToast-styles__close,
+.dapp-core-component__styles__copy {
+  @extend .text-secondary;
+}
+
+.dapp-core-component__styles__success {
+  background-color: var(--success) !important;
+}
+
+.dapp-core-component__styles__danger {
+  background-color: var(--danger) !important;
+}
+
+.dapp-core-component__styles__warning {
+  background-color: var(--warning) !important;
+}
+
+.dapp-core-component__dappModalStyles__dappModalContent {
+  background: var(--card-bg) !important;
+  .dapp-core-component__pageState-styles__state {
+    &.dapp-core-component__main__p-4 {
+      padding: 0 !important;
+    }
+    .dapp-core-component__main__h4.dapp-core-component__main__my-4 {
+      margin-top: 0 !important;
+    }
+  }
+}
+
+.dapp-core-component__dappModalStyles__dappModalCloseButton {
+  @extend .btn;
+  background: var(--neutral-500) !important;
+  width: 2.25rem !important;
+  height: 2rem !important;
+  color: var(--secondary) !important;
+  &:hover {
+    color: var(--body-color) !important;
+  }
+}
+
+.dapp-core-component__scamPhishingStyles__scam-phishing-alert {
+  margin: auto;
+  width: 100% !important;
+  background-color: rgba(255, 170, 0, 0.2);
+  backdrop-filter: blur(100px);
+  margin-bottom: 1rem !important;
+  padding: 1rem !important;
+  border-radius: 0.5rem !important;
+  .dapp-core-component__scamPhishingStyles__scam-phishing-alert-icon {
+    margin-right: 1rem;
+    height: 1.25em;
+  }
+  &.dapp-core-component__scamPhishingStyles__scam-phishing-alert-authorization {
+    background-color: var(--neutral-900);
+    width: auto;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    a {
+      margin-top: 0.5rem;
+      text-decoration: underline;
+    }
+  }
+}
+
+.dapp-core-component__dappModalStyles__dappModalContent,
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-login-container {
+  border-radius: var(--border-radius) !important;
+}
+
+.dapp-core-component__ledgerLoginContainerStyles__ledger-modal-body {
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
+}
+
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-container-button-icon {
+  path {
+    fill: var(--body-color);
+  }
+}
+
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-pairings-list {
+  padding: 0 1rem 0.5rem 1rem;
+  .dapp-core-component__walletConnectLoginContainerStyles__xPortal-pairing-button {
+    background: var(--neutral-800) !important;
+
+    border: 1px solid transparent !important;
+    color: var(--body-color);
+    box-shadow: none !important;
+    padding: 0.75rem !important;
+    margin: 0 !important;
+    font-size: 1rem;
+
+    &.active,
+    &:active,
+    &:hover {
+      color: var(--body-color) !important;
+      border: 1px solid var(--primary) !important;
+    }
+    .dapp-core-component__walletConnectLoginContainerStyles__xPortal-pairing-image {
+      width: 2.5rem;
+    }
+  }
+}
+
+#dapp-modal {
+  .dapp-modal-dialog-content {
+    overflow: hidden;
+    background: var(--card-bg);
+    border: none;
+    box-shadow: none;
+    border-radius: var(--border-radius);
+    .dapp-modal-dialog-header {
+      background-color: var(--card-bg);
+      padding-top: 2rem;
+      padding-left: 1rem;
+      padding-right: 2rem;
+      .dapp-core-component__dappModalStyles__dappModalCloseButton,
+      .dapp-modal-dialog-close-button {
+        @extend .btn;
+        @extend .btn-theme-gray-dark !optional;
+        top: 2rem;
+        right: 1rem;
+      }
+    }
+    .dapp-modal-dialog-content-body {
+      padding: 0 !important;
+      .dapp-core-component__main__card {
+        margin-top: 0 !important;
+        border: none;
+        background-color: var(--card-bg);
+      }
+    }
+  }
+}
+
+.dapp-core-component__scamPhishingStyles__scam-phishing-alert {
+  margin-top: 0 !important;
+  svg,
+  strong {
+    color: var(--primary) !important;
+  }
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  width: max-content;
+}
+
+.dapp-core-component__ledgerConnectStyles__login-connect-container-content {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-bottom: 1rem !important;
+}
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-content {
+  padding: 0 0 2rem !important;
+}
+
+a .dapp-core-component__trim-styles__right span,
+a .dapp-core-component__trim-styles__left span,
+a .dapp-core-component__trim-styles__ellipsis {
+  color: var(--primary) !important;
+}
+
+.dapp-core-component__trim-styles__trim.overflow
+  .dapp-core-component__trim-styles__ellipsis {
+  display: block;
+}
+.dapp-core-component__trim-styles__trim {
+  max-width: unset !important;
+}
+.dapp-custom-toast {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+.dapp-core-component__signWithWalletConnectModalStyles__modal-container {
+  .dapp-core-component__pageState-styles__state {
+    margin-left: 2rem !important;
+    margin-right: 2rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .dapp-core-component__signWithDeviceModalStyles__modal-layout-content.dapp-core-component__signWithDeviceModalStyles__spaced {
+    padding: 2rem 0.75rem 1.5rem 0.75rem !important;
+  }
+}
+
+.dapp-core-component__signWithDeviceModalStyles__modal-container {
+  padding-top: 3rem !important;
+}
+
+.dapp-core-component__signWithDeviceModalStyles__modal-layout-content
+  .dapp-core-component__signWithDeviceModalStyles__modal-layout-heading-icon.dapp-core-component__signWithDeviceModalStyles__close {
+  right: -0.5rem !important;
+}
+
+//------------existing ----------------//
+
+.dapp-core-component__trim-styles__trim.overflow
+  .dapp-core-component__trim-styles__ellipsis {
+  display: block;
+}
+.dapp-core-component__trim-styles__trim {
+  max-width: unset !important;
+}
+.dapp-core-component__copyButton-styles__copy {
+  svg[data-icon='check'] {
+    color: var(--primary);
+  }
+}

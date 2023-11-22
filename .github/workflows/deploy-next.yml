@@ -23,12 +23,14 @@ jobs:
         run: npm install -g yarn
       - run: npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}"
       - run: yarn install
+      - run: yarn run prepare-pro-icons
       - run: yarn run build-next
         env:
           CI: false
           VITE_APP_INTERNAL_NETWORKS: ${{ secrets.INTERNAL_NETWORK_LIST }}
           VITE_APP_MARKERS_API_URL: ${{ secrets.MARKERS_API_URL }}
           VITE_APP_VERSION_URL: ${{ secrets.APP_VERSION_URL }}
+          VITE_APP_WALLETCONNECT_ID: ${{ secrets.WALLETCONNECT_ID }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

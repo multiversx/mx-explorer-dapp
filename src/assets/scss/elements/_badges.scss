@@ -6,16 +6,25 @@ button.badge {
   }
 }
 
+.badge-primary,
 .badge-green-alt,
 .badge-yellow,
 .badge-orange,
 .badge-grey {
   border: 0;
   line-height: 1rem;
-  color: #fafafa;
+  color: var(--neutral-50);
   min-width: 1.5rem;
 }
 
+.badge-primary-alt {
+  color: var(--primary-200);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 245, 160, 0.4),
+    rgba(0, 217, 245, 0.4)
+  );
+}
 .badge-green-alt {
   background: linear-gradient(
     90deg,
@@ -56,9 +65,12 @@ button.badge {
     inset: 0;
     border-radius: $badge-border-radius;
     padding: 1px;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -145,6 +157,16 @@ button.badge {
     background: var(--neutral-900);
     &:before {
       background: linear-gradient(90deg, var(--violet-400), #b6a1f3);
+    }
+  }
+  &-primary-alt {
+    color: var(--primary-200);
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(0, 245, 160, 0.4) 0%,
+        rgba(0, 217, 245, 0.4) 100%
+      );
     }
   }
 

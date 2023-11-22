@@ -429,7 +429,7 @@ export const AccountDetailsCard = () => {
                 )}
               </div>
             </div>
-            <div className='card-body card-item-container mx-spacing'>
+            <div className='card-body card-item-container my-n2 mx-spacing'>
               <CardItem
                 className={cardItemClass}
                 title='Balance'

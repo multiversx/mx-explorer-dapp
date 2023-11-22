@@ -71,7 +71,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           </div>
         </div>
       </div>
-      <div className='card-body card-item-container mx-spacing'>
+      <div className='card-body card-item-container my-n2 mx-spacing'>
         <CardItem title='Shard' icon={faLayerGroup}>
           {shard !== undefined ? (
             <NetworkLink to={urlBuilder.shard(shard)} data-testid='shardLink'>
