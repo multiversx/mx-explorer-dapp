@@ -80,6 +80,8 @@ export const AccountVerifiedContract = () => {
     return null;
   }
 
+  const walletConnectV2ProjectId = process.env.VITE_APP_WALLETCONNECT_ID;
+
   const customClassNames = {
     cardClassName: 'card card-black',
     cardHeaderClassName: 'card-header',
@@ -142,7 +144,7 @@ export const AccountVerifiedContract = () => {
             customNetworkConfig={{
               name: 'sdk-sc-explorer',
               skipFetchFromServer: true,
-              walletConnectV2ProjectId: 'a4bec75abca381546654ea6867a557db'
+              walletConnectV2ProjectId
             }}
           >
             <TransactionsToastList />
