@@ -796,10 +796,10 @@
     classnames "2.3.1"
     react-select "5.4.0"
 
-"@multiversx/sdk-dapp-sc-explorer@0.0.1-alpha.7":
-  version "0.0.1-alpha.7"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-sc-explorer/-/sdk-dapp-sc-explorer-0.0.1-alpha.7.tgz#90f85c529e94d95b6812ed0ed431067b4e3be4c8"
-  integrity sha512-PmiLp5je6GbWa8Ww8OeJGP3qNyghXbOsp8qeEhbqn0Pe+huRTOpTVt6T/wtUWGVMeuTdl/8+gLPyl5DqwTcnXA==
+"@multiversx/sdk-dapp-sc-explorer@0.0.1-beta.0":
+  version "0.0.1-beta.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-sc-explorer/-/sdk-dapp-sc-explorer-0.0.1-beta.0.tgz#c4b3cbf067fb4eff582b4db50574f44727500ca2"
+  integrity sha512-Fuo0oCJJhycOw1ommBfUn7FgMre/bQ4uQYWIh16qUCbQJ6pVLEwduhfGbTn/7SHkU3M52nMhiy5KkfJT8WkAnA==
   dependencies:
     "@multiversx/sdk-core" "12.14.0"
     "@multiversx/sdk-dapp" "2.23.0"
