@@ -32,7 +32,6 @@ import {
   faSpinner
 } from 'icons/solid';
 import { accountSelector, activeNetworkSelector } from 'redux/selectors';
-import { VerifiedContractType } from 'types';
 import { getVerifiedContractSectionUrl } from './helpers';
 import { useGetActiveSection, useGetEnvironment } from './hooks';
 
@@ -47,7 +46,7 @@ export const AccountVerifiedContract = () => {
   const { apiAddress } = useSelector(activeNetworkSelector);
   const environment = useGetEnvironment();
 
-  const [contract, setContract] = useState<VerifiedContractType>();
+  const [contract, setContract] = useState();
   const [isDataReady, setIsDataReady] = useState<undefined | boolean>();
   const [activeSection, setActiveSection] =
     useState<VerifiedContractTabsEnum>(pathActiveSection);
@@ -125,7 +124,9 @@ export const AccountVerifiedContract = () => {
 
   return (
     <>
-      {isDataReady === undefined && <Loader dataTestId='nftsLoader' />}
+      {isDataReady === undefined && (
+        <Loader dataTestId='verifiedContractLoader' />
+      )}
       {isDataReady === false && (
         <PageState
           icon={faFileAlt}
@@ -149,7 +150,7 @@ export const AccountVerifiedContract = () => {
             <SignTransactionsModals />
             <ScExplorerContainer
               smartContract={{
-                canMutate: true,
+                canMutate: !isMainnet,
                 canLoadAbi: false,
                 canDeploy: false,
                 canUpgrade: false,
