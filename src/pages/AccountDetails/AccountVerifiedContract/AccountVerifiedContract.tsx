@@ -1,58 +1,65 @@
 import { useEffect, useState } from 'react';
-import { Tab, Nav } from 'react-bootstrap';
+import { useGetLoginInfo, useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import { NotificationModal } from '@multiversx/sdk-dapp/UI/NotificationModal/NotificationModal';
+import { SignTransactionsModals } from '@multiversx/sdk-dapp/UI/SignTransactionsModals/SignTransactionsModals';
+import { TransactionsToastList } from '@multiversx/sdk-dapp/UI/TransactionsToastList/TransactionsToastList';
+import { DappProvider } from '@multiversx/sdk-dapp/wrappers/DappProvider/DappProvider';
+import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/containers/ScExplorerContainer';
+import { VerifiedContractTabsEnum } from '@multiversx/sdk-dapp-sc-explorer/types/base.types';
 import { useSelector } from 'react-redux';
-import { useMatch, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
-import { urlBuilder } from 'helpers';
-import { useAdapter, useNetworkRoute } from 'hooks';
-import { faFileAlt } from 'icons/solid';
-import { accountSelector } from 'redux/selectors';
-import { accountsRoutes } from 'routes';
-import { VerifiedContractType } from 'types';
-
-import { ContractCode } from './components/ContractCode';
-import { ContractConstructor } from './components/ContractConstructor';
-import { ContractEndpoints } from './components/ContractEndpoints';
-import { ContractEvents } from './components/ContractEvents';
-import { ContractTypes } from './components/ContractTypes';
-
-export enum VerifiedContractTabsEnum {
-  details = 'details',
-  contractconstructor = 'contract-constructor',
-  endpoints = 'endpoints',
-  events = 'events',
-  types = 'types'
-}
+import { useAdapter, useNetworkRoute, useIsMainnet } from 'hooks';
+import { faClone } from 'icons/regular';
+import {
+  faAngleDown,
+  faAngleRight,
+  faFileAlt,
+  faListTree,
+  faList,
+  faQuestionCircle,
+  faLink,
+  faFileCode,
+  faPen,
+  faEye,
+  faUserLock,
+  faTerminal,
+  faReceipt,
+  faPlus,
+  faMinus,
+  faPlay,
+  faSpinner
+} from 'icons/solid';
+import { accountSelector, activeNetworkSelector } from 'redux/selectors';
+import { getVerifiedContractSectionUrl } from './helpers';
+import { useGetActiveSection, useGetEnvironment } from './hooks';
 
 export const AccountVerifiedContract = () => {
   const networkRoute = useNetworkRoute();
   const navigate = useNavigate();
-
-  let activeSection: VerifiedContractTabsEnum =
-    VerifiedContractTabsEnum.details;
-
-  if (useMatch(networkRoute(accountsRoutes.accountCodeEndpoints))) {
-    activeSection = VerifiedContractTabsEnum.endpoints;
-  }
-  if (useMatch(networkRoute(accountsRoutes.accountCodeConstructor))) {
-    activeSection = VerifiedContractTabsEnum.contractconstructor;
-  }
-  if (useMatch(networkRoute(accountsRoutes.accountCodeEvents))) {
-    activeSection = VerifiedContractTabsEnum.events;
-  }
-  if (useMatch(networkRoute(accountsRoutes.accountCodeTypes))) {
-    activeSection = VerifiedContractTabsEnum.types;
-  }
-
+  const pathActiveSection = useGetActiveSection();
+  const isMainnet = useIsMainnet();
   const { getAccountContractVerification } = useAdapter();
   const { account } = useSelector(accountSelector);
   const { address, isVerified } = account;
+  const { apiAddress } = useSelector(activeNetworkSelector);
+  const environment = useGetEnvironment();
 
-  const [contract, setContract] = useState<VerifiedContractType>();
+  const [contract, setContract] = useState();
   const [isDataReady, setIsDataReady] = useState<undefined | boolean>();
-  const [activeKey, setActiveKey] =
-    useState<VerifiedContractTabsEnum>(activeSection);
+  const [activeSection, setActiveSection] =
+    useState<VerifiedContractTabsEnum>(pathActiveSection);
+
+  useEffect(() => {
+    if (activeSection !== pathActiveSection) {
+      const route = getVerifiedContractSectionUrl(activeSection, address);
+      const options = {
+        pathname: networkRoute(route)
+      };
+      navigate(options, { replace: true });
+    }
+  }, [activeSection]);
 
   const fetchContractVerification = () => {
     getAccountContractVerification({ address }).then(({ success, data }) => {
@@ -69,13 +76,59 @@ export const AccountVerifiedContract = () => {
     }
   }, [address, isVerified]);
 
-  if (!isVerified) {
+  if (!isVerified || !environment) {
     return null;
   }
 
+  const walletConnectV2ProjectId = process.env.VITE_APP_WALLETCONNECT_ID;
+
+  const customClassNames = {
+    cardClassName: 'card card-black',
+    cardHeaderClassName: 'card-header',
+    cardBodyClassName: 'card-body',
+    badgeClassName: 'badge',
+    badgePrimaryClassName: 'badge-outline badge-outline-primary-alt',
+    badgeSecondaryClassName: 'badge-outline badge-outline-grey',
+    cardItemClassName: 'card-item',
+    cardItemIconClassName: 'card-item-icon',
+    cardItemTitleClassName: 'card-item-title',
+    cardItemValueClassName: 'card-item-value',
+    buttonClassName: 'btn btn-sm',
+    buttonPrimaryClassName: 'btn-primary',
+    buttonSecondaryClassName: 'btn-dark',
+    inputClassName: 'form-control',
+    inputInvalidClassName: 'is-invalid',
+    inputInvalidFeedbackClassName: 'invalid-feedback',
+    inputGroupClassName: 'input-group input-group-seamless has-validation',
+    inputGroupAppendClassName: 'input-group-text',
+    selectClassName: 'form-control form-select'
+  };
+
+  const icons = {
+    expandedIcon: faAngleDown,
+    collapsedIcon: faAngleRight,
+    structTypeIcon: faListTree,
+    enumTypeIcon: faList,
+    hintIcon: faQuestionCircle,
+    copyIcon: faClone,
+    linkIcon: faLink,
+    contractFileIcon: faFileCode,
+    mutableEndpointIcon: faPen,
+    readonlyEndpointIcon: faEye,
+    onlyOwnerEndpointIcon: faUserLock,
+    interactiveEndpointIcon: faTerminal,
+    payableEndpointIcon: faReceipt,
+    plusIcon: faPlus,
+    minusIcon: faMinus,
+    playIcon: faPlay,
+    loadIcon: faSpinner
+  };
+
   return (
     <>
-      {isDataReady === undefined && <Loader dataTestId='nftsLoader' />}
+      {isDataReady === undefined && (
+        <Loader dataTestId='verifiedContractLoader' />
+      )}
       {isDataReady === false && (
         <PageState
           icon={faFileAlt}
@@ -85,144 +138,39 @@ export const AccountVerifiedContract = () => {
         />
       )}
       {isDataReady === true && contract && (
-        <div className='verified-contract'>
-          <Tab.Container
-            id='contract-code-tabs'
-            defaultActiveKey={activeKey}
-            onSelect={(selectedKey) => {
-              return selectedKey
-                ? setActiveKey(selectedKey as VerifiedContractTabsEnum)
-                : 'details';
+        <div>
+          <DappProvider
+            environment={environment}
+            customNetworkConfig={{
+              name: 'sdk-sc-explorer',
+              skipFetchFromServer: true,
+              walletConnectV2ProjectId
             }}
           >
-            <div className='card-header pt-0'>
-              <div className='card-header-item d-flex align-items-center'>
-                <div className='tabs'>
-                  <Nav.Link
-                    data-testid='title'
-                    eventKey='details'
-                    className={`tab ${activeKey === 'details' ? 'active' : ''}`}
-                    onClick={() => {
-                      const options = {
-                        pathname: networkRoute(
-                          urlBuilder.accountDetailsContractCode(address)
-                        )
-                      };
-                      navigate(options, { replace: true });
-                    }}
-                  >
-                    Code
-                  </Nav.Link>
-
-                  {contract.source.abi?.endpoints && (
-                    <Nav.Link
-                      eventKey='endpoints'
-                      className={`tab ${
-                        activeKey === 'endpoints' ? 'active' : ''
-                      }`}
-                      onClick={() => {
-                        const options = {
-                          pathname: networkRoute(
-                            urlBuilder.accountDetailsContractCodeEndpoints(
-                              address
-                            )
-                          )
-                        };
-                        navigate(options, { replace: true });
-                      }}
-                    >
-                      Endpoints
-                    </Nav.Link>
-                  )}
-
-                  {contract.source.abi?.events && (
-                    <Nav.Link
-                      eventKey='events'
-                      className={`tab ${
-                        activeKey === 'events' ? 'active' : ''
-                      }`}
-                      onClick={() => {
-                        const options = {
-                          pathname: networkRoute(
-                            urlBuilder.accountDetailsContractCodeEvents(address)
-                          )
-                        };
-                        navigate(options, { replace: true });
-                      }}
-                    >
-                      Events
-                    </Nav.Link>
-                  )}
-
-                  {contract.source.abi?.types && (
-                    <Nav.Link
-                      eventKey='types'
-                      className={`tab ${activeKey === 'types' ? 'active' : ''}`}
-                      onClick={() => {
-                        const options = {
-                          pathname: networkRoute(
-                            urlBuilder.accountDetailsContractCodeTypes(address)
-                          )
-                        };
-                        navigate(options, { replace: true });
-                      }}
-                    >
-                      Types
-                    </Nav.Link>
-                  )}
-                  {contract.source.abi?.['constructor'] && (
-                    <Nav.Link
-                      eventKey='contract-constructor'
-                      className={`tab ${
-                        activeKey === 'contract-constructor' ? 'active' : ''
-                      }`}
-                      onClick={() => {
-                        const options = {
-                          pathname: networkRoute(
-                            urlBuilder.accountDetailsContractCodeConstructor(
-                              address
-                            )
-                          )
-                        };
-                        navigate(options, { replace: true });
-                      }}
-                    >
-                      Constructor
-                    </Nav.Link>
-                  )}
-                </div>
-                <h3 className='mb-0 ms-3 text-neutral-400'>(Beta)</h3>
-              </div>
-            </div>
-
-            <div className='card-body pb-0'>
-              <Tab.Content>
-                <Tab.Pane eventKey='details'>
-                  <ContractCode contract={contract} />
-                </Tab.Pane>
-                {contract.source.abi?.endpoints && (
-                  <Tab.Pane eventKey='endpoints'>
-                    <ContractEndpoints contract={contract} />
-                  </Tab.Pane>
-                )}
-                {contract.source.abi?.events && (
-                  <Tab.Pane eventKey='events'>
-                    <ContractEvents contract={contract} />
-                  </Tab.Pane>
-                )}
-                {contract.source.abi?.types && (
-                  <Tab.Pane eventKey='types'>
-                    <ContractTypes contract={contract} />
-                  </Tab.Pane>
-                )}
-                {contract.source.abi?.['constructor'] && (
-                  <Tab.Pane eventKey='contract-constructor'>
-                    <ContractConstructor contract={contract} />
-                  </Tab.Pane>
-                )}
-              </Tab.Content>
-            </div>
-          </Tab.Container>
+            <TransactionsToastList />
+            <NotificationModal />
+            <SignTransactionsModals />
+            <ScExplorerContainer
+              smartContract={{
+                canMutate: !isMainnet,
+                canLoadAbi: false,
+                canDeploy: false,
+                canUpgrade: false,
+                verifiedContract: contract,
+                deployedContractDetails: account
+              }}
+              accountConsumerHandlers={{
+                useGetLoginInfo,
+                useGetAccountInfo
+              }}
+              networkConfig={{ environment, apiAddress }}
+              customClassNames={customClassNames}
+              icons={icons}
+              className='mx-4'
+              activeSection={activeSection}
+              setActiveSection={setActiveSection}
+            />
+          </DappProvider>
         </div>
       )}
     </>

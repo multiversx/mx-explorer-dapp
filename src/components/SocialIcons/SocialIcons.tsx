@@ -8,7 +8,8 @@ import {
   faTelegramPlane,
   faMediumM,
   faMedium,
-  faDiscord
+  faDiscord,
+  faReddit
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -45,6 +46,8 @@ const getFaIcon = (icon: string) => {
       return faMedium;
     case 'discord':
       return faDiscord;
+    case 'reddit':
+      return faReddit;
     default:
       return faGlobe;
   }
@@ -63,7 +66,7 @@ const Icon = ({ icon }: { icon: string }) => {
 
 export const SocialIcons = ({ assets }: { assets: any }) => {
   return (
-    <div className='social-icons d-flex align-items-center ms-n2 mt-2 mt-lg-0'>
+    <div className='social-icons mt-2 mt-lg-0'>
       {Object.keys(assets).map((social, i) => (
         <OverlayTrigger
           placement='top'
@@ -78,7 +81,7 @@ export const SocialIcons = ({ assets }: { assets: any }) => {
         >
           {social === 'email' ? (
             <a
-              className='icon d-flex align-items-center justify-content-center mx-2'
+              className='icon d-flex align-items-center justify-content-center'
               href={`mailto:${assets[social]}`}
             >
               <Icon icon={social} />
@@ -86,7 +89,7 @@ export const SocialIcons = ({ assets }: { assets: any }) => {
           ) : (
             <a
               target='_blank'
-              className='icon d-flex align-items-center justify-content-center mx-2'
+              className='icon d-flex align-items-center justify-content-center'
               href={assets[social]}
               aria-label={social}
               rel='noreferrer nofollow noopener'

@@ -20,6 +20,12 @@
       display: none;
     }
   }
+  &.has-validation {
+    .input-group-text:first-of-type:not(:last-of-type) {
+      right: 0;
+      top: 0;
+    }
+  }
   &.input-group-lg {
     .form-control {
       border-top-right-radius: $input-border-radius-lg !important;
@@ -34,7 +40,6 @@
   }
   &.has-validation {
     .input-group-text {
-      top: 10%;
       bottom: unset;
     }
   }
@@ -52,7 +57,8 @@
     & > .card-header,
     & > .card-body,
     & > .card-footer {
-      padding: 1.5rem 1rem;
+      --card-cap-padding-y: 1.5rem;
+      --card-cap-padding-x: 1rem;
     }
   }
   &.card-sm {
@@ -117,16 +123,8 @@
   }
 }
 
-.modal-open {
-  .modal {
-    .modal-dialog {
-      @extend .modal-lg;
-
-      .modal-content {
-        background-color: transparent;
-      }
-    }
-  }
+.modal {
+  --modal-bg: transparent;
 }
 
 .table {

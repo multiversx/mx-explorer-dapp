@@ -24,12 +24,20 @@ export const urlBuilder = {
   accountDetailsContractCode: (address: string) => `/accounts/${address}/code`,
   accountDetailsContractCodeConstructor: (address: string) =>
     `/accounts/${address}/code/contract-constructor`,
+  accountDetailsContractCodeDetails: (address: string) =>
+    `/accounts/${address}/code/details`,
   accountDetailsContractCodeEndpoints: (address: string) =>
     `/accounts/${address}/code/endpoints`,
-  accountDetailsContractCodeTypes: (address: string) =>
-    `/accounts/${address}/code/types`,
+  accountDetailsContractCodeEndpointsRead: (address: string) =>
+    `/accounts/${address}/code/endpoints-read`,
+  accountDetailsContractCodeEndpointsWrite: (address: string) =>
+    `/accounts/${address}/code/endpoints-write`,
   accountDetailsContractCodeEvents: (address: string) =>
     `/accounts/${address}/code/events`,
+  accountDetailsContractCodeSource: (address: string) =>
+    `/accounts/${address}/code/source`,
+  accountDetailsContractCodeTypes: (address: string) =>
+    `/accounts/${address}/code/types`,
   accountDetailsTokenRoles: (address: string) =>
     `/accounts/${address}/roles/tokens`,
   accountDetailsCollectionRoles: (address: string) =>
