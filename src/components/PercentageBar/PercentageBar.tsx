@@ -1,20 +1,30 @@
+import classNames from 'classnames';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
+import { WithClassnameType } from 'types';
+
+export interface PercentageBarType extends WithClassnameType {
+  overallPercent: number;
+  fillPercent: number;
+  fillPercentLabel: string;
+  type?: string;
+}
 
 export const PercentageBar = ({
   overallPercent,
   fillPercent,
   fillPercentLabel,
-  type
-}: {
-  overallPercent: number;
-  fillPercent: number;
-  fillPercentLabel: string;
-  type?: string;
-}) => (
+  type,
+  className
+}: PercentageBarType) => (
   <div
-    className={`d-flex h-100 align-items-center percentage-bar ${
-      type === 'small' ? 'small' : ''
-    }`}
+    className={classNames(
+      'd-flex h-100 align-items-center percentage-bar',
+      className,
+      {
+        small: type === 'small'
+      }
+    )}
   >
     {overallPercent + fillPercent > 0 ? (
       <div className='progress progress-sm w-100 my-2'>

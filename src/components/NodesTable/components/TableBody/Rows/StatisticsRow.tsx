@@ -1,4 +1,4 @@
-import { NetworkLink, Trim } from 'components';
+import { NetworkLink, NodeRating, Trim } from 'components';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'types';
 import { RowIcon } from '../../RowIcon';
@@ -62,11 +62,7 @@ export const StatisticsRow = ({ nodeData }: { nodeData: NodeType }) => {
         )}
       </td>
       <td className='text-end'>
-        {nodeData.tempRating ? (
-          nodeData.tempRating.toLocaleString('en')
-        ) : (
-          <span className='text-neutral-400'>N/A</span>
-        )}
+        <NodeRating node={nodeData} className='justify-content-end' />
       </td>
     </>
   );
