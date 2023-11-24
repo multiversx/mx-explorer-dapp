@@ -107,7 +107,8 @@ export const EgldRow = ({
             previousTokenValue as string | number
           );
         showOnFilter =
-          previousToken === currentToken && !page
+          previousToken?.identifier === currentToken?.identifier &&
+          (!page || page === 1)
             ? egldIsGreaterThanNext
             : egldIsGreater;
       }
@@ -124,7 +125,7 @@ export const EgldRow = ({
             nextTokenValue as string | number
           ) && egldIsGreaterThanPrevious;
         showOnFilter =
-          nextToken === currentToken && isLastPage
+          nextToken?.identifier === currentToken?.identifier && isLastPage
             ? egldIsGreaterThanPrevious
             : egldIsLess;
       }
