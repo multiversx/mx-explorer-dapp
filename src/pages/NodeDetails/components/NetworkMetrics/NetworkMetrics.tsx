@@ -1,4 +1,4 @@
-import { DetailItem, Led } from 'components';
+import { DetailItem, NodeStatus } from 'components';
 import { NodeType } from 'types';
 
 // import { PercentageBar } from './components/PercentageBar';
@@ -7,7 +7,6 @@ import { RatingArrow } from './components/RatingArrow';
 
 export const NetworkMetrics = ({ node }: { node: NodeType }) => {
   // const { uptimeLabel, downtimeLabel } = getUptimeDowntime(node);
-  const statusColor = node.online ? 'success' : 'danger';
 
   return (
     <div className='card network-metrics h-100'>
@@ -37,12 +36,7 @@ export const NetworkMetrics = ({ node }: { node: NodeType }) => {
           </DetailItem> */}
 
         <DetailItem title='Status' colWidth='3'>
-          <div className='d-flex align-items-center'>
-            <Led color={`bg-${statusColor}`} />
-            <span className={`ms-2 text-${statusColor}`}>
-              {node.online ? 'online' : 'offline'}
-            </span>
-          </div>
+          <NodeStatus node={node} />
         </DetailItem>
       </div>
     </div>

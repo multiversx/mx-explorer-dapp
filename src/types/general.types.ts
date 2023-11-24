@@ -87,7 +87,7 @@ export interface NodeType {
     | 'leaving'
     | 'inactive'
     | 'queued';
-  online: false;
+  online: boolean;
   rating: number;
   tempRating: number;
   ratingModifier: number;
@@ -107,6 +107,7 @@ export interface NodeType {
   identity?: string;
   provider?: string;
   issues?: string[];
+  syncProgress?: number;
 
   leaderSuccess?: number;
   leaderFailure?: number;

@@ -1,8 +1,9 @@
 import {
+  NodeRating,
+  NodeStatus,
   ShardSpan,
   NetworkLink,
   Trim,
-  Led,
   Overlay,
   Denominate
 } from 'components';
@@ -98,23 +99,10 @@ export const StandardRow = ({
         )}
       </td>
       <td>
-        <div className='d-flex align-items-center justify-content-end'>
-          <Led color={nodeData.online ? 'bg-success' : 'bg-danger'} />
-          <span
-            className={`ms-2 ${
-              nodeData.online ? 'text-success' : 'text-danger'
-            }`}
-          >
-            {nodeData.online ? 'online' : 'offline'}
-          </span>
-        </div>
+        <NodeStatus node={nodeData} className='align-items-end' />
       </td>
       <td className='text-end'>
-        {!isNaN(nodeData.tempRating) ? (
-          Math.floor(nodeData.tempRating)
-        ) : (
-          <span className='text-neutral-400'>N/A</span>
-        )}
+        <NodeRating node={nodeData} className='justify-content-end' />
       </td>
       <td className='text-end'>
         {nodeData.nonce ? (

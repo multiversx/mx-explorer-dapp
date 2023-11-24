@@ -1,4 +1,4 @@
-import { NetworkLink, Trim, Led } from 'components';
+import { NetworkLink, Trim, NodeStatus } from 'components';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'types';
 import { RowIcon } from '../../RowIcon';
@@ -50,16 +50,7 @@ export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
         )}
       </td> */}
       <td>
-        <div className='d-flex align-items-center justify-content-end'>
-          <Led color={nodeData.online ? 'bg-success' : 'bg-danger'} />
-          <span
-            className={`ms-2 ${
-              nodeData.online ? 'text-success' : 'text-danger'
-            }`}
-          >
-            {nodeData.online ? 'online' : 'offline'}
-          </span>
-        </div>
+        <NodeStatus node={nodeData} className='align-items-end' />
       </td>
     </>
   );
