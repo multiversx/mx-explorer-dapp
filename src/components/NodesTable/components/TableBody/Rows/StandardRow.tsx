@@ -1,4 +1,5 @@
 import {
+  NodeRating,
   NodeStatus,
   ShardSpan,
   NetworkLink,
@@ -101,11 +102,7 @@ export const StandardRow = ({
         <NodeStatus node={nodeData} className='align-items-end' />
       </td>
       <td className='text-end'>
-        {!isNaN(nodeData.tempRating) ? (
-          Math.floor(nodeData.tempRating)
-        ) : (
-          <span className='text-neutral-400'>N/A</span>
-        )}
+        <NodeRating node={nodeData} className='justify-content-end' />
       </td>
       <td className='text-end'>
         {nodeData.nonce ? (

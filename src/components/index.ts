@@ -35,6 +35,7 @@ export * from './NftBadge';
 export * from './NftBlock';
 export * from './NftPreview';
 export * from './NodesFilters';
+export * from './NodeRating';
 export * from './NodeStatus';
 export * from './NotificationsBar';
 export * from './Overlay';
