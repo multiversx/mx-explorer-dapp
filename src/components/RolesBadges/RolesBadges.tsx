@@ -30,12 +30,6 @@ export const RolesBadges = (props: {
           active={Boolean(props.canTransfer)}
         />
       )}
-      {props?.canMint !== undefined && (
-        <PropertyPill name={'Can Mint'} active={Boolean(props.canMint)} />
-      )}
-      {props?.canBurn !== undefined && (
-        <PropertyPill name={'Can Burn'} active={Boolean(props.canBurn)} />
-      )}
       {props?.canPause !== undefined && (
         <PropertyPill name={'Can Pause'} active={Boolean(props.canPause)} />
       )}
