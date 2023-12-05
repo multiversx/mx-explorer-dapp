@@ -47,7 +47,7 @@ export const TableBody = ({
               icon={faCogs}
               title='No Nodes'
               className='py-spacer my-auto'
-              dataTestId='errorScreen'
+              data-testid='errorScreen'
             />
           </td>
         </tr>

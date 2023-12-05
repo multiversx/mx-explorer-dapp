@@ -16,7 +16,7 @@ export const EmptySearch = () => {
         </div>
       }
       className='py-spacer m-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

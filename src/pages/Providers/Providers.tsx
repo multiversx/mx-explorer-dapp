@@ -88,7 +88,7 @@ export const Providers = () => {
           icon={faCode}
           title='Unable to load providers'
           className='py-spacer my-auto'
-          dataTestId='errorScreenProviders'
+          data-testid='errorScreenProviders'
         />
       )}
 

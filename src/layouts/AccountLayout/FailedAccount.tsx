@@ -17,7 +17,7 @@ export const FailedAccount = ({ address }: { address: string | undefined }) => {
         </div>
       }
       className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

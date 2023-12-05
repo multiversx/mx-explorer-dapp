@@ -7,7 +7,7 @@ export const FailedTokens = () => {
       icon={faCoins}
       title='Unable to load Meta-ESDT Tokens'
       className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

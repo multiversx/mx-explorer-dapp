@@ -48,7 +48,7 @@ export const BlockDetails = () => {
             </div>
           }
           className='py-spacer my-auto'
-          dataTestId='errorScreen'
+          data-testid='errorScreen'
         />
       )}
 

@@ -32,7 +32,7 @@ export const HashSearch = () => {
                 </div>
               }
               className='py-spacer m-auto'
-              dataTestId='errorScreen'
+              data-testid='errorScreen'
             />
           )}
         </>

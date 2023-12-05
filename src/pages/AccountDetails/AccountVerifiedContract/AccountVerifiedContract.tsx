@@ -127,14 +127,14 @@ export const AccountVerifiedContract = () => {
   return (
     <>
       {isDataReady === undefined && (
-        <Loader dataTestId='verifiedContractLoader' />
+        <Loader data-testid='verifiedContractLoader' />
       )}
       {isDataReady === false && (
         <PageState
           icon={faFileAlt}
           title='Unable to load Smart Contract'
           className='py-spacer my-auto'
-          dataTestId='errorScreen'
+          data-testid='errorScreen'
         />
       )}
       {isDataReady === true && contract && (

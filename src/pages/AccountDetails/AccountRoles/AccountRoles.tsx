@@ -79,13 +79,13 @@ export const AccountRoles = ({ type }: { type: AccountRolesTypeEnum }) => {
         </div>
       </div>
       <div className='card-body'>
-        {dataReady === undefined && <Loader dataTestId='upgradesLoader' />}
+        {dataReady === undefined && <Loader data-testid='upgradesLoader' />}
         {dataReady === false && (
           <PageState
             icon={faCode}
             title={`Unable to load ${capitalize(type)} Roles`}
             className='py-spacer my-auto'
-            dataTestId='errorScreen'
+            data-testid='errorScreen'
           />
         )}
         {dataReady === true &&

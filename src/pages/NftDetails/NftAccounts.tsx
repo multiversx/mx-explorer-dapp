@@ -95,14 +95,14 @@ export const NftAccounts = () => {
         ) : (
           <>
             {dataReady === undefined && (
-              <Loader dataTestId='nftAccountsLoader' />
+              <Loader data-testid='nftAccountsLoader' />
             )}
             {dataReady === false && (
               <PageState
                 icon={faUser}
                 title='Unable to load Accounts'
                 className='py-spacer my-auto'
-                dataTestId='errorScreen'
+                data-testid='errorScreen'
               />
             )}
             {dataReady === true && accounts.length === 0 && (

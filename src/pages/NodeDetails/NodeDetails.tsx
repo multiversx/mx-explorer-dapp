@@ -137,7 +137,7 @@ export const NodeDetails = () => {
           icon={faCogs}
           title='Unable to locate this node'
           className='py-spacer my-auto'
-          dataTestId='errorScreen'
+          data-testid='errorScreen'
         />
       )}
       <div ref={ref}>

@@ -25,7 +25,7 @@ export const PageNotFound = () => {
         </div>
       }
       className='py-spacer m-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

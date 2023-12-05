@@ -70,7 +70,7 @@ export const ProviderLayout = () => {
           icon={faCode}
           title='Unable to load provider details'
           className='py-spacer my-auto'
-          dataTestId='errorScreen'
+          data-testid='errorScreen'
         />
       )}
       <div ref={ref}>

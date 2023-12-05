@@ -37,7 +37,7 @@ export const ErrorElement = () => {
         </div>
       }
       className='py-spacer m-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

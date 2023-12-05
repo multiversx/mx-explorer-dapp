@@ -7,7 +7,7 @@ export const FailedNfts = () => {
       icon={faPalette}
       title='Unable to load NFTs'
       className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

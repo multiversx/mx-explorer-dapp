@@ -16,7 +16,7 @@ export const FailedTokenDetails = ({
         </div>
       }
       className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

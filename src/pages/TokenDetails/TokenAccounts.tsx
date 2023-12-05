@@ -102,14 +102,14 @@ export const TokenDetailsAccounts = () => {
         ) : (
           <>
             {dataReady === undefined && (
-              <Loader dataTestId='tokenAccountsLoader' />
+              <Loader data-testid='tokenAccountsLoader' />
             )}
             {dataReady === false && (
               <PageState
                 icon={faUser}
                 title='Unable to load Accounts'
                 className='py-spacer my-auto'
-                dataTestId='errorScreen'
+                data-testid='errorScreen'
               />
             )}
             {dataReady === true && accounts.length === 0 && (

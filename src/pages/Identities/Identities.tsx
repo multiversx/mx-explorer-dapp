@@ -49,7 +49,7 @@ export const Identities = () => {
           icon={faCogs}
           title='Unable to load validators'
           className='py-spacer my-auto'
-          dataTestId='errorScreen'
+          data-testid='errorScreen'
         />
       )}
       {dataReady === true && (

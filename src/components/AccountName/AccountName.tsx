@@ -1,20 +1,22 @@
+import classNames from 'classnames';
+
 import { HEROTAG_SUFFIX } from 'appConstants';
 import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
 import { Trim, Overlay } from 'components';
 import { formatHerotag } from 'helpers';
-import { AccountAssetType } from 'types';
+import { AccountAssetType, WithClassnameType } from 'types';
+
+export interface AccountNameUIType extends WithClassnameType {
+  address: string;
+  assets?: AccountAssetType;
+}
 
 export const AccountName = ({
   address,
   assets,
-  dataTestId,
-  color
-}: {
-  address: string;
-  assets?: AccountAssetType;
-  dataTestId?: string;
-  color?: 'muted' | 'secondary';
-}) => {
+  className,
+  'data-testid': dataTestId = ''
+}: AccountNameUIType) => {
   if (assets && assets.name) {
     const cleanName = assets.name.replaceAll(/[^\p{L}\p{N}\p{P}\p{Z}\n]/gu, '');
     const name = formatHerotag(cleanName);
@@ -33,12 +35,8 @@ export const AccountName = ({
         )}
         <Overlay title={description} tooltipClassName='account-name'>
           <div
-            className={`text-truncate ${color ? `text-${color}` : ''}`}
-            {...(dataTestId
-              ? {
-                  datatestid: dataTestId
-                }
-              : {})}
+            className={classNames('text-truncate', className)}
+            data-testid={dataTestId}
           >
             {name}
           </div>
@@ -47,15 +45,5 @@ export const AccountName = ({
     );
   }
 
-  return (
-    <Trim
-      text={address}
-      color={color}
-      {...(dataTestId
-        ? {
-            dataTestId
-          }
-        : {})}
-    />
-  );
+  return <Trim text={address} className={className} data-testid={dataTestId} />;
 };

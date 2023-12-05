@@ -7,7 +7,7 @@ export const FailedBlocks = () => {
       icon={faCube}
       title='Unable to load blocks'
       className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

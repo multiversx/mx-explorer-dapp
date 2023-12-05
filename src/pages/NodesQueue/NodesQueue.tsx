@@ -79,7 +79,7 @@ export const NodesQueue = () => {
           icon={faCogs}
           title='Unable to load nodes'
           className='py-spacer my-auto'
-          dataTestId='errorScreen'
+          data-testid='errorScreen'
         />
       )}
 

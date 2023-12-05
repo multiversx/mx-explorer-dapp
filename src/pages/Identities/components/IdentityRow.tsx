@@ -122,7 +122,7 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
                   icon={faCogs}
                   title='Unable to load validators'
                   className='py-spacer my-auto'
-                  dataTestId='errorScreen'
+                  data-testid='errorScreen'
                 />
               )}
               {dataReady === true && (

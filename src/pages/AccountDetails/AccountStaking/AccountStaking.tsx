@@ -112,13 +112,13 @@ export const AccountStaking = () => {
                   icon={faChartPie}
                   title='No Staking'
                   className='py-spacer my-auto'
-                  dataTestId='errorScreen'
+                  data-testid='errorScreen'
                 />
               </div>
             )}
           </div>
         ) : (
-          <Loader dataTestId='stakingLoader' />
+          <Loader data-testid='stakingLoader' />
         )}
       </div>
     </div>

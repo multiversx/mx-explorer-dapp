@@ -96,7 +96,7 @@ export const LatestTransactions = () => {
     return (
       <div className='card card-lg card-black latest-transactions' ref={ref}>
         {transactionsFetched === undefined && (
-          <Loader dataTestId='transactionsLoader' />
+          <Loader data-testid='transactionsLoader' />
         )}
         {transactionsFetched === false && <FailedTransactions />}
         {transactionsFetched === true && transactions.length === 0 && (

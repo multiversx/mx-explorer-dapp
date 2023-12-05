@@ -56,13 +56,13 @@ export const AccountUpgrades = () => {
         </div>
       </div>
       <div className='card-body'>
-        {dataReady === undefined && <Loader dataTestId='upgradesLoader' />}
+        {dataReady === undefined && <Loader data-testid='upgradesLoader' />}
         {dataReady === false && (
           <PageState
             icon={faCode}
             title='Unable to load Contract Upgrades'
             className='py-spacer my-auto'
-            dataTestId='errorScreen'
+            data-testid='errorScreen'
           />
         )}
         {dataReady === true &&

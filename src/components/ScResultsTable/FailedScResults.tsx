@@ -7,7 +7,7 @@ export const FailedScResults = () => {
       icon={faCode}
       title='Unable to load Smart Contract Results'
       className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

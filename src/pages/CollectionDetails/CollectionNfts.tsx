@@ -149,14 +149,14 @@ export const CollectionNfts = () => {
         ) : (
           <>
             {dataReady === undefined && (
-              <Loader dataTestId='collectionCollectionNftsLoader' />
+              <Loader data-testid='collectionCollectionNftsLoader' />
             )}
             {dataReady === false && (
               <PageState
                 icon={faUser}
                 title={`Unable to load ${getNftText(type)}`}
                 className='py-spacer my-auto'
-                dataTestId='errorScreen'
+                data-testid='errorScreen'
               />
             )}
             {dataReady === true && collectionNfts.length === 0 && (

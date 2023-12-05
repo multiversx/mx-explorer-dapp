@@ -7,7 +7,7 @@ export const FailedAnalytics = () => {
       icon={faChartBar}
       title='Unable to load Analytics Details'
       className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

@@ -1,14 +1,15 @@
+import classNames from 'classnames';
+
 import { faInfoCircle } from 'icons/regular';
+import { WithClassnameType } from 'types';
 
 import { IconState } from './components/IconState';
 
-interface BasicPageStateType {
+interface BasicPageStateType extends WithClassnameType {
   title?: string;
-  className?: string;
   description?: string | React.ReactNode;
   action?: React.ReactNode;
   iconClassName?: string;
-  dataTestId?: string;
   titleClassName?: string;
 }
 
@@ -29,12 +30,15 @@ export const PageState = ({
   icon,
   action,
   symbol,
-  className = '',
   iconClassName,
-  dataTestId,
-  titleClassName
+  titleClassName,
+  className,
+  'data-testid': dataTestId = ''
 }: PageStateType) => (
-  <div className={`text-center ${className}`} data-testid={dataTestId}>
+  <div
+    className={classNames('text-center', className)}
+    data-testid={dataTestId}
+  >
     <div className='my-spacer'>
       {symbol ? (
         <>{symbol}</>

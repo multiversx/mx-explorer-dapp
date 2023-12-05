@@ -7,7 +7,7 @@ export const FailedCollections = () => {
       icon={faCoins}
       title='Unable to load Collections'
       className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

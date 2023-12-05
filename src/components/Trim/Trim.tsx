@@ -1,14 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
 
 import { useDebounce } from 'hooks';
+import { WithClassnameType } from 'types';
 
-interface TrimType {
+interface TrimUIType extends WithClassnameType {
   text: string;
-  color?: 'muted' | 'secondary';
-  dataTestId?: string;
 }
 
-export const Trim = ({ text, dataTestId = '', color }: TrimType) => {
+export const Trim = ({
+  text,
+  className,
+  'data-testid': dataTestId = ''
+}: TrimUIType) => {
   const [debounce, setDebounce] = useState(0);
 
   const [overflow, setOverflow] = useState(false);
@@ -40,7 +44,7 @@ export const Trim = ({ text, dataTestId = '', color }: TrimType) => {
   return (
     <span
       ref={trimRef}
-      className={`trim ${color ? color : ''} ${overflow ? 'overflow' : ''}`}
+      className={classNames('trim', className, { overflow: Boolean(overflow) })}
     >
       <span
         ref={hiddenTextRef}

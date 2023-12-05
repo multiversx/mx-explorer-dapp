@@ -76,13 +76,13 @@ export const AccountContracts = () => {
         </div>
       </div>
       <div className='card-body'>
-        {dataReady === undefined && <Loader dataTestId='contractsLoader' />}
+        {dataReady === undefined && <Loader data-testid='contractsLoader' />}
         {dataReady === false && (
           <PageState
             icon={faCode}
             title='Unable to load Smart Contracts'
             className='py-spacer my-auto'
-            dataTestId='errorScreen'
+            data-testid='errorScreen'
           />
         )}
         {dataReady === true && accountContracts.length === 0 && (

@@ -70,7 +70,7 @@ export const LatestBlocks = () => {
   const Component = () => {
     return (
       <div className='card card-lg card-black' ref={ref}>
-        {blocksFetched === undefined && <Loader dataTestId='blocksLoader' />}
+        {blocksFetched === undefined && <Loader data-testid='blocksLoader' />}
         {blocksFetched === false && <FailedBlocks />}
         {blocksFetched === true && blocks.length === 0 && <NoBlocks />}
         {blocksFetched === true && blocks.length > 0 && (
@@ -129,7 +129,7 @@ export const LatestBlocks = () => {
                           className='trim-wrapper'
                         >
                           <Trim
-                            dataTestId={`blockHashLink${i}`}
+                            data-testid={`blockHashLink${i}`}
                             text={block.hash}
                           />
                         </NetworkLink>

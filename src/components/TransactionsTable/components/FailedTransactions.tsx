@@ -7,7 +7,7 @@ export const FailedTransactions = () => {
       icon={faExchangeAlt}
       title='Unable to load transactions'
       className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };

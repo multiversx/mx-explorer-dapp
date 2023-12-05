@@ -81,7 +81,7 @@ export const IdentityDetails = () => {
           icon={faCity}
           title='Unable to load identity details'
           className='py-spacer my-auto'
-          dataTestId='errorScreen'
+          data-testid='errorScreen'
         />
       )}
       <div ref={ref}>
@@ -102,7 +102,7 @@ export const IdentityDetails = () => {
                         icon={faCode}
                         title='Unable to load providers'
                         className='py-spacer my-auto'
-                        dataTestId='errorScreen'
+                        data-testid='errorScreen'
                       />
                     ) : (
                       <>

@@ -77,13 +77,13 @@ export const AccountTokens = () => {
       </div>
       <div className='card-body pt-0 px-lg-spacer py-lg-4'>
         <div className='px-0'>
-          {dataReady === undefined && <Loader dataTestId='tokensLoader' />}
+          {dataReady === undefined && <Loader data-testid='tokensLoader' />}
           {dataReady === false && (
             <PageState
               icon={faCoins}
               title='Unable to load tokens'
               className='py-spacer my-auto'
-              dataTestId='errorScreen'
+              data-testid='errorScreen'
             />
           )}
           {dataReady === true && accountTokens.length === 0 && (

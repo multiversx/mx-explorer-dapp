@@ -7,7 +7,7 @@ export const FailedTokens = () => {
       icon={faCoins}
       title='Unable to load Tokens'
       className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 };
