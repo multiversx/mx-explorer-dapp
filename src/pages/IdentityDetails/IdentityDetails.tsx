@@ -74,7 +74,7 @@ export const IdentityDetails = () => {
     (providersFetched && providers !== undefined && providers.length > 0);
 
   return (
-    <>
+    <div ref={ref}>
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
         <PageState
@@ -84,84 +84,82 @@ export const IdentityDetails = () => {
           dataTestId='errorScreen'
         />
       )}
-      <div ref={ref}>
-        {dataReady === true && identity && (
-          <div className='container page-content'>
-            <div className='row' data-testid='identityDetailsContainer'>
-              <div className='col-12 mb-3'>
-                <SharedIdentity.Card identity={identity} />
-              </div>
+      {dataReady === true && identity && (
+        <>
+          <div className='row' data-testid='identityDetailsContainer'>
+            <div className='col-12 mb-3'>
+              <SharedIdentity.Card identity={identity} />
             </div>
+          </div>
 
-            {showProviders && (
-              <div className='row'>
-                <div className='col-12 mb-3'>
-                  <div className='card'>
-                    {providersFetched === false ? (
-                      <PageState
-                        icon={faCode}
-                        title='Unable to load providers'
-                        className='py-spacer my-auto'
-                        dataTestId='errorScreen'
-                      />
-                    ) : (
-                      <>
-                        <div className='card-header'>
-                          <div className='card-header-item d-flex align-items-center'>
-                            <h5 className='mb-0 d-flex align-items-center'>
-                              Delegation Contracts
-                            </h5>
-                          </div>
+          {showProviders && (
+            <div className='row'>
+              <div className='col-12 mb-3'>
+                <div className='card'>
+                  {providersFetched === false ? (
+                    <PageState
+                      icon={faCode}
+                      title='Unable to load providers'
+                      className='py-spacer my-auto'
+                      dataTestId='errorScreen'
+                    />
+                  ) : (
+                    <>
+                      <div className='card-header'>
+                        <div className='card-header-item d-flex align-items-center'>
+                          <h5 className='mb-0 d-flex align-items-center'>
+                            Delegation Contracts
+                          </h5>
                         </div>
+                      </div>
 
-                        <div className='card-body'>
-                          {providers && (
-                            <ProvidersTable
-                              providers={providers}
-                              showIdentity={false}
-                            />
-                          )}
-                        </div>
-                      </>
-                    )}
-                  </div>
+                      <div className='card-body'>
+                        {providers && (
+                          <ProvidersTable
+                            providers={providers}
+                            showIdentity={false}
+                          />
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
-            )}
+            </div>
+          )}
 
-            <div className='row'>
-              <div className='col-12'>
-                <div className='card'>
-                  <div className='card-header'>
-                    <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-                      <h5
-                        className='table-title d-flex align-items-center'
-                        data-testid='title'
-                      >
-                        Nodes
-                      </h5>
-                      <Pager
-                        total={totalNodes}
-                        className='d-flex ms-auto me-auto me-sm-0'
-                        show
-                      />
-                    </div>
+          <div className='row'>
+            <div className='col-12'>
+              <div className='card'>
+                <div className='card-header'>
+                  <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
+                    <h5
+                      className='table-title d-flex align-items-center'
+                      data-testid='title'
+                    >
+                      Nodes
+                    </h5>
+                    <Pager
+                      total={totalNodes}
+                      className='d-flex ms-auto me-auto me-sm-0'
+                      show
+                    />
                   </div>
+                </div>
 
-                  <div className='card-body'>
-                    <NodesTable>
-                      <NodesTable.Body nodes={nodes} />
-                    </NodesTable>
-                  </div>
-                  <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-                    <Pager total={totalNodes} show />
-                  </div>
+                <div className='card-body'>
+                  <NodesTable>
+                    <NodesTable.Body nodes={nodes} />
+                  </NodesTable>
+                </div>
+                <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                  <Pager total={totalNodes} show />
                 </div>
               </div>
             </div>
           </div>
-        )}
-      </div>
-    </>
+        </>
+      )}
+    </div>
   );
 };
