@@ -1,25 +1,31 @@
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import { formatDate } from 'helpers';
+import { WithClassnameType } from 'types';
 import { timeAgo } from './helpers/timeAgo';
+
+export interface TimeAgoUIType extends WithClassnameType {
+  value: number;
+  short?: boolean;
+  tooltip?: boolean;
+  showAgo?: boolean;
+  showHour?: boolean;
+}
 
 export const TimeAgo = ({
   value,
   short = false,
   tooltip = false,
-  showAgo = false
-}: {
-  value: number;
-  short?: boolean;
-  tooltip?: boolean;
-  showAgo?: boolean;
-}) => {
+  showAgo = false,
+  showHour = true
+}: TimeAgoUIType) => {
   const ms = value * 1000;
   let result = timeAgo(ms);
 
   if (short) {
     const parts = result.split(' ');
     if (parts.length > 1) {
-      result = `${parts[0]} ${parts[1]}`;
+      result = `${parts[0]}${showHour ? ` ${parts[1]}` : ''} `;
     }
   }
 

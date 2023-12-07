@@ -24,7 +24,6 @@ export const StatsCard = ({
             {title}
           </p>
         )}
-
         {value && (
           <h2 className='stats-card-value mb-0 text-primary'>{value}</h2>
         )}
@@ -34,7 +33,6 @@ export const StatsCard = ({
             <span className='mx-1'>{subTitle}</span>
           </p>
         )}
-
         {children && <p className='mb-0 mt-2 text-primary-200'>{children}</p>}
       </div>
     </div>
