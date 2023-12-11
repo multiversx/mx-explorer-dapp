@@ -18,14 +18,13 @@ export const PageNotFound = () => {
   return (
     <PageState
       icon={faTimes}
-      title='Page not found'
+      title='Page Not Found'
       description={
         <div className='px-spacer'>
           <span className='text-break-all'>{pathname}</span>
         </div>
       }
-      className='py-spacer m-auto'
-      data-testid='errorScreen'
+      data-testid='404Screen'
     />
   );
 };

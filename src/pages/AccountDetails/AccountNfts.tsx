@@ -78,19 +78,10 @@ export const AccountNfts = () => {
         <div className='px-0'>
           {dataReady === undefined && <Loader data-testid='nftsLoader' />}
           {dataReady === false && (
-            <PageState
-              icon={faCoins}
-              title='Unable to load NFTs'
-              className='py-spacer my-auto'
-              data-testid='errorScreen'
-            />
+            <PageState icon={faCoins} title='Unable to load NFTs' isError />
           )}
           {dataReady === true && accountNfts.length === 0 && (
-            <PageState
-              icon={faCoins}
-              title='No NFTs'
-              className='py-spacer my-auto'
-            />
+            <PageState icon={faCoins} title='No NFTs' />
           )}
 
           {dataReady === true && accountNfts.length > 0 && (

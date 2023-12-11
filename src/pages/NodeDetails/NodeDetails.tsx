@@ -133,12 +133,7 @@ export const NodeDetails = () => {
     <>
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
-        <PageState
-          icon={faCogs}
-          title='Unable to locate this node'
-          className='py-spacer my-auto'
-          data-testid='errorScreen'
-        />
+        <PageState icon={faCogs} title='Unable to locate this Node' isError />
       )}
       <div ref={ref}>
         {dataReady === true && node.data !== undefined && (

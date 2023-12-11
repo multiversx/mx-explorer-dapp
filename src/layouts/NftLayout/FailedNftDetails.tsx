@@ -15,8 +15,7 @@ export const FailedNftDetails = ({
           <span className='text-break-all'>{identifier}</span>
         </div>
       }
-      className='py-spacer my-auto'
-      data-testid='errorScreen'
+      isError
     />
   );
 };

@@ -155,16 +155,11 @@ export const CollectionNfts = () => {
               <PageState
                 icon={faUser}
                 title={`Unable to load ${getNftText(type)}`}
-                className='py-spacer my-auto'
-                data-testid='errorScreen'
+                isError
               />
             )}
             {dataReady === true && collectionNfts.length === 0 && (
-              <PageState
-                icon={faUser}
-                title={`No ${getNftText(type)}s`}
-                className='py-spacer my-auto'
-              />
+              <PageState icon={faUser} title={`No ${getNftText(type)}s`} />
             )}
           </>
         )}

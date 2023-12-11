@@ -302,12 +302,7 @@ export const ProvidersTable = ({
           {displayProviders.length === 0 && (
             <tr>
               <td colSpan={7}>
-                <PageState
-                  icon={faCode}
-                  title='No Providers'
-                  className='py-spacer my-auto'
-                  data-testid='errorScreen'
-                />
+                <PageState icon={faCode} title='No Providers' isError />
               </td>
             </tr>
           )}

@@ -3,11 +3,6 @@ import { faCoins } from 'icons/regular';
 
 export const FailedCollections = () => {
   return (
-    <PageState
-      icon={faCoins}
-      title='Unable to load Collections'
-      className='py-spacer my-auto'
-      data-testid='errorScreen'
-    />
+    <PageState icon={faCoins} title='Unable to load Collections' isError />
   );
 };

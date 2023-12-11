@@ -21,12 +21,5 @@ export const Unavailable = () => {
       break;
   }
 
-  return (
-    <PageState
-      icon={icon}
-      title={title}
-      className='py-spacer m-auto'
-      data-testid='errorScreen'
-    />
-  );
+  return <PageState icon={icon} title={title} isError />;
 };

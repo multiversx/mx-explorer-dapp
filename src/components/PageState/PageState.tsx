@@ -11,6 +11,7 @@ interface BasicPageStateType extends WithClassnameType {
   action?: React.ReactNode;
   iconClassName?: string;
   titleClassName?: string;
+  isError?: boolean;
 }
 
 interface PageStateWithIcon extends BasicPageStateType {
@@ -33,11 +34,12 @@ export const PageState = ({
   iconClassName,
   titleClassName,
   className,
+  isError = false,
   'data-testid': dataTestId = ''
 }: PageStateType) => (
   <div
-    className={classNames('text-center', className)}
-    data-testid={dataTestId}
+    className={classNames('text-center py-spacer my-auto', className)}
+    data-testid={dataTestId ?? isError ? 'errorScreen' : ''}
   >
     <div className='my-spacer'>
       {symbol ? (

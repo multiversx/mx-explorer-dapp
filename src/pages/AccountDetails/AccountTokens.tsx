@@ -79,19 +79,10 @@ export const AccountTokens = () => {
         <div className='px-0'>
           {dataReady === undefined && <Loader data-testid='tokensLoader' />}
           {dataReady === false && (
-            <PageState
-              icon={faCoins}
-              title='Unable to load tokens'
-              className='py-spacer my-auto'
-              data-testid='errorScreen'
-            />
+            <PageState icon={faCoins} title='Unable to load tokens' isError />
           )}
           {dataReady === true && accountTokens.length === 0 && (
-            <PageState
-              icon={faCoins}
-              title='No tokens'
-              className='py-spacer my-auto'
-            />
+            <PageState icon={faCoins} title='No tokens' />
           )}
           {dataReady === true && accountTokens.length > 0 && (
             <>

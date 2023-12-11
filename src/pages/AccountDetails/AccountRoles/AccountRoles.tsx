@@ -84,18 +84,13 @@ export const AccountRoles = ({ type }: { type: AccountRolesTypeEnum }) => {
           <PageState
             icon={faCode}
             title={`Unable to load ${capitalize(type)} Roles`}
-            className='py-spacer my-auto'
-            data-testid='errorScreen'
+            isError
           />
         )}
         {dataReady === true &&
           accountRolesTokens &&
           accountRolesTokens.length === 0 && (
-            <PageState
-              icon={faCode}
-              title={`No ${capitalize(type)} Roles`}
-              className='py-spacer my-auto'
-            />
+            <PageState icon={faCode} title={`No ${capitalize(type)} Roles`} />
           )}
         {dataReady === true &&
           accountRolesTokens &&

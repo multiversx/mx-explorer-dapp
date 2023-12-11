@@ -43,12 +43,7 @@ export const TableBody = ({
       {nodes.length === 0 && (
         <tr>
           <td colSpan={colSpan}>
-            <PageState
-              icon={faCogs}
-              title='No Nodes'
-              className='py-spacer my-auto'
-              data-testid='errorScreen'
-            />
+            <PageState icon={faCogs} title='No Nodes' isError />
           </td>
         </tr>
       )}

@@ -31,8 +31,7 @@ export const HashSearch = () => {
                   <span className='text-break-all'>{query}</span>
                 </div>
               }
-              className='py-spacer m-auto'
-              data-testid='errorScreen'
+              isError
             />
           )}
         </>

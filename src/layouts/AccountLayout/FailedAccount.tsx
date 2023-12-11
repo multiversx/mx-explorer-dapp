@@ -16,8 +16,7 @@ export const FailedAccount = ({ address }: { address: string | undefined }) => {
           <span className='text-break-all'>{address}</span>
         </div>
       }
-      className='py-spacer my-auto'
-      data-testid='errorScreen'
+      isError
     />
   );
 };

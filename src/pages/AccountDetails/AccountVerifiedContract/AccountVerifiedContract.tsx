@@ -133,8 +133,7 @@ export const AccountVerifiedContract = () => {
         <PageState
           icon={faFileAlt}
           title='Unable to load Smart Contract'
-          className='py-spacer my-auto'
-          data-testid='errorScreen'
+          isError
         />
       )}
       {isDataReady === true && contract && (

@@ -80,8 +80,7 @@ export const IdentityDetails = () => {
         <PageState
           icon={faCity}
           title='Unable to load identity details'
-          className='py-spacer my-auto'
-          data-testid='errorScreen'
+          isError
         />
       )}
       {dataReady === true && identity && (
@@ -101,7 +100,7 @@ export const IdentityDetails = () => {
                       icon={faCode}
                       title='Unable to load providers'
                       className='py-spacer my-auto'
-                      data-testid='errorScreen'
+                      isError
                     />
                   ) : (
                     <>

@@ -61,18 +61,13 @@ export const AccountUpgrades = () => {
           <PageState
             icon={faCode}
             title='Unable to load Contract Upgrades'
-            className='py-spacer my-auto'
-            data-testid='errorScreen'
+            isError
           />
         )}
         {dataReady === true &&
           accountUpgrades &&
           accountUpgrades.length === 0 && (
-            <PageState
-              icon={faCode}
-              title='No Smart Contract Upgrades'
-              className='py-spacer my-auto'
-            />
+            <PageState icon={faCode} title='No Smart Contract Upgrades' />
           )}
         {dataReady === true &&
           accountUpgrades &&

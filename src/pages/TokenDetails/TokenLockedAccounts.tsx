@@ -98,17 +98,12 @@ export const TokenDetailsLockedAccounts = () => {
             {dataReady === false && (
               <PageState
                 icon={faUser}
-                title='Unable to loadToken Locked Account'
-                className='py-spacer my-auto'
-                data-testid='errorScreen'
+                title='Unable to load Token Locked Account'
+                isError
               />
             )}
             {dataReady === true && tokenLockedAccounts.length === 0 && (
-              <PageState
-                icon={faUser}
-                title='No Token Locked Account'
-                className='py-spacer my-auto'
-              />
+              <PageState icon={faUser} title='No Token Locked Account' />
             )}
           </>
         )}

@@ -101,16 +101,11 @@ export const NftAccounts = () => {
               <PageState
                 icon={faUser}
                 title='Unable to load Accounts'
-                className='py-spacer my-auto'
-                data-testid='errorScreen'
+                isError
               />
             )}
             {dataReady === true && accounts.length === 0 && (
-              <PageState
-                icon={faUser}
-                title='No Accounts'
-                className='py-spacer my-auto'
-              />
+              <PageState icon={faUser} title='No Accounts' />
             )}
           </>
         )}

@@ -65,12 +65,7 @@ export const Nodes = () => {
 
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
-        <PageState
-          icon={faCogs}
-          title='Unable to load nodes'
-          className='py-spacer my-auto'
-          data-testid='errorScreen'
-        />
+        <PageState icon={faCogs} title='Unable to load Nodes' isError />
       )}
 
       {dataReady === true && (

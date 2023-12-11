@@ -15,8 +15,7 @@ export const MiniBlockNotFound = ({ miniBlockHash }: MiniBlockNotFoundType) => {
           <span className='text-break-all'>{miniBlockHash}</span>
         </div>
       }
-      className='py-spacer my-auto'
-      data-testid='errorScreen'
+      isError
     />
   );
 };

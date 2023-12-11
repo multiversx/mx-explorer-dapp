@@ -45,12 +45,7 @@ export const Identities = () => {
 
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
-        <PageState
-          icon={faCogs}
-          title='Unable to load validators'
-          className='py-spacer my-auto'
-          data-testid='errorScreen'
-        />
+        <PageState icon={faCogs} title='Unable to load validators' isError />
       )}
       {dataReady === true && (
         <div className='card-body'>

@@ -62,8 +62,7 @@ export const TransactionDetails = () => {
               <span className='text-break-all'>{transactionId}</span>
             </div>
           }
-          className='py-spacer my-auto'
-          data-testid='errorScreen'
+          isError
         />
       )}
       <div ref={ref}>

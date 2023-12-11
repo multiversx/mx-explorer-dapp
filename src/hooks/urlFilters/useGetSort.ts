@@ -7,7 +7,7 @@ export const useGetSort = () => {
   const { order, sort } = Object.fromEntries(searchParams);
 
   return {
-    ...(sort ? { sort: sort as SortOrderEnum } : {}),
+    ...(sort ? { sort } : {}),
     ...(order ? { order: order as SortOrderEnum } : {})
   };
 };

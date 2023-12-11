@@ -15,8 +15,7 @@ export const FailedTokenDetails = ({
           <span className='text-break-all'>{tokenId}</span>
         </div>
       }
-      className='py-spacer my-auto'
-      data-testid='errorScreen'
+      isError
     />
   );
 };

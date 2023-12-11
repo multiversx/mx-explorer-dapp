@@ -108,12 +108,7 @@ export const AccountStaking = () => {
               </>
             ) : (
               <div className='col-12'>
-                <PageState
-                  icon={faChartPie}
-                  title='No Staking'
-                  className='py-spacer my-auto'
-                  data-testid='errorScreen'
-                />
+                <PageState icon={faChartPie} title='No Staking' isError />
               </div>
             )}
           </div>
