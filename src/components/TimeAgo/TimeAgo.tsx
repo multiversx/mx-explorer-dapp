@@ -9,15 +9,13 @@ export interface TimeAgoUIType extends WithClassnameType {
   short?: boolean;
   tooltip?: boolean;
   showAgo?: boolean;
-  showHour?: boolean;
 }
 
 export const TimeAgo = ({
   value,
   short = false,
   tooltip = false,
-  showAgo = false,
-  showHour = true
+  showAgo = false
 }: TimeAgoUIType) => {
   const ms = value * 1000;
   let result = timeAgo(ms);
@@ -25,7 +23,7 @@ export const TimeAgo = ({
   if (short) {
     const parts = result.split(' ');
     if (parts.length > 1) {
-      result = `${parts[0]}${showHour ? ` ${parts[1]}` : ''} `;
+      result = `${parts[0]} ${parts[1]}`;
     }
   }
 
