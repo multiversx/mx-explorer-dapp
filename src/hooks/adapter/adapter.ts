@@ -7,7 +7,8 @@ import {
   GetProvidersType,
   GetCollectionsType,
   GetNftsType,
-  GetTokensType
+  GetTokensType,
+  GetAccountsType
 } from 'types/adapter.types';
 
 import {
@@ -243,20 +244,20 @@ export const useAdapter = () => {
 
     getAccounts: ({
       page = 1,
-      size = PAGE_SIZE
-    }: {
-      page?: number;
-      size?: number;
-    }) =>
+      size = PAGE_SIZE,
+      isSmartContract = false
+    }: GetAccountsType) =>
       provider({
         url: '/accounts',
         params: {
           from: (page - 1) * size,
-          size
+          size,
+          isSmartContract
         }
       }),
 
-    getAccountsCount: () => provider({ url: '/accounts/c' }),
+    getAccountsCount: ({ isSmartContract }: GetAccountsType) =>
+      provider({ url: '/accounts/c', params: { isSmartContract } }),
 
     getAccountTransfers: ({ address, ...rest }: GetTransactionsType) =>
       provider({

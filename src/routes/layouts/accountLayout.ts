@@ -11,11 +11,13 @@ import { AccountTransactions } from 'pages/AccountDetails/AccountTransactions';
 import { AccountUpgrades } from 'pages/AccountDetails/AccountUpgrades';
 import { OldRouteRedirect } from 'pages/AccountDetails/OldRouteRedirect';
 import { Accounts } from 'pages/Accounts';
+import { Applications } from 'pages/Applications';
 
 import { TitledRouteObject } from '../routes';
 
 export const accountsRoutes = {
   accounts: '/accounts',
+  applications: '/applications',
   accountDetails: '/accounts/:hash',
   accountTokens: '/accounts/:hash/tokens',
   accountNfts: '/accounts/:hash/nfts',
@@ -47,6 +49,11 @@ export const accountLayout: TitledRouteObject[] = [
     path: accountsRoutes.accounts,
     title: 'Accounts',
     Component: Accounts
+  },
+  {
+    path: accountsRoutes.applications,
+    title: 'Applications',
+    Component: Applications
   },
   {
     path: accountsRoutes.accountDetails,

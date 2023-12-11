@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
+import { ELLIPSIS } from 'appConstants';
 import { Loader, Pager, Denominate, AccountLink } from 'components';
 import { useAdapter, useGetPage, useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { AccountType } from 'types';
 
-import { FailedAccounts } from './components/FailedAccounts';
-import { NoAccounts } from './components/NoAccounts';
+import { FailedApplications } from './components/FailedApplications';
+import { NoApplications } from './components/NoApplications';
 
-export const Accounts = () => {
+export const Applications = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const isMainnet = useIsMainnet();
@@ -23,25 +25,31 @@ export const Accounts = () => {
 
   const [accounts, setAccounts] = useState<AccountType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
-  const [totalAccounts, setTotalAccounts] = useState<number | '...'>('...');
+  const [totalAccounts, setTotalAccounts] = useState<number | typeof ELLIPSIS>(
+    ELLIPSIS
+  );
 
   const fetchAccounts = () => {
-    getAccounts({ page, size }).then(({ data, success }) => {
-      if (ref.current !== null) {
-        if (success) {
-          setAccounts(data);
+    getAccounts({ page, size, isSmartContract: true }).then(
+      ({ data, success }) => {
+        if (ref.current !== null) {
+          if (success) {
+            setAccounts(data);
+          }
+          setDataReady(success);
         }
-        setDataReady(success);
       }
-    });
+    );
   };
 
   const fetchAccountsCount = () => {
-    getAccountsCount({}).then(({ data: count, success }) => {
-      if (ref.current !== null && success) {
-        setTotalAccounts(count);
+    getAccountsCount({ isSmartContract: true }).then(
+      ({ data: count, success }) => {
+        if (ref.current !== null && success) {
+          setTotalAccounts(count);
+        }
       }
-    });
+    );
   };
 
   useEffect(() => {
@@ -55,7 +63,7 @@ export const Accounts = () => {
         (isMainnet && Object.keys(pageHeadersAccounts).length === 0)) && (
         <Loader />
       )}
-      {dataReady === false && <FailedAccounts />}
+      {dataReady === false && <FailedApplications />}
 
       <div ref={ref}>
         {dataReady === true && (
@@ -71,7 +79,10 @@ export const Accounts = () => {
                             data-testid='title'
                             className='table-title d-flex align-items-center'
                           >
-                            Accounts
+                            {totalAccounts !== ELLIPSIS
+                              ? `${new BigNumber(totalAccounts).toFormat()} `
+                              : ''}
+                            Applications
                           </h5>
                           <Pager
                             total={totalAccounts}
@@ -86,7 +97,8 @@ export const Accounts = () => {
                           <table className='table mb-0'>
                             <thead>
                               <tr>
-                                <th>Address</th>
+                                <th>Name/Address</th>
+                                <th>Owner</th>
                                 <th>Balance</th>
                               </tr>
                             </thead>
@@ -98,8 +110,14 @@ export const Accounts = () => {
                                       address={account.address}
                                       assets={account?.assets}
                                       className='full-hash'
-                                      linkClassName='trim-only-sm'
                                     />
+                                  </td>
+                                  <td>
+                                    {account?.ownerAddress && (
+                                      <AccountLink
+                                        address={account.ownerAddress}
+                                      />
+                                    )}
                                   </td>
                                   <td>
                                     <Denominate value={account.balance} />
@@ -119,7 +137,7 @@ export const Accounts = () => {
                       </div>
                     </>
                   ) : (
-                    <NoAccounts />
+                    <NoApplications />
                   )}
                 </div>
               </div>

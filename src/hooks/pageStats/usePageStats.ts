@@ -126,6 +126,7 @@ export const usePageStats = () => {
         };
 
       case activeRoute(accountsRoutes.accounts):
+      case activeRoute(accountsRoutes.applications):
         return {
           title: headersAccountsTitle,
           data: headersAccountsData
