@@ -15,8 +15,8 @@
     "@fortawesome/free-regular-svg-icons": "6.4.2",
     "@fortawesome/free-solid-svg-icons": "6.4.2",
     "@fortawesome/react-fontawesome": "0.2.0",
-    "@multiversx/sdk-dapp": "2.23.0",
-    "@multiversx/sdk-dapp-sc-explorer": "0.0.1-beta.1",
+    "@multiversx/sdk-dapp": "2.24.4",
+    "@multiversx/sdk-dapp-sc-explorer": "0.0.1-beta.3",
     "@react-three/fiber": "8.13.6",
     "@reduxjs/toolkit": "1.9.5",
     "anchorme": "2.1.2",
@@ -117,7 +117,7 @@
     "run-script-os": "1.1.5",
     "sass": "1.62.1",
     "typescript": "5.1.6",
-    "vite": "4.4.9",
+    "vite": "4.4.12",
     "vite-plugin-mkcert": "1.16.0",
     "vite-plugin-node-polyfills": "0.9.0",
     "vite-plugin-svgr": "3.2.0",
@@ -128,6 +128,10 @@
     "@fortawesome/pro-light-svg-icons": "6.4.2",
     "@fortawesome/pro-regular-svg-icons": "6.4.2",
     "@fortawesome/pro-solid-svg-icons": "6.4.2"
+  },
+  "resolutions": {
+    "axios": ">=1.6.0",
+    "d3-color": ">=3.1.0"
   },
   "browserslist": [
     ">0.2%",
