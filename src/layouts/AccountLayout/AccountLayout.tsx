@@ -8,7 +8,7 @@ import {
   MAX_ACOUNT_TOKENS_BALANCE
 } from 'appConstants';
 import { Loader } from 'components';
-import { addressIsBech32, getTotalTokenUsdValue } from 'helpers';
+import { addressIsBech32, getTotalTokenUsdValue, isContract } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { setAccount, setAccountExtra, setAccountStaking } from 'redux/slices';
@@ -20,6 +20,7 @@ import {
 } from 'types';
 
 import { AccountDetailsCard } from './AccountDetailsCard';
+import { ApplicationDetailsCard } from './ApplicationDetailsCard';
 import { FailedAccount } from './FailedAccount';
 
 export const AccountLayout = () => {
@@ -375,7 +376,11 @@ export const AccountLayout = () => {
       <div ref={ref}>
         {!loading && !failed && (
           <div className='container page-content'>
-            <AccountDetailsCard />
+            {address && isContract(address) ? (
+              <ApplicationDetailsCard />
+            ) : (
+              <AccountDetailsCard />
+            )}
             <Outlet />
           </div>
         )}

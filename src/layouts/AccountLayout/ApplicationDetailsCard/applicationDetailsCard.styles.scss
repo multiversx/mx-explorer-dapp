@@ -1,0 +1,37 @@
+@import './components/VerifiedBadge/verifiedBadge.styles.scss';
+
+.application-details-card {
+  background-color: var(--black);
+
+  .application-logo {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    margin-right: 0.5rem;
+    @include media-breakpoint-up(md) {
+      width: 11.25rem;
+      height: 11.25rem;
+      border-radius: 1.5rem;
+    }
+  }
+  .application-name {
+    @include media-breakpoint-down(md) {
+      font-size: 1.5rem;
+    }
+  }
+  .application-description {
+    font-family: var(--headings-font-family);
+    font-size: 1rem;
+    @include media-breakpoint-up(md) {
+      display: -webkit-box !important;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+  }
+  .balance-usd {
+    margin-left: 1rem;
+    font-size: 1rem;
+    color: var(--neutral-500);
+  }
+}
