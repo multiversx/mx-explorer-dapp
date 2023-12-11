@@ -1,0 +1,19 @@
+.stats-card {
+  .mx-symbol {
+    height: 0.75rem;
+    width: 1.25rem;
+    margin-top: -0.25rem;
+    margin-right: 0.25rem;
+  }
+}
+
+.small-stats-card {
+  .stats-card-body {
+    column-gap: 2rem;
+  }
+
+  .stats-card-value {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+}
