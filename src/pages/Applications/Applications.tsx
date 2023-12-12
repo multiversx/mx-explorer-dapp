@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS } from 'appConstants';
-import { Loader, Pager, Denominate, AccountLink } from 'components';
-import { useAdapter, useGetPage, useIsMainnet } from 'hooks';
+import { Loader, Pager, Denominate, AccountLink, Sort } from 'components';
+import { useAdapter, useGetPage, useGetSort, useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { AccountType } from 'types';
@@ -20,6 +20,7 @@ export const Applications = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
 
+  const { sort, order } = useGetSort();
   const { page, size } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
 
@@ -30,7 +31,7 @@ export const Applications = () => {
   );
 
   const fetchAccounts = () => {
-    getAccounts({ page, size, isSmartContract: true }).then(
+    getAccounts({ page, size, sort, order, isSmartContract: true }).then(
       ({ data, success }) => {
         if (ref.current !== null) {
           if (success) {
@@ -99,7 +100,9 @@ export const Applications = () => {
                               <tr>
                                 <th>Name/Address</th>
                                 <th>Owner</th>
-                                <th>Balance</th>
+                                <th>
+                                  <Sort id='balance' field='Balance' />
+                                </th>
                               </tr>
                             </thead>
                             <tbody data-testid='accountsTable'>

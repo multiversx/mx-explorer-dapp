@@ -245,14 +245,16 @@ export const useAdapter = () => {
     getAccounts: ({
       page = 1,
       size = PAGE_SIZE,
-      isSmartContract = false
+      isSmartContract = false,
+      ...rest
     }: GetAccountsType) =>
       provider({
         url: '/accounts',
         params: {
           from: (page - 1) * size,
           size,
-          isSmartContract
+          isSmartContract,
+          ...rest
         }
       }),
 
