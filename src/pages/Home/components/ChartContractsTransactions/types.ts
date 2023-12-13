@@ -1,4 +1,4 @@
-import { GrowthChartDataType } from 'types';
+import { GrowthChartDataType, WithClassnameType } from 'types';
 import { TransactionsStatisticsLabelEnum } from './enum';
 
 export interface StatisticType {
@@ -11,4 +11,9 @@ export interface ChartType {
   identifier: string;
   color: string;
   data: GrowthChartDataType[] | undefined;
+}
+
+export interface ChartContractsTransactionsUIType extends WithClassnameType {
+  title?: string;
+  showStatistics?: boolean;
 }

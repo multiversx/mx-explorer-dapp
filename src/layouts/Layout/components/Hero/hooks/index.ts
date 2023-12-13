@@ -90,6 +90,7 @@ export const useShowTransactionStats = () => {
 
   switch (true) {
     case activeRoute(transactionsRoutes.transactions):
+    case activeRoute(accountsRoutes.applications):
       return true;
 
     default:

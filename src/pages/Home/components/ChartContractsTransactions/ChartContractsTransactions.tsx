@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
@@ -7,14 +8,18 @@ import { growthTransactionsSelector } from 'redux/selectors';
 
 import { TransactionsStatisticsLabelEnum } from './enum';
 import styles from './styles.module.scss';
-import { StatisticType } from './types';
+import { StatisticType, ChartContractsTransactionsUIType } from './types';
 
 import { ChartArea } from '../ChartArea';
 import { PayloadType } from '../ChartArea/types';
 import { ChartSelect } from '../ChartSelect';
 import { ChartSelectOptionType } from '../ChartSelect/types';
 
-export const ChartContractsTransactions = () => {
+export const ChartContractsTransactions = ({
+  showStatistics = true,
+  title,
+  className
+}: ChartContractsTransactionsUIType) => {
   const {
     scResults,
     transactions,
@@ -158,27 +163,31 @@ export const ChartContractsTransactions = () => {
   ];
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.statistics}>
-        {statistics.map((statistic) => (
-          <div key={statistic.label} className={styles.statistic}>
-            <div className={styles.label}>{statistic.label}</div>
-            <div className={styles.value} style={{ color: statistic.color }}>
-              {statistic.value}
+    <div className={classNames(className, styles.wrapper)}>
+      {showStatistics && (
+        <div className={styles.statistics}>
+          {statistics.map((statistic) => (
+            <div key={statistic.label} className={styles.statistic}>
+              <div className={styles.label}>{statistic.label}</div>
+              <div className={styles.value} style={{ color: statistic.color }}>
+                {statistic.value}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       <div className={styles.charts}>
-        <div className={styles.filters}>
-          <ChartSelect
-            options={filters}
-            onChange={onChange}
-            defaultValue={defaultValue}
-          />
+        <div className={styles.headerwrapper}>
+          {title && <h5 className={styles.title}>{title}</h5>}
+          <div className={styles.filters}>
+            <ChartSelect
+              options={filters}
+              onChange={onChange}
+              defaultValue={defaultValue}
+            />
+          </div>
         </div>
-
         <ChartArea payload={payload} />
       </div>
     </div>

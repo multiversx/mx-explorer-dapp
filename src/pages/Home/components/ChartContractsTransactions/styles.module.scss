@@ -68,16 +68,22 @@
       min-width: 0;
     }
 
-    .filters {
-      display: inline-block;
-      margin: 0 1rem 2rem auto;
+    .headerwrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
 
-      @media (min-width: 768px) {
-        margin: 0;
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
-      }
+    .title {
+      padding-left: 1.5rem;
+      margin-bottom: 0;
+    }
+
+    .filters {
+      margin-right: 2rem;
+      margin-left: auto;
     }
 
     .wrapper {

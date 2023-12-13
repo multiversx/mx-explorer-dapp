@@ -60,7 +60,7 @@ export const Hero = () => {
   const pageName = getCustomPageName({ pathname, basePage });
 
   let heroTypeClassName = '';
-  if (showTransactionsStats) {
+  if (showTransactionsStats && !showCustomStats) {
     heroTypeClassName = 'transactions-stats';
   }
   if (showNodesStats) {
@@ -99,17 +99,28 @@ export const Hero = () => {
             </h2>
           </div>
           {showCustomStats ? (
-            <div className='card-body d-flex flex-row flex-wrap gap-3 custom-stats'>
-              {pageStats?.data.map((item) => (
-                <StatsCard
-                  key={item.id}
-                  title={item.title}
-                  subTitle={item.subTitle}
-                  icon={item.icon}
-                  value={item.value ? item.value.toString() : ''}
-                  className='card-solitary'
-                />
-              ))}
+            <div className='card-body'>
+              <div className='d-flex flex-row flex-wrap gap-3 custom-stats'>
+                {pageStats?.data.map((item) => (
+                  <StatsCard
+                    key={item.id}
+                    title={item.title}
+                    subTitle={item.subTitle}
+                    icon={item.icon}
+                    value={item.value ? item.value.toString() : ''}
+                    className='card-solitary'
+                  />
+                ))}
+              </div>
+              {showTransactionsStats && (
+                <div className='card mt-3'>
+                  <ChartContractsTransactions
+                    showStatistics={false}
+                    title='App transactions'
+                    className='bg-neutral-900'
+                  />
+                </div>
+              )}
             </div>
           ) : (
             <>
