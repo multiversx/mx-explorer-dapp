@@ -11,6 +11,7 @@ import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAcc
 import { AccountType } from 'types';
 
 import { FailedApplications } from './components/FailedApplications';
+import { MostUsedApplications } from './components/MostUsedApplications';
 import { NoApplications } from './components/NoApplications';
 
 export const Applications = () => {
@@ -69,6 +70,7 @@ export const Applications = () => {
       <div ref={ref}>
         {dataReady === true && (
           <div className='container page-content'>
+            {isMainnet && <MostUsedApplications />}
             <div className='row'>
               <div className='col-12'>
                 <div className='card'>

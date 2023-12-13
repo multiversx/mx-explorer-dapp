@@ -1,8 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 import { AccountLink } from 'components';
-import { AccountAssetType } from 'types';
-import { MostUsedApplicationsType } from 'types/growthWidgets';
+import { AccountAssetType, MostUsedApplicationsType } from 'types';
 
 export const MostUsedContracts = ({
   data

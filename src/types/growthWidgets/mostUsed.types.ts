@@ -1,3 +1,5 @@
+import { AccountAssetType } from 'types';
+
 export interface GrowthMostUsedType {
   dailyMostUsedApplications: MostUsedApplicationsType[];
   dailyMostTransactedNFTs: MostUsedCollectionsType[];
@@ -16,9 +18,7 @@ export interface MostUsedBaseType {
 
 export interface MostUsedApplicationsType extends MostUsedBaseType {
   extraInfo?: {
-    assets?: {
-      name?: string;
-    };
+    assets?: AccountAssetType;
   };
 }
 
@@ -26,10 +26,7 @@ export interface MostUsedTokensType extends MostUsedBaseType {
   extraInfo?: {
     name?: string;
     ticker?: string;
-    assets?: {
-      svgUrl?: string;
-      pngUrl?: string;
-    };
+    assets?: AccountAssetType;
   };
 }
 
@@ -37,9 +34,6 @@ export interface MostUsedCollectionsType extends MostUsedBaseType {
   extraInfo?: {
     name?: string;
     ticker?: string;
-    assets?: {
-      svgUrl?: string;
-      pngUrl?: string;
-    };
+    assets?: AccountAssetType;
   };
 }

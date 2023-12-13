@@ -63,6 +63,7 @@ export * from './Tabs';
 export * from './TimeAgo';
 export * from './TokenBlock';
 export * from './TokenLink';
+export * from './TopCard';
 export * from './TransactionAction';
 export * from './TransactionGuardianIcon';
 export * from './TransactionIcon';
