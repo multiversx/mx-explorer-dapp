@@ -19,7 +19,10 @@ export const TableBody = ({
   type?: NodeType['type'];
   status?: NodeType['status'];
 }) => {
-  const colSpan = statistics ? 8 : queue ? 6 : 7;
+  let colSpan = 8;
+  if (queue) {
+    colSpan = 5;
+  }
 
   return (
     <tbody>

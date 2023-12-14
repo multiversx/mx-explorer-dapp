@@ -124,6 +124,11 @@
   }
 }
 
+// TEMP - remove Ledger Login Button
+.mx-sdk-sc-button-login-provider.dapp-ledger-login-button {
+  display: none !important;
+}
+
 .ledger-connect-icon {
   .st2,
   .st3 {

@@ -3,13 +3,11 @@ import { useSelector } from 'react-redux';
 
 import { Tabs } from 'components/Tabs';
 import { urlBuilder } from 'helpers';
-import { useNetworkRoute } from 'hooks';
 import { faCircleCheck } from 'icons/solid';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
 
 export const AccountTabs = () => {
-  const networkRoute = useNetworkRoute();
   const { account } = useSelector(accountSelector);
   const { address, code, isVerified } = account;
   const { adapter } = useSelector(activeNetworkSelector);
@@ -47,7 +45,7 @@ export const AccountTabs = () => {
       tabLabel: 'Smart Contracts',
       tabTo: urlBuilder.accountDetailsContracts(address),
       activationRoutes: [accountsRoutes.accountContracts],
-      show: !code
+      show: !Boolean(code)
     },
     {
       tabLabel: 'Upgrades',
@@ -76,15 +74,22 @@ export const AccountTabs = () => {
       )
     },
     {
+      tabLabel: 'Smart Contracts',
+      tabTo: urlBuilder.accountDetailsContracts(address),
+      activationRoutes: [accountsRoutes.accountContracts],
+      show: Boolean(code),
+      extra: true
+    },
+    {
       tabLabel: 'Token Roles',
-      tabTo: networkRoute(urlBuilder.accountDetailsTokenRoles(address)),
+      tabTo: urlBuilder.accountDetailsTokenRoles(address),
       activationRoutes: [accountsRoutes.accountRolesTokens],
       show: tokensRouteActive,
       extra: true
     },
     {
       tabLabel: 'Collection Roles',
-      tabTo: networkRoute(urlBuilder.accountDetailsCollectionRoles(address)),
+      tabTo: urlBuilder.accountDetailsCollectionRoles(address),
       activationRoutes: [accountsRoutes.accountRolesCollections],
       show: tokensRouteActive,
       extra: true

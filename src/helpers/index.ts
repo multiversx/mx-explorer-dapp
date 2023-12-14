@@ -11,6 +11,7 @@ export * from './downloadFile';
 export * from './formatValue';
 export * from './getValue';
 export * from './isContract';
+export * from './isEllipsisActive';
 export * from './isHash';
 export * from './isUtf8';
 export * from './nominate';
