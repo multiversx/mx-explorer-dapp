@@ -7,5 +7,5 @@ export const isEllipsisActive = (e?: HTMLDivElement | null) => {
     }
   }
 
-  return false;
+  return true;
 };

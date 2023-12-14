@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 
@@ -13,7 +13,14 @@ export interface TransactionMethodType {
 export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
   const badgeTextRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isTextTruncated, setIsTextTruncated] = useState(false);
   const { function: filteredFunction } = Object.fromEntries(searchParams);
+
+  useLayoutEffect(() => {
+    if (badgeTextRef?.current) {
+      setIsTextTruncated(isEllipsisActive(badgeTextRef?.current));
+    }
+  }, []);
 
   const transactionMethodText = getTransactionMethod(transaction);
   if (!transactionMethodText) {
@@ -24,8 +31,7 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
     transaction.action?.description &&
       transaction.action.description !== 'Transfer'
   );
-  const showTooltip =
-    isEllipsisActive(badgeTextRef?.current) || showDescription;
+  const showTooltip = showDescription || isTextTruncated;
 
   const updateMethod = (method: string) => {
     const { page, size, ...rest } = Object.fromEntries(searchParams);
@@ -81,11 +87,11 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
     </div>
   );
 
-  const TransactionMethodTooltip = () => {
-    if (showTooltip) {
-      return (
+  return showTooltip ? (
+    <Overlay
+      title={
         <>
-          {isEllipsisActive(badgeTextRef?.current) && (
+          {isTextTruncated && (
             <p className={classNames({ 'mb-0': !showDescription })}>
               {transactionMethodText}
             </p>
@@ -94,14 +100,9 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
             <p className='mb-0'>{transaction.action?.description}</p>
           )}
         </>
-      );
-    }
-
-    return null;
-  };
-
-  return showTooltip ? (
-    <Overlay title={<TransactionMethodTooltip />} className='method-tooltip'>
+      }
+      className='method-tooltip'
+    >
       <TransactionMethodBadge />
     </Overlay>
   ) : (
