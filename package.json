@@ -87,7 +87,8 @@
     "prepare-free-icons": "run-script-os",
     "prepare-free-icons:nix": "cp ./src/icons/duotone/fontawesomeFree.ts ./src/icons/duotone/index.ts && cp ./src/icons/light/fontawesomeFree.ts ./src/icons/light/index.ts && cp ./src/icons/regular/fontawesomeFree.ts ./src/icons/regular/index.ts && cp ./src/icons/solid/fontawesomeFree.ts ./src/icons/solid/index.ts",
     "prepare-free-icons:windows": "copy .\\src\\icons\\duotone\\fontawesomeFree.ts .\\src\\icons\\duotone\\index.ts && copy .\\src\\icons\\light\\fontawesomeFree.ts .\\src\\icons\\light\\index.ts && copy .\\src\\icons\\regular\\fontawesomeFree.ts .\\src\\icons\\regular\\index.ts && copy .\\src\\icons\\solid\\fontawesomeFree.ts .\\src\\icons\\solid\\index.ts",
-    "prepare-pro-icons": "./prepare-pro-icons.sh"
+    "prepare-pro-icons": "./prepare-pro-icons.sh",
+    "cy:run": "node scripts/cypress.ts"
   },
   "devDependencies": {
     "@types/file-saver": "2.0.5",
@@ -121,7 +122,10 @@
     "vite-plugin-mkcert": "1.16.0",
     "vite-plugin-node-polyfills": "0.9.0",
     "vite-plugin-svgr": "3.2.0",
-    "vite-tsconfig-paths": "4.2.0"
+    "vite-tsconfig-paths": "4.2.0",
+    "cypress-mochawesome-reporter": "3.7.0",
+    "mochawesome-merge": "4.3.0",
+    "mochawesome-report-generator": "6.2.0"
   },
   "peerDependencies": {
     "@fortawesome/pro-duotone-svg-icons": "6.4.2",
