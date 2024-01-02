@@ -1,8 +1,8 @@
-.applications {
+.ecosystem-menu {
   display: flex;
   flex-direction: column;
 
-  .application {
+  &-item {
     display: block;
     line-height: 1;
     font-size: 1.125rem;

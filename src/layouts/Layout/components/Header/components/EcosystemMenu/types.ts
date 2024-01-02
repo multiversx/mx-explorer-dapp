@@ -1,5 +1,5 @@
 import { MouseEvent } from 'react';
 
-export interface ApplicationsPropsType {
+export interface EcosystemMenuPropsType {
   onClick: (event: MouseEvent) => void;
 }

@@ -10,7 +10,7 @@ import { capitalize } from 'helpers';
 import { useIsMainnet } from 'hooks';
 import { faGrid, faGrid2 } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
-import { Applications } from './components/Applications';
+import { EcosystemMenu } from './components/EcosystemMenu';
 import { Links } from './components/Links';
 import { Switcher } from './components/Switcher';
 import { HeaderPropsType } from './types';
@@ -32,7 +32,7 @@ export const Header = (props: HeaderPropsType) => {
   const { onExpand } = props;
 
   const [menuActive, setMenuActive] = useState(false);
-  const [applicationsActive, setApplicationsActive] = useState(false);
+  const [ecosystemMenuActive, setEcosystemMenuActive] = useState(false);
 
   const onMenuToggle = (event: MouseEvent) => {
     if (window.innerWidth <= 768) {
@@ -40,31 +40,31 @@ export const Header = (props: HeaderPropsType) => {
     }
 
     event.preventDefault();
-    setApplicationsActive(false);
+    setEcosystemMenuActive(false);
     setTimeout(
       () => setMenuActive((menuActive) => !menuActive),
-      applicationsActive ? 400 : 0
+      ecosystemMenuActive ? 400 : 0
     );
   };
 
-  const onApplicationsToggle = (event: MouseEvent) => {
+  const onEcosystemMenuToggle = (event: MouseEvent) => {
     event.preventDefault();
     setMenuActive(false);
 
     setTimeout(
       () => {
         if (window.innerWidth <= 768) {
-          onExpand(!applicationsActive);
+          onExpand(!ecosystemMenuActive);
         }
 
-        setApplicationsActive((applicationsActive) => !applicationsActive);
+        setEcosystemMenuActive((ecosystemMenuActive) => !ecosystemMenuActive);
       },
       menuActive ? 400 : 0
     );
   };
 
-  const onApplicationsClose = () => {
-    setApplicationsActive(false);
+  const onEcosystemMenuClose = () => {
+    setEcosystemMenuActive(false);
     onExpand(false);
   };
 
@@ -98,10 +98,10 @@ export const Header = (props: HeaderPropsType) => {
 
       <div
         tabIndex={0}
-        onClick={onApplicationsToggle}
-        onBlur={() => setTimeout(onApplicationsClose, 100)}
+        onClick={onEcosystemMenuToggle}
+        onBlur={() => setTimeout(onEcosystemMenuClose, 100)}
         className={classNames('matrix', {
-          active: applicationsActive
+          active: ecosystemMenuActive
         })}
       >
         <FontAwesomeIcon icon={faGrid} className='desktop' />
@@ -109,15 +109,15 @@ export const Header = (props: HeaderPropsType) => {
       </div>
 
       <div
-        className={classNames('applicationswrapper', {
-          active: applicationsActive
+        className={classNames('ecosystem-menu-wrapper', {
+          active: ecosystemMenuActive
         })}
       >
-        <Applications />
+        <EcosystemMenu />
       </div>
 
       <div
-        className={classNames('menuwrapper', {
+        className={classNames('menu-wrapper', {
           active: menuActive
         })}
       >
