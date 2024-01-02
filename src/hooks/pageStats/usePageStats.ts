@@ -11,6 +11,7 @@ import { pageHeadersCollectionsStatsSelector } from '../../redux/selectors/pageH
 import { pageHeaderTokensStatsSelector } from '../../redux/selectors/pageHeadersTokensStats';
 import {
   accountsRoutes,
+  applicationsRoutes,
   blocksRoutes,
   collectionRoutes,
   tokensRoutes
@@ -126,7 +127,7 @@ export const usePageStats = () => {
         };
 
       case activeRoute(accountsRoutes.accounts):
-      case activeRoute(accountsRoutes.applications):
+      case activeRoute(applicationsRoutes.applications):
         return {
           title: headersAccountsTitle,
           data: headersAccountsData

@@ -1,13 +1,16 @@
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { NetworkLink } from 'components';
+import { isContract, addressIsBech32 } from 'helpers';
 import { useActiveRoute, useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import {
   blocksRoutes,
   transactionsRoutes,
   accountsRoutes,
+  applicationsRoutes,
   validatorsRoutes,
   tokensRoutes,
   nftRoutes,
@@ -15,17 +18,22 @@ import {
   analyticsRoutes
 } from 'routes';
 
-import { LinksPropsType } from './types';
+import { LinksPropsType, MenuLinkType } from './types';
 
 export const Links = (props: LinksPropsType) => {
   const { onClick } = props;
   const { adapter } = useSelector(activeNetworkSelector);
   const activeRoute = useActiveRoute();
+  const { hash: address } = useParams();
 
   const isMainnet = useIsMainnet();
   const isAdapterAPI = adapter === 'api';
+  const isOnAccountRoute =
+    address &&
+    addressIsBech32(address) &&
+    Object.values(accountsRoutes).some((item) => activeRoute(item));
 
-  const links = [
+  const links: MenuLinkType[] = [
     {
       label: 'Dashboard',
       to: '/',
@@ -36,106 +44,83 @@ export const Links = (props: LinksPropsType) => {
       label: 'Blocks',
       to: blocksRoutes.blocks,
       show: true,
-      activeRoutes: [
-        blocksRoutes.blocks,
-        blocksRoutes.blocksDetails,
-        blocksRoutes.miniBlockDetails
-      ]
+      activeRoutes: Object.values(blocksRoutes)
     },
     {
       label: 'Transactions',
       show: true,
       to: transactionsRoutes.transactions,
-      activeRoutes: [
-        transactionsRoutes.transactions,
-        transactionsRoutes.transactionDetails
-      ]
+      activeRoutes: Object.values(transactionsRoutes)
     },
     {
       label: 'Accounts',
       show: true,
       to: accountsRoutes.accounts,
-      activeRoutes: [
-        accountsRoutes.accounts,
-        accountsRoutes.accountDetails,
-        accountsRoutes.accountTokens,
-        accountsRoutes.accountNfts,
-        accountsRoutes.accountContracts,
-        accountsRoutes.accountCode,
-        accountsRoutes.accountCodeConstructor,
-        accountsRoutes.accountCodeEndpoints,
-        accountsRoutes.accountCodeEvents,
-        accountsRoutes.accountCodeTypes
-      ]
+      activeRoutes: Object.values(accountsRoutes)
+    },
+    {
+      label: 'Apps',
+      show: true,
+      to: applicationsRoutes.applications,
+      activeRoutes: [applicationsRoutes.applications]
     },
     {
       label: 'Tokens',
       to: tokensRoutes.tokens,
       show: isAdapterAPI,
-      activeRoutes: [
-        tokensRoutes.tokens,
-        tokensRoutes.tokenDetails,
-        tokensRoutes.tokenDetailsAccounts,
-        tokensRoutes.tokenDetailsLockedAccounts,
-        tokensRoutes.tokenDetailsRoles,
-        tokensRoutes.tokensMeta,
-        tokensRoutes.tokensMetaEsdt,
-        tokensRoutes.tokensMetaEsdtDetails
-      ]
+      activeRoutes: Object.values(tokensRoutes)
     },
     {
       label: 'NFTs',
       to: collectionRoutes.collections,
       show: isAdapterAPI,
       activeRoutes: [
-        collectionRoutes.collections,
-        collectionRoutes.collectionDetails,
-        collectionRoutes.collectionsNft,
-        collectionRoutes.collectionsSft,
-        collectionRoutes.collectionDetailsRoles,
-        nftRoutes.nfts,
-        nftRoutes.nftDetails,
-        nftRoutes.nftDetailsAccounts
+        ...Object.values(collectionRoutes),
+        ...Object.values(nftRoutes)
       ]
     },
     {
       label: 'Validators',
       to: isMainnet ? validatorsRoutes.identities : validatorsRoutes.nodes,
       show: isAdapterAPI,
-      activeRoutes: [
-        validatorsRoutes.identities,
-        validatorsRoutes.identityDetails,
-        validatorsRoutes.providers,
-        validatorsRoutes.providerDetails,
-        validatorsRoutes.providerTransactions,
-        validatorsRoutes.nodes,
-        validatorsRoutes.nodeDetails,
-        validatorsRoutes.statistics,
-        validatorsRoutes.queue
-      ]
+      activeRoutes: Object.values(validatorsRoutes)
     },
     {
       label: 'Analytics',
       to: analyticsRoutes.analytics,
       show: isAdapterAPI && isMainnet,
-      activeRoutes: [analyticsRoutes.analytics, analyticsRoutes.compare]
+      activeRoutes: Object.values(analyticsRoutes)
     }
   ].filter((link) => link.show);
 
+  const getIsLinkActive = (link: MenuLinkType) => {
+    if (isOnAccountRoute) {
+      if (isContract(address)) {
+        return link.to === applicationsRoutes.applications;
+      } else {
+        return link.to === accountsRoutes.accounts;
+      }
+    }
+
+    return link.activeRoutes.some((item) => activeRoute(item));
+  };
+
   return (
     <div className='links'>
-      {links.map((link) => (
-        <NetworkLink
-          key={link.label}
-          to={link.to}
-          onClick={onClick}
-          className={classNames('link', {
-            active: link.activeRoutes.some((item) => activeRoute(item))
-          })}
-        >
-          {link.label}
-        </NetworkLink>
-      ))}
+      {links.map((link) => {
+        return (
+          <NetworkLink
+            key={link.label}
+            to={link.to}
+            onClick={onClick}
+            className={classNames('link', {
+              active: getIsLinkActive(link)
+            })}
+          >
+            {link.label}
+          </NetworkLink>
+        );
+      })}
     </div>
   );
 };

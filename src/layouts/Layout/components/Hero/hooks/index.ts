@@ -5,6 +5,7 @@ import {
   transactionsRoutes,
   blocksRoutes,
   accountsRoutes,
+  applicationsRoutes,
   tokensRoutes,
   collectionRoutes,
   nftRoutes,
@@ -71,7 +72,7 @@ export const useShowCustomStats = () => {
   switch (true) {
     case activeRoute(blocksRoutes.blocks):
     case activeRoute(accountsRoutes.accounts):
-    case activeRoute(accountsRoutes.applications):
+    case activeRoute(applicationsRoutes.applications):
     case activeRoute(tokensRoutes.tokens):
     case activeRoute(tokensRoutes.tokensMeta):
     case activeRoute(tokensRoutes.tokensMetaEsdt):
@@ -90,7 +91,7 @@ export const useShowTransactionStats = () => {
 
   switch (true) {
     case activeRoute(transactionsRoutes.transactions):
-    case activeRoute(accountsRoutes.applications):
+    case activeRoute(applicationsRoutes.applications):
       return true;
 
     default:

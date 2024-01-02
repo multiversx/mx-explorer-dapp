@@ -17,7 +17,6 @@ import { TitledRouteObject } from '../routes';
 
 export const accountsRoutes = {
   accounts: '/accounts',
-  applications: '/applications',
   accountDetails: '/accounts/:hash',
   accountTokens: '/accounts/:hash/tokens',
   accountNfts: '/accounts/:hash/nfts',
@@ -39,6 +38,10 @@ export const accountsRoutes = {
   oldAccountDetails: '/address/:hash'
 };
 
+export const applicationsRoutes = {
+  applications: '/applications'
+};
+
 export const accountLayout: TitledRouteObject[] = [
   {
     path: accountsRoutes.oldAccountDetails,
@@ -51,7 +54,7 @@ export const accountLayout: TitledRouteObject[] = [
     Component: Accounts
   },
   {
-    path: accountsRoutes.applications,
+    path: applicationsRoutes.applications,
     title: 'Applications',
     Component: Applications
   },
