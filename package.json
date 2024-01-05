@@ -15,7 +15,7 @@
     "@fortawesome/free-regular-svg-icons": "6.4.2",
     "@fortawesome/free-solid-svg-icons": "6.4.2",
     "@fortawesome/react-fontawesome": "0.2.0",
-    "@multiversx/sdk-dapp": "2.24.4",
+    "@multiversx/sdk-dapp": "2.26.5",
     "@multiversx/sdk-dapp-sc-explorer": "0.0.1-beta.4",
     "@react-three/fiber": "8.13.6",
     "@reduxjs/toolkit": "1.9.5",
@@ -134,7 +134,6 @@
     "@fortawesome/pro-solid-svg-icons": "6.4.2"
   },
   "resolutions": {
-    "axios": ">=1.6.0",
     "d3-color": ">=3.1.0"
   },
   "browserslist": [
