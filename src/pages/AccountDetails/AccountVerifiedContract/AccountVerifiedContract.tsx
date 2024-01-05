@@ -89,6 +89,7 @@ export const AccountVerifiedContract = () => {
     badgeClassName: 'badge',
     badgePrimaryClassName: 'badge-outline badge-outline-primary-alt',
     badgeSecondaryClassName: 'badge-outline badge-outline-grey',
+    badgeFilledClassName: 'badge-grey',
     cardItemClassName: 'card-item',
     cardItemIconClassName: 'card-item-icon',
     cardItemTitleClassName: 'card-item-title',

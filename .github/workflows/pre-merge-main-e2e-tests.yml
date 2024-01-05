@@ -2,13 +2,23 @@ name: Cypress Tests
 on:
   pull_request:
     branches: [main]
+
 jobs:
+  Slack-Notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@master
+        if: always()
+        env:
+          SLACK_ICON_EMOJI: ':robot_face:'
+          SLACK_USERNAME: Cypress Bot
+          SLACK_MESSAGE: E2E tests are now running. Stay tuned for updates!
+          SLACK_TITLE: 'Cypress'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
   cypress-run:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
-      matrix:
-        containers: [1]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -38,3 +48,12 @@ jobs:
         run: aws s3 cp s3://${{ secrets.AWS_S3_BUCKET_INTEGRATION }}/index.html s3://${{ secrets.AWS_S3_BUCKET_INTEGRATION }}/index.html --metadata-directive REPLACE --cache-control max-age=0,no-cache,no-store,must-revalidate --content-type text/html --acl public-read
       - name: Cypress run
         uses: cypress-io/github-action@v4
+      - name: Uploading artifact
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: cypress-execution-report
+          path: |
+            /home/runner/work/mx-explorer-dapp/mx-explorer-dapp/mochawesome-report/mochawesome.html
+            /home/runner/work/mx-explorer-dapp/mx-explorer-dapp/cypress/screenshots
+            /home/runner/work/mx-explorer-dapp/mx-explorer-dapp/cypress/videos
