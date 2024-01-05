@@ -108,12 +108,15 @@
     "@vitejs/plugin-react-swc": "3.3.2",
     "cross-env": "7.0.3",
     "cypress": "^13.1.0",
+    "cypress-mochawesome-reporter": "3.7.0",
     "eslint": "8.44.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-import": "2.28.1",
     "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
+    "mochawesome-merge": "4.3.0",
+    "mochawesome-report-generator": "6.2.0",
     "prettier": "3.0.0",
     "run-script-os": "1.1.5",
     "sass": "1.62.1",
@@ -122,10 +125,7 @@
     "vite-plugin-mkcert": "1.16.0",
     "vite-plugin-node-polyfills": "0.9.0",
     "vite-plugin-svgr": "3.2.0",
-    "vite-tsconfig-paths": "4.2.0",
-    "cypress-mochawesome-reporter": "3.7.0",
-    "mochawesome-merge": "4.3.0",
-    "mochawesome-report-generator": "6.2.0"
+    "vite-tsconfig-paths": "4.2.0"
   },
   "peerDependencies": {
     "@fortawesome/pro-duotone-svg-icons": "6.4.2",
