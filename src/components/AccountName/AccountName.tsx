@@ -18,13 +18,12 @@ export const AccountName = ({
   'data-testid': dataTestId = ''
 }: AccountNameUIType) => {
   if (assets && assets.name) {
-    const cleanName = assets.name.replaceAll(/[^\p{L}\p{N}\p{P}\p{Z}\n]/gu, '');
-    const name = formatHerotag(cleanName);
-    const description = `${cleanName} (${address})`;
+    const name = formatHerotag(assets.name);
+    const description = `${name} (${address})`;
 
     return (
       <>
-        {cleanName.endsWith(HEROTAG_SUFFIX) && (
+        {name.endsWith(HEROTAG_SUFFIX) && (
           <Overlay
             title='Herotag'
             className='herotag'

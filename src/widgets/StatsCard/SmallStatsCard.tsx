@@ -9,7 +9,7 @@ export const SmallStatsCard = ({ title, value, className }: StatsCardType) => {
         className
       )}
     >
-      <div className='card-body p-3 d-flex align-items-center stats-card-body'>
+      <div className='card-body p-3 d-flex stats-card-body'>
         {title && (
           <p className='text-neutral-500 mb-0 stats-card-title font-regular'>
             {title}

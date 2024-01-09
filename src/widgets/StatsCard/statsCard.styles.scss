@@ -5,11 +5,15 @@
     margin-top: -0.25rem;
     margin-right: 0.25rem;
   }
+  .stats-card-body {
+    justify-content: center;
+  }
 }
 
 .small-stats-card {
   .stats-card-body {
     column-gap: 2rem;
+    flex-wrap: wrap;
   }
 
   .stats-card-value {

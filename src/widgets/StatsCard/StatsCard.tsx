@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 
-import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { WithClassnameType } from 'types';
 
 export interface StatsCardType extends WithClassnameType {
@@ -8,7 +7,6 @@ export interface StatsCardType extends WithClassnameType {
   subTitle?: string | React.ReactNode;
   icon?: React.ReactNode;
   value?: string | React.ReactNode;
-  showSymbol?: boolean;
   children?: React.ReactNode;
 }
 
@@ -17,7 +15,6 @@ export const StatsCard = ({
   subTitle,
   value,
   icon,
-  showSymbol = false,
   className,
   children
 }: StatsCardType) => {
@@ -25,17 +22,14 @@ export const StatsCard = ({
     <div
       className={classNames('stats-card card d-flex flex-grow-1', className)}
     >
-      <div className='card-body stats-card-body d-flex flex-column justify-content-center p-4'>
+      <div className='card-body stats-card-body d-flex flex-column p-4'>
         {title && (
           <p className='text-neutral-500 mb-0 stats-card-title font-regular'>
             {title}
           </p>
         )}
         {value && (
-          <h2 className='stats-card-value mb-0 text-primary'>
-            {showSymbol && <MultiversXSymbol className='mx-symbol' />}
-            {value}
-          </h2>
+          <h2 className='stats-card-value mb-0 text-primary'>{value}</h2>
         )}
         {subTitle && (
           <p className='text-primary-200 mb-0 stats-card-title mt-2'>

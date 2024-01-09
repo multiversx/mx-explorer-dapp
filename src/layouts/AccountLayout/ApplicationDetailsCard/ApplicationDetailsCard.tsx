@@ -45,7 +45,8 @@ export const ApplicationDetailsCard = () => {
     isPayable,
     isPayableBySmartContract,
     assets,
-    txCount
+    txCount,
+    isVerified
   } = account;
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getProvider, getAccountUpgrades } = useAdapter();
@@ -96,16 +97,26 @@ export const ApplicationDetailsCard = () => {
           )}
           <div className='application-overview d-flex flex-column flex-fill col-9 gap-3'>
             {assets?.name && (
-              <h1 className='application-name mb-0'>
-                {assets?.iconSvg && (
-                  <img
-                    src={assets.iconSvg}
-                    className='application-logo border d-md-none'
-                    alt=' '
-                  />
+              <div className='application-name'>
+                <h1 className='mb-0'>
+                  {assets?.iconSvg && (
+                    <img
+                      src={assets.iconSvg}
+                      className='application-logo border d-md-none'
+                      alt=' '
+                    />
+                  )}
+                  {assets.name} {isVerified && <VerifiedBadge />}
+                </h1>
+                {isProvider && (
+                  <NetworkLink
+                    to={urlBuilder.providerDetails(address)}
+                    className='btn btn-sm btn-primary'
+                  >
+                    Provider Details
+                  </NetworkLink>
                 )}
-                {assets.name} {!scamInfo && <VerifiedBadge />}
-              </h1>
+              </div>
             )}
             {scamInfo && (
               <span className='text-warning d-flex align-items-center ms-2'>
@@ -180,10 +191,11 @@ export const ApplicationDetailsCard = () => {
             value={
               <>
                 {balance !== ELLIPSIS ? (
-                  <>
+                  <div className='stats-card-content-container'>
                     <Denominate
                       value={balance}
-                      decimals={4}
+                      decimals={2}
+                      showSymbol
                       data-testid='balance'
                     />
                     <FormatUSD
@@ -192,41 +204,43 @@ export const ApplicationDetailsCard = () => {
                       digits={2}
                       className='balance-usd'
                     />
-                  </>
+                  </div>
                 ) : (
                   balance
                 )}
               </>
             }
-            showSymbol={balance !== ELLIPSIS}
           />
           <StatsCard
             title='Rewards'
             value={
               <>
                 {developerReward !== undefined ? (
-                  <>
-                    <Denominate value={developerReward} decimals={4} />
+                  <div className='stats-card-content-container'>
+                    <Denominate
+                      value={developerReward}
+                      decimals={2}
+                      showSymbol
+                    />
                     <FormatUSD
                       amount={developerReward}
                       decimals={DECIMALS}
                       digits={2}
                       className='balance-usd'
                     />
-                  </>
+                  </div>
                 ) : (
                   <span className='text-neutral-400'>N/A</span>
                 )}
               </>
             }
-            showSymbol={developerReward !== undefined}
           />
           <StatsCard
             title='Total Transactions'
             value={new BigNumber(txCount).toFormat()}
           />
 
-          <div className='d-flex flex-column gap-3'>
+          <div className='d-flex flex-column gap-3 flex-fill'>
             <SmallStatsCard
               title='First Deployed'
               value={
@@ -286,14 +300,6 @@ export const ApplicationDetailsCard = () => {
               }
             />
           </div>
-          {isProvider && (
-            <NetworkLink
-              to={urlBuilder.providerDetails(address)}
-              className='btn btn-sm btn-primary mt-auto'
-            >
-              Provider Details
-            </NetworkLink>
-          )}
         </div>
       </div>
     </div>

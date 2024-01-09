@@ -271,7 +271,25 @@
     max-width: 1.5rem;
   }
   svg {
-    color: var(--muted);
+    color: var(--neutral-700);
+  }
+  &.side-icon-md-large {
+    @include media-breakpoint-up(md) {
+      width: 3rem;
+      height: 3rem;
+      min-width: 3rem;
+      min-height: 3rem;
+      svg {
+        width: 3rem;
+        max-width: 3rem;
+        height: 3rem;
+      }
+      svg.svg-inline--fa {
+        width: 1.75rem;
+        max-width: 1.75rem;
+        height: 1.75rem;
+      }
+    }
   }
 }
 div.side-icon {
@@ -392,4 +410,8 @@ div.side-icon {
   margin-top: 2px;
   height: 1rem;
   width: auto;
+}
+
+.w-min-content {
+  width: min-content;
 }

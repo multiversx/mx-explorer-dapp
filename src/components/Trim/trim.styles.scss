@@ -133,8 +133,22 @@ a:hover > .trim span {
       max-width: 12rem;
     }
     .hash-lg {
-      min-width: 16rem;
-      max-width: 16rem;
+      @include media-breakpoint-up(sm) {
+        min-width: 16rem;
+        max-width: 16rem;
+      }
+    }
+    .hash-xl {
+      @include media-breakpoint-up(sm) {
+        min-width: 20rem;
+        max-width: 20rem;
+      }
+    }
+    .hash-xxl {
+      @include media-breakpoint-up(sm) {
+        min-width: 24rem;
+        max-width: 24rem;
+      }
     }
   }
 }

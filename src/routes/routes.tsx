@@ -63,6 +63,7 @@ export const transactionsRoutes = {
 
 export const routes = {
   ...accountsRoutes,
+  ...applicationsRoutes,
   ...analyticsRoutes,
   ...blocksRoutes,
   ...collectionRoutes,

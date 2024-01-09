@@ -4,6 +4,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import { MAX_DISPLAY_ZERO_DECIMALS } from 'appConstants';
+import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { DECIMALS, DIGITS } from 'config';
 import { denominate } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -16,6 +17,7 @@ export interface DenominateType {
   decimals?: number;
   denomination?: number;
   showTooltip?: boolean;
+  showSymbol?: boolean;
   'data-testid'?: string;
 }
 
@@ -77,7 +79,8 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
     value,
     showLastNonZeroDecimal = false,
     showLabel = true,
-    showTooltip = true
+    showTooltip = true,
+    showSymbol = false
   } = props;
   const decimals = props.decimals !== undefined ? props.decimals : DIGITS;
   const denomination =
@@ -154,7 +157,9 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
       data-testid={
         props['data-testid'] ? props['data-testid'] : 'denominateComponent'
       }
+      className='text-nowrap'
     >
+      {showSymbol && <MultiversXSymbol className='mx-symbol' />}
       {showTooltip && completeValue !== denominatedValue ? (
         <CompleteValueTooltip completeValue={completeValue}>
           <DisplayValue />

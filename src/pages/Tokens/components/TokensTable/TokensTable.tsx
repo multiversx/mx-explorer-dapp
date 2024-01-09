@@ -65,10 +65,10 @@ export const TokensTable = ({
                           <img
                             src={token.assets.svgUrl}
                             alt={token.name}
-                            className='side-icon'
+                            className='side-icon side-icon-md-large'
                           />
                         ) : (
-                          <div className=' side-icon d-flex align-items-center justify-content-center'>
+                          <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
                             <FontAwesomeIcon icon={faDiamond} />
                           </div>
                         )}

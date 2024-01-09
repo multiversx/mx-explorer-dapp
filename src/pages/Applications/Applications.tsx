@@ -1,11 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS } from 'appConstants';
-import { Loader, Pager, Denominate, AccountLink, Sort } from 'components';
+import {
+  Loader,
+  Pager,
+  Denominate,
+  AccountLink,
+  NetworkLink,
+  Sort,
+  AccountName,
+  Overlay
+} from 'components';
+import { urlBuilder } from 'helpers';
 import { useAdapter, useGetPage, useGetSort, useIsMainnet } from 'hooks';
+import { faFileAlt } from 'icons/regular';
+import { faBadgeCheck } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { AccountType } from 'types';
@@ -114,11 +127,39 @@ export const Applications = () => {
                               {accounts.map((account, i) => (
                                 <tr key={account.address}>
                                   <td>
-                                    <AccountLink
-                                      address={account.address}
-                                      assets={account?.assets}
-                                      className='full-hash'
-                                    />
+                                    <NetworkLink
+                                      to={urlBuilder.accountDetails(
+                                        account.address
+                                      )}
+                                      data-testid={`applicationLink${i}`}
+                                      className='d-flex align-items-center trim-wrapper gap-2 hash hash-xxl'
+                                    >
+                                      {account.assets &&
+                                      account.assets.iconSvg ? (
+                                        <img
+                                          src={account.assets.iconSvg}
+                                          alt={account.assets?.name}
+                                          className='side-icon side-icon-md-large'
+                                        />
+                                      ) : (
+                                        <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
+                                          <FontAwesomeIcon icon={faFileAlt} />
+                                        </div>
+                                      )}
+                                      <AccountName
+                                        address={account.address}
+                                        assets={account.assets}
+                                      />
+                                      {account?.isVerified && (
+                                        <Overlay title='Verified'>
+                                          <FontAwesomeIcon
+                                            icon={faBadgeCheck}
+                                            size='sm'
+                                            className='text-primary'
+                                          />
+                                        </Overlay>
+                                      )}
+                                    </NetworkLink>
                                   </td>
                                   <td>
                                     {account?.ownerAddress && (
