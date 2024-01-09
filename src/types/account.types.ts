@@ -76,6 +76,7 @@ export interface AccountAssetType {
   tags?: string[];
   iconPng?: string;
   iconSvg?: string;
+  social?: { [key: string]: string };
 }
 
 export interface AccountSmartContractType {

@@ -15,7 +15,8 @@ import {
   PropertyPill,
   FormatUSD,
   Overlay,
-  AccountLink
+  AccountLink,
+  SocialIcons
 } from 'components';
 import { DECIMALS } from 'config';
 import { isContract, urlBuilder } from 'helpers';
@@ -183,6 +184,11 @@ export const ApplicationDetailsCard = () => {
                 />
               </div>
             </ApplicationDetailItem>
+            {account.assets?.social && (
+              <ApplicationDetailItem title='Social'>
+                <SocialIcons assets={account.assets.social} />
+              </ApplicationDetailItem>
+            )}
           </div>
         </div>
         <div className='application-cards d-flex flex-wrap gap-3'>
