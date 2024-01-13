@@ -7,7 +7,7 @@ import { HeroDetailItem } from './components/HeroDetailItem';
 import { VerifiedBadge } from './components/VerifiedBadge';
 
 export interface HeroDetailsItemsType {
-  title: string;
+  title?: string;
   value?: React.ReactNode;
 }
 
@@ -49,7 +49,7 @@ export const HeroDetailsCard = ({
   seoDetails
 }: HeroDetailsCardUIType) => {
   const explorerTitle = useGetExplorerTitle();
-  const seoTitle = `${seoDetails?.title}${
+  const seoTitle = `${seoDetails?.title ?? title ?? ''}${
     seoDetails?.title !== seoDetails?.details ? ` (${seoDetails?.details})` : ''
   } ${seoDetails?.text ?? ''}`;
   const seoDescriotion = seoDetails?.description ?? description;
@@ -97,7 +97,7 @@ export const HeroDetailsCard = ({
             )}
             <div className='hero-details-card-overview d-flex flex-column flex-fill col-9 gap-3'>
               {title && (
-                <div className='hero-details-card-name'>
+                <div className='hero-details-card-title'>
                   <h1 className='mb-0'>
                     {(iconSvg || iconPng) && (
                       <img

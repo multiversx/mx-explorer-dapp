@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
@@ -16,7 +16,8 @@ import {
   FormatUSD,
   Overlay,
   AccountLink,
-  SocialIcons
+  SocialIcons,
+  HeroDetailsCard
 } from 'components';
 import { DECIMALS } from 'config';
 import { isContract, urlBuilder } from 'helpers';
@@ -24,14 +25,8 @@ import { useAdapter } from 'hooks';
 import { faExclamationTriangle, faInfoCircle } from 'icons/regular';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountUpgradeType } from 'types';
-import { StatsCard, SmallStatsCard } from 'widgets';
-
-import { ApplicationDetailItem } from './components/ApplicationDetailItem';
-import { VerifiedBadge } from './components/VerifiedBadge';
 
 export const ApplicationDetailsCard = () => {
-  const ref = useRef(null);
-
   const { account } = useSelector(accountSelector);
   const {
     address,
@@ -53,90 +48,70 @@ export const ApplicationDetailsCard = () => {
   const { getProvider, getAccountUpgrades } = useAdapter();
 
   const [accountLatestUpgrade, setAccountLatestUpgrade] =
-    React.useState<AccountUpgradeType>();
-
+    useState<AccountUpgradeType>();
   const [isProvider, setIsProvider] = useState(false);
-  const fetchProviderDetails = () => {
-    if (isContract(address)) {
-      getProvider({ address }).then(({ success, data }) => {
-        if (ref.current !== null) {
-          if (success && data !== undefined) {
-            setIsProvider(true);
-          }
-        }
-      });
-    }
-  };
 
-  const fetchUpgradesDetails = () => {
-    if (isContract(address)) {
-      getAccountUpgrades({ address, size: 1 }).then(({ success, data }) => {
-        if (ref.current !== null) {
-          if (success && data !== undefined && data.length > 0) {
-            setAccountLatestUpgrade(data[0]);
-          }
-        }
-      });
-    }
+  const fetchApplicationDetails = () => {
+    Promise.all([
+      getProvider({ address }),
+      getAccountUpgrades({ address, size: 1 })
+    ]).then(([providerData, upgradeData]) => {
+      if (providerData.success && providerData.data !== undefined) {
+        setIsProvider(true);
+      }
+      if (upgradeData.success && (upgradeData.data ?? []).length > 0) {
+        setAccountLatestUpgrade(upgradeData.data[0]);
+      }
+    });
   };
 
   useEffect(() => {
-    fetchProviderDetails();
-    fetchUpgradesDetails();
+    if (isContract(address)) {
+      fetchApplicationDetails();
+    }
   }, [activeNetworkId, address]);
 
   return (
-    <div ref={ref} className='application-details-card card card-black mb-3'>
-      <div className='card-body'>
-        <div className='application-details d-flex gap-spacer mb-5'>
-          {assets?.name && assets?.iconSvg && (
-            <img
-              src={assets.iconSvg}
-              className='application-logo border d-none d-md-flex col-md-3'
-              alt=' '
-            />
+    <HeroDetailsCard
+      title={assets?.name}
+      iconSvg={assets?.iconSvg}
+      iconPng={assets?.iconPng}
+      description={assets?.description}
+      isVerified={isVerified}
+      seoDetails={{ text: 'App' }}
+      titleContent={
+        <>
+          {isProvider && (
+            <NetworkLink
+              to={urlBuilder.providerDetails(address)}
+              className='btn btn-sm btn-primary'
+            >
+              Provider Details
+            </NetworkLink>
           )}
-          <div className='application-overview d-flex flex-column flex-fill col-9 gap-3'>
-            {assets?.name && (
-              <div className='application-name'>
-                <h1 className='mb-0'>
-                  {assets?.iconSvg && (
-                    <img
-                      src={assets.iconSvg}
-                      className='application-logo border d-md-none'
-                      alt=' '
-                    />
-                  )}
-                  {assets.name} {isVerified && <VerifiedBadge />}
-                </h1>
-                {isProvider && (
-                  <NetworkLink
-                    to={urlBuilder.providerDetails(address)}
-                    className='btn btn-sm btn-primary'
-                  >
-                    Provider Details
-                  </NetworkLink>
-                )}
-              </div>
-            )}
-            {scamInfo && (
-              <span className='text-warning d-flex align-items-center ms-2'>
-                <FontAwesomeIcon
-                  icon={faExclamationTriangle}
-                  size='sm'
-                  className='text-warning me-2'
-                />
-                {scamInfo.info}
-              </span>
-            )}
-            {assets?.description && (
-              <p className='application-description text-neutral-400'>
-                {assets.description}
-              </p>
-            )}
-            <ApplicationDetailItem title='Owner'>
+        </>
+      }
+      descriptionContent={
+        <>
+          {scamInfo && (
+            <span className='text-warning d-flex align-items-center ms-2'>
+              <FontAwesomeIcon
+                icon={faExclamationTriangle}
+                size='sm'
+                className='text-warning me-2'
+              />
+              {scamInfo.info}
+            </span>
+          )}
+        </>
+      }
+      detailItems={[
+        {
+          title: 'Owner',
+          value: (
+            <>
               {ownerAddress !== undefined ? (
-                <div className='d-flex align-items-center'>
+                <>
                   {ownerAddress !== address ? (
                     <AccountLink address={ownerAddress} />
                   ) : (
@@ -146,168 +121,172 @@ export const ApplicationDetailsCard = () => {
                     </>
                   )}
                   <CopyButton text={ownerAddress} />
+                </>
+              ) : (
+                <span className='text-neutral-400'>N/A</span>
+              )}
+            </>
+          )
+        },
+        {
+          title: 'Address',
+          value: (
+            <>
+              <ScAddressIcon initiator={address} />
+              <Trim text={address} className='text-neutral-400' />
+              <CopyButton text={address} />{' '}
+              {shard !== undefined && (
+                <span className='ms-2 text-nowrap text-neutral-400'>
+                  (
+                  <NetworkLink
+                    to={urlBuilder.shard(shard)}
+                    data-testid='shardLink'
+                  >
+                    <ShardSpan shard={shard} />
+                  </NetworkLink>
+                  )
+                </span>
+              )}
+            </>
+          )
+        },
+        {
+          title: 'Properties',
+          value: (
+            <>
+              <PropertyPill
+                name={'Upgradeable'}
+                active={Boolean(isUpgradeable)}
+              />
+              <PropertyPill name={'Readable'} active={Boolean(isReadable)} />
+              <PropertyPill name={'Payable'} active={Boolean(isPayable)} />
+              <PropertyPill
+                name={'Payable by Smart Contract'}
+                active={Boolean(isPayableBySmartContract)}
+              />
+            </>
+          )
+        },
+        {
+          ...(account.assets?.social
+            ? {
+                title: 'Social',
+                value: <SocialIcons assets={account.assets.social} />
+              }
+            : {})
+        }
+      ]}
+      statsCards={[
+        {
+          title: 'Balance',
+          value: (
+            <>
+              {balance !== ELLIPSIS ? (
+                <div className='stats-card-content-container'>
+                  <Denominate
+                    value={balance}
+                    decimals={2}
+                    showSymbol
+                    data-testid='balance'
+                  />
+                  <FormatUSD
+                    amount={balance}
+                    decimals={DECIMALS}
+                    digits={2}
+                    className='balance-usd'
+                  />
+                </div>
+              ) : (
+                balance
+              )}
+            </>
+          )
+        },
+        {
+          title: 'Rewards',
+          value: (
+            <>
+              {developerReward !== undefined ? (
+                <div className='stats-card-content-container'>
+                  <Denominate value={developerReward} decimals={2} showSymbol />
+                  <FormatUSD
+                    amount={developerReward}
+                    decimals={DECIMALS}
+                    digits={2}
+                    className='balance-usd'
+                  />
                 </div>
               ) : (
                 <span className='text-neutral-400'>N/A</span>
               )}
-            </ApplicationDetailItem>
-            <ApplicationDetailItem title='Address'>
-              <div className='d-flex align-items-center'>
-                <ScAddressIcon initiator={address} />
-                <Trim text={address} className='text-neutral-400' />
-                <CopyButton text={address} />{' '}
-                {shard !== undefined && (
-                  <span className='ms-2 text-nowrap text-neutral-400'>
-                    (
-                    <NetworkLink
-                      to={urlBuilder.shard(shard)}
-                      data-testid='shardLink'
-                    >
-                      <ShardSpan shard={shard} />
-                    </NetworkLink>
-                    )
-                  </span>
-                )}
-              </div>
-            </ApplicationDetailItem>
-            <ApplicationDetailItem title='Properties'>
-              <div className='d-flex alig-items-center flex-wrap gap-2'>
-                <PropertyPill
-                  name={'Upgradeable'}
-                  active={Boolean(isUpgradeable)}
-                />
-                <PropertyPill name={'Readable'} active={Boolean(isReadable)} />
-                <PropertyPill name={'Payable'} active={Boolean(isPayable)} />
-                <PropertyPill
-                  name={'Payable by Smart Contract'}
-                  active={Boolean(isPayableBySmartContract)}
-                />
-              </div>
-            </ApplicationDetailItem>
-            {account.assets?.social && (
-              <ApplicationDetailItem title='Social'>
-                <SocialIcons assets={account.assets.social} />
-              </ApplicationDetailItem>
-            )}
-          </div>
-        </div>
-        <div className='application-cards d-flex flex-wrap gap-3'>
-          <StatsCard
-            title='Balance'
-            value={
-              <>
-                {balance !== ELLIPSIS ? (
-                  <div className='stats-card-content-container'>
-                    <Denominate
-                      value={balance}
-                      decimals={2}
-                      showSymbol
-                      data-testid='balance'
-                    />
-                    <FormatUSD
-                      amount={balance}
-                      decimals={DECIMALS}
-                      digits={2}
-                      className='balance-usd'
-                    />
-                  </div>
-                ) : (
-                  balance
-                )}
-              </>
-            }
-          />
-          <StatsCard
-            title='Rewards'
-            value={
-              <>
-                {developerReward !== undefined ? (
-                  <div className='stats-card-content-container'>
-                    <Denominate
-                      value={developerReward}
-                      decimals={2}
-                      showSymbol
-                    />
-                    <FormatUSD
-                      amount={developerReward}
-                      decimals={DECIMALS}
-                      digits={2}
-                      className='balance-usd'
-                    />
-                  </div>
-                ) : (
-                  <span className='text-neutral-400'>N/A</span>
-                )}
-              </>
-            }
-          />
-          <StatsCard
-            title='Total Transactions'
-            value={new BigNumber(txCount).toFormat()}
-          />
-
-          <div className='d-flex flex-column gap-3 flex-fill'>
-            <SmallStatsCard
-              title='First Deployed'
-              value={
-                <>
-                  {deployedAt !== undefined ? (
-                    <TimeAgo value={deployedAt} short showAgo tooltip />
-                  ) : (
-                    <span className='text-neutral-400'>N/A</span>
-                  )}
-                </>
-              }
-            />
-            <SmallStatsCard
-              title='Latest Upgrade'
-              value={
-                <>
-                  {accountLatestUpgrade !== undefined ? (
-                    <div className='d-flex align-items-center gap-2'>
-                      <TimeAgo
-                        value={accountLatestUpgrade.timestamp}
-                        short
-                        showAgo
-                        tooltip
-                      />
-                      <Overlay
-                        title={
-                          <>
-                            <span className='text-neutral-400'>
-                              Upgrade Transaction:
-                            </span>
-                            {accountLatestUpgrade.txHash && (
-                              <NetworkLink
-                                to={urlBuilder.transactionDetails(
-                                  accountLatestUpgrade.txHash
-                                )}
-                                data-testid='upgradeTxHashLink'
-                                className='trim-wrapper'
-                              >
-                                <Trim text={accountLatestUpgrade.txHash} />
-                              </NetworkLink>
+            </>
+          )
+        },
+        {
+          title: 'Total Transactions',
+          value: new BigNumber(txCount).toFormat()
+        }
+      ]}
+      smallStatsCards={[
+        {
+          title: 'First Deployed',
+          value: (
+            <>
+              {deployedAt !== undefined ? (
+                <TimeAgo value={deployedAt} short showAgo tooltip />
+              ) : (
+                <span className='text-neutral-400'>N/A</span>
+              )}
+            </>
+          )
+        },
+        {
+          title: 'Latest Upgrade',
+          value: (
+            <>
+              {accountLatestUpgrade !== undefined ? (
+                <div className='d-flex align-items-center gap-2'>
+                  <TimeAgo
+                    value={accountLatestUpgrade.timestamp}
+                    short
+                    showAgo
+                    tooltip
+                  />
+                  <Overlay
+                    title={
+                      <>
+                        <span className='text-neutral-400'>
+                          Upgrade Transaction:
+                        </span>
+                        {accountLatestUpgrade.txHash && (
+                          <NetworkLink
+                            to={urlBuilder.transactionDetails(
+                              accountLatestUpgrade.txHash
                             )}
-                          </>
-                        }
-                        className='cursor-context'
-                        persistent
-                      >
-                        <FontAwesomeIcon
-                          icon={faInfoCircle}
-                          className='text-neutral-500'
-                        />
-                      </Overlay>
-                    </div>
-                  ) : (
-                    <span className='text-neutral-400'>N/A</span>
-                  )}
-                </>
-              }
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+                            data-testid='upgradeTxHashLink'
+                            className='trim-wrapper'
+                          >
+                            <Trim text={accountLatestUpgrade.txHash} />
+                          </NetworkLink>
+                        )}
+                      </>
+                    }
+                    className='cursor-context'
+                    persistent
+                  >
+                    <FontAwesomeIcon
+                      icon={faInfoCircle}
+                      className='text-neutral-500'
+                    />
+                  </Overlay>
+                </div>
+              ) : (
+                <span className='text-neutral-400'>N/A</span>
+              )}
+            </>
+          )
+        }
+      ]}
+    />
   );
 };
