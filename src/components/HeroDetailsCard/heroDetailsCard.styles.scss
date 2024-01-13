@@ -52,9 +52,18 @@
       text-overflow: ellipsis;
     }
   }
-  @include media-breakpoint-up(xl) {
-    .stats-card {
-      max-width: 20rem;
+  &.application-details {
+    @include media-breakpoint-up(xl) {
+      .stats-card {
+        max-width: 20rem;
+      }
+    }
+  }
+  &.token-details {
+    @include media-breakpoint-up(xl) {
+      .small-stats-cards-container {
+        max-width: 20rem;
+      }
     }
   }
 }

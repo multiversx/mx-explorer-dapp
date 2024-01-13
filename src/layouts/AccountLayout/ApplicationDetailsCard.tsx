@@ -79,6 +79,8 @@ export const ApplicationDetailsCard = () => {
       description={assets?.description}
       isVerified={isVerified}
       seoDetails={{ text: 'App' }}
+      data-testid-prefix='applications-'
+      className='application-details'
       titleContent={
         <>
           {isProvider && (
@@ -106,6 +108,14 @@ export const ApplicationDetailsCard = () => {
         </>
       }
       detailItems={[
+        {
+          ...(account.assets?.social
+            ? {
+                title: 'Social',
+                value: <SocialIcons assets={account.assets.social} />
+              }
+            : {})
+        },
         {
           title: 'Owner',
           value: (
@@ -166,14 +176,6 @@ export const ApplicationDetailsCard = () => {
               />
             </>
           )
-        },
-        {
-          ...(account.assets?.social
-            ? {
-                title: 'Social',
-                value: <SocialIcons assets={account.assets.social} />
-              }
-            : {})
         }
       ]}
       statsCards={[

@@ -18,6 +18,10 @@ export const StatsCard = ({
   className,
   children
 }: StatsCardUIType) => {
+  if (!(title || value || subTitle || children)) {
+    return null;
+  }
+
   return (
     <div
       className={classNames('stats-card card d-flex flex-grow-1', className)}

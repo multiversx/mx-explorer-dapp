@@ -1,6 +1,8 @@
+import classNames from 'classnames';
 import { Helmet } from 'react-helmet-async';
 
 import { useGetExplorerTitle } from 'hooks';
+import { WithClassnameType } from 'types';
 import { StatsCard, SmallStatsCard, StatsCardUIType } from 'widgets';
 
 import { HeroDetailItem } from './components/HeroDetailItem';
@@ -19,7 +21,7 @@ export interface SEODetailsType {
   useIcon?: boolean;
 }
 
-export interface HeroDetailsCardUIType {
+export interface HeroDetailsCardUIType extends WithClassnameType {
   title?: string;
   titleContent?: React.ReactNode;
   iconSvg?: string;
@@ -32,6 +34,7 @@ export interface HeroDetailsCardUIType {
   statsCards?: StatsCardUIType[];
   smallStatsCards?: StatsCardUIType[];
   seoDetails?: SEODetailsType;
+  'data-testid-prefix'?: string;
 }
 
 export const HeroDetailsCard = ({
@@ -46,7 +49,9 @@ export const HeroDetailsCard = ({
   detailItems = [],
   statsCards = [],
   smallStatsCards = [],
-  seoDetails
+  seoDetails,
+  className,
+  'data-testid-prefix': testIdPrefix = ''
 }: HeroDetailsCardUIType) => {
   const explorerTitle = useGetExplorerTitle();
   const seoTitle = `${seoDetails?.title ?? title ?? ''}${
@@ -85,7 +90,12 @@ export const HeroDetailsCard = ({
           )}
         </Helmet>
       )}
-      <div className='hero-details-card card card-black mb-3'>
+      <div
+        className={classNames(
+          'hero-details-card card card-black mb-3',
+          className
+        )}
+      >
         <div className='card-body'>
           <div className='hero-details-card-content d-flex gap-spacer mb-5'>
             {(iconSvg || iconPng) && (
@@ -98,7 +108,7 @@ export const HeroDetailsCard = ({
             <div className='hero-details-card-overview d-flex flex-column flex-fill col-9 gap-3'>
               {title && (
                 <div className='hero-details-card-title'>
-                  <h1 className='mb-0'>
+                  <h1 className='mb-0' data-testid={`${testIdPrefix}title`}>
                     {(iconSvg || iconPng) && (
                       <img
                         src={iconSvg ?? iconPng}
@@ -116,7 +126,11 @@ export const HeroDetailsCard = ({
               )}
               {descriptionContent}
               {description && (
-                <p className='hero-details-card-description text-neutral-400'>
+                <p
+                  className='hero-details-card-description text-neutral-400'
+                  data-testid={`${testIdPrefix}description`}
+                  title={description}
+                >
                   {description}
                 </p>
               )}
@@ -132,7 +146,7 @@ export const HeroDetailsCard = ({
               <StatsCard title={title} key={`${title}-${index}`} {...rest} />
             ))}
             {smallStatsCards.length > 0 && (
-              <div className='d-flex flex-column gap-3 flex-fill'>
+              <div className='d-flex flex-column gap-3 flex-fill small-stats-cards-container'>
                 {smallStatsCards.map(({ title, ...rest }, index) => (
                   <SmallStatsCard
                     title={title}
