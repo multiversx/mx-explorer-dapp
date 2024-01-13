@@ -58,6 +58,7 @@ export const HeroDetailsCard = ({
     seoDetails?.title !== seoDetails?.details ? ` (${seoDetails?.details})` : ''
   } ${seoDetails?.text ?? ''}`;
   const seoDescriotion = seoDetails?.description ?? description;
+  const hasStatCards = statsCards.length > 0 || smallStatsCards.length > 0;
 
   return (
     <>
@@ -97,7 +98,12 @@ export const HeroDetailsCard = ({
         )}
       >
         <div className='card-body'>
-          <div className='hero-details-card-content d-flex gap-spacer mb-5'>
+          <div
+            className={classNames(
+              'hero-details-card-content d-flex gap-spacer',
+              { 'mb-3': !hasStatCards }
+            )}
+          >
             {(iconSvg || iconPng) && (
               <img
                 src={iconSvg ?? iconPng}
@@ -141,22 +147,24 @@ export const HeroDetailsCard = ({
               ))}
             </div>
           </div>
-          <div className='hero-details-card-cards d-flex flex-wrap gap-3'>
-            {statsCards.map(({ title, ...rest }, index) => (
-              <StatsCard title={title} key={`${title}-${index}`} {...rest} />
-            ))}
-            {smallStatsCards.length > 0 && (
-              <div className='d-flex flex-column gap-3 flex-fill small-stats-cards-container'>
-                {smallStatsCards.map(({ title, ...rest }, index) => (
-                  <SmallStatsCard
-                    title={title}
-                    key={`${title}-${index}`}
-                    {...rest}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+          {hasStatCards && (
+            <div className='hero-details-card-cards d-flex flex-wrap gap-3 mt-5'>
+              {statsCards.map(({ title, ...rest }, index) => (
+                <StatsCard title={title} key={`${title}-${index}`} {...rest} />
+              ))}
+              {smallStatsCards.length > 0 && (
+                <div className='d-flex flex-column gap-3 flex-fill small-stats-cards-container'>
+                  {smallStatsCards.map(({ title, ...rest }, index) => (
+                    <SmallStatsCard
+                      title={title}
+                      key={`${title}-${index}`}
+                      {...rest}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>

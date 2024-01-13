@@ -163,7 +163,7 @@ export const ApplicationDetailsCard = () => {
         {
           title: 'Properties',
           value: (
-            <>
+            <div className='d-flex alig-items-center flex-wrap gap-2 mt-1 mt-lg-0'>
               <PropertyPill
                 name={'Upgradeable'}
                 active={Boolean(isUpgradeable)}
@@ -174,7 +174,7 @@ export const ApplicationDetailsCard = () => {
                 name={'Payable by Smart Contract'}
                 active={Boolean(isPayableBySmartContract)}
               />
-            </>
+            </div>
           )
         }
       ]}
