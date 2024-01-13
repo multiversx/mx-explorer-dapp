@@ -18,6 +18,7 @@ export * from './Denominate';
 export * from './DetailItem';
 export * from './Filters';
 export * from './FormatUSD';
+export * from './HeroDetailsCard';
 export * from './IdentityBlock';
 export * from './LatestItem';
 export * from './Led';

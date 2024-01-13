@@ -2,7 +2,7 @@ import classNames from 'classnames';
 
 import { WithClassnameType } from 'types';
 
-export interface StatsCardType extends WithClassnameType {
+export interface StatsCardUIType extends WithClassnameType {
   title?: string | React.ReactNode;
   subTitle?: string | React.ReactNode;
   icon?: React.ReactNode;
@@ -17,7 +17,7 @@ export const StatsCard = ({
   icon,
   className,
   children
-}: StatsCardType) => {
+}: StatsCardUIType) => {
   return (
     <div
       className={classNames('stats-card card d-flex flex-grow-1', className)}

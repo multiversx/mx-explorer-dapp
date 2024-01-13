@@ -1,7 +1,11 @@
 import classNames from 'classnames';
-import { StatsCardType } from './StatsCard';
+import { StatsCardUIType } from './StatsCard';
 
-export const SmallStatsCard = ({ title, value, className }: StatsCardType) => {
+export const SmallStatsCard = ({
+  title,
+  value,
+  className
+}: StatsCardUIType) => {
   return (
     <div
       className={classNames(
