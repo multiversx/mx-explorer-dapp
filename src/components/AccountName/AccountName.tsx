@@ -23,7 +23,7 @@ export const AccountName = ({
 
     return (
       <>
-        {name.endsWith(HEROTAG_SUFFIX) && (
+        {assets.name.endsWith(HEROTAG_SUFFIX) && (
           <Overlay
             title='Herotag'
             className='herotag'
