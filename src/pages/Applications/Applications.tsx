@@ -45,16 +45,21 @@ export const Applications = () => {
   );
 
   const fetchAccounts = () => {
-    getAccounts({ page, size, sort, order, isSmartContract: true }).then(
-      ({ data, success }) => {
-        if (ref.current !== null) {
-          if (success) {
-            setAccounts(data);
-          }
-          setDataReady(success);
+    getAccounts({
+      page,
+      size,
+      sort,
+      order,
+      isSmartContract: true,
+      withOwnerAssets: true
+    }).then(({ data, success }) => {
+      if (ref.current !== null) {
+        if (success) {
+          setAccounts(data);
         }
+        setDataReady(success);
       }
-    );
+    });
   };
 
   const fetchAccountsCount = () => {
@@ -134,10 +139,13 @@ export const Applications = () => {
                                       data-testid={`applicationLink${i}`}
                                       className='d-flex align-items-center trim-wrapper gap-2 hash hash-xxl'
                                     >
-                                      {account.assets &&
-                                      account.assets.iconSvg ? (
+                                      {account.assets?.iconSvg ||
+                                      account.assets?.iconPng ? (
                                         <img
-                                          src={account.assets.iconSvg}
+                                          src={
+                                            account.assets?.iconSvg ||
+                                            account.assets?.iconPng
+                                          }
                                           alt={account.assets?.name}
                                           className='side-icon side-icon-md-large'
                                         />

@@ -18,14 +18,13 @@ export interface SEODetailsType {
   details?: string;
   description?: string;
   text?: string;
-  useIcon?: boolean;
+  icon?: string;
 }
 
 export interface HeroDetailsCardUIType extends WithClassnameType {
-  title?: string;
+  title?: React.ReactNode;
   titleContent?: React.ReactNode;
-  iconSvg?: string;
-  iconPng?: string;
+  icon?: string;
   isVerified?: boolean;
   verifiedComponent?: React.ReactNode;
   description?: string;
@@ -40,8 +39,7 @@ export interface HeroDetailsCardUIType extends WithClassnameType {
 export const HeroDetailsCard = ({
   title,
   titleContent,
-  iconSvg,
-  iconPng,
+  icon,
   isVerified,
   verifiedComponent,
   description,
@@ -54,10 +52,15 @@ export const HeroDetailsCard = ({
   'data-testid-prefix': testIdPrefix = ''
 }: HeroDetailsCardUIType) => {
   const explorerTitle = useGetExplorerTitle();
-  const seoTitle = `${seoDetails?.title ?? title ?? ''}${
+  const seoTitle = `${
+    seoDetails?.title ?? typeof title === 'string' ? title : ''
+  }${
     seoDetails?.title !== seoDetails?.details ? ` (${seoDetails?.details})` : ''
   } ${seoDetails?.text ?? ''}`;
-  const seoDescriotion = seoDetails?.description ?? description;
+  const seoDescription =
+    seoDetails?.description ?? typeof description === 'string'
+      ? String(description)
+      : '';
   const hasStatCards = statsCards.length > 0 || smallStatsCards.length > 0;
 
   return (
@@ -65,29 +68,29 @@ export const HeroDetailsCard = ({
       {seoDetails && (
         <Helmet prioritizeSeoTags={true}>
           <title>{`${seoTitle} • MultiversX ${explorerTitle}`}</title>
-          {seoDescriotion && (
-            <meta name='description' content={seoDescriotion} />
+          {seoDescription && (
+            <meta name='description' content={seoDescription} />
           )}
           <meta
             name='twitter:title'
             content={`${seoTitle} • MultiversX ${explorerTitle}`}
           />
           <meta name='twitter:card' content='summary' />
-          {seoDescriotion && (
-            <meta name='twitter:description' content={seoDescriotion} />
+          {seoDescription && (
+            <meta name='twitter:description' content={seoDescription} />
           )}
-          {seoDetails?.useIcon && iconPng && (
-            <meta name='twitter:image' content={iconPng} />
+          {seoDetails?.icon && (
+            <meta name='twitter:image' content={seoDetails.icon} />
           )}
           <meta
             property='og:title'
             content={`${seoTitle} • MultiversX ${explorerTitle}`}
           />
-          {seoDescriotion && (
-            <meta property='og:description' content={seoDescriotion} />
+          {seoDescription && (
+            <meta property='og:description' content={seoDescription} />
           )}
-          {seoDetails?.useIcon && iconPng && (
-            <meta property='og:image' content={iconPng} />
+          {seoDetails?.icon && (
+            <meta property='og:image' content={seoDetails.icon} />
           )}
         </Helmet>
       )}
@@ -104,20 +107,24 @@ export const HeroDetailsCard = ({
               { 'mb-3': !hasStatCards }
             )}
           >
-            {(iconSvg || iconPng) && (
+            {icon && (
               <img
-                src={iconSvg ?? iconPng}
+                src={icon}
                 className='hero-details-card-logo border d-none d-md-flex col-md-3'
                 alt=' '
               />
             )}
             <div className='hero-details-card-overview d-flex flex-column flex-fill col-9 gap-3'>
               {title && (
-                <div className='hero-details-card-title'>
+                <div
+                  className={classNames('hero-details-card-title', {
+                    'mb-3': !Boolean(description || descriptionContent)
+                  })}
+                >
                   <h1 className='mb-0' data-testid={`${testIdPrefix}title`}>
-                    {(iconSvg || iconPng) && (
+                    {icon && (
                       <img
-                        src={iconSvg ?? iconPng}
+                        src={icon}
                         className='hero-details-card-logo border d-md-none'
                         alt=' '
                       />

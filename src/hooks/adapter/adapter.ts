@@ -246,6 +246,7 @@ export const useAdapter = () => {
       page = 1,
       size = PAGE_SIZE,
       isSmartContract = false,
+      withOwnerAssets = false,
       ...rest
     }: GetAccountsType) =>
       provider({
@@ -254,6 +255,7 @@ export const useAdapter = () => {
           from: (page - 1) * size,
           size,
           isSmartContract,
+          withOwnerAssets,
           ...rest
         }
       }),

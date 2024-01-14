@@ -35,6 +35,8 @@ export interface AccountType {
   isGuarded?: boolean;
   activeGuardianAddress?: string;
   activeGuardianServiceUid?: string;
+  ownerAssets?: AccountAssetType;
+  // extra - not on api
   tokenBalance?: string;
 }
 

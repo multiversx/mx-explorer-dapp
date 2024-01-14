@@ -43,8 +43,7 @@ export const TokenDetailsCard = () => {
     <HeroDetailsCard
       title={title}
       description={assets?.description}
-      iconSvg={assets?.svgUrl}
-      iconPng={assets?.pngUrl}
+      icon={assets?.svgUrl || assets?.pngUrl}
       seoDetails={{ text: '' }}
       className='token-details'
       detailItems={[

@@ -49,6 +49,7 @@ export const useShowGlobalStats = () => {
     case activeRoute(collectionRoutes.collectionDetailsRoles):
     case activeRoute(nftRoutes.nftDetails):
     case activeRoute(nftRoutes.nftDetailsAccounts):
+    case activeRoute(nftRoutes.nftDetailsTransactions):
     case activeRoute(tokensRoutes.tokenDetails):
     case activeRoute(tokensRoutes.tokenDetailsAccounts):
     case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):

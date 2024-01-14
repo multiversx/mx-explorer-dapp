@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import {
@@ -9,7 +8,8 @@ import {
   TimeAgo,
   SocialIcons,
   SpotlightButton,
-  HeroDetailsCard
+  HeroDetailsCard,
+  Overlay
 } from 'components';
 import { formatDate } from 'helpers';
 import { useActiveRoute } from 'hooks';
@@ -49,15 +49,16 @@ export const CollectionDetailsCard = () => {
     : 'Collection';
 
   const title = `${
-    assets ? `${name} ${ticker !== name ? `(${ticker})` : ''}` : ticker
+    assets && !scamInfo
+      ? `${name} ${ticker !== name ? `(${ticker})` : ''}`
+      : ticker
   } ${titleTypeText}`;
 
   return (
     <HeroDetailsCard
       title={title}
       description={assets?.description}
-      iconSvg={assets?.svgUrl}
-      iconPng={assets?.pngUrl}
+      icon={assets?.svgUrl || assets?.pngUrl}
       seoDetails={{ text: '' }}
       className='collection-details'
       titleContent={
@@ -83,25 +84,17 @@ export const CollectionDetailsCard = () => {
       }
       isVerified={isVerified}
       verifiedComponent={
-        <OverlayTrigger
-          placement='top'
-          delay={{ show: 0, hide: 400 }}
-          overlay={(props: any) => (
-            <Tooltip {...props} show={props.show.toString()}>
-              Verified
-            </Tooltip>
-          )}
-        >
+        <Overlay title='Verified' className='verified-badge-wrapper'>
           <FontAwesomeIcon
             icon={faHexagonCheck}
             size='sm'
             className='text-yellow-spotlight'
           />
-        </OverlayTrigger>
+        </Overlay>
       }
       detailItems={[
         {
-          ...(mergedAssets
+          ...(Object.keys(mergedAssets).length > 0
             ? {
                 title: 'Social',
                 value: <SocialIcons assets={mergedAssets} />

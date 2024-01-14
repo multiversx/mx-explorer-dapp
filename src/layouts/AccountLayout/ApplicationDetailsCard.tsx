@@ -42,7 +42,8 @@ export const ApplicationDetailsCard = () => {
     isPayableBySmartContract,
     assets,
     txCount,
-    isVerified
+    isVerified,
+    ownerAssets
   } = account;
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getProvider, getAccountUpgrades } = useAdapter();
@@ -73,39 +74,34 @@ export const ApplicationDetailsCard = () => {
 
   return (
     <HeroDetailsCard
-      title={assets?.name}
-      iconSvg={assets?.iconSvg}
-      iconPng={assets?.iconPng}
+      title={assets?.name ?? 'App Details'}
+      icon={assets?.iconSvg || assets?.iconPng}
       description={assets?.description}
       isVerified={isVerified}
       seoDetails={{ text: 'App' }}
       data-testid-prefix='applications-'
       className='application-details'
       titleContent={
-        <>
-          {isProvider && (
-            <NetworkLink
-              to={urlBuilder.providerDetails(address)}
-              className='btn btn-sm btn-primary'
-            >
-              Provider Details
-            </NetworkLink>
-          )}
-        </>
+        isProvider ? (
+          <NetworkLink
+            to={urlBuilder.providerDetails(address)}
+            className='btn btn-sm btn-primary'
+          >
+            Provider Details
+          </NetworkLink>
+        ) : null
       }
       descriptionContent={
-        <>
-          {scamInfo && (
-            <span className='text-warning d-flex align-items-center ms-2'>
-              <FontAwesomeIcon
-                icon={faExclamationTriangle}
-                size='sm'
-                className='text-warning me-2'
-              />
-              {scamInfo.info}
-            </span>
-          )}
-        </>
+        scamInfo ? (
+          <span className='text-warning d-flex align-items-center ms-2'>
+            <FontAwesomeIcon
+              icon={faExclamationTriangle}
+              size='sm'
+              className='text-warning me-2'
+            />
+            {scamInfo.info}
+          </span>
+        ) : null
       }
       detailItems={[
         {
@@ -115,28 +111,6 @@ export const ApplicationDetailsCard = () => {
                 value: <SocialIcons assets={account.assets.social} />
               }
             : {})
-        },
-        {
-          title: 'Owner',
-          value: (
-            <>
-              {ownerAddress !== undefined ? (
-                <>
-                  {ownerAddress !== address ? (
-                    <AccountLink address={ownerAddress} />
-                  ) : (
-                    <>
-                      <ScAddressIcon initiator={ownerAddress} />
-                      <Trim text={ownerAddress} />
-                    </>
-                  )}
-                  <CopyButton text={ownerAddress} />
-                </>
-              ) : (
-                <span className='text-neutral-400'>N/A</span>
-              )}
-            </>
-          )
         },
         {
           title: 'Address',
@@ -156,6 +130,28 @@ export const ApplicationDetailsCard = () => {
                   </NetworkLink>
                   )
                 </span>
+              )}
+            </>
+          )
+        },
+        {
+          title: 'Owner',
+          value: (
+            <>
+              {ownerAddress !== undefined ? (
+                <>
+                  {ownerAddress !== address ? (
+                    <AccountLink address={ownerAddress} assets={ownerAssets} />
+                  ) : (
+                    <>
+                      <ScAddressIcon initiator={ownerAddress} />
+                      <Trim text={ownerAddress} />
+                    </>
+                  )}
+                  <CopyButton text={ownerAddress} />
+                </>
+              ) : (
+                <span className='text-neutral-400'>N/A</span>
               )}
             </>
           )
