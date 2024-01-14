@@ -114,7 +114,7 @@ export const HeroDetailsCard = ({
                 alt=' '
               />
             )}
-            <div className='hero-details-card-overview d-flex flex-column flex-fill col-9 gap-3'>
+            <div className='hero-details-card-overview d-flex flex-column flex-fill col-9'>
               {title && (
                 <div
                   className={classNames('hero-details-card-title', {
@@ -147,11 +147,13 @@ export const HeroDetailsCard = ({
                   {description}
                 </p>
               )}
-              {detailItems.map(({ title, value }, index) => (
-                <HeroDetailItem title={title} key={`${title}-${index}`}>
-                  {value}
-                </HeroDetailItem>
-              ))}
+              <div className='d-flex flex-column flex-fill detail-items-container'>
+                {detailItems.map(({ title, value }, index) => (
+                  <HeroDetailItem title={title} key={`${title}-${index}`}>
+                    {value}
+                  </HeroDetailItem>
+                ))}
+              </div>
             </div>
           </div>
           {hasStatCards && (

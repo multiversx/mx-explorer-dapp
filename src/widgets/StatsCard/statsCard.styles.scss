@@ -12,9 +12,12 @@
 
 .small-stats-card {
   .stats-card-body {
+    --card-spacer-x: 1rem;
+    --card-spacer-y: 0.75rem;
     column-gap: 2rem;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
   }
 
   .stats-card-value {
