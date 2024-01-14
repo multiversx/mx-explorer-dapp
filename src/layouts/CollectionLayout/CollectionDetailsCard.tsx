@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import {
@@ -32,6 +33,8 @@ export const CollectionDetailsCard = () => {
     decimals,
     owner,
     isVerified,
+    nftCount,
+    holderCount,
     scamInfo
   } = collectionState;
 
@@ -84,7 +87,7 @@ export const CollectionDetailsCard = () => {
       }
       isVerified={isVerified}
       verifiedComponent={
-        <Overlay title='Verified' className='verified-badge-wrapper'>
+        <Overlay title='Verified' className='d-inline-block'>
           <FontAwesomeIcon
             icon={faHexagonCheck}
             size='sm'
@@ -133,6 +136,24 @@ export const CollectionDetailsCard = () => {
         },
         { title: 'Owner', value: <AccountLink address={owner} /> },
         { title: 'Properties', value: <RolesBadges {...collectionState} /> }
+      ]}
+      statsCards={[
+        {
+          ...(holderCount !== undefined
+            ? {
+                title: 'Holders',
+                value: new BigNumber(holderCount).toFormat()
+              }
+            : {})
+        },
+        {
+          ...(nftCount !== undefined
+            ? {
+                title: 'Items',
+                value: new BigNumber(nftCount).toFormat()
+              }
+            : {})
+        }
       ]}
     />
   );
