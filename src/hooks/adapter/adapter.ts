@@ -365,6 +365,14 @@ export const useAdapter = () => {
         }
       }),
 
+    getAccountAssets: ({ address }: { address: string }) =>
+      provider({
+        url: `/accounts/${address}`,
+        params: {
+          fields: 'assets,username'
+        }
+      }),
+
     /* Account Stake */
 
     getAccountDelegation: (address: string) =>

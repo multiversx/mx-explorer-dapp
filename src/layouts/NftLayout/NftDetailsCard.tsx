@@ -164,7 +164,7 @@ export const NftDetailsCard = () => {
           ...(owner !== undefined
             ? {
                 title: 'Owner',
-                value: <AccountLink address={owner} />
+                value: <AccountLink address={owner} fetchAssets />
               }
             : {})
         },

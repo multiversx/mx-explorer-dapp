@@ -57,7 +57,7 @@ export const TokenDetailsCard = () => {
         },
         { title: 'Identifier', value: identifier },
         { title: 'Decimals', value: decimals },
-        { title: 'Owner', value: <AccountLink address={owner} /> },
+        { title: 'Owner', value: <AccountLink address={owner} fetchAssets /> },
         { title: 'Properties', value: <RolesBadges {...token} /> }
       ]}
       statsCards={[

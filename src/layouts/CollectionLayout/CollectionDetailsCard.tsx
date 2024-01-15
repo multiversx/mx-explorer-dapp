@@ -134,7 +134,7 @@ export const CollectionDetailsCard = () => {
               }
             : {})
         },
-        { title: 'Owner', value: <AccountLink address={owner} /> },
+        { title: 'Owner', value: <AccountLink address={owner} fetchAssets /> },
         { title: 'Properties', value: <RolesBadges {...collectionState} /> }
       ]}
       statsCards={[

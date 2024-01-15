@@ -8,11 +8,13 @@ export interface AccountLinkType extends WithClassnameType {
   address: string;
   assets?: AccountAssetType;
   linkClassName?: string;
+  fetchAssets?: boolean;
 }
 
 export const AccountLink = ({
   address,
   assets,
+  fetchAssets = false,
   className,
   linkClassName,
   'data-testid': testId
@@ -36,7 +38,11 @@ export const AccountLink = ({
           to={urlBuilder.accountDetails(address)}
           className={classNames('trim-wrapper', linkClassName)}
         >
-          <AccountName address={address} assets={assets} />
+          <AccountName
+            address={address}
+            assets={assets}
+            fetchAssets={fetchAssets}
+          />
         </NetworkLink>
       ) : (
         <ShardSpan shard={address} />
