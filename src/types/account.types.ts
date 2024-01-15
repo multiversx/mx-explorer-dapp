@@ -36,8 +36,6 @@ export interface AccountType {
   activeGuardianAddress?: string;
   activeGuardianServiceUid?: string;
   ownerAssets?: AccountAssetType;
-  // extra - not on api
-  tokenBalance?: string;
 }
 
 export interface AccountSliceType extends SliceType {
@@ -47,6 +45,7 @@ export interface AccountSliceType extends SliceType {
 export interface AccountStakingSliceType {
   accountStakingFetched: boolean;
 
+  address: string | undefined;
   totalStaked: string;
   totalDelegation: string;
   totalLegacyDelegation: string;
@@ -68,7 +67,8 @@ export interface AccountStakingSliceType {
 
 export interface AccountExtraSliceType extends SliceType {
   accountExtra: {
-    firstTransactionDate: number | undefined;
+    firstTransactionDate?: number;
+    tokenBalance?: string;
   };
 }
 

@@ -141,7 +141,11 @@ export const ApplicationDetailsCard = () => {
               {ownerAddress !== undefined ? (
                 <>
                   {ownerAddress !== address ? (
-                    <AccountLink address={ownerAddress} assets={ownerAssets} />
+                    <AccountLink
+                      address={ownerAddress}
+                      assets={ownerAssets}
+                      fetchAssets
+                    />
                   ) : (
                     <>
                       <ScAddressIcon initiator={ownerAddress} />

@@ -4,7 +4,8 @@ import { AccountExtraSliceType } from 'types/account.types';
 export const getInitialAccountExtraState = (): AccountExtraSliceType => {
   return {
     accountExtra: {
-      firstTransactionDate: undefined
+      firstTransactionDate: undefined,
+      tokenBalance: undefined
     },
     isFetched: false
   };
@@ -20,6 +21,8 @@ export const accountExtraSlice = createSlice({
     ) => {
       state.accountExtra.firstTransactionDate =
         action.payload.accountExtra.firstTransactionDate;
+      state.accountExtra.tokenBalance =
+        action.payload.accountExtra.tokenBalance;
 
       state.isFetched = action.payload.isFetched;
     }
