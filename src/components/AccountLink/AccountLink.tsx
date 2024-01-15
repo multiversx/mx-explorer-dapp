@@ -42,6 +42,7 @@ export const AccountLink = ({
             address={address}
             assets={assets}
             fetchAssets={fetchAssets}
+            className={linkClassName}
           />
         </NetworkLink>
       ) : (

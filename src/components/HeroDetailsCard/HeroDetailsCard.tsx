@@ -118,7 +118,7 @@ export const HeroDetailsCard = ({
               {title && (
                 <div
                   className={classNames('hero-details-card-title', {
-                    'mb-3': !Boolean(description || descriptionContent)
+                    'mb-spacer': !Boolean(description || descriptionContent)
                   })}
                 >
                   <h1 className='mb-0' data-testid={`${testIdPrefix}title`}>
