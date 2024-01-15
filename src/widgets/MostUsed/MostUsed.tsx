@@ -25,7 +25,7 @@ export const MostUsed = () => {
   }
 
   return (
-    <div className='row'>
+    <div className='row most-used'>
       <div className='col-12 col-lg-6 mt-3'>
         <MostUsedCollections data={dailyMostTransactedNFTs} />
       </div>
