@@ -1,8 +1,13 @@
 .identity-card {
   .identity-avatar {
-    width: 7.5rem;
-    height: 7.5rem;
+    width: 3rem;
+    height: 3rem;
     margin-right: 0 !important;
+
+    @include media-breakpoint-up(md) {
+      width: 7.5rem;
+      height: 7.5rem;
+    }
   }
 
   .idenity-description {

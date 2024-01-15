@@ -23,3 +23,20 @@ export const TOP_APPLICATIONS_DISPLAY_LIMIT = 7;
 export const N_A = 'N/A';
 export const ZERO = '0';
 export const ELLIPSIS = '...';
+
+export const DEFAULT_PROVIDER_COLORS: {
+  [index: string]: string;
+} = {
+  multiversx: '#23f7dd',
+  binance_staking: '#f2b92e',
+  justminingfr: '#f99a28',
+  validblocks: '#5e20e5',
+  arcstake: '#c816cc',
+  moonlorianstake: '#6c4c59',
+  sikka_tech: '#ffbe00',
+  rosettastake: '#1aaefb',
+  middlestakingfr: '#5485a9',
+  meria: '#ff592b',
+  'staking-vaas': '#e20073',
+  trustwallet: '#0500ff'
+};
