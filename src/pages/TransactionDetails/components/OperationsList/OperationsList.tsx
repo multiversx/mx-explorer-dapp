@@ -319,14 +319,8 @@ const OperationRow = ({
     case TransactionVisibleOperationEnum.egld:
       return (
         <DetailedItem operation={operation} transaction={transaction}>
-          <div className='d-flex align-items-center symbol text-truncate'>
-            <EgldSymbol className='side-icon me-1' />
-            <span className='text-truncate'>
-              <Denominate
-                value={operation.value}
-                showLastNonZeroDecimal={true}
-              />
-            </span>
+          <div className='d-flex align-items-center symbol text-truncate text-neutral-100'>
+            <Denominate value={operation.value} showLastNonZeroDecimal={true} />
           </div>
         </DetailedItem>
       );
