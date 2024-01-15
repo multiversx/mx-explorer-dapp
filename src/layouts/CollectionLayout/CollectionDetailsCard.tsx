@@ -61,7 +61,7 @@ export const CollectionDetailsCard = () => {
     <HeroDetailsCard
       title={title}
       description={assets?.description}
-      icon={assets?.svgUrl || assets?.pngUrl}
+      icon={assets?.pngUrl || assets?.svgUrl}
       seoDetails={{ text: '' }}
       className='collection-details'
       titleContent={

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import classNames from 'classnames';
 import { Helmet } from 'react-helmet-async';
 
@@ -51,6 +52,7 @@ export const HeroDetailsCard = ({
   className,
   'data-testid-prefix': testIdPrefix = ''
 }: HeroDetailsCardUIType) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const explorerTitle = useGetExplorerTitle();
   const seoTitle = `${
     seoDetails?.title ?? typeof title === 'string' ? title : ''
@@ -110,8 +112,14 @@ export const HeroDetailsCard = ({
             {icon && (
               <img
                 src={icon}
-                className='hero-details-card-logo border d-none d-md-flex col-md-3'
+                className={classNames(
+                  'hero-details-card-logo border d-none d-md-flex col-md-3',
+                  { loading: !imageLoaded }
+                )}
                 alt=' '
+                onLoad={() => {
+                  setImageLoaded(true);
+                }}
               />
             )}
             <div className='hero-details-card-overview d-flex flex-column flex-fill col-9'>
@@ -125,8 +133,14 @@ export const HeroDetailsCard = ({
                     {icon && (
                       <img
                         src={icon}
-                        className='hero-details-card-logo border d-md-none'
+                        className={classNames(
+                          'hero-details-card-logo border d-md-none',
+                          { loading: !imageLoaded }
+                        )}
                         alt=' '
+                        onLoad={() => {
+                          setImageLoaded(true);
+                        }}
                       />
                     )}
                     {title}{' '}

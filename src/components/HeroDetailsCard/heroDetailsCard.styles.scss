@@ -8,6 +8,18 @@
     height: 3rem;
     border-radius: 0.5rem;
     margin-right: 0.5rem;
+    &.loading {
+      background-color: var(--neutral-800);
+      background: linear-gradient(
+        -10deg,
+        #{var(--neutral-950)} 0%,
+        #{var(--neutral-900)} 50%,
+        #{var(--neutral-800)} 100%
+      );
+      background-size: 400% 400%;
+      animation: loader 1s linear infinite;
+      animation-direction: alternate;
+    }
     @include media-breakpoint-up(md) {
       width: 11.25rem;
       height: 11.25rem;
@@ -63,6 +75,15 @@
       .small-stats-cards-container {
         max-width: 20rem;
       }
+    }
+  }
+
+  @keyframes loader {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 0% 100%;
     }
   }
 }
