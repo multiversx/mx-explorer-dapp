@@ -1,12 +1,10 @@
 import classNames from 'classnames';
 
-import { NetworkLink } from 'components';
 import { WithClassnameType } from 'types';
 
 export interface TopCardUIType extends WithClassnameType {
   title: string | React.ReactNode;
   size: 'sm' | 'md' | 'lg';
-  link?: string;
   icon?: string;
   detailsTitle?: string;
   detailsValue?: string;
@@ -18,7 +16,6 @@ export interface TopCardUIType extends WithClassnameType {
 export const TopCard = ({
   title,
   size,
-  link,
   icon,
   detailsTitle,
   detailsValue,
@@ -29,15 +26,7 @@ export const TopCard = ({
 }: TopCardUIType) => (
   <div className={classNames('top-card', size, className)}>
     <div className='top-card-header'>
-      <h4 className='top-card-header-title'>
-        {link ? (
-          <NetworkLink to={link} className='trim-wrapper'>
-            {title}
-          </NetworkLink>
-        ) : (
-          <>{title}</>
-        )}
-      </h4>
+      <h4 className='top-card-header-title'>{title}</h4>
       {icon && <img src={icon} alt=' ' className='top-card-header-icon' />}
     </div>
     {Boolean(detailsTitle || detailsValue || detailsRank) && (
