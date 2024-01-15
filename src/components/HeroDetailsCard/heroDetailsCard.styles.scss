@@ -50,10 +50,6 @@
     align-items: last baseline;
     row-gap: 0.25rem;
     column-gap: 0.5rem;
-    .text-nowrap {
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
   }
   &.application-details {
     @include media-breakpoint-up(xl) {

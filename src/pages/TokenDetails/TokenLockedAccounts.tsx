@@ -79,6 +79,7 @@ export const TokenDetailsLockedAccounts = () => {
                             value={lockedAccount.balance}
                             showLastNonZeroDecimal={true}
                             showLabel={false}
+                            showSymbol={false}
                             denomination={decimals}
                           />
                         </td>

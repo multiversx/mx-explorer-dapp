@@ -103,6 +103,7 @@ export const TokensTable = ({
                   {token.circulatingSupply && (
                     <Denominate
                       showLabel={false}
+                      showSymbol={false}
                       value={
                         token.circulatingSupply
                           ? String(token.circulatingSupply)

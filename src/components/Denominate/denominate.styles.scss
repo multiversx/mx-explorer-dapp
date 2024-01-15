@@ -1,0 +1,18 @@
+.denominate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  .suffix,
+  .decimals {
+    opacity: 0.75;
+  }
+  .symbol {
+    width: auto;
+    height: 0.5em;
+    margin-bottom: 0.1em;
+    vertical-align: middle;
+    path {
+      fill: currentColor;
+    }
+  }
+}

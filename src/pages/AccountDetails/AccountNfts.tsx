@@ -98,6 +98,7 @@ export const AccountNfts = () => {
                           {nft.decimals ? (
                             <Denominate
                               showLabel={false}
+                              showSymbol={false}
                               value={nft.balance ? nft.balance : '0'}
                               denomination={nft.decimals}
                             />

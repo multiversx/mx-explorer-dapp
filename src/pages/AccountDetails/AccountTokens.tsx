@@ -131,11 +131,12 @@ export const AccountTokens = () => {
                   );
 
                   return (
-                    <DetailItem title={name} key={identifier}>
+                    <DetailItem title={name} key={identifier} verticalCenter>
                       <div className='d-flex align-items-center'>
-                        <div className='me-1'>
+                        <div className='me-1 text-neutral-100'>
                           <Denominate
                             showLabel={false}
+                            showSymbol={false}
                             value={balance ? balance : '0'}
                             denomination={decimals}
                             showLastNonZeroDecimal

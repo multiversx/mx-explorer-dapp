@@ -97,7 +97,7 @@
   }
 
   &.multiversx {
-    .detail-card {
+    .detail-card:first-of-type {
       @include media-breakpoint-up(xxl) {
         flex-basis: 29%;
       }

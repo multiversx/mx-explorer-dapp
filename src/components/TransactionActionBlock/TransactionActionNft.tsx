@@ -51,6 +51,7 @@ export const TransactionActionNft = ({
                 <Denominate
                   value={String(tokenValue)}
                   showLabel={false}
+                  showSymbol={false}
                   denomination={token.decimals}
                   showLastNonZeroDecimal={showLastNonZeroDecimal}
                 />

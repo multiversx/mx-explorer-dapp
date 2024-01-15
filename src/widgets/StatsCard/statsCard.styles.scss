@@ -1,12 +1,17 @@
 .stats-card {
-  .mx-symbol {
-    height: 0.75rem;
-    width: 1.25rem;
-    margin-top: -0.25rem;
-    margin-right: 0.25rem;
-  }
   .stats-card-body {
     justify-content: center;
+  }
+  .denominate {
+    .suffix,
+    .decimals {
+      opacity: 1;
+    }
+  }
+  .stats-card-value {
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

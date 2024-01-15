@@ -229,6 +229,7 @@ export const NftDetailsCard = () => {
                       <Denominate
                         value={supply}
                         showLabel={false}
+                        showSymbol={false}
                         denomination={decimals}
                       />
                     ) : (
