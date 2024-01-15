@@ -76,6 +76,10 @@ export const NftDetailsCard = () => {
   } ${getNftText(type)}`;
   const nftPreview = media?.[0]?.thumbnailUrl ?? media?.[0]?.url;
   const description = metadata?.description ?? assets?.description;
+  const hasExtraDescription =
+    metadata?.description &&
+    assets?.description &&
+    metadata.description !== assets.description;
 
   return (
     <HeroDetailsCard
@@ -93,41 +97,39 @@ export const NftDetailsCard = () => {
       }
       className='nft-details'
       titleContent={
-        <>
-          {!scamInfo && type !== NftTypeEnum.MetaESDT && (
-            <SpotlightButton path={`/nfts/${identifier}`} />
-          )}
-        </>
+        !scamInfo && type !== NftTypeEnum.MetaESDT ? (
+          <SpotlightButton path={`/nfts/${identifier}`} />
+        ) : null
       }
       descriptionContent={
-        <>
-          {scamInfo && (
-            <div className='d-flex align-items-center flex-wrap gap-3'>
-              <span className='text-warning d-flex align-items-center ms-2'>
-                <FontAwesomeIcon
-                  icon={faExclamationTriangle}
-                  size='sm'
-                  className='text-warning me-2'
-                />
-                {scamInfo.info}
-              </span>
-              <a
-                href='/#'
-                onClick={show}
-                className='small-font text-neutral-400'
-              >
-                {!showData ? 'Show' : 'Hide'} original content
-              </a>
-            </div>
-          )}
-          {metadata?.description &&
-            assets?.description &&
-            metadata?.description !== assets?.description && (
+        hasExtraDescription || scamInfo ? (
+          <>
+            {scamInfo && (
+              <div className='d-flex align-items-center flex-wrap gap-3'>
+                <span className='text-warning d-flex align-items-center ms-2'>
+                  <FontAwesomeIcon
+                    icon={faExclamationTriangle}
+                    size='sm'
+                    className='text-warning me-2'
+                  />
+                  {scamInfo.info}
+                </span>
+                <a
+                  href='/#'
+                  onClick={show}
+                  className='small-font text-neutral-400'
+                >
+                  {!showData ? 'Show' : 'Hide'} original content
+                </a>
+              </div>
+            )}
+            {hasExtraDescription && (
               <p className='hero-details-card-description text-neutral-400 mb-1'>
                 {assets.description}
               </p>
             )}
-        </>
+          </>
+        ) : null
       }
       isVerified={isVerified}
       verifiedComponent={

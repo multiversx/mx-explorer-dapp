@@ -65,25 +65,21 @@ export const CollectionDetailsCard = () => {
       seoDetails={{ text: '' }}
       className='collection-details'
       titleContent={
-        <>
-          {!scamInfo && type !== NftTypeEnum.MetaESDT && (
-            <SpotlightButton path={`/collections/${collection}`} />
-          )}
-        </>
+        !scamInfo && type !== NftTypeEnum.MetaESDT ? (
+          <SpotlightButton path={`/collections/${collection}`} />
+        ) : null
       }
       descriptionContent={
-        <>
-          {scamInfo && (
-            <span className='text-warning d-flex align-items-center ms-2'>
-              <FontAwesomeIcon
-                icon={faExclamationTriangle}
-                size='sm'
-                className='text-warning me-2'
-              />
-              {scamInfo.info}
-            </span>
-          )}
-        </>
+        scamInfo ? (
+          <span className='text-warning d-flex align-items-center ms-2'>
+            <FontAwesomeIcon
+              icon={faExclamationTriangle}
+              size='sm'
+              className='text-warning me-2'
+            />
+            {scamInfo.info}
+          </span>
+        ) : null
       }
       isVerified={isVerified}
       verifiedComponent={
