@@ -11,7 +11,7 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
           <h5 className='table-title text-capitalize'>
             Most transacted Tokens{'  '}
-            <span className='text-neutral-500 ml-1'>(daily)</span>
+            <span className='text-neutral-500 ms-1'>(daily)</span>
           </h5>
         </div>
       </div>

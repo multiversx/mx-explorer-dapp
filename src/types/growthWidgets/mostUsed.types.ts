@@ -1,4 +1,4 @@
-import { AccountAssetType } from 'types';
+import { AccountAssetType, TokenAssetType } from 'types';
 
 export interface GrowthMostUsedType {
   dailyMostUsedApplications: MostUsedApplicationsType[];
@@ -26,7 +26,7 @@ export interface MostUsedTokensType extends MostUsedBaseType {
   extraInfo?: {
     name?: string;
     ticker?: string;
-    assets?: AccountAssetType;
+    assets?: TokenAssetType;
   };
 }
 
@@ -34,6 +34,6 @@ export interface MostUsedCollectionsType extends MostUsedBaseType {
   extraInfo?: {
     name?: string;
     ticker?: string;
-    assets?: AccountAssetType;
+    assets?: TokenAssetType;
   };
 }

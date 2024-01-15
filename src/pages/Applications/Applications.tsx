@@ -22,9 +22,9 @@ import { faBadgeCheck } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { AccountType } from 'types';
+import { MostUsedApplications } from 'widgets';
 
 import { FailedApplications } from './components/FailedApplications';
-import { MostUsedApplications } from './components/MostUsedApplications';
 import { NoApplications } from './components/NoApplications';
 
 export const Applications = () => {
@@ -88,7 +88,7 @@ export const Applications = () => {
       <div ref={ref}>
         {dataReady === true && (
           <div className='container page-content'>
-            {isMainnet && <MostUsedApplications />}
+            {isMainnet && <MostUsedApplications className='mb-3' size={7} />}
             <div className='row'>
               <div className='col-12'>
                 <div className='card'>

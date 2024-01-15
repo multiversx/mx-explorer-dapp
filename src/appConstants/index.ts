@@ -18,7 +18,6 @@ export const TEMP_LOCAL_NOTIFICATION_DISMISSED = 'tempNotificationDismissed';
 export const NEW_VERSION_NOTIFICATION = 'newExplorerVersion';
 
 export const SC_INIT_CHARACTERS_LENGTH = 13;
-export const TOP_APPLICATIONS_DISPLAY_LIMIT = 7;
 
 export const N_A = 'N/A';
 export const ZERO = '0';
