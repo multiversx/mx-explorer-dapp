@@ -77,7 +77,6 @@ export const HeroDetailsCard = ({
             name='twitter:title'
             content={`${seoTitle} • MultiversX ${explorerTitle}`}
           />
-          <meta name='twitter:card' content='summary' />
           {seoDescription && (
             <meta name='twitter:description' content={seoDescription} />
           )}
