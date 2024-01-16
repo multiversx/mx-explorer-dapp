@@ -42,7 +42,7 @@ export const NftDetailsCard = () => {
     metadata,
     isVerified
   } = nftState;
-  const [showData, setShowData] = useState(true);
+  const [showData, setShowData] = useState(!Boolean(scamInfo));
 
   const show = (e: React.MouseEvent) => {
     e.preventDefault();
