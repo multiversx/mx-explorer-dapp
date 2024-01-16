@@ -47,9 +47,11 @@ export const CollectionDetailsCard = () => {
     ...(assets?.social ? assets.social : {})
   };
 
-  const titleTypeText = activeRoute(tokensRoutes.tokensMetaEsdtDetails)
-    ? 'Meta-ESDT'
-    : 'Collection';
+  const titleTypeText =
+    activeRoute(tokensRoutes.tokensMetaEsdtDetails) ||
+    activeRoute(tokensRoutes.tokensMetaEsdtDetailsRoles)
+      ? 'Meta-ESDT'
+      : 'Collection';
 
   const title = `${
     assets && !scamInfo

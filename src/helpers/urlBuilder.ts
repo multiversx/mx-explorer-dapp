@@ -59,6 +59,8 @@ export const urlBuilder = {
   },
   tokenDetails: (tokenId: string) => `/tokens/${tokenId}`,
   tokenMetaEsdtDetails: (tokenId: string) => `/meta-esdt/${tokenId}`,
+  tokenMetaEsdtDetailsRoles: (identifier: string) =>
+    `/meta-esdt/${identifier}/roles`,
   tokenDetailsAccounts: (tokenId: string) => `/tokens/${tokenId}/accounts`,
   tokenDetailsLockedAccounts: (tokenId: string) =>
     `/tokens/${tokenId}/locked-accounts`,
@@ -73,6 +75,8 @@ export const urlBuilder = {
   collectionDetails: (identifier: string) => `/collections/${identifier}`,
   collectionDetailsRoles: (identifier: string) =>
     `/collections/${identifier}/roles`,
+  collectionDetailsTransactions: (identifier: string) =>
+    `/collections/${identifier}/transactions`,
   nftDetails: (identifier: string) => `/nfts/${identifier}`,
   nftDetailsTransactions: (identifier: string) =>
     `/nfts/${identifier}/transactions`,

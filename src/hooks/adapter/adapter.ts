@@ -602,6 +602,28 @@ export const useAdapter = () => {
         params: getCollectionsParams({ ...rest })
       }),
 
+    getCollectionTransactions: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/collections/${identifier}/transactions`,
+        params: getTransactionsParams({
+          ...rest
+        })
+      }),
+
+    getCollectionTransactionsCount: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/collections/${identifier}/transactions/count`,
+        params: getTransactionsParams({
+          ...rest
+        })
+      }),
+
     // Nfts
 
     getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
