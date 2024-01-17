@@ -56,7 +56,7 @@ Prepare the Pro version of the Fontawesome Icons ( a paid plan for Fontawesome i
 If you already have a fontawesome accessToken, you will either have to either:
 
 - set a `.npmrc` file with only the `_authToken`, without the `registry` ( the `.npmrc` file is already added in the `.gitignore` file)
-- run `npm config set "//npm.fontawesome.com/:_authToken" FONT-AWESOME-PACKAGE-FONT-AWESOME-PACKAGE-TOKEN`
+- run `npm config set "//npm.fontawesome.com/:_authToken" FONT-AWESOME-PACKAGE-TOKEN`
 
 See more on Fontawesome's [Using A Package Manager](https://fontawesome.com/docs/web/setup/packages) page.
 
