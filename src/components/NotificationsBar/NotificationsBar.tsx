@@ -51,24 +51,15 @@ export const NotificationsBar = () => {
             )}
             {notification.id === TEMP_LOCAL_NOTIFICATION_DISMISSED && (
               <div className='w-100'>
-                This is a new devnet (formerly known as &apos;devnet2&apos; ).
-                The original devnet was
+                Devnet hard-fork process scheduled for January 18, 2024 08:00
+                UTC.
                 <a
-                  href='https://t.me/MultiversXDevelopers/119578'
+                  href='https://t.me/MultiversXDevelopers/122519'
                   target='_blank'
                   rel='noreferrer nofollow noopener'
                   className='ms-1 text-black'
                 >
-                  <u>reset on November 1st, 2023</u>
-                </a>
-                . Find the old network explorer at{' '}
-                <a
-                  href='https://devnet-old-explorer.multiversx.com/'
-                  target='_blank'
-                  rel='noreferrer nofollow noopener'
-                  className='ms-1 text-black'
-                >
-                  <u>https://devnet-old-explorer.multiversx.com</u>
+                  <u>See More</u>
                 </a>
               </div>
             )}
