@@ -21,7 +21,7 @@ export const useTempStorageNotification = () => {
       if (!exists) {
         addNotification({
           id: TEMP_LOCAL_NOTIFICATION_DISMISSED,
-          text: 'This is a new devnet (formerly known as &apos;devnet2apos; ). The original devnet was reset on November 1st 2023',
+          text: ' Devnet Hardfork process scheduled for January 18, 2024 08:00 UTC.',
           dismissable: true,
           priority: 2
         });
