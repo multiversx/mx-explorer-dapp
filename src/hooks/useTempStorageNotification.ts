@@ -21,7 +21,7 @@ export const useTempStorageNotification = () => {
       if (!exists) {
         addNotification({
           id: TEMP_LOCAL_NOTIFICATION_DISMISSED,
-          text: ' Devnet Hardfork process scheduled for January 18, 2024 08:00 UTC.',
+          text: 'Devnet hard-fork process scheduled for January 18, 2024 08:00 UTC.',
           dismissable: true,
           priority: 2
         });

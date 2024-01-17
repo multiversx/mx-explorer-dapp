@@ -51,7 +51,7 @@ export const NotificationsBar = () => {
             )}
             {notification.id === TEMP_LOCAL_NOTIFICATION_DISMISSED && (
               <div className='w-100'>
-                Devnet Hardfork process scheduled for January 18, 2024 08:00
+                Devnet hard-fork process scheduled for January 18, 2024 08:00
                 UTC.
                 <a
                   href='https://t.me/MultiversXDevelopers/122519'
