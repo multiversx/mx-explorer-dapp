@@ -169,20 +169,48 @@ button.badge {
       );
     }
   }
+  &-yellow-alt {
+    color: var(--yellow-500);
+    background: linear-gradient(
+      90deg,
+      rgba(240, 77, 25, 0.05),
+      rgba(237, 136, 93, 0.05)
+    );
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(240, 77, 25, 0.4),
+        rgba(237, 136, 93, 0.4)
+      );
+    }
+  }
 
   &.badge-rounded {
-    line-height: 12px;
+    line-height: 1rem;
     border-radius: 6px;
-    font-weight: 600;
-    padding: 0.25rem 0.5rem;
+    padding: 0.125rem 0.5rem;
     &:before {
       border-radius: 6px;
     }
   }
 }
 
-.badge-direction {
+.badge-direction,
+.badge-propery {
   min-width: 40px;
+}
+
+.badge-property {
+  &.active {
+    @extend .badge-outline-primary-alt;
+  }
+  &.inactive {
+    @extend .badge-outline-yellow-alt;
+  }
+}
+
+.badge-direction {
+  font-weight: 600;
   &.out {
     @extend .badge-outline-yellow;
   }
