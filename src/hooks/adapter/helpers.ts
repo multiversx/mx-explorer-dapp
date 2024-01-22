@@ -1,4 +1,4 @@
-import { PAGE_SIZE } from 'appConstants';
+import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
 import {
   AdapterProviderPropsType,
   GetTransactionsType,
@@ -19,13 +19,13 @@ export const getAccountParams = (address?: string) =>
     : {};
 
 export function getTransactionsParams({
-  address = '',
   page = 1,
   size = PAGE_SIZE,
   senderShard,
   receiverShard,
   sender,
   receiver,
+  senderOrReceiver,
   method,
   before,
   after,
@@ -33,18 +33,40 @@ export function getTransactionsParams({
   miniBlockHash,
   search,
   token,
+  hashes,
   order,
-  withUsername = true
+  fields = TRANSACTIONS_TABLE_FIELDS.join(','),
+  withScResults = false,
+  withOperations = false,
+  withLogs = false,
+  withScamInfo = false,
+  withUsername = true,
+  withBlockInfo = false,
+  isRelayed = false,
+  // not on api
+  isCount = false
 }: GetTransactionsType) {
   const params: AdapterProviderPropsType['params'] = {
-    withUsername,
-    from: (page - 1) * size,
-    size,
-    ...getAccountParams(address),
+    ...(isCount
+      ? {}
+      : {
+          from: (page - 1) * size,
+          size,
+          fields,
+          ...(order ? { order } : {}),
+          ...(withScResults ? { withScResults } : {}),
+          ...(withOperations ? { withOperations } : {}),
+          ...(withLogs ? { withLogs } : {}),
+          ...(withScamInfo ? { withScamInfo } : {}),
+          ...(withUsername ? { withUsername } : {}),
+          ...(withBlockInfo ? { withBlockInfo } : {}),
+          ...(isRelayed ? { isRelayed } : {})
+        }),
     ...(senderShard !== undefined ? { senderShard } : {}),
     ...(receiverShard !== undefined ? { receiverShard } : {}),
     ...(sender ? { sender } : {}),
     ...(receiver ? { receiver } : {}),
+    ...(senderOrReceiver ? { senderOrReceiver } : {}),
     ...(method ? { function: method } : {}),
     ...(before ? { before } : {}),
     ...(after ? { after } : {}),
@@ -52,7 +74,7 @@ export function getTransactionsParams({
     ...(miniBlockHash ? { miniBlockHash } : {}),
     ...(search ? { search } : {}),
     ...(token ? { token } : {}),
-    ...(order ? { order } : {})
+    ...(hashes ? { hashes } : {})
   };
 
   return params;

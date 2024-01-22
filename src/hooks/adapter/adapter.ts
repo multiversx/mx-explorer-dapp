@@ -1,4 +1,4 @@
-import { PAGE_SIZE } from 'appConstants';
+import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
 import { AccountRolesTypeEnum } from 'types';
 import {
   GetBlocksType,
@@ -44,17 +44,15 @@ export const useAdapter = () => {
         url: '/blocks',
         params: {
           size,
-          ...{
-            fields: [
-              'hash',
-              'nonce',
-              'shard',
-              'size',
-              'sizeTxs',
-              'timestamp',
-              'txCount'
-            ].join(',')
-          }
+          fields: [
+            'hash',
+            'nonce',
+            'shard',
+            'size',
+            'sizeTxs',
+            'timestamp',
+            'txCount'
+          ].join(',')
         }
       }),
     getLatestTransactions: ({
@@ -66,26 +64,7 @@ export const useAdapter = () => {
         params: {
           size,
           withUsername,
-          ...{
-            fields: [
-              'txHash',
-              'receiver',
-              'receiverShard',
-              'receiverAssets',
-              'sender',
-              'senderShard',
-              'senderAssets',
-              'status',
-              'timestamp',
-              'value',
-              'miniBlockHash',
-              'round',
-              'tokenValue',
-              'tokenIdentifier',
-              'action',
-              'results'
-            ].join(',')
-          }
+          fields: TRANSACTIONS_TABLE_FIELDS.join(',')
         }
       }),
 
@@ -196,7 +175,7 @@ export const useAdapter = () => {
     getTransactionsCount: (params: GetTransactionsType) =>
       provider({
         url: '/transactions/c',
-        params: getTransactionsParams(params)
+        params: getTransactionsParams({ isCount: true, ...params })
       }),
 
     getTransfers: (params: GetTransactionsType) =>
@@ -208,7 +187,7 @@ export const useAdapter = () => {
     getTransfersCount: (params: GetTransactionsType) =>
       provider({
         url: '/transfers/c',
-        params: getTransactionsParams(params)
+        params: getTransactionsParams({ isCount: true, ...params })
       }),
 
     /* SC Results */
@@ -259,10 +238,10 @@ export const useAdapter = () => {
           from: (page - 1) * size,
           size,
           isSmartContract,
-          withOwnerAssets,
-          withDeployInfo,
-          withTxCount,
-          withScrCount,
+          ...(withOwnerAssets ? { withOwnerAssets } : {}),
+          ...(withDeployInfo ? { withDeployInfo } : {}),
+          ...(withTxCount ? { withTxCount } : {}),
+          ...(withScrCount ? { withScrCount } : {}),
           ...rest
         }
       }),
@@ -282,6 +261,7 @@ export const useAdapter = () => {
       provider({
         url: `/accounts/${address}/transfers/c`,
         params: getTransactionsParams({
+          isCount: true,
           ...rest
         })
       }),
@@ -529,6 +509,7 @@ export const useAdapter = () => {
       provider({
         url: `/tokens/${tokenId}/transactions/c`,
         params: getTransactionsParams({
+          isCount: true,
           ...rest
         })
       }),
@@ -551,6 +532,7 @@ export const useAdapter = () => {
       provider({
         url: `/tokens/${tokenId}/transfers/c`,
         params: getTransactionsParams({
+          isCount: true,
           ...rest
         })
       }),
@@ -627,6 +609,7 @@ export const useAdapter = () => {
       provider({
         url: `/collections/${identifier}/transactions/count`,
         params: getTransactionsParams({
+          isCount: true,
           ...rest
         })
       }),
@@ -683,6 +666,7 @@ export const useAdapter = () => {
       provider({
         url: `/nfts/${identifier}/transactions/count`,
         params: getTransactionsParams({
+          isCount: true,
           ...rest
         })
       }),

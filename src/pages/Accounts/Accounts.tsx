@@ -91,7 +91,7 @@ export const Accounts = () => {
                               </tr>
                             </thead>
                             <tbody data-testid='accountsTable'>
-                              {accounts.map((account, i) => (
+                              {accounts.map((account) => (
                                 <tr key={account.address}>
                                   <td>
                                     <AccountLink
@@ -101,7 +101,7 @@ export const Accounts = () => {
                                       linkClassName='trim-only-sm'
                                     />
                                   </td>
-                                  <td>
+                                  <td className='text-neutral-100'>
                                     <Denominate value={account.balance} />
                                   </td>
                                 </tr>

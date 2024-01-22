@@ -23,6 +23,25 @@ export const N_A = 'N/A';
 export const ZERO = '0';
 export const ELLIPSIS = '...';
 
+export const TRANSACTIONS_TABLE_FIELDS = [
+  'txHash',
+  'receiver',
+  'receiverAssets',
+  'receiverShard',
+  'sender',
+  'senderAssets',
+  'senderShard',
+  'status',
+  'value',
+  'timestamp',
+  'round',
+  'tokenValue',
+  'tokenIdentifier',
+  'function',
+  'action',
+  'guardianSignature'
+];
+
 export const DEFAULT_PROVIDER_COLORS: {
   [index: string]: string;
 } = {

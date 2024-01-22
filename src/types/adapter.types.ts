@@ -78,11 +78,12 @@ export interface GetNodesType extends SortableApiType {
 }
 
 export interface GetTransactionsType extends SortableApiType {
+  sender?: string;
+  receiver?: string;
+  senderOrReceiver?: string;
   address?: string;
   senderShard?: number;
   receiverShard?: number;
-  sender?: string;
-  receiver?: string;
   method?: string;
   before?: number;
   after?: number;
@@ -90,7 +91,17 @@ export interface GetTransactionsType extends SortableApiType {
   miniBlockHash?: string;
   search?: string;
   token?: string;
+  hashes?: string;
+  withScResults?: boolean;
+  withOperations?: boolean;
+  withLogs?: boolean;
+  withScamInfo?: boolean;
   withUsername?: boolean;
+  withBlockInfo?: boolean;
+  isRelayed?: boolean;
+
+  // not on api
+  isCount?: boolean;
 }
 
 export interface GetProvidersType extends BaseApiType {
@@ -115,6 +126,7 @@ export interface AdapterProviderPropsType {
     miniBlockHash?: string;
     sender?: string;
     receiver?: string;
+    senderOrReceiver?: string;
     condition?: string;
     senderShard?: number;
     receiverShard?: number;
@@ -140,7 +152,13 @@ export interface AdapterProviderPropsType {
     identifiers?: string;
     includeFlagged?: boolean;
     fullHistory?: string;
+    withScResults?: boolean;
+    withOperations?: boolean;
+    withLogs?: boolean;
+    withScamInfo?: boolean;
     withUsername?: boolean;
+    withBlockInfo?: boolean;
+    isRelayed?: boolean;
     includeMetaESDT?: boolean;
     withGuardianInfo?: boolean;
     isSmartContract?: boolean;
