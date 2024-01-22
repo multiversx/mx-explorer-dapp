@@ -111,7 +111,7 @@ export const HeroDetailsCard = ({
           >
             <span
               className={classNames(
-                'hero-details-card-logo border d-none d-md-flex col-md-3',
+                'hero-details-card-logo d-none d-md-flex col-md-3',
                 { default: !hasIcon }
               )}
             >
@@ -143,7 +143,7 @@ export const HeroDetailsCard = ({
                 >
                   <div className='d-flex align-items-center'>
                     {(icon || iconPlaceholder) && (
-                      <span className='hero-details-card-logo border d-md-none'>
+                      <span className='hero-details-card-logo d-md-none'>
                         {icon ? (
                           <img
                             src={icon}

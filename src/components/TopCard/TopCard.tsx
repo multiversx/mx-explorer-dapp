@@ -27,7 +27,15 @@ export const TopCard = ({
   <div className={classNames('top-card', size, className)}>
     <div className='top-card-header'>
       <h4 className='top-card-header-title'>{title}</h4>
-      {icon && <img src={icon} alt=' ' className='top-card-header-icon' />}
+      <div className={classNames('top-card-header-icon', { default: !icon })}>
+        {icon && (
+          <img
+            src={icon}
+            alt={`${detailsRank ? `#${detailsRank} ` : ''}${title} Logo`}
+            className='icon-img'
+          />
+        )}
+      </div>
     </div>
     {Boolean(detailsTitle || detailsValue || detailsRank) && (
       <div className='top-card-body'>
