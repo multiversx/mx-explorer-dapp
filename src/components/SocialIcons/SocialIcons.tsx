@@ -1,5 +1,5 @@
 import {
-  faTwitter,
+  faXTwitter,
   faLinkedin,
   faInstagram,
   faFacebook,
@@ -9,7 +9,9 @@ import {
   faMediumM,
   faMedium,
   faDiscord,
-  faReddit
+  faReddit,
+  faThreads,
+  faTiktok
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -27,7 +29,8 @@ const getFaIcon = (icon: string) => {
     case 'whitepaper':
       return faFileAlt;
     case 'twitter':
-      return faTwitter;
+    case 'x':
+      return faXTwitter;
     case 'instagram':
       return faInstagram;
     case 'linkedin':
@@ -48,6 +51,10 @@ const getFaIcon = (icon: string) => {
       return faDiscord;
     case 'reddit':
       return faReddit;
+    case 'threads':
+      return faThreads;
+    case 'tiktok':
+      return faTiktok;
     default:
       return faGlobe;
   }

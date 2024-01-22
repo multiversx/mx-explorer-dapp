@@ -67,6 +67,8 @@ export const ApplicationDetailsCard = () => {
     });
   };
 
+  const { website: _omit, ...socialIcons } = account.assets?.social ?? {};
+
   useEffect(() => {
     if (isContract(address)) {
       fetchApplicationDetails();
@@ -114,13 +116,10 @@ export const ApplicationDetailsCard = () => {
             : {})
         },
         {
-          ...(account.assets?.social &&
-          Object.keys(account.assets.social).length > 0
+          ...(socialIcons && Object.keys(socialIcons).length > 0
             ? {
                 title: 'Other Links',
-                value: (
-                  <SocialIcons assets={account.assets.social} excludeWebsite />
-                )
+                value: <SocialIcons assets={socialIcons} excludeWebsite />
               }
             : {})
         },

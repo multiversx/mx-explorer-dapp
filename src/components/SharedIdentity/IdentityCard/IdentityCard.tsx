@@ -1,4 +1,4 @@
-import { faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
@@ -95,7 +95,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                   {twitterLink && (
                     <div className='d-flex align-items-center me-3'>
                       <FontAwesomeIcon
-                        icon={faTwitter}
+                        icon={faXTwitter}
                         className='identity-social-logo me-1'
                       />
                       <a
