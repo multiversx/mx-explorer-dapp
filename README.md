@@ -12,7 +12,7 @@ This project was bootstrapped with [Vite](https://vitejs.dev/guide/).
 ## Requirements
 
 - a `git` client installed
-- `nodejs` (v18.17.0 LTS), `npm` and `yarn` installed
+- `nodejs` (v18.19.0 LTS), `npm` and `yarn` installed
 - optional, but useful: an IDE (Visual Code for example)
 
 ## Quick start

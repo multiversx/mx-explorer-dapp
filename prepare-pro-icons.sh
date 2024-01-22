@@ -1,6 +1,6 @@
 #!/bin/bash
 
-packages='@fortawesome/pro-duotone-svg-icons@6.4.2 @fortawesome/pro-light-svg-icons@6.4.2 @fortawesome/pro-regular-svg-icons@6.4.2 @fortawesome/pro-solid-svg-icons@6.4.2'
+packages='@fortawesome/pro-duotone-svg-icons@6.5.1 @fortawesome/pro-light-svg-icons@6.5.1 @fortawesome/pro-regular-svg-icons@6.5.1 @fortawesome/pro-solid-svg-icons@6.5.1'
 if [[ "$(npm list $packages)" =~ "empty" ]]; then
     echo "Installing $packages ..."
     yarn add $packages --registry https://npm.fontawesome.com/ --peer --no-lockfile
