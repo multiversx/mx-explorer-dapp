@@ -175,7 +175,7 @@ export const HeroDetailsCard = ({
                 <StatsCard title={title} key={`${title}-${index}`} {...rest} />
               ))}
               {smallStatsCards.length > 0 && (
-                <div className='d-flex flex-column gap-3 flex-fill small-stats-cards-container'>
+                <div className='d-flex flex-column gap-3 small-stats-cards-container'>
                   {smallStatsCards.map(({ title, ...rest }, index) => (
                     <SmallStatsCard
                       title={title}

@@ -6,7 +6,7 @@
   &-logo {
     width: 3rem;
     height: 3rem;
-    border-radius: 0.5rem;
+    border-radius: 50%;
     margin-right: 0.5rem;
     &.loading {
       background-color: var(--neutral-800);
@@ -23,7 +23,6 @@
     @include media-breakpoint-up(md) {
       width: 11.25rem;
       height: 11.25rem;
-      border-radius: 1.5rem;
     }
   }
   &-title {
@@ -56,12 +55,27 @@
     font-size: 1rem;
     color: var(--neutral-500);
   }
+  .stats-card {
+    .stats-card-body {
+      justify-content: start;
+    }
+  }
+  .small-stats-cards-container {
+    @include media-breakpoint-down(xl) {
+      flex: 1 1 auto;
+    }
+  }
   .stats-card-content-container {
     display: flex;
-    flex-wrap: wrap;
-    align-items: last baseline;
-    row-gap: 0.25rem;
-    column-gap: 0.5rem;
+    flex-direction: column;
+  }
+  &.application-details,
+  &.token-details {
+    .stats-card {
+      @include media-breakpoint-up(xl) {
+        flex-grow: 0;
+      }
+    }
   }
   &.application-details {
     @include media-breakpoint-up(xl) {

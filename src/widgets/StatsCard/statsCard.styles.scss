@@ -1,12 +1,10 @@
 .stats-card {
+  font-family: var(--headings-font-family);
+  flex-grow: 1;
   .stats-card-body {
     justify-content: center;
   }
   .denominate {
-    .suffix,
-    .decimals {
-      opacity: 1;
-    }
     .symbol {
       height: 0.4em;
     }
@@ -19,6 +17,7 @@
 }
 
 .small-stats-card {
+  font-family: var(--headings-font-family);
   .stats-card-body {
     --card-spacer-x: 1rem;
     --card-spacer-y: 0.75rem;

@@ -23,14 +23,10 @@ export const StatsCard = ({
   }
 
   return (
-    <div
-      className={classNames('stats-card card d-flex flex-grow-1', className)}
-    >
+    <div className={classNames('stats-card card d-flex', className)}>
       <div className='card-body stats-card-body d-flex flex-column p-4'>
         {title && (
-          <p className='text-neutral-500 mb-0 stats-card-title font-regular'>
-            {title}
-          </p>
+          <p className='text-neutral-400 mb-0 stats-card-title'>{title}</p>
         )}
         {value && (
           <h2 className='stats-card-value mb-0 text-primary'>{value}</h2>

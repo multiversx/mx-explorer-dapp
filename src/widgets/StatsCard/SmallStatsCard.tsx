@@ -15,11 +15,11 @@ export const SmallStatsCard = ({
     >
       <div className='card-body d-flex stats-card-body'>
         {title && (
-          <p className='text-neutral-500 mb-0 stats-card-title font-regular'>
-            {title}
-          </p>
+          <p className='text-neutral-400 mb-0 stats-card-title'>{title}</p>
         )}
-        {value && <h2 className='stats-card-value mb-0'>{value}</h2>}
+        {value && (
+          <h2 className='stats-card-value text-neutral-300 mb-0'>{value}</h2>
+        )}
       </div>
     </div>
   );
