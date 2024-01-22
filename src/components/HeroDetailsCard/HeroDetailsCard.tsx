@@ -24,6 +24,7 @@ export interface HeroDetailsCardUIType extends WithClassnameType {
   title?: React.ReactNode;
   titleContent?: React.ReactNode;
   icon?: string;
+  iconPlaceholder?: React.ReactNode;
   isVerified?: boolean;
   verifiedComponent?: React.ReactNode;
   description?: string;
@@ -39,6 +40,7 @@ export const HeroDetailsCard = ({
   title,
   titleContent,
   icon,
+  iconPlaceholder,
   isVerified,
   verifiedComponent,
   description,
@@ -62,6 +64,7 @@ export const HeroDetailsCard = ({
       ? String(description)
       : '';
   const hasStatCards = statsCards.length > 0 || smallStatsCards.length > 0;
+  const hasIcon = icon || iconPlaceholder;
 
   return (
     <>
@@ -106,19 +109,31 @@ export const HeroDetailsCard = ({
               { 'mb-3': !hasStatCards }
             )}
           >
-            {icon && (
-              <img
-                src={icon}
-                className={classNames(
-                  'hero-details-card-logo border d-none d-md-flex col-md-3',
-                  { loading: !imageLoaded }
-                )}
-                alt=' '
-                onLoad={() => {
-                  setImageLoaded(true);
-                }}
-              />
-            )}
+            <span
+              className={classNames(
+                'hero-details-card-logo border d-none d-md-flex col-md-3',
+                { default: !hasIcon }
+              )}
+            >
+              {hasIcon && (
+                <>
+                  {icon ? (
+                    <img
+                      src={icon}
+                      className={classNames('logo-img', {
+                        loading: !imageLoaded
+                      })}
+                      alt={seoTitle ? `${seoTitle} Logo` : 'Logo'}
+                      onLoad={() => {
+                        setImageLoaded(true);
+                      }}
+                    />
+                  ) : (
+                    iconPlaceholder
+                  )}
+                </>
+              )}
+            </span>
             <div className='hero-details-card-overview d-flex flex-column flex-fill col-9'>
               {title && (
                 <div
@@ -126,25 +141,32 @@ export const HeroDetailsCard = ({
                     'mb-spacer': !Boolean(description || descriptionContent)
                   })}
                 >
-                  <h1 className='mb-0' data-testid={`${testIdPrefix}title`}>
-                    {icon && (
-                      <img
-                        src={icon}
-                        className={classNames(
-                          'hero-details-card-logo border d-md-none',
-                          { loading: !imageLoaded }
+                  <div className='d-flex align-items-center'>
+                    {(icon || iconPlaceholder) && (
+                      <span className='hero-details-card-logo border d-md-none'>
+                        {icon ? (
+                          <img
+                            src={icon}
+                            className={classNames('logo-img', {
+                              loading: !imageLoaded
+                            })}
+                            alt={seoTitle ? `${seoTitle} Logo` : 'Logo'}
+                            onLoad={() => {
+                              setImageLoaded(true);
+                            }}
+                          />
+                        ) : (
+                          iconPlaceholder
                         )}
-                        alt=' '
-                        onLoad={() => {
-                          setImageLoaded(true);
-                        }}
-                      />
+                      </span>
                     )}
-                    {title}{' '}
-                    {isVerified && (
-                      <>{verifiedComponent ?? <VerifiedBadge />}</>
-                    )}
-                  </h1>
+                    <h1 className='mb-0' data-testid={`${testIdPrefix}title`}>
+                      {title}{' '}
+                      {isVerified && (
+                        <>{verifiedComponent ?? <VerifiedBadge />}</>
+                      )}
+                    </h1>
+                  </div>
                   {titleContent}
                 </div>
               )}
