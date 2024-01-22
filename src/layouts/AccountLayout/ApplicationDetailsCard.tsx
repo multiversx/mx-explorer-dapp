@@ -17,6 +17,7 @@ import {
   Overlay,
   AccountLink,
   SocialIcons,
+  SocialWebsite,
   HeroDetailsCard
 } from 'components';
 import { DECIMALS } from 'config';
@@ -105,10 +106,21 @@ export const ApplicationDetailsCard = () => {
       }
       detailItems={[
         {
-          ...(account.assets?.social
+          ...(account.assets?.social?.website
             ? {
-                title: 'Social',
-                value: <SocialIcons assets={account.assets.social} />
+                title: 'Website',
+                value: <SocialWebsite link={account.assets.social.website} />
+              }
+            : {})
+        },
+        {
+          ...(account.assets?.social &&
+          Object.keys(account.assets.social).length > 0
+            ? {
+                title: 'Other Links',
+                value: (
+                  <SocialIcons assets={account.assets.social} excludeWebsite />
+                )
               }
             : {})
         },
@@ -162,8 +174,9 @@ export const ApplicationDetailsCard = () => {
         },
         {
           title: 'Properties',
+          contentClassName: 'flex-wrap gap-2 mt-1 mt-lg-0',
           value: (
-            <div className='d-flex alig-items-center flex-wrap gap-2 mt-1 mt-lg-0'>
+            <>
               <PropertyPill
                 name={'Upgradeable'}
                 active={Boolean(isUpgradeable)}
@@ -174,7 +187,7 @@ export const ApplicationDetailsCard = () => {
                 name={'Payable by Smart Contract'}
                 active={Boolean(isPayableBySmartContract)}
               />
-            </div>
+            </>
           )
         }
       ]}

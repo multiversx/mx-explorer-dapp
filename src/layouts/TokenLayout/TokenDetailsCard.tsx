@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import {
   AccountLink,
   SocialIcons,
+  SocialWebsite,
   RolesBadges,
   HeroDetailsCard
 } from 'components';
@@ -30,14 +31,6 @@ export const TokenDetailsCard = () => {
   const title = `${
     assets ? `${name} ${ticker !== name ? `(${ticker})` : ''}` : ticker
   } Token`;
-  const mergedAssets = {
-    ...(assets?.website
-      ? {
-          website: assets.website
-        }
-      : {}),
-    ...(assets?.social ? assets.social : {})
-  };
 
   return (
     <HeroDetailsCard
@@ -48,10 +41,18 @@ export const TokenDetailsCard = () => {
       className='token-details'
       detailItems={[
         {
-          ...(mergedAssets
+          ...(assets?.website
             ? {
-                title: 'Social',
-                value: <SocialIcons assets={mergedAssets} />
+                title: 'Website',
+                value: <SocialWebsite link={assets.website} />
+              }
+            : {})
+        },
+        {
+          ...(assets?.social && Object.keys(assets.social).length > 0
+            ? {
+                title: 'Other Links',
+                value: <SocialIcons assets={assets.social} excludeWebsite />
               }
             : {})
         },

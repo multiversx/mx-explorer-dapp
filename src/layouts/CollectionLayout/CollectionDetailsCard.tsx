@@ -8,6 +8,7 @@ import {
   NftBadge,
   TimeAgo,
   SocialIcons,
+  SocialWebsite,
   SpotlightButton,
   HeroDetailsCard,
   Overlay
@@ -37,15 +38,6 @@ export const CollectionDetailsCard = () => {
     holderCount,
     scamInfo
   } = collectionState;
-
-  const mergedAssets = {
-    ...(assets?.website
-      ? {
-          website: assets.website
-        }
-      : {}),
-    ...(assets?.social ? assets.social : {})
-  };
 
   const titleTypeText =
     activeRoute(tokensRoutes.tokensMetaEsdtDetails) ||
@@ -95,10 +87,18 @@ export const CollectionDetailsCard = () => {
       }
       detailItems={[
         {
-          ...(Object.keys(mergedAssets).length > 0
+          ...(assets?.website
             ? {
-                title: 'Social',
-                value: <SocialIcons assets={mergedAssets} />
+                title: 'Website',
+                value: <SocialWebsite link={assets.website} />
+              }
+            : {})
+        },
+        {
+          ...(assets?.social && Object.keys(assets.social).length > 0
+            ? {
+                title: 'Other Links',
+                value: <SocialIcons assets={assets.social} excludeWebsite />
               }
             : {})
         },

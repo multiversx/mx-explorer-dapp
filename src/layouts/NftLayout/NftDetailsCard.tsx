@@ -12,7 +12,8 @@ import {
   SpotlightButton,
   HeroDetailsCard,
   Overlay,
-  SocialIcons
+  SocialIcons,
+  SocialWebsite
 } from 'components';
 import { formatDate, getNftText } from 'helpers';
 import { faClock, faExclamationTriangle } from 'icons/regular';
@@ -47,15 +48,6 @@ export const NftDetailsCard = () => {
   const show = (e: React.MouseEvent) => {
     e.preventDefault();
     setShowData((existing) => !existing);
-  };
-
-  const mergedAssets = {
-    ...(assets?.website
-      ? {
-          website: assets.website
-        }
-      : {}),
-    ...(assets?.social ? assets.social : {})
   };
 
   const showPreviewDetails = !scamInfo && assets;
@@ -143,10 +135,18 @@ export const NftDetailsCard = () => {
       }
       detailItems={[
         {
-          ...(Object.keys(mergedAssets).length > 0
+          ...(assets?.website
             ? {
-                title: 'Social',
-                value: <SocialIcons assets={mergedAssets} />
+                title: 'Website',
+                value: <SocialWebsite link={assets.website} />
+              }
+            : {})
+        },
+        {
+          ...(assets?.social && Object.keys(assets.social).length > 0
+            ? {
+                title: 'Other Links',
+                value: <SocialIcons assets={assets.social} excludeWebsite />
               }
             : {})
         },

@@ -6,13 +6,11 @@ import { useGetExplorerTitle } from 'hooks';
 import { WithClassnameType } from 'types';
 import { StatsCard, SmallStatsCard, StatsCardUIType } from 'widgets';
 
-import { HeroDetailItem } from './components/HeroDetailItem';
+import {
+  HeroDetailItem,
+  HeroDetailItemUIType
+} from './components/HeroDetailItem';
 import { VerifiedBadge } from './components/VerifiedBadge';
-
-export interface HeroDetailsItemsType {
-  title?: string;
-  value?: React.ReactNode;
-}
 
 export interface SEODetailsType {
   title?: string;
@@ -30,7 +28,7 @@ export interface HeroDetailsCardUIType extends WithClassnameType {
   verifiedComponent?: React.ReactNode;
   description?: string;
   descriptionContent?: React.ReactNode;
-  detailItems?: HeroDetailsItemsType[];
+  detailItems?: HeroDetailItemUIType[];
   statsCards?: StatsCardUIType[];
   smallStatsCards?: StatsCardUIType[];
   seoDetails?: SEODetailsType;
@@ -161,8 +159,12 @@ export const HeroDetailsCard = ({
                 </p>
               )}
               <div className='d-flex flex-column flex-fill detail-items-container'>
-                {detailItems.map(({ title, value }, index) => (
-                  <HeroDetailItem title={title} key={`${title}-${index}`}>
+                {detailItems.map(({ title, value, ...props }, index) => (
+                  <HeroDetailItem
+                    title={title}
+                    key={`${title}-${index}`}
+                    {...props}
+                  >
                     {value}
                   </HeroDetailItem>
                 ))}
