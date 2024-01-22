@@ -15,7 +15,8 @@ import {
   AccountName,
   Overlay,
   TimeAgo,
-  Trim
+  Trim,
+  TableWrapper
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetPage, useGetSort, useIsMainnet } from 'hooks';
@@ -41,26 +42,32 @@ export const Applications = () => {
 
   const [accounts, setAccounts] = useState<AccountType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [dataChanged, setDataChanged] = useState<boolean>(false);
   const [totalAccounts, setTotalAccounts] = useState<number | typeof ELLIPSIS>(
     ELLIPSIS
   );
 
   const fetchAccounts = () => {
+    setDataChanged(true);
     getAccounts({
       page,
-      size,
+      size: size ?? 15,
       sort,
       order,
       isSmartContract: true,
       withOwnerAssets: true,
       withDeployInfo: true,
       withScrCount: true
-    }).then(({ data, success }) => {
-      if (success) {
-        setAccounts(data);
-      }
-      setDataReady(success);
-    });
+    })
+      .then(({ data, success }) => {
+        if (success) {
+          setAccounts(data);
+        }
+        setDataReady(success);
+      })
+      .finally(() => {
+        setDataChanged(false);
+      });
   };
 
   const fetchAccountsCount = () => {
@@ -118,7 +125,7 @@ export const Applications = () => {
                       </div>
 
                       <div className='card-body'>
-                        <div className='table-wrapper animated-list'>
+                        <TableWrapper dataChanged={dataChanged}>
                           <table className='table mb-0'>
                             <thead>
                               <tr>
@@ -241,7 +248,7 @@ export const Applications = () => {
                               ))}
                             </tbody>
                           </table>
-                        </div>
+                        </TableWrapper>
                       </div>
 
                       <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
