@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
@@ -13,11 +13,13 @@ import {
   NetworkLink,
   Sort,
   AccountName,
-  Overlay
+  Overlay,
+  TimeAgo,
+  Trim
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetPage, useGetSort, useIsMainnet } from 'hooks';
-import { faFileAlt } from 'icons/regular';
+import { faFileAlt, faInfoCircle } from 'icons/regular';
 import { faBadgeCheck } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
@@ -28,7 +30,6 @@ import { FailedApplications } from './components/FailedApplications';
 import { NoApplications } from './components/NoApplications';
 
 export const Applications = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const isMainnet = useIsMainnet();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -51,21 +52,21 @@ export const Applications = () => {
       sort,
       order,
       isSmartContract: true,
-      withOwnerAssets: true
+      withOwnerAssets: true,
+      withDeployInfo: true,
+      withScrCount: true
     }).then(({ data, success }) => {
-      if (ref.current !== null) {
-        if (success) {
-          setAccounts(data);
-        }
-        setDataReady(success);
+      if (success) {
+        setAccounts(data);
       }
+      setDataReady(success);
     });
   };
 
   const fetchAccountsCount = () => {
     getAccountsCount({ isSmartContract: true }).then(
       ({ data: count, success }) => {
-        if (ref.current !== null && success) {
+        if (success) {
           setTotalAccounts(count);
         }
       }
@@ -85,7 +86,7 @@ export const Applications = () => {
       )}
       {dataReady === false && <FailedApplications />}
 
-      <div ref={ref}>
+      <div>
         {dataReady === true && (
           <div className='container page-content'>
             {isMainnet && <MostUsedApplications className='mb-3' size={7} />}
@@ -126,6 +127,8 @@ export const Applications = () => {
                                 <th>
                                   <Sort id='balance' field='Balance' />
                                 </th>
+                                <th className='text-end'>Transactions</th>
+                                <th className='text-end'>Deployed</th>
                               </tr>
                             </thead>
                             <tbody data-testid='accountsTable'>
@@ -158,7 +161,7 @@ export const Applications = () => {
                                         address={account.address}
                                         assets={account.assets}
                                       />
-                                      {account?.isVerified && (
+                                      {account.isVerified && (
                                         <Overlay title='Verified'>
                                           <FontAwesomeIcon
                                             icon={faBadgeCheck}
@@ -173,11 +176,66 @@ export const Applications = () => {
                                     {account?.ownerAddress && (
                                       <AccountLink
                                         address={account.ownerAddress}
+                                        assets={account.ownerAssets}
                                       />
                                     )}
                                   </td>
-                                  <td>
+                                  <td className='text-neutral-100'>
                                     <Denominate value={account.balance} />
+                                  </td>
+                                  <td className='text-end'>
+                                    {account.scrCount && (
+                                      <>
+                                        {new BigNumber(
+                                          account.scrCount
+                                        ).toFormat()}
+                                      </>
+                                    )}
+                                  </td>
+                                  <td className='text-end'>
+                                    {account.deployedAt ? (
+                                      <div className='d-flex align-items-center justify-content-end gap-2'>
+                                        <TimeAgo
+                                          value={account.deployedAt}
+                                          short
+                                          showAgo
+                                          tooltip
+                                        />
+                                        {account.deployTxHash && (
+                                          <Overlay
+                                            title={
+                                              <>
+                                                <span className='text-neutral-400'>
+                                                  Deploy Transaction:
+                                                </span>
+                                                <NetworkLink
+                                                  to={urlBuilder.transactionDetails(
+                                                    account.deployTxHash
+                                                  )}
+                                                  data-testid='upgradeTxHashLink'
+                                                  className='trim-wrapper'
+                                                >
+                                                  <Trim
+                                                    text={account.deployTxHash}
+                                                  />
+                                                </NetworkLink>
+                                              </>
+                                            }
+                                            className='cursor-context'
+                                            persistent
+                                          >
+                                            <FontAwesomeIcon
+                                              icon={faInfoCircle}
+                                              className='text-neutral-500'
+                                            />
+                                          </Overlay>
+                                        )}
+                                      </div>
+                                    ) : (
+                                      <span className='text-neutral-400'>
+                                        N/A
+                                      </span>
+                                    )}
                                   </td>
                                 </tr>
                               ))}

@@ -16,6 +16,9 @@ export interface GetAccountsType extends SortableApiType {
   ownerAddress?: string;
   isSmartContract?: boolean;
   withOwnerAssets?: boolean;
+  withDeployInfo?: boolean;
+  withTxCount?: boolean;
+  withScrCount?: boolean;
 }
 export interface GetBlocksType extends BaseApiType {
   shard?: number;
@@ -142,6 +145,9 @@ export interface AdapterProviderPropsType {
     withGuardianInfo?: boolean;
     isSmartContract?: boolean;
     withOwnerAssets?: boolean;
+    withDeployInfo?: boolean;
+    withTxCount?: boolean;
+    withScrCount?: boolean;
   };
   timeout: number;
   timestamp?: number;

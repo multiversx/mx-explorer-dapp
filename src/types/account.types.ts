@@ -24,6 +24,7 @@ export interface AccountType {
   ownerAddress?: string;
   developerReward?: string;
   deployedAt?: number;
+  deployTxHash?: string;
   scamInfo?: ScamInfoType;
   isUpgradeable?: boolean;
   isReadable?: boolean;

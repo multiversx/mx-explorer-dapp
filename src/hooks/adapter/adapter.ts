@@ -247,15 +247,22 @@ export const useAdapter = () => {
       size = PAGE_SIZE,
       isSmartContract = false,
       withOwnerAssets = false,
+      withDeployInfo = false,
+      withTxCount = false,
+      withScrCount = false,
       ...rest
     }: GetAccountsType) =>
       provider({
         url: '/accounts',
+        timeout: 15000,
         params: {
           from: (page - 1) * size,
           size,
           isSmartContract,
           withOwnerAssets,
+          withDeployInfo,
+          withTxCount,
+          withScrCount,
           ...rest
         }
       }),
