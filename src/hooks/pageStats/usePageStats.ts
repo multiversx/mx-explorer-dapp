@@ -100,6 +100,20 @@ export const usePageStats = () => {
     );
   }, [pageHeadersBlocks]);
 
+  const headersApplicationsData = useMemo(() => {
+    const {
+      blockHeight: _omit,
+      totalApplicationsDeployed,
+      totalDeveloperRewards,
+      totalNetworkFees
+    } = pageHeadersBlocks;
+    return getData('blocks', {
+      totalApplicationsDeployed: totalApplicationsDeployed ?? '',
+      totalNetworkFees: totalNetworkFees ?? '',
+      totalDeveloperRewards: totalDeveloperRewards ?? ''
+    });
+  }, [pageHeadersBlocks]);
+
   const headersCollectionsData = useMemo(() => {
     return getData('collections', pageHeadersCollections).sort(
       (a, b) => a.order - b.order
@@ -126,8 +140,13 @@ export const usePageStats = () => {
           data: headersBlocksData
         };
 
-      case activeRoute(accountsRoutes.accounts):
       case activeRoute(applicationsRoutes.applications):
+        return {
+          title: headersBlocksTitle,
+          data: headersApplicationsData
+        };
+
+      case activeRoute(accountsRoutes.accounts):
         return {
           title: headersAccountsTitle,
           data: headersAccountsData
@@ -152,6 +171,7 @@ export const usePageStats = () => {
   }, [
     activeRoute,
     headersBlocksData,
+    headersApplicationsData,
     headersCollectionsData,
     headersTokensData,
     headersAccountsData
