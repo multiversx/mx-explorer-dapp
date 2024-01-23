@@ -9,5 +9,6 @@ export interface PayloadType {
 
 export interface ChartAreaPropsType {
   className?: string;
+  simpleTooltip?: boolean;
   payload: PayloadType[];
 }

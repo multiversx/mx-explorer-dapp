@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
 import { useFetchGrowthTransactions } from 'hooks';
 import { growthTransactionsSelector } from 'redux/selectors';
+import { GrowthChartDataType } from 'types';
 
 import { TransactionsStatisticsLabelEnum } from './enum';
 import styles from './styles.module.scss';
@@ -15,8 +17,37 @@ import { PayloadType } from '../ChartArea/types';
 import { ChartSelect } from '../ChartSelect';
 import { ChartSelectOptionType } from '../ChartSelect/types';
 
+const getSum = (
+  first: GrowthChartDataType[],
+  second: GrowthChartDataType[]
+) => {
+  const dayData = [...first, ...second].reduce(
+    ((map) => (acc: any, cur) => {
+      map.set(
+        cur.timestamp,
+        map.get(cur.timestamp) ||
+          acc[acc.push({ timestamp: cur.timestamp, value: 0 }) - 1]
+      );
+      const currentEntry = map.get(cur.timestamp);
+
+      currentEntry.value = new BigNumber(currentEntry.value)
+        .plus(new BigNumber(cur.value))
+        .toNumber();
+
+      return acc;
+    })(new Map()),
+    []
+  ) as GrowthChartDataType[];
+
+  return dayData;
+};
+
 export const ChartContractsTransactions = ({
   showStatistics = true,
+  showTransactions = true,
+  showContracts = true,
+  showTotal = true,
+  simpleTooltip = false,
   title,
   className
 }: ChartContractsTransactionsUIType) => {
@@ -109,13 +140,31 @@ export const ChartContractsTransactions = ({
     [scResults7d, scResults30d, scResultsAll]
   );
 
+  const dataTotal = useMemo(
+    () =>
+      new Map([
+        ['total7d', getSum(transactions7d, scResults7d)],
+        ['total30d', getSum(transactions30d, scResults30d)],
+        ['total365d', getSum(transactions365d, scResults365d)],
+        ['totalAll', getSum(transactionsAll, scResultsAll)]
+      ]),
+    [
+      transactions7d,
+      transactions30d,
+      transactionsAll,
+      scResults7d,
+      scResults30d,
+      scResultsAll
+    ]
+  );
+
   const [transactionsPayload, setTransactionsPayload] = useState(
     dataTransactions.get('transactions30d')
   );
-
   const [contractsPayload, setContractsPayload] = useState(
     dataContracts.get('scResults30d')
   );
+  const [totalPayload, setTotalPayload] = useState(dataTotal.get('total30d'));
 
   const defaultValue = filters.find(
     (filter) => filter.value === 'transactions30d'
@@ -125,13 +174,15 @@ export const ChartContractsTransactions = ({
     (option: SingleValue<ChartSelectOptionType>) => {
       if (option && option.value && isFetched) {
         const value = option.value.replace('transactions', '');
-        const [transactionsKey, contractsKey] = [
+        const [transactionsKey, contractsKey, totalKey] = [
           `transactions${value}`,
-          `scResults${value}`
+          `scResults${value}`,
+          `total${value}`
         ];
 
         setTransactionsPayload(dataTransactions.get(transactionsKey));
         setContractsPayload(dataContracts.get(contractsKey));
+        setTotalPayload(dataTotal.get(totalKey));
       }
     },
     [isFetched]
@@ -141,25 +192,44 @@ export const ChartContractsTransactions = ({
     if (isFetched) {
       setTransactionsPayload(dataTransactions.get('transactions30d'));
       setContractsPayload(dataContracts.get('scResults30d'));
+      setTotalPayload(dataTotal.get('total30d'));
     }
-  }, [dataTransactions, dataContracts]);
+  }, [dataTransactions, dataContracts, dataTotal]);
 
   useFetchGrowthTransactions();
   useEffect(onInitialLoad, [onInitialLoad]);
 
   const payload: PayloadType[] = [
-    {
-      data: contractsPayload,
-      key: 'contractValue',
-      label: 'Applications',
-      color: primary
-    },
-    {
-      data: transactionsPayload,
-      key: 'transactionValue',
-      label: 'Standard',
-      color: violet500
-    }
+    ...(showTotal
+      ? [
+          {
+            data: totalPayload,
+            key: 'totalValue',
+            label: 'Total Transactions',
+            color: white
+          }
+        ]
+      : []),
+    ...(showContracts
+      ? [
+          {
+            data: contractsPayload,
+            key: 'contractValue',
+            label: 'Applications',
+            color: primary
+          }
+        ]
+      : []),
+    ...(showTransactions
+      ? [
+          {
+            data: transactionsPayload,
+            key: 'transactionValue',
+            label: 'Standard',
+            color: violet500
+          }
+        ]
+      : [])
   ];
 
   return (
@@ -188,7 +258,7 @@ export const ChartContractsTransactions = ({
             />
           </div>
         </div>
-        <ChartArea payload={payload} />
+        <ChartArea payload={payload} simpleTooltip={simpleTooltip} />
       </div>
     </div>
   );

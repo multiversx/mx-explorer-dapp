@@ -16,4 +16,8 @@ export interface ChartType {
 export interface ChartContractsTransactionsUIType extends WithClassnameType {
   title?: string;
   showStatistics?: boolean;
+  showTransactions?: boolean;
+  showTotal?: boolean;
+  showContracts?: boolean;
+  simpleTooltip?: boolean;
 }

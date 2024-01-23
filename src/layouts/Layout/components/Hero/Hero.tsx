@@ -139,6 +139,9 @@ export const Hero = () => {
                   <ChartContractsTransactions
                     showStatistics={false}
                     title='App transactions'
+                    showTransactions={false}
+                    showTotal={false}
+                    simpleTooltip={true}
                     className='bg-neutral-900'
                   />
                 </div>
