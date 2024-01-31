@@ -37,7 +37,11 @@ export const StatsCard = ({
             <span className='mx-1'>{subTitle}</span>
           </p>
         )}
-        {children && <p className='mb-0 mt-2 text-primary-200'>{children}</p>}
+        {children && (
+          <p className='mb-0 mt-2 text-primary-200 d-flex align-items-center'>
+            {children}
+          </p>
+        )}
       </div>
     </div>
   );

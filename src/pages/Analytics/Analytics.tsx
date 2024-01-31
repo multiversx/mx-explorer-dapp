@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Loader, Tabs } from 'components';
+import { Loader, Overlay, Tabs } from 'components';
 import { ChartListType } from 'components/Chart/helpers/types';
 import { useAdapter, useIsMainnet, useNetworkRoute } from 'hooks';
 
+import { faInfoCircle } from 'icons/regular';
 import { AnalyticsChart } from 'pages/AnalyticsCompare/AnalyticsChart';
 import { FailedAnalytics } from 'pages/AnalyticsCompare/components/FailedAnalytics';
 import { NoAnalytics } from 'pages/AnalyticsCompare/components/NoAnalytics';
@@ -248,7 +250,23 @@ export const Analytics = () => {
           </ChartWrapper>
           <ChartWrapper>
             <div className='px-3 pb-3'>
-              <AnalyticsChart series={dailyActiveUsersChart} />
+              <AnalyticsChart
+                series={dailyActiveUsersChart}
+                title={
+                  <div className='d-flex align-items-center'>
+                    Daily Active Users
+                    <Overlay
+                      title='Number of accounts that have sent or received transactions in the last 24 hours'
+                      className='d-inline-flex'
+                    >
+                      <FontAwesomeIcon
+                        icon={faInfoCircle}
+                        className='ms-2 small cursor-context text-neutral-400'
+                      />
+                    </Overlay>
+                  </div>
+                }
+              />
             </div>
           </ChartWrapper>
 
