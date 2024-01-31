@@ -46,7 +46,7 @@ export const Overlay = ({
       )}
       {...(persistent ? { show } : {})}
     >
-      <div
+      <span
         ref={ref}
         className={classNames(className, {
           'text-truncate': !Boolean(className)
@@ -59,7 +59,7 @@ export const Overlay = ({
           : {})}
       >
         {children}
-      </div>
+      </span>
     </OverlayTrigger>
   );
 };

@@ -178,7 +178,7 @@ export const ProvidersTable = ({
               <SortTh name='Nodes' field='numNodes' />
             </th>
             <th>
-              <SortTh name='Computed APR' field='apr' />
+              <SortTh name='Computed Net APR' field='apr' />
             </th>
             <th>
               <SortTh name='Service fee' field='serviceFee' />

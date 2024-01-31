@@ -154,7 +154,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
               />
 
               <StatsCard
-                title='Computed APR'
+                title='Computed Gross APR'
                 value={<>{identity.apr ? `${identity.apr}%` : 'N/A'}</>}
                 className='detail-card'
               />
