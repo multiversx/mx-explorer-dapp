@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 
 import { ELLIPSIS } from 'appConstants';
 import { ProgressRing } from 'components';
@@ -31,7 +32,7 @@ export const EpochProgressRing = ({
           )}
         </div>
         <div
-          className='description'
+          className={classNames('description', { 'cursor-context': showTime })}
           {...(showTime ? { title: epochTimeRemaining } : {})}
         >
           {roundsLeft && roundsLeft >= 0 ? (
