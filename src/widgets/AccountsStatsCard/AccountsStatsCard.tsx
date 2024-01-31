@@ -3,7 +3,9 @@ import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
+import { Overlay } from 'components';
 import { useFetchGrowthHero, useIsMainnet } from 'hooks';
+import { faInfoCircle } from 'icons/regular';
 import { faCircleBolt } from 'icons/solid';
 import {
   growthHeroSelector,
@@ -33,7 +35,16 @@ export const AccountsStatsCard = () => {
       {isMainnet ? (
         <StatsCard title='Total Accounts' value={totalAccounts}>
           <FontAwesomeIcon icon={faCircleBolt} className='me-2' />
-          {activeAccountsToday} active today
+          {activeAccountsToday} active today{' '}
+          <Overlay
+            title='Number of accounts that have sent or received transactions in the last epoch'
+            className='d-inline'
+          >
+            <FontAwesomeIcon
+              icon={faInfoCircle}
+              className='ms-2 cursor-context'
+            />
+          </Overlay>
         </StatsCard>
       ) : (
         <StatsCard title='Total Accounts' value={accounts} />
