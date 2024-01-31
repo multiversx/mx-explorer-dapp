@@ -29,7 +29,7 @@ export const AnalyticsChart = ({
   customDomain
 }: {
   series: ChartListType[];
-  title?: string;
+  title?: React.ReactNode;
 } & StackedChartConfig) => {
   const ref = useRef(null);
 
