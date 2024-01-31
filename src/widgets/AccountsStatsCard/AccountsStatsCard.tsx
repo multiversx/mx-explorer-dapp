@@ -35,15 +35,12 @@ export const AccountsStatsCard = () => {
       {isMainnet ? (
         <StatsCard title='Total Accounts' value={totalAccounts}>
           <FontAwesomeIcon icon={faCircleBolt} className='me-2' />
-          {activeAccountsToday} active today{' '}
+          {activeAccountsToday} active today
           <Overlay
-            title='Number of accounts that have sent or received transactions in the last epoch'
-            className='d-inline'
+            title='Number of accounts that have sent or received transactions in the last 24 hours'
+            className='d-inline cursor-context'
           >
-            <FontAwesomeIcon
-              icon={faInfoCircle}
-              className='ms-2 cursor-context'
-            />
+            <FontAwesomeIcon icon={faInfoCircle} className='ms-2' />
           </Overlay>
         </StatsCard>
       ) : (

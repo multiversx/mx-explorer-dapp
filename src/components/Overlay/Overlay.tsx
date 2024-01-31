@@ -24,6 +24,6 @@ export const Overlay = ({
       </Tooltip>
     )}
   >
-    <div className={className ?? 'text-truncate'}>{children}</div>
+    <span className={className ?? 'text-truncate'}>{children}</span>
   </OverlayTrigger>
 );

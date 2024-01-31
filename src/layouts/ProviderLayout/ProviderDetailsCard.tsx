@@ -69,7 +69,7 @@ export const ProviderDetailsCard = ({
           )}
         </CardItem>
 
-        <CardItem title='Computed APR' icon={faLeaf}>
+        <CardItem title='Computed Net APR' icon={faLeaf}>
           {provider.apr ? (
             <>
               {provider.apr}
