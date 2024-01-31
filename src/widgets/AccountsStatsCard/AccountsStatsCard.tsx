@@ -38,9 +38,12 @@ export const AccountsStatsCard = () => {
           {activeAccountsToday} active today
           <Overlay
             title='Number of accounts that have sent or received transactions in the last 24 hours'
-            className='d-inline cursor-context'
+            className='d-inline-flex'
           >
-            <FontAwesomeIcon icon={faInfoCircle} className='ms-2' />
+            <FontAwesomeIcon
+              icon={faInfoCircle}
+              className='ms-2 cursor-context'
+            />
           </Overlay>
         </StatsCard>
       ) : (
