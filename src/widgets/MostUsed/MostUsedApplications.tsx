@@ -2,19 +2,22 @@ import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { Loader, TopCard, Trim, NetworkLink } from 'components';
+import { Loader, TopCard, Trim, NetworkLink, TimeAgo } from 'components';
 import { urlBuilder, addressIsBech32 } from 'helpers';
 import { useIsMainnet, useFetchGrowthMostUsed } from 'hooks';
 import { growthMostUsedSelector } from 'redux/selectors';
+import { applicationsRoutes } from 'routes';
 import { WithClassnameType } from 'types';
 
 export interface MostUsedApplicationsUIType extends WithClassnameType {
   size: 10 | 7;
+  showDashboardLink?: boolean;
 }
 
 export const MostUsedApplications = ({
-  className,
-  size
+  size,
+  showDashboardLink = false,
+  className
 }: MostUsedApplicationsUIType) => {
   const isMainnet = useIsMainnet();
 
@@ -63,6 +66,14 @@ export const MostUsedApplications = ({
                 Most Used Applications{' '}
                 <span className='text-neutral-500 ms-1'>(daily)</span>
               </h5>
+              {showDashboardLink && (
+                <NetworkLink
+                  to={applicationsRoutes.applications}
+                  className='btn btn-sm btn-dark'
+                >
+                  View Dashboard
+                </NetworkLink>
+              )}
             </div>
           </div>
 
@@ -83,7 +94,7 @@ export const MostUsedApplications = ({
                       hash: !Boolean(contract?.extraInfo?.assets?.name)
                     })}
                   >
-                    {contract?.extraInfo?.assets?.name ?? (
+                    {contract.extraInfo?.assets?.name ?? (
                       <Trim text={contract.key} />
                     )}
                   </NetworkLink>
@@ -93,11 +104,29 @@ export const MostUsedApplications = ({
                   <TopCard
                     size={getCardSize(i)}
                     title={<TitleLink />}
-                    icon={contract?.extraInfo?.assets?.iconSvg}
+                    icon={
+                      contract.extraInfo?.assets?.svgUrl ||
+                      contract.extraInfo?.assets?.pngUrl
+                    }
                     detailsTitle='Total Txn:'
                     detailsValue={new BigNumber(contract.value).toFormat()}
                     detailsRank={contract.rank}
                     key={contract.key}
+                    {...(contract.extraInfo?.deployedAt
+                      ? { footerTitle: 'Age' }
+                      : {})}
+                    {...(contract.extraInfo?.deployedAt
+                      ? {
+                          footerValue: (
+                            <TimeAgo
+                              value={contract.extraInfo?.deployedAt}
+                              short
+                              showAgo
+                              tooltip
+                            />
+                          )
+                        }
+                      : {})}
                   />
                 );
               })}

@@ -2,6 +2,7 @@ import { GetTokensType, GetCollectionsType } from 'types';
 
 export const urlBuilder = {
   shard: (shard: number | string) => `/blocks?shard=${shard}`,
+  blockDetails: (hash: number | string) => `/blocks/${hash}`,
   receiverShard: (shard: number | string) =>
     `/transactions?receiverShard=${shard}`,
   senderShard: (shard: number | string) => `/transactions?senderShard=${shard}`,

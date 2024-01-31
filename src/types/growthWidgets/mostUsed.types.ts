@@ -19,6 +19,7 @@ export interface MostUsedBaseType {
 export interface MostUsedApplicationsType extends MostUsedBaseType {
   extraInfo?: {
     assets?: AccountAssetType;
+    deployedAt?: number;
   };
 }
 
@@ -34,6 +35,9 @@ export interface MostUsedCollectionsType extends MostUsedBaseType {
   extraInfo?: {
     name?: string;
     ticker?: string;
+    holderCount?: number;
+    nftCount?: number;
+    isVerified?: boolean;
     assets?: TokenAssetType;
   };
 }

@@ -79,6 +79,8 @@ export interface AccountAssetType {
   tags?: string[];
   iconPng?: string;
   iconSvg?: string;
+  svgUrl?: string;
+  pngUrl?: string;
   social?: { [key: string]: string };
 }
 

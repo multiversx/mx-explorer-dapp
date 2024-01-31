@@ -15,6 +15,7 @@ import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import { urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
 import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
+import { blocksRoutes } from 'routes';
 import { BlockType } from 'types';
 
 export const LatestBlocks = () => {
@@ -80,7 +81,10 @@ export const LatestBlocks = () => {
                 <h5 className='mb-0 d-flex align-items-center'>
                   Recent Blocks <PulsatingLed className='ms-2 mt-1' />
                 </h5>
-                <NetworkLink to='/blocks' className='btn btn-sm btn-dark'>
+                <NetworkLink
+                  to={blocksRoutes.blocks}
+                  className='btn btn-sm btn-dark'
+                >
                   View All
                 </NetworkLink>
               </div>
@@ -98,7 +102,7 @@ export const LatestBlocks = () => {
                       <div className='d-flex align-items-center justify-content-between mb-3'>
                         <div className='d-flex align-items-center'>
                           <NetworkLink
-                            to={`/blocks/${block.hash}`}
+                            to={urlBuilder.blockDetails(block.hash)}
                             data-testid={`blockLink${i}`}
                           >
                             {block.nonce}
@@ -125,7 +129,7 @@ export const LatestBlocks = () => {
                       <div className='d-flex flex-row mt-1'>
                         <span className='me-2 text-neutral-400'>Hash:</span>
                         <NetworkLink
-                          to={`/blocks/${block.hash}`}
+                          to={urlBuilder.blockDetails(block.hash)}
                           className='trim-wrapper'
                         >
                           <Trim

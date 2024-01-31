@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js';
 
 import { NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
+import { tokensRoutes } from 'routes';
 import { MostUsedTokensType } from 'types/growthWidgets';
 
 export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
@@ -13,6 +14,9 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
             Most transacted Tokens{'  '}
             <span className='text-neutral-500 ms-1'>(daily)</span>
           </h5>
+          <NetworkLink to={tokensRoutes.tokens} className='btn btn-sm btn-dark'>
+            Dashboard
+          </NetworkLink>
         </div>
       </div>
 
@@ -23,7 +27,7 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
               <tr>
                 <th>Rank</th>
                 <th>Token</th>
-                <th>Total Txn</th>
+                <th className='text-end'>Total Txn</th>
               </tr>
             </thead>
             <tbody data-testid='tokensTable'>
@@ -34,21 +38,21 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
                     <NetworkLink
                       to={urlBuilder.tokenDetails(token.key)}
                       className={`d-flex text-truncate text-primary-200 ${
-                        token?.extraInfo?.assets?.svgUrl ? 'side-link' : ''
+                        token.extraInfo?.assets?.svgUrl ? 'side-link' : ''
                       }`}
                     >
                       <div className='d-flex align-items-center symbol trim text-truncate'>
-                        {token?.extraInfo ? (
+                        {token.extraInfo ? (
                           <>
-                            {token?.extraInfo?.assets?.svgUrl && (
+                            {token.extraInfo?.assets?.svgUrl && (
                               <img
-                                src={token?.extraInfo?.assets.svgUrl}
-                                alt={token?.extraInfo?.name ?? token.key}
+                                src={token.extraInfo?.assets.svgUrl}
+                                alt={token.extraInfo?.name ?? token.key}
                                 className='side-icon me-1'
                               />
                             )}
                             <div className='text-truncate'>
-                              {token?.extraInfo?.name ? (
+                              {token.extraInfo?.name ? (
                                 <>
                                   {token.extraInfo.name} (
                                   {token.extraInfo.ticker})
@@ -64,7 +68,7 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
                       </div>
                     </NetworkLink>
                   </td>
-                  <td className='text-center'>
+                  <td className='text-neutral-300 text-end fw-600 pe-2'>
                     {new BigNumber(token.value).toFormat()}
                   </td>
                 </tr>

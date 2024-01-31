@@ -26,14 +26,14 @@ export const MostUsed = () => {
 
   return (
     <div className='row most-used'>
-      <div className='col-12 col-lg-6 mt-3'>
+      <div className='col-12 col-lg-7 mt-3'>
         <MostUsedCollections data={dailyMostTransactedNFTs} />
       </div>
-      <div className='col-12 col-lg-6 mt-3'>
+      <div className='col-12 col-lg-5 mt-3'>
         <MostUsedTokens data={dailyMostTransactedTokens} />
       </div>
       <div className='col-12 mt-3'>
-        <MostUsedApplications size={10} />
+        <MostUsedApplications size={10} showDashboardLink />
       </div>
     </div>
   );
