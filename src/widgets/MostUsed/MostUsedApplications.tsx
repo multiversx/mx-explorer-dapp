@@ -61,7 +61,7 @@ export const MostUsedApplications = ({
           )}
         >
           <div className='card-header'>
-            <div className='card-header-item'>
+            <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
               <h5>
                 Most Used Applications{' '}
                 <span className='text-neutral-500 ms-1'>(daily)</span>
