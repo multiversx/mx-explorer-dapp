@@ -7,7 +7,6 @@
   .th-rank {
     min-width: 1rem;
   }
-
   .th-stake-percent {
     width: 18.5rem;
   }
@@ -15,9 +14,17 @@
   .identity-row {
     position: relative;
     background-color: var(--neutral-900);
+    font-family: $headings-font-family;
     &:hover {
       background-color: var(--neutral-900);
       cursor: pointer;
+    }
+
+    td {
+      &:nth-of-type(3),
+      &:nth-of-type(4) {
+        color: var(--neutral-200);
+      }
     }
 
     &.collapsed {
@@ -63,6 +70,13 @@
           transform: rotateZ(-90deg);
         }
       }
+    }
+  }
+
+  .resiliency-row {
+    font-family: var(--headings-font-family);
+    hr {
+      opacity: 1;
     }
   }
 }

@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
 
 import { ReactComponent as CarretDown } from 'assets/img/carret-down.svg';
 import {
@@ -80,7 +81,7 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
               </NetworkLink>
             ) : (
               <NetworkLink to={link} className='trim-wrapper trim-size-xl'>
-                {identity.name ? identity.name : 'N/A'}
+                {identity.name ?? 'N/A'}
               </NetworkLink>
             )}
           </div>
@@ -93,8 +94,11 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
           <div className='d-flex align-items-center'>
             <PercentageBar
               overallPercent={identity.overallStakePercent || 0}
+              overallPercentLabel={formatStakePercentLabel(
+                identity.overallStakePercent
+              )}
               fillPercent={identity.stakePercent}
-              fillPercentLabel={formatStakePercentLabel(identity?.stakePercent)}
+              fillPercentLabel={formatStakePercentLabel(identity.stakePercent)}
             />
 
             <div className='ms-3'>
@@ -102,8 +106,9 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
             </div>
           </div>
         </td>
-        <td className='text-end'>{identity.validators.toLocaleString('en')}</td>
-        {/* <td className="text-end">{Math.round(identity.score).toLocaleString('en')}</td> */}
+        <td className='text-end'>
+          {new BigNumber(identity.validators).toFormat()}
+        </td>
         <td className='text-end'>
           <CarretDown className='details-arrow' height='8' />
         </td>
