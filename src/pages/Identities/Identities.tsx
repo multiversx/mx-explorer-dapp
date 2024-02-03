@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-
 import BigNumber from 'bignumber.js';
-import { Loader, PageState } from 'components';
+import { useSelector } from 'react-redux';
+
+import { InfoTooltip, Loader, PageState } from 'components';
 import { useAdapter } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
+import { activeNetworkSelector } from 'redux/selectors';
 import { IdentityType } from 'types';
 
 import { IdentityRow, ResiliencyRow } from './components';
@@ -12,6 +14,7 @@ import { IdentityRow, ResiliencyRow } from './components';
 export const Identities = () => {
   const ref = useRef(null);
   const { getIdentities } = useAdapter();
+  const { egldLabel } = useSelector(activeNetworkSelector);
 
   const [identities, setIdentities] = useState<IdentityType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
@@ -59,7 +62,27 @@ export const Identities = () => {
                   <th className='th-rank'>#</th>
                   <th className='th-name'>Name</th>
                   <th>Stake</th>
-                  <th className='th-stake-percent'>Cumulative stake</th>
+                  <th className='th-stake-percent'>
+                    Cumulative Stake
+                    <InfoTooltip
+                      title={
+                        <>
+                          <p>
+                            The Cumulative Stake represents the total share of
+                            staked {egldLabel} that this and all previous
+                            validators add up to.
+                          </p>
+                          <p className='mb-0'>
+                            To improve the decentralization of the network,
+                            please consider staking your tokens with smaller,
+                            independent validator operators who control a
+                            smaller proportion of stake.
+                          </p>
+                        </>
+                      }
+                      tooltipClassName='tooltip-xl'
+                    />
+                  </th>
                   <th className='w-10 text-end'>Nodes</th>
                   <th className='th-details'>&nbsp;</th>
                 </tr>

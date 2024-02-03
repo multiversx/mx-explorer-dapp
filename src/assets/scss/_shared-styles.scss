@@ -116,7 +116,7 @@
 }
 
 .side-action {
-  color: var(--text-neutral-500);
+  color: var(--neutral-500);
   margin-left: 0.5rem;
   transition: color 200ms ease;
 
@@ -437,4 +437,15 @@ div.side-icon {
 
 .fw-600 {
   font-weight: 600;
+}
+
+.tooltip-lg {
+  .tooltip-inner {
+    max-width: 20rem;
+  }
+}
+.tooltip-xl {
+  .tooltip-inner {
+    max-width: 24rem;
+  }
 }
