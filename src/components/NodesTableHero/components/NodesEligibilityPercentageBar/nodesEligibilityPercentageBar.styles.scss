@@ -1,0 +1,42 @@
+.nodes-eligibility-percentage-bar {
+  .progress,
+  .progress-bar {
+    height: 0.5rem;
+    background-color: var(--neutral-750);
+  }
+  .progress-bar {
+    &.step-1 {
+      background-color: var(--neutral-750);
+    }
+    &.step-2 {
+      background-color: var(--red-400);
+    }
+    &.step-3 {
+      background-color: var(--green-400);
+    }
+  }
+  .eligibility-legend-container {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 0.5rem;
+  }
+  .legend {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--headings-font-family);
+    min-width: fit-content;
+    .description {
+      font-size: 1.125rem;
+    }
+    .name,
+    .value {
+      color: var(--neutral-500);
+    }
+    .name {
+      white-space: nowrap;
+    }
+    &:last-of-type {
+      text-align: right;
+    }
+  }
+}

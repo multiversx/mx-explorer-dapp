@@ -7,7 +7,8 @@ import { MultilayerPercentageUIType } from '../types';
 export const MultilayerPercentageBar = ({
   steps,
   hasTrim,
-  className
+  className,
+  legendClassName
 }: MultilayerPercentageUIType) => {
   return (
     <div
@@ -27,9 +28,14 @@ export const MultilayerPercentageBar = ({
         ))}
       </div>
       <div
-        className={classNames('d-flex legend-container mt-2', {
-          'flex-wrap': !hasTrim
-        })}
+        className={classNames(
+          'legend-container',
+          {
+            'flex-wrap': !hasTrim && !Boolean(legendClassName),
+            'd-flex mt-2': !Boolean(legendClassName)
+          },
+          legendClassName
+        )}
       >
         {steps.map((step, i) => {
           if (step.legend) {

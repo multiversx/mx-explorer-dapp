@@ -1,6 +1,8 @@
 .led {
+  display: inline-flex;
   height: 0.625rem;
   width: 0.625rem;
   min-width: 0.625rem;
   border-radius: 50%;
+  margin-top: 0.125em;
 }

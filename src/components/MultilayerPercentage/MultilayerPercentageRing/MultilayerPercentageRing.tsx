@@ -20,7 +20,9 @@ export const prepareChartData = (steps: MultilayerPercentageStepType[]) => {
 
 export const MultilayerPercentageRing = ({
   steps,
-  hasTrim
+  hasTrim,
+  className,
+  legendClassName
 }: MultilayerPercentageUIType) => {
   useEffect(() => {
     window.dispatchEvent(new Event('resize'));
@@ -30,7 +32,8 @@ export const MultilayerPercentageRing = ({
     <div
       className={classNames(
         'd-flex flex-row flex-wrap align-items-center gap-2 multilayer-percentage-ring',
-        { 'two-items': steps.length === 2 }
+        { 'two-items': steps.length === 2 },
+        className
       )}
     >
       <PieChart width={40} height={40} className='composed-pie-chart'>
@@ -50,8 +53,13 @@ export const MultilayerPercentageRing = ({
 
       <div
         className={classNames(
-          'd-flex legend-container d-flex truncate-item-xl',
-          { 'flex-column': hasTrim, 'flex-row flex-wrap': !hasTrim }
+          'legend-container',
+          {
+            'flex-column': hasTrim && !Boolean(legendClassName),
+            'flex-row flex-wrap': !hasTrim && !Boolean(legendClassName),
+            'd-flex truncate-item-xl': !Boolean(legendClassName)
+          },
+          legendClassName
         )}
       >
         {steps.map((step, i) => {

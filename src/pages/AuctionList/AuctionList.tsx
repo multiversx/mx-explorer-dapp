@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
+import {
+  Loader,
+  Pager,
+  PageState,
+  NodesTable,
+  NodesFilters,
+  NodesTableHero
+} from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -52,6 +59,7 @@ export const AuctionList = () => {
         <NodesTabs />
 
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
+          <NodesTableHero />
           <NodesFilters baseRoute={validatorsRoutes.nodes} />
           {dataReady === true && (
             <Pager
