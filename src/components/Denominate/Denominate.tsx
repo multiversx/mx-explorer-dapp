@@ -18,6 +18,7 @@ export interface DenominateType {
   denomination?: number;
   showTooltip?: boolean;
   showSymbol?: boolean;
+  superSuffix?: boolean;
   'data-testid'?: string;
 }
 
@@ -80,7 +81,8 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
     showLastNonZeroDecimal = false,
     showLabel = true,
     showTooltip = true,
-    showSymbol = true
+    showSymbol = true,
+    superSuffix = false
   } = props;
   const decimals = props.decimals !== undefined ? props.decimals : DIGITS;
   const denomination =
@@ -173,9 +175,17 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
       )}
 
       {showLabel && (
-        <span className='suffix'>
-          &nbsp;{props.token ? props.token : egldLabel}
-        </span>
+        <>
+          {superSuffix ? (
+            <sup className='suffix'>
+              &nbsp;{props.token ? props.token : egldLabel}
+            </sup>
+          ) : (
+            <span className='suffix'>
+              {props.token ? props.token : egldLabel}
+            </span>
+          )}
+        </>
       )}
     </span>
   );
