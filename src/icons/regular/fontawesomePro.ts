@@ -25,6 +25,7 @@ import {
   faChevronUp,
   faCircleBolt,
   faCircleCheck,
+  faCircleInfo,
   faCircleDown,
   faCircleMinus,
   faCircleNotch,
