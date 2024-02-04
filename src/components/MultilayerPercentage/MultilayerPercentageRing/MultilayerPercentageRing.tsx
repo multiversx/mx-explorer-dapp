@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
+import classNames from 'classnames';
 import { PieChart, Pie } from 'recharts';
 
 import { Led, Trim } from 'components';
@@ -27,9 +28,10 @@ export const MultilayerPercentageRing = ({
 
   return (
     <div
-      className={`d-flex flex-row flex-wrap align-items-center gap-2 multilayer-percentage-ring ${
-        steps.length === 2 ? 'two-items' : ''
-      }`}
+      className={classNames(
+        'd-flex flex-row flex-wrap align-items-center gap-2 multilayer-percentage-ring',
+        { 'two-items': steps.length === 2 }
+      )}
     >
       <PieChart width={40} height={40} className='composed-pie-chart'>
         <Pie
@@ -47,26 +49,32 @@ export const MultilayerPercentageRing = ({
       </PieChart>
 
       <div
-        className={`d-flex legend-dot-container d-flex truncate-item-xl ${
-          hasTrim ? 'flex-column' : 'flex-row flex-wrap'
-        }`}
+        className={classNames(
+          'd-flex legend-container d-flex truncate-item-xl',
+          { 'flex-column': hasTrim, 'flex-row flex-wrap': !hasTrim }
+        )}
       >
-        {steps.map((step, i) => (
-          <div
-            key={`legend-${i}`}
-            className={`legend-dot d-flex align-items-center ${
-              hasTrim ? '' : 'me-1 me-lg-2'
-            }`}
-          >
-            <Led color={`flex-shrink-0 me-1 step-${i + 1}`} />
-            <small className='d-flex align-items-center overflow-hidden min-w-0'>
-              {hasTrim ? <Trim text={String(step.name)} /> : <>{step.name}</>}
-              <span className={`percentage ms-1 percentage-step-${i + 1}`}>
-                ({step.value}%)
-              </span>
-            </small>
-          </div>
-        ))}
+        {steps.map((step, i) => {
+          if (step.legend) {
+            return <Fragment key={`legend-${i}`}>{step.legend}</Fragment>;
+          }
+          return (
+            <div
+              key={`legend-${i}`}
+              className={classNames('legend d-flex align-items-center', {
+                'me-1 me-lg-2': !hasTrim
+              })}
+            >
+              <Led color={`flex-shrink-0 me-1 step-${i + 1}`} />
+              <small className='d-flex align-items-center overflow-hidden min-w-0'>
+                {hasTrim ? <Trim text={String(step.name)} /> : <>{step.name}</>}
+                <span className={`value ms-1 value-step-${i + 1}`}>
+                  ({step.value}%)
+                </span>
+              </small>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

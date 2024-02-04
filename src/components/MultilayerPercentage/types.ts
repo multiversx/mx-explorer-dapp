@@ -7,7 +7,7 @@ export interface MultilayerPercentageUIType extends WithClassnameType {
 }
 
 export interface MultilayerPercentageStepType {
-  name: React.ReactNode;
+  name: string;
   value: number;
-  description?: React.ReactNode;
+  legend?: React.ReactNode;
 }

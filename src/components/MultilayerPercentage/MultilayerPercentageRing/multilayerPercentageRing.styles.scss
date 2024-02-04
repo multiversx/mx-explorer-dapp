@@ -45,35 +45,35 @@ $tenth-color: shade-color($primary, 70%);
     }
   }
 
-  .percentage {
-    &.percentage-step-1 {
+  .value {
+    &.value-step-1 {
       color: $first-color;
     }
-    &.percentage-step-2 {
+    &.value-step-2 {
       color: $second-color;
     }
-    &.percentage-step-3 {
+    &.value-step-3 {
       color: $third-color;
     }
-    &.percentage-step-4 {
+    &.value-step-4 {
       color: $fourth-color;
     }
-    &.percentage-step-5 {
+    &.value-step-5 {
       color: $fifth-color;
     }
-    &.percentage-step-6 {
+    &.value-step-6 {
       color: $sixth-color;
     }
-    &.percentage-step-7 {
+    &.value-step-7 {
       color: $seventh-color;
     }
-    &.percentage-step-8 {
+    &.value-step-8 {
       color: $eighth-color;
     }
-    &.percentage-step-9 {
+    &.value-step-9 {
       color: $ninth-color;
     }
-    &.percentage-step-10 {
+    &.value-step-10 {
       color: $tenth-color;
     }
   }
@@ -113,7 +113,7 @@ $tenth-color: shade-color($primary, 70%);
     .step-2 {
       background-color: $third-color;
     }
-    .percentage.percentage-step-2 {
+    .value.value-step-2 {
       color: $second-color;
     }
     .composed-pie-chart {
