@@ -3,24 +3,24 @@ import { PieChart, Pie } from 'recharts';
 
 import { Led, Trim } from 'components';
 import { truncateMiddle } from 'helpers';
-import { NodesVersionsType } from 'types';
+import {
+  MultilayerPercentageUIType,
+  MultilayerPercentageStepType
+} from '../types';
 
-export const prepareChartData = (steps: NodesVersionsType[]) => {
+export const prepareChartData = (steps: MultilayerPercentageStepType[]) => {
   return steps.map((step) => {
     return {
-      name: truncateMiddle(step.name, 20),
-      value: step.percent
+      name: truncateMiddle(String(step.name), 20),
+      value: step.value
     };
   });
 };
 
 export const MultilayerPercentageRing = ({
   steps,
-  trim
-}: {
-  steps: NodesVersionsType[];
-  trim?: boolean;
-}) => {
+  hasTrim
+}: MultilayerPercentageUIType) => {
   useEffect(() => {
     window.dispatchEvent(new Event('resize'));
   }, []);
@@ -33,7 +33,7 @@ export const MultilayerPercentageRing = ({
     >
       <PieChart width={40} height={40} className='composed-pie-chart'>
         <Pie
-          data={prepareChartData(steps)}
+          data={hasTrim ? prepareChartData(steps) : steps}
           dataKey='value'
           nameKey='name'
           cx='50%'
@@ -48,21 +48,21 @@ export const MultilayerPercentageRing = ({
 
       <div
         className={`d-flex legend-dot-container d-flex truncate-item-xl ${
-          trim ? 'flex-column' : 'flex-row flex-wrap'
+          hasTrim ? 'flex-column' : 'flex-row flex-wrap'
         }`}
       >
         {steps.map((step, i) => (
           <div
             key={`legend-${i}`}
             className={`legend-dot d-flex align-items-center ${
-              trim ? '' : 'me-1 me-lg-2'
+              hasTrim ? '' : 'me-1 me-lg-2'
             }`}
           >
             <Led color={`flex-shrink-0 me-1 step-${i + 1}`} />
             <small className='d-flex align-items-center overflow-hidden min-w-0'>
-              {trim ? <Trim text={step.name} /> : <>{step.name}</>}
+              {hasTrim ? <Trim text={String(step.name)} /> : <>{step.name}</>}
               <span className={`percentage ms-1 percentage-step-${i + 1}`}>
-                ({step.percent}%)
+                ({step.value}%)
               </span>
             </small>
           </div>

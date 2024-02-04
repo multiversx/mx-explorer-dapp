@@ -1,13 +1,10 @@
 import { Led, Trim } from 'components';
-import { NodesVersionsType } from 'types';
+import { MultilayerPercentageUIType } from '../types';
 
 export const MultilayerPercentageBar = ({
   steps,
-  trim
-}: {
-  steps: NodesVersionsType[];
-  trim?: boolean;
-}) => {
+  hasTrim
+}: MultilayerPercentageUIType) => {
   return (
     <div
       className={`d-flex h-100 flex-column multilayer-percentage-bar ${
@@ -19,26 +16,26 @@ export const MultilayerPercentageBar = ({
           <div
             key={`progress-bar-${i}`}
             className={`progress-bar step-${i + 1}`}
-            style={{ width: step.percent + '%' }}
+            style={{ width: step.value + '%' }}
           />
         ))}
       </div>
       <div
         className={`d-flex legend-dot-container mt-2 ${
-          trim ? '' : 'flex-wrap'
+          hasTrim ? '' : 'flex-wrap'
         }`}
       >
         {steps.map((step, i) => (
           <div
             key={`legend-${i}`}
             className={`legend-dot d-flex align-items-center ${
-              trim ? '' : 'me-1 me-lg-2'
+              hasTrim ? '' : 'me-1 me-lg-2'
             }`}
           >
             <Led color={`flex-shrink-0 me-1 step-${i + 1}`} />
             <small className='d-flex align-items-center overflow-hidden min-w-0'>
-              {trim ? <Trim text={step.name} /> : <>{step.name}</>}
-              <span className='text-neutral-400 ms-1'>({step.percent}%)</span>
+              {hasTrim ? <Trim text={String(step.name)} /> : <>{step.name}</>}
+              <span className='text-neutral-400 ms-1'>({step.value}%)</span>
             </small>
           </div>
         ))}

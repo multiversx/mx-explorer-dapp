@@ -19,3 +19,4 @@ export * from './transaction.types';
 export * from './withClassname.types';
 
 export * from './growthWidgets';
+export * from 'components/types';
