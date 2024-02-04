@@ -111,6 +111,7 @@ export const useShowNodesStats = () => {
     case activeRoute(validatorsRoutes.nodes):
     case activeRoute(validatorsRoutes.statistics):
     case activeRoute(validatorsRoutes.queue):
+    case activeRoute(validatorsRoutes.auctionList):
       return true;
   }
 

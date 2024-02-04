@@ -1,5 +1,6 @@
 import { NodesLayout } from 'layouts/NodesLayout';
 import { ProviderLayout } from 'layouts/ProviderLayout';
+import { AuctionList } from 'pages/AuctionList';
 import { Identities } from 'pages/Identities';
 import { IdentityDetails } from 'pages/IdentityDetails';
 import { NodeDetails } from 'pages/NodeDetails';
@@ -17,6 +18,7 @@ export const validatorsRoutes = {
   identityDetails: '/identities/:hash',
   statistics: '/statistics',
   queue: '/queue',
+  auctionList: '/auction-list',
   nodes: '/nodes',
   nodeDetails: '/nodes/:hash',
   providers: '/providers',
@@ -72,6 +74,19 @@ export const validatorLayout: TitledRouteObject[] = [
         title: 'Nodes Queue',
         preventScroll: true,
         Component: NodesQueue
+      }
+    ]
+  },
+  {
+    path: validatorsRoutes.auctionList,
+    preventScroll: true,
+    Component: NodesLayout,
+    children: [
+      {
+        path: validatorsRoutes.auctionList,
+        title: 'Auction List',
+        preventScroll: true,
+        Component: AuctionList
       }
     ]
   },

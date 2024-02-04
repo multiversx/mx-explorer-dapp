@@ -26,6 +26,10 @@ export const NodesTabs = () => {
     {
       tabTo: validatorsRoutes.queue,
       tabLabel: 'Queue'
+    },
+    {
+      tabTo: validatorsRoutes.auctionList,
+      tabLabel: 'Auction List'
     }
   ];
 
