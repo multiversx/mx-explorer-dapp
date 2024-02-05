@@ -2,13 +2,22 @@ import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import {
+  NodeStatus,
+  NetworkLink,
+  Trim,
+  Overlay,
+  Denominate,
   Loader,
   Pager,
   PageState,
-  NodesTable,
-  NodesFilters,
-  NodesTableHero
+  NodesTableHero,
+  NodeIcon,
+  NodeFullHistoryIcon,
+  NodeIssueIcon,
+  NodeLockedStakeTooltip,
+  SharedIdentity
 } from 'components';
+import { urlBuilder } from 'helpers';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -19,17 +28,18 @@ import {
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { validatorsRoutes } from 'routes';
-import { NodeType } from 'types';
+import { NodeType, IdentityType } from 'types';
 
 export const AuctionList = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const { getNodes, getNodesCount } = useAdapter();
+  const { getNodes, getNodesCount, getIdentities } = useAdapter();
   const { search } = useGetSearch();
   const { page, size } = useGetPage();
   const nodeFilters = useGetNodeFilters();
   const sort = useGetSort();
   const [nodes, setNodes] = useState<NodeType[]>([]);
+  const [identities, setIdentities] = useState<IdentityType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
@@ -39,14 +49,16 @@ export const AuctionList = () => {
     setDataReady(undefined);
 
     Promise.all([
+      getIdentities(),
       getNodes({ ...nodeFilters, ...sort, search, page, size }),
-      getNodesCount({ ...nodeFilters, ...sort, search })
-    ]).then(([nodesData, count]) => {
+      getNodesCount({ ...nodeFilters, search })
+    ]).then(([identitiesData, nodesData, count]) => {
+      setIdentities(identitiesData.data);
       setNodes(nodesData.data);
       setTotalNodes(count.data);
 
       if (ref.current !== null) {
-        setDataReady(nodesData.success && count.success);
+        setDataReady(identitiesData.data && nodesData.success && count.success);
       }
     });
   };
@@ -54,20 +66,11 @@ export const AuctionList = () => {
   useEffect(fetchNodes, [searchParams]);
 
   return (
-    <div className='card position-unset' ref={ref}>
-      <div className='card-header position-unset'>
+    <div className='card auction-list' ref={ref}>
+      <div className='card-header'>
         <NodesTabs />
-
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <NodesTableHero />
-          <NodesFilters baseRoute={validatorsRoutes.nodes} />
-          {dataReady === true && (
-            <Pager
-              total={totalNodes}
-              className='d-flex ms-auto me-auto me-sm-0'
-              show
-            />
-          )}
         </div>
       </div>
 
@@ -79,16 +82,96 @@ export const AuctionList = () => {
       {dataReady === true && (
         <>
           <div className='card-body'>
-            <NodesTable
-              type={type as NodeType['type']}
-              status={status as NodeType['status']}
-            >
-              <NodesTable.Body
-                nodes={nodes}
-                type={type as NodeType['type']}
-                status={status as NodeType['status']}
-              />
-            </NodesTable>
+            <table className='table auction-list-table mb-0'>
+              <thead>
+                <tr>
+                  <th className='th-rank'>#</th>
+                  <th className='th-eligibility'>Eligibility</th>
+                  <th className='th-identity'>Validator</th>
+                  <th className='th-name'>Name</th>
+                  <th className='th-key'>Key</th>
+                  <th className='th-stake'>Stake / Node</th>
+                  <th className='th-treshold'>Until Treshold</th>
+                  <th className='th-info'></th>
+                </tr>
+              </thead>
+              <tbody>
+                {nodes.map((node, i) => {
+                  const nodeIdentity = identities.find(
+                    (identity) => identity.identity === node.identity
+                  );
+
+                  const nodeIdentityLink = node.identity
+                    ? urlBuilder.identityDetails(node.identity)
+                    : urlBuilder.nodeDetails(node.name);
+
+                  return (
+                    <tr key={node.bls}>
+                      <td>{i + 1}</td>
+                      <td>
+                        <NodeStatus node={node} />
+                      </td>
+                      <td>
+                        <div className='d-flex align-items-center'>
+                          {nodeIdentity && (
+                            <div className='me-3'>
+                              <NetworkLink to={nodeIdentityLink}>
+                                <SharedIdentity.Avatar
+                                  identity={nodeIdentity}
+                                />
+                              </NetworkLink>
+                            </div>
+                          )}
+                          {nodeIdentity?.name &&
+                          nodeIdentity.name.length > 70 ? (
+                            <NetworkLink
+                              to={nodeIdentityLink}
+                              className='trim-wrapper trim-size-xl'
+                            >
+                              <Trim text={nodeIdentity?.name} />
+                            </NetworkLink>
+                          ) : (
+                            <NetworkLink
+                              to={nodeIdentityLink}
+                              className='trim-wrapper trim-size-xl'
+                            >
+                              {nodeIdentity?.name ?? 'N/A'}
+                            </NetworkLink>
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        {node.name ? (
+                          <div className='truncate-item-lg'>{node.name}</div>
+                        ) : (
+                          <span className='text-neutral-400'>N/A</span>
+                        )}
+                      </td>
+                      <td>
+                        <div className='d-flex align-items-center hash'>
+                          <NodeIcon node={node} />
+                          <NodeFullHistoryIcon node={node} />
+                          <NetworkLink
+                            to={urlBuilder.nodeDetails(node.bls)}
+                            className='trim-wrapper'
+                          >
+                            <Trim text={node.bls} />
+                          </NetworkLink>
+                          <NodeIssueIcon node={node} />
+                        </div>
+                      </td>
+                      <td>
+                        <Overlay title={<NodeLockedStakeTooltip node={node} />}>
+                          <Denominate value={node.locked} showTooltip={false} />
+                        </Overlay>
+                      </td>
+                      <td>{i + 1}</td>
+                      <td></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
           <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
             <Pager total={totalNodes} show />
