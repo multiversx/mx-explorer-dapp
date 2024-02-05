@@ -8,7 +8,8 @@ import {
   Denominate,
   NodeIcon,
   NodeIssueIcon,
-  NodeFullHistoryIcon
+  NodeFullHistoryIcon,
+  NodeLockedStakeTooltip
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'types';
@@ -24,30 +25,6 @@ export const StandardRow = ({
   type?: NodeType['type'];
   status?: NodeType['status'];
 }) => {
-  const ValidatorLockedStakeTooltip = () => {
-    if (
-      (type === 'validator' && nodeData.locked && nodeData.stake) ||
-      nodeData.topUp
-    ) {
-      return (
-        <>
-          {nodeData.stake && (
-            <div>
-              Staked: <Denominate value={nodeData.stake} showTooltip={false} />
-            </div>
-          )}
-          {nodeData.topUp && (
-            <div>
-              Top up: <Denominate value={nodeData.topUp} showTooltip={false} />
-            </div>
-          )}
-        </>
-      );
-    }
-
-    return null;
-  };
-
   return (
     <>
       <td>
@@ -124,7 +101,7 @@ export const StandardRow = ({
 
       {type === 'validator' && nodeData.locked && (
         <td className='text-end'>
-          <Overlay title={<ValidatorLockedStakeTooltip />}>
+          <Overlay title={<NodeLockedStakeTooltip node={nodeData} />}>
             <Denominate value={nodeData.locked} showTooltip={false} />
           </Overlay>
         </td>
