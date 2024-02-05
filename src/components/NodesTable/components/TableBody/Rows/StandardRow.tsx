@@ -5,13 +5,13 @@ import {
   NetworkLink,
   Trim,
   Overlay,
-  Denominate
+  Denominate,
+  NodeIcon,
+  NodeIssueIcon,
+  NodeFullHistoryIcon
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'types';
-import { RowFullHistory } from '../../RowFullHistory';
-import { RowIcon } from '../../RowIcon';
-import { RowIssueIcon } from '../../RowIssueIcon';
 
 export const StandardRow = ({
   nodeData,
@@ -52,15 +52,15 @@ export const StandardRow = ({
     <>
       <td>
         <div className='d-flex align-items-center hash'>
-          <RowIcon node={nodeData} />
-          <RowFullHistory node={nodeData} />
+          <NodeIcon node={nodeData} />
+          <NodeFullHistoryIcon node={nodeData} />
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}
             className='trim-wrapper'
           >
             <Trim text={nodeData.bls} />
           </NetworkLink>
-          <RowIssueIcon node={nodeData} />
+          <NodeIssueIcon node={nodeData} />
         </div>
       </td>
       <td>

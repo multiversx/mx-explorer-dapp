@@ -1,5 +1,6 @@
 export * from './getDisplayReceiver';
 export * from './getNftText';
+export * from './getNodeIcon';
 export * from './getNodeIssue';
 export * from './getOperationDirection';
 export * from './getPercentage';

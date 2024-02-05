@@ -1,22 +1,26 @@
-import { NetworkLink, NodeRating, Trim } from 'components';
+import {
+  NetworkLink,
+  NodeRating,
+  Trim,
+  NodeIcon,
+  NodeIssueIcon
+} from 'components';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'types';
-import { RowIcon } from '../../RowIcon';
-import { RowIssueIcon } from '../../RowIssueIcon';
 
 export const StatisticsRow = ({ nodeData }: { nodeData: NodeType }) => {
   return (
     <>
       <td>
         <div className='d-flex align-items-center hash'>
-          <RowIcon node={nodeData} />
+          <NodeIcon node={nodeData} />
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}
             className='trim-wrapper'
           >
             <Trim text={nodeData.bls} />
           </NetworkLink>
-          <RowIssueIcon node={nodeData} />
+          <NodeIssueIcon node={nodeData} />
         </div>
       </td>
       <td>

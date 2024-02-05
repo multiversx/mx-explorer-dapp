@@ -1,59 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';
-import {
-  faClock,
-  faEye,
-  faFlagAlt,
-  faLeaf,
-  faSnooze,
-  faSync
-} from 'icons/regular';
+import { getNodeIcon } from 'helpers';
 import { NodeType } from 'types';
 
-export const getIcon = (node: NodeType) => {
-  let icon;
-
-  switch (true) {
-    case node.type === 'observer':
-      icon = faEye;
-      break;
-
-    case node.status === 'new':
-      icon = faLeaf;
-      break;
-
-    case node.status === 'inactive':
-      icon = faSnooze;
-      break;
-
-    case node.receivedShardID !== node.computedShardID:
-      icon = faSync;
-      break;
-
-    case node.status === 'waiting':
-      icon = faClock;
-      break;
-
-    case node.status === 'queued':
-      icon = faFlagAlt;
-      break;
-
-    default:
-      icon = null;
-  }
-
-  return icon;
-};
-
-export const RowIcon = ({
+export const NodeIcon = ({
   node,
   small
 }: {
   node: NodeType;
   small?: boolean;
 }) => {
-  const icon = getIcon(node);
+  const icon = getNodeIcon(node);
 
   if (icon) {
     switch (true) {

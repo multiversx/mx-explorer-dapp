@@ -1,8 +1,12 @@
-import { NetworkLink, Trim, NodeStatus } from 'components';
+import {
+  NetworkLink,
+  Trim,
+  NodeStatus,
+  NodeIcon,
+  NodeIssueIcon
+} from 'components';
 import { urlBuilder } from 'helpers';
 import { NodeType } from 'types';
-import { RowIcon } from '../../RowIcon';
-import { RowIssueIcon } from '../../RowIssueIcon';
 
 export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
   return (
@@ -18,14 +22,14 @@ export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
       </td>
       <td>
         <div className='d-flex align-items-center hash'>
-          <RowIcon node={nodeData} />
+          <NodeIcon node={nodeData} />
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}
             className='trim-wrapper'
           >
             <Trim text={nodeData.bls} />
           </NetworkLink>
-          <RowIssueIcon node={nodeData} />
+          <NodeIssueIcon node={nodeData} />
         </div>
       </td>
       <td>
@@ -42,13 +46,6 @@ export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
           <span className='text-neutral-400'>N/A</span>
         )}
       </td>
-      {/* <td className="text-end">
-        {nodeData.uptimeSec !== undefined && nodeData.uptimeSec !== 0 ? (
-          <span>{nodeData.uptime}%</span>
-        ) : (
-          <span className="text-neutral-400">N/A</span>
-        )}
-      </td> */}
       <td>
         <NodeStatus node={nodeData} className='align-items-end' />
       </td>

@@ -1,41 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';
-import { getNodeIssue } from 'helpers';
-import { faExclamationTriangle, faLock, faSync } from 'icons/regular';
+import { getNodeIssue, getNodeIssueIcon } from 'helpers';
 import { NodeType } from 'types';
 
-export const getIcon = (node: NodeType) => {
-  let icon;
-
-  switch (true) {
-    case node.status === 'jailed':
-      icon = faLock;
-      break;
-
-    case node.issues && node.issues.length > 0:
-      icon = faExclamationTriangle;
-      break;
-
-    case node.receivedShardID !== node.computedShardID:
-      icon = faSync;
-      break;
-
-    default:
-      icon = null;
-  }
-
-  return icon;
-};
-
-export const RowIssueIcon = ({
+export const NodeIssueIcon = ({
   node,
   small
 }: {
   node: NodeType;
   small?: boolean;
 }) => {
-  const icon = getIcon(node);
+  const icon = getNodeIssueIcon(node);
 
   if (icon) {
     switch (true) {

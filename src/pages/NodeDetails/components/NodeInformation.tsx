@@ -8,8 +8,7 @@ import {
   LockedAmountTooltip,
   AccountLink
 } from 'components';
-import { getIcon } from 'components/NodesTable/components/RowIcon';
-import { urlBuilder } from 'helpers';
+import { urlBuilder, getNodeIcon } from 'helpers';
 import { faFlagAlt } from 'icons/regular';
 import {
   faCogs,
@@ -96,7 +95,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         <CardItem title='Name' icon={faServer}>
           {name ? name : <>N/A</>}
         </CardItem>
-        <CardItem title='Type' icon={getIcon(nodeData) || faCogs}>
+        <CardItem title='Type' icon={getNodeIcon(nodeData) || faCogs}>
           <>
             {type === 'observer' && (
               <>Observer {Boolean(fullHistory) ? ' - Full History' : ''}</>

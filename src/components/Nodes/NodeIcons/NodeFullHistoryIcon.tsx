@@ -4,7 +4,7 @@ import { Overlay } from 'components';
 import { faHistory } from 'icons/regular';
 import { NodeType } from 'types';
 
-export const RowFullHistory = ({
+export const NodeFullHistoryIcon = ({
   node,
   small
 }: {

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { RowIssueIcon } from 'components/NodesTable/components/RowIssueIcon';
+import { NodeIssueIcon } from 'components';
 import { getNodeIssue } from 'helpers';
 import { faExclamationTriangle } from 'icons/regular';
 import { NodeType } from 'types';
@@ -14,14 +14,14 @@ export const Alert = ({ node }: { node: NodeType }) => {
     case node.status === 'jailed':
       return (
         <Container>
-          <RowIssueIcon node={node} small={true} />
+          <NodeIssueIcon node={node} small={true} />
           <small className='text-danger ms-1'>Jailed</small>
         </Container>
       );
     case node.issues && node.issues.length > 0:
       return (
         <Container>
-          <RowIssueIcon node={node} small={true} />
+          <NodeIssueIcon node={node} small={true} />
           <small className='text-warning ms-1'>{getNodeIssue(node)}</small>
         </Container>
       );
