@@ -70,11 +70,9 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
         <td>{identity.rank}</td>
         <td>
           <div className='d-flex align-items-center'>
-            <div className='me-3'>
-              <NetworkLink to={link}>
-                <SharedIdentity.Avatar identity={identity} />
-              </NetworkLink>
-            </div>
+            <NetworkLink to={link}>
+              <SharedIdentity.Avatar identity={identity} />
+            </NetworkLink>
             {identity.name && identity.name.length > 70 ? (
               <NetworkLink to={link} className='trim-wrapper trim-size-xl'>
                 <Trim text={identity.name} />

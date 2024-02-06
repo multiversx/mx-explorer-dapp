@@ -1,23 +1,25 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
-import {
-  Denominate,
-  MultilayerPercentageRing,
-  SharedIdentity,
-  Trim,
-  MultilayerPercentageBar
-} from 'components';
-import { faExclamationTriangle, faClock } from 'icons/solid';
-import { NodeType, WithClassnameType } from 'types';
+import { Denominate } from 'components';
+import { faClock } from 'icons/solid';
+import { stakeSelector } from 'redux/selectors';
+import { WithClassnameType } from 'types';
 
 import { NodesEligibilityPercentageBar } from './components';
 
-export interface NodesTableHeroUIType extends WithClassnameType {
-  data?: any;
-}
+export const NodesTableHero = ({ className }: WithClassnameType) => {
+  const {
+    isFetched: isStakeFetched,
+    minimumAuctionStake,
+    unprocessed
+  } = useSelector(stakeSelector);
 
-export const NodesTableHero = ({ className }: NodesTableHeroUIType) => {
+  if (!isStakeFetched) {
+    return null;
+  }
+
   return (
     <div className={classNames('nodes-table-hero w-100 mb-3', className)}>
       <div className='row gy-3'>
@@ -51,11 +53,15 @@ export const NodesTableHero = ({ className }: NodesTableHeroUIType) => {
                     Node Eligibility Threshold
                   </div>
                   <h3 className='mb-0 text-lh-24'>
-                    <Denominate
-                      value='1743213300000000000000'
-                      superSuffix
-                      decimals={4}
-                    />
+                    {unprocessed.minimumAuctionStake ? (
+                      <Denominate
+                        value={unprocessed.minimumAuctionStake}
+                        superSuffix
+                        decimals={4}
+                      />
+                    ) : (
+                      minimumAuctionStake
+                    )}
                   </h3>
                 </div>
               </div>

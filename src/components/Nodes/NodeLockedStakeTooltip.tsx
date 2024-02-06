@@ -10,14 +10,14 @@ export const NodeLockedStakeTooltip = ({ node }: { node: NodeType }) => {
     return (
       <>
         {node.stake && (
-          <div>
+          <p className='mb-1'>
             Staked: <Denominate value={node.stake} showTooltip={false} />
-          </div>
+          </p>
         )}
         {node.topUp && (
-          <div>
+          <p className='mb-0'>
             Top up: <Denominate value={node.topUp} showTooltip={false} />
-          </div>
+          </p>
         )}
       </>
     );
