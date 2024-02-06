@@ -8,7 +8,6 @@ import { accountExtraReducer } from './slices/accountExtra';
 import { accountStakingReducer } from './slices/accountStaking';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
-import { stakeReducer } from './slices/stake';
 import { growthEconomicsReducer } from './slices/growthEconomics';
 import { growthHeroReducer } from './slices/growthHero';
 import { growthMostUsedReducer } from './slices/growthMostUsed';
@@ -27,6 +26,7 @@ import { pageHeadersBlocksReducer } from './slices/pageHeadersBlocksStats';
 import { pageHeadersCollectionsReducer } from './slices/pageHeadersCollectionsStats';
 import { pageHeadersTokensReducer } from './slices/pageHeadersTokensStats';
 import { refreshReducer } from './slices/refresh';
+import { stakeReducer } from './slices/stake';
 import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
 
