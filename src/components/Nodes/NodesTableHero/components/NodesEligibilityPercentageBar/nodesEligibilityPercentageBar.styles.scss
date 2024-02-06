@@ -4,17 +4,6 @@
     height: 0.5rem;
     background-color: var(--neutral-750);
   }
-  .progress-bar {
-    &.step-1 {
-      background-color: var(--neutral-750);
-    }
-    &.step-2 {
-      background-color: var(--red-400);
-    }
-    &.step-3 {
-      background-color: var(--green-400);
-    }
-  }
   .eligibility-legend-container {
     display: flex;
     flex-wrap: nowrap;

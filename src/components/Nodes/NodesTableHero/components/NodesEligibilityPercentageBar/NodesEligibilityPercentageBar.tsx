@@ -1,44 +1,76 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
-import {
-  Denominate,
-  MultilayerPercentageRing,
-  SharedIdentity,
-  Trim,
-  MultilayerPercentageBar,
-  Overlay,
-  Led
-} from 'components';
-import { faExclamationTriangle, faClock, faSquareInfo } from 'icons/solid';
-import { WithClassnameType, MultilayerPercentageUIType } from 'types';
-
-export interface NodesEligibilityPercentageBarUIType extends WithClassnameType {
-  data?: any;
-}
+import { MultilayerPercentageBar, Overlay, Led } from 'components';
+import { faSquareInfo } from 'icons/solid';
+import { stakeSelector } from 'redux/selectors';
+import { WithClassnameType } from 'types';
 
 export const NodesEligibilityPercentageBar = ({
   className
-}: NodesEligibilityPercentageBarUIType) => {
+}: WithClassnameType) => {
+  const {
+    isFetched: isStakeFetched,
+    eligibleValidators,
+    notEligibleValidators,
+    dangerZoneValidators,
+    unprocessed
+  } = useSelector(stakeSelector);
+
+  if (
+    !isStakeFetched ||
+    !(
+      unprocessed.notEligibleValidators &&
+      unprocessed.eligibleValidators &&
+      unprocessed.dangerZoneValidators
+    )
+  ) {
+    return null;
+  }
+
+  const totalValidators = new BigNumber(unprocessed.eligibleValidators)
+    .plus(unprocessed.dangerZoneValidators)
+    .plus(unprocessed.notEligibleValidators);
+
+  const percentageNotEligible = new BigNumber(unprocessed.notEligibleValidators)
+    .dividedBy(totalValidators)
+    .times(100);
+  const percentageDangerZone = new BigNumber(unprocessed.dangerZoneValidators)
+    .dividedBy(totalValidators)
+    .times(100);
+  const percentageEligible = new BigNumber(unprocessed.eligibleValidators)
+    .dividedBy(totalValidators)
+    .times(100);
+
   return (
     <MultilayerPercentageBar
       steps={[
         {
           name: 'Not Eligible',
-          value: 34,
+          value: percentageNotEligible.toFixed(2),
+          className: 'bg-neutral-750',
           legend: (
-            <div className='legend' style={{ width: `${34}%` }}>
+            <div
+              className='legend'
+              style={{ width: `${percentageNotEligible.toFixed(2)}%` }}
+            >
               <div className='name'>Not Eligible</div>
-              <div className='description'>1,092</div>
-              <div className='value'>34%</div>
+              <div className='description'>{notEligibleValidators}</div>
+              <div className='value'>{percentageNotEligible.toFormat(0)}%</div>
             </div>
           )
         },
         {
           name: 'Danger Zone',
-          value: 11,
+          value: percentageDangerZone.toFixed(2),
+          className: 'bg-red-400',
           legend: (
-            <div className='legend' style={{ width: `${11}%` }}>
+            <div
+              className='legend'
+              style={{ width: `${percentageDangerZone.toFixed(2)}%` }}
+            >
               <div className='name'>
                 Danger Zone
                 <Overlay
@@ -48,31 +80,35 @@ export const NodesEligibilityPercentageBar = ({
                         Danger Zone <Led color='bg-danger ms-1' />
                       </p>
                       <p className='text-neutral-400 mb-0'>
-                        100 nodes are 5% above the threshold level. Increase the
-                        staked amount / node to exit the danger zone and move up
-                        on the auction list.
+                        {dangerZoneValidators} nodes are 5% above the threshold
+                        level. Increase the staked amount / node to exit the
+                        danger zone and move up on the auction list.
                       </p>
                     </>
                   }
                   className='side-action cursor-context'
-                  tooltipClassName='tooltip-start tooltip-lg'
+                  tooltipClassName='tooltip-text-start tooltip-lg'
                 >
                   <FontAwesomeIcon icon={faSquareInfo} />
                 </Overlay>
               </div>
-              <div className='description'>100</div>
-              <div className='value'>34%</div>
+              <div className='description'>{dangerZoneValidators}</div>
+              <div className='value'>{percentageDangerZone.toFormat(0)}%</div>
             </div>
           )
         },
         {
           name: 'Eligible',
-          value: 55,
+          value: percentageEligible.toFixed(2),
+          className: 'bg-green-400',
           legend: (
-            <div className='legend' style={{ width: `${55}%` }}>
+            <div
+              className='legend'
+              style={{ width: `${percentageEligible.toFixed(2)}%` }}
+            >
               <div className='name'>Eligible</div>
-              <div className='description'>3,200</div>
-              <div className='value'>34%</div>
+              <div className='description'>{eligibleValidators}</div>
+              <div className='value'>{percentageEligible.toFormat(0)}%</div>
             </div>
           )
         }
