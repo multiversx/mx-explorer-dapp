@@ -1,10 +1,15 @@
+import { useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
+import { ELLIPSIS } from 'appConstants';
 
 import { Denominate } from 'components';
+import { useGetRemainingTime } from 'hooks';
 import { faClock } from 'icons/solid';
-import { stakeSelector } from 'redux/selectors';
+import { stakeSelector, statsSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
 import { NodesEligibilityPercentageBar } from './components';
@@ -15,6 +20,27 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
     minimumAuctionStake,
     unprocessed
   } = useSelector(stakeSelector);
+  const {
+    isFetched: isStatsFetched,
+    unprocessed: { epochTimeRemaining: unprocessedEpochTimeRemaining },
+    epoch
+  } = useSelector(statsSelector);
+
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const currentTimestamp = useMemo(
+    () => moment().unix() + unprocessedEpochTimeRemaining / 1000,
+    [refreshTrigger]
+  );
+  const remainingTime = useGetRemainingTime({
+    //showZeroDecimal: false,
+    timeData: currentTimestamp,
+    onCountdownEnd: () => {
+      setRefreshTrigger(unprocessedEpochTimeRemaining);
+    }
+  });
+
+  const [_omit, hours, minutes, seconds] = remainingTime;
 
   if (!isStakeFetched) {
     return null;
@@ -38,10 +64,26 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
                 <div className='d-flex w-100 flex-wrap gap-3 align-items-start justify-content-between'>
                   <div className='text-primary-100 small'>
                     <FontAwesomeIcon icon={faClock} className='me-2' />
-                    Epoch 1262 ends in
+                    Epoch{' '}
+                    {epoch !== undefined ? (
+                      <>Epoch {new BigNumber(epoch).toFormat(0)}</>
+                    ) : (
+                      ELLIPSIS
+                    )}{' '}
+                    ends in
                   </div>
                   <h3 className='mb-0 text-primary text-lh-24'>
-                    3h 45min 12sec
+                    {isStatsFetched ? (
+                      <>
+                        <span className='time-container'>{hours.time}</span>h{' '}
+                        <span className='time-container'>{minutes.time}</span>
+                        min{' '}
+                        <span className='time-container'>{seconds.time}</span>
+                        sec
+                      </>
+                    ) : (
+                      ELLIPSIS
+                    )}
                   </h3>
                 </div>
               </div>
