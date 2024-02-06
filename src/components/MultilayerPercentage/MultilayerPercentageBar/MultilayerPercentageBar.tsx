@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import classNames from 'classnames';
 
-import { Led, Trim } from 'components';
+import { Led, Overlay, Trim } from 'components';
 import { MultilayerPercentageUIType } from '../types';
 
 export const MultilayerPercentageBar = ({
@@ -20,10 +20,16 @@ export const MultilayerPercentageBar = ({
     >
       <div className='progress w-100 my-0'>
         {steps.map((step, i) => (
-          <div
+          <Overlay
             key={`progress-bar-${i}`}
-            className={`progress-bar step-${i + 1}`}
-            style={{ width: step.value + '%' }}
+            className={classNames(
+              'progress-bar',
+              'cursor-context',
+              `step-${i + 1}`,
+              step.className
+            )}
+            title={`${step.value}%`}
+            style={{ width: `${Number(step.value)}%` }}
           />
         ))}
       </div>

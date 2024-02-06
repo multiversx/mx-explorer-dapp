@@ -7,8 +7,8 @@ export interface MultilayerPercentageUIType extends WithClassnameType {
   legendClassName?: string;
 }
 
-export interface MultilayerPercentageStepType {
+export interface MultilayerPercentageStepType extends WithClassnameType {
   name: string;
-  value: number;
+  value: number | string;
   legend?: React.ReactNode;
 }

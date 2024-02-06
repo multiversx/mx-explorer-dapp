@@ -13,7 +13,7 @@ export const prepareChartData = (steps: MultilayerPercentageStepType[]) => {
   return steps.map((step) => {
     return {
       name: truncateMiddle(String(step.name), 20),
-      value: step.value
+      value: Number(step.value)
     };
   });
 };

@@ -182,7 +182,7 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
             </sup>
           ) : (
             <span className='suffix'>
-              {props.token ? props.token : egldLabel}
+              &nbsp;{props.token ? props.token : egldLabel}
             </span>
           )}
         </>
