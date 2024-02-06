@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ELLIPSIS } from 'appConstants';
-import { GlobalStakeSliceType } from 'types/globalStake.types';
+import { StakeSliceType } from 'types/stake.types';
 
-export const getInitialGlobalStakeState = (): GlobalStakeSliceType => {
+export const getInitialStakeState = (): StakeSliceType => {
   return {
     totalValidators: ELLIPSIS,
     activeValidators: ELLIPSIS,
@@ -19,13 +19,13 @@ export const getInitialGlobalStakeState = (): GlobalStakeSliceType => {
   };
 };
 
-export const globalStakeSlice = createSlice({
-  name: 'globalStakeSlice',
-  initialState: getInitialGlobalStakeState(),
+export const stakeSlice = createSlice({
+  name: 'stakeSlice',
+  initialState: getInitialStakeState(),
   reducers: {
-    setGlobalStake: (
-      state: GlobalStakeSliceType,
-      action: PayloadAction<GlobalStakeSliceType>
+    setStake: (
+      state: StakeSliceType,
+      action: PayloadAction<StakeSliceType>
     ) => {
       state.totalValidators = action.payload.totalValidators;
       state.activeValidators = action.payload.activeValidators;
@@ -38,6 +38,6 @@ export const globalStakeSlice = createSlice({
   }
 });
 
-export const { setGlobalStake } = globalStakeSlice.actions;
+export const { setStake } = stakeSlice.actions;
 
-export const globalStakeReducer = globalStakeSlice.reducer;
+export const stakeReducer = stakeSlice.reducer;

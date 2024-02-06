@@ -675,7 +675,7 @@ export const useAdapter = () => {
     getStats,
     getShards,
 
-    getGlobalStake: () => provider({ url: '/stake' }),
+    getStake: () => provider({ url: '/stake' }),
 
     getEconomics: () => getEconomics({ url: '/economics' }),
 

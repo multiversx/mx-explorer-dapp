@@ -1,6 +1,6 @@
 export * from './useFetchAccountStakingDetails';
 export * from './useFetchEconomics';
-export * from './useFetchGlobalStake';
+export * from './useFetchStake';
 export * from './useFetchMarkers';
 export * from './useFetchNodesVersions';
 export * from './useFetchShards';

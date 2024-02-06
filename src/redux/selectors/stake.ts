@@ -2,10 +2,7 @@ import { createSelector } from 'reselect';
 import { RootState } from '../store';
 
 const stateSelector = (state: RootState) => {
-  return state.globalStake;
+  return state.stake;
 };
 
-export const globalStakeSelector = createSelector(
-  stateSelector,
-  (state) => state
-);
+export const stakeSelector = createSelector(stateSelector, (state) => state);

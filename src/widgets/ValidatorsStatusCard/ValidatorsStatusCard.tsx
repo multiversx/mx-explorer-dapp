@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
-import { useFetchGlobalStake, useFetchMarkers, useFetchShards } from 'hooks';
-import { globalStakeSelector, markersSelector } from 'redux/selectors';
+import { useFetchStake, useFetchMarkers, useFetchShards } from 'hooks';
+import { stakeSelector, markersSelector } from 'redux/selectors';
 import { RankType } from 'types';
 
 import { LargeCard } from './components/LargeCard';
@@ -41,13 +41,13 @@ export const ValidatorsStatusCard = ({
   const ref = useRef(null);
 
   const { markers } = useSelector(markersSelector);
-  const { totalValidators, unprocessed } = useSelector(globalStakeSelector);
+  const { totalValidators, unprocessed } = useSelector(stakeSelector);
 
   const [continentsRank, setContinentsRank] =
     useState<RankType[]>(placeHolderRank);
 
   useFetchMarkers();
-  useFetchGlobalStake();
+  useFetchStake();
   useFetchShards();
 
   useEffect(() => {

@@ -1,14 +1,14 @@
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { useFetchShards } from 'hooks';
-import { shardsSelector, globalStakeSelector } from 'redux/selectors';
+import { shardsSelector, stakeSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
 import { ShardCard } from './components/ShardCard';
 
 export const ShardList = ({ className }: WithClassnameType) => {
   const shards = useSelector(shardsSelector);
-  const { queueSize } = useSelector(globalStakeSelector);
+  const { queueSize } = useSelector(stakeSelector);
   useFetchShards();
 
   return (

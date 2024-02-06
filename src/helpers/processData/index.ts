@@ -1,5 +1,5 @@
 export * from './processEconomics';
-export * from './processGlobalStake';
+export * from './processStake';
 export * from './processGrowthEconomics';
 export * from './processGrowthHero';
 export * from './processGrowthPrice';

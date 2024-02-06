@@ -1,26 +1,17 @@
-export interface UndelegationType {
-  amount: string;
-  seconds: number;
-}
-
-export interface DelegationType {
-  address: string;
-  contract: string;
-  userUnBondable: string;
-  userActiveStake: string;
-  claimableRewards: string;
-  userUndelegatedList?: UndelegationType[];
-}
-export interface DelegationLegacyType {
-  userActiveStake?: string;
-  userDeferredPaymentStake?: string;
-  userUnstakedStake?: string;
-  userWaitingStake?: string;
-  userWithdrawOnlyStake?: string;
-  claimableRewards?: string;
-}
+import { SliceType } from 'types/general.types';
 
 export interface StakeType {
-  totalStaked?: string;
-  unstakedTokens?: { amount: string; expires?: number }[];
+  totalValidators: number;
+  activeValidators: number;
+  queueSize: number;
+  totalStaked: string;
+}
+
+export interface StakeSliceType extends SliceType {
+  unprocessed: StakeType;
+
+  totalValidators: string;
+  activeValidators: string;
+  queueSize: string;
+  totalStaked: string;
 }

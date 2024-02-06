@@ -2,11 +2,11 @@ import BigNumber from 'bignumber.js';
 
 import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
 import { Denominate } from 'components';
-import { StakeType } from 'types';
+import { AccountStakeType } from 'types';
 
 import { DetailsBlock } from '../DetailsBlock';
 
-export const AccountStake = ({ stake }: { stake: StakeType }) => {
+export const AccountStake = ({ stake }: { stake: AccountStakeType }) => {
   const { totalStaked, unstakedTokens } = stake;
 
   const bNtotalUnstaked = unstakedTokens
