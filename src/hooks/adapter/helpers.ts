@@ -88,12 +88,14 @@ export function getNodeParams({
   shard,
   online,
   page,
+  from,
   size = PAGE_SIZE,
   identity,
   sort,
   order,
   provider,
-  fullHistory
+  fullHistory,
+  isAuctionDangerZone
 }: GetNodesType) {
   const params: AdapterProviderPropsType['params'] = {
     ...(search !== undefined ? { search } : {}),
@@ -107,7 +109,11 @@ export function getNodeParams({
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
     ...(fullHistory !== undefined ? { fullHistory } : {}),
-    ...(page !== undefined ? { from: (page - 1) * size } : {}),
+    ...(isAuctionDangerZone !== undefined ? { isAuctionDangerZone } : {}),
+    ...(page !== undefined && from === undefined
+      ? { from: (page - 1) * size }
+      : {}),
+    ...(from !== undefined ? { from } : {}),
     ...(size !== undefined ? { size } : {})
   };
 

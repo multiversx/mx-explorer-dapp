@@ -419,7 +419,8 @@ export const useAdapter = () => {
       status,
       identity,
       provider,
-      fullHistory
+      fullHistory,
+      isAuctionDangerZone
     }: GetNodesType) =>
       getNodes({
         url: '/nodes/c',
@@ -432,7 +433,8 @@ export const useAdapter = () => {
           status,
           identity,
           provider,
-          fullHistory
+          fullHistory,
+          isAuctionDangerZone
         })
       }),
 

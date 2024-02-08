@@ -75,6 +75,8 @@ export interface GetNodesType extends SortableApiType {
   pagination?: boolean;
   provider?: string;
   fullHistory?: string;
+  from?: number;
+  isAuctionDangerZone?: boolean;
 }
 
 export interface GetTransactionsType extends SortableApiType {
