@@ -19,7 +19,6 @@ import {
 } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
-import { validatorsRoutes } from 'routes';
 import { NodeType, IdentityType, SortOrderEnum } from 'types';
 
 export const NodesAuctionList = () => {
@@ -82,7 +81,7 @@ export const NodesAuctionList = () => {
         <NodesTabs />
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <NodesTableHero />
-          <AuctionListFilters baseRoute={validatorsRoutes.auctionList} />
+          <AuctionListFilters />
           {dataReady === true && isCustomSize && (
             <Pager
               itemsPerPage={size}

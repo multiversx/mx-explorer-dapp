@@ -11,7 +11,6 @@ import {
 } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
-import { validatorsRoutes } from 'routes';
 import { NodeType, SortOrderEnum } from 'types';
 
 export const NodesQueue = () => {
@@ -62,7 +61,7 @@ export const NodesQueue = () => {
         <NodesTabs />
 
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-          <NodesFilters baseRoute={validatorsRoutes.queue} onlySearch />
+          <NodesFilters onlySearch />
           {dataReady === true && (
             <Pager
               total={totalNodes}

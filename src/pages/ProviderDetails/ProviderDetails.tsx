@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageState, NodesTable } from 'components';
 import {
@@ -16,7 +16,7 @@ import { NodeType } from 'types';
 export const ProviderDetails = () => {
   const ref = useRef(null);
   const { hash: address } = useParams() as any;
-  const { search: locationSearch } = useLocation();
+  const [searchParams] = useSearchParams();
   const { getNodes, getNodesCount } = useAdapter();
   const { search } = useGetSearch();
   const { page, size } = useGetPage();
@@ -49,7 +49,7 @@ export const ProviderDetails = () => {
     });
   };
 
-  useEffect(fetchNodes, [locationSearch]);
+  useEffect(fetchNodes, [searchParams]);
 
   return (
     <div className='card' ref={ref}>

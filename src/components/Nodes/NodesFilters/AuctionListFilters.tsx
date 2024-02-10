@@ -10,7 +10,6 @@ import { stakeSelector } from 'redux/selectors';
 export const AuctionListFilters = ({
   onlySearch
 }: {
-  baseRoute: string;
   onlySearch?: boolean;
 }) => {
   const { eligibleValidators, notEligibleValidators, dangerZoneValidators } =

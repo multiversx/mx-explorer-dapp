@@ -4,12 +4,7 @@ import { Dropdown, Anchor } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import { faSearch, faTimes } from 'icons/regular';
 
-export const NodesFilters = ({
-  onlySearch
-}: {
-  baseRoute: string;
-  onlySearch?: boolean;
-}) => {
+export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { search, status, issues, type, fullHistory } =

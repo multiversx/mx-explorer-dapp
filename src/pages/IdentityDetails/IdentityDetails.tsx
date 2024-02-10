@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageState, ProvidersTable } from 'components';
-import { NodesTable, SharedIdentity } from 'components';
+import { NodesFilters, NodesTable, SharedIdentity } from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -138,6 +138,7 @@ export const IdentityDetails = () => {
                     >
                       Nodes
                     </h5>
+                    <NodesFilters />
                     <Pager
                       total={totalNodes}
                       className='d-flex ms-auto me-auto me-sm-0'

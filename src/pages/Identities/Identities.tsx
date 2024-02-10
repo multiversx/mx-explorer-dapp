@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
@@ -89,7 +89,7 @@ export const Identities = () => {
               </thead>
               <tbody>
                 {identities.map((identity, i) => {
-                  // temporary - will be fetched from /stake
+                  // TODO temporary - will be fetched from /stake
                   const isOverCoefficient =
                     new BigNumber(
                       identity?.overallStakePercent ?? 0
@@ -98,10 +98,10 @@ export const Identities = () => {
                     coefficientShown = true;
                   }
                   return (
-                    <>
+                    <Fragment key={i}>
                       {isOverCoefficient && <ResiliencyRow coefficient={i} />}
                       <IdentityRow key={i} identity={identity} />
-                    </>
+                    </Fragment>
                   );
                 })}
               </tbody>
