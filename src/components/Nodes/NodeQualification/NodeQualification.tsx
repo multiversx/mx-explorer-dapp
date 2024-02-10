@@ -39,7 +39,12 @@ export const NodeQualification = ({
       bNTopup.isGreaterThanOrEqualTo(bNMinimumAuctionTopup)
     ) {
       if (showDangerZone) {
-        return <NodeDangerZoneTooltip node={node} />;
+        return (
+          <>
+            <Led color='bg-red-400' />
+            <NodeDangerZoneTooltip node={node} />
+          </>
+        );
       }
 
       return (

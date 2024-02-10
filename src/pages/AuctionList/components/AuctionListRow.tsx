@@ -11,6 +11,7 @@ import {
   NodeFullHistoryIcon,
   NodeIssueIcon,
   NodeLockedStakeTooltip,
+  NodeTreshold,
   SharedIdentity
 } from 'components';
 import { urlBuilder } from 'helpers';
@@ -50,29 +51,26 @@ export const AuctionListRow = ({
               <SharedIdentity.Avatar identity={nodeIdentity} />
             </NetworkLink>
           )}
-          {nodeIdentity?.name && nodeIdentity.name.length > 70 ? (
+          <div className='d-flex flex-column'>
             <NetworkLink
               to={nodeIdentityLink}
-              className='trim-wrapper trim-size-xl'
+              className='trim-wrapper trim-size-lg'
             >
-              <Trim text={nodeIdentity?.name} />
+              {nodeIdentity?.name && nodeIdentity.name.length > 70 ? (
+                <Trim text={nodeIdentity?.name} />
+              ) : (
+                <>{nodeIdentity?.name ?? 'N/A'}</>
+              )}
             </NetworkLink>
-          ) : (
-            <NetworkLink
-              to={nodeIdentityLink}
-              className='trim-wrapper trim-size-xl'
-            >
-              {nodeIdentity?.name ?? 'N/A'}
-            </NetworkLink>
-          )}
+            {node.name ? (
+              <div className='truncate-item-lg text-neutral-400'>
+                {node.name}
+              </div>
+            ) : (
+              <span className='text-neutral-400'>N/A</span>
+            )}
+          </div>
         </div>
-      </td>
-      <td>
-        {node.name ? (
-          <div className='truncate-item-lg'>{node.name}</div>
-        ) : (
-          <span className='text-neutral-400'>N/A</span>
-        )}
       </td>
       <td>
         <div className='d-flex align-items-center hash'>
@@ -96,7 +94,9 @@ export const AuctionListRow = ({
           <Denominate value={node.locked} showTooltip={false} />
         </Overlay>
       </td>
-      <td></td>
+      <td>
+        <NodeTreshold node={node} />
+      </td>
       <td>
         <NodeDangerZoneTooltip node={node} />
       </td>

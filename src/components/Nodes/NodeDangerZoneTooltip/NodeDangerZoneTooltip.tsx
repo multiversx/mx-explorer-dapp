@@ -41,9 +41,8 @@ export const NodeDangerZoneTooltip = ({
 
       return (
         <div
-          className={classNames('d-flex align-items-center gap-2', className)}
+          className={classNames('d-flex align-items-center gap-1', className)}
         >
-          <Led color='bg-red-400' />
           <span className='text-red-400'>
             {NodeQualificationStatusEnum.dangerZone}
             <Overlay
