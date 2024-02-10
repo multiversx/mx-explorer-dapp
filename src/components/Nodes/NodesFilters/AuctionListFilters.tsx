@@ -77,6 +77,9 @@ export const AuctionListFilters = ({
 
   return (
     <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
+      <h5 className='table-title d-flex align-items-center' data-testid='title'>
+        Nodes
+      </h5>
       {!onlySearch && (
         <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
           <li className='list-inline-item me-0'>

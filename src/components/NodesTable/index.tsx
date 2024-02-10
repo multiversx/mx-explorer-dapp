@@ -1,39 +1,58 @@
 import React from 'react';
-import { NodeType } from 'types';
-import { QueueHead } from './components/Heads/QueueHead';
-import { StandardHead } from './components/Heads/StandardHead';
-import { StatisticsHead } from './components/Heads/StatisticsHead';
-import { TableBody } from './components/TableBody';
+import classNames from 'classnames';
 
-interface NodesTableType {
+import { NodeType, IdentityType } from 'types';
+import { NodesTableBody } from './components/NodesTableBody';
+import { AuctionListHead } from './components/NodesTableHead/AuctionListHead';
+import { QueueHead } from './components/NodesTableHead/QueueHead';
+import { StandardHead } from './components/NodesTableHead/StandardHead';
+import { StatisticsHead } from './components/NodesTableHead/StatisticsHead';
+
+interface NodesTableUIType {
   children: React.ReactNode;
   hideFilters?: boolean;
   statistics?: boolean;
   queue?: boolean;
+  auctionList?: boolean;
   type?: NodeType['type'];
   status?: NodeType['status'];
+  identities?: IdentityType[];
 }
 
-export default class NodesTable extends React.Component<NodesTableType> {
-  static Body = TableBody;
+export default class NodesTable extends React.Component<NodesTableUIType> {
+  static Body = NodesTableBody;
 
   render() {
-    const { statistics, queue, children, hideFilters, type, status } =
-      this.props;
+    const {
+      statistics,
+      queue,
+      auctionList,
+      children,
+      hideFilters,
+      type,
+      status
+    } = this.props;
 
     return (
-      <div className='nodes-table table-wrapper'>
+      <div
+        className={classNames('nodes-table table-wrapper', {
+          'auction-list-table': auctionList,
+          'queue-table': queue,
+          'statistics-table': statistics
+        })}
+      >
         <table className='table mb-0'>
           <thead>
-            {!statistics && !queue && (
+            {auctionList && <AuctionListHead />}
+            {statistics && <StatisticsHead />}
+            {queue && <QueueHead hideFilters={hideFilters} />}
+            {!statistics && !queue && !auctionList && (
               <StandardHead
                 hideFilters={hideFilters}
                 type={type}
                 status={status}
               />
             )}
-            {statistics && <StatisticsHead />}
-            {queue && <QueueHead hideFilters={hideFilters} />}
           </thead>
           {children}
         </table>

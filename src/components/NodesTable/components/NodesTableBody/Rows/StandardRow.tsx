@@ -26,7 +26,7 @@ export const StandardRow = ({
   status?: NodeType['status'];
 }) => {
   return (
-    <>
+    <tr>
       <td>
         <div className='d-flex align-items-center hash'>
           <NodeIcon node={nodeData} />
@@ -106,6 +106,6 @@ export const StandardRow = ({
           </Overlay>
         </td>
       )}
-    </>
+    </tr>
   );
 };

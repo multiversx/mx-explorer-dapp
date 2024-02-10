@@ -10,7 +10,7 @@ import { NodeType } from 'types';
 
 export const StatisticsRow = ({ nodeData }: { nodeData: NodeType }) => {
   return (
-    <>
+    <tr>
       <td>
         <div className='d-flex align-items-center hash'>
           <NodeIcon node={nodeData} />
@@ -68,6 +68,6 @@ export const StatisticsRow = ({ nodeData }: { nodeData: NodeType }) => {
       <td className='text-end'>
         <NodeRating node={nodeData} className='justify-content-end' />
       </td>
-    </>
+    </tr>
   );
 };

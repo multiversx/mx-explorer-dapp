@@ -10,7 +10,7 @@ import { NodeType } from 'types';
 
 export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
   return (
-    <>
+    <tr>
       <td>
         {nodeData.position ? (
           <div className='truncate-item-lg'>
@@ -49,6 +49,6 @@ export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
       <td>
         <NodeStatus node={nodeData} className='align-items-end' />
       </td>
-    </>
+    </tr>
   );
 };

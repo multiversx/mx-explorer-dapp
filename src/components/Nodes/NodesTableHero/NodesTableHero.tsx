@@ -52,7 +52,7 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
         <div className='col-xl-7'>
           <div className='card bg-neutral-800'>
             <div className='card-body d-flex flex-column gap-3'>
-              <h4 className='mb-0'>Eligible Nodes</h4>
+              <h4 className='mb-0'>Qualified Nodes</h4>
               <NodesEligibilityPercentageBar />
             </div>
           </div>
@@ -64,7 +64,6 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
                 <div className='d-flex w-100 flex-wrap gap-3 align-items-start justify-content-between'>
                   <div className='text-primary-100 small'>
                     <FontAwesomeIcon icon={faClock} className='me-2' />
-                    Epoch{' '}
                     {epoch !== undefined ? (
                       <>Epoch {new BigNumber(epoch).toFormat(0)}</>
                     ) : (
@@ -92,7 +91,7 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
               <div className='card-body d-flex align-items-center'>
                 <div className='d-flex w-100 flex-wrap gap-3 align-items-start justify-content-between'>
                   <div className='text-neutral-500 small'>
-                    Node Eligibility Threshold
+                    Node Qualification Threshold
                   </div>
                   <h3 className='mb-0 text-lh-24'>
                     {unprocessed.minimumAuctionStake ? (

@@ -1,10 +1,10 @@
 import { NodesLayout } from 'layouts/NodesLayout';
 import { ProviderLayout } from 'layouts/ProviderLayout';
-import { AuctionList } from 'pages/AuctionList';
 import { Identities } from 'pages/Identities';
 import { IdentityDetails } from 'pages/IdentityDetails';
 import { NodeDetails } from 'pages/NodeDetails';
 import { Nodes } from 'pages/Nodes';
+import { NodesAuctionList } from 'pages/NodesAuctionList';
 import { NodesQueue } from 'pages/NodesQueue';
 import { NodesStatistics } from 'pages/NodesStatistics';
 import { ProviderDetails } from 'pages/ProviderDetails';
@@ -86,7 +86,7 @@ export const validatorLayout: TitledRouteObject[] = [
         path: validatorsRoutes.auctionList,
         title: 'Auction List',
         preventScroll: true,
-        Component: AuctionList
+        Component: NodesAuctionList
       }
     ]
   },

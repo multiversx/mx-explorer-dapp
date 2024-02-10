@@ -2,7 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { PAGE_SIZE, MAX_AUCTION_LIST_NODES } from 'appConstants';
-import { Loader, Pager, PageState, NodesTableHero, Sort } from 'components';
+import {
+  Loader,
+  Pager,
+  PageState,
+  NodesTableHero,
+  NodesTable,
+  AuctionListFilters
+} from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -15,10 +22,7 @@ import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { validatorsRoutes } from 'routes';
 import { NodeType, IdentityType, SortOrderEnum } from 'types';
 
-import { AuctionListFilters } from './components/AuctionListFilters';
-import { AuctionListRow } from './components/AuctionListRow';
-
-export const AuctionList = () => {
+export const NodesAuctionList = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
 
@@ -42,26 +46,23 @@ export const AuctionList = () => {
 
   const fetchNodes = () => {
     setDataReady(undefined);
+    const auctionListFilters = {
+      ...nodeFilters,
+      type: 'validator',
+      status: 'queued',
+      isAuctioned: true,
+      search
+    };
 
     Promise.all([
       getIdentities(),
       getNodes({
-        ...nodeFilters,
         ...sort,
-        type: 'validator',
-        status: 'queued',
-        isAuctioned: true,
-        search,
+        ...auctionListFilters,
         page,
         size
       }),
-      getNodesCount({
-        ...nodeFilters,
-        type: 'validator',
-        status: 'queued',
-        isAuctioned: true,
-        search
-      })
+      getNodesCount(auctionListFilters)
     ]).then(([identitiesData, nodesData, count]) => {
       setIdentities(identitiesData.data);
       setNodes(nodesData.data);
@@ -76,7 +77,7 @@ export const AuctionList = () => {
   useEffect(fetchNodes, [searchParams]);
 
   return (
-    <div className='card auction-list' ref={ref}>
+    <div className='card nodes-auction-list' ref={ref}>
       <div className='card-header'>
         <NodesTabs />
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
@@ -95,48 +96,29 @@ export const AuctionList = () => {
 
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
-        <PageState icon={faCogs} title='Unable to load Nodes' isError />
+        <PageState icon={faCogs} title='Unable to load Auction List' isError />
       )}
       {dataReady === true && (
         <>
-          <div className='card-body'>
-            <div className='table-wrapper'>
-              <table className='table auction-list-table mb-0'>
-                <thead>
-                  <tr>
-                    <th className='th-rank'>
-                      <Sort id='position' field='Position' />
-                    </th>
-                    <th className='th-eligibility'>Qualified</th>
-                    <th className='th-identity'>
-                      <Sort id='name' field='Validator' />
-                    </th>
-                    <th className='th-key'>Key</th>
-                    <th className='th-stake'>
-                      <Sort id='locked' field='Stake / Node' />
-                    </th>
-                    <th className='th-treshold'>Until Treshold</th>
-                    <th className='th-info'></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {nodes.map((node, i) => {
-                    return (
-                      <AuctionListRow
-                        node={node}
-                        identities={identities}
-                        key={node.bls}
-                      />
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          {isCustomSize && (
-            <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-              <Pager total={totalNodes} itemsPerPage={size} show />
-            </div>
+          {nodes.length === 0 ? (
+            <PageState icon={faCogs} title='No Nodes in Auction List' />
+          ) : (
+            <>
+              <div className='card-body'>
+                <NodesTable auctionList>
+                  <NodesTable.Body
+                    nodes={nodes}
+                    identities={identities}
+                    auctionList
+                  />
+                </NodesTable>
+              </div>
+              {isCustomSize && (
+                <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                  <Pager total={totalNodes} itemsPerPage={size} show />
+                </div>
+              )}
+            </>
           )}
         </>
       )}

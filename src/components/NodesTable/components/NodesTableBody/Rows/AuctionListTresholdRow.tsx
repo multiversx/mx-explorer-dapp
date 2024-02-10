@@ -7,11 +7,14 @@ import { faDown, faUp } from 'icons/solid';
 import { stakeSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
-export interface TresholdRowUIType extends WithClassnameType {
+export interface AuctionListTresholdRowUIType extends WithClassnameType {
   colSpan?: number;
 }
 
-export const TresholdRow = ({ colSpan = 7, className }: TresholdRowUIType) => {
+export const AuctionListTresholdRow = ({
+  colSpan = 7,
+  className
+}: AuctionListTresholdRowUIType) => {
   const {
     isFetched: isStakeFetched,
     minimumAuctionStake,
@@ -34,7 +37,7 @@ export const TresholdRow = ({ colSpan = 7, className }: TresholdRowUIType) => {
 
           <div className='text-center'>
             <p className='mb-0 text-neutral-500 small'>
-              Node Eligibility Threshold
+              Node Qualification Threshold
             </p>
             <h1>
               {isStakeFetched && unprocessed.minimumAuctionStake ? (

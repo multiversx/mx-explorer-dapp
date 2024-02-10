@@ -48,7 +48,7 @@ export const NodesEligibilityPercentageBar = ({
     <MultilayerPercentageBar
       steps={[
         {
-          name: 'Not Eligible',
+          name: 'Not Qualified',
           value: percentageNotEligible.toFixed(2),
           className: 'bg-neutral-750',
           legend: (
@@ -56,7 +56,7 @@ export const NodesEligibilityPercentageBar = ({
               className='legend'
               style={{ width: `${percentageNotEligible.toFixed(2)}%` }}
             >
-              <div className='name'>Not Eligible</div>
+              <div className='name'>Not Qualified</div>
               <div className='description'>{notEligibleValidators}</div>
               <div className='value'>{percentageNotEligible.toFormat(0)}%</div>
             </div>
@@ -98,7 +98,7 @@ export const NodesEligibilityPercentageBar = ({
           )
         },
         {
-          name: 'Eligible',
+          name: 'Qualified',
           value: percentageEligible.toFixed(2),
           className: 'bg-green-400',
           legend: (
@@ -106,7 +106,7 @@ export const NodesEligibilityPercentageBar = ({
               className='legend'
               style={{ width: `${percentageEligible.toFixed(2)}%` }}
             >
-              <div className='name'>Eligible</div>
+              <div className='name'>Qualified</div>
               <div className='description'>{eligibleValidators}</div>
               <div className='value'>{percentageEligible.toFormat(0)}%</div>
             </div>
