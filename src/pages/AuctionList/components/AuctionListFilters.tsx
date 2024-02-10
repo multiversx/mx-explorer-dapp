@@ -38,8 +38,15 @@ export const AuctionListFilters = ({
   };
 
   const resetFiltersLink = () => {
-    const { isQualified, isAuctionDangerZone, search, page, ...rest } =
-      Object.fromEntries(searchParams);
+    const {
+      isQualified,
+      isAuctionDangerZone,
+      search,
+      page,
+      sort,
+      order,
+      ...rest
+    } = Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest
     };

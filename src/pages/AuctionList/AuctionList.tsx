@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, PageState, NodesTableHero } from 'components';
-
+import { PAGE_SIZE, MAX_AUCTION_LIST_NODES } from 'appConstants';
+import { Loader, Pager, PageState, NodesTableHero, Sort } from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -24,13 +24,16 @@ export const AuctionList = () => {
 
   const { getNodes, getNodesCount, getIdentities } = useAdapter();
   const { search } = useGetSearch();
-  const { page, size } = useGetPage();
+  const { page, size: pageSize } = useGetPage();
   const nodeFilters = useGetNodeFilters();
   const sort = useGetSort();
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [identities, setIdentities] = useState<IdentityType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
   const [dataReady, setDataReady] = useState<boolean | undefined>();
+
+  const isCustomSize = ![PAGE_SIZE, MAX_AUCTION_LIST_NODES].includes(pageSize);
+  const size = isCustomSize ? pageSize : MAX_AUCTION_LIST_NODES;
 
   if (!sort.sort) {
     sort.sort = 'position';
@@ -79,8 +82,9 @@ export const AuctionList = () => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <NodesTableHero />
           <AuctionListFilters baseRoute={validatorsRoutes.auctionList} />
-          {dataReady === true && (
+          {dataReady === true && isCustomSize && (
             <Pager
+              itemsPerPage={size}
               total={totalNodes}
               className='d-flex ms-auto me-auto me-sm-0'
               show
@@ -100,11 +104,17 @@ export const AuctionList = () => {
               <table className='table auction-list-table mb-0'>
                 <thead>
                   <tr>
-                    <th className='th-rank'>Position</th>
+                    <th className='th-rank'>
+                      <Sort id='position' field='Position' />
+                    </th>
                     <th className='th-eligibility'>Qualified</th>
-                    <th className='th-identity'>Validator</th>
+                    <th className='th-identity'>
+                      <Sort id='name' field='Validator' />
+                    </th>
                     <th className='th-key'>Key</th>
-                    <th className='th-stake'>Stake / Node</th>
+                    <th className='th-stake'>
+                      <Sort id='locked' field='Stake / Node' />
+                    </th>
                     <th className='th-treshold'>Until Treshold</th>
                     <th className='th-info'></th>
                   </tr>
@@ -123,9 +133,11 @@ export const AuctionList = () => {
               </table>
             </div>
           </div>
-          <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-            <Pager total={totalNodes} show />
-          </div>
+          {isCustomSize && (
+            <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+              <Pager total={totalNodes} itemsPerPage={size} show />
+            </div>
+          )}
         </>
       )}
     </div>
