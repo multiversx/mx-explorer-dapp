@@ -95,6 +95,8 @@ export function getNodeParams({
   order,
   provider,
   fullHistory,
+  isQualified,
+  isAuctioned,
   isAuctionDangerZone
 }: GetNodesType) {
   const params: AdapterProviderPropsType['params'] = {
@@ -109,6 +111,8 @@ export function getNodeParams({
     ...(sort !== undefined ? { sort } : {}),
     ...(order !== undefined ? { order } : {}),
     ...(fullHistory !== undefined ? { fullHistory } : {}),
+    ...(isQualified !== undefined ? { isQualified } : {}),
+    ...(isAuctioned !== undefined ? { isAuctioned } : {}),
     ...(isAuctionDangerZone !== undefined ? { isAuctionDangerZone } : {}),
     ...(page !== undefined && from === undefined
       ? { from: (page - 1) * size }

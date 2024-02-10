@@ -24,11 +24,11 @@ export const TresholdRow = ({ colSpan = 7, className }: TresholdRowUIType) => {
         <div className='d-flex flex-row gap-5 align-items-center my-spacer'>
           <div className='d-flex flex-fill flex-column'>
             <div className='d-flex align-items-center gap-2 text-neutral-500'>
-              <FontAwesomeIcon icon={faUp} /> Eligible
+              <FontAwesomeIcon icon={faUp} /> Qualified
             </div>
             <hr className='d-flex flex-fill text-neutral-800 opacity-100 my-2' />
             <div className='d-flex align-items-center gap-2 text-neutral-500'>
-              <FontAwesomeIcon icon={faDown} /> Not Eligible
+              <FontAwesomeIcon icon={faDown} /> Not Qualified
             </div>
           </div>
 

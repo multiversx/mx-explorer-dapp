@@ -11,19 +11,23 @@ export const useGetNodeFilters = () => {
     fullHistory,
     shard,
     identity,
+    isQualified,
+    isAuctioned,
     isAuctionDangerZone
   } = Object.fromEntries(searchParams);
 
   return {
-    ...(online ? { online: online === 'true' } : {}),
     ...(status ? { status } : {}),
     ...(type ? { type } : {}),
     ...(identity ? { identity } : {}),
+    ...(shard && stringIsInteger(shard) ? { shard } : {}),
+    ...(online ? { online: online === 'true' } : {}),
     ...(issues ? { issues: 'true' } : {}),
     ...(fullHistory ? { fullHistory: 'true' } : {}),
+    ...(isQualified ? { isQualified: isQualified === 'true' } : {}),
+    ...(isAuctioned ? { isAuctioned: isAuctioned === 'true' } : {}),
     ...(isAuctionDangerZone
       ? { isAuctionDangerZone: isAuctionDangerZone === 'true' }
-      : {}),
-    ...(shard && stringIsInteger(shard) ? { shard } : {})
+      : {})
   };
 };

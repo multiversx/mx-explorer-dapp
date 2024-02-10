@@ -76,6 +76,8 @@ export interface GetNodesType extends SortableApiType {
   provider?: string;
   fullHistory?: string;
   from?: number;
+  isQualified?: boolean;
+  isAuctioned?: boolean;
   isAuctionDangerZone?: boolean;
 }
 

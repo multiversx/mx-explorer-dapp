@@ -12,6 +12,7 @@ export * from './markers.types';
 export * from './miniBlock.types';
 export * from './network.types';
 export * from './nft.types';
+export * from './node.types';
 export * from './nodesVersions.types';
 export * from './stake.types';
 export * from './stats.types';

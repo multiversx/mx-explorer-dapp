@@ -87,6 +87,17 @@
   }
 }
 
+// TABLE
+.table {
+  tr {
+    &.row-danger {
+      --table-border-color: rgba(248, 113, 113, 0.5); // red-400
+      --table-bg: rgba(248, 113, 113, 0.1); // red-400
+      border-color: rgba(248, 113, 113, 0.1); // red-400
+    }
+  }
+}
+
 /* Base - TODO: Cleanup / split into files
 -------------------------------------------------- */
 

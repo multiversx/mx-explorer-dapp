@@ -103,12 +103,10 @@ export interface NodeType {
   downtime: number;
   downtimeSec: number;
   locked: string;
-  topup: string;
   identity?: string;
   provider?: string;
   issues?: string[];
   syncProgress?: number;
-
   leaderSuccess?: number;
   leaderFailure?: number;
   validatorSuccess?: number;
@@ -116,6 +114,11 @@ export interface NodeType {
   validatorIgnoredSignatures?: number;
   position?: number;
   fullHistory?: boolean;
+
+  auctionPosition?: number;
+  auctionTopUp?: string;
+  auctionQualified?: boolean;
+  isInDangerZone?: boolean;
 
   // TODO check if used
   receivedShardID?: number;
