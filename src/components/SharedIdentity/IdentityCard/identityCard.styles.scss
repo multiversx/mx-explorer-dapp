@@ -73,6 +73,7 @@
     width: 100%;
     .distribution-card-title {
       color: var(--neutral-500);
+      font-family: var(--headings-font-family);
     }
 
     @include media-breakpoint-up(lg) {

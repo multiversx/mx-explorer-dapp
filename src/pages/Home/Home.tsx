@@ -17,7 +17,7 @@ export const Home = () => {
         <>
           <div className='d-xl-flex mt-3'>
             <ChartPrice />
-            <ChartStake />
+            <ChartStake className='pt-md-spacer' />
             <EconomicsCard />
           </div>
 

@@ -35,7 +35,7 @@ export const Hero = () => {
   const subdomainNetwork = useGetSubdomainNetwork();
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
-  const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
   const { pageStats } = usePageStats();
 

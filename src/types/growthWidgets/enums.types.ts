@@ -5,6 +5,7 @@ export enum TransactionsStatisticsLabelEnum {
 }
 
 export enum StakingStatisticsLabelEnum {
+  TotalStaked = 'Total Staked',
   CirculatingSupply = 'Circulating Supply',
   UsersStaking = 'Users Staking',
   AverageAPR = 'Average APR'

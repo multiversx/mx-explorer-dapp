@@ -1,5 +1,6 @@
 export interface StatisticType {
   label: string;
-  value: string;
+  value: React.ReactNode;
+  detail?: React.ReactNode;
   color?: string;
 }
