@@ -37,6 +37,9 @@ export const NodesAuctionList = () => {
 
   const isCustomSize = ![PAGE_SIZE, MAX_AUCTION_LIST_NODES].includes(pageSize);
   const size = isCustomSize ? pageSize : MAX_AUCTION_LIST_NODES;
+  const hasTresholdRow = [search, ...Object.keys(nodeFilters)].every(
+    (el) => el === undefined
+  );
 
   if (!sort.sort) {
     sort.sort = 'position';
@@ -108,6 +111,7 @@ export const NodesAuctionList = () => {
                   <NodesTable.Body
                     nodes={nodes}
                     identities={identities}
+                    hasTresholdRow={hasTresholdRow}
                     auctionList
                   />
                 </NodesTable>

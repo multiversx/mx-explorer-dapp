@@ -25,7 +25,7 @@ export const AuctionListTresholdRow = ({
     <tr className={classNames('treshold-row', className)}>
       <td colSpan={colSpan} className='px-0'>
         <div className='d-flex flex-row gap-5 align-items-center my-spacer'>
-          <div className='d-flex flex-fill flex-column'>
+          <div className='d-flex flex-fill flex-column w-0'>
             <div className='d-flex align-items-center gap-2 text-neutral-500'>
               <FontAwesomeIcon icon={faUp} /> Qualified
             </div>

@@ -18,8 +18,11 @@ export const IdentityAvatar = ({
             !identity.avatar ? 'border-0' : ''
           }`}
           src={identity.avatar}
-          alt='img'
+          alt=' '
           height='42'
+          onLoad={() => {
+            setImageLoaded(true);
+          }}
         />
       ) : (
         <DefaultAvatar

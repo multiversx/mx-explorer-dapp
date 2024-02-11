@@ -1,8 +1,10 @@
+import { Fragment } from 'react';
 import { PageState } from 'components';
 import { faCogs } from 'icons/regular';
 import { IdentityType, NodeType } from 'types';
 
 import { AuctionListRow } from './Rows/AuctionListRow';
+import { AuctionListTresholdRow } from './Rows/AuctionListTresholdRow';
 import { QueueRow } from './Rows/QueueRow';
 import { StandardRow } from './Rows/StandardRow';
 import { StatisticsRow } from './Rows/StatisticsRow';
@@ -12,6 +14,7 @@ export interface NodesTableBodyUIType {
   statistics?: boolean;
   queue?: boolean;
   auctionList?: boolean;
+  hasTresholdRow?: boolean;
   type?: NodeType['type'];
   status?: NodeType['status'];
   identities?: IdentityType[];
@@ -22,11 +25,13 @@ export const NodesTableBody = ({
   statistics,
   queue,
   auctionList,
+  hasTresholdRow,
   type,
   status,
   identities
 }: NodesTableBodyUIType) => {
   let colSpan = 8;
+  let tresholdShown = false;
   if (queue) {
     colSpan = 5;
   }
@@ -41,12 +46,18 @@ export const NodesTableBody = ({
           return <QueueRow nodeData={nodeData} key={nodeData.bls} />;
         }
         if (auctionList) {
+          const displayTresholdRow =
+            hasTresholdRow && !nodeData.auctionQualified && !tresholdShown;
+          if (displayTresholdRow) {
+            tresholdShown = true;
+          }
           return (
-            <AuctionListRow
-              nodeData={nodeData}
-              identities={identities}
-              key={nodeData.bls}
-            />
+            <Fragment key={nodeData.bls}>
+              {displayTresholdRow && (
+                <AuctionListTresholdRow key={nodeData.bls} />
+              )}
+              <AuctionListRow nodeData={nodeData} identities={identities} />
+            </Fragment>
           );
         }
         return (
