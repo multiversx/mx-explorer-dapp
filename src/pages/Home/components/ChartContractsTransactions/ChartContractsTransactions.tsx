@@ -6,11 +6,14 @@ import { SingleValue } from 'react-select';
 
 import { useFetchGrowthTransactions } from 'hooks';
 import { growthTransactionsSelector } from 'redux/selectors';
-import { GrowthChartDataType } from 'types';
+import {
+  GrowthChartDataType,
+  StatisticType,
+  TransactionsStatisticsLabelEnum
+} from 'types';
 
-import { TransactionsStatisticsLabelEnum } from './enum';
 import styles from './styles.module.scss';
-import { StatisticType, ChartContractsTransactionsUIType } from './types';
+import { ChartContractsTransactionsUIType } from './types';
 
 import { ChartArea } from '../ChartArea';
 import { PayloadType } from '../ChartArea/types';
