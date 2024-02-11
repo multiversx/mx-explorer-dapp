@@ -1,8 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
-import { Search } from 'components';
+import { FormattedValue, Search } from 'components';
 import {
   useActiveRoute,
   useIsMainnet,
@@ -67,27 +66,6 @@ export const Hero = () => {
   if (showNodesStats) {
     heroTypeClassName = 'nodes-stats';
   }
-
-  // Temporary
-  const FormattedValue = ({ value }: { value: string | number }) => {
-    if (!value) {
-      return null;
-    }
-    if (!String(value).includes('EGLD')) {
-      return value;
-    }
-
-    const [amount, decimals] = String(value).replace('EGLD', '').split('.');
-
-    return (
-      <span className='formatted'>
-        <MultiversXSymbol className='symbol' />{' '}
-        <span className='amount'>{amount}</span>
-        <span className='decimals'>{decimals}</span>
-        <span className='suffix'>{egldLabel}</span>
-      </span>
-    );
-  };
 
   return (
     <div className='container'>
