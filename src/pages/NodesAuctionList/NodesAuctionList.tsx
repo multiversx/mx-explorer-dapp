@@ -50,7 +50,6 @@ export const NodesAuctionList = () => {
     setDataReady(undefined);
     const auctionListFilters = {
       ...nodeFilters,
-      type: 'validator',
       isAuctioned: true,
       search
     };

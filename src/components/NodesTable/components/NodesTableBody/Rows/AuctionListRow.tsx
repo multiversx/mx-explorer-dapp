@@ -57,7 +57,7 @@ export const AuctionListRow = ({
             {nodeIdentity && (
               <NetworkLink
                 to={nodeIdentityLink}
-                className='trim-wrapper trim-size-lg'
+                className='trim-wrapper trim-size-xl'
               >
                 {nodeIdentity?.name && nodeIdentity.name.length > 70 ? (
                   <Trim text={nodeIdentity?.name} />
