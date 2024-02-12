@@ -14,7 +14,11 @@ export const NodeLockedStakeTooltip = ({
     return null;
   }
 
-  if ((node.type === 'validator' && node.locked && node.stake) || node.topUp) {
+  if (
+    (node.type === 'validator' && node.locked && node.stake) ||
+    node.topUp ||
+    node.auctionTopUp
+  ) {
     return (
       <>
         {node.stake && (
