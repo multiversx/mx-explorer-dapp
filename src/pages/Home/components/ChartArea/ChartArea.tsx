@@ -100,7 +100,8 @@ export const ChartArea = (props: ChartAreaPropsType) => {
                 y2='1'
               >
                 <stop offset='0%' stopColor={item.color} stopOpacity={0.5} />
-                <stop offset='100%' stopColor={item.color} stopOpacity={0.1} />
+                <stop offset='25%' stopColor={item.color} stopOpacity={0.25} />
+                <stop offset='75%' stopColor={item.color} stopOpacity={0.05} />
               </linearGradient>
             </defs>
 

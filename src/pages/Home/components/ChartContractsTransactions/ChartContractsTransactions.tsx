@@ -64,11 +64,14 @@ export const ChartContractsTransactions = ({
     isFetched
   } = useSelector(growthTransactionsSelector);
 
-  const [white, primary, violet500] = ['white', 'primary', 'violet-500'].map(
-    (color) =>
-      getComputedStyle(document.documentElement)
-        .getPropertyValue(`--${color}`)
-        .trim()
+  const [success, primary, violet500] = [
+    'success',
+    'primary',
+    'violet-500'
+  ].map((color) =>
+    getComputedStyle(document.documentElement)
+      .getPropertyValue(`--${color}`)
+      .trim()
   );
 
   const filters: ChartSelectOptionType[] = [
@@ -94,12 +97,12 @@ export const ChartContractsTransactions = ({
     {
       label: TransactionsStatisticsLabelEnum.Transactions,
       value: totalTransactions,
-      color: white
+      color: primary
     },
     {
       label: TransactionsStatisticsLabelEnum.Applications,
       value: scResults,
-      color: primary
+      color: success
     },
     {
       label: TransactionsStatisticsLabelEnum.Standard,
@@ -206,7 +209,7 @@ export const ChartContractsTransactions = ({
             data: totalPayload,
             key: 'totalValue',
             label: 'Total Transactions',
-            color: white
+            color: primary
           }
         ]
       : []),
@@ -216,7 +219,7 @@ export const ChartContractsTransactions = ({
             data: contractsPayload,
             key: 'contractValue',
             label: 'Applications',
-            color: primary
+            color: success
           }
         ]
       : []),
