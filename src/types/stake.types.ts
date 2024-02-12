@@ -3,15 +3,16 @@ import { SliceType } from 'types/general.types';
 export interface StakeType {
   totalValidators: number;
   activeValidators: number;
-  queueSize: number;
   totalStaked: string;
-
   nakamotoCoefficient?: number;
-  minimumAuctionTopup?: string;
-  minimumAuctionStake?: string;
-  dangerZoneValidators?: number;
+
+  queueSize?: number;
+  minimumAuctionQualifiedTopUp?: string;
+  minimumAuctionQualifiedStake?: string;
+  auctionValidators?: number;
   eligibleValidators?: number;
-  notEligibleValidators?: number;
+  dangerZoneValidators?: number;
+  waitingValidators?: number;
 }
 
 export interface StakeSliceType extends SliceType {
@@ -19,13 +20,14 @@ export interface StakeSliceType extends SliceType {
 
   totalValidators: string;
   activeValidators: string;
-  queueSize: string;
   totalStaked: string;
-
   nakamotoCoefficient?: string;
-  minimumAuctionTopup?: string;
-  minimumAuctionStake?: string;
-  dangerZoneValidators?: string;
+
+  queueSize?: string;
+  minimumAuctionQualifiedTopUp?: string;
+  minimumAuctionQualifiedStake?: string;
+  auctionValidators?: string;
   eligibleValidators?: string;
-  notEligibleValidators?: string;
+  dangerZoneValidators?: string;
+  waitingValidators?: string;
 }

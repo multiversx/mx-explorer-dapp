@@ -1,15 +1,16 @@
+import { useSelector } from 'react-redux';
+
 import { Tabs } from 'components/Tabs';
-import { useIsMainnet } from 'hooks';
+import { stakeSelector } from 'redux/selectors';
 import { validatorsRoutes } from 'routes';
 
 export const NodesTabs = () => {
-  const isMainnet = useIsMainnet();
+  const { queueSize, auctionValidators } = useSelector(stakeSelector);
 
   const tabs = [
     {
       tabLabel: 'Validators',
-      tabTo: validatorsRoutes.identities,
-      show: isMainnet
+      tabTo: validatorsRoutes.identities
     },
     {
       tabTo: validatorsRoutes.providers,
@@ -24,10 +25,12 @@ export const NodesTabs = () => {
       tabLabel: 'Statistics'
     },
     {
+      show: queueSize !== undefined,
       tabTo: validatorsRoutes.queue,
       tabLabel: 'Queue'
     },
     {
+      show: auctionValidators !== undefined,
       tabTo: validatorsRoutes.auctionList,
       tabLabel: 'Auction List'
     }

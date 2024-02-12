@@ -17,7 +17,7 @@ export const AuctionListTresholdRow = ({
 }: AuctionListTresholdRowUIType) => {
   const {
     isFetched: isStakeFetched,
-    minimumAuctionStake,
+    minimumAuctionQualifiedStake,
     unprocessed
   } = useSelector(stakeSelector);
 
@@ -40,14 +40,14 @@ export const AuctionListTresholdRow = ({
               Node Qualification Threshold
             </p>
             <h1>
-              {isStakeFetched && unprocessed.minimumAuctionStake ? (
+              {isStakeFetched && unprocessed.minimumAuctionQualifiedStake ? (
                 <Denominate
-                  value={unprocessed.minimumAuctionStake}
+                  value={unprocessed.minimumAuctionQualifiedStake}
                   superSuffix
                   decimals={4}
                 />
               ) : (
-                minimumAuctionStake
+                minimumAuctionQualifiedStake
               )}
             </h1>
           </div>

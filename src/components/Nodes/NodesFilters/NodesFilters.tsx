@@ -1,15 +1,30 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown, Anchor } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+
 import { faSearch, faTimes } from 'icons/regular';
+import { stakeSelector } from 'redux/selectors';
 
 export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
+  const { queueSize, auctionValidators } = useSelector(stakeSelector);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { search, status, issues, type, fullHistory } =
+  const { search, status, issues, type, fullHistory, isAuctioned } =
     Object.fromEntries(searchParams);
   const [inputValue, setInputValue] = useState<string>(search);
+
+  const isMoreActive =
+    [
+      'eligible',
+      'waiting',
+      'new',
+      'jailed',
+      'leaving',
+      'queued',
+      'inactive'
+    ].includes(status) || isAuctioned;
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -28,7 +43,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   };
 
   const nodeStatusLink = (statusValue: string) => {
-    const { status, type, issues, fullHistory, page, ...rest } =
+    const { status, type, issues, fullHistory, isAuctioned, page, ...rest } =
       Object.fromEntries(searchParams);
 
     const nextUrlParams = {
@@ -41,7 +56,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   };
 
   const nodeTypeLink = (typeValue: string) => {
-    const { type, status, issues, fullHistory, page, ...rest } =
+    const { type, status, issues, fullHistory, isAuctioned, page, ...rest } =
       Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
@@ -51,23 +66,34 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
     setSearchParams(nextUrlParams);
   };
 
-  const issuesLink = (issuesValue: string) => {
-    const { type, status, issues, fullHistory, page, ...rest } =
+  const issuesLink = (issuesValue: boolean) => {
+    const { type, status, issues, fullHistory, isAuctioned, page, ...rest } =
       Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
-      ...(issuesValue ? { issues: issuesValue, type: 'validator' } : {})
+      ...(issuesValue ? { issues: String(issuesValue), type: 'validator' } : {})
     };
 
     setSearchParams(nextUrlParams);
   };
 
-  const fullHistoryLink = (fullHistoryValue: string) => {
-    const { type, status, issues, fullHistory, page, ...rest } =
+  const fullHistoryLink = (fullHistoryValue: boolean) => {
+    const { type, status, issues, fullHistory, isAuctioned, page, ...rest } =
       Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
-      ...(fullHistoryValue ? { fullHistory: fullHistoryValue } : {})
+      ...(fullHistoryValue ? { fullHistory: String(fullHistoryValue) } : {})
+    };
+
+    setSearchParams(nextUrlParams);
+  };
+
+  const isAuctionedLink = (isAuctionedValue: boolean) => {
+    const { type, status, issues, fullHistory, isAuctioned, page, ...rest } =
+      Object.fromEntries(searchParams);
+    const nextUrlParams = {
+      ...rest,
+      ...(isAuctionedValue ? { isAuctioned: String(isAuctionedValue) } : {})
     };
 
     setSearchParams(nextUrlParams);
@@ -84,7 +110,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
                 nodeTypeLink('');
               }}
               className={`badge py-2 px-3 br-lg ${
-                [search, status, issues, type, fullHistory].every(
+                [search, status, issues, type, fullHistory, isAuctioned].every(
                   (el) => el === undefined
                 )
                   ? 'badge-grey'
@@ -129,7 +155,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
             <button
               type='button'
               onClick={() => {
-                fullHistoryLink('true');
+                fullHistoryLink(true);
               }}
               data-testid='filterByFullHistory'
               className={`badge py-2 px-3 br-lg ${
@@ -143,7 +169,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
             <button
               type='button'
               onClick={() => {
-                issuesLink('true');
+                issuesLink(true);
               }}
               className={`badge py-2 px-3 br-lg ${
                 issues === 'true'
@@ -160,15 +186,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
                 variant='outline-dark'
                 size='sm'
                 className={`badge py-2 px-3 br-lg nodes-more ${
-                  [
-                    'eligible',
-                    'waiting',
-                    'new',
-                    'jailed',
-                    'leaving',
-                    'queued',
-                    'inactive'
-                  ].includes(status)
+                  isMoreActive
                     ? 'badge-grey'
                     : 'badge-outline badge-outline-grey'
                 }`}
@@ -245,19 +263,36 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
                 >
                   Leaving
                 </Dropdown.Item>
-                <Dropdown.Item
-                  as={Anchor}
-                  className={`dropdown-item ${
-                    status === 'queued' ? 'active' : ''
-                  }`}
-                  data-testid='filterByValidators'
-                  onClick={() => {
-                    nodeStatusLink('queued');
-                    document.body.click();
-                  }}
-                >
-                  Queued
-                </Dropdown.Item>
+                {queueSize !== undefined && (
+                  <Dropdown.Item
+                    as={Anchor}
+                    className={`dropdown-item ${
+                      status === 'queued' ? 'active' : ''
+                    }`}
+                    data-testid='filterByValidators'
+                    onClick={() => {
+                      nodeStatusLink('queued');
+                      document.body.click();
+                    }}
+                  >
+                    Queued
+                  </Dropdown.Item>
+                )}
+                {auctionValidators !== undefined && (
+                  <Dropdown.Item
+                    as={Anchor}
+                    className={`dropdown-item ${
+                      isAuctioned === 'true' ? 'active' : ''
+                    }`}
+                    data-testid='filterByValidators'
+                    onClick={() => {
+                      isAuctionedLink(true);
+                      document.body.click();
+                    }}
+                  >
+                    Auction List
+                  </Dropdown.Item>
+                )}
                 <Dropdown.Item
                   as={Anchor}
                   className={`dropdown-item ${

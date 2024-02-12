@@ -22,17 +22,21 @@ export const NodeQualification = ({
 }: NodeQualificationUIType) => {
   const {
     isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionTopup }
+    unprocessed: { minimumAuctionQualifiedTopUp }
   } = useSelector(stakeSelector);
+  const { auctionTopUp, auctionQualified } = node;
 
-  if (!isStakeFetched || minimumAuctionTopup === undefined) {
+  if (
+    !isStakeFetched ||
+    minimumAuctionQualifiedTopUp === undefined ||
+    auctionTopUp === undefined
+  ) {
     return null;
   }
-  const { topUp, auctionTopUp, auctionQualified } = node;
 
   const NodeStatusComponent = () => {
-    const bNTopup = new BigNumber(auctionTopUp ?? topUp);
-    const bNMinimumAuctionTopup = new BigNumber(minimumAuctionTopup);
+    const bNTopup = new BigNumber(auctionTopUp);
+    const bNMinimumAuctionTopup = new BigNumber(minimumAuctionQualifiedTopUp);
 
     if (
       auctionQualified ||

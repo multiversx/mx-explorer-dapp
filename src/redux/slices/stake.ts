@@ -6,13 +6,11 @@ export const getInitialStakeState = (): StakeSliceType => {
   return {
     totalValidators: ELLIPSIS,
     activeValidators: ELLIPSIS,
-    queueSize: ELLIPSIS,
     totalStaked: ELLIPSIS,
 
     unprocessed: {
       totalValidators: 0,
       activeValidators: 0,
-      queueSize: 0,
       totalStaked: ELLIPSIS
     },
     isFetched: false
@@ -29,15 +27,18 @@ export const stakeSlice = createSlice({
     ) => {
       state.totalValidators = action.payload.totalValidators;
       state.activeValidators = action.payload.activeValidators;
-      state.queueSize = action.payload.queueSize;
       state.totalStaked = action.payload.totalStaked;
-
       state.nakamotoCoefficient = action.payload.nakamotoCoefficient;
-      state.minimumAuctionTopup = action.payload.minimumAuctionTopup;
-      state.minimumAuctionStake = action.payload.minimumAuctionStake;
-      state.dangerZoneValidators = action.payload.dangerZoneValidators;
+
+      state.queueSize = action.payload.queueSize;
+      state.minimumAuctionQualifiedTopUp =
+        action.payload.minimumAuctionQualifiedTopUp;
+      state.minimumAuctionQualifiedStake =
+        action.payload.minimumAuctionQualifiedStake;
+      state.auctionValidators = action.payload.auctionValidators;
       state.eligibleValidators = action.payload.eligibleValidators;
-      state.notEligibleValidators = action.payload.notEligibleValidators;
+      state.dangerZoneValidators = action.payload.dangerZoneValidators;
+      state.waitingValidators = action.payload.waitingValidators;
 
       state.unprocessed = action.payload.unprocessed;
       state.isFetched = action.payload.isFetched;

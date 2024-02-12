@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -7,13 +8,35 @@ import { Led } from 'components';
 import { faSearch, faTimes } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
 
-export const AuctionListFilters = ({
-  onlySearch
-}: {
+export interface AuctionListFiltersUIType {
   onlySearch?: boolean;
-}) => {
-  const { eligibleValidators, notEligibleValidators, dangerZoneValidators } =
-    useSelector(stakeSelector);
+  eligibleValidators?: number;
+  waitingValidators?: number;
+  dangerZoneValidators?: number;
+  auctionValidators?: number;
+}
+
+export const AuctionListFilters = ({
+  eligibleValidators: paramEligibleValidators,
+  waitingValidators: paramWaitingValidators,
+  dangerZoneValidators: paramDangerZoneValidators,
+  auctionValidators: paramAuctionValidators,
+  onlySearch
+}: AuctionListFiltersUIType) => {
+  const {
+    unprocessed: {
+      eligibleValidators: stateEligibleValidators,
+      waitingValidators: stateWaitingValidators,
+      dangerZoneValidators: stateDangerZoneValidators,
+      auctionValidators: stateAuctionValidators
+    }
+  } = useSelector(stakeSelector);
+
+  const eligibleValidators = paramEligibleValidators ?? stateEligibleValidators;
+  const waitingValidators = paramWaitingValidators ?? stateWaitingValidators;
+  const dangerZoneValidators =
+    paramDangerZoneValidators ?? stateDangerZoneValidators;
+  const auctionValidators = paramAuctionValidators ?? stateAuctionValidators;
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { search, isAuctionDangerZone, isQualified } =
@@ -87,7 +110,7 @@ export const AuctionListFilters = ({
               onClick={() => {
                 resetFiltersLink();
               }}
-              className={`badge py-2 px-3 br-lg ${
+              className={`badge px-2 br-lg ${
                 [search, isQualified, isAuctionDangerZone].every(
                   (el) => el === undefined
                 )
@@ -96,6 +119,11 @@ export const AuctionListFilters = ({
               }`}
             >
               All
+              {auctionValidators !== undefined && (
+                <span className='badge badge-grey p-1 ms-1'>
+                  {new BigNumber(auctionValidators).toFormat(0)}
+                </span>
+              )}
             </button>
           </li>
           <li className='list-inline-item me-0'>
@@ -112,9 +140,11 @@ export const AuctionListFilters = ({
             >
               <Led color='bg-green-400 me-1' />
               Qualified{' '}
-              <span className='badge badge-grey p-1 ms-1'>
-                {eligibleValidators}
-              </span>
+              {eligibleValidators !== undefined && (
+                <span className='badge badge-grey p-1 ms-1'>
+                  {new BigNumber(eligibleValidators).toFormat(0)}
+                </span>
+              )}
             </button>
           </li>
           <li className='list-inline-item me-0'>
@@ -131,9 +161,11 @@ export const AuctionListFilters = ({
             >
               <Led color='bg-red-400 me-1' />
               Danger Zone{' '}
-              <span className='badge badge-grey p-1 ms-1'>
-                {dangerZoneValidators}
-              </span>
+              {dangerZoneValidators !== undefined && (
+                <span className='badge badge-grey p-1 ms-1'>
+                  {new BigNumber(dangerZoneValidators).toFormat(0)}
+                </span>
+              )}
             </button>
           </li>
           <li className='list-inline-item me-0'>
@@ -150,9 +182,11 @@ export const AuctionListFilters = ({
             >
               <Led color='bg-neutral-750 me-1' />
               Not Qualified{' '}
-              <span className='badge badge-grey p-1 ms-1'>
-                {notEligibleValidators}
-              </span>
+              {waitingValidators !== undefined && (
+                <span className='badge badge-grey p-1 ms-1'>
+                  {new BigNumber(waitingValidators).toFormat(0)}
+                </span>
+              )}
             </button>
           </li>
         </ul>

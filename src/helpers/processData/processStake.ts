@@ -8,7 +8,6 @@ export const processStake = (data: StakeType) => {
   return {
     totalValidators: new BigNumber(data.totalValidators).toFormat(0),
     activeValidators: new BigNumber(data.activeValidators).toFormat(0),
-    queueSize: new BigNumber(data.queueSize).toFormat(0),
     totalStaked: denominate({
       input: data.totalStaked,
       denomination: DECIMALS,
@@ -16,19 +15,23 @@ export const processStake = (data: StakeType) => {
       showLastNonZeroDecimal: false,
       addCommas: false
     }),
-
-    // TODO - Temporary Hardcoded
-    ...(data.nakamotoCoefficient
+    ...(data.nakamotoCoefficient !== undefined
       ? {
           nakamotoCoefficient: new BigNumber(data.nakamotoCoefficient).toFormat(
             0
           )
         }
       : {}),
-    ...(data.minimumAuctionTopup
+    ...(data.queueSize !== undefined
       ? {
-          minimumAuctionTopup: denominate({
-            input: data.minimumAuctionTopup,
+          queueSize: new BigNumber(data.queueSize).toFormat(0)
+        }
+      : {}),
+
+    ...(data.minimumAuctionQualifiedTopUp !== undefined
+      ? {
+          minimumAuctionQualifiedTopUp: denominate({
+            input: data.minimumAuctionQualifiedTopUp,
             denomination: DECIMALS,
             decimals: DIGITS,
             showLastNonZeroDecimal: false,
@@ -36,10 +39,10 @@ export const processStake = (data: StakeType) => {
           })
         }
       : {}),
-    ...(data.minimumAuctionStake
+    ...(data.minimumAuctionQualifiedStake !== undefined
       ? {
-          minimumAuctionStake: denominate({
-            input: data.minimumAuctionStake,
+          minimumAuctionQualifiedStake: denominate({
+            input: data.minimumAuctionQualifiedStake,
             denomination: DECIMALS,
             decimals: DIGITS,
             showLastNonZeroDecimal: false,
@@ -47,23 +50,26 @@ export const processStake = (data: StakeType) => {
           })
         }
       : {}),
-    ...(data.dangerZoneValidators
+    ...(data.auctionValidators !== undefined
+      ? {
+          auctionValidators: new BigNumber(data.auctionValidators).toFormat(0)
+        }
+      : {}),
+    ...(data.eligibleValidators !== undefined
+      ? {
+          eligibleValidators: new BigNumber(data.eligibleValidators).toFormat(0)
+        }
+      : {}),
+    ...(data.dangerZoneValidators !== undefined
       ? {
           dangerZoneValidators: new BigNumber(
             data.dangerZoneValidators
           ).toFormat(0)
         }
       : {}),
-    ...(data.eligibleValidators
+    ...(data.waitingValidators !== undefined
       ? {
-          eligibleValidators: new BigNumber(data.eligibleValidators).toFormat(0)
-        }
-      : {}),
-    ...(data.notEligibleValidators
-      ? {
-          notEligibleValidators: new BigNumber(
-            data.notEligibleValidators
-          ).toFormat(0)
+          waitingValidators: new BigNumber(data.waitingValidators).toFormat(0)
         }
       : {})
   };

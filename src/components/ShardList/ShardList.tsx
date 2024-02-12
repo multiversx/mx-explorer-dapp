@@ -8,7 +8,7 @@ import { ShardCard } from './components/ShardCard';
 
 export const ShardList = ({ className }: WithClassnameType) => {
   const shards = useSelector(shardsSelector);
-  const { queueSize } = useSelector(stakeSelector);
+  const { queueSize, auctionValidators } = useSelector(stakeSelector);
   useFetchShards();
 
   return (
@@ -18,7 +18,15 @@ export const ShardList = ({ className }: WithClassnameType) => {
           <ShardCard shard={shard} />
         </Fragment>
       ))}
-      <ShardCard customTitle='Queue' customValue={queueSize} />
+      {queueSize !== undefined && (
+        <ShardCard customTitle='Queue' customValue={queueSize} />
+      )}
+      {auctionValidators !== undefined && (
+        <ShardCard
+          customTitle='Auction Validators'
+          customValue={auctionValidators}
+        />
+      )}
     </div>
   );
 };

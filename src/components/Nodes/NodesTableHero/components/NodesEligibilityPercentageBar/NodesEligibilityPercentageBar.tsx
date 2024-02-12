@@ -14,33 +14,30 @@ export const NodesEligibilityPercentageBar = ({
   const {
     isFetched: isStakeFetched,
     eligibleValidators,
-    notEligibleValidators,
+    waitingValidators,
     dangerZoneValidators,
     unprocessed
   } = useSelector(stakeSelector);
 
-  if (
-    !isStakeFetched ||
-    !(
-      unprocessed.notEligibleValidators &&
-      unprocessed.eligibleValidators &&
-      unprocessed.dangerZoneValidators
-    )
-  ) {
+  const totalValidators = new BigNumber(unprocessed.eligibleValidators ?? 0)
+    .plus(unprocessed.dangerZoneValidators ?? 0)
+    .plus(unprocessed.waitingValidators ?? 0);
+
+  if (!isStakeFetched || !totalValidators.isGreaterThan(0)) {
     return null;
   }
 
-  const totalValidators = new BigNumber(unprocessed.eligibleValidators)
-    .plus(unprocessed.dangerZoneValidators)
-    .plus(unprocessed.notEligibleValidators);
-
-  const percentageNotEligible = new BigNumber(unprocessed.notEligibleValidators)
+  const percentageNotEligible = new BigNumber(
+    unprocessed.waitingValidators ?? 0
+  )
     .dividedBy(totalValidators)
     .times(100);
-  const percentageDangerZone = new BigNumber(unprocessed.dangerZoneValidators)
+  const percentageDangerZone = new BigNumber(
+    unprocessed.dangerZoneValidators ?? 0
+  )
     .dividedBy(totalValidators)
     .times(100);
-  const percentageEligible = new BigNumber(unprocessed.eligibleValidators)
+  const percentageEligible = new BigNumber(unprocessed.eligibleValidators ?? 0)
     .dividedBy(totalValidators)
     .times(100);
 
@@ -57,7 +54,7 @@ export const NodesEligibilityPercentageBar = ({
               style={{ width: `${percentageNotEligible.toFixed(2)}%` }}
             >
               <div className='name'>Not Qualified</div>
-              <div className='description'>{notEligibleValidators}</div>
+              <div className='description'>{waitingValidators}</div>
               <div className='value'>{percentageNotEligible.toFormat(0)}%</div>
             </div>
           )
@@ -80,9 +77,9 @@ export const NodesEligibilityPercentageBar = ({
                         Danger Zone <Led color='bg-danger ms-1' />
                       </p>
                       <p className='text-neutral-400 mb-0'>
-                        {dangerZoneValidators} nodes are 5% above the threshold
-                        level. Increase the staked amount / node to exit the
-                        danger zone and move up on the auction list.
+                        {dangerZoneValidators} nodes are under 5% above the
+                        threshold level. Increase the staked amount / node to
+                        exit the danger zone and move up on the auction list.
                       </p>
                     </>
                   }

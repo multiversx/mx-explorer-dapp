@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 
-import { Denominate } from 'components';
+import { FormattedValue } from 'components';
 import { useGetRemainingTime } from 'hooks';
 import { faClock } from 'icons/solid';
 import { stakeSelector, statsSelector } from 'redux/selectors';
@@ -15,11 +15,7 @@ import { WithClassnameType } from 'types';
 import { NodesEligibilityPercentageBar } from './components';
 
 export const NodesTableHero = ({ className }: WithClassnameType) => {
-  const {
-    isFetched: isStakeFetched,
-    minimumAuctionStake,
-    unprocessed
-  } = useSelector(stakeSelector);
+  const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
   const {
     isFetched: isStatsFetched,
     unprocessed: { epochTimeRemaining: unprocessedEpochTimeRemaining },
@@ -33,7 +29,6 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
     [refreshTrigger]
   );
   const remainingTime = useGetRemainingTime({
-    //showZeroDecimal: false,
     timeData: currentTimestamp,
     onCountdownEnd: () => {
       setRefreshTrigger(unprocessedEpochTimeRemaining);
@@ -87,26 +82,30 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
                 </div>
               </div>
             </div>
-            <div className='card bg-neutral-800 flex-fill'>
-              <div className='card-body d-flex align-items-center'>
-                <div className='d-flex w-100 flex-wrap gap-3 align-items-start justify-content-between'>
-                  <div className='text-neutral-500 small'>
-                    Node Qualification Threshold
-                  </div>
-                  <h3 className='mb-0 text-lh-24'>
-                    {unprocessed.minimumAuctionStake ? (
-                      <Denominate
-                        value={unprocessed.minimumAuctionStake}
+            {unprocessed.minimumAuctionQualifiedStake && (
+              <div className='card bg-neutral-800 flex-fill'>
+                <div className='card-body d-flex align-items-center'>
+                  <div className='d-flex w-100 flex-wrap gap-3 align-items-start justify-content-between'>
+                    <div className='text-neutral-500 small'>
+                      Node Qualification Threshold
+                    </div>
+                    <h3 className='mb-0 text-lh-24'>
+                      {/* <Denominate
+                        value={unprocessed.minimumAuctionQualifiedStake}
                         superSuffix
                         decimals={4}
+                      /> */}
+                      <FormattedValue
+                        value={new BigNumber(
+                          unprocessed.minimumAuctionQualifiedStake
+                        ).toFormat(0)}
+                        showEgldLabel
                       />
-                    ) : (
-                      minimumAuctionStake
-                    )}
-                  </h3>
+                    </h3>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
