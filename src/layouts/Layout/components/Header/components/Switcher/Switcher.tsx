@@ -4,6 +4,7 @@ import { Anchor, Dropdown } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import { networks, links } from 'config';
+import { getSubdomainNetwork } from 'helpers';
 import { faAngleDown } from 'icons/solid';
 
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
@@ -13,12 +14,20 @@ export const Switcher = () => {
     activeNetworkSelector
   );
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
+  const { isSubSubdomain } = getSubdomainNetwork();
 
-  const networkLinks = networks.map(({ name, id }) => ({
-    name,
-    url: id === defaultNetworkId ? '/' : `/${id}`,
-    id
-  }));
+  const networkLinks = networks.map(({ name, id }) => {
+    let url = id === defaultNetworkId ? '/' : `/${id}`;
+    if (isSubSubdomain && window?.location?.hostname) {
+      const [_omit, ...rest] = window.location.hostname.split('.');
+      url = `https://${[id, ...rest].join('.')}`;
+    }
+    return {
+      name,
+      url,
+      id
+    };
+  });
 
   return (
     <Dropdown className='switcher'>
@@ -54,16 +63,36 @@ export const Switcher = () => {
           </>
         ) : (
           <>
-            {networkLinks.map((link) => (
-              <Dropdown.Item
-                as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
-                href={link.url}
-                key={link.url}
-                active={activeNetworkId === link.id}
-              >
-                {link.name}
-              </Dropdown.Item>
-            ))}
+            {isSubSubdomain && window?.location?.hostname ? (
+              <>
+                {networkLinks.map((link) => (
+                  <a
+                    key={link.id}
+                    target='_blank'
+                    rel='noreferrer nofollow noopener'
+                    className={classNames('dropdown-item', {
+                      active: activeNetworkId === link.id
+                    })}
+                    href={link.url}
+                  >
+                    {link.name}
+                  </a>
+                ))}
+              </>
+            ) : (
+              <>
+                {networkLinks.map((link) => (
+                  <Dropdown.Item
+                    as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
+                    href={link.url}
+                    key={link.url}
+                    active={activeNetworkId === link.id}
+                  >
+                    {link.name}
+                  </Dropdown.Item>
+                ))}
+              </>
+            )}
           </>
         )}
       </Dropdown.Menu>

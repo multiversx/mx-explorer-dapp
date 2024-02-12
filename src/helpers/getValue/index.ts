@@ -4,6 +4,7 @@ export * from './getNodeIcon';
 export * from './getNodeIssue';
 export * from './getOperationDirection';
 export * from './getPercentage';
+export * from './getSubdomainNetwork';
 export * from './getTotalTokenUsdValue';
 export * from './getTotalTxTokenUsdValue';
 export * from './getTransactionMessages';
