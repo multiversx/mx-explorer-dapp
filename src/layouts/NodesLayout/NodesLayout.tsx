@@ -7,7 +7,6 @@ import { useFetchStake, useFetchNodesVersions, useFetchShards } from 'hooks';
 import {
   activeNetworkSelector,
   shardsSelector,
-  stakeSelector,
   nodesVersionsSelector
 } from 'redux/selectors';
 
@@ -15,8 +14,7 @@ export const NodesLayout = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const shards = useSelector(shardsSelector);
-  const { isFetched: isStakeFetched } = useSelector(stakeSelector);
-  const { isFetched: isNodesVersioonsFetched } = useSelector(
+  const { isFetched: isNodesVersionsFetched } = useSelector(
     nodesVersionsSelector
   );
 
@@ -27,10 +25,10 @@ export const NodesLayout = () => {
   useFetchShards();
 
   useEffect(() => {
-    if (isStakeFetched && isNodesVersioonsFetched && shards.length > 0) {
+    if (isNodesVersionsFetched && shards.length > 0) {
       setIsDataReady(true);
     }
-  }, [activeNetworkId, shards, isStakeFetched, isNodesVersioonsFetched]);
+  }, [activeNetworkId, shards, isNodesVersionsFetched]);
 
   return (
     <>

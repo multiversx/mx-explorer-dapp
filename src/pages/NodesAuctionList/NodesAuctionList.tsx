@@ -70,21 +70,23 @@ export const NodesAuctionList = () => {
       setTotalNodes(count.data);
 
       if (ref.current !== null) {
-        setDataReady(identitiesData.data && nodesData.success && count.success);
+        setDataReady(
+          identitiesData.success && nodesData.success && count.success
+        );
       }
     });
   };
 
-  const eligibleValidators = nodes.filter(({ auctionQualified }) =>
-    Boolean(auctionQualified)
-  ).length;
-  const waitingValidators = nodes.filter(
-    ({ auctionQualified }) => !Boolean(auctionQualified)
-  ).length;
-  const dangerZoneValidators = nodes.filter(({ isInDangerZone }) =>
-    Boolean(isInDangerZone)
-  ).length;
-  const auctionValidators = nodes.length;
+  const eligibleValidatorsCount = nodes
+    ? nodes.filter(({ auctionQualified }) => Boolean(auctionQualified)).length
+    : 0;
+  const waitingValidatorsCount = nodes
+    ? nodes.filter(({ auctionQualified }) => !Boolean(auctionQualified)).length
+    : 0;
+  const dangerZoneValidatorsCount = nodes
+    ? nodes.filter(({ isInDangerZone }) => Boolean(isInDangerZone)).length
+    : 0;
+  const auctionValidatorsCount = nodes ? nodes.length : 0;
 
   useEffect(fetchNodes, [searchParams]);
 
@@ -95,10 +97,10 @@ export const NodesAuctionList = () => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <NodesTableHero />
           <AuctionListFilters
-            auctionValidators={auctionValidators}
-            eligibleValidators={eligibleValidators}
-            dangerZoneValidators={dangerZoneValidators}
-            waitingValidators={waitingValidators}
+            auctionValidators={auctionValidatorsCount}
+            eligibleValidators={eligibleValidatorsCount}
+            dangerZoneValidators={dangerZoneValidatorsCount}
+            waitingValidators={waitingValidatorsCount}
           />
           {dataReady === true && isCustomSize && (
             <Pager
