@@ -2,14 +2,14 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { networks } from 'config';
-import { useGetSubdomainNetwork } from 'hooks';
+import { getSubdomainNetwork } from 'helpers';
 import { defaultNetworkSelector } from 'redux/selectors';
 
 export const useGetURLNetwork = () => {
   const defaultNetwork = useSelector(defaultNetworkSelector);
-  const subdomainNetwork = useGetSubdomainNetwork();
 
   const { pathname } = useLocation();
+  const { subdomainNetwork } = getSubdomainNetwork();
   const locationArray = pathname.substring(1).split('/');
   const networkId = locationArray[0];
   const allNetworkIds = networks.map((network) => network.id);
