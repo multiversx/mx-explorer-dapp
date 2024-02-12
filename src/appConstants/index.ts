@@ -26,6 +26,7 @@ export const ELLIPSIS = '...';
 
 export const TRANSACTIONS_TABLE_FIELDS = [
   'txHash',
+  'originalTxHash',
   'receiver',
   'receiverAssets',
   'receiverShard',
