@@ -16,12 +16,16 @@ export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
     unprocessed: { minimumAuctionQualifiedTopUp }
   } = useSelector(stakeSelector);
 
-  if (!isStakeFetched || minimumAuctionQualifiedTopUp === undefined) {
+  const { auctionTopUp, isInDangerZone } = node;
+  if (
+    !isStakeFetched ||
+    minimumAuctionQualifiedTopUp === undefined ||
+    auctionTopUp === undefined
+  ) {
     return null;
   }
-  const { topUp, auctionTopUp, isInDangerZone } = node;
 
-  const bNTopup = new BigNumber(auctionTopUp ?? topUp);
+  const bNTopup = new BigNumber(auctionTopUp);
   const bNMinimumAuctionTopup = new BigNumber(minimumAuctionQualifiedTopUp);
   const bNTreshold = bNTopup.minus(bNMinimumAuctionTopup);
 

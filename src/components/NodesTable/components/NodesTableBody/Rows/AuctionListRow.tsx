@@ -91,7 +91,7 @@ export const AuctionListRow = ({
       </td>
       <td>
         <Overlay
-          title={<NodeLockedStakeTooltip node={nodeData} />}
+          title={<NodeLockedStakeTooltip node={nodeData} showAuctionTopup />}
           tooltipClassName='tooltip-text-start tooltip-lg'
           className='cursor-context'
         >

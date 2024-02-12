@@ -8,7 +8,8 @@ import {
   GetCollectionsType,
   GetNftsType,
   GetTokensType,
-  GetAccountsType
+  GetAccountsType,
+  GetIdentitiesType
 } from 'types/adapter.types';
 
 import {
@@ -440,8 +441,15 @@ export const useAdapter = () => {
 
     getNodesVersions,
 
-    getIdentities: (identities?: string) =>
-      provider({ url: '/identities', params: { identities } }),
+    getIdentities: ({ identities, sort, order }: GetIdentitiesType) =>
+      provider({
+        url: '/identities',
+        params: {
+          identities,
+          ...(sort !== undefined ? { sort } : {}),
+          ...(order !== undefined ? { order } : {})
+        }
+      }),
 
     getIdentity: (identity: string) =>
       provider({ url: `/identities/${identity}` }),

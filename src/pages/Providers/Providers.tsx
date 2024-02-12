@@ -42,7 +42,7 @@ export const Providers = () => {
             .join(',');
 
           if (identities) {
-            getIdentities(identities).then((identitiesData) => {
+            getIdentities({ identities }).then((identitiesData) => {
               if (ref.current !== null) {
                 if (identitiesData.success) {
                   newProvidersData.forEach((provider) => {

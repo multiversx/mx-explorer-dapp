@@ -1,7 +1,15 @@
 import { Denominate } from 'components';
 import { NodeType } from 'types';
 
-export const NodeLockedStakeTooltip = ({ node }: { node: NodeType }) => {
+export interface NodeLockedStakeTooltipUIType {
+  node: NodeType;
+  showAuctionTopup?: boolean;
+}
+
+export const NodeLockedStakeTooltip = ({
+  node,
+  showAuctionTopup
+}: NodeLockedStakeTooltipUIType) => {
   if (!node) {
     return null;
   }
@@ -16,7 +24,13 @@ export const NodeLockedStakeTooltip = ({ node }: { node: NodeType }) => {
         )}
         {node.topUp && (
           <p className='mb-0'>
-            Top up: <Denominate value={node.topUp} showTooltip={false} />
+            Top Up: <Denominate value={node.topUp} showTooltip={false} />
+          </p>
+        )}
+        {node.auctionTopUp && showAuctionTopup && (
+          <p className='mb-0'>
+            Auction Qualified Top Up:{' '}
+            <Denominate value={node.auctionTopUp} showTooltip={false} />
           </p>
         )}
       </>

@@ -56,7 +56,7 @@ export const NodesAuctionList = () => {
     };
 
     Promise.all([
-      getIdentities(),
+      getIdentities({}),
       getNodes({
         ...sort,
         ...auctionListFilters,

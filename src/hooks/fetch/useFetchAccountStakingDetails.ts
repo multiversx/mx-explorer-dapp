@@ -203,7 +203,7 @@ export const useFetchAccountStakingDetails = () => {
           const identities = providerIdentitiesList.join(',');
 
           if (identities) {
-            getIdentities(identities).then((identitiesData) => {
+            getIdentities({ identities }).then((identitiesData) => {
               if (identitiesData.success) {
                 newProvidersData.forEach((provider) => {
                   if (provider.identity) {

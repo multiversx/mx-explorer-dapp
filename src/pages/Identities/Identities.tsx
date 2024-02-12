@@ -6,7 +6,7 @@ import { useAdapter } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { activeNetworkSelector, stakeSelector } from 'redux/selectors';
-import { IdentityType } from 'types';
+import { IdentityType, SortOrderEnum } from 'types';
 
 import { IdentityRow, ResiliencyRow } from './components';
 
@@ -22,23 +22,25 @@ export const Identities = () => {
   const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
 
   const fetchIdentities = () => {
-    getIdentities().then(({ data, success }) => {
-      const identitiesList: IdentityType[] = [];
-      let overallStakePercent = 0;
+    getIdentities({ sort: 'validators', order: SortOrderEnum.desc }).then(
+      ({ data, success }) => {
+        const identitiesList: IdentityType[] = [];
+        let overallStakePercent = 0;
 
-      if (success) {
-        data.forEach((identity: IdentityType) => {
-          if (!identity.stake || !identity.validators) {
-            return;
-          }
-          identitiesList.push({ ...identity, overallStakePercent });
-          overallStakePercent = overallStakePercent + identity.stakePercent;
-        });
-        setIdentities(identitiesList);
+        if (success) {
+          data.forEach((identity: IdentityType) => {
+            if (!identity.stake || !identity.validators) {
+              return;
+            }
+            identitiesList.push({ ...identity, overallStakePercent });
+            overallStakePercent = overallStakePercent + identity.stakePercent;
+          });
+          setIdentities(identitiesList);
+        }
+
+        setDataReady(success);
       }
-
-      setDataReady(success);
-    });
+    );
   };
 
   useEffect(fetchIdentities, []);

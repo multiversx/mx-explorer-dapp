@@ -81,6 +81,10 @@ export interface GetNodesType extends SortableApiType {
   isAuctionDangerZone?: boolean;
 }
 
+export interface GetIdentitiesType extends SortableApiType {
+  identities?: string;
+}
+
 export interface GetTransactionsType extends SortableApiType {
   sender?: string;
   receiver?: string;
