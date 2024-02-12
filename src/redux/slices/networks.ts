@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { networks } from 'config';
+import { getSubdomainNetwork } from 'helpers';
 import { NetworkType } from 'types/network.types';
 
 export const emptyNetwork: NetworkType = {
@@ -21,8 +22,12 @@ type CurrentNetworkSliceType = {
 };
 
 export const getInitialState = (): CurrentNetworkSliceType => {
-  const defaultNetwork =
-    networks.find(({ default: active }) => Boolean(active)) ?? emptyNetwork;
+  const { subdomainNetwork, isSubSubdomain } = getSubdomainNetwork();
+  const defaultNetworkInList = networks.find(({ default: active }) =>
+    Boolean(active)
+  );
+  const baseNetwork = isSubSubdomain ? subdomainNetwork : defaultNetworkInList;
+  const defaultNetwork = baseNetwork ?? emptyNetwork;
 
   return {
     defaultNetwork,

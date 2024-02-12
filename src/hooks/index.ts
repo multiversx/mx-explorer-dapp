@@ -8,7 +8,6 @@ export * from './useCheckVersion';
 export * from './useDebounce';
 export * from './useGetExplorerTitle';
 export * from './useGetHash';
-export * from './useGetSubdomainNetwork';
 export * from './useGetURLNetwork';
 export * from './useIsDevnet';
 export * from './useIsMainnet';

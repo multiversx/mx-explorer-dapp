@@ -3,12 +3,8 @@ import { useLocation } from 'react-router-dom';
 
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { Search } from 'components';
-import {
-  useActiveRoute,
-  useIsMainnet,
-  usePageStats,
-  useGetSubdomainNetwork
-} from 'hooks';
+import { getSubdomainNetwork } from 'helpers';
+import { useActiveRoute, useIsMainnet, usePageStats } from 'hooks';
 import { ChartContractsTransactions } from 'pages/Home/components/ChartContractsTransactions';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
@@ -33,7 +29,6 @@ import { getCustomPageName } from '../../helpers';
 
 export const Hero = () => {
   const { pathname } = useLocation();
-  const subdomainNetwork = useGetSubdomainNetwork();
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
@@ -49,6 +44,7 @@ export const Hero = () => {
   const showNodesStats = useShowNodesStats();
   const showTransactionsStats = useShowTransactionStats() && isMainnet;
 
+  const { subdomainNetwork } = getSubdomainNetwork();
   const pathArray = pathname.split('/').filter((path) => path);
 
   const basePage =
