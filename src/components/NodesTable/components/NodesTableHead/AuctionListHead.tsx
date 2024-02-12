@@ -4,7 +4,7 @@ export const AuctionListHead = () => {
   return (
     <tr>
       <th className='th-rank'>
-        <Sort id='position' field='Position' />
+        <Sort id='auctionPosition' field='Position' />
       </th>
       <th className='th-eligibility'>Qualified</th>
       <th className='th-identity'>

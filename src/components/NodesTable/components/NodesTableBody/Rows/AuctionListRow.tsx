@@ -42,7 +42,7 @@ export const AuctionListRow = ({
         'row-danger': nodeData?.isInDangerZone
       })}
     >
-      <td>{nodeData.auctionPosition ?? nodeData.position}</td>
+      <td>{nodeData.auctionPosition}</td>
       <td>
         <NodeQualification node={nodeData} showDangerZone={false} />
       </td>

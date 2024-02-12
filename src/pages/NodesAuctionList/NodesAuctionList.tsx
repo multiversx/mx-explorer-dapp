@@ -42,7 +42,7 @@ export const NodesAuctionList = () => {
   );
 
   if (!sort.sort) {
-    sort.sort = 'position';
+    sort.sort = 'auctionPosition';
     sort.order = SortOrderEnum.asc;
   }
 
@@ -101,7 +101,7 @@ export const NodesAuctionList = () => {
             dangerZoneValidators={dangerZoneValidatorsCount}
             waitingValidators={waitingValidatorsCount}
           />
-          {dataReady === true && isCustomSize && (
+          {dataReady === true && (isCustomSize || !hasTresholdRow) && (
             <Pager
               itemsPerPage={size}
               total={totalNodes}
@@ -132,7 +132,7 @@ export const NodesAuctionList = () => {
                   />
                 </NodesTable>
               </div>
-              {isCustomSize && (
+              {(isCustomSize || !hasTresholdRow) && (
                 <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
                   <Pager total={totalNodes} itemsPerPage={size} show />
                 </div>
