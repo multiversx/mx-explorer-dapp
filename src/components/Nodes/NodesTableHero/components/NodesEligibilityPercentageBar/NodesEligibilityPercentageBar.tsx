@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { MultilayerPercentageBar, Overlay, Led } from 'components';
+import { formatBigNumber } from 'helpers';
 import { faSquareInfo } from 'icons/solid';
 import { stakeSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
@@ -55,7 +56,9 @@ export const NodesEligibilityPercentageBar = ({
             >
               <div className='name'>Not Qualified</div>
               <div className='description'>{waitingValidators}</div>
-              <div className='value'>{percentageNotEligible.toFormat(0)}%</div>
+              <div className='value'>
+                {formatBigNumber(percentageNotEligible)}%
+              </div>
             </div>
           )
         },
@@ -90,7 +93,9 @@ export const NodesEligibilityPercentageBar = ({
                 </Overlay>
               </div>
               <div className='description'>{dangerZoneValidators}</div>
-              <div className='value'>{percentageDangerZone.toFormat(0)}%</div>
+              <div className='value'>
+                {formatBigNumber(percentageDangerZone)}%
+              </div>
             </div>
           )
         },
@@ -105,7 +110,9 @@ export const NodesEligibilityPercentageBar = ({
             >
               <div className='name'>Qualified</div>
               <div className='description'>{eligibleValidators}</div>
-              <div className='value'>{percentageEligible.toFormat(0)}%</div>
+              <div className='value'>
+                {formatBigNumber(percentageEligible)}%
+              </div>
             </div>
           )
         }
