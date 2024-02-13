@@ -41,6 +41,12 @@ export const NodesEligibilityPercentageBar = ({
   )
     .dividedBy(totalValidators)
     .times(100);
+  const percentageQualifiedNoDangerZone = new BigNumber(
+    unprocessed.qualifiedAuctionValidators ?? 0
+  )
+    .minus(unprocessed.dangerZoneValidators ?? 0)
+    .dividedBy(totalValidators)
+    .times(100);
 
   return (
     <MultilayerPercentageBar
@@ -93,20 +99,19 @@ export const NodesEligibilityPercentageBar = ({
                 </Overlay>
               </div>
               <div className='description'>{dangerZoneValidators}</div>
-              <div className='value'>
-                {formatBigNumber(percentageDangerZone)}%
-              </div>
             </div>
           )
         },
         {
           name: 'Qualified',
-          value: percentageQualified.toFixed(2),
+          value: percentageQualifiedNoDangerZone.toFixed(2),
           className: 'bg-green-400',
           legend: (
             <div
               className='legend'
-              style={{ width: `${percentageQualified.toFixed(2)}%` }}
+              style={{
+                width: `${percentageQualifiedNoDangerZone.toFixed(2)}%`
+              }}
             >
               <div className='name'>Qualified</div>
               <div className='description'>{qualifiedAuctionValidators}</div>
