@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 
-import { FormattedValue } from 'components';
+import { Denominate } from 'components';
 import { useGetRemainingTime } from 'hooks';
 import { faClock } from 'icons/solid';
 import { stakeSelector, statsSelector } from 'redux/selectors';
@@ -90,16 +90,10 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
                       Node Qualification Threshold
                     </div>
                     <h3 className='mb-0 text-lh-24'>
-                      {/* <Denominate
+                      <Denominate
                         value={unprocessed.minimumAuctionQualifiedStake}
                         superSuffix
                         decimals={4}
-                      /> */}
-                      <FormattedValue
-                        value={new BigNumber(
-                          unprocessed.minimumAuctionQualifiedStake
-                        ).toFormat(0)}
-                        showEgldLabel
                       />
                     </h3>
                   </div>

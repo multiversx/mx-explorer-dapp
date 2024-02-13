@@ -47,6 +47,11 @@ export const useFetchStake = () => {
           .toNumber();
       }
 
+      // TOSO - temporary
+      if (data.minimumAuctionQualifiedStake === '2500') {
+        data.minimumAuctionQualifiedStake = '2500000000000000000000';
+      }
+
       const processedStake = processStake(data);
       dispatch(
         setStake({
