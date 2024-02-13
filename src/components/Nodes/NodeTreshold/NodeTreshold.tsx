@@ -32,9 +32,12 @@ export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
   if (bNTreshold.isGreaterThanOrEqualTo(0)) {
     return (
       <span
-        className={classNames(className, { 'text-success': !isInDangerZone })}
+        className={classNames(className, {
+          'text-success': !isInDangerZone && bNTreshold.isGreaterThan(0)
+        })}
       >
-        +<Denominate value={bNTreshold.toString(10)} showSymbol={false} />
+        {bNTreshold.isGreaterThan(0) && <>+</>}
+        <Denominate value={bNTreshold.toString(10)} showSymbol={false} />
       </span>
     );
   }

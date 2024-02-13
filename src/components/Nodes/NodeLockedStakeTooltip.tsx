@@ -20,9 +20,9 @@ export const NodeLockedStakeTooltip = ({
     node.auctionTopUp
   ) {
     return (
-      <>
+      <div className='d-flex flex-column gap-1'>
         {node.stake && (
-          <p className='mb-1'>
+          <p className='mb-0'>
             Staked: <Denominate value={node.stake} showTooltip={false} />
           </p>
         )}
@@ -37,7 +37,7 @@ export const NodeLockedStakeTooltip = ({
             <Denominate value={node.auctionTopUp} showTooltip={false} />
           </p>
         )}
-      </>
+      </div>
     );
   }
 

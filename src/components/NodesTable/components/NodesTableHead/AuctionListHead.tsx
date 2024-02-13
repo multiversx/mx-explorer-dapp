@@ -14,7 +14,7 @@ export const AuctionListHead = () => {
       <th className='th-stake'>
         <Sort id='locked' field='Stake / Node' />
       </th>
-      <th className='th-treshold'>Until Treshold</th>
+      <th className='th-treshold'>Above Treshold</th>
       <th className='th-info'></th>
     </tr>
   );

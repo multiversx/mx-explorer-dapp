@@ -10,9 +10,13 @@ export interface StakeType {
   minimumAuctionQualifiedTopUp?: string;
   minimumAuctionQualifiedStake?: string;
   auctionValidators?: number;
-  eligibleValidators?: number;
+  qualifiedAuctionValidators?: number;
   dangerZoneValidators?: number;
+  eligibleValidators?: number;
   waitingValidators?: number;
+
+  // not in API
+  notQualifiedAuctionValidators?: number;
 }
 
 export interface StakeSliceType extends SliceType {
@@ -27,7 +31,11 @@ export interface StakeSliceType extends SliceType {
   minimumAuctionQualifiedTopUp?: string;
   minimumAuctionQualifiedStake?: string;
   auctionValidators?: string;
-  eligibleValidators?: string;
+  qualifiedAuctionValidators?: string;
   dangerZoneValidators?: string;
+  eligibleValidators?: string;
   waitingValidators?: string;
+
+  // not in API
+  notQualifiedAuctionValidators?: string;
 }

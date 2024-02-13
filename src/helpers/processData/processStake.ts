@@ -55,9 +55,18 @@ export const processStake = (data: StakeType) => {
           auctionValidators: new BigNumber(data.auctionValidators).toFormat(0)
         }
       : {}),
-    ...(data.eligibleValidators !== undefined
+    ...(data.qualifiedAuctionValidators !== undefined
       ? {
-          eligibleValidators: new BigNumber(data.eligibleValidators).toFormat(0)
+          qualifiedAuctionValidators: new BigNumber(
+            data.qualifiedAuctionValidators
+          ).toFormat(0)
+        }
+      : {}),
+    ...(data.notQualifiedAuctionValidators !== undefined
+      ? {
+          notQualifiedAuctionValidators: new BigNumber(
+            data.notQualifiedAuctionValidators
+          ).toFormat(0)
         }
       : {}),
     ...(data.dangerZoneValidators !== undefined
@@ -65,6 +74,11 @@ export const processStake = (data: StakeType) => {
           dangerZoneValidators: new BigNumber(
             data.dangerZoneValidators
           ).toFormat(0)
+        }
+      : {}),
+    ...(data.eligibleValidators !== undefined
+      ? {
+          eligibleValidators: new BigNumber(data.eligibleValidators).toFormat(0)
         }
       : {}),
     ...(data.waitingValidators !== undefined

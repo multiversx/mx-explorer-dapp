@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import BigNumber from 'bignumber.js';
 import { useDispatch } from 'react-redux';
 
 import { processStake } from 'helpers';
@@ -34,23 +35,18 @@ export const useFetchStake = () => {
   const fetchStake = async () => {
     const { data, success } = await getStakeOnce();
 
-    // TODO - Temporary Hardcoded
-    // const { data: fetchData, success } = await getStakeOnce();
-    // const data = {
-    //   ...fetchData,
-    //   nakamotoCoefficient: fetchData.nakamotoCoefficient ?? 5, // nakamotoCoefficient (calculated as top x identities by validators to reach > 33.3%)
-    //   minimumAuctionQualifiedTopUp:
-    //     fetchData.nakamotoCoefficient ?? '1743213300000000000000', // minimumAuctionQualifiedTopUp (moved from /economics)
-    //   minimumAuctionQualifiedStake:
-    //     fetchData.minimumAuctionQualifiedStake ?? '4243213300000000000000', // minimumAuctionQualifiedStake (2500 + minimumAuctionQualifiedTopUp)
-    //   dangerZoneValidators:
-    //     fetchData.dangerZoneValidators ?? fetchData.activeValidators - 1800,
-    //   eligibleValidators:
-    //     fetchData.eligibleValidators ?? fetchData.activeValidators,
-    //   waitingValidators: fetchData.waitingValidators ?? 1800
-    // };
-
     if (data && success) {
+      if (
+        data.auctionValidators !== undefined &&
+        data.qualifiedAuctionValidators !== undefined
+      ) {
+        data.notQualifiedAuctionValidators = new BigNumber(
+          data.auctionValidators
+        )
+          .minus(data.qualifiedAuctionValidators)
+          .toNumber();
+      }
+
       const processedStake = processStake(data);
       dispatch(
         setStake({

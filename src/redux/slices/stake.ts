@@ -36,8 +36,12 @@ export const stakeSlice = createSlice({
       state.minimumAuctionQualifiedStake =
         action.payload.minimumAuctionQualifiedStake;
       state.auctionValidators = action.payload.auctionValidators;
-      state.eligibleValidators = action.payload.eligibleValidators;
+      state.qualifiedAuctionValidators =
+        action.payload.qualifiedAuctionValidators;
       state.dangerZoneValidators = action.payload.dangerZoneValidators;
+      state.notQualifiedAuctionValidators =
+        action.payload.notQualifiedAuctionValidators;
+      state.eligibleValidators = action.payload.eligibleValidators;
       state.waitingValidators = action.payload.waitingValidators;
 
       state.unprocessed = action.payload.unprocessed;

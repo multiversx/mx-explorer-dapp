@@ -10,33 +10,20 @@ import { stakeSelector } from 'redux/selectors';
 
 export interface AuctionListFiltersUIType {
   onlySearch?: boolean;
-  eligibleValidators?: number;
-  waitingValidators?: number;
-  dangerZoneValidators?: number;
-  auctionValidators?: number;
 }
 
 export const AuctionListFilters = ({
-  eligibleValidators: paramEligibleValidators,
-  waitingValidators: paramWaitingValidators,
-  dangerZoneValidators: paramDangerZoneValidators,
-  auctionValidators: paramAuctionValidators,
   onlySearch
 }: AuctionListFiltersUIType) => {
   const {
     unprocessed: {
-      eligibleValidators: stateEligibleValidators,
-      waitingValidators: stateWaitingValidators,
-      dangerZoneValidators: stateDangerZoneValidators,
-      auctionValidators: stateAuctionValidators
+      qualifiedAuctionValidators,
+      notQualifiedAuctionValidators,
+      dangerZoneValidators,
+      auctionValidators
     }
   } = useSelector(stakeSelector);
 
-  const eligibleValidators = paramEligibleValidators ?? stateEligibleValidators;
-  const waitingValidators = paramWaitingValidators ?? stateWaitingValidators;
-  const dangerZoneValidators =
-    paramDangerZoneValidators ?? stateDangerZoneValidators;
-  const auctionValidators = paramAuctionValidators ?? stateAuctionValidators;
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { search, isAuctionDangerZone, isQualified } =
@@ -140,9 +127,9 @@ export const AuctionListFilters = ({
             >
               <Led color='bg-green-400 me-1' />
               Qualified{' '}
-              {eligibleValidators !== undefined && (
+              {qualifiedAuctionValidators !== undefined && (
                 <span className='badge badge-grey p-1 ms-1'>
-                  {new BigNumber(eligibleValidators).toFormat(0)}
+                  {new BigNumber(qualifiedAuctionValidators).toFormat(0)}
                 </span>
               )}
             </button>
@@ -182,9 +169,9 @@ export const AuctionListFilters = ({
             >
               <Led color='bg-neutral-750 me-1' />
               Not Qualified{' '}
-              {waitingValidators !== undefined && (
+              {notQualifiedAuctionValidators !== undefined && (
                 <span className='badge badge-grey p-1 ms-1'>
-                  {new BigNumber(waitingValidators).toFormat(0)}
+                  {new BigNumber(notQualifiedAuctionValidators).toFormat(0)}
                 </span>
               )}
             </button>

@@ -8,5 +8,10 @@ export const formatBigNumber = (
   const bN = BigNumber.isBigNumber(number)
     ? number.toFormat()
     : new BigNumber(number).toFormat();
-  return bN.slice(0, bN.indexOf('.') + 1 + maxDigits);
+
+  if (bN.includes('.')) {
+    return bN.slice(0, bN.indexOf('.') + maxDigits + 1);
+  }
+
+  return bN;
 };

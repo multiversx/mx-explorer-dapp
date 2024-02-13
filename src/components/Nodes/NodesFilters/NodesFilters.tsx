@@ -287,7 +287,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
                       document.body.click();
                     }}
                   >
-                    Auction
+                    Auction List
                   </Dropdown.Item>
                 )}
                 <Dropdown.Item

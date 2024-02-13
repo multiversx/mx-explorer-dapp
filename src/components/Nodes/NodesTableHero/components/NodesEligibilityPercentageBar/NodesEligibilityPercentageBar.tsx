@@ -14,22 +14,20 @@ export const NodesEligibilityPercentageBar = ({
 }: WithClassnameType) => {
   const {
     isFetched: isStakeFetched,
-    eligibleValidators,
-    waitingValidators,
+    qualifiedAuctionValidators,
+    notQualifiedAuctionValidators,
     dangerZoneValidators,
     unprocessed
   } = useSelector(stakeSelector);
 
-  const totalValidators = new BigNumber(unprocessed.eligibleValidators ?? 0)
-    .plus(unprocessed.dangerZoneValidators ?? 0)
-    .plus(unprocessed.waitingValidators ?? 0);
-
-  if (!isStakeFetched || !totalValidators.isGreaterThan(0)) {
+  if (!isStakeFetched || !unprocessed?.auctionValidators) {
     return null;
   }
 
-  const percentageNotEligible = new BigNumber(
-    unprocessed.waitingValidators ?? 0
+  const totalValidators = new BigNumber(unprocessed.auctionValidators);
+
+  const percentageNotQualified = new BigNumber(
+    notQualifiedAuctionValidators ?? 0
   )
     .dividedBy(totalValidators)
     .times(100);
@@ -38,7 +36,9 @@ export const NodesEligibilityPercentageBar = ({
   )
     .dividedBy(totalValidators)
     .times(100);
-  const percentageEligible = new BigNumber(unprocessed.eligibleValidators ?? 0)
+  const percentageQualified = new BigNumber(
+    unprocessed.qualifiedAuctionValidators ?? 0
+  )
     .dividedBy(totalValidators)
     .times(100);
 
@@ -47,17 +47,17 @@ export const NodesEligibilityPercentageBar = ({
       steps={[
         {
           name: 'Not Qualified',
-          value: percentageNotEligible.toFixed(2),
+          value: percentageNotQualified.toFixed(2),
           className: 'bg-neutral-750',
           legend: (
             <div
               className='legend'
-              style={{ width: `${percentageNotEligible.toFixed(2)}%` }}
+              style={{ width: `${percentageNotQualified.toFixed(2)}%` }}
             >
               <div className='name'>Not Qualified</div>
-              <div className='description'>{waitingValidators}</div>
+              <div className='description'>{notQualifiedAuctionValidators}</div>
               <div className='value'>
-                {formatBigNumber(percentageNotEligible)}%
+                {formatBigNumber(percentageNotQualified)}%
               </div>
             </div>
           )
@@ -101,17 +101,17 @@ export const NodesEligibilityPercentageBar = ({
         },
         {
           name: 'Qualified',
-          value: percentageEligible.toFixed(2),
+          value: percentageQualified.toFixed(2),
           className: 'bg-green-400',
           legend: (
             <div
               className='legend'
-              style={{ width: `${percentageEligible.toFixed(2)}%` }}
+              style={{ width: `${percentageQualified.toFixed(2)}%` }}
             >
               <div className='name'>Qualified</div>
-              <div className='description'>{eligibleValidators}</div>
+              <div className='description'>{qualifiedAuctionValidators}</div>
               <div className='value'>
-                {formatBigNumber(percentageEligible)}%
+                {formatBigNumber(percentageQualified)}%
               </div>
             </div>
           )

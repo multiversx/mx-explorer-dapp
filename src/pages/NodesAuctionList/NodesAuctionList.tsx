@@ -76,17 +76,6 @@ export const NodesAuctionList = () => {
     });
   };
 
-  const eligibleValidatorsCount = nodes
-    ? nodes.filter(({ auctionQualified }) => Boolean(auctionQualified)).length
-    : 0;
-  const waitingValidatorsCount = nodes
-    ? nodes.filter(({ auctionQualified }) => !Boolean(auctionQualified)).length
-    : 0;
-  const dangerZoneValidatorsCount = nodes
-    ? nodes.filter(({ isInDangerZone }) => Boolean(isInDangerZone)).length
-    : 0;
-  const auctionValidatorsCount = nodes ? nodes.length : 0;
-
   useEffect(fetchNodes, [searchParams]);
 
   return (
@@ -95,12 +84,7 @@ export const NodesAuctionList = () => {
         <NodesTabs />
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <NodesTableHero />
-          <AuctionListFilters
-            auctionValidators={auctionValidatorsCount}
-            eligibleValidators={eligibleValidatorsCount}
-            dangerZoneValidators={dangerZoneValidatorsCount}
-            waitingValidators={waitingValidatorsCount}
-          />
+          <AuctionListFilters />
           {dataReady === true && (isCustomSize || !hasTresholdRow) && (
             <Pager
               itemsPerPage={size}
