@@ -6,25 +6,26 @@ import { useSearchParams } from 'react-router-dom';
 
 import { faSearch, faTimes } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
+import { SortOrderEnum } from 'types';
 
 export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   const { queueSize, auctionValidators } = useSelector(stakeSelector);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { search, status, issues, type, fullHistory, isAuctioned } =
+  const { search, status, issues, type, fullHistory } =
     Object.fromEntries(searchParams);
   const [inputValue, setInputValue] = useState<string>(search);
 
-  const isMoreActive =
-    [
-      'eligible',
-      'waiting',
-      'new',
-      'jailed',
-      'leaving',
-      'queued',
-      'inactive'
-    ].includes(status) || isAuctioned;
+  const isMoreActive = [
+    'eligible',
+    'waiting',
+    'new',
+    'jailed',
+    'leaving',
+    'queued',
+    'inactive',
+    'auction'
+  ].includes(status);
 
   const changeValidatorValue: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -43,20 +44,27 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   };
 
   const nodeStatusLink = (statusValue: string) => {
-    const { status, type, issues, fullHistory, isAuctioned, page, ...rest } =
+    const { status, type, issues, fullHistory, page, sort, order, ...rest } =
       Object.fromEntries(searchParams);
 
-    const nextUrlParams = {
+    const nextUrlParams: { [k: string]: string } = {
       ...rest,
-      ...(statusValue ? { status: statusValue } : {}),
-      ...(statusValue && statusValue === 'queued' ? { sort: 'position' } : {})
+      ...(statusValue ? { status: statusValue } : {})
     };
 
+    if (statusValue === 'queued') {
+      nextUrlParams.sort = 'position';
+      nextUrlParams.order = SortOrderEnum.asc;
+    }
+    if (statusValue === 'auction') {
+      nextUrlParams.sort = 'auctionPosition';
+      nextUrlParams.order = SortOrderEnum.asc;
+    }
     setSearchParams(nextUrlParams);
   };
 
   const nodeTypeLink = (typeValue: string) => {
-    const { type, status, issues, fullHistory, isAuctioned, page, ...rest } =
+    const { type, status, issues, fullHistory, page, sort, order, ...rest } =
       Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
@@ -67,7 +75,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   };
 
   const issuesLink = (issuesValue: boolean) => {
-    const { type, status, issues, fullHistory, isAuctioned, page, ...rest } =
+    const { type, status, issues, fullHistory, page, sort, order, ...rest } =
       Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
@@ -78,22 +86,11 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   };
 
   const fullHistoryLink = (fullHistoryValue: boolean) => {
-    const { type, status, issues, fullHistory, isAuctioned, page, ...rest } =
+    const { type, status, issues, fullHistory, page, sort, order, ...rest } =
       Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
       ...(fullHistoryValue ? { fullHistory: String(fullHistoryValue) } : {})
-    };
-
-    setSearchParams(nextUrlParams);
-  };
-
-  const isAuctionedLink = (isAuctionedValue: boolean) => {
-    const { type, status, issues, fullHistory, isAuctioned, page, ...rest } =
-      Object.fromEntries(searchParams);
-    const nextUrlParams = {
-      ...rest,
-      ...(isAuctionedValue ? { isAuctioned: String(isAuctionedValue) } : {})
     };
 
     setSearchParams(nextUrlParams);
@@ -110,7 +107,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
                 nodeTypeLink('');
               }}
               className={`badge py-2 px-3 br-lg ${
-                [search, status, issues, type, fullHistory, isAuctioned].every(
+                [search, status, issues, type, fullHistory].every(
                   (el) => el === undefined
                 )
                   ? 'badge-grey'
@@ -282,15 +279,15 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
                   <Dropdown.Item
                     as={Anchor}
                     className={`dropdown-item ${
-                      isAuctioned === 'true' ? 'active' : ''
+                      status === 'auction' ? 'active' : ''
                     }`}
                     data-testid='filterByValidators'
                     onClick={() => {
-                      isAuctionedLink(true);
+                      nodeStatusLink('auction');
                       document.body.click();
                     }}
                   >
-                    Auction List
+                    Auction
                   </Dropdown.Item>
                 )}
                 <Dropdown.Item

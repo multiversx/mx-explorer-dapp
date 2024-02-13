@@ -9,7 +9,8 @@ export interface NodeType {
     | 'jailed'
     | 'leaving'
     | 'inactive'
-    | 'queued';
+    | 'queued'
+    | 'auction';
   online: boolean;
   rating: number;
   tempRating: number;
