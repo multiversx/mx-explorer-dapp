@@ -45,7 +45,7 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
     <div className={classNames('nodes-table-hero w-100 mb-3', className)}>
       <div className='row gy-3'>
         <div className='col-xl-7'>
-          <div className='card bg-neutral-800'>
+          <div className='card bg-neutral-800-opacity-60'>
             <div className='card-body d-flex flex-column gap-3'>
               <h4 className='mb-0'>Qualified Nodes</h4>
               <NodesEligibilityPercentageBar />
@@ -54,7 +54,7 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
         </div>
         <div className='col-xl-5'>
           <div className='d-flex flex-column gap-3 h-100'>
-            <div className='card bg-neutral-800 flex-fill'>
+            <div className='card bg-neutral-800-opacity-60 flex-fill'>
               <div className='card-body d-flex align-items-center'>
                 <div className='d-flex w-100 flex-wrap gap-3 align-items-start justify-content-between'>
                   <div className='text-primary-100 small'>
@@ -83,7 +83,7 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
               </div>
             </div>
             {unprocessed.minimumAuctionQualifiedStake && (
-              <div className='card bg-neutral-800 flex-fill'>
+              <div className='card bg-neutral-800-opacity-60 flex-fill'>
                 <div className='card-body d-flex align-items-center'>
                   <div className='d-flex w-100 flex-wrap gap-3 align-items-start justify-content-between'>
                     <div className='text-neutral-500 small'>

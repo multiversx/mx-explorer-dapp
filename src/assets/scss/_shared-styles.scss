@@ -241,7 +241,7 @@
   .new td {
     @keyframes highlight {
       from {
-        background-color: var(--neutral-transparent);
+        background-color: var(--neutral-800-opacity-60);
       }
     }
     animation: highlight 1000ms ease-in-out;
@@ -467,4 +467,8 @@ div.side-icon {
   .tooltip-inner {
     text-align: left;
   }
+}
+
+.bg-neutral-800-opacity-60 {
+  background-color: var(--neutral-800-opacity-60);
 }
