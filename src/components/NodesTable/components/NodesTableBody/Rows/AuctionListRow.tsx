@@ -7,7 +7,7 @@ import {
   Overlay,
   Denominate,
   NodeDangerZoneTooltip,
-  NodeIcon,
+  NodeStatusIcon,
   NodeFullHistoryIcon,
   NodeIssueIcon,
   NodeLockedStakeTooltip,
@@ -77,8 +77,7 @@ export const AuctionListRow = ({
         </div>
       </td>
       <td>
-        <div className='d-flex align-items-center hash'>
-          <NodeIcon node={nodeData} />
+        <div className='d-flex align-items-center gap-1 hash'>
           <NodeFullHistoryIcon node={nodeData} />
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}

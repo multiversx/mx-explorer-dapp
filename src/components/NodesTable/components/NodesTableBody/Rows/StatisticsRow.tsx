@@ -2,7 +2,7 @@ import {
   NetworkLink,
   NodeRating,
   Trim,
-  NodeIcon,
+  NodeStatusIcon,
   NodeIssueIcon
 } from 'components';
 import { urlBuilder } from 'helpers';
@@ -12,8 +12,8 @@ export const StatisticsRow = ({ nodeData }: { nodeData: NodeType }) => {
   return (
     <tr>
       <td>
-        <div className='d-flex align-items-center hash'>
-          <NodeIcon node={nodeData} />
+        <div className='d-flex align-items-center gap-1 hash'>
+          <NodeStatusIcon node={nodeData} />
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}
             className='trim-wrapper'

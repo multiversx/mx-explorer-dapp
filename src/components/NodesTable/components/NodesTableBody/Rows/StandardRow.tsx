@@ -6,7 +6,7 @@ import {
   Trim,
   Overlay,
   Denominate,
-  NodeIcon,
+  NodeStatusIcon,
   NodeIssueIcon,
   NodeFullHistoryIcon,
   NodeLockedStakeTooltip
@@ -28,9 +28,9 @@ export const StandardRow = ({
   return (
     <tr>
       <td>
-        <div className='d-flex align-items-center hash'>
-          <NodeIcon node={nodeData} />
-          <NodeFullHistoryIcon node={nodeData} />
+        <div className='d-flex align-items-center gap-1 hash'>
+          <NodeStatusIcon node={nodeData} />
+          <NodeFullHistoryIcon node={nodeData} small={true} />
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}
             className='trim-wrapper'

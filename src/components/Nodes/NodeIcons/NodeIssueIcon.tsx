@@ -1,8 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { Overlay } from 'components';
 import { getNodeIssue, getNodeIssueIcon } from 'helpers';
 import { NodeType } from 'types';
+
+import { NodeIcon } from './NodeIcon';
 
 export const NodeIssueIcon = ({
   node,
@@ -17,24 +16,22 @@ export const NodeIssueIcon = ({
     switch (true) {
       case node.status === 'jailed':
         return (
-          <Overlay title='Jailed' className='node-icon'>
-            <FontAwesomeIcon
-              icon={icon}
-              className='text-danger ms-1'
-              size={small ? 'xs' : '1x'}
-            />
-          </Overlay>
+          <NodeIcon
+            title='Jailed'
+            icon={icon}
+            small={small}
+            className='text-danger'
+          />
         );
 
       case node.issues && node.issues.length > 0: {
         return (
-          <Overlay title={getNodeIssue(node)} className='node-icon'>
-            <FontAwesomeIcon
-              icon={icon}
-              className='ms-1 text-warning'
-              size={small ? 'xs' : '1x'}
-            />
-          </Overlay>
+          <NodeIcon
+            title={getNodeIssue(node)}
+            icon={icon}
+            small={small}
+            className='text-warning'
+          />
         );
       }
     }

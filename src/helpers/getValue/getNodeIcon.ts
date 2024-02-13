@@ -6,7 +6,8 @@ import {
   faSnooze,
   faSync,
   faLock,
-  faExclamationTriangle
+  faExclamationTriangle,
+  faGavel
 } from 'icons/regular';
 import { NodeType } from 'types';
 
@@ -29,6 +30,9 @@ export const getNodeIcon = (node: NodeType) => {
 
     case node.status === 'queued':
       return faFlagAlt;
+
+    case node.status === 'auction':
+      return faGavel;
 
     default:
       return null;

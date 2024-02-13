@@ -1,86 +1,30 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 
 import { Overlay } from 'components';
-import { getNodeIcon } from 'helpers';
-import { NodeType } from 'types';
+import { WithClassnameType } from 'types';
 
-export const NodeIcon = ({
-  node,
-  small
-}: {
-  node: NodeType;
+export interface NodeIconUIType extends WithClassnameType {
+  title: string;
+  icon: IconProp;
   small?: boolean;
-}) => {
-  const icon = getNodeIcon(node);
+}
 
-  if (icon) {
-    switch (true) {
-      case node.type === 'observer':
-        return (
-          <Overlay title='Observer' className='node-icon'>
-            <FontAwesomeIcon
-              icon={icon}
-              className='text-neutral-400 me-1'
-              size={small ? 'xs' : '1x'}
-            />
-          </Overlay>
-        );
-
-      case node.status === 'new':
-        return (
-          <Overlay title='New' className='node-icon'>
-            <FontAwesomeIcon
-              icon={icon}
-              className='text-neutral-400 me-1'
-              size={small ? 'xs' : '1x'}
-            />
-          </Overlay>
-        );
-
-      case node.status === 'inactive':
-        return (
-          <Overlay title='Inactive' className='node-icon'>
-            <FontAwesomeIcon
-              icon={icon}
-              className='text-neutral-400 me-1'
-              size={small ? 'xs' : '1x'}
-            />
-          </Overlay>
-        );
-
-      case node.receivedShardID !== node.computedShardID:
-        return (
-          <Overlay title='Changing shard' className='node-icon'>
-            <FontAwesomeIcon
-              icon={icon}
-              className='text-neutral-400 me-1'
-              size={small ? 'xs' : '1x'}
-            />
-          </Overlay>
-        );
-
-      case node.status === 'waiting':
-        return (
-          <Overlay title='Waiting' className='node-icon'>
-            <FontAwesomeIcon
-              icon={icon}
-              className='text-neutral-400 me-1'
-              size={small ? 'xs' : '1x'}
-            />
-          </Overlay>
-        );
-
-      case node.status === 'queued':
-        return (
-          <Overlay title='Queued' className='node-icon'>
-            <FontAwesomeIcon
-              icon={icon}
-              className='text-neutral-400 me-1'
-              size={small ? 'xs' : '1x'}
-            />
-          </Overlay>
-        );
-    }
+export const NodeIcon = ({ title, icon, small, className }: NodeIconUIType) => {
+  if (icon && title) {
+    return (
+      <Overlay
+        title={title}
+        className='node-icon text-neutral-400 cursor-context'
+      >
+        <FontAwesomeIcon
+          icon={icon}
+          className={classNames(className)}
+          size={small ? 'xs' : '1x'}
+        />
+      </Overlay>
+    );
   }
 
   return null;
