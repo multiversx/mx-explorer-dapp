@@ -36,28 +36,32 @@ export const useFetchStake = () => {
     const { data, success } = await getStakeOnce();
 
     if (data && success) {
-      if (
+      const hasValidatorData =
         data.auctionValidators !== undefined &&
-        data.qualifiedAuctionValidators !== undefined
-      ) {
-        data.notQualifiedAuctionValidators = new BigNumber(
-          data.auctionValidators
-        )
-          .minus(data.qualifiedAuctionValidators)
-          .toNumber();
-      }
+        data.qualifiedAuctionValidators !== undefined;
+      const processedData = {
+        ...data,
+        ...(hasValidatorData
+          ? {
+              notQualifiedAuctionValidators: new BigNumber(
+                data.auctionValidators
+              )
+                .minus(data.qualifiedAuctionValidators)
+                .toNumber()
+            }
+          : {}),
+        // TODO: temporary
+        ...(data.minimumAuctionQualifiedStake === '2500'
+          ? { minimumAuctionQualifiedStake: '2500000000000000000000' }
+          : {})
+      };
 
-      // TOSO - temporary
-      if (data.minimumAuctionQualifiedStake === '2500') {
-        data.minimumAuctionQualifiedStake = '2500000000000000000000';
-      }
-
-      const processedStake = processStake(data);
+      const processedStake = processStake(processedData);
       dispatch(
         setStake({
           ...processedStake,
 
-          unprocessed: data,
+          unprocessed: processedData,
           isFetched: true
         })
       );
