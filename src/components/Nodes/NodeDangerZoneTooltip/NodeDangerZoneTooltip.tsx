@@ -22,25 +22,27 @@ export const NodeDangerZoneTooltip = ({
 }: NodeDangerZoneTooltipUIType) => {
   const {
     isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionQualifiedTopUp }
+    unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
-  const { auctionTopUp, isInDangerZone } = node;
+  const { stake, auctionTopUp, isInDangerZone } = node;
 
   if (
     !isStakeFetched ||
-    minimumAuctionQualifiedTopUp === undefined ||
-    auctionTopUp === undefined
+    minimumAuctionQualifiedStake === undefined ||
+    stake === undefined
   ) {
     return null;
   }
 
-  const bNTopup = new BigNumber(auctionTopUp);
-  const bNMinimumAuctionTopup = new BigNumber(minimumAuctionQualifiedTopUp);
+  const bNStake = new BigNumber(stake).plus(auctionTopUp ?? 0);
+  const bNMinimumAuctionStake = new BigNumber(minimumAuctionQualifiedStake);
 
-  if (bNTopup.isGreaterThanOrEqualTo(bNMinimumAuctionTopup) && isInDangerZone) {
-    const topupNeeded = bNMinimumAuctionTopup.minus(bNTopup);
-    const dangerZoneThreshold = bNMinimumAuctionTopup.times(5).dividedBy(100);
-    const topupNeededAboveDangerZone = bNTopup.minus(dangerZoneThreshold);
+  if (bNStake.isGreaterThanOrEqualTo(bNMinimumAuctionStake) && isInDangerZone) {
+    const bNDangerZoneTreshold = bNMinimumAuctionStake
+      .times(105)
+      .dividedBy(100);
+    const bNStakeAboveTreshold = bNStake.minus(bNMinimumAuctionStake);
+    const bNStakeNeededAboveDangerZone = bNDangerZoneTreshold.minus(bNStake);
 
     return (
       <div className={classNames('d-flex align-items-center gap-1', className)}>
@@ -54,14 +56,14 @@ export const NodeDangerZoneTooltip = ({
                 </p>
                 <p className='mb-0'>
                   This node is only{' '}
-                  <Denominate value={topupNeeded.toString(10)} /> above the
-                  threshold level.
-                  {topupNeededAboveDangerZone.isGreaterThan(0) && (
+                  <Denominate value={bNStakeAboveTreshold.toString(10)} /> above
+                  the threshold level.
+                  {bNStakeNeededAboveDangerZone.isGreaterThan(0) && (
                     <>
                       {' '}
                       Increase the staked amount with{' '}
                       <Denominate
-                        value={topupNeededAboveDangerZone.toString(10)}
+                        value={bNStakeNeededAboveDangerZone.toString(10)}
                       />{' '}
                       / node to exit the danger zone and move up on the auction
                       list.

@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
 import {
@@ -7,7 +8,6 @@ import {
   Overlay,
   Denominate,
   NodeDangerZoneTooltip,
-  NodeStatusIcon,
   NodeFullHistoryIcon,
   NodeIssueIcon,
   NodeLockedStakeTooltip,
@@ -30,6 +30,9 @@ export const AuctionListRow = ({
 }: AuctionListRowUIType) => {
   const nodeIdentity = identities.find(
     (identity) => identity.identity === nodeData.identity
+  );
+  const bNStake = new BigNumber(nodeData.stake).plus(
+    nodeData.auctionTopUp ?? 0
   );
 
   const nodeIdentityLink = nodeData.identity
@@ -94,7 +97,7 @@ export const AuctionListRow = ({
           tooltipClassName='tooltip-text-start tooltip-lg'
           className='cursor-context'
         >
-          <Denominate value={nodeData.locked} showTooltip={false} />
+          <Denominate value={bNStake.toString(10)} showTooltip={false} />
         </Overlay>
       </td>
       <td>
