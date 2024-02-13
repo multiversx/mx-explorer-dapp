@@ -31,7 +31,10 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
   const remainingTime = useGetRemainingTime({
     timeData: currentTimestamp,
     onCountdownEnd: () => {
-      setRefreshTrigger(unprocessedEpochTimeRemaining);
+      setTimeout(() => {
+        setRefreshTrigger(moment().unix());
+        return;
+      }, 500);
     }
   });
 
