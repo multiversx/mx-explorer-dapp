@@ -3,9 +3,10 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { PageState } from 'components';
+import { useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
-import { IdentityType, NodeType } from 'types';
+import { IdentityType, NodeType, SortOrderEnum } from 'types';
 
 import { AuctionListRow } from './Rows/AuctionListRow';
 import { AuctionListTresholdRow } from './Rows/AuctionListTresholdRow';
@@ -24,6 +25,21 @@ export interface NodesTableBodyUIType {
   identities?: IdentityType[];
 }
 
+const findTresholdNode = (
+  node: NodeType,
+  minimumAuctionQualifiedStake?: string
+) => {
+  const bNStake = new BigNumber(node.stake ?? 0).plus(node.auctionTopUp ?? 0);
+  const bNMinimumAuctionStake = new BigNumber(
+    minimumAuctionQualifiedStake ?? 0
+  );
+
+  return (
+    bNStake.isGreaterThanOrEqualTo(bNMinimumAuctionStake) &&
+    node.auctionQualified
+  );
+};
+
 export const NodesTableBody = ({
   nodes,
   statistics,
@@ -41,22 +57,26 @@ export const NodesTableBody = ({
   const {
     unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
+  const { sort, order } = useGetSort();
+  const isSortDesc = sort === 'auctionPosition' && order === SortOrderEnum.desc;
 
-  const tresholdIndex = nodes.findLastIndex((node) => {
-    const bNStake = new BigNumber(node.stake ?? 0).plus(node.auctionTopUp ?? 0);
-    const bNMinimumAuctionStake = new BigNumber(
-      minimumAuctionQualifiedStake ?? 0
-    );
-
-    return (
-      bNStake.isGreaterThanOrEqualTo(bNMinimumAuctionStake) &&
-      node.auctionQualified
-    );
-  });
+  const tresholdIndex = isSortDesc
+    ? nodes.findIndex((node) =>
+        findTresholdNode(node, minimumAuctionQualifiedStake)
+      )
+    : nodes.findLastIndex((node) =>
+        findTresholdNode(node, minimumAuctionQualifiedStake)
+      );
 
   return (
     <tbody>
       {nodes.map((nodeData, index) => {
+        const showTresholdRow =
+          tresholdIndex &&
+          tresholdIndex !== nodes.length - 1 &&
+          index === tresholdIndex &&
+          hasTresholdRow;
+
         if (statistics) {
           return <StatisticsRow nodeData={nodeData} key={nodeData.bls} />;
         }
@@ -66,8 +86,11 @@ export const NodesTableBody = ({
         if (auctionList) {
           return (
             <Fragment key={nodeData.bls}>
+              {isSortDesc && showTresholdRow && (
+                <AuctionListTresholdRow key={nodeData.bls} isSortDesc />
+              )}
               <AuctionListRow nodeData={nodeData} identities={identities} />
-              {tresholdIndex && index === tresholdIndex && hasTresholdRow && (
+              {!isSortDesc && showTresholdRow && (
                 <AuctionListTresholdRow key={nodeData.bls} />
               )}
             </Fragment>

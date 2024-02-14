@@ -9,10 +9,12 @@ import { WithClassnameType } from 'types';
 
 export interface AuctionListTresholdRowUIType extends WithClassnameType {
   colSpan?: number;
+  isSortDesc?: boolean;
 }
 
 export const AuctionListTresholdRow = ({
   colSpan = 7,
+  isSortDesc,
   className
 }: AuctionListTresholdRowUIType) => {
   const {
@@ -27,11 +29,13 @@ export const AuctionListTresholdRow = ({
         <div className='d-flex flex-row gap-5 align-items-center my-spacer'>
           <div className='d-flex flex-fill flex-column w-0'>
             <div className='d-flex align-items-center gap-2 text-neutral-500'>
-              <FontAwesomeIcon icon={faUp} /> Qualified
+              <FontAwesomeIcon icon={faUp} />
+              {isSortDesc ? 'Not Qualified' : 'Qualified'}
             </div>
             <hr className='d-flex flex-fill text-neutral-800 opacity-100 my-2' />
             <div className='d-flex align-items-center gap-2 text-neutral-500'>
-              <FontAwesomeIcon icon={faDown} /> Not Qualified
+              <FontAwesomeIcon icon={faDown} />
+              {isSortDesc ? 'Qualified' : 'Not Qualified'}
             </div>
           </div>
 
