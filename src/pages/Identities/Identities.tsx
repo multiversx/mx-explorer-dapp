@@ -95,7 +95,7 @@ export const Identities = () => {
                     {nakamotoCoefficient && i === nakamotoCoefficient && (
                       <ResiliencyRow coefficient={nakamotoCoefficient} />
                     )}
-                    <IdentityRow key={i} identity={identity} />
+                    <IdentityRow key={i} index={i + 1} identity={identity} />
                   </Fragment>
                 ))}
               </tbody>

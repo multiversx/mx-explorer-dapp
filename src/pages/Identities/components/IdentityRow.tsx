@@ -20,9 +20,10 @@ import { IdentityType, NodeType } from 'types';
 
 export interface IdentityRowType {
   identity: IdentityType;
+  index?: number;
 }
 
-export const IdentityRow = ({ identity }: IdentityRowType) => {
+export const IdentityRow = ({ identity, index }: IdentityRowType) => {
   const ref = useRef(null);
   const [collapsed, setCollapsed] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
@@ -67,7 +68,7 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
         className={`identity-row ${collapsed ? 'collapsed' : ''}`}
         ref={ref}
       >
-        <td>{identity.rank}</td>
+        <td>{index ?? identity.rank}</td>
         <td>
           <div className='d-flex align-items-center'>
             <NetworkLink to={link}>
