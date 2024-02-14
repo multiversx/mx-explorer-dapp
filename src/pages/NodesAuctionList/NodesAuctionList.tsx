@@ -40,6 +40,16 @@ export const NodesAuctionList = () => {
   const hasTresholdRow = [search, ...Object.keys(nodeFilters)].every(
     (el) => el === undefined
   );
+  let filterText = '';
+  if (!nodeFilters.isQualified) {
+    filterText = 'Unqualified';
+  }
+  if (nodeFilters.isQualified) {
+    filterText = 'Qualified';
+  }
+  if (nodeFilters.isAuctionDangerZone) {
+    filterText = 'Danger Zone';
+  }
 
   if (!sort.sort) {
     sort.sort = 'auctionPosition';
@@ -103,7 +113,12 @@ export const NodesAuctionList = () => {
       {dataReady === true && (
         <>
           {nodes.length === 0 ? (
-            <PageState icon={faCogs} title='No Nodes in Auction List' />
+            <PageState
+              icon={faCogs}
+              title={`No ${
+                filterText ? `${filterText} ` : ''
+              }Nodes in Auction List`}
+            />
           ) : (
             <>
               <div className='card-body'>

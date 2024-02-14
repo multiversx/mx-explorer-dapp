@@ -1,12 +1,13 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { InfoTooltip, Loader, PageState } from 'components';
 import { useAdapter } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
-import { activeNetworkSelector, stakeSelector } from 'redux/selectors';
-import { IdentityType, SortOrderEnum } from 'types';
+import { activeNetworkSelector } from 'redux/selectors';
+import { IdentityType } from 'types';
 
 import { IdentityRow, ResiliencyRow } from './components';
 
@@ -14,33 +15,30 @@ export const Identities = () => {
   const ref = useRef(null);
   const { getIdentities } = useAdapter();
   const { egldLabel } = useSelector(activeNetworkSelector);
-  const {
-    unprocessed: { nakamotoCoefficient }
-  } = useSelector(stakeSelector);
 
   const [identities, setIdentities] = useState<IdentityType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
 
+  let coefficientShown = false;
+
   const fetchIdentities = () => {
-    getIdentities({ sort: 'validators', order: SortOrderEnum.desc }).then(
-      ({ data, success }) => {
-        const identitiesList: IdentityType[] = [];
-        let overallStakePercent = 0;
+    getIdentities({}).then(({ data, success }) => {
+      const identitiesList: IdentityType[] = [];
+      let overallStakePercent = 0;
 
-        if (success) {
-          data.forEach((identity: IdentityType) => {
-            if (!identity.stake || !identity.validators) {
-              return;
-            }
-            identitiesList.push({ ...identity, overallStakePercent });
-            overallStakePercent = overallStakePercent + identity.stakePercent;
-          });
-          setIdentities(identitiesList);
-        }
-
-        setDataReady(success);
+      if (success) {
+        data.forEach((identity: IdentityType) => {
+          if (!identity.stake || !identity.validators) {
+            return;
+          }
+          identitiesList.push({ ...identity, overallStakePercent });
+          overallStakePercent = overallStakePercent + identity.stakePercent;
+        });
+        setIdentities(identitiesList);
       }
-    );
+
+      setDataReady(success);
+    });
   };
 
   useEffect(fetchIdentities, []);
@@ -90,14 +88,22 @@ export const Identities = () => {
                 </tr>
               </thead>
               <tbody>
-                {identities.map((identity, i) => (
-                  <Fragment key={i}>
-                    {nakamotoCoefficient && i === nakamotoCoefficient && (
-                      <ResiliencyRow coefficient={nakamotoCoefficient} />
-                    )}
-                    <IdentityRow key={i} index={i + 1} identity={identity} />
-                  </Fragment>
-                ))}
+                {identities.map((identity, i) => {
+                  // TODO temporary - will be fetched from /stake
+                  const isOverCoefficient =
+                    new BigNumber(
+                      identity?.overallStakePercent ?? 0
+                    ).isGreaterThan(33.33) && !coefficientShown;
+                  if (isOverCoefficient) {
+                    coefficientShown = true;
+                  }
+                  return (
+                    <Fragment key={i}>
+                      {isOverCoefficient && <ResiliencyRow coefficient={i} />}
+                      <IdentityRow key={i} identity={identity} />
+                    </Fragment>
+                  );
+                })}
               </tbody>
             </table>
           </div>
