@@ -29,7 +29,7 @@ export const AuctionListRow = ({
   className
 }: AuctionListRowUIType) => {
   const nodeIdentity = identities.find(
-    (identity) => identity.identity === nodeData.identity
+    (identity) => nodeData.identity && identity.identity === nodeData.identity
   );
   const bNStake = new BigNumber(nodeData.stake).plus(
     nodeData.auctionTopUp ?? 0

@@ -71,11 +71,12 @@ export const NodesTableBody = ({
   return (
     <tbody>
       {nodes.map((nodeData, index) => {
-        const showTresholdRow =
+        const showTresholdRow = Boolean(
           tresholdIndex &&
-          tresholdIndex !== nodes.length - 1 &&
-          index === tresholdIndex &&
-          hasTresholdRow;
+            tresholdIndex !== nodes.length - 1 &&
+            index === tresholdIndex &&
+            hasTresholdRow
+        );
 
         if (statistics) {
           return <StatisticsRow nodeData={nodeData} key={nodeData.bls} />;
