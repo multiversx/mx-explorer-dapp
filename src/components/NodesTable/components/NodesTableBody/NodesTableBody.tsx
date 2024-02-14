@@ -1,6 +1,10 @@
 import { Fragment } from 'react';
+import BigNumber from 'bignumber.js';
+import { useSelector } from 'react-redux';
+
 import { PageState } from 'components';
 import { faCogs } from 'icons/regular';
+import { stakeSelector } from 'redux/selectors';
 import { IdentityType, NodeType } from 'types';
 
 import { AuctionListRow } from './Rows/AuctionListRow';
@@ -31,10 +35,24 @@ export const NodesTableBody = ({
   identities
 }: NodesTableBodyUIType) => {
   let colSpan = 8;
-  let tresholdShown = false;
   if (queue) {
     colSpan = 5;
   }
+  const {
+    unprocessed: { minimumAuctionQualifiedStake }
+  } = useSelector(stakeSelector);
+
+  const tresholdIndex = nodes.findLastIndex((node) => {
+    const bNStake = new BigNumber(node.stake ?? 0).plus(node.auctionTopUp ?? 0);
+    const bNMinimumAuctionStake = new BigNumber(
+      minimumAuctionQualifiedStake ?? 0
+    );
+
+    return (
+      bNStake.isGreaterThanOrEqualTo(bNMinimumAuctionStake) &&
+      node.auctionQualified
+    );
+  });
 
   return (
     <tbody>
@@ -46,17 +64,12 @@ export const NodesTableBody = ({
           return <QueueRow nodeData={nodeData} key={nodeData.bls} />;
         }
         if (auctionList) {
-          const displayTresholdRow =
-            hasTresholdRow && !nodeData.auctionQualified && !tresholdShown;
-          if (displayTresholdRow) {
-            tresholdShown = true;
-          }
           return (
             <Fragment key={nodeData.bls}>
-              {displayTresholdRow && (
+              <AuctionListRow nodeData={nodeData} identities={identities} />
+              {tresholdIndex && index === tresholdIndex && hasTresholdRow && (
                 <AuctionListTresholdRow key={nodeData.bls} />
               )}
-              <AuctionListRow nodeData={nodeData} identities={identities} />
             </Fragment>
           );
         }
