@@ -2,4 +2,62 @@
   .percentage-bar {
     width: 8.125rem;
   }
+
+  tr:has(+ .expand-row) td {
+    border-bottom-width: 0;
+  }
+  .expand-row {
+    td {
+      position: relative;
+      padding: 0;
+      border-bottom-width: 0;
+    }
+    &.row-danger {
+      td {
+        background-color: unset;
+      }
+      .content-wrapper {
+        background-color: #2a1b1b;
+      }
+    }
+    .trapezoid {
+      background-color: var(--table-bg);
+      transform: perspective(10rem) rotateX(-10deg);
+      border-width: 1px;
+      border-style: solid;
+      border-color: inherit;
+      height: 1rem;
+      margin-left: 5px;
+      margin-right: 5px;
+      border-bottom-width: 0;
+      &.reverse {
+        border-bottom-width: 0;
+        transform: perspective(10rem) rotateX(10deg);
+      }
+      &:first-of-type {
+        margin-top: -1px;
+      }
+      &:last-of-type {
+        &.reverse {
+          border-bottom-width: 1px;
+        }
+      }
+    }
+    .content-wrapper {
+      position: absolute;
+      z-index: 1;
+      background-color: var(--neutral-950);
+      padding: 0.25rem 1rem;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: fit-content;
+      height: fit-content;
+      margin: auto;
+      button {
+        line-height: 1.4;
+      }
+    }
+  }
 }

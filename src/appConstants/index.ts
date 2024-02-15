@@ -12,6 +12,7 @@ export const MAX_DECODE_TX_DATA_LENGTH = 60_000;
 export const MAX_DISPLAY_ZERO_DECIMALS = 4;
 export const MAX_ACOUNT_TOKENS_BALANCE = 1000;
 export const MAX_AUCTION_LIST_NODES = 1000;
+export const EXPAND_AUCTION_LIST_ROW_POSITION = 3;
 
 export const LEGACY_DELEGATION_NODES_IDENTITY = 'multiversx';
 export const HEROTAG_SUFFIX = '.elrond';

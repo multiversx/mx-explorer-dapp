@@ -1,15 +1,14 @@
-import { Fragment } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { PageState } from 'components';
+import { getExpandRowDetails } from 'helpers';
 import { useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
 import { IdentityType, NodeType, SortOrderEnum } from 'types';
 
 import { AuctionListRow } from './Rows/AuctionListRow';
-import { AuctionListTresholdRow } from './Rows/AuctionListTresholdRow';
 import { QueueRow } from './Rows/QueueRow';
 import { StandardRow } from './Rows/StandardRow';
 import { StatisticsRow } from './Rows/StatisticsRow';
@@ -68,6 +67,9 @@ export const NodesTableBody = ({
         findTresholdNode(node, minimumAuctionQualifiedStake)
       );
 
+  const expandRowDetails =
+    auctionList && hasTresholdRow ? getExpandRowDetails(nodes) : undefined;
+
   return (
     <tbody>
       {nodes.map((nodeData, index) => {
@@ -83,17 +85,16 @@ export const NodesTableBody = ({
         }
         if (auctionList) {
           return (
-            <Fragment key={nodeData.bls}>
-              {isSortDesc && showTresholdRow && (
-                <AuctionListTresholdRow key={nodeData.bls} isSortDesc />
-              )}
-              <AuctionListRow nodeData={nodeData} identities={identities} />
-              {!isSortDesc && showTresholdRow && (
-                <AuctionListTresholdRow key={nodeData.bls} />
-              )}
-            </Fragment>
+            <AuctionListRow
+              nodeData={nodeData}
+              key={nodeData.bls}
+              showTresholdRow={showTresholdRow}
+              expandRowDetails={expandRowDetails}
+              identities={identities}
+            />
           );
         }
+
         return (
           <StandardRow
             nodeData={nodeData}
