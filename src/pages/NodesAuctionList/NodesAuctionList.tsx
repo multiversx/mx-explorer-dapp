@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { PAGE_SIZE, MAX_AUCTION_LIST_NODES } from 'appConstants';
+import { PAGE_SIZE, AUCTION_LIST_MAX_NODES } from 'appConstants';
 import {
   Loader,
   Pager,
@@ -39,8 +39,8 @@ export const NodesAuctionList = () => {
 
   const identityFields = ['identity', 'name', 'avatar'];
 
-  const isCustomSize = ![PAGE_SIZE, MAX_AUCTION_LIST_NODES].includes(pageSize);
-  const size = isCustomSize ? pageSize : MAX_AUCTION_LIST_NODES;
+  const isCustomSize = ![PAGE_SIZE, AUCTION_LIST_MAX_NODES].includes(pageSize);
+  const size = isCustomSize ? pageSize : AUCTION_LIST_MAX_NODES;
   let filterText = '';
   if (!nodeFilters.isQualified) {
     filterText = 'Unqualified';

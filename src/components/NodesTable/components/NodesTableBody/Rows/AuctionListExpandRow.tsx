@@ -1,10 +1,15 @@
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 
-import { WithClassnameType } from 'types';
+import { NodeType, IdentityType, WithClassnameType } from 'types';
+import { AuctionListBaseRow } from './AuctionListBaseRow';
 
 export interface AuctionListTresholdRowUIType extends WithClassnameType {
   colSpan?: number;
+  nodeData: NodeType;
+  identities?: IdentityType[];
+  expandPosition: number;
+  closePosition: number;
   remainingQualifiedValidators?: number;
   remainingDangerZoneValidators?: number;
   remainingNotQualifiedValidators?: number;
@@ -12,6 +17,10 @@ export interface AuctionListTresholdRowUIType extends WithClassnameType {
 
 export const AuctionListExpandRow = ({
   colSpan = 7,
+  nodeData,
+  identities,
+  expandPosition,
+  closePosition,
   remainingQualifiedValidators,
   remainingDangerZoneValidators,
   remainingNotQualifiedValidators,
@@ -40,43 +49,56 @@ export const AuctionListExpandRow = ({
     setSearchParams(nextUrlParams);
   };
 
+  if (
+    nodeData.auctionPosition !== undefined &&
+    nodeData.auctionPosition > expandPosition &&
+    nodeData.auctionPosition < closePosition
+  ) {
+    return null;
+  }
+
   return (
-    <tr className={classNames('expand-row', className)}>
-      <td colSpan={colSpan} className='px-0'>
-        <div className='content-wrapper text-neutral-400 d-flex align-items-start gap-3'>
-          <span>
-            ..{' '}
-            {remainingQualifiedValidators ||
-              remainingDangerZoneValidators ||
-              remainingNotQualifiedValidators}{' '}
-            more eligible nodes
-          </span>
-          <button
-            type='button'
-            className='btn btn-unstyled text-primary font-weight-600'
-            onClick={() => {
-              if (remainingQualifiedValidators) {
-                nodeQualifiedLink(true);
-                return;
-              }
-              if (remainingDangerZoneValidators) {
-                nodeDangerZoneLink(true);
-                return;
-              }
-              if (remainingNotQualifiedValidators) {
-                nodeQualifiedLink(false);
-                return;
-              }
-            }}
-          >
-            View All
-          </button>
-        </div>
-        <div className='trapezoid'></div>
-        <div className='trapezoid reverse'></div>
-        <div className='trapezoid'></div>
-        <div className='trapezoid reverse'></div>
-      </td>
-    </tr>
+    <>
+      {nodeData.auctionPosition === expandPosition && (
+        <tr className={classNames('expand-row', className)}>
+          <td colSpan={colSpan} className='px-0'>
+            <div className='content-wrapper text-neutral-400 d-flex align-items-start gap-3'>
+              <span>
+                ..{' '}
+                {remainingQualifiedValidators ||
+                  remainingDangerZoneValidators ||
+                  remainingNotQualifiedValidators}{' '}
+                more eligible nodes
+              </span>
+              <button
+                type='button'
+                className='btn btn-unstyled text-primary font-weight-600'
+                onClick={() => {
+                  if (remainingQualifiedValidators) {
+                    nodeQualifiedLink(true);
+                    return;
+                  }
+                  if (remainingDangerZoneValidators) {
+                    nodeDangerZoneLink(true);
+                    return;
+                  }
+                  if (remainingNotQualifiedValidators) {
+                    nodeQualifiedLink(false);
+                    return;
+                  }
+                }}
+              >
+                View All
+              </button>
+            </div>
+            <div className='trapezoid'></div>
+            <div className='trapezoid reverse'></div>
+            <div className='trapezoid'></div>
+            <div className='trapezoid reverse'></div>
+          </td>
+        </tr>
+      )}
+      <AuctionListBaseRow nodeData={nodeData} identities={identities} />
+    </>
   );
 };
