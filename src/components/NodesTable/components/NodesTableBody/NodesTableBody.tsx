@@ -72,10 +72,7 @@ export const NodesTableBody = ({
     <tbody>
       {nodes.map((nodeData, index) => {
         const showTresholdRow = Boolean(
-          tresholdIndex &&
-            tresholdIndex !== nodes.length - 1 &&
-            index === tresholdIndex &&
-            hasTresholdRow
+          tresholdIndex && index === tresholdIndex && hasTresholdRow
         );
 
         if (statistics) {

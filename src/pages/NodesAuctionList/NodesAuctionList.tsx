@@ -35,6 +35,8 @@ export const NodesAuctionList = () => {
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
+  const identityFields = ['identity', 'name', 'avatar'];
+
   const isCustomSize = ![PAGE_SIZE, MAX_AUCTION_LIST_NODES].includes(pageSize);
   const size = isCustomSize ? pageSize : MAX_AUCTION_LIST_NODES;
   const hasTresholdRow = [search, ...Object.keys(nodeFilters)].every(
@@ -65,7 +67,8 @@ export const NodesAuctionList = () => {
     };
 
     Promise.all([
-      getIdentities({}),
+      // TODO: set in node layout state
+      getIdentities({ fields: identityFields.join(',') }),
       getNodes({
         ...sort,
         ...auctionListFilters,
