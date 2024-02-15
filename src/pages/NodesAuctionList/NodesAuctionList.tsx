@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { PAGE_SIZE, MAX_AUCTION_LIST_NODES } from 'appConstants';
@@ -22,7 +22,6 @@ import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { NodeType, IdentityType, SortOrderEnum } from 'types';
 
 export const NodesAuctionList = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
 
   const { getNodes, getNodesCount, getIdentities } = useAdapter();
@@ -34,14 +33,14 @@ export const NodesAuctionList = () => {
   const [identities, setIdentities] = useState<IdentityType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
   const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [identityDataReady, setIdentityDataReady] = useState<
+    boolean | undefined
+  >();
 
   const identityFields = ['identity', 'name', 'avatar'];
 
   const isCustomSize = ![PAGE_SIZE, MAX_AUCTION_LIST_NODES].includes(pageSize);
   const size = isCustomSize ? pageSize : MAX_AUCTION_LIST_NODES;
-  const hasTresholdRow = [search, ...Object.keys(nodeFilters)].every(
-    (el) => el === undefined
-  );
   let filterText = '';
   if (!nodeFilters.isQualified) {
     filterText = 'Unqualified';
@@ -58,6 +57,10 @@ export const NodesAuctionList = () => {
     sort.order = SortOrderEnum.asc;
   }
 
+  const hasNoFilters =
+    [search, ...Object.keys(nodeFilters)].every((el) => el === undefined) &&
+    sort.sort === 'auctionPosition';
+
   const fetchNodes = () => {
     setDataReady(undefined);
     const auctionListFilters = {
@@ -66,39 +69,85 @@ export const NodesAuctionList = () => {
       search
     };
 
-    Promise.all([
-      // TODO: set in node layout state
-      getIdentities({ fields: identityFields.join(',') }),
-      getNodes({
-        ...sort,
-        ...auctionListFilters,
-        page,
-        size
-      }),
-      getNodesCount(auctionListFilters)
-    ]).then(([identitiesData, nodesData, count]) => {
-      setIdentities(identitiesData.data);
-      setNodes(nodesData.data);
-      setTotalNodes(count.data);
+    // TODO - temporary until sorting is fixed from api
+    if (hasNoFilters) {
+      Promise.all([
+        getNodes({
+          ...sort,
+          ...auctionListFilters,
+          isQualified: true,
+          page,
+          size
+        }),
+        getNodes({
+          ...sort,
+          ...auctionListFilters,
+          isQualified: false,
+          page,
+          size
+        }),
+        getNodesCount(auctionListFilters)
+      ]).then(([qualifiedNodesData, notQualifiedNodesData, count]) => {
+        setNodes([
+          ...(sort.order === SortOrderEnum.desc
+            ? [
+                ...(notQualifiedNodesData.data ?? []),
+                ...(qualifiedNodesData.data ?? [])
+              ]
+            : [
+                ...(qualifiedNodesData.data ?? []),
+                ...(notQualifiedNodesData.data ?? [])
+              ])
+        ]);
+        setTotalNodes(count.data);
 
-      if (ref.current !== null) {
         setDataReady(
-          identitiesData.success && nodesData.success && count.success
+          qualifiedNodesData.success &&
+            notQualifiedNodesData.success &&
+            count.success
         );
+      });
+    } else {
+      Promise.all([
+        getNodes({
+          ...sort,
+          ...auctionListFilters,
+          page,
+          size
+        }),
+        getNodesCount(auctionListFilters)
+      ]).then(([nodesData, count]) => {
+        setNodes(nodesData.data);
+        setTotalNodes(count.data);
+
+        setDataReady(nodesData.success && count.success);
+      });
+    }
+  };
+
+  const fetchIdentities = () => {
+    setIdentityDataReady(undefined);
+    getIdentities({ fields: identityFields.join(',') }).then(
+      ({ success, data }) => {
+        setIdentities(data);
+        setIdentityDataReady(success);
       }
-    });
+    );
   };
 
   useEffect(fetchNodes, [searchParams]);
+  useEffect(fetchIdentities, []);
+
+  const pageDataReady = dataReady && identityDataReady;
 
   return (
-    <div className='card nodes-auction-list' ref={ref}>
+    <div className='card nodes-auction-list'>
       <div className='card-header'>
         <NodesTabs />
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <NodesTableHero />
           <AuctionListFilters />
-          {dataReady === true && (isCustomSize || !hasTresholdRow) && (
+          {pageDataReady === true && (isCustomSize || !hasNoFilters) && (
             <Pager
               itemsPerPage={size}
               total={totalNodes}
@@ -109,11 +158,11 @@ export const NodesAuctionList = () => {
         </div>
       </div>
 
-      {dataReady === undefined && <Loader />}
-      {dataReady === false && (
+      {pageDataReady === undefined && <Loader />}
+      {pageDataReady === false && (
         <PageState icon={faCogs} title='Unable to load Auction List' isError />
       )}
-      {dataReady === true && (
+      {pageDataReady === true && (
         <>
           {nodes.length === 0 ? (
             <PageState
@@ -129,12 +178,12 @@ export const NodesAuctionList = () => {
                   <NodesTable.Body
                     nodes={nodes}
                     identities={identities}
-                    hasTresholdRow={hasTresholdRow}
+                    hasTresholdRow={hasNoFilters}
                     auctionList
                   />
                 </NodesTable>
               </div>
-              {(isCustomSize || !hasTresholdRow) && (
+              {(isCustomSize || !hasNoFilters) && (
                 <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
                   <Pager total={totalNodes} itemsPerPage={size} show />
                 </div>
