@@ -10,7 +10,9 @@ import {
   NodesTable,
   SharedIdentity,
   Denominate,
-  PercentageBar
+  PercentageBar,
+  Overlay,
+  LockedStakeTooltip
 } from 'components';
 import { formatStakePercentLabel } from 'components/SharedIdentity/helpers';
 import { urlBuilder } from 'helpers';
@@ -87,7 +89,18 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
         </td>
 
         <td>
-          <Denominate value={identity.locked} />
+          <Overlay
+            title={
+              <LockedStakeTooltip
+                stake={identity.stake}
+                topUp={identity.topUp}
+              />
+            }
+            tooltipClassName='tooltip-text-start tooltip-lg'
+            className='cursor-context'
+          >
+            <Denominate value={identity.locked} showTooltip={false} />
+          </Overlay>
         </td>
         <td>
           <div className='d-flex align-items-center'>
