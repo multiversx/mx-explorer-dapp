@@ -122,7 +122,7 @@ export const AuctionListFilters = ({
                 nodeQualifiedLink(true);
               }}
               className={`badge px-2 br-lg ${
-                isQualified === 'true'
+                isQualified === 'true' && !isAuctionDangerZone
                   ? 'badge-grey'
                   : 'badge-outline badge-outline-grey'
               }`}
