@@ -65,7 +65,7 @@ export const NodeDangerZoneTooltip = ({
                       <Denominate
                         value={bNStakeNeededAboveDangerZone.toString(10)}
                       />{' '}
-                      / node to exit the danger zone and move up on the auction
+                      / node to exit the danger zone and move up in the auction
                       list.
                     </>
                   )}

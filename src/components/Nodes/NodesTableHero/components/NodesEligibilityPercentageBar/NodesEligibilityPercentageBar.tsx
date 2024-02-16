@@ -88,7 +88,7 @@ export const NodesEligibilityPercentageBar = ({
                       <p className='text-neutral-400 mb-0'>
                         {dangerZoneValidators} nodes are under 5% above the
                         threshold level. Increase the staked amount / node to
-                        exit the danger zone and move up on the auction list.
+                        exit the danger zone and move up in the auction list.
                       </p>
                     </>
                   }
