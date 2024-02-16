@@ -78,7 +78,9 @@ export const AuctionListFilters = ({
     const { isQualified, page, ...rest } = Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
-      ...(isAuctionDangerZone ? { isAuctionDangerZone: 'true' } : {})
+      ...(isAuctionDangerZone
+        ? { isAuctionDangerZone: 'true', isQualified: 'true' }
+        : {})
     };
 
     setSearchParams(nextUrlParams);
