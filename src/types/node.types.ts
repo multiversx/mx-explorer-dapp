@@ -1,3 +1,5 @@
+import { SliceType } from 'types/general.types';
+
 export interface NodeType {
   bls: string;
   name: string;
@@ -49,8 +51,66 @@ export interface NodeType {
   computedShardID?: number;
 }
 
+export interface IdentityType {
+  name: string;
+  score: number;
+  stake: string;
+  locked: string;
+  stakePercent: number;
+  validators: number;
+  rank?: number;
+  overallStakePercent?: number;
+  twitter?: string;
+  website?: string;
+  location?: string;
+  avatar?: string;
+  identity?: string;
+  description?: string;
+  topUp?: string;
+  distribution?: any;
+  apr?: number;
+  url?: string;
+}
+export interface ProviderType {
+  provider: string;
+  apr: string;
+  delegationCap: string;
+  locked: string;
+  numUsers: number;
+  numNodes: number;
+  owner: string;
+  serviceFee: number;
+  stake: string;
+  topUp: string;
+  featured?: boolean;
+  identity?: string;
+  cumulatedRewards?: string;
+
+  identityDetails?: IdentityType; // local field
+
+  // not used
+  initialOwnerFunds?: string;
+  automaticActivation?: boolean;
+  withDelegationCap?: boolean;
+  changeableServiceFee?: boolean;
+  checkCapOnRedelegate?: boolean;
+  createdNonce?: number;
+  unBondPeriod?: number;
+  totalUnStaked?: string;
+
+  totalUnStakedFromNodes?: string;
+  totalUnBondedFromNodes?: string;
+  maxDelegateAmountAllowed?: string;
+  maxRedelegateAmountAllowed?: string;
+}
+
 export enum NodeQualificationStatusEnum {
   qualified = 'Qualified',
   notQualified = 'Not Qualified',
   dangerZone = 'Danger Zone'
+}
+
+export interface NodesIdentitiesSliceType extends SliceType {
+  unprocessed: IdentityType[];
+  nodesIdentities: IdentityType[];
 }

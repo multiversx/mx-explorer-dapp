@@ -19,25 +19,20 @@ import {
 } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
-import { NodeType, IdentityType, SortOrderEnum } from 'types';
+import { NodeType, SortOrderEnum } from 'types';
 
 export const NodesAuctionList = () => {
   const [searchParams] = useSearchParams();
 
-  const { getNodes, getNodesCount, getIdentities } = useAdapter();
+  const { getNodes, getNodesCount } = useAdapter();
   const { search } = useGetSearch();
   const { page, size: pageSize } = useGetPage();
   const nodeFilters = useGetNodeFilters();
   const sort = useGetSort();
   const [nodes, setNodes] = useState<NodeType[]>([]);
-  const [identities, setIdentities] = useState<IdentityType[]>([]);
+
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
   const [dataReady, setDataReady] = useState<boolean | undefined>();
-  const [identityDataReady, setIdentityDataReady] = useState<
-    boolean | undefined
-  >();
-
-  const identityFields = ['identity', 'name', 'avatar'];
 
   const isCustomSize = ![PAGE_SIZE, AUCTION_LIST_MAX_NODES].includes(pageSize);
   const size = isCustomSize ? pageSize : AUCTION_LIST_MAX_NODES;
@@ -125,20 +120,7 @@ export const NodesAuctionList = () => {
     }
   };
 
-  const fetchIdentities = () => {
-    setIdentityDataReady(undefined);
-    getIdentities({ fields: identityFields.join(',') }).then(
-      ({ success, data }) => {
-        setIdentities(data);
-        setIdentityDataReady(success);
-      }
-    );
-  };
-
   useEffect(fetchNodes, [searchParams]);
-  useEffect(fetchIdentities, []);
-
-  const pageDataReady = dataReady && identityDataReady;
 
   return (
     <div className='card nodes-auction-list'>
@@ -147,7 +129,7 @@ export const NodesAuctionList = () => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <NodesTableHero />
           <AuctionListFilters />
-          {pageDataReady === true && (isCustomSize || !hasNoFilters) && (
+          {dataReady === true && (isCustomSize || !hasNoFilters) && (
             <Pager
               itemsPerPage={size}
               total={totalNodes}
@@ -158,11 +140,11 @@ export const NodesAuctionList = () => {
         </div>
       </div>
 
-      {pageDataReady === undefined && <Loader />}
-      {pageDataReady === false && (
+      {dataReady === undefined && <Loader />}
+      {dataReady === false && (
         <PageState icon={faCogs} title='Unable to load Auction List' isError />
       )}
-      {pageDataReady === true && (
+      {dataReady === true && (
         <>
           {nodes.length === 0 ? (
             <PageState
@@ -177,7 +159,6 @@ export const NodesAuctionList = () => {
                 <NodesTable auctionList>
                   <NodesTable.Body
                     nodes={nodes}
-                    identities={identities}
                     hasTresholdRow={hasNoFilters}
                     auctionList
                   />

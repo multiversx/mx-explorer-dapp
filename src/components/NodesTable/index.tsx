@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { NodeType, IdentityType } from 'types';
+import { NodeType } from 'types';
 import { NodesTableBody } from './components/NodesTableBody';
 import { AuctionListHead } from './components/NodesTableHead/AuctionListHead';
 import { QueueHead } from './components/NodesTableHead/QueueHead';
@@ -16,7 +16,6 @@ interface NodesTableUIType {
   auctionList?: boolean;
   type?: NodeType['type'];
   status?: NodeType['status'];
-  identities?: IdentityType[];
 }
 
 export default class NodesTable extends React.Component<NodesTableUIType> {

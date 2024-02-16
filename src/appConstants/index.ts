@@ -46,6 +46,17 @@ export const TRANSACTIONS_TABLE_FIELDS = [
   'guardianSignature'
 ];
 
+export const IDENTITIES_FIELDS = [
+  'rank',
+  'identity',
+  'locked',
+  'stake',
+  'topUp',
+  'avatar',
+  'name',
+  'validators'
+];
+
 export const DEFAULT_PROVIDER_COLORS: {
   [index: string]: string;
 } = {

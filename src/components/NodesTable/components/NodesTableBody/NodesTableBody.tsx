@@ -6,7 +6,7 @@ import { getExpandRowDetails } from 'helpers';
 import { useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
-import { IdentityType, NodeType, SortOrderEnum } from 'types';
+import { NodeType, SortOrderEnum } from 'types';
 
 import { AuctionListRow } from './Rows/AuctionListRow';
 import { QueueRow } from './Rows/QueueRow';
@@ -21,7 +21,6 @@ export interface NodesTableBodyUIType {
   hasTresholdRow?: boolean;
   type?: NodeType['type'];
   status?: NodeType['status'];
-  identities?: IdentityType[];
 }
 
 const findTresholdNode = (
@@ -46,8 +45,7 @@ export const NodesTableBody = ({
   auctionList,
   hasTresholdRow,
   type,
-  status,
-  identities
+  status
 }: NodesTableBodyUIType) => {
   let colSpan = 8;
   if (queue) {
@@ -90,7 +88,6 @@ export const NodesTableBody = ({
               key={nodeData.bls}
               showTresholdRow={showTresholdRow}
               expandRowDetails={expandRowDetails}
-              identities={identities}
             />
           );
         }

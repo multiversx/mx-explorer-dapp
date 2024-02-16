@@ -16,6 +16,7 @@ export * from './markers';
 export * from './miniBlock';
 export * from './networks';
 export * from './nft';
+export * from './nodesIdentities';
 export * from './nodesVersions';
 export * from './refresh';
 export * from './stats';

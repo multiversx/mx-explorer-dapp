@@ -1,59 +1,34 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { InfoTooltip, Loader, PageState } from 'components';
-import { useAdapter } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
-import { activeNetworkSelector } from 'redux/selectors';
-import { IdentityType } from 'types';
+import {
+  activeNetworkSelector,
+  nodesIdentitiesSelector
+} from 'redux/selectors';
 
 import { IdentityRow, ResiliencyRow } from './components';
 
 export const Identities = () => {
-  const ref = useRef(null);
-  const { getIdentities } = useAdapter();
   const { egldLabel } = useSelector(activeNetworkSelector);
-
-  const [identities, setIdentities] = useState<IdentityType[]>([]);
-  const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
+  const { nodesIdentities, isFetched } = useSelector(nodesIdentitiesSelector);
 
   let coefficientShown = false;
 
-  const fetchIdentities = () => {
-    getIdentities({}).then(({ data, success }) => {
-      const identitiesList: IdentityType[] = [];
-      let overallStakePercent = 0;
-
-      if (success) {
-        data.forEach((identity: IdentityType) => {
-          if (!identity.stake || !identity.validators) {
-            return;
-          }
-          identitiesList.push({ ...identity, overallStakePercent });
-          overallStakePercent = overallStakePercent + identity.stakePercent;
-        });
-        setIdentities(identitiesList);
-      }
-
-      setDataReady(success);
-    });
-  };
-
-  useEffect(fetchIdentities, []);
-
   return (
-    <div className='card identities' ref={ref}>
+    <div className='card identities'>
       <div className='card-header'>
         <NodesTabs />
       </div>
 
-      {dataReady === undefined && <Loader />}
-      {dataReady === false && (
+      {isFetched === undefined && <Loader />}
+      {isFetched === false && (
         <PageState icon={faCogs} title='Unable to load validators' isError />
       )}
-      {dataReady === true && (
+      {isFetched === true && (
         <div className='card-body'>
           <div className='table-wrapper animated-list'>
             <table className='table mb-0'>
@@ -88,7 +63,7 @@ export const Identities = () => {
                 </tr>
               </thead>
               <tbody>
-                {identities.map((identity, i) => {
+                {nodesIdentities.map((identity, i) => {
                   // TODO temporary - will be fetched from /stake
                   const isOverCoefficient =
                     new BigNumber(

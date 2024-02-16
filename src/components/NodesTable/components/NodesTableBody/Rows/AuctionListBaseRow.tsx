@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
 import {
   NodeQualification,
@@ -15,20 +16,19 @@ import {
   SharedIdentity
 } from 'components';
 import { urlBuilder } from 'helpers';
-
-import { NodeType, IdentityType, WithClassnameType } from 'types';
+import { nodesIdentitiesSelector } from 'redux/selectors';
+import { NodeType, WithClassnameType } from 'types';
 
 export interface AuctionListBaseRowUIType extends WithClassnameType {
   nodeData: NodeType;
-  identities?: IdentityType[];
 }
 
 export const AuctionListBaseRow = ({
   nodeData,
-  identities = [],
   className
 }: AuctionListBaseRowUIType) => {
-  const nodeIdentity = identities.find(
+  const { nodesIdentities } = useSelector(nodesIdentitiesSelector);
+  const nodeIdentity = nodesIdentities.find(
     (identity) => nodeData.identity && identity.identity === nodeData.identity
   );
   const bNStake = new BigNumber(nodeData.stake).plus(
