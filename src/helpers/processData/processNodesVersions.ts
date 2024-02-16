@@ -17,7 +17,7 @@ const prepareNodesVersions = (data: NodesVersionsApiType) => {
     }
   });
 
-  return versions.sort((a, b) => b.value - a.value);
+  return versions.sort((a, b) => Number(b.value) - Number(a.value));
 };
 
 export const processNodesVersions = (data: NodesVersionsApiType) => {

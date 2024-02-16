@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useAdapter } from 'hooks';
+import { interfaceSelector } from 'redux/selectors';
 import { setShards } from 'redux/slices/interface';
 
 let currentRequest: any = null;
@@ -9,6 +10,7 @@ let currentRequest: any = null;
 export const useFetchShards = () => {
   const dispatch = useDispatch();
   const { getShards } = useAdapter();
+  const { shards } = useSelector(interfaceSelector);
 
   const getShardsOnce = () => {
     if (currentRequest) {
@@ -41,6 +43,8 @@ export const useFetchShards = () => {
   };
 
   useEffect(() => {
-    fetchShards();
+    if (shards.length === 0) {
+      fetchShards();
+    }
   }, []);
 };
