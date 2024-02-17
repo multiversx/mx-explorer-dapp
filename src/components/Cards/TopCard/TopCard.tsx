@@ -3,14 +3,14 @@ import classNames from 'classnames';
 import { WithClassnameType } from 'types';
 
 export interface TopCardUIType extends WithClassnameType {
-  title: string | React.ReactNode;
+  title: React.ReactNode;
   size: 'sm' | 'md' | 'lg';
   icon?: string;
-  detailsTitle?: string;
-  detailsValue?: string;
+  detailsTitle?: React.ReactNode;
+  detailsValue?: React.ReactNode;
   detailsRank?: string | number;
-  footerTitle?: string;
-  footerValue?: string;
+  footerTitle?: React.ReactNode;
+  footerValue?: React.ReactNode;
 }
 
 export const TopCard = ({
@@ -31,7 +31,7 @@ export const TopCard = ({
         {icon && (
           <img
             src={icon}
-            alt={`${detailsRank ? `#${detailsRank} ` : ''}${title} Logo`}
+            alt={`${detailsRank ? `#${detailsRank} ` : ''} Logo`}
             className='icon-img'
           />
         )}

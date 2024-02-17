@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { Loader, TopCard, Trim, NetworkLink, TimeAgo } from 'components';
+import { Loader, ShowcaseCard, Trim, NetworkLink, TimeAgo } from 'components';
 import { urlBuilder, addressIsBech32 } from 'helpers';
 import { useIsMainnet, useFetchGrowthMostUsed } from 'hooks';
 import { growthMostUsedSelector } from 'redux/selectors';
@@ -26,26 +26,6 @@ export const MostUsedApplications = ({
   );
 
   useFetchGrowthMostUsed();
-
-  const getCardSize = (index: number) => {
-    if (size === 10) {
-      if (index < 2) {
-        return 'md';
-      }
-      return 'sm';
-    }
-    if (size === 7) {
-      if (index === 0) {
-        return 'lg';
-      }
-      if (index < 3) {
-        return 'md';
-      }
-      return 'sm';
-    }
-
-    return 'sm';
-  };
 
   if (!isMainnet) {
     return null;
@@ -77,59 +57,48 @@ export const MostUsedApplications = ({
             </div>
           </div>
 
-          <div className='card-body top-card-wrapper'>
-            <div className='top-card-holder'>
-              {dailyMostUsedApplications.map((contract, i) => {
-                if (i >= size) {
-                  return null;
-                }
-                const TitleLink = () => (
-                  <NetworkLink
-                    to={
-                      addressIsBech32(contract.key)
-                        ? urlBuilder.accountDetails(contract.key)
-                        : ''
-                    }
-                    className={classNames('trim-wrapper', {
-                      hash: !Boolean(contract?.extraInfo?.assets?.name)
-                    })}
-                  >
-                    {contract.extraInfo?.assets?.name ?? (
-                      <Trim text={contract.key} />
-                    )}
-                  </NetworkLink>
-                );
+          <div className='card-body'>
+            <div className='showcase-card-wrapper'>
+              <div className='showcase-card-scroll d-flex flex-nowrap'>
+                {dailyMostUsedApplications.map((contract, i) => {
+                  if (i >= size) {
+                    return null;
+                  }
+                  const TitleLink = () => (
+                    <NetworkLink
+                      to={
+                        addressIsBech32(contract.key)
+                          ? urlBuilder.accountDetails(contract.key)
+                          : ''
+                      }
+                      className={classNames('trim-wrapper', {
+                        hash: !Boolean(contract?.extraInfo?.assets?.name),
+                        'line-clamp-3': Boolean(
+                          contract?.extraInfo?.assets?.name
+                        )
+                      })}
+                    >
+                      {contract.extraInfo?.assets?.name ?? (
+                        <Trim text={contract.key} />
+                      )}
+                    </NetworkLink>
+                  );
 
-                return (
-                  <TopCard
-                    size={getCardSize(i)}
-                    title={<TitleLink />}
-                    icon={
-                      contract.extraInfo?.assets?.svgUrl ||
-                      contract.extraInfo?.assets?.pngUrl
-                    }
-                    detailsTitle='Total Txn:'
-                    detailsValue={new BigNumber(contract.value).toFormat()}
-                    detailsRank={contract.rank}
-                    key={contract.key}
-                    {...(contract.extraInfo?.deployedAt
-                      ? { footerTitle: 'Age' }
-                      : {})}
-                    {...(contract.extraInfo?.deployedAt
-                      ? {
-                          footerValue: (
-                            <TimeAgo
-                              value={contract.extraInfo?.deployedAt}
-                              short
-                              showAgo
-                              tooltip
-                            />
-                          )
-                        }
-                      : {})}
-                  />
-                );
-              })}
+                  return (
+                    <ShowcaseCard
+                      title={<TitleLink />}
+                      icon={
+                        contract.extraInfo?.assets?.svgUrl ||
+                        contract.extraInfo?.assets?.pngUrl
+                      }
+                      detailsTitle='Txn'
+                      detailsValue={new BigNumber(contract.value).toFormat()}
+                      detailsRank={contract.rank}
+                      key={contract.key}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
