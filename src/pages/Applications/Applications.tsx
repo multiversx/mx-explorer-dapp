@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS } from 'appConstants';
+import { ReactComponent as DefaultImage } from 'assets/img/default.svg';
 import {
   Loader,
   Pager,
@@ -20,7 +21,7 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetPage, useGetSort, useIsMainnet } from 'hooks';
-import { faCommand, faInfoCircle } from 'icons/regular';
+import { faInfoCircle } from 'icons/regular';
 import { faBadgeCheck } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
@@ -151,7 +152,7 @@ export const Applications = () => {
                                     />
                                   ) : (
                                     <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
-                                      <FontAwesomeIcon icon={faCommand} />
+                                      <DefaultImage className='p-2' />
                                     </div>
                                   )}
                                   <AccountName

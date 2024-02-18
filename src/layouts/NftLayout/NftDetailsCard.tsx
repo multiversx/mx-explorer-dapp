@@ -71,7 +71,8 @@ export const NftDetailsCard = () => {
   const hasExtraDescription =
     metadata?.description &&
     assets?.description &&
-    metadata.description !== assets.description;
+    metadata.description !== assets.description &&
+    !assets.description.includes(metadata.description);
 
   return (
     <HeroDetailsCard
