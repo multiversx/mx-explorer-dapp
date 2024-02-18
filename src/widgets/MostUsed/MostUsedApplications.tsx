@@ -10,12 +10,10 @@ import { applicationsRoutes } from 'routes';
 import { WithClassnameType } from 'types';
 
 export interface MostUsedApplicationsUIType extends WithClassnameType {
-  size: 10 | 7;
   showDashboardLink?: boolean;
 }
 
 export const MostUsedApplications = ({
-  size,
   showDashboardLink = false,
   className
 }: MostUsedApplicationsUIType) => {
@@ -60,10 +58,7 @@ export const MostUsedApplications = ({
           <div className='card-body'>
             <div className='showcase-card-wrapper'>
               <div className='showcase-card-scroll d-flex flex-nowrap'>
-                {dailyMostUsedApplications.map((contract, i) => {
-                  if (i >= size) {
-                    return null;
-                  }
+                {dailyMostUsedApplications.map((contract) => {
                   const TitleLink = () => (
                     <NetworkLink
                       to={
