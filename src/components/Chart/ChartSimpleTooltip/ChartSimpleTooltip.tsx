@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import moment from 'moment';
 import styles from './styles.module.scss';
 
 export const ChartSimpleTooltip = (props: any) => {
@@ -17,7 +18,17 @@ export const ChartSimpleTooltip = (props: any) => {
       <span className={styles.dot} style={{ background: item.color }} />
       <span className={styles.background} style={{ background: item.color }} />
       <span className={styles.border} style={{ borderColor: item.color }} />
-      {formatter ? formatter(item) : new BigNumber(item.value).toFormat()}
+
+      <div className={styles.wrapper}>
+        {item?.payload?.timestamp ? (
+          <span className={styles.date}>
+            {moment.unix(item.payload.timestamp).utc().format('MMM DD, YYYY')}
+          </span>
+        ) : (
+          ''
+        )}
+        {formatter ? formatter(item) : new BigNumber(item.value).toFormat()}
+      </div>
     </div>
   ));
 };

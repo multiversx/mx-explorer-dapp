@@ -9,7 +9,6 @@ import { growthTransactionsSelector } from 'redux/selectors';
 import { GrowthChartDataType } from 'types';
 
 import { TransactionsStatisticsLabelEnum } from './enum';
-import styles from './styles.module.scss';
 import { StatisticType, ChartContractsTransactionsUIType } from './types';
 
 import { ChartArea } from '../ChartArea';
@@ -50,6 +49,7 @@ export const ChartContractsTransactions = ({
   showContracts = true,
   showTotal = true,
   simpleTooltip = false,
+  hasBorder = false,
   className
 }: ChartContractsTransactionsUIType) => {
   const {
@@ -106,7 +106,7 @@ export const ChartContractsTransactions = ({
           {
             label: TransactionsStatisticsLabelEnum.Applications,
             value: scResults,
-            color: success
+            color: showTotal ? success : primary
           },
           {
             label: TransactionsStatisticsLabelEnum.Standard,
@@ -223,7 +223,7 @@ export const ChartContractsTransactions = ({
             data: contractsPayload,
             key: 'contractValue',
             label: 'Applications',
-            color: success
+            color: showTotal ? success : primary
           }
         ]
       : []),
@@ -240,13 +240,13 @@ export const ChartContractsTransactions = ({
   ];
 
   return (
-    <div className={classNames(className, styles.wrapper)}>
+    <div className={classNames(className, 'chart-contracts-transactions')}>
       {showStatistics && (
-        <div className={styles.statistics}>
+        <div className='statistics'>
           {statistics.map((statistic) => (
-            <div key={statistic.label} className={styles.statistic}>
-              <div className={styles.label}>{statistic.label}</div>
-              <div className={styles.value} style={{ color: statistic.color }}>
+            <div key={statistic.label} className='statistic'>
+              <div className='label'>{statistic.label}</div>
+              <div className='value' style={{ color: statistic.color }}>
                 {statistic.value}
               </div>
             </div>
@@ -254,10 +254,10 @@ export const ChartContractsTransactions = ({
         </div>
       )}
 
-      <div className={styles.charts}>
-        <div className={styles.headerwrapper}>
-          {title && <h5 className={styles.title}>{title}</h5>}
-          <div className={styles.filters}>
+      <div className={classNames('charts', { 'has-border': hasBorder })}>
+        <div className='headerwrapper'>
+          {title && <h5 className='title'>{title}</h5>}
+          <div className='filters'>
             <ChartSelect
               options={filters}
               onChange={onChange}

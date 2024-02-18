@@ -21,4 +21,5 @@ export interface ChartContractsTransactionsUIType extends WithClassnameType {
   showTotal?: boolean;
   showContracts?: boolean;
   simpleTooltip?: boolean;
+  hasBorder?: boolean;
 }

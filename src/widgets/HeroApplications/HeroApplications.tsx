@@ -92,6 +92,7 @@ export const HeroApplications = () => {
         showTransactions={false}
         showTotal={false}
         simpleTooltip={true}
+        hasBorder={true}
         customStatistics={economics}
       />
     </div>
