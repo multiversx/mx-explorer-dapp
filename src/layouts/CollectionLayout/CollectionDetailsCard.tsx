@@ -54,9 +54,12 @@ export const CollectionDetailsCard = () => {
   return (
     <HeroDetailsCard
       title={title}
-      description={assets?.description}
       icon={assets?.pngUrl || assets?.svgUrl}
-      seoDetails={{ text: '' }}
+      seoDetails={{
+        text: '',
+        description: assets?.description,
+        completeDetails: Boolean(!scamInfo && assets)
+      }}
       className='collection-details'
       titleContent={
         !scamInfo && type !== NftTypeEnum.MetaESDT ? (
@@ -86,6 +89,21 @@ export const CollectionDetailsCard = () => {
         </Overlay>
       }
       detailItems={[
+        {
+          ...(assets?.description
+            ? {
+                title: 'Description',
+                value: (
+                  <div
+                    className='description line-clamp-2'
+                    title={assets.description}
+                  >
+                    {assets.description}
+                  </div>
+                )
+              }
+            : {})
+        },
         {
           ...(assets?.website
             ? {

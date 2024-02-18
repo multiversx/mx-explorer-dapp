@@ -23,7 +23,12 @@ export const HeroDetailItem = ({
 
   return (
     <div className={classNames('row hero-detail-item', className)}>
-      <div className={classNames('col-lg-2 text-neutral-400', titleClassName)}>
+      <div
+        className={classNames(
+          'col-lg-2 font-headings-regular text-neutral-400 title',
+          titleClassName
+        )}
+      >
         {title}
       </div>
       <div className='col-lg-10'>

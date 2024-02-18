@@ -13,6 +13,7 @@ import {
 import { VerifiedBadge } from './components/VerifiedBadge';
 
 export interface SEODetailsType {
+  completeDetails?: boolean;
   title?: string;
   details?: string;
   description?: string;
@@ -55,20 +56,19 @@ export const HeroDetailsCard = ({
   const [imageLoaded, setImageLoaded] = useState(false);
   const explorerTitle = useGetExplorerTitle();
   const seoTitle = `${
-    seoDetails?.title ?? typeof title === 'string' ? title : ''
+    seoDetails?.title ?? (typeof title === 'string' ? title : '')
   }${
     seoDetails?.title !== seoDetails?.details ? ` (${seoDetails?.details})` : ''
   } ${seoDetails?.text ?? ''}`;
   const seoDescription =
-    seoDetails?.description ?? typeof description === 'string'
-      ? String(description)
-      : '';
+    seoDetails?.description ??
+    (typeof description === 'string' ? String(description) : '');
   const hasStatCards = statsCards.length > 0 || smallStatsCards.length > 0;
-  const hasIcon = icon || iconPlaceholder;
+  const hasIcon = Boolean(icon || iconPlaceholder);
 
   return (
     <>
-      {seoDetails && (
+      {seoDetails?.completeDetails && (
         <Helmet prioritizeSeoTags={true}>
           <title>{`${seoTitle} • MultiversX ${explorerTitle}`}</title>
           {seoDescription && (
@@ -96,6 +96,11 @@ export const HeroDetailsCard = ({
           )}
         </Helmet>
       )}
+      {seoDetails && !seoDetails.completeDetails && (
+        <Helmet prioritizeSeoTags={true}>
+          <title>{`${seoTitle} • MultiversX ${explorerTitle}`}</title>
+        </Helmet>
+      )}
       <div
         className={classNames(
           'hero-details-card card card-black mb-3',
@@ -112,7 +117,10 @@ export const HeroDetailsCard = ({
             <span
               className={classNames(
                 'hero-details-card-logo d-none d-md-flex col-md-3',
-                { default: !hasIcon }
+                {
+                  default: !icon,
+                  'placeholder-default': !icon && iconPlaceholder
+                }
               )}
             >
               {hasIcon && (
@@ -142,26 +150,41 @@ export const HeroDetailsCard = ({
                   })}
                 >
                   <div className='d-flex align-items-center'>
-                    {(icon || iconPlaceholder) && (
-                      <span className='hero-details-card-logo d-md-none'>
-                        {icon ? (
-                          <img
-                            src={icon}
-                            className={classNames('logo-img', {
-                              loading: !imageLoaded
-                            })}
-                            alt={seoTitle ? `${seoTitle} Logo` : 'Logo'}
-                            onLoad={() => {
-                              setImageLoaded(true);
-                            }}
-                          />
-                        ) : (
-                          iconPlaceholder
-                        )}
-                      </span>
-                    )}
-                    <h1 className='mb-0' data-testid={`${testIdPrefix}title`}>
-                      {title}{' '}
+                    <span
+                      className={classNames(
+                        'hero-details-card-logo d-md-none',
+                        {
+                          default: !icon,
+                          'placeholder-default': !icon && iconPlaceholder
+                        }
+                      )}
+                    >
+                      {hasIcon && (
+                        <>
+                          {icon ? (
+                            <img
+                              src={icon}
+                              className={classNames('logo-img', {
+                                loading: !imageLoaded
+                              })}
+                              alt={seoTitle ? `${seoTitle} Logo` : 'Logo'}
+                              onLoad={() => {
+                                setImageLoaded(true);
+                              }}
+                            />
+                          ) : (
+                            iconPlaceholder
+                          )}
+                        </>
+                      )}
+                    </span>
+                    <h1
+                      className={classNames('mb-0', {
+                        'has-content': Boolean(titleContent || isVerified)
+                      })}
+                      data-testid={`${testIdPrefix}title`}
+                    >
+                      <span>{title}</span>{' '}
                       {isVerified && (
                         <>{verifiedComponent ?? <VerifiedBadge />}</>
                       )}
@@ -194,7 +217,7 @@ export const HeroDetailsCard = ({
             </div>
           </div>
           {hasStatCards && (
-            <div className='hero-details-card-cards d-flex flex-wrap gap-3 mt-5'>
+            <div className='hero-details-card-cards d-flex flex-wrap gap-3'>
               {statsCards.map(({ title, ...rest }, index) => (
                 <StatsCard title={title} key={`${title}-${index}`} {...rest} />
               ))}
