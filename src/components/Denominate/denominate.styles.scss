@@ -7,9 +7,18 @@
   .decimals {
     opacity: 0.75;
   }
+  sup {
+    margin-left: 0.125rem;
+    top: -0.4em;
+    font-size: 0.625em;
+    line-height: 1;
+    font-family: var(--font-headings-semibold);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
   .symbol {
     width: auto;
-    height: 0.5em;
+    height: 0.438em;
     margin-bottom: 0.1em;
     vertical-align: middle;
     path {
