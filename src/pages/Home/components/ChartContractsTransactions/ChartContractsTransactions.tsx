@@ -43,12 +43,13 @@ const getSum = (
 };
 
 export const ChartContractsTransactions = ({
+  title,
+  customStatistics = [],
   showStatistics = true,
   showTransactions = true,
   showContracts = true,
   showTotal = true,
   simpleTooltip = false,
-  title,
   className
 }: ChartContractsTransactionsUIType) => {
   const {
@@ -93,23 +94,26 @@ export const ChartContractsTransactions = ({
     }
   ];
 
-  const statistics: StatisticType[] = [
-    {
-      label: TransactionsStatisticsLabelEnum.Transactions,
-      value: totalTransactions,
-      color: primary
-    },
-    {
-      label: TransactionsStatisticsLabelEnum.Applications,
-      value: scResults,
-      color: success
-    },
-    {
-      label: TransactionsStatisticsLabelEnum.Standard,
-      value: transactions,
-      color: violet500
-    }
-  ];
+  const statistics: StatisticType[] =
+    customStatistics.length > 0
+      ? customStatistics
+      : [
+          {
+            label: TransactionsStatisticsLabelEnum.Transactions,
+            value: totalTransactions,
+            color: primary
+          },
+          {
+            label: TransactionsStatisticsLabelEnum.Applications,
+            value: scResults,
+            color: success
+          },
+          {
+            label: TransactionsStatisticsLabelEnum.Standard,
+            value: transactions,
+            color: violet500
+          }
+        ];
 
   const transactions365d = transactionsAll.slice(
     transactionsAll.length - 365,

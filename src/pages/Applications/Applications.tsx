@@ -47,47 +47,40 @@ export const Applications = () => {
     ELLIPSIS
   );
 
-  const fetchAccounts = () => {
+  const fetchApplications = () => {
     setDataChanged(true);
-    getAccounts({
-      page,
-      size: size ?? 15,
-      sort,
-      order,
-      isSmartContract: true,
-      withOwnerAssets: true,
-      withDeployInfo: true,
-      withScrCount: true
-    })
-      .then(({ data, success }) => {
-        if (success) {
-          setAccounts(data);
+    Promise.all([
+      getAccounts({
+        page,
+        size: size ?? 15,
+        sort,
+        order,
+        isSmartContract: true,
+        withOwnerAssets: true,
+        withDeployInfo: true,
+        withScrCount: true
+      }),
+      getAccountsCount({ isSmartContract: true })
+    ])
+      .then(([applicationsData, applicationsCountData]) => {
+        if (applicationsData.success && applicationsCountData.success) {
+          setAccounts(applicationsData.data);
+          setTotalAccounts(applicationsCountData.data);
         }
-        setDataReady(success);
+        setDataReady(applicationsData.success && applicationsCountData.success);
       })
       .finally(() => {
         setDataChanged(false);
       });
   };
 
-  const fetchAccountsCount = () => {
-    getAccountsCount({ isSmartContract: true }).then(
-      ({ data: count, success }) => {
-        if (success) {
-          setTotalAccounts(count);
-        }
-      }
-    );
-  };
-
   useEffect(() => {
-    fetchAccounts();
-    fetchAccountsCount();
+    fetchApplications();
   }, [activeNetworkId, searchParams]);
 
   return (
     <div className='container page-content'>
-      {isMainnet && <MostUsedApplications className='mb-3' size={7} />}
+      {isMainnet && <MostUsedApplications className='mb-3' />}
       {(dataReady === undefined ||
         (isMainnet && Object.keys(pageHeadersAccounts).length === 0)) && (
         <Loader />
@@ -99,7 +92,7 @@ export const Applications = () => {
             <div className='card'>
               {accounts && accounts.length > 0 ? (
                 <>
-                  <div className='card-header pb-3'>
+                  <div className='card-header pb-0'>
                     <h5 className='mb-0'>Browse all deployed apps</h5>
                   </div>
                   <div className='card-header'>
