@@ -20,7 +20,7 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetPage, useGetSort, useIsMainnet } from 'hooks';
-import { faFileAlt, faInfoCircle } from 'icons/regular';
+import { faCommand, faInfoCircle } from 'icons/regular';
 import { faBadgeCheck } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
@@ -151,7 +151,7 @@ export const Applications = () => {
                                     />
                                   ) : (
                                     <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
-                                      <FontAwesomeIcon icon={faFileAlt} />
+                                      <FontAwesomeIcon icon={faCommand} />
                                     </div>
                                   )}
                                   <AccountName
