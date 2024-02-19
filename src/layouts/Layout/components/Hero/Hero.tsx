@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { FormattedValue, Search } from 'components';
+import { FormatEGLD, Search } from 'components';
 import { getSubdomainNetwork } from 'helpers';
 import { useActiveRoute, useIsMainnet, usePageStats } from 'hooks';
 import { ChartContractsTransactions } from 'pages/Home/components/ChartContractsTransactions';
@@ -109,7 +109,7 @@ export const Hero = () => {
                     title={item.title}
                     subTitle={item.subTitle}
                     icon={item.icon}
-                    value={<FormattedValue value={item.value} />}
+                    value={<FormatEGLD value={item.value} />}
                     className='card-solitary'
                   />
                 ))}

@@ -5,16 +5,20 @@ import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { activeNetworkSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
-export interface FormattedValueUIType extends WithClassnameType {
+export interface FormatEGLDUIType extends WithClassnameType {
   value: string | number;
   showEgldLabel?: boolean;
+  superSuffix?: boolean;
 }
 
-export const FormattedValue = ({
+// TODO - will expand on FormatAmount ( Denominate )
+
+export const FormatEGLD = ({
   value,
   showEgldLabel,
+  superSuffix,
   className
-}: FormattedValueUIType) => {
+}: FormatEGLDUIType) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
 
   if (!value) {
@@ -31,7 +35,13 @@ export const FormattedValue = ({
       <MultiversXSymbol className='symbol' />{' '}
       <span className='amount'>{amount}</span>
       <span className='decimals'>{decimals}</span>
-      <span className='suffix'> {egldLabel}</span>
+      <>
+        {superSuffix ? (
+          <sup className='suffix'>&nbsp;{egldLabel}</sup>
+        ) : (
+          <span className='suffix'>&nbsp;{egldLabel}</span>
+        )}
+      </>
     </span>
   );
 };

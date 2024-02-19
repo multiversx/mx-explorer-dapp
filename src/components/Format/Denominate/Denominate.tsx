@@ -9,6 +9,8 @@ import { DECIMALS, DIGITS } from 'config';
 import { denominate } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
 
+// TODO - will change into FormatAmount similar to sdk-dapp in a different PR
+
 export interface DenominateType {
   value: string;
   showLastNonZeroDecimal?: boolean;
