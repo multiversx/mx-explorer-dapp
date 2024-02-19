@@ -8,7 +8,7 @@ export const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
       <th data-testid='position'>
         <Sort id='position' field='Position' />
       </th>
-      <th data-testid='node'>Public key</th>
+      <th data-testid='node'>Public Key</th>
       <th data-testid='name'>
         <Sort id='name' field='Name' />
       </th>

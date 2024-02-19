@@ -14,7 +14,7 @@ export const StandardHead = ({
   status?: NodeType['status'];
 }) => (
   <tr>
-    <th data-testid='node'>Public key</th>
+    <th data-testid='node'>Public Key</th>
     <th data-testid='name'>
       <Sort id='name' field='Name' />
     </th>

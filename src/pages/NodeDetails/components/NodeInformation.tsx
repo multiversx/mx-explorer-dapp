@@ -58,7 +58,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         </div>
         <div className='card-header-item compact card card-sm bg-table-header p-3 d-flex flex-row align-items-center mt-3'>
           <span className='flex-shrink-0 text-neutral-400 me-2'>
-            Public key:
+            Public Key:
           </span>
 
           <div className='d-flex flex-column min-w-0'>

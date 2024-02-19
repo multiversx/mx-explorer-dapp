@@ -10,7 +10,7 @@ export const AuctionListHead = () => {
       <th className='th-identity'>
         <Sort id='name' field='Validator' />
       </th>
-      <th className='th-key'>Key</th>
+      <th className='th-key'>Public Key</th>
       <th className='th-stake'>
         <Sort id='locked' field='Stake / Node' />
       </th>
