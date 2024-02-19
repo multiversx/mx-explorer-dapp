@@ -71,22 +71,23 @@ export const NftDetailsCard = () => {
   const hasExtraDescription =
     metadata?.description &&
     assets?.description &&
-    metadata.description !== assets.description;
+    metadata.description !== assets.description &&
+    !assets.description.includes(metadata.description);
 
   return (
     <HeroDetailsCard
       title={
         scamInfo ? (showData ? title : `[Hidden - ${scamInfo.info}]`) : title
       }
-      description={description}
       icon={
         showPreviewDetails ? nftPreview || assets?.svgUrl || assets?.pngUrl : ''
       }
-      seoDetails={
-        showPreviewDetails
-          ? { text: '', description, icon: nftPreview }
-          : undefined
-      }
+      seoDetails={{
+        text: '',
+        description,
+        icon: nftPreview,
+        completeDetails: Boolean(!scamInfo && showPreviewDetails)
+      }}
       className='nft-details'
       titleContent={
         !scamInfo && type !== NftTypeEnum.MetaESDT ? (
@@ -94,7 +95,7 @@ export const NftDetailsCard = () => {
         ) : null
       }
       descriptionContent={
-        hasExtraDescription || scamInfo ? (
+        scamInfo ? (
           <>
             {scamInfo && (
               <div className='d-flex align-items-center flex-wrap gap-3'>
@@ -115,11 +116,6 @@ export const NftDetailsCard = () => {
                 </a>
               </div>
             )}
-            {hasExtraDescription && (
-              <p className='hero-details-card-description text-neutral-400 mb-1'>
-                {assets.description}
-              </p>
-            )}
           </>
         ) : null
       }
@@ -134,6 +130,33 @@ export const NftDetailsCard = () => {
         </Overlay>
       }
       detailItems={[
+        {
+          ...(description
+            ? {
+                title: 'Description',
+                value: (
+                  <div className='description line-clamp-2' title={description}>
+                    {description}
+                  </div>
+                )
+              }
+            : {})
+        },
+        {
+          ...(hasExtraDescription
+            ? {
+                title: 'Collection',
+                value: (
+                  <div
+                    className='description line-clamp-2'
+                    title={assets.description}
+                  >
+                    {assets.description}
+                  </div>
+                )
+              }
+            : {})
+        },
         {
           ...(assets?.website
             ? {

@@ -15,10 +15,12 @@ import {
   HeroPills,
   StatsCard,
   HeroHome,
-  HeroNodes
+  HeroNodes,
+  HeroApplications
 } from 'widgets';
 
 import {
+  useShowApplicationsStats,
   useShowCustomStats,
   useShowGlobalStats,
   useShowNodesStats,
@@ -41,6 +43,7 @@ export const Hero = () => {
   const showCustomStats = useShowCustomStats() && isMainnet;
   const showGlobalStats = useShowGlobalStats();
   const showNodesStats = useShowNodesStats();
+  const showApplicationsStats = useShowApplicationsStats() && isMainnet;
   const showTransactionsStats = useShowTransactionStats() && isMainnet;
 
   const { subdomainNetwork } = getSubdomainNetwork();
@@ -61,6 +64,9 @@ export const Hero = () => {
   }
   if (showNodesStats) {
     heroTypeClassName = 'nodes-stats';
+  }
+  if (showApplicationsStats) {
+    heroTypeClassName = 'applications-stats';
   }
 
   return (
@@ -108,30 +114,22 @@ export const Hero = () => {
                   />
                 ))}
               </div>
-              {showTransactionsStats && (
-                <div className='card mt-3'>
-                  <ChartContractsTransactions
-                    showStatistics={false}
-                    title='App transactions'
-                    showTransactions={false}
-                    showTotal={false}
-                    simpleTooltip={true}
-                    className='bg-neutral-900'
-                  />
-                </div>
-              )}
             </div>
           ) : (
             <>
+              {showApplicationsStats && <HeroApplications />}
               {showTransactionsStats && (
                 <div className='card-body p-0'>
                   <ChartContractsTransactions />
                 </div>
               )}
-
               {showNodesStats && <HeroNodes />}
 
-              {!(showTransactionsStats || showNodesStats) && (
+              {!(
+                showTransactionsStats ||
+                showNodesStats ||
+                showApplicationsStats
+              ) && (
                 <div className='card-body d-flex flex-row flex-wrap gap-3'>
                   <TransactionsStatsCard />
                   <AccountsStatsCard />

@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
+import { ReactComponent as DefaultImage } from 'assets/img/default.svg';
 import {
   CopyButton,
   Denominate,
@@ -20,6 +21,7 @@ import {
   SocialWebsite,
   HeroDetailsCard
 } from 'components';
+
 import { DECIMALS } from 'config';
 import { isContract, urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
@@ -77,11 +79,15 @@ export const ApplicationDetailsCard = () => {
 
   return (
     <HeroDetailsCard
-      title={assets?.name ?? 'App Details'}
+      title={assets?.name ?? <Trim text={address} />}
       icon={assets?.iconSvg || assets?.iconPng}
-      description={assets?.description}
+      iconPlaceholder={<DefaultImage />}
       isVerified={isVerified}
-      seoDetails={{ text: 'App' }}
+      seoDetails={{
+        text: `${assets?.name ? '' : `${address} App`}`,
+        description: assets?.description,
+        completeDetails: Boolean(assets?.name)
+      }}
       data-testid-prefix='applications-'
       className='application-details'
       titleContent={
@@ -107,6 +113,21 @@ export const ApplicationDetailsCard = () => {
         ) : null
       }
       detailItems={[
+        {
+          ...(assets?.description
+            ? {
+                title: 'Description',
+                value: (
+                  <div
+                    className='description line-clamp-2'
+                    title={assets.description}
+                  >
+                    {assets.description}
+                  </div>
+                )
+              }
+            : {})
+        },
         {
           ...(account.assets?.social?.website
             ? {

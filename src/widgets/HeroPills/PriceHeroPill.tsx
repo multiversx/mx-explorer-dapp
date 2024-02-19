@@ -20,7 +20,7 @@ export const PriceHeroPill = ({ className }: WithClassnameType) => {
 
   return (
     <div
-      className={`hero-pill price-hero-pill d-flex align-items-center font-primary-medium ${
+      className={`hero-pill price-hero-pill d-flex align-items-center font-headings ${
         className ?? ''
       }`}
     >

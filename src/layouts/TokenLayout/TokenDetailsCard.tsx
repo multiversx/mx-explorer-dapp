@@ -35,11 +35,29 @@ export const TokenDetailsCard = () => {
   return (
     <HeroDetailsCard
       title={title}
-      description={assets?.description}
       icon={assets?.svgUrl || assets?.pngUrl}
-      seoDetails={{ text: '' }}
+      seoDetails={{
+        text: '',
+        description: assets?.description,
+        completeDetails: Boolean(assets)
+      }}
       className='token-details'
       detailItems={[
+        {
+          ...(assets?.description
+            ? {
+                title: 'Description',
+                value: (
+                  <div
+                    className='description line-clamp-2'
+                    title={assets.description}
+                  >
+                    {assets.description}
+                  </div>
+                )
+              }
+            : {})
+        },
         {
           ...(assets?.website
             ? {

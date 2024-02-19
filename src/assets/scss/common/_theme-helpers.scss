@@ -30,20 +30,18 @@
 }
 
 // FONTS
-.font-primary-regular {
-  font-family: 'Roobert Medium', 'Inter', Roboto, 'Helvetica Neue', 'Noto Sans',
-    'Liberation Sans', sans-serif;
+.font-headings-regular {
+  font-family: var(--font-headings-regular);
   font-weight: 400;
 }
 
-.font-primary-medium {
+.font-headings {
   font-family: $headings-font-family;
   font-weight: 500;
 }
 
-.font-primary-semibold {
-  font-family: 'Roobert SemiBold', 'Inter', Roboto, 'Helvetica Neue',
-    'Noto Sans', 'Liberation Sans', sans-serif;
+.font-headings-semibold {
+  font-family: var(--font-headings-semibold);
   font-weight: 600;
 }
 
@@ -52,6 +50,23 @@
 }
 .font-headings {
   font-family: $headings-font-family;
+}
+
+.line-clamp-1,
+.line-clamp-2,
+.line-clamp-3 {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-1 {
+  -webkit-line-clamp: 1;
+}
+.line-clamp-2 {
+  -webkit-line-clamp: 2;
+}
+.line-clamp-3 {
+  -webkit-line-clamp: 3;
 }
 
 // TABLE

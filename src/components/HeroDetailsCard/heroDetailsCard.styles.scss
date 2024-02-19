@@ -3,6 +3,9 @@
 .hero-details-card {
   background-color: var(--black);
 
+  &-overview {
+    margin-top: 1.5rem;
+  }
   &-logo {
     width: 3rem;
     height: 3rem;
@@ -26,7 +29,19 @@
       height: 50%;
       color: var(--neutral-700);
     }
-    &.default,
+    &.placeholder-default {
+      border-radius: unset;
+      border: unset;
+      svg {
+        margin-top: 0.75rem;
+        height: 2rem;
+        @include media-breakpoint-up(md) {
+          margin-top: 1rem;
+          height: 7rem;
+        }
+      }
+    }
+    &.default:not(.placeholder-default),
     img.loading {
       background-color: var(--neutral-800);
       background:
@@ -40,10 +55,11 @@
       background-size: contain;
     }
     @include media-breakpoint-up(md) {
-      min-width: 11.25rem;
-      min-height: 11.25rem;
-      width: 11.25rem;
-      height: 11.25rem;
+      margin-left: 0.625rem;
+      min-width: 9.375rem;
+      min-height: 9.375rem;
+      width: 9.375rem;
+      height: 9.375rem;
     }
   }
   &-title {
@@ -54,6 +70,40 @@
     column-gap: 1rem;
     row-gap: 0.5rem;
     h1 {
+      letter-spacing: -0.03em;
+      @include media-breakpoint-up(xxl) {
+        &.has-content {
+          display: contents;
+          span {
+            display: block;
+            max-width: 46rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 0.5rem;
+          }
+        }
+      }
+      .trim {
+        max-width: calc(90vw - 4rem);
+        letter-spacing: normal;
+        span {
+          font-size: 1.5rem;
+          letter-spacing: normal;
+        }
+        @include media-breakpoint-up(md) {
+          max-width: 32rem;
+          span {
+            font-size: 2.5rem;
+          }
+        }
+        @include media-breakpoint-up(lg) {
+          max-width: 44rem;
+        }
+        @include media-breakpoint-up(xl) {
+          max-width: 47rem;
+        }
+      }
       @include media-breakpoint-down(md) {
         font-size: 1.5rem;
       }
@@ -70,26 +120,51 @@
     }
   }
   .detail-items-container {
-    row-gap: 0.825rem;
-  }
-  .balance-usd {
-    font-size: 1rem;
-    color: var(--neutral-500);
-  }
-  .stats-card {
-    .stats-card-body {
-      justify-content: start;
+    row-gap: 1rem;
+    .hero-detail-item {
+      .description {
+        font-size: 1rem;
+        font-family: var(--headings-font-family);
+        color: var(--neutral-400);
+      }
+      @include media-breakpoint-up(xl) {
+        .title {
+          max-width: 8rem;
+        }
+      }
     }
   }
-  .small-stats-cards-container {
-    @include media-breakpoint-down(xl) {
-      flex: 1 1 auto;
+  &-cards {
+    margin-top: 2.5rem;
+
+    .stats-card {
+      .stats-card-body {
+        justify-content: start;
+        gap: 0.5rem;
+      }
+      .stats-card-value {
+        font-size: 1.5rem;
+        letter-spacing: -0.03em;
+      }
+      .balance-usd {
+        font-size: 0.875rem;
+        font-family: var(--font-headings-regular);
+        margin-top: 0.5rem;
+        color: var(--neutral-500);
+      }
+    }
+    .small-stats-cards-container {
+      @include media-breakpoint-down(xl) {
+        flex: 1 1 auto;
+      }
+    }
+    .stats-card-content-container {
+      display: flex;
+      flex-direction: column;
     }
   }
-  .stats-card-content-container {
-    display: flex;
-    flex-direction: column;
-  }
+
+  // Custom Styling
   &.application-details,
   &.token-details {
     .stats-card {

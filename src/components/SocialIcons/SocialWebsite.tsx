@@ -11,10 +11,7 @@ export const SocialWebsite = ({ link }: { link?: string }) => {
   return (
     <a href={formattedLink} target='_blank' rel='noreferrer nofollow noopener'>
       {formattedLink}
-      <FontAwesomeIcon
-        icon={faArrowUpRight}
-        className='ms-1 text-neutral-300'
-      />
+      <FontAwesomeIcon icon={faArrowUpRight} className='ms-1' size='sm' />
     </a>
   );
 };

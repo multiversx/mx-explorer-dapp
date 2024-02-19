@@ -75,7 +75,6 @@ export const useShowCustomStats = () => {
   switch (true) {
     case activeRoute(blocksRoutes.blocks):
     case activeRoute(accountsRoutes.accounts):
-    case activeRoute(applicationsRoutes.applications):
     case activeRoute(tokensRoutes.tokens):
     case activeRoute(tokensRoutes.tokensMeta):
     case activeRoute(tokensRoutes.tokensMetaEsdt):
@@ -94,6 +93,17 @@ export const useShowTransactionStats = () => {
 
   switch (true) {
     case activeRoute(transactionsRoutes.transactions):
+      return true;
+
+    default:
+      return false;
+  }
+};
+
+export const useShowApplicationsStats = () => {
+  const activeRoute = useActiveRoute();
+
+  switch (true) {
     case activeRoute(applicationsRoutes.applications):
       return true;
 

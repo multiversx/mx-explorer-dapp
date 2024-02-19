@@ -12,9 +12,7 @@ import {
   TransactionsStatisticsLabelEnum
 } from 'types';
 
-import styles from './styles.module.scss';
 import { ChartContractsTransactionsUIType } from './types';
-
 import { ChartArea } from '../ChartArea';
 import { PayloadType } from '../ChartArea/types';
 import { ChartSelect } from '../ChartSelect';
@@ -46,12 +44,14 @@ const getSum = (
 };
 
 export const ChartContractsTransactions = ({
+  title,
+  customStatistics = [],
   showStatistics = true,
   showTransactions = true,
   showContracts = true,
   showTotal = true,
   simpleTooltip = false,
-  title,
+  hasBorder = false,
   className
 }: ChartContractsTransactionsUIType) => {
   const {
@@ -96,23 +96,26 @@ export const ChartContractsTransactions = ({
     }
   ];
 
-  const statistics: StatisticType[] = [
-    {
-      label: TransactionsStatisticsLabelEnum.Transactions,
-      value: totalTransactions,
-      color: primary
-    },
-    {
-      label: TransactionsStatisticsLabelEnum.Applications,
-      value: scResults,
-      color: success
-    },
-    {
-      label: TransactionsStatisticsLabelEnum.Standard,
-      value: transactions,
-      color: violet500
-    }
-  ];
+  const statistics: StatisticType[] =
+    customStatistics.length > 0
+      ? customStatistics
+      : [
+          {
+            label: TransactionsStatisticsLabelEnum.Transactions,
+            value: totalTransactions,
+            color: primary
+          },
+          {
+            label: TransactionsStatisticsLabelEnum.Applications,
+            value: scResults,
+            color: showTotal ? success : primary
+          },
+          {
+            label: TransactionsStatisticsLabelEnum.Standard,
+            value: transactions,
+            color: violet500
+          }
+        ];
 
   const transactions365d = transactionsAll.slice(
     transactionsAll.length - 365,
@@ -222,7 +225,7 @@ export const ChartContractsTransactions = ({
             data: contractsPayload,
             key: 'contractValue',
             label: 'Applications',
-            color: success
+            color: showTotal ? success : primary
           }
         ]
       : []),
@@ -239,13 +242,13 @@ export const ChartContractsTransactions = ({
   ];
 
   return (
-    <div className={classNames(className, styles.wrapper)}>
+    <div className={classNames(className, 'chart-contracts-transactions')}>
       {showStatistics && (
-        <div className={styles.statistics}>
+        <div className='statistics'>
           {statistics.map((statistic) => (
-            <div key={statistic.label} className={styles.statistic}>
-              <div className={styles.label}>{statistic.label}</div>
-              <div className={styles.value} style={{ color: statistic.color }}>
+            <div key={statistic.label} className='statistic'>
+              <div className='label'>{statistic.label}</div>
+              <div className='value' style={{ color: statistic.color }}>
                 {statistic.value}
               </div>
             </div>
@@ -253,10 +256,10 @@ export const ChartContractsTransactions = ({
         </div>
       )}
 
-      <div className={styles.charts}>
-        <div className={styles.headerwrapper}>
-          {title && <h5 className={styles.title}>{title}</h5>}
-          <div className={styles.filters}>
+      <div className={classNames('charts', { 'has-border': hasBorder })}>
+        <div className='headerwrapper'>
+          {title && <h5 className='title'>{title}</h5>}
+          <div className='filters'>
             <ChartSelect
               options={filters}
               onChange={onChange}

@@ -25,6 +25,8 @@ export const SC_INIT_CHARACTERS_LENGTH = 13;
 export const N_A = 'N/A';
 export const ZERO = '0';
 export const ELLIPSIS = '...';
+export const PLACEHOLDER_IMAGE_PATH = 'assets/img/default.png';
+export const SVG_PLACEHOLDER_IMAGE_PATH = 'assets/img/default.svg';
 
 export const TRANSACTIONS_TABLE_FIELDS = [
   'txHash',

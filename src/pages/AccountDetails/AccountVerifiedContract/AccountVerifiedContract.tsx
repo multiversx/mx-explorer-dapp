@@ -15,7 +15,7 @@ import { faClone } from 'icons/regular';
 import {
   faAngleDown,
   faAngleRight,
-  faFileAlt,
+  faCommand,
   faListTree,
   faList,
   faQuestionCircle,
@@ -134,7 +134,7 @@ export const AccountVerifiedContract = () => {
       )}
       {isDataReady === false && (
         <PageState
-          icon={faFileAlt}
+          icon={faCommand}
           title='Unable to load Smart Contract'
           isError
         />
