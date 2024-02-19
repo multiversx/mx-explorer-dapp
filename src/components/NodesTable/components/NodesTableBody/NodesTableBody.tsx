@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { PageState } from 'components';
 import { getExpandRowDetails } from 'helpers';
-import { useGetSort } from 'hooks';
+import { useGetNodeFilters, useGetSearch, useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
 import { NodeType, SortOrderEnum } from 'types';
@@ -18,7 +18,6 @@ export interface NodesTableBodyUIType {
   statistics?: boolean;
   queue?: boolean;
   auctionList?: boolean;
-  hasTresholdRow?: boolean;
   type?: NodeType['type'];
   status?: NodeType['status'];
 }
@@ -43,7 +42,6 @@ export const NodesTableBody = ({
   statistics,
   queue,
   auctionList,
-  hasTresholdRow,
   type,
   status
 }: NodesTableBodyUIType) => {
@@ -51,13 +49,23 @@ export const NodesTableBody = ({
   if (queue) {
     colSpan = 5;
   }
+  if (auctionList || status === 'auction') {
+    colSpan = 10;
+  }
   const {
     unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
+  const { search } = useGetSearch();
   const { sort, order } = useGetSort();
-  const isSortDesc = sort === 'auctionPosition' && order === SortOrderEnum.desc;
+  const { status: nodeStatus, ...nodeFilters } = useGetNodeFilters();
 
-  const tresholdIndex = isSortDesc
+  const isAuctionSortDesc =
+    sort === 'auctionPosition' && order === SortOrderEnum.desc;
+  const hasNoFilters =
+    [search, ...Object.keys(nodeFilters)].every((el) => el === undefined) &&
+    sort === 'auctionPosition';
+
+  const tresholdIndex = isAuctionSortDesc
     ? nodes.findIndex((node) =>
         findTresholdNode(node, minimumAuctionQualifiedStake)
       )
@@ -66,13 +74,13 @@ export const NodesTableBody = ({
       );
 
   const expandRowDetails =
-    auctionList && hasTresholdRow ? getExpandRowDetails(nodes) : undefined;
+    auctionList && hasNoFilters ? getExpandRowDetails(nodes) : undefined;
 
   return (
     <tbody>
       {nodes.map((nodeData, index) => {
         const showTresholdRow = Boolean(
-          tresholdIndex && index === tresholdIndex && hasTresholdRow
+          tresholdIndex && index === tresholdIndex && hasNoFilters
         );
 
         if (statistics) {
@@ -99,6 +107,7 @@ export const NodesTableBody = ({
             type={type}
             status={status}
             key={nodeData.bls}
+            showTresholdRow={showTresholdRow}
           />
         );
       })}

@@ -44,8 +44,18 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   };
 
   const nodeStatusLink = (statusValue: string) => {
-    const { status, type, issues, fullHistory, page, sort, order, ...rest } =
-      Object.fromEntries(searchParams);
+    const {
+      status,
+      type,
+      issues,
+      fullHistory,
+      page,
+      sort,
+      order,
+      isAuctionDangerZone,
+      isQualified,
+      ...rest
+    } = Object.fromEntries(searchParams);
 
     const nextUrlParams: { [k: string]: string } = {
       ...rest,
@@ -64,8 +74,18 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   };
 
   const nodeTypeLink = (typeValue: string) => {
-    const { type, status, issues, fullHistory, page, sort, order, ...rest } =
-      Object.fromEntries(searchParams);
+    const {
+      type,
+      status,
+      issues,
+      fullHistory,
+      page,
+      sort,
+      order,
+      isAuctionDangerZone,
+      isQualified,
+      ...rest
+    } = Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
       ...(typeValue ? { type: typeValue } : {})
@@ -75,8 +95,18 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   };
 
   const issuesLink = (issuesValue: boolean) => {
-    const { type, status, issues, fullHistory, page, sort, order, ...rest } =
-      Object.fromEntries(searchParams);
+    const {
+      type,
+      status,
+      issues,
+      fullHistory,
+      page,
+      sort,
+      order,
+      isAuctionDangerZone,
+      isQualified,
+      ...rest
+    } = Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
       ...(issuesValue ? { issues: String(issuesValue), type: 'validator' } : {})
@@ -86,8 +116,18 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   };
 
   const fullHistoryLink = (fullHistoryValue: boolean) => {
-    const { type, status, issues, fullHistory, page, sort, order, ...rest } =
-      Object.fromEntries(searchParams);
+    const {
+      type,
+      status,
+      issues,
+      fullHistory,
+      page,
+      sort,
+      order,
+      isAuctionDangerZone,
+      isQualified,
+      ...rest
+    } = Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
       ...(fullHistoryValue ? { fullHistory: String(fullHistoryValue) } : {})

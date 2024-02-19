@@ -157,11 +157,7 @@ export const NodesAuctionList = () => {
         <>
           <div className='card-body'>
             <NodesTable auctionList>
-              <NodesTable.Body
-                nodes={nodes}
-                hasTresholdRow={hasNoFilters}
-                auctionList
-              />
+              <NodesTable.Body nodes={nodes} auctionList />
             </NodesTable>
           </div>
           {(isCustomSize || !hasNoFilters) && (

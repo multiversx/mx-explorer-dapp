@@ -17,11 +17,11 @@ export const NodeQualification = ({
   showDangerZone = false,
   className
 }: NodeQualificationUIType) => {
-  const { auctionQualified } = node;
+  const { auctionQualified, isInDangerZone } = node;
 
   const NodeStatusComponent = () => {
     if (auctionQualified) {
-      if (showDangerZone) {
+      if (showDangerZone && isInDangerZone) {
         return (
           <>
             <Led color='bg-red-400' />

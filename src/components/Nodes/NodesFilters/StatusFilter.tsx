@@ -1,23 +1,9 @@
-import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Anchor, Dropdown } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
-
-const CustomToggle = forwardRef(({ children, onClick }: any, ref: any) => (
-  <a
-    href=''
-    ref={ref}
-    onClick={(e) => {
-      e.preventDefault();
-      onClick(e);
-    }}
-  >
-    {children}
-  </a>
-));
 
 export const StatusFilter = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,12 +20,15 @@ export const StatusFilter = () => {
 
   return (
     <Dropdown
-      className='d-inline-block side-action cursor-pointer'
+      className='d-inline-flex'
       onSelect={(eventKey: any) => {
         return onlineLink(eventKey ?? '');
       }}
     >
-      <Dropdown.Toggle as={CustomToggle} id='dropdown-custom-components'>
+      <Dropdown.Toggle
+        className='btn-link-unstyled side-action cursor-pointer'
+        variant='link'
+      >
         <FontAwesomeIcon
           icon={online !== undefined ? faFilterSolid : faFilter}
           className={online !== undefined ? 'text-primary' : ''}
@@ -62,7 +51,7 @@ export const StatusFilter = () => {
           Offline
         </Dropdown.Item>
         <Dropdown.Item as={Anchor} eventKey=''>
-          Show all
+          Show All
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

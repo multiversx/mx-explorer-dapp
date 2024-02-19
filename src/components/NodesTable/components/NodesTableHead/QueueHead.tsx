@@ -1,6 +1,4 @@
-import { Sort } from 'components';
-
-import { StatusFilter } from '../StatusFilter';
+import { Sort, StatusFilter } from 'components';
 
 export const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
   return (

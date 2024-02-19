@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown, Anchor } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -9,19 +8,6 @@ import { useFetchShards } from 'hooks';
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
 import { shardsSelector } from 'redux/selectors';
-
-const CustomToggle = forwardRef(({ children, onClick }: any, ref: any) => (
-  <a
-    href=''
-    ref={ref}
-    onClick={(e) => {
-      e.preventDefault();
-      onClick(e);
-    }}
-  >
-    {children}
-  </a>
-));
 
 export const ShardFilter = () => {
   const shards = useSelector(shardsSelector);
@@ -42,12 +28,15 @@ export const ShardFilter = () => {
 
   return (
     <Dropdown
-      className='d-inline-block side-action cursor-pointer'
+      className='d-inline-flex'
       onSelect={(eventKey: any) => {
         return setShardfilter(eventKey ?? '');
       }}
     >
-      <Dropdown.Toggle as={CustomToggle} id='dropdown-custom-components'>
+      <Dropdown.Toggle
+        className='btn-link-unstyled side-action cursor-pointer'
+        variant='link'
+      >
         <FontAwesomeIcon
           icon={shard !== undefined ? faFilterSolid : faFilter}
           className={shard !== undefined ? 'text-primary' : ''}
@@ -70,7 +59,7 @@ export const ShardFilter = () => {
           );
         })}
         <Dropdown.Item as={Anchor} eventKey=''>
-          Show all
+          Show All
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
