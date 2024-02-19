@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, PageState, NodesTable } from 'components';
+import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -57,11 +57,14 @@ export const ProviderDetails = () => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <ProviderTabs />
           {dataReady === true && (
-            <Pager
-              total={totalNodes}
-              className='d-flex ms-auto me-auto me-sm-0'
-              show
-            />
+            <>
+              <Pager
+                total={totalNodes}
+                className='d-flex ms-auto me-auto me-sm-0'
+                show
+              />
+              <NodesFilters />
+            </>
           )}
         </div>
       </div>
