@@ -5,6 +5,8 @@ export interface BaseApiType {
   size?: number;
   fields?: string;
   extract?: string;
+  // not on api
+  isCount?: boolean;
 }
 
 export interface SortableApiType extends BaseApiType {
@@ -107,9 +109,6 @@ export interface GetTransactionsType extends SortableApiType {
   withUsername?: boolean;
   withBlockInfo?: boolean;
   isRelayed?: boolean;
-
-  // not on api
-  isCount?: boolean;
 }
 
 export interface GetProvidersType extends BaseApiType {

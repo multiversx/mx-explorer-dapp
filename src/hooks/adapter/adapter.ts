@@ -411,33 +411,12 @@ export const useAdapter = () => {
         params: getNodeParams(params)
       }),
 
-    getNodesCount: ({
-      online,
-      issues,
-      search,
-      type,
-      shard,
-      status,
-      identity,
-      provider,
-      fullHistory,
-      isAuctionDangerZone
-    }: GetNodesType) =>
-      getNodes({
+    getNodesCount: (params: GetNodesType) => {
+      return getNodes({
         url: '/nodes/c',
-        params: getNodeParams({
-          online,
-          issues,
-          search,
-          type,
-          shard,
-          status,
-          identity,
-          provider,
-          fullHistory,
-          isAuctionDangerZone
-        })
-      }),
+        params: getNodeParams({ isCount: true, ...params })
+      });
+    },
 
     getNodesVersions,
 
