@@ -1,4 +1,7 @@
 import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
+
+import { ImageWithFallback } from 'components';
+
 interface IdentityAvatarType {
   name?: string;
   avatar?: string;
@@ -13,12 +16,11 @@ export const IdentityAvatar = ({
   return (
     <>
       {identity.avatar ? (
-        <img
+        <ImageWithFallback
           className={`identity-avatar rounded-circle flex-shrink-0 me-2 ${
             !identity.avatar ? 'border-0' : ''
           }`}
           src={identity.avatar}
-          alt='img'
           height='42'
         />
       ) : (

@@ -29,7 +29,7 @@
       height: 50%;
       color: var(--neutral-700);
     }
-    &.placeholder-default {
+    &.has-placeholder {
       border-radius: unset;
       border: unset;
       svg {
@@ -40,19 +40,6 @@
           height: 7rem;
         }
       }
-    }
-    &.default:not(.placeholder-default),
-    img.loading {
-      background-color: var(--neutral-800);
-      background:
-        url('/assets/img/default.png') no-repeat center,
-        linear-gradient(
-          -10deg,
-          #{var(--neutral-950)} 0%,
-          #{var(--neutral-900)} 50%,
-          #{var(--neutral-800)} 100%
-        );
-      background-size: contain;
     }
     @include media-breakpoint-up(md) {
       margin-left: 0.625rem;

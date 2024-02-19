@@ -27,7 +27,7 @@ const prepareStakeDistribution = (identity: IdentityType) => {
     });
   }
 
-  return distribution.sort((a, b) => b.value - a.value);
+  return distribution.sort((a, b) => Number(b.value) - Number(a.value));
 };
 
 export const IdentityCard = ({ identity }: { identity: IdentityType }) => {

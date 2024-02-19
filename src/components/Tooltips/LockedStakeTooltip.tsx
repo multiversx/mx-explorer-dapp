@@ -37,6 +37,4 @@ export const LockedStakeTooltip = ({
       )}
     </div>
   );
-
-  return null;
 };

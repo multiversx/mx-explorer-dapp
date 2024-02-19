@@ -18,6 +18,7 @@ export * from './Filters';
 export * from './Format';
 export * from './HeroDetailsCard';
 export * from './IdentityBlock';
+export * from './ImageWithFallback';
 export * from './LatestItem';
 export * from './Led';
 export * from './Loader';
