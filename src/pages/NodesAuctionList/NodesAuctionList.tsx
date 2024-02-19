@@ -144,32 +144,30 @@ export const NodesAuctionList = () => {
       {dataReady === false && (
         <PageState icon={faCogs} title='Unable to load Auction List' isError />
       )}
-      {dataReady === true && (
+      {dataReady === true && nodes.length === 0 && (
+        <PageState
+          icon={faCogs}
+          title={`No ${
+            filterText ? `${filterText} ` : ''
+          }Nodes in Auction List`}
+        />
+      )}
+
+      {dataReady === true && nodes.length > 0 && (
         <>
-          {nodes.length === 0 ? (
-            <PageState
-              icon={faCogs}
-              title={`No ${
-                filterText ? `${filterText} ` : ''
-              }Nodes in Auction List`}
-            />
-          ) : (
-            <>
-              <div className='card-body'>
-                <NodesTable auctionList>
-                  <NodesTable.Body
-                    nodes={nodes}
-                    hasTresholdRow={hasNoFilters}
-                    auctionList
-                  />
-                </NodesTable>
-              </div>
-              {(isCustomSize || !hasNoFilters) && (
-                <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-                  <Pager total={totalNodes} itemsPerPage={size} show />
-                </div>
-              )}
-            </>
+          <div className='card-body'>
+            <NodesTable auctionList>
+              <NodesTable.Body
+                nodes={nodes}
+                hasTresholdRow={hasNoFilters}
+                auctionList
+              />
+            </NodesTable>
+          </div>
+          {(isCustomSize || !hasNoFilters) && (
+            <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+              <Pager total={totalNodes} itemsPerPage={size} show />
+            </div>
           )}
         </>
       )}

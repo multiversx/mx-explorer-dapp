@@ -17,25 +17,15 @@ export const AuctionListRow = ({
   const { sort, order } = useGetSort();
   const isSortDesc = sort === 'auctionPosition' && order === SortOrderEnum.desc;
 
-  const TresholdRowWrapper = ({ children }: { children: React.ReactNode }) => {
-    return (
-      <>
-        {isSortDesc && showTresholdRow && (
-          <AuctionListTresholdRow key={nodeData.bls} isSortDesc />
-        )}
-        {children}
-        {!isSortDesc && showTresholdRow && (
-          <AuctionListTresholdRow key={nodeData.bls} />
-        )}
-      </>
-    );
-  };
-
   return (
     <>
-      <TresholdRowWrapper>
-        <AuctionListBaseRow nodeData={nodeData} />
-      </TresholdRowWrapper>
+      {isSortDesc && showTresholdRow && (
+        <AuctionListTresholdRow key={nodeData.bls} isSortDesc />
+      )}
+      <AuctionListBaseRow nodeData={nodeData} />
+      {!isSortDesc && showTresholdRow && (
+        <AuctionListTresholdRow key={nodeData.bls} />
+      )}
     </>
   );
 };
