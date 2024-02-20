@@ -21,11 +21,12 @@ export const getExpandRowDetails = (nodes: NodeType[] = []) => {
     remainingDangerZoneValidators,
     remainingNotQualifiedValidators;
 
-  const qualifiedNotInDangerZoneValidators = nodes.filter(
-    (node) => node.auctionQualified && !node.isInDangerZone
-  );
-  const dangerZoneValidators = nodes.filter((nodes) => nodes.isInDangerZone);
-  const notQualifiedValidators = nodes.filter((node) => !node.auctionQualified);
+  const qualifiedNotInDangerZoneValidators =
+    nodes.filter((node) => node.auctionQualified && !node.isInDangerZone) ?? [];
+  const dangerZoneValidators =
+    nodes.filter((nodes) => nodes.isInDangerZone) ?? [];
+  const notQualifiedValidators =
+    nodes.filter((node) => !node.auctionQualified) ?? [];
 
   if (
     hasMinElements &&
@@ -36,10 +37,10 @@ export const getExpandRowDetails = (nodes: NodeType[] = []) => {
 
     qualifiedExpandPosition =
       qualifiedNotInDangerZoneValidators[AUCTION_LIST_EXPAND_ROW_POSITION]
-        .auctionPosition;
+        ?.auctionPosition;
 
     qualifiedExpandClosePosition =
-      qualifiedNotInDangerZoneValidators[closeIndex].auctionPosition;
+      qualifiedNotInDangerZoneValidators[closeIndex]?.auctionPosition;
 
     remainingQualifiedValidators =
       qualifiedNotInDangerZoneValidators.length -
@@ -49,10 +50,10 @@ export const getExpandRowDetails = (nodes: NodeType[] = []) => {
     const closeIndex = dangerZoneValidators.length - 1 - closedRowPosition;
 
     dangerZoneExpandPosition =
-      dangerZoneValidators[AUCTION_LIST_EXPAND_ROW_POSITION].auctionPosition;
+      dangerZoneValidators[AUCTION_LIST_EXPAND_ROW_POSITION]?.auctionPosition;
 
     dangerZoneExpandClosePosition =
-      dangerZoneValidators[closeIndex].auctionPosition;
+      dangerZoneValidators[closeIndex]?.auctionPosition;
 
     remainingDangerZoneValidators =
       dangerZoneValidators.length - AUCTION_LIST_MIN_DISPLAY_ROW_COUNT;
@@ -62,10 +63,10 @@ export const getExpandRowDetails = (nodes: NodeType[] = []) => {
 
     notQualifiedExpandPosition =
       qualifiedNotInDangerZoneValidators[AUCTION_LIST_EXPAND_ROW_POSITION]
-        .auctionPosition;
+        ?.auctionPosition;
 
     notQualifiedExpandClosePosition =
-      notQualifiedValidators[closeIndex].auctionPosition;
+      notQualifiedValidators[closeIndex]?.auctionPosition;
 
     remainingNotQualifiedValidators =
       notQualifiedValidators.length - AUCTION_LIST_MIN_DISPLAY_ROW_COUNT;
