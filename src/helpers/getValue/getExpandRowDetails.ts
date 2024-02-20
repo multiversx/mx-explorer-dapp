@@ -10,6 +10,7 @@ export const getExpandRowDetails = (nodes: NodeType[] = []) => {
 
   const hasMinElements = nodes.length >= PAGE_SIZE;
   const closedRowPosition = Math.floor(AUCTION_LIST_MIN_DISPLAY_ROW_COUNT / 2);
+
   let qualifiedExpandPosition,
     dangerZoneExpandPosition,
     notQualifiedExpandPosition,
@@ -30,35 +31,41 @@ export const getExpandRowDetails = (nodes: NodeType[] = []) => {
     hasMinElements &&
     qualifiedNotInDangerZoneValidators.length >= MIN_ROW_COUNT
   ) {
+    const closeIndex =
+      qualifiedNotInDangerZoneValidators.length - 1 - closedRowPosition;
+
     qualifiedExpandPosition =
       qualifiedNotInDangerZoneValidators[AUCTION_LIST_EXPAND_ROW_POSITION]
         .auctionPosition;
 
     qualifiedExpandClosePosition =
-      qualifiedNotInDangerZoneValidators.length - closedRowPosition;
+      qualifiedNotInDangerZoneValidators[closeIndex].auctionPosition;
 
     remainingQualifiedValidators =
       qualifiedNotInDangerZoneValidators.length -
       AUCTION_LIST_MIN_DISPLAY_ROW_COUNT;
   }
   if (hasMinElements && dangerZoneValidators.length >= MIN_ROW_COUNT) {
+    const closeIndex = dangerZoneValidators.length - 1 - closedRowPosition;
+
     dangerZoneExpandPosition =
-      qualifiedNotInDangerZoneValidators[AUCTION_LIST_EXPAND_ROW_POSITION]
-        .auctionPosition;
+      dangerZoneValidators[AUCTION_LIST_EXPAND_ROW_POSITION].auctionPosition;
 
     dangerZoneExpandClosePosition =
-      dangerZoneValidators.length - closedRowPosition;
+      dangerZoneValidators[closeIndex].auctionPosition;
 
     remainingDangerZoneValidators =
       dangerZoneValidators.length - AUCTION_LIST_MIN_DISPLAY_ROW_COUNT;
   }
   if (hasMinElements && notQualifiedValidators.length >= MIN_ROW_COUNT) {
+    const closeIndex = notQualifiedValidators.length - 1 - closedRowPosition;
+
     notQualifiedExpandPosition =
       qualifiedNotInDangerZoneValidators[AUCTION_LIST_EXPAND_ROW_POSITION]
         .auctionPosition;
 
     notQualifiedExpandClosePosition =
-      notQualifiedValidators.length - closedRowPosition;
+      notQualifiedValidators[closeIndex].auctionPosition;
 
     remainingNotQualifiedValidators =
       notQualifiedValidators.length - AUCTION_LIST_MIN_DISPLAY_ROW_COUNT;
