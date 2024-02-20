@@ -50,10 +50,12 @@ export const ProviderDetailsCard = ({
           </a>
         </div>
         <div className='card-header-item compact card card-sm bg-table-header p-3 d-flex flex-row align-items-center mt-3'>
-          <span className='text-neutral-400 flex-shrink-0'>Address:</span>
-          <div className='d-flex align-items-center text-break-all ms-2'>
-            <AccountLink address={provider.provider} data-testid='address' />
-            <CopyButton text={provider.provider} />
+          <span className='flex-shrink-0 text-neutral-400 me-2'>Address:</span>
+          <div className='d-flex flex-column min-w-0'>
+            <div className='d-flex align-items-center'>
+              <AccountLink address={provider.provider} data-testid='address' />
+              <CopyButton text={provider.provider} />
+            </div>
           </div>
         </div>
       </div>
