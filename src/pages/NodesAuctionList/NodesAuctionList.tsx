@@ -108,7 +108,7 @@ export const NodesAuctionList = () => {
           ...sort,
           ...auctionListFilters,
           page,
-          size
+          size: pageSize
         }),
         getNodesCount(auctionListFilters)
       ]).then(([nodesData, count]) => {
@@ -131,7 +131,7 @@ export const NodesAuctionList = () => {
           <AuctionListFilters />
           {dataReady === true && (isCustomSize || !hasNoFilters) && (
             <Pager
-              itemsPerPage={size}
+              itemsPerPage={pageSize}
               total={totalNodes}
               className='d-flex ms-auto me-auto me-sm-0'
               show
@@ -162,7 +162,7 @@ export const NodesAuctionList = () => {
           </div>
           {(isCustomSize || !hasNoFilters) && (
             <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
-              <Pager total={totalNodes} itemsPerPage={size} show />
+              <Pager total={totalNodes} itemsPerPage={pageSize} show />
             </div>
           )}
         </>
