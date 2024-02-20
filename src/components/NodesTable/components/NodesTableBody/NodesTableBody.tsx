@@ -63,7 +63,7 @@ export const NodesTableBody = ({
     sort === 'auctionPosition' && order === SortOrderEnum.desc;
   const hasNoFilters =
     [search, ...Object.keys(nodeFilters)].every((el) => el === undefined) &&
-    sort === 'auctionPosition';
+    ((sort === undefined && auctionList) || sort === 'auctionPosition');
 
   const tresholdIndex = isAuctionSortDesc
     ? nodes.findIndex((node) =>
