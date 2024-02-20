@@ -96,6 +96,7 @@ export const NodesTableBody = ({
               key={nodeData.bls}
               showTresholdRow={showTresholdRow}
               expandRowDetails={expandRowDetails}
+              index={index + 1}
             />
           );
         }
@@ -103,7 +104,7 @@ export const NodesTableBody = ({
         return (
           <StandardRow
             nodeData={nodeData}
-            index={index}
+            index={index + 1}
             type={type}
             status={status}
             key={nodeData.bls}

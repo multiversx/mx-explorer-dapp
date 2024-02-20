@@ -59,15 +59,7 @@ export const StandardRow = ({
             )}
           </td>
         )}
-        {status === 'auction' && (
-          <td>
-            {nodeData.auctionPosition ? (
-              <div>{nodeData.auctionPosition}</div>
-            ) : (
-              <span className='text-neutral-400'>N/A</span>
-            )}
-          </td>
-        )}
+        {status === 'auction' && <td>{index ?? nodeData.auctionPosition}</td>}
         <td>
           <div className='d-flex align-items-center gap-1 hash'>
             <NodeStatusIcon node={nodeData} />

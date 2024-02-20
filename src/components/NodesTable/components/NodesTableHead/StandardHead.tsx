@@ -16,11 +16,7 @@ export const StandardHead = ({
         <Sort id='position' field='Position' />
       </th>
     )}
-    {status === 'auction' && (
-      <th data-testid='auctionPosition'>
-        <Sort id='auctionPosition' field='Position' />
-      </th>
-    )}
+    {status === 'auction' && <th data-testid='auctionPosition'>Position</th>}
     <th data-testid='node'>Public Key</th>
     <th data-testid='name'>
       <Sort id='name' field='Name' />

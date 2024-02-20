@@ -3,9 +3,7 @@ import { Sort } from 'components';
 export const AuctionListHead = () => {
   return (
     <tr>
-      <th className='th-rank'>
-        <Sort id='auctionPosition' field='Position' />
-      </th>
+      <th className='th-rank'>Position</th>
       <th className='th-eligibility'>Qualified</th>
       <th className='th-identity'>
         <Sort id='name' field='Validator' />

@@ -8,11 +8,13 @@ export interface AuctionListRowUIType extends WithClassnameType {
   nodeData: NodeType;
   showTresholdRow?: boolean;
   expandRowDetails?: any;
+  index?: number;
 }
 
 export const AuctionListRow = ({
   nodeData,
-  showTresholdRow
+  showTresholdRow,
+  index
 }: AuctionListRowUIType) => {
   const { sort, order } = useGetSort();
   const isSortDesc = sort === 'auctionPosition' && order === SortOrderEnum.desc;
@@ -22,7 +24,7 @@ export const AuctionListRow = ({
       {isSortDesc && showTresholdRow && (
         <AuctionListTresholdRow key={nodeData.bls} isSortDesc />
       )}
-      <AuctionListBaseRow nodeData={nodeData} />
+      <AuctionListBaseRow nodeData={nodeData} index={index} />
       {!isSortDesc && showTresholdRow && (
         <AuctionListTresholdRow key={nodeData.bls} />
       )}

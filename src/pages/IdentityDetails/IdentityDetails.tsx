@@ -23,6 +23,7 @@ export const IdentityDetails = () => {
   const { page, size } = useGetPage();
   const { sort, order } = useGetSort();
   const { search } = useGetSearch();
+  const { type, status } = nodeFilters;
 
   const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
   const [identity, setIdentity] = useState<IdentityType>();
@@ -148,8 +149,15 @@ export const IdentityDetails = () => {
                 </div>
 
                 <div className='card-body'>
-                  <NodesTable>
-                    <NodesTable.Body nodes={nodes} />
+                  <NodesTable
+                    type={type as NodeType['type']}
+                    status={status as NodeType['status']}
+                  >
+                    <NodesTable.Body
+                      nodes={nodes}
+                      type={type as NodeType['type']}
+                      status={status as NodeType['status']}
+                    />
                   </NodesTable>
                 </div>
                 <div className='card-footer d-flex justify-content-center justify-content-sm-end'>

@@ -26,6 +26,8 @@ export const ProviderDetails = () => {
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
 
+  const { type, status } = nodeFilters;
+
   const fetchNodes = () => {
     setDataReady(undefined);
 
@@ -77,8 +79,15 @@ export const ProviderDetails = () => {
       {dataReady === true && (
         <>
           <div className='card-body'>
-            <NodesTable>
-              <NodesTable.Body nodes={nodes} />
+            <NodesTable
+              type={type as NodeType['type']}
+              status={status as NodeType['status']}
+            >
+              <NodesTable.Body
+                nodes={nodes}
+                type={type as NodeType['type']}
+                status={status as NodeType['status']}
+              />
             </NodesTable>
           </div>
           <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
