@@ -1,9 +1,10 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
+import { PAGE_SIZE, AUCTION_LIST_MAX_NODES } from 'appConstants';
 import { PageState } from 'components';
 import { getExpandRowDetails } from 'helpers';
-import { useGetNodeFilters, useGetSearch, useGetSort } from 'hooks';
+import { useGetNodeFilters, useGetPage, useGetSearch, useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
 import { NodeType, SortOrderEnum } from 'types';
@@ -62,6 +63,7 @@ export const NodesTableBody = ({
   } = useSelector(stakeSelector);
   const { search } = useGetSearch();
   const { sort, order } = useGetSort();
+  const { size: pageSize } = useGetPage();
   const { status: nodeStatus, ...nodeFilters } = useGetNodeFilters();
 
   const isAuctionSortDesc =
@@ -69,6 +71,7 @@ export const NodesTableBody = ({
   const hasNoFilters =
     [search, ...Object.keys(nodeFilters)].every((el) => el === undefined) &&
     ((sort === undefined && auctionList) || sort === 'auctionPosition');
+  const isCustomSize = ![PAGE_SIZE, AUCTION_LIST_MAX_NODES].includes(pageSize);
 
   const tresholdIndex = isAuctionSortDesc
     ? nodes.findIndex((node) =>
@@ -79,7 +82,9 @@ export const NodesTableBody = ({
       );
 
   const expandRowDetails =
-    auctionList && hasNoFilters ? getExpandRowDetails(nodes) : undefined;
+    auctionList && hasNoFilters && !isCustomSize
+      ? getExpandRowDetails(nodes)
+      : undefined;
 
   return (
     <tbody>
