@@ -11,6 +11,7 @@ export interface AuctionListExpandRowUIType extends WithClassnameType {
   index: number;
   expandRowDetails: ExpandRowDetailsType;
   colSpan?: number;
+  showPosition?: boolean;
 }
 
 interface ExpandRowUIType extends WithClassnameType {
@@ -56,6 +57,7 @@ export const AuctionListExpandRow = ({
   index,
   nodeData,
   expandRowDetails,
+  showPosition,
   className
 }: AuctionListExpandRowUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -168,5 +170,11 @@ export const AuctionListExpandRow = ({
     );
   }
 
-  return <AuctionListBaseRow nodeData={nodeData} index={index} />;
+  return (
+    <AuctionListBaseRow
+      nodeData={nodeData}
+      index={index}
+      showPosition={showPosition}
+    />
+  );
 };

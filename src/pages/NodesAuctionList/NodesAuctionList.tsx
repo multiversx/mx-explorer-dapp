@@ -156,8 +156,12 @@ export const NodesAuctionList = () => {
       {dataReady === true && nodes.length > 0 && (
         <>
           <div className='card-body'>
-            <NodesTable auctionList>
-              <NodesTable.Body nodes={nodes} auctionList />
+            <NodesTable auctionList showPosition={hasNoFilters}>
+              <NodesTable.Body
+                nodes={nodes}
+                auctionList
+                showPosition={hasNoFilters}
+              />
             </NodesTable>
           </div>
           {(isCustomSize || !hasNoFilters) && (

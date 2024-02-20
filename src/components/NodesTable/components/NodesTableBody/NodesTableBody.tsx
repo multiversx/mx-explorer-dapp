@@ -17,9 +17,10 @@ export interface NodesTableBodyUIType {
   nodes: NodeType[];
   statistics?: boolean;
   queue?: boolean;
-  auctionList?: boolean;
   type?: NodeType['type'];
   status?: NodeType['status'];
+  auctionList?: boolean;
+  showPosition?: boolean;
 }
 
 const findTresholdNode = (
@@ -41,16 +42,20 @@ export const NodesTableBody = ({
   nodes,
   statistics,
   queue,
-  auctionList,
   type,
-  status
+  status,
+  auctionList,
+  showPosition
 }: NodesTableBodyUIType) => {
   let colSpan = 8;
   if (queue) {
     colSpan = 5;
   }
-  if (auctionList || status === 'auction') {
-    colSpan = 10;
+  if (status === 'auction') {
+    colSpan = showPosition ? 10 : 9;
+  }
+  if (auctionList) {
+    colSpan = showPosition ? 7 : 6;
   }
   const {
     unprocessed: { minimumAuctionQualifiedStake }
@@ -97,6 +102,7 @@ export const NodesTableBody = ({
               showTresholdRow={showTresholdRow}
               expandRowDetails={expandRowDetails}
               index={index + 1}
+              showPosition={showPosition}
             />
           );
         }
@@ -109,6 +115,7 @@ export const NodesTableBody = ({
             status={status}
             key={nodeData.bls}
             showTresholdRow={showTresholdRow}
+            showPosition={showPosition}
           />
         );
       })}

@@ -22,11 +22,13 @@ import { NodeType, WithClassnameType } from 'types';
 export interface AuctionListBaseRowUIType extends WithClassnameType {
   nodeData: NodeType;
   index?: number;
+  showPosition?: boolean;
 }
 
 export const AuctionListBaseRow = ({
   nodeData,
   index,
+  showPosition,
   className
 }: AuctionListBaseRowUIType) => {
   const { nodesIdentities } = useSelector(nodesIdentitiesSelector);
@@ -47,7 +49,7 @@ export const AuctionListBaseRow = ({
         'row-danger': nodeData?.isInDangerZone && nodeData.auctionQualified
       })}
     >
-      <td>{index ?? nodeData.auctionPosition}</td>
+      {showPosition && <td>{index ?? nodeData.auctionPosition}</td>}
       <td>
         <NodeQualification node={nodeData} showDangerZone={false} />
       </td>

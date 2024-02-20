@@ -16,6 +16,7 @@ interface NodesTableUIType {
   auctionList?: boolean;
   type?: NodeType['type'];
   status?: NodeType['status'];
+  showPosition?: boolean;
 }
 
 export default class NodesTable extends React.Component<NodesTableUIType> {
@@ -29,7 +30,8 @@ export default class NodesTable extends React.Component<NodesTableUIType> {
       children,
       hideFilters,
       type,
-      status
+      status,
+      showPosition
     } = this.props;
 
     return (
@@ -42,7 +44,7 @@ export default class NodesTable extends React.Component<NodesTableUIType> {
       >
         <table className='table mb-0'>
           <thead>
-            {auctionList && <AuctionListHead />}
+            {auctionList && <AuctionListHead showPosition={showPosition} />}
             {statistics && <StatisticsHead />}
             {queue && <QueueHead hideFilters={hideFilters} />}
             {!statistics && !queue && !auctionList && (
@@ -50,6 +52,7 @@ export default class NodesTable extends React.Component<NodesTableUIType> {
                 hideFilters={hideFilters}
                 type={type}
                 status={status}
+                showPosition={showPosition}
               />
             )}
           </thead>

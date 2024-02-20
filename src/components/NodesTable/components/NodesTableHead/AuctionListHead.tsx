@@ -1,9 +1,13 @@
 import { Sort } from 'components';
 
-export const AuctionListHead = () => {
+export interface AuctionListHeadUIType {
+  showPosition?: boolean;
+}
+
+export const AuctionListHead = ({ showPosition }: AuctionListHeadUIType) => {
   return (
     <tr>
-      <th className='th-rank'>#</th>
+      {showPosition && <th className='th-rank'>#</th>}
       <th className='th-eligibility'>Qualified</th>
       <th className='th-identity'>
         <Sort id='name' field='Validator' />

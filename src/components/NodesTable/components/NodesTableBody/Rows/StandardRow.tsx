@@ -26,6 +26,7 @@ export interface StandardRowUIType {
   type?: NodeType['type'];
   status?: NodeType['status'];
   showTresholdRow?: boolean;
+  showPosition?: boolean;
 }
 
 export const StandardRow = ({
@@ -33,7 +34,8 @@ export const StandardRow = ({
   index,
   type,
   status,
-  showTresholdRow
+  showTresholdRow,
+  showPosition
 }: StandardRowUIType) => {
   const { sort, order } = useGetSort();
   const isSortDesc = sort === 'auctionPosition' && order === SortOrderEnum.desc;
@@ -62,7 +64,9 @@ export const StandardRow = ({
             )}
           </td>
         )}
-        {status === 'auction' && <td>{index ?? nodeData.auctionPosition}</td>}
+        {status === 'auction' && showPosition && (
+          <td>{index ?? nodeData.auctionPosition}</td>
+        )}
         <td>
           <div className='d-flex align-items-center gap-1 hash'>
             <NodeStatusIcon node={nodeData} />

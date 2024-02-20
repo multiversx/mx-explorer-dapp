@@ -1,22 +1,28 @@
 import { Sort, QualifiedFilter, ShardFilter, StatusFilter } from 'components';
 import { NodeType } from 'types';
 
-export const StandardHead = ({
-  hideFilters,
-  type,
-  status
-}: {
+export interface StandardHeadUIType {
   hideFilters?: boolean;
   type?: NodeType['type'];
   status?: NodeType['status'];
-}) => (
+  showPosition?: boolean;
+}
+
+export const StandardHead = ({
+  type,
+  status,
+  hideFilters,
+  showPosition
+}: StandardHeadUIType) => (
   <tr>
     {status === 'queued' && (
       <th data-testid='position'>
         <Sort id='position' field='Position' />
       </th>
     )}
-    {status === 'auction' && <th data-testid='auctionPosition'>Position</th>}
+    {status === 'auction' && showPosition && (
+      <th data-testid='auctionPosition'>#</th>
+    )}
     <th data-testid='node'>Public Key</th>
     <th data-testid='name'>
       <Sort id='name' field='Name' />
