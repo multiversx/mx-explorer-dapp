@@ -1,72 +1,77 @@
-import {
-  PAGE_SIZE,
-  AUCTION_LIST_EXPAND_ROW_POSITION,
-  AUCTION_LIST_MIN_DISPLAY_ROW_COUNT
-} from 'appConstants';
+import { PAGE_SIZE, AUCTION_LIST_MIN_DISPLAY_ROW_COUNT } from 'appConstants';
 import { NodeType } from 'types';
 
-export const getExpandRowDetails = (nodes: NodeType[] = []) => {
+export interface ExpandRowDetailsType {
+  qualifiedExpandPosition: number | undefined;
+  qualifiedExpandClosePosition: number | undefined;
+  remainingQualifiedValidators: number | undefined;
+  dangerZoneExpandPosition: number | undefined;
+  dangerZoneExpandClosePosition: number | undefined;
+  remainingDangerZoneValidators: number | undefined;
+  notQualifiedExpandPosition: number | undefined;
+  notQualifiedExpandClosePosition: number | undefined;
+  remainingNotQualifiedValidators: number | undefined;
+}
+
+const isQualified = (node: NodeType) => {
+  return node.auctionQualified && !node.isInDangerZone;
+};
+const isDangerZone = (node: NodeType) => {
+  return node.isInDangerZone && node.auctionQualified;
+};
+const isNotQualified = (node: NodeType) => {
+  return !node.auctionQualified;
+};
+
+export const getExpandRowDetails = (
+  nodes: NodeType[] = []
+): ExpandRowDetailsType => {
   const MIN_ROW_COUNT = 9;
 
   const hasMinElements = nodes.length >= PAGE_SIZE;
-  const closedRowPosition = Math.floor(AUCTION_LIST_MIN_DISPLAY_ROW_COUNT / 2);
+  const displayRows = Math.floor(AUCTION_LIST_MIN_DISPLAY_ROW_COUNT / 2);
 
   let qualifiedExpandPosition,
-    dangerZoneExpandPosition,
-    notQualifiedExpandPosition,
     qualifiedExpandClosePosition,
-    dangerZoneExpandClosePosition,
-    notQualifiedExpandClosePosition,
     remainingQualifiedValidators,
+    dangerZoneExpandPosition,
+    dangerZoneExpandClosePosition,
     remainingDangerZoneValidators,
+    notQualifiedExpandPosition,
+    notQualifiedExpandClosePosition,
     remainingNotQualifiedValidators;
 
-  const qualifiedNotInDangerZoneValidators =
-    nodes.filter((node) => node.auctionQualified && !node.isInDangerZone) ?? [];
-  const dangerZoneValidators =
-    nodes.filter((nodes) => nodes.isInDangerZone) ?? [];
-  const notQualifiedValidators =
-    nodes.filter((node) => !node.auctionQualified) ?? [];
+  const qualifiedNotInDangerZoneValidators = nodes.filter(isQualified) ?? [];
+  const dangerZoneValidators = nodes.filter(isDangerZone) ?? [];
+  const notQualifiedValidators = nodes.filter(isNotQualified) ?? [];
 
   if (
     hasMinElements &&
     qualifiedNotInDangerZoneValidators.length >= MIN_ROW_COUNT
   ) {
-    const closeIndex =
-      qualifiedNotInDangerZoneValidators.length - 1 - closedRowPosition;
-
-    qualifiedExpandPosition =
-      qualifiedNotInDangerZoneValidators[AUCTION_LIST_EXPAND_ROW_POSITION]
-        ?.auctionPosition;
-
-    qualifiedExpandClosePosition =
-      qualifiedNotInDangerZoneValidators[closeIndex]?.auctionPosition;
+    const qualifiedFirst = nodes.findIndex(isQualified);
+    const qualifiedLast = nodes.findLastIndex(isQualified);
+    qualifiedExpandPosition = qualifiedFirst + 1 + displayRows;
+    qualifiedExpandClosePosition = qualifiedLast + 1 - displayRows;
 
     remainingQualifiedValidators =
       qualifiedNotInDangerZoneValidators.length -
       AUCTION_LIST_MIN_DISPLAY_ROW_COUNT;
   }
   if (hasMinElements && dangerZoneValidators.length >= MIN_ROW_COUNT) {
-    const closeIndex = dangerZoneValidators.length - 1 - closedRowPosition;
-
-    dangerZoneExpandPosition =
-      dangerZoneValidators[AUCTION_LIST_EXPAND_ROW_POSITION]?.auctionPosition;
-
-    dangerZoneExpandClosePosition =
-      dangerZoneValidators[closeIndex]?.auctionPosition;
+    const dangerZoneFirst = nodes.findIndex(isDangerZone);
+    const dangerZoneLast = nodes.findLastIndex(isDangerZone);
+    dangerZoneExpandPosition = dangerZoneFirst + 1 + displayRows;
+    dangerZoneExpandClosePosition = dangerZoneLast + 1 - displayRows;
 
     remainingDangerZoneValidators =
       dangerZoneValidators.length - AUCTION_LIST_MIN_DISPLAY_ROW_COUNT;
   }
   if (hasMinElements && notQualifiedValidators.length >= MIN_ROW_COUNT) {
-    const closeIndex = notQualifiedValidators.length - 1 - closedRowPosition;
-
-    notQualifiedExpandPosition =
-      qualifiedNotInDangerZoneValidators[AUCTION_LIST_EXPAND_ROW_POSITION]
-        ?.auctionPosition;
-
-    notQualifiedExpandClosePosition =
-      notQualifiedValidators[closeIndex]?.auctionPosition;
+    const notQualifiedFirst = nodes.findIndex(isNotQualified);
+    const notQualifiedLast = nodes.findLastIndex(isNotQualified);
+    notQualifiedExpandPosition = notQualifiedFirst + 1 + displayRows;
+    notQualifiedExpandClosePosition = notQualifiedLast + 1 - displayRows;
 
     remainingNotQualifiedValidators =
       notQualifiedValidators.length - AUCTION_LIST_MIN_DISPLAY_ROW_COUNT;
@@ -74,13 +79,13 @@ export const getExpandRowDetails = (nodes: NodeType[] = []) => {
 
   return {
     qualifiedExpandPosition,
-    dangerZoneExpandPosition,
-    notQualifiedExpandPosition,
     qualifiedExpandClosePosition,
-    dangerZoneExpandClosePosition,
-    notQualifiedExpandClosePosition,
     remainingQualifiedValidators,
+    dangerZoneExpandPosition,
+    dangerZoneExpandClosePosition,
     remainingDangerZoneValidators,
+    notQualifiedExpandPosition,
+    notQualifiedExpandClosePosition,
     remainingNotQualifiedValidators
   };
 };

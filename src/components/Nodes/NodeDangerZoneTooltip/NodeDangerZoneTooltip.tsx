@@ -29,7 +29,8 @@ export const NodeDangerZoneTooltip = ({
   if (
     !isStakeFetched ||
     minimumAuctionQualifiedStake === undefined ||
-    stake === undefined
+    stake === undefined ||
+    !node.auctionQualified
   ) {
     return null;
   }

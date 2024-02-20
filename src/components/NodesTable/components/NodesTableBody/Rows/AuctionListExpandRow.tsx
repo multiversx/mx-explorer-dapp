@@ -1,29 +1,63 @@
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 
+import { ExpandRowDetailsType } from 'helpers/getValue/getExpandRowDetails';
 import { NodeType, WithClassnameType } from 'types';
 import { AuctionListBaseRow } from './AuctionListBaseRow';
 
-export interface AuctionListTresholdRowUIType extends WithClassnameType {
-  colSpan?: number;
+export interface AuctionListExpandRowUIType extends WithClassnameType {
   nodeData: NodeType;
-  expandPosition: number;
-  closePosition: number;
-  remainingQualifiedValidators?: number;
-  remainingDangerZoneValidators?: number;
-  remainingNotQualifiedValidators?: number;
+  index: number;
+  expandRowDetails: ExpandRowDetailsType;
+  colSpan?: number;
 }
+
+interface ExpandRowUIType extends WithClassnameType {
+  nodeCount: number;
+  nodeText: string;
+  onClick: () => void;
+  colSpan?: number;
+}
+
+const ExpandRow = ({
+  nodeCount,
+  nodeText,
+  onClick,
+  colSpan,
+  className
+}: ExpandRowUIType) => {
+  return (
+    <tr className={classNames('expand-row', className)}>
+      <td colSpan={colSpan} className='px-0'>
+        <div className='content-wrapper text-neutral-400 d-flex align-items-start gap-3'>
+          <span>
+            .. {new BigNumber(nodeCount).toFormat()} more {nodeText}
+          </span>
+          <button
+            type='button'
+            className='btn btn-link-unstyled text-primary font-weight-600'
+            onClick={onClick}
+          >
+            View All
+          </button>
+        </div>
+        <div className='trapezoid'></div>
+        <div className='trapezoid reverse'></div>
+        <div className='trapezoid'></div>
+        <div className='trapezoid reverse'></div>
+      </td>
+    </tr>
+  );
+};
 
 export const AuctionListExpandRow = ({
   colSpan = 7,
+  index,
   nodeData,
-  expandPosition,
-  closePosition,
-  remainingQualifiedValidators,
-  remainingDangerZoneValidators,
-  remainingNotQualifiedValidators,
+  expandRowDetails,
   className
-}: AuctionListTresholdRowUIType) => {
+}: AuctionListExpandRowUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const nodeQualifiedLink = (isQualified: boolean) => {
@@ -49,55 +83,90 @@ export const AuctionListExpandRow = ({
     setSearchParams(nextUrlParams);
   };
 
-  if (
-    nodeData.auctionPosition !== undefined &&
-    nodeData.auctionPosition > expandPosition &&
-    nodeData.auctionPosition <= closePosition
-  ) {
+  const {
+    qualifiedExpandPosition,
+    qualifiedExpandClosePosition,
+    remainingQualifiedValidators,
+    dangerZoneExpandPosition,
+    dangerZoneExpandClosePosition,
+    remainingDangerZoneValidators,
+    notQualifiedExpandPosition,
+    notQualifiedExpandClosePosition,
+    remainingNotQualifiedValidators
+  } = expandRowDetails;
+
+  const hasQualifiedExpand =
+    qualifiedExpandPosition &&
+    qualifiedExpandClosePosition &&
+    remainingQualifiedValidators;
+  const hasDangerZoneExpand =
+    dangerZoneExpandPosition &&
+    dangerZoneExpandClosePosition &&
+    remainingDangerZoneValidators;
+  const hasNotQualifiedExpand =
+    notQualifiedExpandPosition &&
+    notQualifiedExpandClosePosition &&
+    remainingNotQualifiedValidators;
+
+  const isQualifiedHidden =
+    hasQualifiedExpand &&
+    index >= qualifiedExpandPosition &&
+    index < qualifiedExpandClosePosition;
+  const isDangerZoneHidden =
+    hasDangerZoneExpand &&
+    index >= dangerZoneExpandPosition &&
+    index < dangerZoneExpandClosePosition;
+  const isNotQualifiedHidden =
+    hasNotQualifiedExpand &&
+    index >= notQualifiedExpandPosition &&
+    index < notQualifiedExpandClosePosition;
+
+  if (isQualifiedHidden || isDangerZoneHidden || isNotQualifiedHidden) {
     return null;
   }
 
-  if (nodeData.auctionPosition === expandPosition) {
+  if (hasQualifiedExpand && index === qualifiedExpandClosePosition) {
     return (
-      <tr className={classNames('expand-row', className)}>
-        <td colSpan={colSpan} className='px-0'>
-          <div className='content-wrapper text-neutral-400 d-flex align-items-start gap-3'>
-            <span>
-              ..{' '}
-              {remainingQualifiedValidators ||
-                remainingDangerZoneValidators ||
-                remainingNotQualifiedValidators}{' '}
-              more eligible nodes
-            </span>
-            <button
-              type='button'
-              className='btn btn-link-unstyled text-primary font-weight-600'
-              onClick={() => {
-                if (remainingQualifiedValidators) {
-                  nodeQualifiedLink(true);
-                  return;
-                }
-                if (remainingDangerZoneValidators) {
-                  nodeDangerZoneLink(true);
-                  return;
-                }
-                if (remainingNotQualifiedValidators) {
-                  nodeQualifiedLink(false);
-                  return;
-                }
-              }}
-            >
-              View All
-            </button>
-          </div>
-          <div className='trapezoid'></div>
-          <div className='trapezoid reverse'></div>
-          <div className='trapezoid'></div>
-          <div className='trapezoid reverse'></div>
-        </td>
-      </tr>
+      <ExpandRow
+        nodeCount={remainingQualifiedValidators}
+        nodeText='Qualified nodes'
+        onClick={() => {
+          nodeQualifiedLink(true);
+          return;
+        }}
+        colSpan={colSpan}
+        className={className}
+      />
+    );
+  }
+  if (hasDangerZoneExpand && index === dangerZoneExpandClosePosition) {
+    return (
+      <ExpandRow
+        nodeCount={remainingDangerZoneValidators}
+        nodeText='nodes in Danger Zone'
+        onClick={() => {
+          nodeDangerZoneLink(true);
+          return;
+        }}
+        colSpan={colSpan}
+        className={className}
+      />
+    );
+  }
+  if (hasNotQualifiedExpand && index === notQualifiedExpandClosePosition) {
+    return (
+      <ExpandRow
+        nodeCount={remainingNotQualifiedValidators}
+        nodeText='Not Qualified nodes'
+        onClick={() => {
+          nodeQualifiedLink(false);
+          return;
+        }}
+        colSpan={colSpan}
+        className={className}
+      />
     );
   }
 
-  return <AuctionListBaseRow nodeData={nodeData} />;
+  return <AuctionListBaseRow nodeData={nodeData} index={index} />;
 };

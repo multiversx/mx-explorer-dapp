@@ -482,9 +482,9 @@ img.loading {
     url('/assets/img/default.png') no-repeat center,
     linear-gradient(
       -10deg,
-      #{var(--neutral-950)} 0%,
-      #{var(--neutral-900)} 50%,
-      #{var(--neutral-800)} 100%
+      #{rgba(var(--neutral-950-rgb), 0.5)} 0%,
+      #{rgba(var(--neutral-900-rgb), 0.5)} 50%,
+      #{rgba(var(--neutral-800-rgb), 0.5)} 100%
     );
   background-size: contain;
 }
