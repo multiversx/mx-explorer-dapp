@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS } from 'appConstants';
-import { ReactComponent as DefaultImage } from 'assets/img/default.svg';
+import { ReactComponent as DefaultImage } from 'assets/img/default-icon.svg';
 import {
   Loader,
   Pager,
@@ -152,7 +152,7 @@ export const Applications = () => {
                                     />
                                   ) : (
                                     <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
-                                      <DefaultImage className='p-2' />
+                                      <DefaultImage />
                                     </div>
                                   )}
                                   <AccountName

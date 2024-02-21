@@ -4,15 +4,19 @@
   overflow: hidden;
 
   @include media-breakpoint-up(sm) {
-    display: flex;
-    align-items: flex-end;
+    display: grid;
+
+    grid-template-columns: minmax(16.625rem, max-content) auto;
     position: relative;
   }
 
   .statistics {
     padding: 1rem;
-    margin-bottom: 2rem;
-    min-width: 15.625rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    gap: 1rem;
 
     @include media-breakpoint-up(sm) {
       margin-bottom: 0;
@@ -23,7 +27,6 @@
       display: flex;
       line-height: 1;
       align-items: center;
-      margin-bottom: 1.5rem;
       justify-content: space-between;
 
       @include media-breakpoint-up(sm) {
@@ -50,7 +53,7 @@
 
       .value {
         font-size: 1.5rem;
-        font-family: 'Roobert Medium';
+        font-family: var(--headings-font-family);
         font-weight: 500;
 
         @include media-breakpoint-up(sm) {
@@ -64,6 +67,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    justify-content: space-between;
 
     @include media-breakpoint-up(sm) {
       flex-grow: 1;
@@ -75,11 +79,13 @@
       align-items: center;
       justify-content: space-between;
       margin-top: 1.5rem;
-      margin-bottom: 0.5rem;
     }
 
     .title {
-      padding-left: 1.5rem;
+      padding-left: 1rem;
+      @include media-breakpoint-up(sm) {
+        padding-left: 1.5rem;
+      }
       margin-bottom: 0;
     }
 

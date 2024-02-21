@@ -52,6 +52,7 @@ export const ChartContractsTransactions = ({
   showTotal = true,
   simpleTooltip = false,
   hasBorder = false,
+  isStandalone,
   className
 }: ChartContractsTransactionsUIType) => {
   const {
@@ -267,7 +268,11 @@ export const ChartContractsTransactions = ({
             />
           </div>
         </div>
-        <ChartArea payload={payload} simpleTooltip={simpleTooltip} />
+        <ChartArea
+          payload={payload}
+          simpleTooltip={simpleTooltip}
+          {...(isStandalone ? { height: 244 } : {})}
+        />
       </div>
     </div>
   );
