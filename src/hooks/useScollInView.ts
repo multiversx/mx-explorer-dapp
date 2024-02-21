@@ -100,7 +100,11 @@ export const useScollInView = () => {
   };
 
   const observer = useMemo(
-    () => new IntersectionObserver(updateElementInViewStatus, { threshold: 1 }),
+    () =>
+      new IntersectionObserver(updateElementInViewStatus, {
+        threshold: 1,
+        rootMargin: '100% 0% 100% 0%'
+      }),
     [scrollableElements]
   );
 
