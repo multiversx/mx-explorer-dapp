@@ -24,6 +24,7 @@ export const ZERO = '0';
 export const ELLIPSIS = '...';
 export const PLACEHOLDER_IMAGE_PATH = 'assets/img/default.png';
 export const SVG_PLACEHOLDER_IMAGE_PATH = 'assets/img/default.svg';
+export const SVG_ICON_PLACEHOLDER_IMAGE_PATH = 'assets/img/default-icon.svg';
 
 export const TRANSACTIONS_TABLE_FIELDS = [
   'txHash',

@@ -39,9 +39,7 @@
     margin-left: -4.75rem;
     margin-top: -2.75rem;
     pointer-events: none;
-    &.default {
-      margin-left: -5.25rem;
-    }
+
     .icon-blur-bg,
     .icon {
       position: absolute;
@@ -50,10 +48,8 @@
       top: 0;
       bottom: 0;
       margin: auto;
-      &:not(.default) {
-        border-radius: 50%;
-        overflow: hidden;
-      }
+      border-radius: 50%;
+      overflow: hidden;
     }
 
     .icon-blur-bg {
@@ -63,14 +59,14 @@
       opacity: 0.25;
       filter: blur(0.75rem);
       mask: radial-gradient(circle, black 0%, transparent 70%);
+      &.default {
+        opacity: 0.8;
+        //filter: blur(0.5rem);
+      }
     }
     .icon {
       width: 6.25rem;
       min-width: 6.25rem;
-      &.default {
-        width: 5.25rem;
-        min-width: 5.25rem;
-      }
     }
   }
   &-title {

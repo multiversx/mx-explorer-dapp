@@ -1,6 +1,9 @@
 import classNames from 'classnames';
 
-import { SVG_PLACEHOLDER_IMAGE_PATH } from 'appConstants';
+import {
+  SVG_PLACEHOLDER_IMAGE_PATH,
+  SVG_ICON_PLACEHOLDER_IMAGE_PATH
+} from 'appConstants';
 import { WithClassnameType } from 'types';
 
 export interface ShowcaseCardUIType extends WithClassnameType {
@@ -47,14 +50,14 @@ export const ShowcaseCard = ({
       })}
     >
       <img
-        src={icon ?? SVG_PLACEHOLDER_IMAGE_PATH}
+        src={icon ?? SVG_ICON_PLACEHOLDER_IMAGE_PATH}
         alt=' '
         className={classNames('icon-blur-bg img-fluid', {
           default: !Boolean(icon)
         })}
       />
       <img
-        src={icon ?? SVG_PLACEHOLDER_IMAGE_PATH}
+        src={icon ?? SVG_ICON_PLACEHOLDER_IMAGE_PATH}
         alt={`${detailsRank ? `#${detailsRank} ` : ''} Logo`}
         className={classNames('icon img-fluid', { default: !Boolean(icon) })}
       />
