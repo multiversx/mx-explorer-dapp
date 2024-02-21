@@ -1,9 +1,6 @@
 import classNames from 'classnames';
 
-import {
-  SVG_PLACEHOLDER_IMAGE_PATH,
-  SVG_ICON_PLACEHOLDER_IMAGE_PATH
-} from 'appConstants';
+import { SVG_ICON_PLACEHOLDER_IMAGE_PATH } from 'appConstants';
 import { WithClassnameType } from 'types';
 
 export interface ShowcaseCardUIType extends WithClassnameType {

@@ -1,10 +1,12 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { Loader, ShowcaseCard, Trim, NetworkLink, TimeAgo } from 'components';
+import { Loader, ShowcaseCard, Trim, NetworkLink } from 'components';
 import { urlBuilder, addressIsBech32 } from 'helpers';
-import { useIsMainnet, useFetchGrowthMostUsed } from 'hooks';
+import { useIsMainnet, useFetchGrowthMostUsed, useScollInView } from 'hooks';
+import { faAngleLeft, faAngleRight } from 'icons/solid';
 import { growthMostUsedSelector } from 'redux/selectors';
 import { applicationsRoutes } from 'routes';
 import { WithClassnameType } from 'types';
@@ -24,6 +26,13 @@ export const MostUsedApplications = ({
   );
 
   useFetchGrowthMostUsed();
+  const {
+    handleElementReference,
+    handleNextArrowClick,
+    handlePreviousArrowClick,
+    showLeftInViewArrow,
+    showRightInViewArrow
+  } = useScollInView();
 
   if (!isMainnet) {
     return null;
@@ -57,8 +66,32 @@ export const MostUsedApplications = ({
 
           <div className='card-body'>
             <div className='showcase-card-wrapper'>
+              <div
+                onClick={handlePreviousArrowClick}
+                className={classNames('showcase-card-arrow left', {
+                  show: showLeftInViewArrow
+                })}
+              >
+                <FontAwesomeIcon
+                  icon={faAngleLeft}
+                  className='showcase-card-arrow-icon'
+                />
+              </div>
+
+              <div
+                onClick={handleNextArrowClick}
+                className={classNames('showcase-card-arrow right', {
+                  show: showRightInViewArrow
+                })}
+              >
+                <FontAwesomeIcon
+                  icon={faAngleRight}
+                  className='showcase-card-arrow-icon'
+                />
+              </div>
+
               <div className='showcase-card-scroll d-flex flex-nowrap'>
-                {dailyMostUsedApplications.map((contract) => {
+                {dailyMostUsedApplications.map((contract, contractIndex) => {
                   const TitleLink = () => (
                     <NetworkLink
                       to={
@@ -80,17 +113,23 @@ export const MostUsedApplications = ({
                   );
 
                   return (
-                    <ShowcaseCard
-                      title={<TitleLink />}
-                      icon={
-                        contract.extraInfo?.assets?.svgUrl ||
-                        contract.extraInfo?.assets?.pngUrl
-                      }
-                      detailsTitle='Txn'
-                      detailsValue={new BigNumber(contract.value).toFormat()}
-                      detailsRank={contract.rank}
+                    <div
+                      ref={handleElementReference}
+                      data-index={contractIndex}
                       key={contract.key}
-                    />
+                      className='showcase-card-container'
+                    >
+                      <ShowcaseCard
+                        title={<TitleLink />}
+                        icon={
+                          contract.extraInfo?.assets?.svgUrl ||
+                          contract.extraInfo?.assets?.pngUrl
+                        }
+                        detailsTitle='Txn'
+                        detailsValue={new BigNumber(contract.value).toFormat()}
+                        detailsRank={contract.rank}
+                      />
+                    </div>
                   );
                 })}
               </div>
