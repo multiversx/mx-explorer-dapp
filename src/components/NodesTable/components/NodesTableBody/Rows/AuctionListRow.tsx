@@ -1,4 +1,3 @@
-import { ExpandRowDetailsType } from 'helpers/getValue/getExpandRowDetails';
 import { useGetSort } from 'hooks';
 import { NodeType, SortOrderEnum, WithClassnameType } from 'types';
 
@@ -6,10 +5,12 @@ import { AuctionListBaseRow } from './AuctionListBaseRow';
 import { AuctionListExpandRow } from './AuctionListExpandRow';
 import { AuctionListTresholdRow } from './AuctionListTresholdRow';
 
+import { ExpandRowConfigType } from '../NodesTableBody';
+
 export interface AuctionListRowUIType extends WithClassnameType {
   nodeData: NodeType;
   showTresholdRow?: boolean;
-  expandRowDetails?: ExpandRowDetailsType;
+  expandRowConfig?: ExpandRowConfigType;
   index?: number;
   showPosition?: boolean;
 }
@@ -19,15 +20,15 @@ export const AuctionListRow = ({
   showTresholdRow,
   index,
   showPosition,
-  expandRowDetails
+  expandRowConfig
 }: AuctionListRowUIType) => {
   const { sort, order } = useGetSort();
   const isSortDesc = sort === 'auctionPosition' && order === SortOrderEnum.desc;
 
   const hasExpand = Boolean(
-    expandRowDetails?.qualifiedExpandPosition ||
-      expandRowDetails?.dangerZoneExpandPosition ||
-      expandRowDetails?.notQualifiedExpandPosition
+    expandRowConfig?.qualifiedExpandPosition ||
+      expandRowConfig?.dangerZoneExpandPosition ||
+      expandRowConfig?.notQualifiedExpandPosition
   );
 
   return (
@@ -35,10 +36,10 @@ export const AuctionListRow = ({
       {isSortDesc && showTresholdRow && (
         <AuctionListTresholdRow key={nodeData.bls} isSortDesc />
       )}
-      {hasExpand && index && expandRowDetails ? (
+      {hasExpand && index && expandRowConfig ? (
         <AuctionListExpandRow
           nodeData={nodeData}
-          expandRowDetails={expandRowDetails}
+          expandRowConfig={expandRowConfig}
           showPosition={showPosition}
           index={index}
         />

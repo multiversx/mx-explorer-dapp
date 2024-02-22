@@ -46,7 +46,9 @@ export const AuctionListBaseRow = ({
   return (
     <tr
       className={classNames(className, {
-        'row-danger': nodeData?.isInDangerZone && nodeData.auctionQualified
+        q: nodeData.auctionQualified && !nodeData.isInDangerZone,
+        dz: nodeData.isInDangerZone && nodeData.auctionQualified,
+        nq: !nodeData.auctionQualified
       })}
     >
       {showPosition && <td>{index ?? nodeData.auctionPosition}</td>}

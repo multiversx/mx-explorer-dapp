@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { PAGE_SIZE, AUCTION_LIST_MAX_NODES } from 'appConstants';
 import { PageState } from 'components';
-import { getExpandRowDetails } from 'helpers';
+import { getExpandRowDetails, ExpandRowDetailsType } from 'helpers';
 import { useGetNodeFilters, useGetPage, useGetSearch, useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
@@ -22,6 +23,15 @@ export interface NodesTableBodyUIType {
   status?: NodeType['status'];
   auctionList?: boolean;
   showPosition?: boolean;
+}
+
+export interface ExpandRowConfigType extends ExpandRowDetailsType {
+  qualifiedExpanded: boolean;
+  dangerZoneExpanded: boolean;
+  notQualifiedExpanded: boolean;
+  setQualifiedExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  setDangerZoneExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  setNotQualifiedExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const findTresholdNode = (
@@ -48,16 +58,6 @@ export const NodesTableBody = ({
   auctionList,
   showPosition
 }: NodesTableBodyUIType) => {
-  let colSpan = 8;
-  if (queue) {
-    colSpan = 5;
-  }
-  if (status === 'auction') {
-    colSpan = showPosition ? 10 : 9;
-  }
-  if (auctionList) {
-    colSpan = showPosition ? 7 : 6;
-  }
   const {
     unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
@@ -65,6 +65,10 @@ export const NodesTableBody = ({
   const { sort, order } = useGetSort();
   const { size: pageSize } = useGetPage();
   const { status: nodeStatus, ...nodeFilters } = useGetNodeFilters();
+
+  const [qualifiedExpanded, setQualifiedExpanded] = useState(false);
+  const [dangerZoneExpanded, setDangerZoneExpanded] = useState(false);
+  const [notQualifiedExpanded, setNotQualifiedExpanded] = useState(false);
 
   const isAuctionSortDesc =
     sort === 'auctionPosition' && order === SortOrderEnum.desc;
@@ -81,10 +85,29 @@ export const NodesTableBody = ({
         findTresholdNode(node, minimumAuctionQualifiedStake)
       );
 
-  const expandRowDetails =
+  const expandRowConfig =
     auctionList && hasNoFilters && !isCustomSize
-      ? getExpandRowDetails(nodes)
+      ? ({
+          ...getExpandRowDetails(nodes),
+          qualifiedExpanded,
+          dangerZoneExpanded,
+          notQualifiedExpanded,
+          setQualifiedExpanded,
+          setDangerZoneExpanded,
+          setNotQualifiedExpanded
+        } as ExpandRowConfigType)
       : undefined;
+
+  let colSpan = 8;
+  if (queue) {
+    colSpan = 5;
+  }
+  if (status === 'auction') {
+    colSpan = showPosition ? 10 : 9;
+  }
+  if (auctionList) {
+    colSpan = showPosition ? 7 : 6;
+  }
 
   return (
     <tbody>
@@ -105,7 +128,7 @@ export const NodesTableBody = ({
               nodeData={nodeData}
               key={nodeData.bls}
               showTresholdRow={showTresholdRow}
-              expandRowDetails={expandRowDetails}
+              expandRowConfig={expandRowConfig}
               index={index + 1}
               showPosition={showPosition}
             />

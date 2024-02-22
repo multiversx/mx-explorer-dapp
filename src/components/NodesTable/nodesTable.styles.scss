@@ -3,74 +3,115 @@
     width: 8.125rem;
   }
 
-  tr:has(+ .expand-row) td {
-    border-bottom-width: 0;
-  }
-
-  .expand-row {
-    td {
-      position: relative;
-      padding: 0;
-      border-bottom-width: 0;
-    }
-    &.row-danger {
-      td {
-        background-color: unset;
-      }
-      .content-wrapper {
-        background-color: #2a1b1b;
-      }
-    }
-    .trapezoid {
-      background-color: var(--table-bg);
-      transform: perspective(10rem) rotateX(-10deg);
-      border-width: 1px;
-      border-style: solid;
-      border-color: inherit;
-      height: 1rem;
-      margin-left: 5px;
-      margin-right: 5px;
-      border-bottom-width: 0;
-      &.reverse {
-        border-bottom-width: 0;
-        transform: perspective(10rem) rotateX(10deg);
-      }
-      &:first-of-type {
-        margin-top: -1px;
-      }
-      &:last-of-type {
-        &.reverse {
-          border-bottom-width: 1px;
-        }
-      }
-    }
-    .content-wrapper {
-      position: absolute;
-      z-index: 1;
-      background-color: var(--neutral-950);
-      padding: 0.25rem 1rem;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: fit-content;
-      height: fit-content;
-      margin: auto;
-      button {
-        line-height: 1.4;
-      }
+  tr {
+    &.dz {
+      --table-border-color: rgba(var(--red-400-rgb), 0.5);
+      --table-bg: rgba(var(--red-400-rgb), 0.1);
+      border-color: rgba(var(--red-400-rgb), 0.1);
     }
   }
 
-  tr.row-danger + tr.expand-row {
-    --table-border-color: rgba(248, 113, 113, 0.5); // red-400
-    --table-bg: rgba(248, 113, 113, 0.1); // red-400
-    border-color: rgba(248, 113, 113, 0.1); // red-400
+  tr.dz + tr.expand-row {
+    --table-border-color: rgba(var(--red-400-rgb), 0.5);
+    --table-bg: rgba(var(--red-400-rgb), 0.1);
+    border-color: rgba(var(--red-400-rgb), 0.1);
     td {
       background-color: unset;
     }
     .content-wrapper {
       background-color: #2a1b1b;
+    }
+  }
+
+  // .dh   - Default Hidden
+  // .q    - Qualified
+  // .qv   - Qualified Visible
+  // .dz   - Danger Zone
+  // .dzv  - Danger Zone Visible
+  // .nq   - Not Qualified
+  // .nqv  - Not Qualified Visible
+  &.auction-list-table {
+    overflow-y: clip;
+    table {
+      overflow-y: clip;
+    }
+
+    tr {
+      &:has(+ .expand-row) td,
+      &:has(+ .dh.q:not(.qv)) td,
+      &:has(+ .dh.dz:not(.dzv)) td,
+      &:has(+ .dh.nq:not(.nqv)) td {
+        border-bottom-width: 0;
+      }
+
+      &.dh {
+        visibility: collapse;
+        td {
+          border-bottom-width: 0;
+        }
+        &.q.qv:not(.dz),
+        &.dz.dzv,
+        &.nq.nqv {
+          visibility: visible;
+          td {
+            border-bottom-width: 1px;
+          }
+        }
+      }
+      &.expand-row {
+        &.dz {
+          td {
+            background-color: unset;
+          }
+          .content-wrapper {
+            background-color: #2a1b1b;
+          }
+        }
+        td {
+          position: relative;
+          padding: 0;
+          border-bottom-width: 0;
+        }
+        .trapezoid {
+          background-color: var(--table-bg);
+          transform: perspective(10rem) rotateX(-10deg);
+          border-width: 1px;
+          border-style: solid;
+          border-color: inherit;
+          height: 1rem;
+          margin-left: 5px;
+          margin-right: 5px;
+          border-bottom-width: 0;
+          &.reverse {
+            border-bottom-width: 0;
+            transform: perspective(10rem) rotateX(10deg);
+          }
+          &:first-of-type {
+            margin-top: -1px;
+          }
+          &:last-of-type {
+            &.reverse {
+              border-bottom-width: 1px;
+            }
+          }
+        }
+        .content-wrapper {
+          position: absolute;
+          z-index: 1;
+          background-color: var(--neutral-950);
+          padding: 0.25rem 1rem;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          width: fit-content;
+          height: fit-content;
+          margin: auto;
+          button {
+            line-height: 1.4;
+          }
+        }
+      }
     }
   }
 }

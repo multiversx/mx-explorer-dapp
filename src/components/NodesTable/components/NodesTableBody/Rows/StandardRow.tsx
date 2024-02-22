@@ -49,7 +49,7 @@ export const StandardRow = ({
       )}
       <tr
         className={classNames({
-          'row-danger':
+          dz:
             nodeData?.isInDangerZone &&
             nodeData.auctionQualified &&
             status === 'auction'
