@@ -1,5 +1,4 @@
-import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
-
+import { PLACEHOLDER_IMAGE_PATH } from 'appConstants';
 import { ImageWithFallback } from 'components';
 
 interface IdentityAvatarType {
@@ -14,21 +13,10 @@ export const IdentityAvatar = ({
   identity: IdentityAvatarType;
 }) => {
   return (
-    <>
-      {identity.avatar ? (
-        <ImageWithFallback
-          className={`identity-avatar rounded-circle flex-shrink-0 me-2 ${
-            !identity.avatar ? 'border-0' : ''
-          }`}
-          src={identity.avatar}
-          height='42'
-        />
-      ) : (
-        <DefaultAvatar
-          className='identity-avatar border-0 flex-shrink-0 me-2'
-          style={{ width: '42px', height: '42px' }}
-        />
-      )}
-    </>
+    <ImageWithFallback
+      className='identity-avatar rounded-circle flex-shrink-0 me-2 '
+      src={identity.avatar ?? PLACEHOLDER_IMAGE_PATH}
+      height='42'
+    />
   );
 };
