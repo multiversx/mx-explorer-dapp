@@ -92,26 +92,6 @@ export const MostUsedApplications = ({
 
               <div className='showcase-card-scroll d-flex flex-nowrap'>
                 {dailyMostUsedApplications.map((contract, contractIndex) => {
-                  const TitleLink = () => (
-                    <NetworkLink
-                      to={
-                        addressIsBech32(contract.key)
-                          ? urlBuilder.accountDetails(contract.key)
-                          : ''
-                      }
-                      className={classNames('trim-wrapper', {
-                        hash: !Boolean(contract?.extraInfo?.assets?.name),
-                        'line-clamp-3': Boolean(
-                          contract?.extraInfo?.assets?.name
-                        )
-                      })}
-                    >
-                      {contract.extraInfo?.assets?.name ?? (
-                        <Trim text={contract.key} />
-                      )}
-                    </NetworkLink>
-                  );
-
                   return (
                     <div
                       ref={handleElementReference}
@@ -119,16 +99,41 @@ export const MostUsedApplications = ({
                       key={contract.key}
                       className='showcase-card-container'
                     >
-                      <ShowcaseCard
-                        title={<TitleLink />}
-                        icon={
-                          contract.extraInfo?.assets?.svgUrl ||
-                          contract.extraInfo?.assets?.pngUrl
+                      <NetworkLink
+                        to={
+                          addressIsBech32(contract.key)
+                            ? urlBuilder.accountDetails(contract.key)
+                            : ''
                         }
-                        detailsTitle='Txn'
-                        detailsValue={new BigNumber(contract.value).toFormat()}
-                        detailsRank={contract.rank}
-                      />
+                      >
+                        <ShowcaseCard
+                          title={
+                            <span
+                              className={classNames('trim-wrapper', {
+                                hash: !Boolean(
+                                  contract?.extraInfo?.assets?.name
+                                ),
+                                'line-clamp-3': Boolean(
+                                  contract?.extraInfo?.assets?.name
+                                )
+                              })}
+                            >
+                              {contract.extraInfo?.assets?.name ?? (
+                                <Trim text={contract.key} />
+                              )}
+                            </span>
+                          }
+                          icon={
+                            contract.extraInfo?.assets?.svgUrl ||
+                            contract.extraInfo?.assets?.pngUrl
+                          }
+                          detailsTitle='Txn'
+                          detailsValue={new BigNumber(
+                            contract.value
+                          ).toFormat()}
+                          detailsRank={contract.rank}
+                        />
+                      </NetworkLink>
                     </div>
                   );
                 })}

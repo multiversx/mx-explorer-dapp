@@ -42,6 +42,7 @@
     margin-left: -4.75rem;
     margin-top: -2.75rem;
     pointer-events: none;
+    z-index: 0;
 
     .icon-blur-bg,
     .icon {
@@ -72,6 +73,7 @@
     }
   }
   &-title {
+    z-index: 1;
     h3 {
       font-size: 1.313rem;
       letter-spacing: -1%;
