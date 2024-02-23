@@ -37,13 +37,6 @@
     }
 
     tr {
-      &:has(+ .expand-row) td,
-      &:has(+ .dh.q:not(.qv)) td,
-      &:has(+ .dh.dz:not(.dzv)) td,
-      &:has(+ .dh.nq:not(.nqv)) td {
-        border-bottom-width: 0;
-      }
-
       &.dh {
         visibility: collapse;
         td {
@@ -86,9 +79,6 @@
             border-bottom-width: 0;
             transform: perspective(10rem) rotateX(10deg);
           }
-          &:first-of-type {
-            margin-top: -1px;
-          }
           &:last-of-type {
             &.reverse {
               border-bottom-width: 1px;
@@ -110,6 +100,26 @@
           button {
             line-height: 1.4;
           }
+        }
+        .content-wrapper + .trapezoid {
+          margin-top: -1px;
+          border-top-width: 0;
+        }
+      }
+    }
+  }
+}
+
+body.explorer.safari {
+  .auction-list-table {
+    tr {
+      &.dh {
+        display: none;
+        visibility: visible;
+        &.q.qv:not(.dz),
+        &.dz.dzv,
+        &.nq.nqv {
+          display: table-row;
         }
       }
     }
