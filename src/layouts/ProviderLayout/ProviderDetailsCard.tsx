@@ -7,11 +7,12 @@ import {
   LockedAmountTooltip,
   AccountLink
 } from 'components';
-import { DelegationCap } from 'components/ProvidersTable/components/DelegationCap';
 import {
-  PercentageFilled,
-  hasDelegationCap
-} from 'components/ProvidersTable/components/PercentageFilled';
+  DelegationCap,
+  PercentageFilled
+} from 'components/ProvidersTable/components';
+import { hasDelegationCap } from 'components/ProvidersTable/helpers';
+
 import {
   faServer,
   faLock,

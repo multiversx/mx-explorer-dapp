@@ -85,8 +85,8 @@ export interface ProviderType {
   featured?: boolean;
   identity?: string;
   cumulatedRewards?: string;
-
-  identityDetails?: IdentityType; // local field
+  identityInfo?: IdentityType;
+  identityDetails?: IdentityType; // local field - TODO - remove
 
   // not used
   initialOwnerFunds?: string;

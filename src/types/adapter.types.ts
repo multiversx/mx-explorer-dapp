@@ -114,6 +114,7 @@ export interface GetTransactionsType extends SortableApiType {
 export interface GetProvidersType extends BaseApiType {
   identity?: string;
   providers?: string;
+  withIdentityInfo?: boolean;
 }
 
 export type AdapterProviderType = (
@@ -173,6 +174,7 @@ export interface AdapterProviderPropsType {
     withDeployInfo?: boolean;
     withTxCount?: boolean;
     withScrCount?: boolean;
+    withIdentityInfo?: boolean;
   };
   timeout: number;
   timestamp?: number;

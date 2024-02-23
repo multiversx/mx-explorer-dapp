@@ -1,3 +1,5 @@
+export * from './apiFields';
+
 export const METACHAIN_SHARD_ID = 4294967295;
 export const ALL_SHARDS_SHARD_ID = 4294967280;
 
@@ -28,37 +30,6 @@ export const ELLIPSIS = '...';
 export const PLACEHOLDER_IMAGE_PATH = 'assets/img/default.png';
 export const SVG_PLACEHOLDER_IMAGE_PATH = 'assets/img/default.svg';
 export const SVG_ICON_PLACEHOLDER_IMAGE_PATH = 'assets/img/default-icon.svg';
-
-export const TRANSACTIONS_TABLE_FIELDS = [
-  'txHash',
-  'originalTxHash',
-  'receiver',
-  'receiverAssets',
-  'receiverShard',
-  'sender',
-  'senderAssets',
-  'senderShard',
-  'status',
-  'value',
-  'timestamp',
-  'round',
-  'tokenValue',
-  'tokenIdentifier',
-  'function',
-  'action',
-  'guardianSignature'
-];
-
-export const IDENTITIES_FIELDS = [
-  'rank',
-  'identity',
-  'locked',
-  'stake',
-  'topUp',
-  'avatar',
-  'name',
-  'validators'
-];
 
 export const DEFAULT_PROVIDER_COLORS: {
   [index: string]: string;

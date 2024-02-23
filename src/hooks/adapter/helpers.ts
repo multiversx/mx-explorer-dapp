@@ -130,10 +130,15 @@ export function getNodeParams({
   return params;
 }
 
-export function getProviderParams({ identity, providers }: GetProvidersType) {
+export function getProviderParams({
+  identity,
+  providers,
+  withIdentityInfo
+}: GetProvidersType) {
   const params: AdapterProviderPropsType['params'] = {
     ...(identity !== undefined ? { identity } : {}),
-    ...(providers !== undefined ? { providers } : {})
+    ...(providers !== undefined ? { providers } : {}),
+    ...(withIdentityInfo !== undefined ? { withIdentityInfo } : {})
   };
   return params;
 }

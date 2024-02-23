@@ -1,18 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 
+import { PROVIDERS_FIELDS } from 'appConstants';
 import { ProvidersTable, Loader, PageState } from 'components';
 import { useAdapter } from 'hooks';
 import { faCode } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { activeNetworkSelector } from 'redux/selectors';
-import { IdentityType, ProviderType } from 'types';
+import { ProviderType } from 'types';
 
 export const Providers = () => {
   const ref = useRef(null);
-  const { getProviders, getIdentities } = useAdapter();
-  const [searchParams] = useSearchParams();
+  const { getProviders } = useAdapter();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -20,61 +19,21 @@ export const Providers = () => {
 
   const fetchProviders = () => {
     setDataReady(undefined);
-
     getProviders({
-      fields: [
-        'identity',
-        'provider',
-        'stake',
-        'numNodes',
-        'apr',
-        'serviceFee',
-        'delegationCap'
-      ].join(',')
+      fields: PROVIDERS_FIELDS.join(','),
+      withIdentityInfo: true
     }).then((providersData) => {
-      if (ref.current !== null) {
-        if (providersData.success) {
-          const newProvidersData: ProviderType[] = providersData.data;
-
-          const identities = newProvidersData
-            .filter((item) => item.identity)
-            .map((item) => item.identity)
-            .join(',');
-
-          if (identities) {
-            getIdentities({ identities }).then((identitiesData) => {
-              if (ref.current !== null) {
-                if (identitiesData.success) {
-                  newProvidersData.forEach((provider) => {
-                    if (provider.identity) {
-                      const identityDetails = identitiesData.data.find(
-                        (identity: IdentityType) =>
-                          identity.identity === provider.identity
-                      );
-
-                      if (identityDetails) {
-                        provider.identityDetails = identityDetails;
-                      }
-                    }
-                  });
-                }
-
-                setProviders(newProvidersData);
-                setDataReady(providersData.success);
-              }
-            });
-          } else {
-            setProviders(providersData.data);
-            setDataReady(providersData.success);
-          }
-        } else {
-          setDataReady(providersData.success);
-        }
+      if (providersData.success) {
+        setProviders(providersData.data);
+        setDataReady(providersData.success);
+      } else {
+        setDataReady(providersData.success);
       }
     });
   };
 
-  useEffect(fetchProviders, [activeNetworkId, searchParams]);
+  // no need to refetch on searchParams change as no sorting is supported on api
+  useEffect(fetchProviders, [activeNetworkId]);
 
   return (
     <div className='card' ref={ref}>
