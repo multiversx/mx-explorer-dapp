@@ -74,15 +74,10 @@
           height: 1rem;
           margin-left: 5px;
           margin-right: 5px;
-          border-bottom-width: 0;
+          border-top-width: 0;
           &.reverse {
-            border-bottom-width: 0;
+            margin-top: -1px;
             transform: perspective(10rem) rotateX(10deg);
-          }
-          &:last-of-type {
-            &.reverse {
-              border-bottom-width: 1px;
-            }
           }
         }
         .content-wrapper {
@@ -100,10 +95,6 @@
           button {
             line-height: 1.4;
           }
-        }
-        .content-wrapper + .trapezoid {
-          margin-top: -1px;
-          border-top-width: 0;
         }
       }
     }
