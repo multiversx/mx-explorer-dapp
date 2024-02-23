@@ -3,12 +3,7 @@ import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
 import { Loader } from 'components';
-import {
-  useFetchStake,
-  useFetchNodesVersions,
-  useFetchShards,
-  useFetchNodesIdentities
-} from 'hooks';
+import { useFetchStake, useFetchNodesVersions, useFetchShards } from 'hooks';
 import {
   activeNetworkSelector,
   shardsSelector,
@@ -28,7 +23,6 @@ export const NodesLayout = () => {
   useFetchStake();
   useFetchNodesVersions();
   useFetchShards();
-  useFetchNodesIdentities();
 
   useEffect(() => {
     if (isNodesVersionsFetched && shards.length > 0) {

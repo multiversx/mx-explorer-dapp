@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { InfoTooltip, Loader, PageState } from 'components';
+import { useFetchNodesIdentities } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import {
@@ -17,6 +18,8 @@ export const Identities = () => {
   const { nodesIdentities, isFetched } = useSelector(nodesIdentitiesSelector);
 
   let coefficientShown = false;
+
+  useFetchNodesIdentities();
 
   return (
     <div className='card identities'>

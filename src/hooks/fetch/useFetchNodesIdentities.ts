@@ -54,8 +54,6 @@ export const useFetchNodesIdentities = () => {
   };
 
   useEffect(() => {
-    if (nodesIdentities.length === 0) {
-      fetchNodesIdentities();
-    }
+    fetchNodesIdentities();
   }, []);
 };

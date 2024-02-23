@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { PAGE_SIZE, AUCTION_LIST_MAX_NODES } from 'appConstants';
+import { IDENTITIES_FIELDS } from 'appConstants';
 import {
   Loader,
   Pager,
@@ -10,6 +12,7 @@ import {
   NodesTable,
   AuctionListFilters
 } from 'components';
+import { processNodesIdentities } from 'helpers';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -19,18 +22,22 @@ import {
 } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
+import { nodesIdentitiesSelector } from 'redux/selectors';
+import { setNodesIdentities } from 'redux/slices/nodesIdentities';
 import { NodeType, SortOrderEnum } from 'types';
 
 export const NodesAuctionList = () => {
-  const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
+  const { nodesIdentities } = useSelector(nodesIdentitiesSelector);
+  const { getNodes, getNodesCount, getIdentities } = useAdapter();
 
-  const { getNodes, getNodesCount } = useAdapter();
   const { search } = useGetSearch();
   const { page, size: pageSize } = useGetPage();
   const nodeFilters = useGetNodeFilters();
   const sort = useGetSort();
-  const [nodes, setNodes] = useState<NodeType[]>([]);
+  const [searchParams] = useSearchParams();
 
+  const [nodes, setNodes] = useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
@@ -65,59 +72,79 @@ export const NodesAuctionList = () => {
     };
 
     // TODO - temporary until sorting is fixed from api
-    if (hasNoFilters) {
-      Promise.all([
-        getNodes({
-          ...sort,
-          ...auctionListFilters,
-          isQualified: true,
-          page,
-          size
-        }),
-        getNodes({
-          ...sort,
-          ...auctionListFilters,
-          isQualified: false,
-          page,
-          size
-        }),
-        getNodesCount(auctionListFilters)
-      ]).then(([qualifiedNodesData, notQualifiedNodesData, count]) => {
-        setNodes([
+    const nodesPromiseArray = hasNoFilters
+      ? [
+          getNodes({
+            ...sort,
+            ...auctionListFilters,
+            isQualified: true,
+            page,
+            size
+          }),
+          getNodes({
+            ...sort,
+            ...auctionListFilters,
+            isQualified: false,
+            page,
+            size
+          })
+        ]
+      : [
+          getNodes({
+            ...sort,
+            ...auctionListFilters,
+            page,
+            size: pageSize
+          }),
+          Promise.resolve({ success: true, data: undefined })
+        ];
+
+    Promise.all([...nodesPromiseArray, getNodesCount(auctionListFilters)]).then(
+      ([firstNodes, secondNodes, count]) => {
+        const allNodes = [
           ...(sort.order === SortOrderEnum.desc
-            ? [
-                ...(notQualifiedNodesData.data ?? []),
-                ...(qualifiedNodesData.data ?? [])
-              ]
-            : [
-                ...(qualifiedNodesData.data ?? []),
-                ...(notQualifiedNodesData.data ?? [])
-              ])
-        ]);
+            ? [...(secondNodes.data ?? []), ...(firstNodes.data ?? [])]
+            : [...(firstNodes.data ?? []), ...(secondNodes.data ?? [])])
+        ];
+
+        const identityArray = allNodes
+          .filter((node) => node.identity)
+          .map((node) => node.identity);
+
+        if (identityArray.length > 0) {
+          const nodesIdentityList = nodesIdentities.map(
+            (node) => node.identity
+          );
+          const newIdentities = identityArray.filter(
+            (value) => !nodesIdentityList.includes(value)
+          );
+
+          if (newIdentities.length > 0) {
+            getIdentities({
+              identities: identityArray.join(','),
+              fields: IDENTITIES_FIELDS.join(',')
+            }).then(({ data, success }) => {
+              if (data) {
+                const processedNodesIdentities = processNodesIdentities(data);
+                dispatch(
+                  setNodesIdentities({
+                    nodesIdentities: processedNodesIdentities,
+                    unprocessed: data,
+                    isFetched: success
+                  })
+                );
+              }
+            });
+          }
+        }
+        setNodes(allNodes);
         setTotalNodes(count.data);
 
         setDataReady(
-          qualifiedNodesData.success &&
-            notQualifiedNodesData.success &&
-            count.success
+          firstNodes.success && secondNodes.success && count.success
         );
-      });
-    } else {
-      Promise.all([
-        getNodes({
-          ...sort,
-          ...auctionListFilters,
-          page,
-          size: pageSize
-        }),
-        getNodesCount(auctionListFilters)
-      ]).then(([nodesData, count]) => {
-        setNodes(nodesData.data);
-        setTotalNodes(count.data);
-
-        setDataReady(nodesData.success && count.success);
-      });
-    }
+      }
+    );
   };
 
   useEffect(fetchNodes, [searchParams]);
