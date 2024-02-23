@@ -143,6 +143,7 @@ export const IdentityDetails = () => {
                     <Pager
                       total={totalNodes}
                       className='d-flex ms-auto me-auto me-sm-0'
+                      showFirstAndLast={false}
                       show
                     />
                   </div>

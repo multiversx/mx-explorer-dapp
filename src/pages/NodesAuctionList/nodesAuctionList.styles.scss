@@ -21,9 +21,4 @@
       }
     }
   }
-  .search-small {
-    @include media-breakpoint-up(xl) {
-      max-width: 9.5rem;
-    }
-  }
 }

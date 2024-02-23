@@ -348,10 +348,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
           </li>
         </ul>
       )}
-      <div
-        role='search'
-        className={onlySearch ? 'search-large' : 'search-small'}
-      >
+      <div role='search' className={onlySearch ? 'search-lg' : 'search-sm'}>
         <div className='input-group input-group-sm input-group-seamless'>
           <input
             type='text'

@@ -56,6 +56,7 @@ export const Nodes = () => {
             <Pager
               total={totalNodes}
               className='d-flex ms-auto me-auto me-sm-0'
+              showFirstAndLast={false}
               show
             />
           )}
