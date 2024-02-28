@@ -3,11 +3,14 @@ import { DIGITS } from 'config';
 import { stringIsFloat } from './stringIsFloat';
 
 export const amountWithoutRounding = (
-  amount: string | number,
-  minNonZeroDecimals?: number,
-  maxDecimals?: number
+  amount: string | number | BigNumber,
+  minNonZeroDigits?: number,
+  maxDigits?: number
 ) => {
-  const bNamount = new BigNumber(amount);
+  const bNamount = BigNumber.isBigNumber(amount)
+    ? amount
+    : new BigNumber(amount);
+
   const formattedAmount = bNamount.toFormat({
     groupSeparator: '',
     decimalSeparator: '.'
@@ -17,19 +20,19 @@ export const amountWithoutRounding = (
       return '0';
     }
 
-    const amountDecimals = formattedAmount.split('.')?.[1];
-    let displayDecimals = minNonZeroDecimals ?? DIGITS;
-    if (amountDecimals) {
-      for (let i = 0; i < amountDecimals.length; i++) {
-        if (amountDecimals.charAt(i) === '0') {
-          displayDecimals++;
+    const amountDigits = formattedAmount.split('.')?.[1];
+    let displayDigits = minNonZeroDigits ?? DIGITS;
+    if (amountDigits) {
+      for (let i = 0; i < amountDigits.length; i++) {
+        if (amountDigits.charAt(i) === '0') {
+          displayDigits++;
         } else {
           break;
         }
       }
     }
 
-    return new BigNumber(amount).toFormat(maxDecimals ?? displayDecimals);
+    return new BigNumber(amount).toFormat(maxDigits ?? displayDigits);
   }
 
   return '0';

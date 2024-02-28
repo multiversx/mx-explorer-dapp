@@ -5,17 +5,13 @@ import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 import { Overlay } from 'components';
 import { DIGITS } from 'config';
-import { denominate, formatUSD, stringIsFloat } from 'helpers';
+import { denominate, formatUSD, stringIsFloat, FormatUSDType } from 'helpers';
 
 import { economicsSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
-export interface FormatUSDUIType extends WithClassnameType {
-  amount: string | number;
-  usd?: string | number;
+export interface FormatUSDUIType extends FormatUSDType, WithClassnameType {
   decimals?: number;
-  digits?: number;
-  showPrefix?: boolean;
   showTooltip?: boolean;
 }
 
@@ -24,8 +20,10 @@ export const FormatUSD = ({
   usd: usdValue,
   digits,
   decimals,
+  maxDigits,
   showPrefix = true,
   showTooltip = true,
+  showLastNonZeroDecimal,
   className
 }: FormatUSDUIType) => {
   const { isFetched, unprocessed } = useSelector(economicsSelector);
@@ -60,11 +58,25 @@ export const FormatUSD = ({
       ) : (
         <>
           {showTooltip && !isEqual ? (
-            <Overlay title={`$${value.toFormat()}`}>
-              {formatUSD({ amount, usd, digits, showPrefix })}
+            <Overlay title={`$${value.toFormat()}`} className='cursor-context'>
+              {formatUSD({
+                amount,
+                usd,
+                digits,
+                maxDigits,
+                showPrefix,
+                showLastNonZeroDecimal
+              })}
             </Overlay>
           ) : (
-            formatUSD({ amount, usd, digits, showPrefix })
+            formatUSD({
+              amount,
+              usd,
+              digits,
+              maxDigits,
+              showPrefix,
+              showLastNonZeroDecimal
+            })
           )}
         </>
       )}
