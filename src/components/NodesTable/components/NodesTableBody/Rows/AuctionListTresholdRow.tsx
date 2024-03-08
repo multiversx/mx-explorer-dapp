@@ -49,6 +49,7 @@ export const AuctionListTresholdRow = ({
                   value={unprocessed.minimumAuctionQualifiedStake}
                   superSuffix
                   decimals={4}
+                  showLastNonZeroDecimal
                 />
               ) : (
                 minimumAuctionQualifiedStake

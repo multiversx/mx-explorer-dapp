@@ -48,7 +48,7 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
     <div className={classNames('nodes-table-hero w-100 mb-3', className)}>
       <div className='row gy-3'>
         <div className='col-xl-7'>
-          <div className='card bg-neutral-800-opacity-60'>
+          <div className='card bg-neutral-800-opacity-60 h-100'>
             <div className='card-body d-flex flex-column gap-3'>
               <h4 className='mb-0'>Qualified Nodes</h4>
               <NodesEligibilityPercentageBar />
@@ -97,6 +97,7 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
                         value={unprocessed.minimumAuctionQualifiedStake}
                         superSuffix
                         decimals={4}
+                        showLastNonZeroDecimal
                       />
                     </h3>
                   </div>

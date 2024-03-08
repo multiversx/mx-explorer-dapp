@@ -31,8 +31,7 @@ export const LockedStakeTooltip = ({
       )}
       {auctionTopUp !== undefined && showAuctionTopup && (
         <p className='mb-0'>
-          Qualified Top Up:{' '}
-          <Denominate value={auctionTopUp} showTooltip={false} />
+          Qualified Top Up: <Denominate value={auctionTopUp} />
         </p>
       )}
     </div>

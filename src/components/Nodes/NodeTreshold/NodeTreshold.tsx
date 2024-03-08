@@ -13,21 +13,21 @@ export interface NodeTresholdUIType extends WithClassnameType {
 export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
   const {
     isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionQualifiedTopUp }
+    unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
 
-  const { auctionTopUp, isInDangerZone } = node;
+  const { locked, isInDangerZone } = node;
   if (
     !isStakeFetched ||
-    minimumAuctionQualifiedTopUp === undefined ||
-    auctionTopUp === undefined
+    minimumAuctionQualifiedStake === undefined ||
+    locked === undefined
   ) {
     return null;
   }
 
-  const bNTopup = new BigNumber(auctionTopUp);
-  const bNMinimumAuctionTopup = new BigNumber(minimumAuctionQualifiedTopUp);
-  const bNTreshold = bNTopup.minus(bNMinimumAuctionTopup);
+  const bNLocked = new BigNumber(locked);
+  const bNMinimumQualifiedStake = new BigNumber(minimumAuctionQualifiedStake);
+  const bNTreshold = bNLocked.minus(bNMinimumQualifiedStake);
 
   if (bNTreshold.isGreaterThanOrEqualTo(0)) {
     return (
