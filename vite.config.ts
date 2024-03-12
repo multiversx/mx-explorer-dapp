@@ -13,11 +13,14 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
+  const shouldUseTSL =
+    process.env.VITE_APP_USE_HTTPS?.toLowerCase() !== 'false';
+
   return defineConfig({
     plugins: [
       svgr(),
       react(),
-      mkcert(),
+      ...(shouldUseTSL ? [mkcert()] : []),
       tsconfigPaths(),
       splitVendorChunkPlugin(),
       nodePolyfills({
@@ -40,7 +43,7 @@ export default ({ mode }) => {
     server: {
       port: 3002,
       strictPort: true,
-      https: true,
+      https: shouldUseTSL,
       host: 'localhost',
       hmr: {
         overlay: false
@@ -53,7 +56,7 @@ export default ({ mode }) => {
     preview: {
       port: 3002,
       strictPort: true,
-      https: true,
+      https: shouldUseTSL,
       host: 'localhost'
     }
   });
