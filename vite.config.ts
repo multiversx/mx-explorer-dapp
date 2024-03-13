@@ -20,12 +20,12 @@ export default ({ mode }) => {
     plugins: [
       svgr(),
       react(),
-      ...(shouldUseTSL ? [mkcert()] : []),
       tsconfigPaths(),
       splitVendorChunkPlugin(),
       nodePolyfills({
         globals: { Buffer: true, global: true, process: true }
-      })
+      }),
+      ...(shouldUseTSL ? [mkcert()] : [])
     ],
     resolve: {
       alias: {
