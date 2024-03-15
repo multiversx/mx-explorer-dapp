@@ -97,7 +97,6 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
                         value={unprocessed.minimumAuctionQualifiedStake}
                         superSuffix
                         decimals={4}
-                        showLastNonZeroDecimal
                       />
                     </h3>
                   </div>
