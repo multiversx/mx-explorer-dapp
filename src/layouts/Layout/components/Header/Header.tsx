@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
@@ -50,15 +50,22 @@ export const Header = (props: HeaderPropsType) => {
     );
   };
 
-  const onEcosystemMenuClose = () => {
-    setEcosystemMenuActive(false);
-    onExpand(false);
-  };
-
   const onMenuClose = () => {
     setMenuActive(false);
     onExpand(false);
   };
+
+  useEffect(() => {
+    const onClickOutsideEcosystemMenu = () => {
+      setEcosystemMenuActive(false);
+      onExpand(false);
+    };
+
+    window.addEventListener('pointerdown', onClickOutsideEcosystemMenu);
+
+    return () =>
+      window.removeEventListener('pointerdown', onClickOutsideEcosystemMenu);
+  }, [onExpand]);
 
   return (
     <header className='header'>
@@ -84,9 +91,8 @@ export const Header = (props: HeaderPropsType) => {
       </div>
 
       <div
-        tabIndex={0}
         onClick={onEcosystemMenuToggle}
-        onBlur={() => setTimeout(onEcosystemMenuClose, 100)}
+        onPointerDown={(e) => e.stopPropagation()}
         className={classNames('matrix', {
           active: ecosystemMenuActive
         })}
@@ -96,6 +102,7 @@ export const Header = (props: HeaderPropsType) => {
       </div>
 
       <div
+        onPointerDown={(e) => e.stopPropagation()}
         className={classNames('ecosystem-menu-wrapper', {
           active: ecosystemMenuActive
         })}
