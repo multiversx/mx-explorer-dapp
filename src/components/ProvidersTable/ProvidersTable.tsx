@@ -83,7 +83,7 @@ export const ProvidersTable = ({
           {displayProviders.map((provider, i) => (
             <tr key={provider.provider}>
               <td>
-                <div className='d-flex align-items-center hash hash-lg'>
+                <div className='d-flex align-items-center hash hash-lg gap-2'>
                   {showIdentity && (
                     <SharedIdentity.Avatar
                       identity={provider.identityInfo || {}}
@@ -102,13 +102,12 @@ export const ProvidersTable = ({
                       <Trim text={provider.provider} />
                     )}
                   </NetworkLink>
-
                   {showIdentity && provider.featured && (
                     <Overlay title='Verified'>
                       <FontAwesomeIcon
                         icon={faBadgeCheck}
-                        size='lg'
-                        className='ms-2 text-primary'
+                        size='sm'
+                        className='text-primary'
                       />
                     </Overlay>
                   )}
