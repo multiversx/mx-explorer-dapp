@@ -41,7 +41,8 @@ export const NodeDangerZoneTooltip = ({
   if (bNStake.isGreaterThanOrEqualTo(bNMinimumAuctionStake) && isInDangerZone) {
     const bNDangerZoneTreshold = bNMinimumAuctionStake
       .times(105)
-      .dividedBy(100);
+      .dividedBy(100)
+      .decimalPlaces(0, 1);
     const bNStakeAboveTreshold = bNStake.minus(bNMinimumAuctionStake);
     const bNStakeNeededAboveDangerZone = bNDangerZoneTreshold.minus(bNStake);
 
@@ -59,7 +60,7 @@ export const NodeDangerZoneTooltip = ({
                   This node is only{' '}
                   <Denominate
                     value={bNStakeAboveTreshold.toString(10)}
-                    showLastNonZeroDecimal
+                    decimals={4}
                   />{' '}
                   above the threshold level.
                   {bNStakeNeededAboveDangerZone.isGreaterThan(0) && (
@@ -68,7 +69,7 @@ export const NodeDangerZoneTooltip = ({
                       Increase the staked amount with{' '}
                       <Denominate
                         value={bNStakeNeededAboveDangerZone.toString(10)}
-                        showLastNonZeroDecimal
+                        decimals={4}
                       />{' '}
                       / node to exit the danger zone and move up in the auction
                       list.
@@ -79,6 +80,7 @@ export const NodeDangerZoneTooltip = ({
             }
             className='side-action cursor-context'
             tooltipClassName='tooltip-text-start tooltip-lg'
+            persistent
           >
             <FontAwesomeIcon icon={faSquareInfo} className='text-red-400' />
           </Overlay>
