@@ -74,6 +74,13 @@
       color: var(--primary-200);
     }
   }
+  &.text-neutral-400 {
+    .ellipsis,
+    .left span,
+    .right span {
+      color: var(--neutral-400);
+    }
+  }
 
   /* IE fix */
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {

@@ -483,3 +483,11 @@ img.loading {
     );
   background-size: contain;
 }
+
+.text-break {
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: break-spaces;
+  overflow-wrap: break-word; // inline elements
+  line-break: auto; // characters
+}

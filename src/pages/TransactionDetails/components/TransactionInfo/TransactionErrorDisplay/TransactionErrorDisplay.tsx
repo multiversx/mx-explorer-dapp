@@ -68,7 +68,9 @@ export const TransactionErrorDisplay = ({
             transform={{ rotate: 45 }}
           />
           <div className='d-flex flex-wrap'>
-            <small className={`${messageColor} transaction-error-message me-1`}>
+            <small
+              className={`${messageColor} transaction-error-message text-break me-1`}
+            >
               {capitalizeFirstLetter(transactionMessage.toString().trim())}
             </small>
             <div className='d-flex align-items-center justify-content-center gap-1'>
@@ -111,7 +113,7 @@ export const TransactionErrorDisplay = ({
             style={{ marginTop: '2px' }}
             transform={{ rotate: 45 }}
           />
-          <small className='transaction-error-message text-danger'>
+          <small className='transaction-error-message text-break text-danger'>
             Block Reverted
           </small>
         </div>

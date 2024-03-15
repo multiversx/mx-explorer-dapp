@@ -61,7 +61,7 @@
       @include media-breakpoint-up(xxl) {
         &.has-content {
           display: contents;
-          span {
+          .title-container {
             display: block;
             max-width: 46rem;
             overflow: hidden;
@@ -72,17 +72,19 @@
         }
       }
       .trim {
-        max-width: calc(90vw - 4rem);
+        max-width: calc(90vw - 5rem);
         letter-spacing: normal;
-        span {
+        .left span,
+        .right span,
+        .ellipsis {
           font-size: 1.5rem;
           letter-spacing: normal;
+          @include media-breakpoint-up(md) {
+            font-size: 2.5rem;
+          }
         }
         @include media-breakpoint-up(md) {
           max-width: 32rem;
-          span {
-            font-size: 2.5rem;
-          }
         }
         @include media-breakpoint-up(lg) {
           max-width: 44rem;

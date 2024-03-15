@@ -139,7 +139,7 @@ export const HeroDetailsCard = ({
             <div className='hero-details-card-overview d-flex flex-column flex-fill col-9'>
               {title && (
                 <div
-                  className={classNames('hero-details-card-title', {
+                  className={classNames('hero-details-card-title text-break', {
                     'mb-spacer': !Boolean(description || descriptionContent)
                   })}
                 >
@@ -173,9 +173,9 @@ export const HeroDetailsCard = ({
                       })}
                       data-testid={`${testIdPrefix}title`}
                     >
-                      <span>{title}</span>{' '}
+                      <span className='title-container'>{title}</span>
                       {isVerified && (
-                        <>{verifiedComponent ?? <VerifiedBadge />}</>
+                        <> {verifiedComponent ?? <VerifiedBadge />}</>
                       )}
                     </h1>
                   </div>

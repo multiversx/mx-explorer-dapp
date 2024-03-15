@@ -3,10 +3,10 @@ import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { Loader, ShowcaseCard, Trim, NetworkLink } from 'components';
+import { Loader, Overlay, ShowcaseCard, Trim, NetworkLink } from 'components';
 import { urlBuilder, addressIsBech32 } from 'helpers';
 import { useIsMainnet, useFetchGrowthMostUsed, useScollInView } from 'hooks';
-import { faAngleLeft, faAngleRight } from 'icons/solid';
+import { faAngleLeft, faAngleRight, faBadgeCheck } from 'icons/solid';
 import { growthMostUsedSelector } from 'redux/selectors';
 import { applicationsRoutes } from 'routes';
 import { WithClassnameType } from 'types';
@@ -120,6 +120,18 @@ export const MostUsedApplications = ({
                             >
                               {contract.extraInfo?.assets?.name ?? (
                                 <Trim text={contract.key} />
+                              )}
+                              {contract.extraInfo?.isVerified && (
+                                <Overlay
+                                  title='Verified'
+                                  className='ms-1 d-inline-flex align-self-center'
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faBadgeCheck}
+                                    size='2xs'
+                                    className='text-primary'
+                                  />
+                                </Overlay>
                               )}
                             </span>
                           }

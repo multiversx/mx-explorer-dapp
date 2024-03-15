@@ -5,11 +5,6 @@
 .transaction-info {
   .transaction-error-message {
     font-size: 0.75rem; // use rem instead of em because on long texts Chrome breaks the layout
-    word-wrap: break-word;
-    word-break: break-word;
-    white-space: break-spaces;
-    overflow-wrap: break-word; // inline elements
-    line-break: auto; // characters
   }
 
   .status-success {
