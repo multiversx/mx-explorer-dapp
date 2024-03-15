@@ -37,35 +37,33 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
                   <td>
                     <NetworkLink
                       to={urlBuilder.tokenDetails(token.key)}
-                      className={`d-flex text-truncate text-primary-200 ${
+                      className={`d-flex align-items-center symbol trim text-truncate text-primary-200 w-min-content ${
                         token.extraInfo?.assets?.svgUrl ? 'side-link' : ''
                       }`}
                     >
-                      <div className='d-flex align-items-center symbol trim text-truncate'>
-                        {token.extraInfo ? (
-                          <>
-                            {token.extraInfo?.assets?.svgUrl && (
-                              <img
-                                src={token.extraInfo?.assets.svgUrl}
-                                alt={token.extraInfo?.name ?? token.key}
-                                className='side-icon me-1'
-                              />
+                      {token.extraInfo ? (
+                        <>
+                          {token.extraInfo?.assets?.svgUrl && (
+                            <img
+                              src={token.extraInfo?.assets.svgUrl}
+                              alt={token.extraInfo?.name ?? token.key}
+                              className='side-icon me-1'
+                            />
+                          )}
+                          <div className='text-truncate'>
+                            {token.extraInfo?.name ? (
+                              <>
+                                {token.extraInfo.name} ({token.extraInfo.ticker}
+                                )
+                              </>
+                            ) : (
+                              <>{token.key}</>
                             )}
-                            <div className='text-truncate'>
-                              {token.extraInfo?.name ? (
-                                <>
-                                  {token.extraInfo.name} (
-                                  {token.extraInfo.ticker})
-                                </>
-                              ) : (
-                                <>{token.key}</>
-                              )}
-                            </div>
-                          </>
-                        ) : (
-                          <div className='text-truncate'>{token.key}</div>
-                        )}
-                      </div>
+                          </div>
+                        </>
+                      ) : (
+                        <div className='text-truncate'>{token.key}</div>
+                      )}
                     </NetworkLink>
                   </td>
                   <td className='text-neutral-300 text-end fw-600 pe-2'>
