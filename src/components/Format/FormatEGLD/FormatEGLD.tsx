@@ -34,7 +34,7 @@ export const FormatEGLD = ({
     <span className={classNames(className, 'formatted')}>
       <MultiversXSymbol className='symbol' />{' '}
       <span className='amount'>{amount}</span>
-      <span className='decimals'>{decimals}</span>
+      {decimals && <span className='decimals'>.{decimals}</span>}
       <>
         {superSuffix ? (
           <sup className='suffix'>&nbsp;{egldLabel}</sup>
