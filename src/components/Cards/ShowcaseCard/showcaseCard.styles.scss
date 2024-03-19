@@ -1,0 +1,167 @@
+.showcase-card {
+  --card-width: 13.75rem;
+  --card-height: 18.625rem;
+  width: var(--card-width);
+  height: var(--card-height);
+  min-width: var(--card-width);
+  min-height: var(--card-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem 1.5rem;
+  font-family: var(--headings-font-family);
+  border-radius: var(--card-border-radius);
+  background-color: rgba(var(--neutral-750-rgb), 0.5);
+  overflow: hidden;
+  position: relative;
+
+  &-container {
+    scroll-snap-align: center;
+    scroll-margin-right: 3rem;
+  }
+
+  &-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  &-rank {
+    font-size: 2.625rem;
+    line-height: 2.625rem;
+  }
+  &-icon-container {
+    top: 3.5rem;
+    position: absolute;
+    width: 16rem;
+    height: 16rem;
+    min-width: 16rem;
+    min-height: 16rem;
+    margin-left: -4.75rem;
+    margin-top: -2.75rem;
+    pointer-events: none;
+
+    .icon-blur-bg,
+    .icon {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .icon-blur-bg {
+      width: 16rem;
+      min-width: 16rem;
+      height: 100%;
+      opacity: 0.25;
+      filter: blur(0.75rem);
+      mask: radial-gradient(circle, black 0%, transparent 70%);
+      &.default {
+        opacity: 0.8;
+      }
+    }
+    .icon {
+      width: 6.25rem;
+      min-width: 6.25rem;
+    }
+  }
+  &-title {
+    h3 {
+      font-size: 1.313rem;
+      letter-spacing: -1%;
+    }
+  }
+}
+
+.showcase-card-wrapper {
+  position: relative;
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+  .showcase-card-scroll {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding-left: 0.75rem;
+    padding-right: 4rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .showcase-card-arrow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    z-index: 1;
+    opacity: 0;
+    align-items: center;
+    cursor: pointer;
+    pointer-events: none;
+
+    &:before {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 6rem;
+      top: 0;
+      z-index: 0;
+    }
+
+    &.show {
+      pointer-events: all;
+      opacity: 1;
+    }
+
+    &.left {
+      left: 0;
+      &:before {
+        background: linear-gradient(
+          270deg,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 1) 100%
+        );
+      }
+    }
+
+    &.right {
+      right: 0;
+      justify-content: flex-end;
+      &:before {
+        right: 0;
+
+        background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0) 0%,
+          rgb(0, 0, 0) 100%
+        );
+      }
+    }
+
+    .showcase-card-arrow-icon {
+      color: var(--primary);
+      position: relative;
+      height: 2.5rem;
+    }
+  }
+}
+
+// disable scroll snap on firefox
+
+.firefox {
+  .showcase-card-container {
+    scroll-snap-type: unset;
+    scroll-snap-align: unset;
+    scroll-margin-right: unset;
+  }
+}

@@ -77,21 +77,12 @@ export const AccountTokens = () => {
       </div>
       <div className='card-body pt-0 px-lg-spacer py-lg-4'>
         <div className='px-0'>
-          {dataReady === undefined && <Loader dataTestId='tokensLoader' />}
+          {dataReady === undefined && <Loader data-testid='tokensLoader' />}
           {dataReady === false && (
-            <PageState
-              icon={faCoins}
-              title='Unable to load tokens'
-              className='py-spacer my-auto'
-              dataTestId='errorScreen'
-            />
+            <PageState icon={faCoins} title='Unable to load tokens' isError />
           )}
           {dataReady === true && accountTokens.length === 0 && (
-            <PageState
-              icon={faCoins}
-              title='No tokens'
-              className='py-spacer my-auto'
-            />
+            <PageState icon={faCoins} title='No tokens' />
           )}
           {dataReady === true && accountTokens.length > 0 && (
             <>
@@ -140,11 +131,12 @@ export const AccountTokens = () => {
                   );
 
                   return (
-                    <DetailItem title={name} key={identifier}>
+                    <DetailItem title={name} key={identifier} verticalCenter>
                       <div className='d-flex align-items-center'>
-                        <div className='me-1'>
+                        <div className='me-1 text-neutral-100'>
                           <Denominate
                             showLabel={false}
+                            showSymbol={false}
                             value={balance ? balance : '0'}
                             denomination={decimals}
                             showLastNonZeroDecimal

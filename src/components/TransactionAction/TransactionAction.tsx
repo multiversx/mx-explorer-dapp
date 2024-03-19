@@ -160,6 +160,7 @@ const ActionText = ({
           <Denominate
             value={entry.value}
             showLabel={false}
+            showSymbol={false}
             showLastNonZeroDecimal
           />
         </span>

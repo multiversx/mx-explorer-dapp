@@ -11,6 +11,7 @@ import { AccountTransactions } from 'pages/AccountDetails/AccountTransactions';
 import { AccountUpgrades } from 'pages/AccountDetails/AccountUpgrades';
 import { OldRouteRedirect } from 'pages/AccountDetails/OldRouteRedirect';
 import { Accounts } from 'pages/Accounts';
+import { Applications } from 'pages/Applications';
 
 import { TitledRouteObject } from '../routes';
 
@@ -37,6 +38,10 @@ export const accountsRoutes = {
   oldAccountDetails: '/address/:hash'
 };
 
+export const applicationsRoutes = {
+  applications: '/applications'
+};
+
 export const accountLayout: TitledRouteObject[] = [
   {
     path: accountsRoutes.oldAccountDetails,
@@ -47,6 +52,11 @@ export const accountLayout: TitledRouteObject[] = [
     path: accountsRoutes.accounts,
     title: 'Accounts',
     Component: Accounts
+  },
+  {
+    path: applicationsRoutes.applications,
+    title: 'Applications',
+    Component: Applications
   },
   {
     path: accountsRoutes.accountDetails,

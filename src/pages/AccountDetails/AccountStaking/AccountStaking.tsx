@@ -1,8 +1,12 @@
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Outlet, useParams } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
+import { useAdapter, useGetPage, useFetchAccountStakingDetails } from 'hooks';
 import { faChartPie } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
+
 import { accountStakingSelector } from 'redux/selectors';
 
 import { AccountDelegation } from './components/AccountDelegation';
@@ -11,8 +15,13 @@ import { AccountStake } from './components/AccountStake';
 import { DonutChart } from './components/DonutChart';
 
 export const AccountStaking = () => {
+  const { fetchAccountStakingDetails } = useFetchAccountStakingDetails();
+  const { hash: address } = useParams();
+  const [dataReady, setDataReady] = useState<boolean | undefined>();
+
   const stakingDetails = useSelector(accountStakingSelector);
   const {
+    address: stateAddress,
     providerDataReady,
     stakingDataReady,
     delegation,
@@ -35,8 +44,26 @@ export const AccountStaking = () => {
       )
     : [];
 
+  const needsData = address && stakingDataReady && address !== stateAddress;
   const hasStaking = showDelegation || showDelegationLegacy || showStake;
-  const isReady = providerDataReady && stakingDataReady;
+  const isReady =
+    providerDataReady &&
+    stakingDataReady &&
+    ((needsData && dataReady) || !needsData);
+
+  useEffect(() => {
+    if (needsData) {
+      fetchAccountStakingDetails({ address }).then(
+        ([delegationData, stakeData, delegationLegacyData]) => {
+          setDataReady(
+            delegationData.success &&
+              stakeData.success &&
+              delegationLegacyData.success
+          );
+        }
+      );
+    }
+  }, [needsData]);
 
   return (
     <div className='card'>
@@ -108,17 +135,12 @@ export const AccountStaking = () => {
               </>
             ) : (
               <div className='col-12'>
-                <PageState
-                  icon={faChartPie}
-                  title='No Staking'
-                  className='py-spacer my-auto'
-                  dataTestId='errorScreen'
-                />
+                <PageState icon={faChartPie} title='No Staking' isError />
               </div>
             )}
           </div>
         ) : (
-          <Loader dataTestId='stakingLoader' />
+          <Loader data-testid='stakingLoader' />
         )}
       </div>
     </div>

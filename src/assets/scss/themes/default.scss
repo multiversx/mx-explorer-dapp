@@ -8,12 +8,17 @@
   --border-radius-medium: 16px;
   --border-radius-low: 8px;
   --headings-font-family: #{$headings-font-family};
+  --font-headings-regular: 'Roobert Regular', 'Inter', Roboto, 'Helvetica Neue',
+    'Noto Sans', 'Liberation Sans', sans-serif;
+  --font-headings-semibold: 'Roobert SemiBold', 'Inter', Roboto,
+    'Helvetica Neue', 'Noto Sans', 'Liberation Sans', sans-serif;
 
   // Custom Color pallete
   // Custom Common Variables
   --muted: var(--neutral-400);
   --muted-rgb: 212, 212, 212;
-  --card-bg: var(--neutral-950);
+  --card-bg: #{$card-bg};
+  --card-bg-rgb: 18, 18, 18;
 
   --table-header: #1d1d1d;
   --neutral-transparent: rgba(38, 38, 38, 0.6);

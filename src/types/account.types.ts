@@ -24,6 +24,7 @@ export interface AccountType {
   ownerAddress?: string;
   developerReward?: string;
   deployedAt?: number;
+  deployTxHash?: string;
   scamInfo?: ScamInfoType;
   isUpgradeable?: boolean;
   isReadable?: boolean;
@@ -35,7 +36,7 @@ export interface AccountType {
   isGuarded?: boolean;
   activeGuardianAddress?: string;
   activeGuardianServiceUid?: string;
-  tokenBalance?: string;
+  ownerAssets?: AccountAssetType;
 }
 
 export interface AccountSliceType extends SliceType {
@@ -45,6 +46,7 @@ export interface AccountSliceType extends SliceType {
 export interface AccountStakingSliceType {
   accountStakingFetched: boolean;
 
+  address: string | undefined;
   totalStaked: string;
   totalDelegation: string;
   totalLegacyDelegation: string;
@@ -66,7 +68,8 @@ export interface AccountStakingSliceType {
 
 export interface AccountExtraSliceType extends SliceType {
   accountExtra: {
-    firstTransactionDate: number | undefined;
+    firstTransactionDate?: number;
+    tokenBalance?: string;
   };
 }
 
@@ -76,6 +79,9 @@ export interface AccountAssetType {
   tags?: string[];
   iconPng?: string;
   iconSvg?: string;
+  svgUrl?: string;
+  pngUrl?: string;
+  social?: { [key: string]: string };
 }
 
 export interface AccountSmartContractType {

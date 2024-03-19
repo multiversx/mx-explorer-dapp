@@ -68,12 +68,7 @@ export const ProviderDetails = () => {
 
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
-        <PageState
-          icon={faCogs}
-          title='Unable to load nodes'
-          className='py-spacer my-auto'
-          dataTestId='errorScreen'
-        />
+        <PageState icon={faCogs} title='Unable to load nodes' isError />
       )}
 
       {dataReady === true && (

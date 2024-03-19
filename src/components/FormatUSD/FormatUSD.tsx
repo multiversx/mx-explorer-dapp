@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
@@ -7,6 +8,16 @@ import { DIGITS } from 'config';
 import { denominate, formatUSD, stringIsFloat } from 'helpers';
 
 import { economicsSelector } from 'redux/selectors';
+import { WithClassnameType } from 'types';
+
+export interface FormatUSDUIType extends WithClassnameType {
+  amount: string | number;
+  usd?: string | number;
+  decimals?: number;
+  digits?: number;
+  showPrefix?: boolean;
+  showTooltip?: boolean;
+}
 
 export const FormatUSD = ({
   amount: unprocessedAmount,
@@ -14,15 +25,9 @@ export const FormatUSD = ({
   digits,
   decimals,
   showPrefix = true,
-  showTooltip = true
-}: {
-  amount: string | number;
-  usd?: string | number;
-  decimals?: number;
-  digits?: number;
-  showPrefix?: boolean;
-  showTooltip?: boolean;
-}) => {
+  showTooltip = true,
+  className
+}: FormatUSDUIType) => {
   const { isFetched, unprocessed } = useSelector(economicsSelector);
 
   const displayDigits = digits ? digits : DIGITS;
@@ -49,7 +54,7 @@ export const FormatUSD = ({
   );
 
   return (
-    <span className='d-inline-flex'>
+    <span className={classNames('d-inline-flex', className)}>
       {!stringIsFloat(formattedAmount) || (!usdValue && !isFetched) ? (
         ELLIPSIS
       ) : (

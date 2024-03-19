@@ -68,5 +68,8 @@ export const elasticAdapter = {
   },
   getAccounRoles: () => {
     throw new Error('not defined');
+  },
+  getAccountAssets: () => {
+    throw new Error('not defined');
   }
 };

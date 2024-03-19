@@ -14,6 +14,6 @@ export const formatUSD = ({
   const value = new BigNumber(amount).times(usd ? new BigNumber(usd) : 1);
 
   return `${
-    showPrefix ? (value.isGreaterThan(0) ? '≈' : '=') : ''
+    showPrefix ? (value.isGreaterThan(0) ? '~' : '=') : ''
   }$${value.toFormat(digits)}`;
 };

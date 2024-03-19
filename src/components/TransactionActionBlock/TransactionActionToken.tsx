@@ -23,6 +23,7 @@ export const TransactionActionToken = ({
               <Denominate
                 value={token.value}
                 showLabel={false}
+                showSymbol={false}
                 denomination={denomination}
                 showLastNonZeroDecimal={showLastNonZeroDecimal}
               />

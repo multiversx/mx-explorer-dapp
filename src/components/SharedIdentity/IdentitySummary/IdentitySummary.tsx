@@ -114,7 +114,7 @@ export const IdentitySummary = ({
             icon={faCity}
             title='Unable to load identity details'
             className='py-spacer my-auto page-state-sm'
-            dataTestId='errorScreen'
+            isError
           />
         )}
       </div>

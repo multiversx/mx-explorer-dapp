@@ -121,8 +121,7 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
                 <PageState
                   icon={faCogs}
                   title='Unable to load validators'
-                  className='py-spacer my-auto'
-                  dataTestId='errorScreen'
+                  isError
                 />
               )}
               {dataReady === true && (

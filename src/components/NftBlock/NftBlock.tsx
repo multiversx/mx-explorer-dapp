@@ -17,6 +17,7 @@ export const NftBlock = ({ value, operationToken }: NftBlockType) => (
               <Denominate
                 value={value}
                 showLabel={false}
+                showSymbol={false}
                 denomination={operationToken.decimals}
                 showLastNonZeroDecimal={true}
               />

@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSearchParams } from 'react-router-dom';
 
 import { Denominate, TransactionActionBlock, Overlay } from 'components';
 import { getTransactionTokens } from 'helpers';
@@ -43,6 +44,9 @@ export const TransactionValue = ({
   token?: string;
   hideMultipleBadge?: boolean;
 }) => {
+  const [searchParams] = useSearchParams();
+  const { token: filterToken } = Object.fromEntries(searchParams);
+
   if (transaction.action) {
     if (
       transaction.action.name === TransactionActionEnum.wrapEgld ||
@@ -51,7 +55,10 @@ export const TransactionValue = ({
       return <Denominate value={transaction.value} />;
     }
 
-    const transactionTokens = getTransactionTokens({ transaction, token });
+    const transactionTokens = getTransactionTokens({
+      transaction,
+      token: token ?? filterToken
+    });
     const transactionActionValue =
       transactionTokens.length === 1 &&
       transaction?.action?.arguments?.value !== undefined

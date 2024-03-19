@@ -17,7 +17,6 @@ import {
   CopyButton,
   TransactionAction,
   LoadingDots,
-  AccountName,
   FormatUSD,
   TransactionGuardianIcon,
   AccountLink
@@ -131,13 +130,6 @@ export const TransactionInfo = ({
           decimals: DIGITS,
           showLastNonZeroDecimal: true
         });
-
-  const formattedTxValue = denominate({
-    input: transaction.value,
-    denomination: DECIMALS,
-    decimals: DIGITS,
-    showLastNonZeroDecimal: true
-  });
 
   const txValue = denominate({
     input: transaction.value,
@@ -330,15 +322,20 @@ export const TransactionInfo = ({
               </DetailItem>
 
               <DetailItem title='Value' className='text-neutral-100'>
-                {formattedTxValue} {egldLabel}{' '}
+                <Denominate
+                  value={transaction.value.toString()}
+                  showLastNonZeroDecimal
+                />
                 {transaction.price !== undefined && (
-                  <span className='text-neutral-400'>
+                  <>
+                    {' '}
                     <FormatUSD
                       amount={txValue}
                       usd={transaction.price}
                       digits={2}
+                      className='text-neutral-400'
                     />
-                  </span>
+                  </>
                 )}
               </DetailItem>
 
@@ -387,19 +384,24 @@ export const TransactionInfo = ({
                 </DetailItem>
               )}
 
-              <DetailItem title='Transaction Fee'>
-                {transaction.gasUsed !== undefined ? (
+              <DetailItem title='Transaction Fee' className='text-neutral-100'>
+                {transaction.fee !== undefined &&
+                transaction.gasUsed !== undefined ? (
                   <>
-                    <span className='text-neutral-100'>{transactionFee}</span>{' '}
-                    {egldLabel}{' '}
+                    <Denominate
+                      value={transaction.fee ?? getFee(transaction)}
+                      showLastNonZeroDecimal
+                    />
                     {transaction.price !== undefined && (
-                      <span className='text-neutral-400'>
+                      <>
+                        {' '}
                         <FormatUSD
                           amount={transactionFee}
                           usd={transaction.price}
                           digits={4}
+                          className='text-neutral-400'
                         />
-                      </span>
+                      </>
                     )}
                   </>
                 ) : (
@@ -435,14 +437,12 @@ export const TransactionInfo = ({
                 )}
               </DetailItem>
 
-              <DetailItem title='Gas Price'>
+              <DetailItem title='Gas Price' className='text-neutral-100'>
                 {transaction.gasPrice !== undefined ? (
-                  <span className='text-neutral-100'>
-                    <Denominate
-                      value={transaction.gasPrice.toString()}
-                      showLastNonZeroDecimal
-                    />
-                  </span>
+                  <Denominate
+                    value={transaction.gasPrice.toString()}
+                    showLastNonZeroDecimal
+                  />
                 ) : (
                   <span>N/A</span>
                 )}

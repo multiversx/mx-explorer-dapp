@@ -8,6 +8,7 @@ import { faDollarSign } from 'icons/solid';
 import {
   accountSelector,
   accountStakingSelector,
+  accountExtraSelector,
   economicsSelector
 } from 'redux/selectors';
 
@@ -19,7 +20,9 @@ export const AccountUsdValueCardItem = ({
   const { isFetched: isEconomicsFetched, unprocessed } =
     useSelector(economicsSelector);
   const { account } = useSelector(accountSelector);
-  const { balance, tokenBalance } = account;
+  const { accountExtra } = useSelector(accountExtraSelector);
+  const { balance } = account;
+  const { tokenBalance } = accountExtra;
   const { stakingDataReady, totalLocked } = useSelector(accountStakingSelector);
 
   let totalWorth = balance ? new BigNumber(balance) : new BigNumber(0);

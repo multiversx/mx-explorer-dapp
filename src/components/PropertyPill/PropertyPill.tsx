@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faCheck } from 'icons/light';
+import classNames from 'classnames';
+import { faTimes } from 'icons/regular';
+import { faCheck } from 'icons/solid';
 
 export const PropertyPill = ({
   name,
@@ -10,9 +12,11 @@ export const PropertyPill = ({
 }) => {
   return (
     <span
-      className={`badge badge-outline badge-rounded badge-direction ${
-        active ? 'in' : 'out'
-      }`}
+      className={classNames(
+        'badge badge-outline badge-rounded badge-property',
+        { active: active },
+        { inactive: !active }
+      )}
     >
       <FontAwesomeIcon className='me-1' icon={active ? faCheck : faTimes} />{' '}
       {name}

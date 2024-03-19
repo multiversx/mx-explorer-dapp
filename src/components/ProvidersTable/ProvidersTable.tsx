@@ -196,7 +196,7 @@ export const ProvidersTable = ({
             <tr key={provider.provider}>
               {showIdentity ? (
                 <td>
-                  <div className='d-flex align-items-center hash-lg'>
+                  <div className='d-flex align-items-center hash hash-lg'>
                     <IdentityAvatar identity={provider.identityDetails || {}} />
                     <NetworkLink
                       to={urlBuilder.providerDetails(provider.provider)}
@@ -233,7 +233,7 @@ export const ProvidersTable = ({
                 </td>
               ) : (
                 <td>
-                  <div className='d-flex align-items-center hash-lg'>
+                  <div className='d-flex align-items-center hash hash-lg'>
                     <NetworkLink
                       to={urlBuilder.providerDetails(provider.provider)}
                       className='trim-wrapper'
@@ -302,12 +302,7 @@ export const ProvidersTable = ({
           {displayProviders.length === 0 && (
             <tr>
               <td colSpan={7}>
-                <PageState
-                  icon={faCode}
-                  title='No Providers'
-                  className='py-spacer my-auto'
-                  dataTestId='errorScreen'
-                />
+                <PageState icon={faCode} title='No Providers' isError />
               </td>
             </tr>
           )}

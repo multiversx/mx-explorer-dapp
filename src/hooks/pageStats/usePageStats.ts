@@ -11,6 +11,7 @@ import { pageHeadersCollectionsStatsSelector } from '../../redux/selectors/pageH
 import { pageHeaderTokensStatsSelector } from '../../redux/selectors/pageHeadersTokensStats';
 import {
   accountsRoutes,
+  applicationsRoutes,
   blocksRoutes,
   collectionRoutes,
   tokensRoutes
@@ -99,6 +100,20 @@ export const usePageStats = () => {
     );
   }, [pageHeadersBlocks]);
 
+  const headersApplicationsData = useMemo(() => {
+    const {
+      blockHeight: _omit,
+      totalApplicationsDeployed,
+      totalDeveloperRewards,
+      totalNetworkFees
+    } = pageHeadersBlocks;
+    return getData('blocks', {
+      totalApplicationsDeployed: totalApplicationsDeployed ?? '',
+      totalNetworkFees: totalNetworkFees ?? '',
+      totalDeveloperRewards: totalDeveloperRewards ?? ''
+    });
+  }, [pageHeadersBlocks]);
+
   const headersCollectionsData = useMemo(() => {
     return getData('collections', pageHeadersCollections).sort(
       (a, b) => a.order - b.order
@@ -123,6 +138,12 @@ export const usePageStats = () => {
         return {
           title: headersBlocksTitle,
           data: headersBlocksData
+        };
+
+      case activeRoute(applicationsRoutes.applications):
+        return {
+          title: headersBlocksTitle,
+          data: headersApplicationsData
         };
 
       case activeRoute(accountsRoutes.accounts):
@@ -150,6 +171,7 @@ export const usePageStats = () => {
   }, [
     activeRoute,
     headersBlocksData,
+    headersApplicationsData,
     headersCollectionsData,
     headersTokensData,
     headersAccountsData

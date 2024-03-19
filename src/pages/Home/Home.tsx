@@ -21,7 +21,7 @@ export const Home = () => {
             <EconomicsCard />
           </div>
 
-          <ChartContractsTransactions />
+          <ChartContractsTransactions isStandalone />
           <MostUsed />
         </>
       )}

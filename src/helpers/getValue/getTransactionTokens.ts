@@ -26,10 +26,16 @@ export const getTransactionTokens = ({
     if (token) {
       const reorderedTransactionTokens = [
         ...transactionTokens.filter(
-          (transactionToken) => transactionToken?.token === token
+          (transactionToken) =>
+            transactionToken?.token === token ||
+            transactionToken?.collection === token
         ),
         ...transactionTokens.filter(
-          (transactionToken) => !(transactionToken?.token === token)
+          (transactionToken) =>
+            !(
+              transactionToken?.token === token ||
+              transactionToken?.collection === token
+            )
         )
       ];
 

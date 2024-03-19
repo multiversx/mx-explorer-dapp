@@ -220,7 +220,7 @@ export const Analytics = () => {
 
           <ChartWrapper>
             <div className='px-3 pb-3'>
-              <ChartContractsTransactions />
+              <ChartContractsTransactions isStandalone />
             </div>
           </ChartWrapper>
           <ChartWrapper size='half'>

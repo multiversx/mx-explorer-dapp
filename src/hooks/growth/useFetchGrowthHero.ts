@@ -12,8 +12,8 @@ export const useFetchGrowthHero = () => {
   const { isFetched } = useSelector(growthHeroSelector);
   const { getGrowthWidget } = useAdapter();
 
-  const fetchGrowthHero = async (refesh?: boolean) => {
-    if (!isFetched || refesh) {
+  const fetchGrowthHero = async (refresh?: boolean) => {
+    if (!isFetched || refresh) {
       const { data, success } = await getGrowthWidget('/hero');
 
       if (data && success) {

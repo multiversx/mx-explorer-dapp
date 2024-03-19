@@ -5,6 +5,7 @@ import {
   transactionsRoutes,
   blocksRoutes,
   accountsRoutes,
+  applicationsRoutes,
   tokensRoutes,
   collectionRoutes,
   nftRoutes,
@@ -46,13 +47,16 @@ export const useShowGlobalStats = () => {
     case activeRoute(accountsRoutes.accountRolesTokens):
     case isCollectionDetails:
     case activeRoute(collectionRoutes.collectionDetailsRoles):
+    case activeRoute(collectionRoutes.collectionDetailsTransactions):
     case activeRoute(nftRoutes.nftDetails):
     case activeRoute(nftRoutes.nftDetailsAccounts):
+    case activeRoute(nftRoutes.nftDetailsTransactions):
     case activeRoute(tokensRoutes.tokenDetails):
     case activeRoute(tokensRoutes.tokenDetailsAccounts):
     case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
     case activeRoute(tokensRoutes.tokenDetailsRoles):
     case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
+    case activeRoute(tokensRoutes.tokensMetaEsdtDetailsRoles):
     case activeRoute(transactionsRoutes.transactionDetails):
     case activeRoute(transactionsRoutes.transactionDetailsLogs):
     case activeRoute(validatorsRoutes.identityDetails):
@@ -89,6 +93,18 @@ export const useShowTransactionStats = () => {
 
   switch (true) {
     case activeRoute(transactionsRoutes.transactions):
+      return true;
+
+    default:
+      return false;
+  }
+};
+
+export const useShowApplicationsStats = () => {
+  const activeRoute = useActiveRoute();
+
+  switch (true) {
+    case activeRoute(applicationsRoutes.applications):
       return true;
 
     default:

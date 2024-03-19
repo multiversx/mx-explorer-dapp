@@ -1,29 +1,7 @@
 import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
+import { ChartSimpleTooltip } from 'components/Chart/ChartSimpleTooltip';
 
-import styles from './styles.module.scss';
 import { ChartRootPropsType } from './types';
-
-const CustomTooltip = (props: any) => {
-  const { payload, active, formatter } = props;
-
-  if (!payload || !active) {
-    return null;
-  }
-
-  return payload.map((item: any) => (
-    <div
-      className={styles.tooltip}
-      style={{ color: item.color }}
-      key={item.value}
-    >
-      <span className={styles.dot} style={{ background: item.color }} />
-      <span className={styles.background} style={{ background: item.color }} />
-      <span className={styles.border} style={{ borderColor: item.color }} />
-
-      {formatter(item)}
-    </div>
-  ));
-};
 
 export const ChartRoot = (props: ChartRootPropsType) => {
   const { className, data, height, color, identifier, tooltipFormatter } =
@@ -52,7 +30,7 @@ export const ChartRoot = (props: ChartRootPropsType) => {
         <Tooltip
           cursor={false}
           content={(props) => (
-            <CustomTooltip formatter={tooltipFormatter} {...props} />
+            <ChartSimpleTooltip formatter={tooltipFormatter} {...props} />
           )}
         />
       </AreaChart>

@@ -3,6 +3,7 @@ import { AccountStakingSliceType } from 'types/account.types';
 
 export const getInitialAccountStakingState = (): AccountStakingSliceType => {
   return {
+    address: undefined,
     showDelegation: false,
     showDelegationLegacy: false,
     showStake: false,
@@ -30,6 +31,7 @@ export const accountStakingSlice = createSlice({
       state: AccountStakingSliceType,
       action: PayloadAction<AccountStakingSliceType>
     ) => {
+      state.address = action.payload.address;
       state.totalStaked = action.payload.totalStaked;
       state.totalDelegation = action.payload.totalDelegation;
       state.totalLegacyDelegation = action.payload.totalLegacyDelegation;

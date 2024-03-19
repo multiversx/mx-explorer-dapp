@@ -17,6 +17,7 @@ import { wrapRoutes } from './helpers/wrapRoutes';
 import {
   accountLayout,
   accountsRoutes,
+  applicationsRoutes,
   blockLayout,
   blocksRoutes,
   collectionLayout,
@@ -31,6 +32,7 @@ import {
 
 export {
   accountsRoutes,
+  applicationsRoutes,
   blocksRoutes,
   collectionRoutes,
   nftRoutes,
@@ -61,6 +63,7 @@ export const transactionsRoutes = {
 
 export const routes = {
   ...accountsRoutes,
+  ...applicationsRoutes,
   ...analyticsRoutes,
   ...blocksRoutes,
   ...collectionRoutes,

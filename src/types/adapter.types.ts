@@ -7,6 +7,19 @@ export interface BaseApiType {
   extract?: string;
 }
 
+export interface SortableApiType extends BaseApiType {
+  sort?: string;
+  order?: SortOrderEnum;
+}
+
+export interface GetAccountsType extends SortableApiType {
+  ownerAddress?: string;
+  isSmartContract?: boolean;
+  withOwnerAssets?: boolean;
+  withDeployInfo?: boolean;
+  withTxCount?: boolean;
+  withScrCount?: boolean;
+}
 export interface GetBlocksType extends BaseApiType {
   shard?: number;
   epoch?: number;
@@ -14,14 +27,12 @@ export interface GetBlocksType extends BaseApiType {
   withProposerIdentity?: boolean;
 }
 
-export interface GetTokensType extends BaseApiType {
+export interface GetTokensType extends SortableApiType {
   type?: string;
   search?: string;
   name?: string;
   identifier?: string;
   identifiers?: string;
-  sort?: string;
-  order?: SortOrderEnum;
   includeMetaESDT?: boolean;
   withUsername?: boolean;
 }
@@ -42,18 +53,17 @@ export interface GetNftsType extends BaseApiType {
   source?: string;
 }
 
-export interface GetCollectionsType extends BaseApiType {
+export interface GetCollectionsType extends SortableApiType {
   search?: string;
   identifiers?: string;
   type?: string;
   before?: string;
   after?: string;
-  sort?: string;
   excludeMetaESDT?: boolean;
   withOwner?: boolean;
 }
 
-export interface GetNodesType extends BaseApiType {
+export interface GetNodesType extends SortableApiType {
   search?: string;
   issues?: string;
   online?: boolean;
@@ -62,19 +72,18 @@ export interface GetNodesType extends BaseApiType {
   status?: string;
   count?: boolean;
   identity?: string;
-  sort?: string;
-  order?: SortOrderEnum;
   pagination?: boolean;
   provider?: string;
   fullHistory?: string;
 }
 
-export interface GetTransactionsType extends BaseApiType {
+export interface GetTransactionsType extends SortableApiType {
+  sender?: string;
+  receiver?: string;
+  senderOrReceiver?: string;
   address?: string;
   senderShard?: number;
   receiverShard?: number;
-  sender?: string;
-  receiver?: string;
   method?: string;
   before?: number;
   after?: number;
@@ -82,8 +91,17 @@ export interface GetTransactionsType extends BaseApiType {
   miniBlockHash?: string;
   search?: string;
   token?: string;
+  hashes?: string;
+  withScResults?: boolean;
+  withOperations?: boolean;
+  withLogs?: boolean;
+  withScamInfo?: boolean;
   withUsername?: boolean;
-  order?: SortOrderEnum;
+  withBlockInfo?: boolean;
+  isRelayed?: boolean;
+
+  // not on api
+  isCount?: boolean;
 }
 
 export interface GetProvidersType extends BaseApiType {
@@ -108,6 +126,7 @@ export interface AdapterProviderPropsType {
     miniBlockHash?: string;
     sender?: string;
     receiver?: string;
+    senderOrReceiver?: string;
     condition?: string;
     senderShard?: number;
     receiverShard?: number;
@@ -133,9 +152,20 @@ export interface AdapterProviderPropsType {
     identifiers?: string;
     includeFlagged?: boolean;
     fullHistory?: string;
+    withScResults?: boolean;
+    withOperations?: boolean;
+    withLogs?: boolean;
+    withScamInfo?: boolean;
     withUsername?: boolean;
+    withBlockInfo?: boolean;
+    isRelayed?: boolean;
     includeMetaESDT?: boolean;
     withGuardianInfo?: boolean;
+    isSmartContract?: boolean;
+    withOwnerAssets?: boolean;
+    withDeployInfo?: boolean;
+    withTxCount?: boolean;
+    withScrCount?: boolean;
   };
   timeout: number;
   timestamp?: number;

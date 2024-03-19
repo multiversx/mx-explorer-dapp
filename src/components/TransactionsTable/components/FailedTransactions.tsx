@@ -6,8 +6,7 @@ export const FailedTransactions = () => {
     <PageState
       icon={faExchangeAlt}
       title='Unable to load transactions'
-      className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      isError
     />
   );
 };

@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 
 import { getSubdomainNetwork } from 'helpers';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
-import { NetworkLinkPropsType } from './types';
+import { NetworkLinkUIType } from './types';
 
 export const NetworkLink = ({
   to,
   children,
   preventScrollReset = false,
-  'data-testid': dataTestId,
+  'data-testid': dataTestId = '',
   ...rest
-}: NetworkLinkPropsType) => {
+}: NetworkLinkUIType) => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
   const { subdomainNetwork } = getSubdomainNetwork();
@@ -36,7 +36,7 @@ export const NetworkLink = ({
     <Link
       {...props}
       preventScrollReset={preventScrollReset}
-      {...(dataTestId ? { 'data-testid': dataTestId } : {})}
+      data-testid={dataTestId}
     >
       {children}
     </Link>

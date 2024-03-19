@@ -4,6 +4,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import { MAX_DISPLAY_ZERO_DECIMALS } from 'appConstants';
+import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { DECIMALS, DIGITS } from 'config';
 import { denominate } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -16,6 +17,7 @@ export interface DenominateType {
   decimals?: number;
   denomination?: number;
   showTooltip?: boolean;
+  showSymbol?: boolean;
   'data-testid'?: string;
 }
 
@@ -77,7 +79,8 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
     value,
     showLastNonZeroDecimal = false,
     showLabel = true,
-    showTooltip = true
+    showTooltip = true,
+    showSymbol = true
   } = props;
   const decimals = props.decimals !== undefined ? props.decimals : DIGITS;
   const denomination =
@@ -132,7 +135,7 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
       if (firstNonZeroIndex > MAX_DISPLAY_ZERO_DECIMALS) {
         return (
           <>
-            <span className='int-amount'>0</span>
+            <span className='amount'>0</span>
             <span className='decimals'>.0...0{nonZeroDecimals.join('')}</span>
           </>
         );
@@ -141,7 +144,7 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
 
     return (
       <>
-        <span className='int-amount'>{valueParts[0]}</span>
+        <span className='amount'>{valueParts[0]}</span>
         {valueParts.length > 1 && (
           <span className='decimals'>.{valueParts[1]}</span>
         )}
@@ -154,7 +157,13 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
       data-testid={
         props['data-testid'] ? props['data-testid'] : 'denominateComponent'
       }
+      className='denominate'
     >
+      {showSymbol && !props.token && (
+        <>
+          <MultiversXSymbol className='symbol' />{' '}
+        </>
+      )}
       {showTooltip && completeValue !== denominatedValue ? (
         <CompleteValueTooltip completeValue={completeValue}>
           <DisplayValue />
@@ -164,7 +173,7 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
       )}
 
       {showLabel && (
-        <span className={`symbol ${props.token ? 'text-muted' : ''}`}>
+        <span className='suffix'>
           &nbsp;{props.token ? props.token : egldLabel}
         </span>
       )}

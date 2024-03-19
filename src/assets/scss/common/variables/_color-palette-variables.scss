@@ -41,6 +41,7 @@ $neutral-400: #a3a3a3;
 $neutral-500: #737373;
 $neutral-600: #525252;
 $neutral-700: #404040;
+$neutral-750: #2e2e2e;
 $neutral-800: #262626;
 $neutral-900: #171717;
 $neutral-950: #121212;
@@ -290,6 +291,7 @@ $neutrals: (
   'neutral-500': $neutral-500,
   'neutral-600': $neutral-600,
   'neutral-700': $neutral-700,
+  'neutral-750': $neutral-750,
   'neutral-800': $neutral-800,
   'neutral-900': $neutral-900,
   'neutral-950': $neutral-950
@@ -509,6 +511,11 @@ $roses: (
   'rose-700': $rose-700,
   'rose-800': $rose-800,
   'rose-900': $rose-900
+);
+
+$opacities: (
+  60: 0.6,
+  70: 0.7
 );
 
 // -----------------------------------------

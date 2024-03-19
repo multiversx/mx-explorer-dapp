@@ -1,4 +1,4 @@
-@import './components/Applications/applications.styles.scss';
+@import './components/EcosystemMenu/ecosystemMenu.styles.scss';
 @import './components/Links/links.styles.scss';
 @import './components/Switcher/switcher.styles.scss';
 
@@ -208,8 +208,8 @@
     }
   }
 
-  .applicationswrapper,
-  .menuwrapper {
+  .ecosystem-menu-wrapper,
+  .menu-wrapper {
     font-family: var(--headings-font-family);
     font-weight: 400;
 
@@ -237,7 +237,7 @@
     }
   }
 
-  .menuwrapper {
+  .menu-wrapper {
     transform: translateX(100%);
 
     @include media-breakpoint-up(lg) {
@@ -254,7 +254,7 @@
     }
   }
 
-  .applicationswrapper {
+  .ecosystem-menu-wrapper {
     @include media-breakpoint-up(lg) {
       position: absolute;
       right: calc(((100vw - 960px) / 2) + 0.75rem);

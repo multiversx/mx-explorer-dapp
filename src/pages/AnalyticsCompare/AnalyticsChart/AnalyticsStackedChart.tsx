@@ -161,7 +161,7 @@ export const AnalyticsStackedChart = ({
               title='Unable to load Chart'
               className='py-spacer my-auto'
               titleClassName='mt-0'
-              dataTestId='accountsChartError'
+              data-testid='accountsChartError'
             />
           )}
           {dataReady === true &&
@@ -172,7 +172,7 @@ export const AnalyticsStackedChart = ({
                 title='Missing Chart data'
                 className='py-spacer my-auto'
                 titleClassName='mt-0'
-                dataTestId='accountsChartError'
+                data-testid='accountsChartError'
               />
             )}
 

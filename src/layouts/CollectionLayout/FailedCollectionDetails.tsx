@@ -15,8 +15,7 @@ export const FailedCollectionDetails = ({
           <span className='text-break-all'>{collection}</span>
         </div>
       }
-      className='py-spacer my-auto'
-      dataTestId='errorScreen'
+      isError
     />
   );
 };

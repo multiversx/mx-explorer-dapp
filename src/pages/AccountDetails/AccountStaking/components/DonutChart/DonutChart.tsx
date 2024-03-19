@@ -38,14 +38,14 @@ export const DonutChart = ({
         <h6 className='mb-1'>
           <Denominate value={bNtotalLocked.toString(10)} decimals={2} />
         </h6>
-        <p className='text-neutral-400 small mb-0'>
+        <div className='text-neutral-400 small mb-0'>
           <FormatUSD
             amount={bNtotalLocked.toString(10)}
             decimals={DECIMALS}
             digits={2}
             showPrefix={false}
           />
-        </p>
+        </div>
       </div>
       <Chart.Donut config={config} />
     </>

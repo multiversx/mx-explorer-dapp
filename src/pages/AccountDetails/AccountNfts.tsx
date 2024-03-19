@@ -76,21 +76,12 @@ export const AccountNfts = () => {
       </div>
       <div className='card-body pt-0 px-lg-spacer py-lg-4'>
         <div className='px-0'>
-          {dataReady === undefined && <Loader dataTestId='nftsLoader' />}
+          {dataReady === undefined && <Loader data-testid='nftsLoader' />}
           {dataReady === false && (
-            <PageState
-              icon={faCoins}
-              title='Unable to load NFTs'
-              className='py-spacer my-auto'
-              dataTestId='errorScreen'
-            />
+            <PageState icon={faCoins} title='Unable to load NFTs' isError />
           )}
           {dataReady === true && accountNfts.length === 0 && (
-            <PageState
-              icon={faCoins}
-              title='No NFTs'
-              className='py-spacer my-auto'
-            />
+            <PageState icon={faCoins} title='No NFTs' />
           )}
 
           {dataReady === true && accountNfts.length > 0 && (
@@ -107,6 +98,7 @@ export const AccountNfts = () => {
                           {nft.decimals ? (
                             <Denominate
                               showLabel={false}
+                              showSymbol={false}
                               value={nft.balance ? nft.balance : '0'}
                               denomination={nft.decimals}
                             />

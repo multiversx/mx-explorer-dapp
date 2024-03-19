@@ -19,6 +19,7 @@ export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
             value={value}
             denomination={denomination}
             showLabel={false}
+            showSymbol={false}
             showLastNonZeroDecimal={true}
           />
         </div>

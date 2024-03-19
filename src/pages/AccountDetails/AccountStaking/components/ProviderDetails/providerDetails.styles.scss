@@ -30,6 +30,7 @@
   .provider-website {
     font-size: 0.825rem;
     width: max-content;
+    max-width: 16rem;
     &:hover {
       text-decoration: underline;
     }

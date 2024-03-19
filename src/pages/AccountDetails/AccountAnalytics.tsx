@@ -96,7 +96,7 @@ export const AccountAnalytics = () => {
               title='Unable to load balance chart'
               className='my-auto'
               titleClassName='mt-0'
-              dataTestId='accountChartError'
+              data-testid='accountChartError'
             />
           )}
           {dataReady === true && (
@@ -121,7 +121,7 @@ export const AccountAnalytics = () => {
                   }
                   className='my-auto'
                   titleClassName='mt-0'
-                  dataTestId='accountChartSmall'
+                  data-testid='accountChartSmall'
                 />
               )}
             </>

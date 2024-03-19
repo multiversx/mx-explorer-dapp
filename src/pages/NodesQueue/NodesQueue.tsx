@@ -12,7 +12,7 @@ import {
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { validatorsRoutes } from 'routes';
-import { NodeType } from 'types';
+import { NodeType, SortOrderEnum } from 'types';
 
 export const NodesQueue = () => {
   const ref = useRef(null);
@@ -28,7 +28,7 @@ export const NodesQueue = () => {
 
   if (!sort.sort) {
     sort.sort = 'position';
-    sort.order = 'asc';
+    sort.order = SortOrderEnum.asc;
   }
 
   const fetchNodes = () => {
@@ -75,12 +75,7 @@ export const NodesQueue = () => {
 
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
-        <PageState
-          icon={faCogs}
-          title='Unable to load nodes'
-          className='py-spacer my-auto'
-          dataTestId='errorScreen'
-        />
+        <PageState icon={faCogs} title='Unable to load Nodes' isError />
       )}
 
       {dataReady === true && (

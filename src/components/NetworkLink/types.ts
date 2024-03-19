@@ -1,11 +1,11 @@
 import { ReactNode, MouseEvent } from 'react';
 
-export interface NetworkLinkPropsType {
-  className?: string;
+import { WithClassnameType } from 'types';
+
+export interface NetworkLinkUIType extends WithClassnameType {
   title?: string;
   preventScrollReset?: boolean;
   onClick?: (event: MouseEvent) => void;
   to: string;
-  'data-testid'?: string;
   children: ReactNode | string;
 }

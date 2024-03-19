@@ -2,6 +2,7 @@ import { GetTokensType, GetCollectionsType } from 'types';
 
 export const urlBuilder = {
   shard: (shard: number | string) => `/blocks?shard=${shard}`,
+  blockDetails: (hash: number | string) => `/blocks/${hash}`,
   receiverShard: (shard: number | string) =>
     `/transactions?receiverShard=${shard}`,
   senderShard: (shard: number | string) => `/transactions?senderShard=${shard}`,
@@ -59,6 +60,8 @@ export const urlBuilder = {
   },
   tokenDetails: (tokenId: string) => `/tokens/${tokenId}`,
   tokenMetaEsdtDetails: (tokenId: string) => `/meta-esdt/${tokenId}`,
+  tokenMetaEsdtDetailsRoles: (identifier: string) =>
+    `/meta-esdt/${identifier}/roles`,
   tokenDetailsAccounts: (tokenId: string) => `/tokens/${tokenId}/accounts`,
   tokenDetailsLockedAccounts: (tokenId: string) =>
     `/tokens/${tokenId}/locked-accounts`,
@@ -73,7 +76,11 @@ export const urlBuilder = {
   collectionDetails: (identifier: string) => `/collections/${identifier}`,
   collectionDetailsRoles: (identifier: string) =>
     `/collections/${identifier}/roles`,
+  collectionDetailsTransactions: (identifier: string) =>
+    `/collections/${identifier}/transactions`,
   nftDetails: (identifier: string) => `/nfts/${identifier}`,
+  nftDetailsTransactions: (identifier: string) =>
+    `/nfts/${identifier}/transactions`,
   nftDetailsAccounts: (identifier: string) => `/nfts/${identifier}/accounts`,
   providerDetails: (address: string) => `/providers/${address}`,
   providerDetailsTransactions: (address: string) =>

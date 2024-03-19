@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { Search } from 'components';
 import { getSubdomainNetwork } from 'helpers';
 import { useActiveRoute, useIsMainnet, usePageStats } from 'hooks';
@@ -15,10 +16,12 @@ import {
   HeroPills,
   StatsCard,
   HeroHome,
-  HeroNodes
+  HeroNodes,
+  HeroApplications
 } from 'widgets';
 
 import {
+  useShowApplicationsStats,
   useShowCustomStats,
   useShowGlobalStats,
   useShowNodesStats,
@@ -30,7 +33,7 @@ export const Hero = () => {
   const { pathname } = useLocation();
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
   const { pageStats } = usePageStats();
 
@@ -41,6 +44,7 @@ export const Hero = () => {
   const showCustomStats = useShowCustomStats() && isMainnet;
   const showGlobalStats = useShowGlobalStats();
   const showNodesStats = useShowNodesStats();
+  const showApplicationsStats = useShowApplicationsStats() && isMainnet;
   const showTransactionsStats = useShowTransactionStats() && isMainnet;
 
   const { subdomainNetwork } = getSubdomainNetwork();
@@ -56,12 +60,36 @@ export const Hero = () => {
   const pageName = getCustomPageName({ pathname, basePage });
 
   let heroTypeClassName = '';
-  if (showTransactionsStats) {
+  if (showTransactionsStats && !showCustomStats) {
     heroTypeClassName = 'transactions-stats';
   }
   if (showNodesStats) {
     heroTypeClassName = 'nodes-stats';
   }
+  if (showApplicationsStats) {
+    heroTypeClassName = 'applications-stats';
+  }
+
+  // Temporary
+  const FormattedValue = ({ value }: { value: string | number }) => {
+    if (!value) {
+      return null;
+    }
+    if (!String(value).includes('EGLD')) {
+      return value;
+    }
+
+    const [amount, decimals] = String(value).replace('EGLD', '').split('.');
+
+    return (
+      <span className='formatted'>
+        <MultiversXSymbol className='symbol' />{' '}
+        <span className='amount'>{amount}</span>
+        <span className='decimals'>{decimals}</span>
+        <span className='suffix'>{egldLabel}</span>
+      </span>
+    );
+  };
 
   return (
     <div className='container'>
@@ -95,29 +123,35 @@ export const Hero = () => {
             </h2>
           </div>
           {showCustomStats ? (
-            <div className='card-body d-flex flex-row flex-wrap gap-3 custom-stats'>
-              {pageStats?.data.map((item) => (
-                <StatsCard
-                  key={item.id}
-                  title={item.title}
-                  subTitle={item.subTitle}
-                  icon={item.icon}
-                  value={item.value ? item.value.toString() : ''}
-                  className='card-solitary'
-                />
-              ))}
+            <div className='card-body'>
+              <div className='d-flex flex-row flex-wrap gap-3 custom-stats'>
+                {pageStats?.data.map((item) => (
+                  <StatsCard
+                    key={item.id}
+                    title={item.title}
+                    subTitle={item.subTitle}
+                    icon={item.icon}
+                    value={<FormattedValue value={item.value} />}
+                    className='card-solitary'
+                  />
+                ))}
+              </div>
             </div>
           ) : (
             <>
+              {showApplicationsStats && <HeroApplications />}
               {showTransactionsStats && (
                 <div className='card-body p-0'>
                   <ChartContractsTransactions />
                 </div>
               )}
-
               {showNodesStats && <HeroNodes />}
 
-              {!(showTransactionsStats || showNodesStats) && (
+              {!(
+                showTransactionsStats ||
+                showNodesStats ||
+                showApplicationsStats
+              ) && (
                 <div className='card-body d-flex flex-row flex-wrap gap-3'>
                   <TransactionsStatsCard />
                   <AccountsStatsCard />

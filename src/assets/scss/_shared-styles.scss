@@ -59,6 +59,8 @@
     & > .card-footer {
       --card-cap-padding-y: 1.5rem;
       --card-cap-padding-x: 1rem;
+      --card-spacer-y: 1.5rem;
+      --card-spacer-x: 1rem;
     }
   }
   &.card-sm {
@@ -114,7 +116,7 @@
 }
 
 .side-action {
-  color: var(--body-color);
+  color: var(--text-neutral-500);
   margin-left: 0.5rem;
   transition: color 200ms ease;
 
@@ -137,11 +139,30 @@
 .table-wrapper {
   overflow-x: auto;
   color: var(--neutral-400);
+  position: relative;
   .table {
     white-space: nowrap;
-
     td {
       vertical-align: middle;
+    }
+  }
+  .overlay {
+    position: absolute;
+    top: 53px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    height: calc(100% - 53px);
+    border-radius: 8px;
+    background: rgba(18, 18, 18, 0.8);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+    &.transparent {
+      opacity: 0;
+      pointer-events: none;
     }
   }
 }
@@ -269,7 +290,25 @@
     max-width: 1.5rem;
   }
   svg {
-    color: var(--muted);
+    color: var(--neutral-700);
+  }
+  &.side-icon-md-large {
+    @include media-breakpoint-up(md) {
+      width: 3rem;
+      height: 3rem;
+      min-width: 3rem;
+      min-height: 3rem;
+      svg {
+        width: 3rem;
+        max-width: 3rem;
+        height: 3rem;
+      }
+      svg.svg-inline--fa {
+        width: 1.75rem;
+        max-width: 1.75rem;
+        height: 1.75rem;
+      }
+    }
   }
 }
 div.side-icon {
@@ -390,4 +429,28 @@ div.side-icon {
   margin-top: 2px;
   height: 1rem;
   width: auto;
+}
+
+.w-min-content {
+  width: min-content;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.default-img,
+img.loading {
+  font-size: 1px;
+  color: transparent;
+  background-color: var(--neutral-800);
+  background:
+    url('/assets/img/default.png') no-repeat center,
+    linear-gradient(
+      -10deg,
+      #{var(--neutral-950)} 0%,
+      #{var(--neutral-900)} 50%,
+      #{var(--neutral-800)} 100%
+    );
+  background-size: contain;
 }

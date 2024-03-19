@@ -17,7 +17,7 @@ export const SpotlightButton = ({ path }: { path: string }) => {
       href={`${nftExplorerAddress}${path}`}
       target='_blank'
       rel='noreferrer nofollow noopener'
-      className='btn btn-dark d-flex align-items-center gap-2'
+      className='btn btn-dark d-flex align-items-center gap-2 my-1'
     >
       View on <SpotlightLogo className='spotlight-btn-logo' />
       <FontAwesomeIcon

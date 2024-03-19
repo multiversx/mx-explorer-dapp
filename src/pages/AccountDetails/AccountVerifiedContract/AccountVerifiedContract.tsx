@@ -15,7 +15,7 @@ import { faClone } from 'icons/regular';
 import {
   faAngleDown,
   faAngleRight,
-  faFileAlt,
+  faCommand,
   faListTree,
   faList,
   faQuestionCircle,
@@ -31,6 +31,7 @@ import {
   faPlay,
   faSpinner
 } from 'icons/solid';
+import { getHeaders } from 'interceptors';
 import { accountSelector, activeNetworkSelector } from 'redux/selectors';
 import { getVerifiedContractSectionUrl } from './helpers';
 import { useGetActiveSection, useGetEnvironment } from './hooks';
@@ -45,6 +46,7 @@ export const AccountVerifiedContract = () => {
   const { address, isVerified } = account;
   const { apiAddress } = useSelector(activeNetworkSelector);
   const environment = useGetEnvironment();
+  const extraRequestHeaders = getHeaders();
 
   const [contract, setContract] = useState();
   const [isDataReady, setIsDataReady] = useState<undefined | boolean>();
@@ -128,14 +130,13 @@ export const AccountVerifiedContract = () => {
   return (
     <>
       {isDataReady === undefined && (
-        <Loader dataTestId='verifiedContractLoader' />
+        <Loader data-testid='verifiedContractLoader' />
       )}
       {isDataReady === false && (
         <PageState
-          icon={faFileAlt}
+          icon={faCommand}
           title='Unable to load Smart Contract'
-          className='py-spacer my-auto'
-          dataTestId='errorScreen'
+          isError
         />
       )}
       {isDataReady === true && contract && (
@@ -145,7 +146,8 @@ export const AccountVerifiedContract = () => {
             customNetworkConfig={{
               name: 'sdk-sc-explorer',
               skipFetchFromServer: true,
-              walletConnectV2ProjectId
+              walletConnectV2ProjectId,
+              apiAddress
             }}
           >
             <TransactionsToastList />
@@ -153,10 +155,6 @@ export const AccountVerifiedContract = () => {
             <SignTransactionsModals />
             <ScExplorerContainer
               smartContract={{
-                canMutate: !isMainnet,
-                canLoadAbi: false,
-                canDeploy: false,
-                canUpgrade: false,
                 verifiedContract: contract,
                 deployedContractDetails: account
               }}
@@ -170,6 +168,22 @@ export const AccountVerifiedContract = () => {
               className='mx-4'
               activeSection={activeSection}
               setActiveSection={setActiveSection}
+              config={{
+                canMutate: !isMainnet,
+                canLoadAbi: false,
+                canDeploy: false,
+                canUpgrade: false,
+                canDisplayContractDetails: false,
+                ...(extraRequestHeaders
+                  ? {
+                      loginParams: {
+                        nativeAuth: {
+                          extraRequestHeaders
+                        }
+                      }
+                    }
+                  : {})
+              }}
             />
           </DappProvider>
         </div>
