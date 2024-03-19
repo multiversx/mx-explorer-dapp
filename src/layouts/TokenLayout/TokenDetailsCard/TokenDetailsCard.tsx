@@ -6,7 +6,8 @@ import {
   SocialIcons,
   RolesBadges,
   SmallDetailItem,
-  AssetsHelmet
+  AssetsHelmet,
+  LowLiquidityTooltip
 } from 'components';
 import { amountWithoutRounding } from 'helpers';
 
@@ -28,7 +29,9 @@ export const TokenDetailsCard = () => {
     accounts,
     transactions,
     price,
-    marketCap
+    marketCap,
+    totalLiquidity,
+    isLowLiquidity
   } = token;
 
   const title = `${
@@ -80,6 +83,13 @@ export const TokenDetailsCard = () => {
                       <SmallDetailItem title='Market Cap'>
                         ${new BigNumber(marketCap).toFormat(0)}
                       </SmallDetailItem>
+
+                      {totalLiquidity && (
+                        <SmallDetailItem title='Total Liquidity'>
+                          ${new BigNumber(totalLiquidity).toFormat(0)}
+                          {isLowLiquidity && <LowLiquidityTooltip />}
+                        </SmallDetailItem>
+                      )}
                     </>
                   ) : (
                     <SmallDetailItem title='Supply'>
