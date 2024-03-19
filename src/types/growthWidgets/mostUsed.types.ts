@@ -20,6 +20,7 @@ export interface MostUsedApplicationsType extends MostUsedBaseType {
   extraInfo?: {
     assets?: AccountAssetType;
     deployedAt?: number;
+    isVerified?: boolean;
   };
 }
 

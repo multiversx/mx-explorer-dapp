@@ -8,15 +8,15 @@ import {
   Pager,
   PageState,
   Denominate,
-  NetworkLink,
-  Overlay
+  TokenLink,
+  FormatUSD
 } from 'components';
-import { urlBuilder, amountWithoutRounding } from 'helpers';
+import { amountWithoutRounding } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
-import { TokenType, TokenTypeEnum } from 'types';
+import { TokenType } from 'types';
 
 export const AccountTokens = () => {
   const ref = useRef(null);
@@ -86,90 +86,43 @@ export const AccountTokens = () => {
           )}
           {dataReady === true && accountTokens.length > 0 && (
             <>
-              {accountTokens.map(
-                ({
-                  type,
-                  identifier,
-                  name,
-                  balance,
-                  decimals,
-                  assets,
-                  ticker,
-                  valueUsd
-                }) => {
-                  const identifierArray = identifier.split('-');
-                  if (identifierArray.length > 2) {
-                    identifierArray.pop();
-                  }
-
-                  const networkLink =
-                    type === TokenTypeEnum.MetaESDT
-                      ? urlBuilder.tokenMetaEsdtDetails(
-                          identifierArray.join('-')
-                        )
-                      : urlBuilder.tokenDetails(identifier);
-
-                  const TokenInfo = () => (
-                    <div className='d-flex align-items-center symbol text-truncate'>
-                      {assets ? (
-                        <>
-                          {assets?.svgUrl && (
-                            <img
-                              src={assets.svgUrl}
-                              alt={name}
-                              className='side-icon me-1'
-                            />
-                          )}
-                          <div className='text-truncate'>
-                            {ticker ? ticker : name}{' '}
-                          </div>
-                        </>
-                      ) : (
-                        <div className='text-truncate'>{identifier}</div>
-                      )}
-                    </div>
-                  );
-
-                  return (
-                    <DetailItem title={name} key={identifier} verticalCenter>
-                      <div className='d-flex align-items-center'>
-                        <div className='me-1 text-neutral-100'>
-                          <Denominate
-                            showLabel={false}
-                            showSymbol={false}
-                            value={balance ? balance : '0'}
-                            denomination={decimals}
-                            showLastNonZeroDecimal
-                          />
-                        </div>
-                        {valueUsd && (
-                          <span className='text-neutral-400 me-1'>
-                            (${amountWithoutRounding(valueUsd)})
-                          </span>
-                        )}
-
-                        <NetworkLink
-                          to={networkLink}
-                          className={`d-flex text-truncate ${
-                            assets?.svgUrl ? 'side-link' : ''
-                          }`}
-                        >
-                          <div className='d-flex align-items-center symbol text-truncate'>
-                            {type === TokenTypeEnum.MetaESDT &&
-                            assets?.svgUrl ? (
-                              <Overlay title={identifier}>
-                                <TokenInfo />
-                              </Overlay>
-                            ) : (
-                              <TokenInfo />
-                            )}
-                          </div>
-                        </NetworkLink>
+              {accountTokens.map((token) => {
+                return (
+                  <DetailItem
+                    title={token.name}
+                    key={token.identifier}
+                    verticalCenter
+                  >
+                    <div className='d-flex align-items-center flex-wrap gap-1'>
+                      <div className='text-neutral-100'>
+                        <Denominate
+                          showLabel={false}
+                          showSymbol={false}
+                          value={token.balance ? token.balance : '0'}
+                          denomination={token.decimals}
+                          showLastNonZeroDecimal
+                        />
                       </div>
-                    </DetailItem>
-                  );
-                }
-              )}
+                      {token.valueUsd && (
+                        <span>
+                          (
+                          <FormatUSD
+                            amount={token.valueUsd}
+                            usd={1}
+                            digits={2}
+                            showPrefix={false}
+                            showLastNonZeroDecimal
+                            className='text-neutral-400'
+                          />
+                          )
+                        </span>
+                      )}
+
+                      <TokenLink token={token} />
+                    </div>
+                  </DetailItem>
+                );
+              })}
             </>
           )}
         </div>

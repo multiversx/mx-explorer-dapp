@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
@@ -127,14 +126,14 @@ export const TransactionIcon = ({
                       ? faCheck
                       : statusIcon
                   }
-                  size={(statusIcon as IconProp) === faTimes ? '1x' : 'sm'}
+                  size={statusIcon === faTimes ? '1x' : 'sm'}
                   className={`me-1 tx-status text-${color}`}
                 />
               </div>
             ) : (
               <FontAwesomeIcon
                 icon={statusIcon}
-                size={(statusIcon as IconProp) === faTimes ? '1x' : 'sm'}
+                size={statusIcon === faTimes ? '1x' : 'sm'}
                 className={`me-1 tx-status text-${color}`}
               />
             )}

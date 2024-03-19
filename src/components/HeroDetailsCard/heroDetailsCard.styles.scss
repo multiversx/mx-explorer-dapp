@@ -29,7 +29,7 @@
       height: 50%;
       color: var(--neutral-700);
     }
-    &.placeholder-default {
+    &.has-placeholder {
       border-radius: unset;
       border: unset;
       svg {
@@ -40,19 +40,6 @@
           height: 7rem;
         }
       }
-    }
-    &.default:not(.placeholder-default),
-    img.loading {
-      background-color: var(--neutral-800);
-      background:
-        url('/assets/img/default.png') no-repeat center,
-        linear-gradient(
-          -10deg,
-          #{var(--neutral-950)} 0%,
-          #{var(--neutral-900)} 50%,
-          #{var(--neutral-800)} 100%
-        );
-      background-size: contain;
     }
     @include media-breakpoint-up(md) {
       margin-left: 0.625rem;
@@ -74,7 +61,7 @@
       @include media-breakpoint-up(xxl) {
         &.has-content {
           display: contents;
-          span {
+          .title-container {
             display: block;
             max-width: 46rem;
             overflow: hidden;
@@ -85,17 +72,19 @@
         }
       }
       .trim {
-        max-width: calc(90vw - 4rem);
+        max-width: calc(90vw - 5rem);
         letter-spacing: normal;
-        span {
+        .left span,
+        .right span,
+        .ellipsis {
           font-size: 1.5rem;
           letter-spacing: normal;
+          @include media-breakpoint-up(md) {
+            font-size: 2.5rem;
+          }
         }
         @include media-breakpoint-up(md) {
           max-width: 32rem;
-          span {
-            font-size: 2.5rem;
-          }
         }
         @include media-breakpoint-up(lg) {
           max-width: 44rem;

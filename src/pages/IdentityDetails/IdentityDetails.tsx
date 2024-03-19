@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageState, ProvidersTable } from 'components';
-import { NodesTable, SharedIdentity } from 'components';
+import { NodesFilters, NodesTable, SharedIdentity } from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -23,6 +23,7 @@ export const IdentityDetails = () => {
   const { page, size } = useGetPage();
   const { sort, order } = useGetSort();
   const { search } = useGetSearch();
+  const { type, status } = nodeFilters;
 
   const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
   const [identity, setIdentity] = useState<IdentityType>();
@@ -138,17 +139,26 @@ export const IdentityDetails = () => {
                     >
                       Nodes
                     </h5>
+                    <NodesFilters />
                     <Pager
                       total={totalNodes}
                       className='d-flex ms-auto me-auto me-sm-0'
+                      showFirstAndLast={false}
                       show
                     />
                   </div>
                 </div>
 
                 <div className='card-body'>
-                  <NodesTable>
-                    <NodesTable.Body nodes={nodes} />
+                  <NodesTable
+                    type={type as NodeType['type']}
+                    status={status as NodeType['status']}
+                  >
+                    <NodesTable.Body
+                      nodes={nodes}
+                      type={type as NodeType['type']}
+                      status={status as NodeType['status']}
+                    />
                   </NodesTable>
                 </div>
                 <div className='card-footer d-flex justify-content-center justify-content-sm-end'>

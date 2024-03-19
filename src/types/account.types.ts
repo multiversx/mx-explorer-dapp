@@ -1,8 +1,8 @@
 import {
   ScamInfoType,
-  StakeType,
-  DelegationType,
-  DelegationLegacyType,
+  AccountStakeType,
+  AccountDelegationType,
+  AccountDelegationLegacyType,
   ProviderType,
   IdentityType,
   SliceType,
@@ -54,11 +54,11 @@ export interface AccountStakingSliceType {
   totalClaimable: string;
   totalActiveStake: string;
   totalUnstakedValue: string;
-  stake?: StakeType;
+  stake?: AccountStakeType;
   showStake: boolean;
-  delegationLegacy?: DelegationLegacyType;
+  delegationLegacy?: AccountDelegationLegacyType;
   showDelegationLegacy: boolean;
-  delegation?: DelegationType[];
+  delegation?: AccountDelegationType[];
   showDelegation: boolean;
   providerDataReady: undefined | boolean;
   stakingDataReady: undefined | boolean;

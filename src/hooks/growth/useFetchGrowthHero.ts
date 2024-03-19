@@ -6,36 +6,54 @@ import { useAdapter, useIsMainnet } from 'hooks';
 import { growthHeroSelector } from 'redux/selectors';
 import { setGrowthHero } from 'redux/slices/growthHero';
 
+let currentRequest: any = null;
+
 export const useFetchGrowthHero = () => {
   const isMainnet = useIsMainnet();
   const dispatch = useDispatch();
-  const { isFetched } = useSelector(growthHeroSelector);
   const { getGrowthWidget } = useAdapter();
+  const { isFetched } = useSelector(growthHeroSelector);
 
-  const fetchGrowthHero = async (refresh?: boolean) => {
-    if (!isFetched || refresh) {
-      const { data, success } = await getGrowthWidget('/hero');
-
-      if (data && success) {
-        const processedGrowthHero = processGrowthHero(data);
-        dispatch(
-          setGrowthHero({
-            ...processedGrowthHero,
-
-            unprocessed: data,
-            isFetched: success
-          })
-        );
-      }
-
-      return { data, success };
+  const getGrowthHeroOnce = () => {
+    if (currentRequest) {
+      return currentRequest;
     }
 
-    return { data: [], success: true };
+    const requestPromise = new Promise(async (resolve, reject) => {
+      try {
+        const response = await getGrowthWidget('/hero');
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      } finally {
+        currentRequest = null;
+      }
+    });
+
+    currentRequest = requestPromise;
+    return requestPromise;
+  };
+
+  const fetchGrowthHero = async () => {
+    const { data, success } = await getGrowthHeroOnce();
+
+    if (data && success) {
+      const processedGrowthHero = processGrowthHero(data);
+      dispatch(
+        setGrowthHero({
+          ...processedGrowthHero,
+
+          unprocessed: data,
+          isFetched: success
+        })
+      );
+    }
+
+    return { data, success };
   };
 
   useEffect(() => {
-    if (isMainnet) {
+    if (!isFetched && isMainnet) {
       fetchGrowthHero();
     }
   }, [isMainnet]);

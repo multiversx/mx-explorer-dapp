@@ -5,6 +5,8 @@ export interface BaseApiType {
   size?: number;
   fields?: string;
   extract?: string;
+  // not on api
+  isCount?: boolean;
 }
 
 export interface SortableApiType extends BaseApiType {
@@ -75,6 +77,14 @@ export interface GetNodesType extends SortableApiType {
   pagination?: boolean;
   provider?: string;
   fullHistory?: string;
+  from?: number;
+  isQualified?: boolean;
+  isAuctioned?: boolean;
+  isAuctionDangerZone?: boolean;
+}
+
+export interface GetIdentitiesType extends SortableApiType {
+  identities?: string;
 }
 
 export interface GetTransactionsType extends SortableApiType {
@@ -99,14 +109,12 @@ export interface GetTransactionsType extends SortableApiType {
   withUsername?: boolean;
   withBlockInfo?: boolean;
   isRelayed?: boolean;
-
-  // not on api
-  isCount?: boolean;
 }
 
 export interface GetProvidersType extends BaseApiType {
   identity?: string;
   providers?: string;
+  withIdentityInfo?: boolean;
 }
 
 export type AdapterProviderType = (
@@ -166,6 +174,7 @@ export interface AdapterProviderPropsType {
     withDeployInfo?: boolean;
     withTxCount?: boolean;
     withScrCount?: boolean;
+    withIdentityInfo?: boolean;
   };
   timeout: number;
   timestamp?: number;

@@ -11,23 +11,23 @@ import {
 import { getValidLink } from 'helpers';
 import { faLink, faMapMarkerAlt } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
-import { NodesVersionsType, IdentityType } from 'types';
+import { IdentityType, MultilayerPercentageStepType } from 'types';
 import { StatsCard } from 'widgets';
 import { formatStakePercentLabel } from '../helpers';
 
 const prepareStakeDistribution = (identity: IdentityType) => {
-  const distribution: NodesVersionsType[] = [];
+  const distribution: MultilayerPercentageStepType[] = [];
 
   if (identity.distribution) {
     Object.keys(identity.distribution).forEach((key) => {
       distribution.push({
         name: key === 'direct' ? 'Direct' : key,
-        percent: Math.floor(identity.distribution[key] * 100)
+        value: Math.floor(identity.distribution[key] * 100)
       });
     });
   }
 
-  return distribution.sort((a, b) => b.percent - a.percent);
+  return distribution.sort((a, b) => Number(b.value) - Number(a.value));
 };
 
 export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
@@ -179,7 +179,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                   </div>
                   <div className='distribution-card-value'>
                     {distribution && distribution.length > 0 ? (
-                      <MultilayerPercentageRing steps={distribution} trim />
+                      <MultilayerPercentageRing steps={distribution} hasTrim />
                     ) : (
                       <span className='text-neutral-400'>N/A</span>
                     )}

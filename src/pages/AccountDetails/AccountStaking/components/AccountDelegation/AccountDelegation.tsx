@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { Denominate } from 'components';
 import { activeNetworkSelector } from 'redux/selectors';
-import { DelegationType, ProviderType } from 'types';
+import { AccountDelegationType, ProviderType } from 'types';
 
 import { DetailsBlock } from '../DetailsBlock';
 import { ProviderDetails } from '../ProviderDetails';
@@ -12,7 +12,7 @@ export const AccountDelegation = ({
   delegation,
   provider
 }: {
-  delegation: DelegationType;
+  delegation: AccountDelegationType;
   provider: ProviderType;
 }) => {
   const { egldLabel } = useSelector(activeNetworkSelector);

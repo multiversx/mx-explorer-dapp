@@ -3,10 +3,10 @@ import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { Loader, ShowcaseCard, Trim, NetworkLink } from 'components';
+import { Loader, Overlay, ShowcaseCard, Trim, NetworkLink } from 'components';
 import { urlBuilder, addressIsBech32 } from 'helpers';
 import { useIsMainnet, useFetchGrowthMostUsed, useScollInView } from 'hooks';
-import { faAngleLeft, faAngleRight } from 'icons/solid';
+import { faAngleLeft, faAngleRight, faBadgeCheck } from 'icons/solid';
 import { growthMostUsedSelector } from 'redux/selectors';
 import { applicationsRoutes } from 'routes';
 import { WithClassnameType } from 'types';
@@ -92,26 +92,6 @@ export const MostUsedApplications = ({
 
               <div className='showcase-card-scroll d-flex flex-nowrap'>
                 {dailyMostUsedApplications.map((contract, contractIndex) => {
-                  const TitleLink = () => (
-                    <NetworkLink
-                      to={
-                        addressIsBech32(contract.key)
-                          ? urlBuilder.accountDetails(contract.key)
-                          : ''
-                      }
-                      className={classNames('trim-wrapper', {
-                        hash: !Boolean(contract?.extraInfo?.assets?.name),
-                        'line-clamp-3': Boolean(
-                          contract?.extraInfo?.assets?.name
-                        )
-                      })}
-                    >
-                      {contract.extraInfo?.assets?.name ?? (
-                        <Trim text={contract.key} />
-                      )}
-                    </NetworkLink>
-                  );
-
                   return (
                     <div
                       ref={handleElementReference}
@@ -119,16 +99,53 @@ export const MostUsedApplications = ({
                       key={contract.key}
                       className='showcase-card-container'
                     >
-                      <ShowcaseCard
-                        title={<TitleLink />}
-                        icon={
-                          contract.extraInfo?.assets?.svgUrl ||
-                          contract.extraInfo?.assets?.pngUrl
+                      <NetworkLink
+                        to={
+                          addressIsBech32(contract.key)
+                            ? urlBuilder.accountDetails(contract.key)
+                            : ''
                         }
-                        detailsTitle='Txn'
-                        detailsValue={new BigNumber(contract.value).toFormat()}
-                        detailsRank={contract.rank}
-                      />
+                      >
+                        <ShowcaseCard
+                          title={
+                            <span
+                              className={classNames('trim-wrapper', {
+                                hash: !Boolean(
+                                  contract?.extraInfo?.assets?.name
+                                ),
+                                'line-clamp-3': Boolean(
+                                  contract?.extraInfo?.assets?.name
+                                )
+                              })}
+                            >
+                              {contract.extraInfo?.assets?.name ?? (
+                                <Trim text={contract.key} />
+                              )}
+                              {contract.extraInfo?.isVerified && (
+                                <Overlay
+                                  title='Verified'
+                                  className='ms-1 d-inline-flex align-self-center'
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faBadgeCheck}
+                                    size='2xs'
+                                    className='text-primary'
+                                  />
+                                </Overlay>
+                              )}
+                            </span>
+                          }
+                          icon={
+                            contract.extraInfo?.assets?.svgUrl ||
+                            contract.extraInfo?.assets?.pngUrl
+                          }
+                          detailsTitle='Txn'
+                          detailsValue={new BigNumber(
+                            contract.value
+                          ).toFormat()}
+                          detailsRank={contract.rank}
+                        />
+                      </NetworkLink>
                     </div>
                   );
                 })}

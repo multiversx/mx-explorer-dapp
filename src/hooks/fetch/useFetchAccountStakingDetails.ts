@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { LEGACY_DELEGATION_NODES_IDENTITY } from 'appConstants';
 import { useAdapter } from 'hooks';
 import { setAccountStaking } from 'redux/slices';
-import { IdentityType, ProviderType, DelegationType } from 'types';
+import { IdentityType, ProviderType, AccountDelegationType } from 'types';
 
 let currentRequest: any = null;
 
@@ -66,7 +66,7 @@ export const useFetchAccountStakingDetails = () => {
       ? delegationLegacyData.data
       : {};
 
-    const delegation: DelegationType[] = delegationFetched
+    const delegation: AccountDelegationType[] = delegationFetched
       ? delegationData.data
       : [];
     const stake = stakeFetched ? stakeData.data : {};
@@ -203,7 +203,7 @@ export const useFetchAccountStakingDetails = () => {
           const identities = providerIdentitiesList.join(',');
 
           if (identities) {
-            getIdentities(identities).then((identitiesData) => {
+            getIdentities({ identities }).then((identitiesData) => {
               if (identitiesData.success) {
                 newProvidersData.forEach((provider) => {
                   if (provider.identity) {

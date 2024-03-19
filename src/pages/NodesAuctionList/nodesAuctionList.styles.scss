@@ -1,0 +1,24 @@
+.nodes-auction-list {
+  .auction-list-table {
+    .th-eligibility {
+      width: 12%;
+    }
+    .th-key {
+      width: 20%;
+    }
+    th,
+    td {
+      white-space: nowrap;
+      vertical-align: middle;
+      &:last-of-type {
+        text-align: right;
+      }
+    }
+    td {
+      color: var(--neutral-100);
+      &:nth-of-type(4) {
+        color: var(--neutral-400);
+      }
+    }
+  }
+}

@@ -7,11 +7,9 @@ import { SingleValue } from 'react-select';
 import { useFetchGrowthPrice } from 'hooks';
 import { faCircleUp, faCircleDown, faCircleMinus } from 'icons/solid';
 import { growthPriceSelector } from 'redux/selectors';
-import { TrendEnum } from 'types';
+import { PriceStatisticsLabelEnum, StatisticType, TrendEnum } from 'types';
 
-import { PriceStatisticsLabelEnum } from './enum';
 import styles from './styles.module.scss';
-import { StatisticType } from './types';
 
 import { ChartRoot } from '../ChartRoot';
 import { ChartSelect } from '../ChartSelect';

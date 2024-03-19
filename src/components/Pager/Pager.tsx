@@ -12,19 +12,23 @@ import {
 } from 'icons/solid';
 import { pagerHelper } from './helpers/pagerHelper';
 
+export interface PagerUIType {
+  total: number | typeof ELLIPSIS;
+  show?: boolean;
+  itemsPerPage?: number;
+  showFirstAndLast?: boolean;
+  className?: string;
+  hasTestId?: boolean;
+}
+
 export const Pager = ({
   total,
   show = false,
   itemsPerPage = PAGE_SIZE,
+  showFirstAndLast = true,
   className = '',
   hasTestId = true
-}: {
-  total: number | typeof ELLIPSIS;
-  show?: boolean;
-  itemsPerPage?: number;
-  className?: string;
-  hasTestId?: boolean;
-}) => {
+}: PagerUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
 
@@ -71,24 +75,28 @@ export const Pager = ({
         <div
           className={`btns-contrainer left ${leftBtnActive ? '' : 'inactive'}`}
         >
-          {processedPage === 1 ? (
-            <div className='btn btn-pager'>
-              <FontAwesomeIcon
-                icon={faAnglesLeft}
-                size='lg'
-                aria-label='No First Page'
-              />
-            </div>
-          ) : (
-            <button
-              type='button'
-              className='btn btn-pager'
-              onClick={() => updatePage(firstUrlParams)}
-              aria-label='First Page'
-              {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
-            >
-              <FontAwesomeIcon icon={faAnglesLeft} size='lg' />
-            </button>
+          {showFirstAndLast && (
+            <>
+              {processedPage === 1 ? (
+                <div className='btn btn-pager'>
+                  <FontAwesomeIcon
+                    icon={faAnglesLeft}
+                    size='lg'
+                    aria-label='No First Page'
+                  />
+                </div>
+              ) : (
+                <button
+                  type='button'
+                  className='btn btn-pager'
+                  onClick={() => updatePage(firstUrlParams)}
+                  aria-label='First Page'
+                  {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
+                >
+                  <FontAwesomeIcon icon={faAnglesLeft} size='lg' />
+                </button>
+              )}
+            </>
           )}
 
           {processedPage === 1 ? (
@@ -179,24 +187,28 @@ export const Pager = ({
             </div>
           )}
 
-          {!isNaN(lastPage) && end < processedTotal ? (
-            <button
-              type='button'
-              className='btn btn-pager'
-              onClick={() => updatePage(lastUrlParams)}
-              aria-label='Last Page'
-              {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
-            >
-              <FontAwesomeIcon icon={faAnglesRight} size='lg' />
-            </button>
-          ) : (
-            <span className='btn btn-pager'>
-              <FontAwesomeIcon
-                icon={faAnglesRight}
-                size='lg'
-                aria-label='No Last Page'
-              />
-            </span>
+          {showFirstAndLast && (
+            <>
+              {!isNaN(lastPage) && end < processedTotal ? (
+                <button
+                  type='button'
+                  className='btn btn-pager'
+                  onClick={() => updatePage(lastUrlParams)}
+                  aria-label='Last Page'
+                  {...(hasTestId ? { 'data-testid': 'nextPageButton' } : {})}
+                >
+                  <FontAwesomeIcon icon={faAnglesRight} size='lg' />
+                </button>
+              ) : (
+                <span className='btn btn-pager'>
+                  <FontAwesomeIcon
+                    icon={faAnglesRight}
+                    size='lg'
+                    aria-label='No Last Page'
+                  />
+                </span>
+              )}
+            </>
           )}
         </div>
       </div>

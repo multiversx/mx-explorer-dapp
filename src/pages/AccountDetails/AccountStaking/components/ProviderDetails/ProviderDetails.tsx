@@ -1,21 +1,44 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { Trim, PercentageLed, NetworkLink } from 'components';
-import { getPercentage, stringIsFloat, urlBuilder } from 'helpers';
+import { PLACEHOLDER_IMAGE_PATH } from 'appConstants';
+import {
+  Trim,
+  PercentageLed,
+  NetworkLink,
+  ImageWithFallback,
+  Overlay
+} from 'components';
+import {
+  getPercentage,
+  stringIsFloat,
+  urlBuilder,
+  getValidLink
+} from 'helpers';
 import { faExternalLink, faLeaf, faReceipt, faInfinity } from 'icons/regular';
 import { faBadgeCheck } from 'icons/solid';
 import { ProviderType } from 'types';
-import { ProviderImage } from './ProviderImage';
 
 const minDelegation = '1000000000000000000';
 
 export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
+  if (!provider) {
+    return null;
+  }
+
+  const websiteLink = getValidLink({
+    link: provider?.identityDetails?.website
+  });
+
   return provider ? (
     <div className='provider-details'>
       <div className='d-flex flex-row align-items-center'>
-        <ProviderImage provider={provider} />
+        <ImageWithFallback
+          className='provider-image rounded-circle d-flex me-3 '
+          src={provider?.identityDetails?.avatar ?? PLACEHOLDER_IMAGE_PATH}
+          alt={provider?.identityDetails?.name ?? provider.provider}
+          height='42'
+        />
         <div className='d-flex flex-column w-100'>
           <div className='font-headings d-flex align-items-center'>
             <NetworkLink
@@ -30,32 +53,20 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
                 <Trim text={provider.provider} />
               )}
             </NetworkLink>
-
             {provider.featured && (
-              <OverlayTrigger
-                placement='top'
-                delay={{ show: 0, hide: 400 }}
-                overlay={(props: any) => (
-                  <Tooltip {...props} show={props.show.toString()}>
-                    Verified
-                  </Tooltip>
-                )}
-              >
+              <Overlay title=' Verified'>
                 <FontAwesomeIcon
                   icon={faBadgeCheck}
                   size='lg'
                   className='ms-2 text-primary'
                 />
-              </OverlayTrigger>
+              </Overlay>
             )}
           </div>
 
-          {provider?.identityDetails?.website && (
+          {websiteLink && (
             <a
-              href={provider.identityDetails.website.replace(
-                'http://',
-                'https://'
-              )}
+              href={websiteLink}
               rel='noopener noreferrer nofollow'
               target='_blank'
               className='provider-website text-neutral-400 d-inline-flex align-items-center'
@@ -63,7 +74,7 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
                 e.stopPropagation();
               }}
             >
-              {provider.identityDetails.website.replace('http://', 'https://')}
+              {websiteLink}
               <FontAwesomeIcon
                 size='xs'
                 icon={faExternalLink}

@@ -1,11 +1,4 @@
-import { GrowthChartDataType, WithClassnameType } from 'types';
-import { TransactionsStatisticsLabelEnum } from './enum';
-
-export interface StatisticType {
-  label: TransactionsStatisticsLabelEnum | string;
-  color?: string;
-  value: React.ReactNode;
-}
+import { GrowthChartDataType, StatisticType, WithClassnameType } from 'types';
 
 export interface ChartType {
   identifier: string;

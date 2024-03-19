@@ -47,7 +47,7 @@ $main-colors: map-merge-multiple(
 $main-colors-rgb: map-loop($main-colors, to-rgb, '$value');
 
 // Generate helper classes like text-primary-200 and bg-primary-500
-$helper-colors: map-merge-multiple($neutrals, $primarys);
+$helper-colors: map-merge-multiple($neutrals, $primarys, $reds, $greens);
 $helper-colors-rgb: map-loop($theme-colors, to-rgb, '$value');
 
 $helper-text-colors-rgb: map-loop($helper-colors, rgba-css-var, '$key', 'text');

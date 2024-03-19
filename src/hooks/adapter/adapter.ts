@@ -8,7 +8,8 @@ import {
   GetCollectionsType,
   GetNftsType,
   GetTokensType,
-  GetAccountsType
+  GetAccountsType,
+  GetIdentitiesType
 } from 'types/adapter.types';
 
 import {
@@ -410,36 +411,24 @@ export const useAdapter = () => {
         params: getNodeParams(params)
       }),
 
-    getNodesCount: ({
-      online,
-      issues,
-      search,
-      type,
-      shard,
-      status,
-      identity,
-      provider,
-      fullHistory
-    }: GetNodesType) =>
-      getNodes({
+    getNodesCount: (params: GetNodesType) => {
+      return getNodes({
         url: '/nodes/c',
-        params: getNodeParams({
-          online,
-          issues,
-          search,
-          type,
-          shard,
-          status,
-          identity,
-          provider,
-          fullHistory
-        })
-      }),
+        params: getNodeParams({ isCount: true, ...params })
+      });
+    },
 
     getNodesVersions,
 
-    getIdentities: (identities?: string) =>
-      provider({ url: '/identities', params: { identities } }),
+    getIdentities: ({ identities, sort, order }: GetIdentitiesType) =>
+      provider({
+        url: '/identities',
+        params: {
+          identities,
+          ...(sort !== undefined ? { sort } : {}),
+          ...(order !== undefined ? { order } : {})
+        }
+      }),
 
     getIdentity: (identity: string) =>
       provider({ url: `/identities/${identity}` }),
@@ -675,7 +664,7 @@ export const useAdapter = () => {
     getStats,
     getShards,
 
-    getGlobalStake: () => provider({ url: '/stake' }),
+    getStake: () => provider({ url: '/stake' }),
 
     getEconomics: () => getEconomics({ url: '/economics' }),
 

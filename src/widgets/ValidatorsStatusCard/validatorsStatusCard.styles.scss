@@ -46,6 +46,9 @@
       }
       .rsm-svg {
         max-height: 15rem;
+        @include media-breakpoint-up(lg) {
+          margin-top: -2.25rem;
+        }
       }
     }
     .weighted-node-card {

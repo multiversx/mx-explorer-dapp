@@ -9,7 +9,7 @@
   flex-direction: column;
 
   @media (min-width: 768px) {
-    padding: 2rem 0;
+    padding: 1.5rem 0;
     margin: 2rem 0;
   }
 
@@ -54,9 +54,6 @@
   .label {
     color: var(--neutral-500);
     font-family: var(--headings-font-family);
-    font-size: 0.875rem;
-    line-height: 1;
-    margin-bottom: 0.5rem;
   }
 
   .price {

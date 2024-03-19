@@ -13,7 +13,7 @@ export const SmallCard = ({
     <>
       <div className={`card-body overflow-hidden ${className ?? ''}`}>
         <div className='card-title validator-card-title'>
-          <p className='text-neutral-400 mb-0'>Validators</p>
+          <p className='text-neutral-400 font-headings mb-0'>Validators</p>
           <h2 className='card-value text-primary'>{totalValidators}</h2>
         </div>
         {process.env.NODE_ENV !== 'test' && markers.length > 0 && (

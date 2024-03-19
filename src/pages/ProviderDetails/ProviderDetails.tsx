@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, PageState, NodesTable } from 'components';
+import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -16,7 +16,7 @@ import { NodeType } from 'types';
 export const ProviderDetails = () => {
   const ref = useRef(null);
   const { hash: address } = useParams() as any;
-  const { search: locationSearch } = useLocation();
+  const [searchParams] = useSearchParams();
   const { getNodes, getNodesCount } = useAdapter();
   const { search } = useGetSearch();
   const { page, size } = useGetPage();
@@ -25,6 +25,8 @@ export const ProviderDetails = () => {
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
+
+  const { type, status } = nodeFilters;
 
   const fetchNodes = () => {
     setDataReady(undefined);
@@ -49,7 +51,7 @@ export const ProviderDetails = () => {
     });
   };
 
-  useEffect(fetchNodes, [locationSearch]);
+  useEffect(fetchNodes, [searchParams]);
 
   return (
     <div className='card' ref={ref}>
@@ -57,11 +59,15 @@ export const ProviderDetails = () => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <ProviderTabs />
           {dataReady === true && (
-            <Pager
-              total={totalNodes}
-              className='d-flex ms-auto me-auto me-sm-0'
-              show
-            />
+            <>
+              <Pager
+                total={totalNodes}
+                className='d-flex ms-auto me-auto me-sm-0'
+                showFirstAndLast={false}
+                show
+              />
+              <NodesFilters />
+            </>
           )}
         </div>
       </div>
@@ -74,8 +80,15 @@ export const ProviderDetails = () => {
       {dataReady === true && (
         <>
           <div className='card-body'>
-            <NodesTable>
-              <NodesTable.Body nodes={nodes} />
+            <NodesTable
+              type={type as NodeType['type']}
+              status={status as NodeType['status']}
+            >
+              <NodesTable.Body
+                nodes={nodes}
+                type={type as NodeType['type']}
+                status={status as NodeType['status']}
+              />
             </NodesTable>
           </div>
           <div className='card-footer d-flex justify-content-center justify-content-sm-end'>

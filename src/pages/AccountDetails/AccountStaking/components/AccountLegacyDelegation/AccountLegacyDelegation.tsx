@@ -8,7 +8,7 @@ import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy
 import { Denominate } from 'components';
 import { faLeaf } from 'icons/regular';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
-import { DelegationLegacyType, IdentityType } from 'types';
+import { AccountDelegationLegacyType, IdentityType } from 'types';
 
 import { DetailsBlock } from '../DetailsBlock';
 
@@ -16,7 +16,7 @@ export const AccountLegacyDelegation = ({
   delegationLegacy,
   identity
 }: {
-  delegationLegacy: DelegationLegacyType;
+  delegationLegacy: AccountDelegationLegacyType;
   identity?: IdentityType;
 }) => {
   const {

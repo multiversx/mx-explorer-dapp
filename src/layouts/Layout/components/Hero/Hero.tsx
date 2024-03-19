@@ -1,8 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
-import { Search } from 'components';
+import { FormatEGLD, Search } from 'components';
 import { getSubdomainNetwork } from 'helpers';
 import { useActiveRoute, useIsMainnet, usePageStats } from 'hooks';
 import { ChartContractsTransactions } from 'pages/Home/components/ChartContractsTransactions';
@@ -33,7 +32,7 @@ export const Hero = () => {
   const { pathname } = useLocation();
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
-  const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
   const { pageStats } = usePageStats();
 
@@ -69,27 +68,6 @@ export const Hero = () => {
   if (showApplicationsStats) {
     heroTypeClassName = 'applications-stats';
   }
-
-  // Temporary
-  const FormattedValue = ({ value }: { value: string | number }) => {
-    if (!value) {
-      return null;
-    }
-    if (!String(value).includes('EGLD')) {
-      return value;
-    }
-
-    const [amount, decimals] = String(value).replace('EGLD', '').split('.');
-
-    return (
-      <span className='formatted'>
-        <MultiversXSymbol className='symbol' />{' '}
-        <span className='amount'>{amount}</span>
-        <span className='decimals'>{decimals}</span>
-        <span className='suffix'>{egldLabel}</span>
-      </span>
-    );
-  };
 
   return (
     <div className='container'>
@@ -131,7 +109,7 @@ export const Hero = () => {
                     title={item.title}
                     subTitle={item.subTitle}
                     icon={item.icon}
-                    value={<FormattedValue value={item.value} />}
+                    value={<FormatEGLD value={item.value} />}
                     className='card-solitary'
                   />
                 ))}

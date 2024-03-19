@@ -1,7 +1,12 @@
 .verified-badge-wrapper {
-  display: inline-block;
-  vertical-align: middle;
+  display: inline-flex;
+  @include media-breakpoint-up(md) {
+    display: inline-block;
+    vertical-align: middle;
+  }
   .verified-badge {
+    display: flex;
+    align-items: center;
     color: var(--primary);
     font-family: var(--headings-font-family);
     font-size: 0.875rem;

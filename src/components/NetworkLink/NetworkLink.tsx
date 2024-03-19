@@ -16,16 +16,16 @@ export const NetworkLink = ({
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
   const { subdomainNetwork } = getSubdomainNetwork();
 
-  const prependLink =
-    activeNetworkId &&
-    activeNetworkId !== defaultNetworkId &&
-    !to.includes(activeNetworkId) &&
-    !subdomainNetwork;
-
   if (!to.startsWith('/')) {
     console.error('Link not prepeded by / : ', to);
     to = `/${to}`;
   }
+
+  const prependLink =
+    activeNetworkId &&
+    activeNetworkId !== defaultNetworkId &&
+    !to.startsWith(`/${activeNetworkId}`) &&
+    !subdomainNetwork;
 
   const props = {
     to: prependLink ? `/${activeNetworkId}${to}` : to,

@@ -6,11 +6,13 @@ import { SingleValue } from 'react-select';
 
 import { useFetchGrowthStaking } from 'hooks';
 import { growthStakingSelector, activeNetworkSelector } from 'redux/selectors';
-import { WithClassnameType } from 'types';
+import {
+  StatisticType,
+  StakingStatisticsLabelEnum,
+  WithClassnameType
+} from 'types';
 
-import { StakingStatisticsLabelEnum } from './enum';
 import styles from './styles.module.scss';
-import { StatisticType } from './types';
 import { ChartRoot } from '../ChartRoot';
 import { ChartSelect } from '../ChartSelect';
 import { ChartSelectOptionType } from '../ChartSelect/types';

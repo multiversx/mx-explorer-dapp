@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import classNames from 'classnames';
 import { Helmet } from 'react-helmet-async';
 
+import { ImageWithFallback } from 'components';
 import { useGetExplorerTitle } from 'hooks';
 import { WithClassnameType } from 'types';
 import { StatsCard, SmallStatsCard, StatsCardUIType } from 'widgets';
@@ -53,7 +53,6 @@ export const HeroDetailsCard = ({
   className,
   'data-testid-prefix': testIdPrefix = ''
 }: HeroDetailsCardUIType) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
   const explorerTitle = useGetExplorerTitle();
   const seoTitle = `${
     seoDetails?.title ?? (typeof title === 'string' ? title : '')
@@ -118,23 +117,18 @@ export const HeroDetailsCard = ({
               className={classNames(
                 'hero-details-card-logo d-none d-md-flex col-md-3',
                 {
-                  default: !icon,
-                  'placeholder-default': !icon && iconPlaceholder
+                  'default-image': !icon,
+                  'has-placeholder': !icon && iconPlaceholder
                 }
               )}
             >
               {hasIcon && (
                 <>
                   {icon ? (
-                    <img
+                    <ImageWithFallback
                       src={icon}
-                      className={classNames('logo-img', {
-                        loading: !imageLoaded
-                      })}
+                      className='logo-img'
                       alt={seoTitle ? `${seoTitle} Logo` : 'Logo'}
-                      onLoad={() => {
-                        setImageLoaded(true);
-                      }}
                     />
                   ) : (
                     iconPlaceholder
@@ -145,7 +139,7 @@ export const HeroDetailsCard = ({
             <div className='hero-details-card-overview d-flex flex-column flex-fill col-9'>
               {title && (
                 <div
-                  className={classNames('hero-details-card-title', {
+                  className={classNames('hero-details-card-title text-break', {
                     'mb-spacer': !Boolean(description || descriptionContent)
                   })}
                 >
@@ -154,23 +148,18 @@ export const HeroDetailsCard = ({
                       className={classNames(
                         'hero-details-card-logo d-md-none',
                         {
-                          default: !icon,
-                          'placeholder-default': !icon && iconPlaceholder
+                          'default-image': !icon,
+                          'has-placeholder': !icon && iconPlaceholder
                         }
                       )}
                     >
                       {hasIcon && (
                         <>
                           {icon ? (
-                            <img
+                            <ImageWithFallback
                               src={icon}
-                              className={classNames('logo-img', {
-                                loading: !imageLoaded
-                              })}
+                              className='logo-img'
                               alt={seoTitle ? `${seoTitle} Logo` : 'Logo'}
-                              onLoad={() => {
-                                setImageLoaded(true);
-                              }}
                             />
                           ) : (
                             iconPlaceholder
@@ -184,9 +173,9 @@ export const HeroDetailsCard = ({
                       })}
                       data-testid={`${testIdPrefix}title`}
                     >
-                      <span>{title}</span>{' '}
+                      <span className='title-container'>{title}</span>
                       {isVerified && (
-                        <>{verifiedComponent ?? <VerifiedBadge />}</>
+                        <> {verifiedComponent ?? <VerifiedBadge />}</>
                       )}
                     </h1>
                   </div>

@@ -2,12 +2,15 @@ import { useState, useRef } from 'react';
 import classNames from 'classnames';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-export interface OverlayUIType {
-  children: React.ReactNode;
-  title: React.ReactNode | string;
-  className?: string;
+import { WithClassnameType } from 'types';
+
+export interface OverlayUIType extends WithClassnameType {
+  children?: React.ReactNode;
+  title: React.ReactNode;
   tooltipClassName?: string;
+  truncate?: boolean;
   persistent?: boolean;
+  style?: any;
 }
 
 export const Overlay = ({
@@ -15,7 +18,9 @@ export const Overlay = ({
   title,
   className,
   tooltipClassName,
-  persistent = false
+  persistent = false,
+  truncate = false,
+  style
 }: OverlayUIType) => {
   const [show, setShow] = useState(false);
   const handleOnMouseEnter = () => {
@@ -29,7 +34,7 @@ export const Overlay = ({
   return (
     <OverlayTrigger
       placement='top'
-      delay={{ show: 0, hide: 400 }}
+      delay={{ show: 0, hide: 200 }}
       overlay={(props: any) => (
         <Tooltip
           {...(tooltipClassName ? { className: tooltipClassName } : {})}
@@ -49,8 +54,9 @@ export const Overlay = ({
       <span
         ref={ref}
         className={classNames(className, {
-          'text-truncate': !Boolean(className)
+          'text-truncate': !Boolean(className) || truncate
         })}
+        {...(style ? { style: style } : {})}
         {...(persistent
           ? {
               onMouseEnter: handleOnMouseEnter,
@@ -58,7 +64,7 @@ export const Overlay = ({
             }
           : {})}
       >
-        {children}
+        {children ?? ''}
       </span>
     </OverlayTrigger>
   );

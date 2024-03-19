@@ -48,6 +48,9 @@
 .font-regular {
   font-family: $font-family-base;
 }
+.font-headings {
+  font-family: $headings-font-family;
+}
 
 .line-clamp-1,
 .line-clamp-2,
@@ -70,7 +73,7 @@
 .table {
   th {
     font-weight: 400;
-    background-color: var(--neutral-transparent);
+    background-color: var(--neutral-800-opacity-60);
     padding-top: 1rem;
     padding-bottom: 1rem;
     border-bottom-width: 0;
@@ -137,6 +140,11 @@
 
 // BUTTONS
 .btn-unstyled {
+  --btn-hover-color: inherit;
+  --btn-hover-bg: transparent;
+  --btn-active-color: inherit;
+  --btn-active-bg: transparent;
+
   background: none;
   color: inherit;
   border: none;
@@ -144,4 +152,31 @@
   font: inherit;
   cursor: pointer;
   outline: inherit;
+}
+
+.btn-link-unstyled {
+  --btn-active-color: inherit !important;
+  --btn-active-bg: transparent !important;
+
+  padding: 0;
+  font-size: inherit;
+  outline: 0;
+  border: 0;
+  box-shadow: none;
+  text-decoration: none;
+  &:focus,
+  &.focus,
+  &:active {
+    box-shadow: none;
+    text-decoration: none;
+  }
+  &:hover {
+    box-shadow: none;
+    text-decoration: none;
+    color: var(--primary);
+  }
+
+  &.dropdown-toggle::after {
+    display: none;
+  }
 }

@@ -11,7 +11,6 @@ import {
 } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
-import { validatorsRoutes } from 'routes';
 import { NodeType } from 'types';
 
 export const NodesStatistics = () => {
@@ -57,7 +56,7 @@ export const NodesStatistics = () => {
         <NodesTabs />
 
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-          <NodesFilters baseRoute={validatorsRoutes.statistics} onlySearch />
+          <NodesFilters onlySearch />
           {dataReady === true && (
             <Pager
               total={totalNodes}

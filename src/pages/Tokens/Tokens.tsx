@@ -32,7 +32,7 @@ export const Tokens = () => {
   const { sort, order } = useGetSort();
   const { getTokens, getTokensCount } = useAdapter();
 
-  const { ecosystemMarketCap } = useSelector(economicsSelector);
+  const { ecosystemMarketCap, unprocessed } = useSelector(economicsSelector);
   const pageHeadersTokens = useSelector(pageHeaderTokensStatsSelector);
 
   const [tokens, setTokens] = useState<TokenType[]>([]);
@@ -81,13 +81,17 @@ export const Tokens = () => {
                         </h5>
                         <span>
                           {totalTokens}{' '}
-                          <span className='text-neutral-400 pe-2 border-end me-2'>
-                            Tokens
-                          </span>{' '}
-                          <span className='text-neutral-400'>
-                            Ecosystem Market Cap:
-                          </span>{' '}
-                          {ecosystemMarketCap}
+                          <span className='text-neutral-400'>Tokens</span>
+                          {Boolean(
+                            unprocessed.tokenMarketCap && unprocessed.marketCap
+                          ) && (
+                            <>
+                              <span className='ps-2 border-start ms-2 text-neutral-400'>
+                                Ecosystem Market Cap:
+                              </span>{' '}
+                              {ecosystemMarketCap}
+                            </>
+                          )}
                         </span>
                       </div>
                     </div>

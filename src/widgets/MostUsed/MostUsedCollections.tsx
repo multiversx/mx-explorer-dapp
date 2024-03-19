@@ -48,46 +48,42 @@ export const MostUsedCollections = ({
                   <td>
                     <NetworkLink
                       to={urlBuilder.collectionDetails(collection.key)}
-                      className={`d-flex text-truncate text-primary-200 ${
+                      className={`d-flex align-items-center symbol trim text-truncate text-primary-200 w-min-content ${
                         collection.extraInfo?.assets?.svgUrl ? 'side-link' : ''
                       }`}
                     >
-                      <div className='d-flex align-items-center symbol trim text-truncate'>
-                        {collection.extraInfo?.assets ? (
-                          <>
-                            {collection.extraInfo.assets?.svgUrl && (
-                              <img
-                                src={collection.extraInfo.assets.svgUrl}
-                                alt={
-                                  collection.extraInfo?.name ?? collection.key
-                                }
-                                className='side-icon me-1'
+                      {collection.extraInfo?.assets ? (
+                        <>
+                          {collection.extraInfo.assets?.svgUrl && (
+                            <img
+                              src={collection.extraInfo.assets.svgUrl}
+                              alt={collection.extraInfo?.name ?? collection.key}
+                              className='side-icon me-1'
+                            />
+                          )}
+                          <div className='text-truncate'>
+                            {collection.extraInfo?.name ? (
+                              <>{collection.extraInfo.name}</>
+                            ) : (
+                              <>{collection.key}</>
+                            )}
+                          </div>
+                          {collection.extraInfo?.isVerified && (
+                            <Overlay
+                              title='Verified'
+                              className='verified-badge-wrapper'
+                            >
+                              <FontAwesomeIcon
+                                icon={faHexagonCheck}
+                                size='sm'
+                                className='text-yellow-spotlight ms-2'
                               />
-                            )}
-                            <div className='text-truncate'>
-                              {collection.extraInfo?.name ? (
-                                <>{collection.extraInfo.name}</>
-                              ) : (
-                                <>{collection.key}</>
-                              )}
-                            </div>
-                            {collection.extraInfo?.isVerified && (
-                              <Overlay
-                                title='Verified'
-                                className='verified-badge-wrapper'
-                              >
-                                <FontAwesomeIcon
-                                  icon={faHexagonCheck}
-                                  size='sm'
-                                  className='text-yellow-spotlight ms-2'
-                                />
-                              </Overlay>
-                            )}
-                          </>
-                        ) : (
-                          <div className='text-truncate'>{collection.key}</div>
-                        )}
-                      </div>
+                            </Overlay>
+                          )}
+                        </>
+                      ) : (
+                        <div className='text-truncate'>{collection.key}</div>
+                      )}
                     </NetworkLink>
                   </td>
                   <td className='text-end'>

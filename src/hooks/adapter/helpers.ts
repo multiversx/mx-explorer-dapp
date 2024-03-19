@@ -88,14 +88,31 @@ export function getNodeParams({
   shard,
   online,
   page,
+  from,
   size = PAGE_SIZE,
   identity,
   sort,
   order,
   provider,
-  fullHistory
+  fullHistory,
+  isQualified,
+  isAuctioned,
+  isAuctionDangerZone,
+  // not on api
+  isCount = false
 }: GetNodesType) {
   const params: AdapterProviderPropsType['params'] = {
+    ...(isCount
+      ? {}
+      : {
+          ...(page !== undefined && from === undefined
+            ? { from: (page - 1) * size }
+            : {}),
+          ...(from !== undefined ? { from } : {}),
+          ...(size !== undefined ? { size } : {}),
+          ...(sort !== undefined ? { sort } : {}),
+          ...(order !== undefined ? { order } : {})
+        }),
     ...(search !== undefined ? { search } : {}),
     ...(type !== undefined ? { type } : {}),
     ...(status !== undefined ? { status } : {}),
@@ -104,20 +121,24 @@ export function getNodeParams({
     ...(online !== undefined ? { online } : {}),
     ...(identity !== undefined ? { identity } : {}),
     ...(provider !== undefined ? { provider } : {}),
-    ...(sort !== undefined ? { sort } : {}),
-    ...(order !== undefined ? { order } : {}),
     ...(fullHistory !== undefined ? { fullHistory } : {}),
-    ...(page !== undefined ? { from: (page - 1) * size } : {}),
-    ...(size !== undefined ? { size } : {})
+    ...(isQualified !== undefined ? { isQualified } : {}),
+    ...(isAuctioned !== undefined ? { isAuctioned } : {}),
+    ...(isAuctionDangerZone !== undefined ? { isAuctionDangerZone } : {})
   };
 
   return params;
 }
 
-export function getProviderParams({ identity, providers }: GetProvidersType) {
+export function getProviderParams({
+  identity,
+  providers,
+  withIdentityInfo
+}: GetProvidersType) {
   const params: AdapterProviderPropsType['params'] = {
     ...(identity !== undefined ? { identity } : {}),
-    ...(providers !== undefined ? { providers } : {})
+    ...(providers !== undefined ? { providers } : {}),
+    ...(withIdentityInfo !== undefined ? { withIdentityInfo } : {})
   };
   return params;
 }

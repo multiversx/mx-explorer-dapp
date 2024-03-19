@@ -8,7 +8,6 @@ import { accountExtraReducer } from './slices/accountExtra';
 import { accountStakingReducer } from './slices/accountStaking';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
-import { globalStakeReducer } from './slices/globalStake';
 import { growthEconomicsReducer } from './slices/growthEconomics';
 import { growthHeroReducer } from './slices/growthHero';
 import { growthMostUsedReducer } from './slices/growthMostUsed';
@@ -21,12 +20,14 @@ import { markersReducer } from './slices/markers';
 import { miniBlockReducer } from './slices/miniBlock';
 import { networkReducer } from './slices/networks';
 import { nftReducer } from './slices/nft';
+import { nodesIdentitiesReducer } from './slices/nodesIdentities';
 import { nodesVersionsReducer } from './slices/nodesVersions';
 import { pageHeadersAccountsReducer } from './slices/pageHeadersAccountsStats';
 import { pageHeadersBlocksReducer } from './slices/pageHeadersBlocksStats';
 import { pageHeadersCollectionsReducer } from './slices/pageHeadersCollectionsStats';
 import { pageHeadersTokensReducer } from './slices/pageHeadersTokensStats';
 import { refreshReducer } from './slices/refresh';
+import { stakeReducer } from './slices/stake';
 import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
 
@@ -56,7 +57,7 @@ export const customIgnoredSlices = {
   accountStaking: accountStakingReducer,
   collection: collectionReducer,
   economics: economicsReducer,
-  globalStake: globalStakeReducer,
+  stake: stakeReducer,
   growthHero: growthHeroReducer,
   growthMostUsed: growthMostUsedReducer,
   growthPrice: growthPriceReducer,
@@ -70,6 +71,7 @@ export const customIgnoredSlices = {
   markers: markersReducer,
   miniBlock: miniBlockReducer,
   nft: nftReducer,
+  nodesIdentities: nodesIdentitiesReducer,
   nodesVersions: nodesVersionsReducer,
   pageHeadersBlocksStats: pageHeadersBlocksReducer,
   pageHeadersAccountsStats: pageHeadersAccountsReducer,

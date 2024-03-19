@@ -17,7 +17,7 @@ export const ProviderTabs = () => {
   ];
 
   return (
-    <div className='card-header-item nodes-tabs mb-3'>
+    <div className='card-header-item provider-tabs'>
       <Tabs tabs={tabs} />
     </div>
   );
