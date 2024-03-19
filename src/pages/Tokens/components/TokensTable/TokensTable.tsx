@@ -75,7 +75,7 @@ export const TokensTable = ({
                       </NetworkLink>
                     </div>
                     <div className='d-flex flex-column justify-content-center'>
-                      <span className='d-flex align-items-center'>
+                      <span className='d-flex align-items-center gap-2'>
                         <NetworkLink
                           to={urlBuilder.tokenDetails(token.identifier)}
                           data-testid={`tokensLink${i}`}
@@ -83,7 +83,23 @@ export const TokensTable = ({
                         >
                           {token.ticker}
                         </NetworkLink>
-                        {token.isLowLiquidity && <LowLiquidityTooltip />}
+                        {token.isLowLiquidity && (
+                          <LowLiquidityTooltip
+                            {...(token.totalLiquidity
+                              ? {
+                                  details: (
+                                    <>
+                                      ($
+                                      {new BigNumber(
+                                        token.totalLiquidity
+                                      ).toFormat(2)}
+                                      )
+                                    </>
+                                  )
+                                }
+                              : {})}
+                          />
+                        )}
                       </span>
                       {token.assets && token.assets.description && (
                         <div

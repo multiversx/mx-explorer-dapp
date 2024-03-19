@@ -86,8 +86,10 @@ export const TokenDetailsCard = () => {
 
                       {totalLiquidity && (
                         <SmallDetailItem title='Total Liquidity'>
-                          ${new BigNumber(totalLiquidity).toFormat(0)}
-                          {isLowLiquidity && <LowLiquidityTooltip />}
+                          ${new BigNumber(totalLiquidity).toFormat(2)}
+                          {isLowLiquidity && (
+                            <LowLiquidityTooltip className='ms-2' />
+                          )}
                         </SmallDetailItem>
                       )}
                     </>
