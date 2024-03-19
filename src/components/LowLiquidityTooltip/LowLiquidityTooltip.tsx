@@ -22,7 +22,7 @@ export const LowLiquidityTooltip = ({
       }
       className={classNames('cursor-context', className)}
     >
-      <FontAwesomeIcon icon={faInfoCircle} className='text-primary' />
+      <FontAwesomeIcon icon={faInfoCircle} className='text-warning' />
     </Overlay>
   );
 };
