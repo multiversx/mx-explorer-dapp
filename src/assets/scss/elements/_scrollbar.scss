@@ -3,35 +3,51 @@
 }
 
 @mixin webkit-scrollbar {
-  &::-webkit-scrollbar,
-  &::-webkit-scrollbar-track,
-  &::-webkit-scrollbar-track:hover,
-  &::-webkit-scrollbar-corner,
-  &::-webkit-scrollbar:horizontal {
-    background-color: transparent;
+  --scrollbar-color-thumb: #404040;
+  --scrollbar-color-thumb-hover: #525252;
+  --scrollbar-color-track: transparent;
+
+  /* Modern browsers with `scrollbar-*` support */
+  @supports (scrollbar-width: auto) {
+    scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
   }
-  &::-webkit-scrollbar {
-    width: 0.5rem;
-    height: 0.5rem;
+
+  /* Legacy browsers with `::-webkit-scrollbar-*` support */
+  @supports selector(::-webkit-scrollbar) {
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-track:hover,
+    &::-webkit-scrollbar-corner,
+    &::-webkit-scrollbar:horizontal {
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+    &::-webkit-scrollbar:horizontal {
+      height: 0.5rem;
+    }
+    &::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-thumb:horizontal {
+      border-radius: 0.5rem;
+      background-color: var(--scrollbar-color-thumb);
+      border: 2.5px solid transparent;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: var(--scrollbar-color-thumb-hover);
+      border: 2px solid transparent;
+    }
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+    &::-webkit-resizer {
+      background-color: transparent;
+    }
   }
-  &::-webkit-scrollbar:horizontal {
-    height: 0.5rem;
-  }
-  &::-webkit-scrollbar-thumb,
-  &::-webkit-scrollbar-thumb:horizontal {
-    border-radius: 0.5rem;
-    background-color: #404040;
-    border: 2.5px solid transparent;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: #525252;
-    border: 2px solid transparent;
-  }
-  &::-webkit-scrollbar-button {
-    display: none;
-  }
-  &::-webkit-resizer {
-    background-color: transparent;
+
+  :hover {
+    --fix: ; /* This custom property invalidates styles on hover, thereby enforcing a style recomputation. This is needed to work around a bug in Safari. */
   }
 }
 
