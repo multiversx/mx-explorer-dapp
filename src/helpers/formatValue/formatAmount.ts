@@ -1,20 +1,30 @@
+import { FormatAmountType as SdkDappFormatAmountType } from '@multiversx/sdk-dapp/utils/operations/formatAmount';
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import { MAX_DISPLAY_ZERO_DECIMALS } from 'appConstants';
+import { DECIMALS, DIGITS } from 'config';
 
-function format(
-  big: string,
-  decimals: number,
-  digits: number,
-  showLastNonZeroDecimal: boolean,
-  addCommas: boolean,
-  maxDisplayZeroDecimals = MAX_DISPLAY_ZERO_DECIMALS
-) {
+interface FormatAmountType extends SdkDappFormatAmountType {
+  maxDisplayZeroDecimals?: number;
+}
+
+export function formatAmount({
+  input,
+  decimals = DECIMALS,
+  digits = DIGITS,
+  showLastNonZeroDecimal = false,
+  maxDisplayZeroDecimals = MAX_DISPLAY_ZERO_DECIMALS,
+  addCommas = false
+}: FormatAmountType) {
+  if (!stringIsInteger(input, false)) {
+    throw new Error('Invalid input');
+  }
+
   showLastNonZeroDecimal =
     typeof showLastNonZeroDecimal !== 'undefined'
       ? showLastNonZeroDecimal
       : false;
 
-  let array = big.toString().split('');
+  let array = input.toString().split('');
 
   let negative = false;
   if (array[0] === '-') {
@@ -104,25 +114,3 @@ function format(
 
   return output;
 }
-
-interface FormatAmountType {
-  input: string;
-  decimals: number;
-  digits: number;
-  showLastNonZeroDecimal: boolean;
-  addCommas?: boolean;
-}
-
-export const formatAmount = ({
-  input,
-  decimals,
-  digits,
-  showLastNonZeroDecimal = false,
-  addCommas = true
-}: FormatAmountType) => {
-  if (!stringIsInteger(input, false)) {
-    throw new Error('Invalid input');
-  }
-
-  return format(input, decimals, digits, showLastNonZeroDecimal, addCommas);
-};

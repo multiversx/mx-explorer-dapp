@@ -1,7 +1,6 @@
 import moment, { Moment, unitOfTime } from 'moment';
 
 import { ChartDataType } from 'components/Chart/helpers/types';
-import { DECIMALS, DIGITS } from 'config';
 import { formatAmount } from 'helpers';
 
 interface AccountBalanceHistoryType {
@@ -58,11 +57,7 @@ export const getIntervalDates = (
 
 export const formatEntry = (entry: AccountBalanceHistoryType) => {
   const value = formatAmount({
-    input: entry.balance,
-    decimals: DECIMALS,
-    digits: DIGITS,
-    showLastNonZeroDecimal: false,
-    addCommas: false
+    input: entry.balance
   });
   return {
     timestamp: entry.timestamp,

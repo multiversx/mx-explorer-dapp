@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js';
 
 import { FormatAmount, FormatUSD, Chart } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
-import { DECIMALS } from 'config';
 import { ProviderType } from 'types';
 import { AccountStakingSliceType } from 'types/account.types';
 
@@ -36,12 +35,11 @@ export const DonutChart = ({
           {bNtotalLocked.isEqualTo(0) ? 'No staking' : 'Total Staked'}
         </h5>
         <h6 className='mb-1'>
-          <FormatAmount value={bNtotalLocked.toString(10)} decimals={2} />
+          <FormatAmount value={bNtotalLocked.toString(10)} digits={2} />
         </h6>
         <div className='text-neutral-400 small mb-0'>
           <FormatUSD
             amount={bNtotalLocked.toString(10)}
-            decimals={DECIMALS}
             digits={2}
             showPrefix={false}
           />

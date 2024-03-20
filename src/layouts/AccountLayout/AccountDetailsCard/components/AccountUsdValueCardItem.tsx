@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { CardItem, LockedAmountTooltip, FormatUSD } from 'components';
-import { DECIMALS } from 'config';
 import { formatAmount } from 'helpers';
 import { faDollarSign } from 'icons/solid';
 import {
@@ -31,10 +30,8 @@ export const AccountUsdValueCardItem = ({
   }
   const formattedTotalWorth = formatAmount({
     input: totalWorth.toString(10),
-    decimals: DECIMALS,
     digits: 2,
-    showLastNonZeroDecimal: true,
-    addCommas: false
+    showLastNonZeroDecimal: true
   });
 
   let totalUsdValue = new BigNumber(formattedTotalWorth).times(
@@ -67,7 +64,6 @@ export const AccountUsdValueCardItem = ({
                 value: (
                   <FormatUSD
                     amount={new BigNumber(balance ?? 0).toString(10)}
-                    decimals={DECIMALS}
                     digits={2}
                     showPrefix={false}
                   />
@@ -78,7 +74,6 @@ export const AccountUsdValueCardItem = ({
                 value: (
                   <FormatUSD
                     amount={new BigNumber(totalLocked ?? 0).toString(10)}
-                    decimals={DECIMALS}
                     digits={2}
                     showPrefix={false}
                   />

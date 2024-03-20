@@ -47,8 +47,8 @@ export const AuctionListTresholdRow = ({
               {isStakeFetched && unprocessed.minimumAuctionQualifiedStake ? (
                 <FormatAmount
                   value={unprocessed.minimumAuctionQualifiedStake}
+                  digits={4}
                   superSuffix
-                  decimals={4}
                 />
               ) : (
                 minimumAuctionQualifiedStake

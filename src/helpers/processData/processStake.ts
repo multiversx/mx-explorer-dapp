@@ -1,6 +1,5 @@
 import BigNumber from 'bignumber.js';
 
-import { DECIMALS, DIGITS } from 'config';
 import { formatAmount } from 'helpers';
 import { StakeType } from 'types/stake.types';
 
@@ -9,11 +8,7 @@ export const processStake = (data: StakeType) => {
     totalValidators: new BigNumber(data.totalValidators).toFormat(0),
     activeValidators: new BigNumber(data.activeValidators).toFormat(0),
     totalStaked: formatAmount({
-      input: data.totalStaked,
-      decimals: DECIMALS,
-      digits: DIGITS,
-      showLastNonZeroDecimal: false,
-      addCommas: false
+      input: data.totalStaked
     }),
     ...(data.nakamotoCoefficient !== undefined
       ? {
@@ -31,22 +26,14 @@ export const processStake = (data: StakeType) => {
     ...(data.minimumAuctionQualifiedTopUp !== undefined
       ? {
           minimumAuctionQualifiedTopUp: formatAmount({
-            input: data.minimumAuctionQualifiedTopUp,
-            decimals: DECIMALS,
-            digits: DIGITS,
-            showLastNonZeroDecimal: false,
-            addCommas: false
+            input: data.minimumAuctionQualifiedTopUp
           })
         }
       : {}),
     ...(data.minimumAuctionQualifiedStake !== undefined
       ? {
           minimumAuctionQualifiedStake: formatAmount({
-            input: data.minimumAuctionQualifiedStake,
-            decimals: DECIMALS,
-            digits: DIGITS,
-            showLastNonZeroDecimal: false,
-            addCommas: false
+            input: data.minimumAuctionQualifiedStake
           })
         }
       : {}),

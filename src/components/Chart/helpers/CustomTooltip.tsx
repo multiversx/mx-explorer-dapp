@@ -66,9 +66,7 @@ export const CustomTooltip = ({
               const formattedValue = formatAmount({
                 input: new BigNumber(displayValue).toString(10),
                 decimals,
-                digits: 2,
-                showLastNonZeroDecimal: false,
-                addCommas: false
+                digits: 2
               });
 
               displayValue = formattedValue;

@@ -62,8 +62,7 @@ export const prepareChartData = ({
             input: bNtotalLocked.toString(10),
             decimals: DECIMALS,
             digits: DIGITS,
-            showLastNonZeroDecimal: false,
-            addCommas: false
+            showLastNonZeroDecimal: false
           });
 
           chartData.push({
@@ -81,8 +80,7 @@ export const prepareChartData = ({
         input: bNtotalLegacyDelegation.toString(10),
         decimals: DECIMALS,
         digits: DIGITS,
-        showLastNonZeroDecimal: false,
-        addCommas: false
+        showLastNonZeroDecimal: false
       });
       chartData.push({
         name: 'MultiversX Legacy Delegation',
@@ -95,8 +93,7 @@ export const prepareChartData = ({
         input: bNtotalStaked.toString(10),
         decimals: DECIMALS,
         digits: DIGITS,
-        showLastNonZeroDecimal: false,
-        addCommas: false
+        showLastNonZeroDecimal: false
       });
       chartData.push({
         name: 'Staked Validator Nodes',

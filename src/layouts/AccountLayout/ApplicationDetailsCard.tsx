@@ -220,13 +220,11 @@ export const ApplicationDetailsCard = () => {
                 <div className='stats-card-content-container'>
                   <FormatAmount
                     value={balance}
-                    decimals={2}
-                    showSymbol
+                    digits={2}
                     data-testid='balance'
                   />
                   <FormatUSD
                     amount={balance}
-                    decimals={DECIMALS}
                     digits={2}
                     className='balance-usd'
                   />
@@ -243,14 +241,9 @@ export const ApplicationDetailsCard = () => {
             <>
               {developerReward !== undefined ? (
                 <div className='stats-card-content-container'>
-                  <FormatAmount
-                    value={developerReward}
-                    decimals={2}
-                    showSymbol
-                  />
+                  <FormatAmount value={developerReward} digits={2} />
                   <FormatUSD
                     amount={developerReward}
-                    decimals={DECIMALS}
                     digits={2}
                     className='balance-usd'
                   />

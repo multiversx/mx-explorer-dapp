@@ -1,10 +1,9 @@
-import { useState, useRef } from 'react';
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import { MAX_DISPLAY_ZERO_DECIMALS } from 'appConstants';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
+import { Overlay } from 'components';
 import { DECIMALS, DIGITS } from 'config';
 import { formatAmount } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -24,47 +23,6 @@ export interface FormatAmountType {
   'data-testid'?: string;
 }
 
-const CompleteValueTooltip = ({
-  completeValue,
-  children
-}: {
-  completeValue: string;
-  children: React.ReactNode;
-}) => {
-  const [show, setShow] = useState(false);
-  const handleOnMouseEnter = () => {
-    setShow(true);
-  };
-  const handleOnMouseLeave = () => {
-    setShow(false);
-  };
-  const ref = useRef(null);
-
-  return (
-    <OverlayTrigger
-      placement='top'
-      show={show}
-      delay={{ show: 0, hide: 400 }}
-      overlay={
-        <Tooltip
-          onMouseEnter={handleOnMouseEnter}
-          onMouseLeave={handleOnMouseLeave}
-        >
-          {completeValue}
-        </Tooltip>
-      }
-    >
-      <span
-        ref={ref}
-        onMouseEnter={handleOnMouseEnter}
-        onMouseLeave={handleOnMouseLeave}
-      >
-        {children}
-      </span>
-    </OverlayTrigger>
-  );
-};
-
 const formatAmountInvalid = (props: FormatAmountType) => {
   return (
     <span
@@ -80,27 +38,29 @@ const formatAmountInvalid = (props: FormatAmountType) => {
 const formatAmountValid = (props: FormatAmountType, egldLabel?: string) => {
   const {
     value,
+    digits = DIGITS,
+    decimals = DECIMALS,
     showLastNonZeroDecimal = false,
     showLabel = true,
     showTooltip = true,
     showSymbol = true,
     superSuffix = false
   } = props;
-  const digits = props.digits !== undefined ? props.digits : DIGITS;
-  const decimals = props.decimals !== undefined ? props.decimals : DECIMALS;
 
   const formattedValue = formatAmount({
     input: value,
     decimals,
     digits,
-    showLastNonZeroDecimal
+    showLastNonZeroDecimal,
+    addCommas: true
   });
 
   const completeValue = formatAmount({
     input: value,
     decimals,
     digits,
-    showLastNonZeroDecimal: true
+    showLastNonZeroDecimal: true,
+    addCommas: true
   });
 
   const valueParts = formattedValue.split('.');
@@ -166,13 +126,12 @@ const formatAmountValid = (props: FormatAmountType, egldLabel?: string) => {
         </>
       )}
       {showTooltip && completeValue !== formattedValue ? (
-        <CompleteValueTooltip completeValue={completeValue}>
+        <Overlay title={completeValue} className='cursor-context' persistent>
           <DisplayValue />
-        </CompleteValueTooltip>
+        </Overlay>
       ) : (
         <DisplayValue />
       )}
-
       {showLabel && (
         <>
           {superSuffix ? (

@@ -1,6 +1,6 @@
-import { formatAmount } from '@multiversx/sdk-dapp/utils';
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
+import { formatAmount } from 'helpers';
 import { ChartAxisType } from './types';
 
 export const formatYAxis = ({
@@ -15,9 +15,7 @@ export const formatYAxis = ({
     const formattedValue = formatAmount({
       input: new BigNumber(tick).toString(10),
       decimals,
-      digits: 2,
-      showLastNonZeroDecimal: false,
-      addCommas: false
+      digits: 2
     });
 
     return `${numeral(formattedValue).format('0a')}${

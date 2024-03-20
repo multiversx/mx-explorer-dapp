@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
 import { Overlay } from 'components';
-import { DIGITS } from 'config';
+import { DECIMALS, DIGITS } from 'config';
 import { formatAmount, formatUSD, stringIsFloat, FormatUSDType } from 'helpers';
 
 import { economicsSelector } from 'redux/selectors';
@@ -18,8 +18,8 @@ export interface FormatUSDUIType extends FormatUSDType, WithClassnameType {
 export const FormatUSD = ({
   amount: unprocessedAmount,
   usd: usdValue,
-  digits,
-  decimals,
+  digits = DIGITS,
+  decimals = DECIMALS,
   maxDigits,
   showPrefix = true,
   showTooltip = true,
@@ -28,14 +28,11 @@ export const FormatUSD = ({
 }: FormatUSDUIType) => {
   const { isFetched, unprocessed } = useSelector(economicsSelector);
 
-  const displayDigits = digits ? digits : DIGITS;
   const amount = decimals
     ? formatAmount({
         input: String(unprocessedAmount),
         decimals,
-        digits: DIGITS,
-        showLastNonZeroDecimal: true,
-        addCommas: false
+        showLastNonZeroDecimal: true
       })
     : unprocessedAmount;
   const formattedAmount = new BigNumber(amount).toFormat({
@@ -48,7 +45,7 @@ export const FormatUSD = ({
 
   const value = new BigNumber(amount).times(new BigNumber(usd));
   const isEqual = new BigNumber(value).isEqualTo(
-    BigNumber(value).toFixed(displayDigits)
+    BigNumber(value).toFixed(digits)
   );
 
   return (

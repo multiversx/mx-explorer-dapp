@@ -60,7 +60,7 @@ export const NodeDangerZoneTooltip = ({
                   This node is only{' '}
                   <FormatAmount
                     value={bNStakeAboveTreshold.toString(10)}
-                    decimals={4}
+                    digits={4}
                   />{' '}
                   above the threshold level.
                   {bNStakeNeededAboveDangerZone.isGreaterThan(0) && (
@@ -69,7 +69,7 @@ export const NodeDangerZoneTooltip = ({
                       Increase the staked amount with{' '}
                       <FormatAmount
                         value={bNStakeNeededAboveDangerZone.toString(10)}
-                        decimals={4}
+                        digits={4}
                       />{' '}
                       / node to exit the danger zone and move up in the auction
                       list.

@@ -21,7 +21,6 @@ import {
   TransactionGuardianIcon,
   AccountLink
 } from 'components';
-import { DECIMALS, DIGITS } from 'config';
 import {
   addressIsBech32,
   formatAmount,
@@ -126,16 +125,11 @@ export const TransactionInfo = ({
       ? 'N/A'
       : formatAmount({
           input: transaction.fee ? transaction.fee : getFee(transaction),
-          decimals: DECIMALS,
-          digits: DIGITS,
           showLastNonZeroDecimal: true
         });
 
   const txValue = formatAmount({
     input: transaction.value,
-    decimals: DECIMALS,
-    digits: DIGITS,
-    addCommas: false,
     showLastNonZeroDecimal: true
   });
 

@@ -95,8 +95,8 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
                     <h3 className='mb-0 text-lh-24'>
                       <FormatAmount
                         value={unprocessed.minimumAuctionQualifiedStake}
+                        digits={4}
                         superSuffix
-                        decimals={4}
                       />
                     </h3>
                   </div>
