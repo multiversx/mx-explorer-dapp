@@ -100,7 +100,7 @@ export const AccountNfts = () => {
                               showLabel={false}
                               showSymbol={false}
                               value={nft.balance ? nft.balance : '0'}
-                              denomination={nft.decimals}
+                              decimals={nft.decimals}
                             />
                           ) : (
                             Number(nft.balance).toLocaleString('en')

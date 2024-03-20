@@ -31,8 +31,8 @@ export const AccountUsdValueCardItem = ({
   }
   const formattedTotalWorth = formatAmount({
     input: totalWorth.toString(10),
-    denomination: DECIMALS,
-    decimals: 2,
+    decimals: DECIMALS,
+    digits: 2,
     showLastNonZeroDecimal: true,
     addCommas: false
   });

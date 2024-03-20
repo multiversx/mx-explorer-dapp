@@ -8,7 +8,7 @@ interface TokenBlockType {
 }
 
 export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
-  const denomination =
+  const decimals =
     operationToken.decimals !== undefined ? operationToken.decimals : DECIMALS;
 
   return (
@@ -17,7 +17,7 @@ export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
         <div className='me-1'>
           <FormatAmount
             value={value}
-            denomination={denomination}
+            decimals={decimals}
             showLabel={false}
             showSymbol={false}
             showLastNonZeroDecimal={true}

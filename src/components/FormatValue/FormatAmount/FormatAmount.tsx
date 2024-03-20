@@ -16,8 +16,8 @@ export interface FormatAmountType {
   showLastNonZeroDecimal?: boolean;
   showLabel?: boolean;
   token?: string | React.ReactNode;
+  digits?: number;
   decimals?: number;
-  denomination?: number;
   showTooltip?: boolean;
   showSymbol?: boolean;
   superSuffix?: boolean;
@@ -86,21 +86,20 @@ const formatAmountValid = (props: FormatAmountType, egldLabel?: string) => {
     showSymbol = true,
     superSuffix = false
   } = props;
-  const decimals = props.decimals !== undefined ? props.decimals : DIGITS;
-  const denomination =
-    props.denomination !== undefined ? props.denomination : DECIMALS;
+  const digits = props.digits !== undefined ? props.digits : DIGITS;
+  const decimals = props.decimals !== undefined ? props.decimals : DECIMALS;
 
   const formattedValue = formatAmount({
     input: value,
-    denomination,
     decimals,
+    digits,
     showLastNonZeroDecimal
   });
 
   const completeValue = formatAmount({
     input: value,
-    denomination,
     decimals,
+    digits,
     showLastNonZeroDecimal: true
   });
 
@@ -108,10 +107,10 @@ const formatAmountValid = (props: FormatAmountType, egldLabel?: string) => {
   const hasNoDecimals = valueParts.length === 1;
   const isNotZero = formattedValue !== '0';
 
-  if (decimals > 0 && hasNoDecimals && isNotZero) {
+  if (digits > 0 && hasNoDecimals && isNotZero) {
     let zeros = '';
 
-    for (let i = 1; i <= decimals; i++) {
+    for (let i = 1; i <= digits; i++) {
       zeros = zeros + '0';
     }
 
@@ -131,7 +130,7 @@ const formatAmountValid = (props: FormatAmountType, egldLabel?: string) => {
       );
       const nonZeroDecimals = [];
       for (let i = firstNonZeroIndex; i <= decimalArray.length - 1; i++) {
-        if (nonZeroDecimals.length < Math.max(decimals, 2)) {
+        if (nonZeroDecimals.length < Math.max(digits, 2)) {
           nonZeroDecimals.push(decimalArray[i]);
         }
       }

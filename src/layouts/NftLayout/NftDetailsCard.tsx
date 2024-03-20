@@ -255,7 +255,7 @@ export const NftDetailsCard = () => {
                         value={supply}
                         showLabel={false}
                         showSymbol={false}
-                        denomination={decimals}
+                        decimals={decimals}
                       />
                     ) : (
                       Number(supply).toLocaleString('en')

@@ -60,8 +60,8 @@ export const prepareChartData = ({
 
           const amount = formatAmount({
             input: bNtotalLocked.toString(10),
-            denomination: DECIMALS,
-            decimals: DIGITS,
+            decimals: DECIMALS,
+            digits: DIGITS,
             showLastNonZeroDecimal: false,
             addCommas: false
           });
@@ -79,8 +79,8 @@ export const prepareChartData = ({
     if (showDelegationLegacy && delegationLegacy) {
       const amount = formatAmount({
         input: bNtotalLegacyDelegation.toString(10),
-        denomination: DECIMALS,
-        decimals: DIGITS,
+        decimals: DECIMALS,
+        digits: DIGITS,
         showLastNonZeroDecimal: false,
         addCommas: false
       });
@@ -93,8 +93,8 @@ export const prepareChartData = ({
     if (showStake && stake) {
       const amount = formatAmount({
         input: bNtotalStaked.toString(10),
-        denomination: DECIMALS,
-        decimals: DIGITS,
+        decimals: DECIMALS,
+        digits: DIGITS,
         showLastNonZeroDecimal: false,
         addCommas: false
       });

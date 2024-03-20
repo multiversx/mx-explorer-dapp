@@ -23,7 +23,7 @@ export const ChartArea = ({
   category,
   currency,
   percentageMultiplier,
-  denomination,
+  decimals,
   size,
   tooltip,
   hasOnlyStartEndTick
@@ -80,7 +80,7 @@ export const ChartArea = ({
                 tick,
                 currency,
                 percentageMultiplier,
-                decimals: denomination
+                decimals
               })
             }
             axisLine={false}
@@ -108,7 +108,7 @@ export const ChartArea = ({
                 {...props}
                 currency={currency}
                 percentageMultiplier={percentageMultiplier}
-                denomination={denomination}
+                decimals={decimals}
                 {...tooltip}
               />
             )}

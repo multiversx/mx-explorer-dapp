@@ -80,7 +80,7 @@ export const TokenDetailsLockedAccounts = () => {
                             showLastNonZeroDecimal={true}
                             showLabel={false}
                             showSymbol={false}
-                            denomination={decimals}
+                            decimals={decimals}
                           />
                         </td>
                       </tr>

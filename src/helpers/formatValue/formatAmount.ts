@@ -3,8 +3,8 @@ import { MAX_DISPLAY_ZERO_DECIMALS } from 'appConstants';
 
 function format(
   big: string,
-  denomination: number,
   decimals: number,
+  digits: number,
   showLastNonZeroDecimal: boolean,
   addCommas: boolean,
   maxDisplayZeroDecimals = MAX_DISPLAY_ZERO_DECIMALS
@@ -22,17 +22,17 @@ function format(
     negative = true;
   }
 
-  if (denomination !== 0) {
+  if (decimals !== 0) {
     // make sure we have enough characters
-    while (array.length < denomination + 1) {
+    while (array.length < decimals + 1) {
       array.unshift('0');
     }
 
     // add our dot
-    array.splice(array.length - denomination, 0, '.');
+    array.splice(array.length - decimals, 0, '.');
 
-    // make sure there are enough decimals after the dot
-    while (array.length - array.indexOf('.') <= decimals) {
+    // make sure there are enough digits after the dot
+    while (array.length - array.indexOf('.') <= digits) {
       array.push('0');
     }
 
@@ -44,8 +44,8 @@ function format(
           break;
         }
       }
-      const decimalsIndex = array.indexOf('.') + decimals + 1;
-      const sliceIndex = Math.max(decimalsIndex, nonZeroDigitIndex);
+      const digitsIndex = array.indexOf('.') + digits + 1;
+      const sliceIndex = Math.max(digitsIndex, nonZeroDigitIndex);
       array = array.slice(0, sliceIndex);
     } else {
       let zeroDecimals = 0;
@@ -60,8 +60,7 @@ function format(
           break;
         }
       }
-      const displayDecimals =
-        zeroDecimals > 0 ? zeroDecimals + decimals : decimals;
+      const displayDecimals = zeroDecimals > 0 ? zeroDecimals + digits : digits;
 
       array = array.slice(0, array.indexOf('.') + displayDecimals + 1);
     }
@@ -70,7 +69,7 @@ function format(
   if (addCommas) {
     // add comas every 3 characters
     array = array.reverse();
-    const reference = denomination
+    const reference = decimals
       ? array.length - array.indexOf('.') - 1
       : array.length;
     const count = Math.floor(reference / 3);
@@ -94,7 +93,7 @@ function format(
     output = string.split('.')[0];
   } else {
     output =
-      decimals === 0 && !showLastNonZeroDecimal
+      digits === 0 && !showLastNonZeroDecimal
         ? string.split('.').join('')
         : string;
   }
@@ -108,16 +107,16 @@ function format(
 
 interface FormatAmountType {
   input: string;
-  denomination: number;
   decimals: number;
+  digits: number;
   showLastNonZeroDecimal: boolean;
   addCommas?: boolean;
 }
 
 export const formatAmount = ({
   input,
-  denomination,
   decimals,
+  digits,
   showLastNonZeroDecimal = false,
   addCommas = true
 }: FormatAmountType) => {
@@ -125,11 +124,5 @@ export const formatAmount = ({
     throw new Error('Invalid input');
   }
 
-  return format(
-    input,
-    denomination,
-    decimals,
-    showLastNonZeroDecimal,
-    addCommas
-  );
+  return format(input, decimals, digits, showLastNonZeroDecimal, addCommas);
 };

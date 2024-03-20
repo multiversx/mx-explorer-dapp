@@ -39,7 +39,7 @@ export const CustomTooltip = ({
   label,
   currency,
   percentageMultiplier,
-  denomination,
+  decimals,
   customLabel,
   showUsdValue,
   dateFormat
@@ -49,7 +49,7 @@ export const CustomTooltip = ({
   label?: any;
   currency?: string;
   percentageMultiplier?: number;
-  denomination?: number;
+  decimals?: number;
   customLabel?: string;
   showUsdValue?: boolean;
   dateFormat?: string;
@@ -62,11 +62,11 @@ export const CustomTooltip = ({
         <ul className='recharts-tooltip-item-list list-unstyled'>
           {payload.map((entry: any) => {
             let displayValue = entry.value;
-            if (denomination) {
+            if (decimals) {
               const formattedValue = formatAmount({
                 input: new BigNumber(displayValue).toString(10),
-                denomination,
-                decimals: 2,
+                decimals,
+                digits: 2,
                 showLastNonZeroDecimal: false,
                 addCommas: false
               });

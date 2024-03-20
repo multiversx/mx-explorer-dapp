@@ -50,8 +50,8 @@ const getReceiptValue = (transaction: TransactionType) => {
     ) {
       const formattedGas = formatAmount({
         input: transaction.receipt.value,
-        denomination: DECIMALS,
-        decimals: DIGITS,
+        decimals: DECIMALS,
+        digits: DIGITS,
         showLastNonZeroDecimal: true
       });
       const gasRefunded = new BigNumber(formattedGas)

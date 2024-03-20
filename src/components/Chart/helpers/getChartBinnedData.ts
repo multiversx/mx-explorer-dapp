@@ -59,8 +59,8 @@ export const getIntervalDates = (
 export const formatEntry = (entry: AccountBalanceHistoryType) => {
   const value = formatAmount({
     input: entry.balance,
-    denomination: DECIMALS,
-    decimals: DIGITS,
+    decimals: DECIMALS,
+    digits: DIGITS,
     showLastNonZeroDecimal: false,
     addCommas: false
   });

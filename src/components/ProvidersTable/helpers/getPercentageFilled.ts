@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import { formatBigNumber, nominate } from 'helpers';
+import { formatBigNumber, parseAmount } from 'helpers';
 
 export const hasDelegationCap = (delegationCap: string) => {
   const bnDelegationCap = new BigNumber(delegationCap);
@@ -7,7 +7,7 @@ export const hasDelegationCap = (delegationCap: string) => {
 };
 
 export const getPercentageFilled = (locked: string, delegationCap: string) => {
-  const minDelegation = nominate('1'); // 1 EGLD
+  const minDelegation = parseAmount('1'); // 1 EGLD
   const bnLocked = new BigNumber(locked);
   const bnDelegationCap = new BigNumber(delegationCap);
 

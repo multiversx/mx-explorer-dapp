@@ -12,7 +12,7 @@ export const TransactionActionToken = ({
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
 }) => {
-  const denomination = token.decimals !== undefined ? token.decimals : DECIMALS;
+  const decimals = token.decimals !== undefined ? token.decimals : DECIMALS;
 
   return (
     <div className='token-action-block d-contents'>
@@ -24,7 +24,7 @@ export const TransactionActionToken = ({
                 value={token.value}
                 showLabel={false}
                 showSymbol={false}
-                denomination={denomination}
+                decimals={decimals}
                 showLastNonZeroDecimal={showLastNonZeroDecimal}
               />
             </div>

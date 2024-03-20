@@ -133,8 +133,8 @@ export const TokensTable = ({
                           ? String(token.circulatingSupply)
                           : '0'
                       }
-                      denomination={token.decimals}
-                      decimals={0}
+                      decimals={token.decimals}
+                      digits={0}
                     />
                   )}
                 </td>

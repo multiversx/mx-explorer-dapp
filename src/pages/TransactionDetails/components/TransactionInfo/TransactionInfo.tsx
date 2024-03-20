@@ -126,15 +126,15 @@ export const TransactionInfo = ({
       ? 'N/A'
       : formatAmount({
           input: transaction.fee ? transaction.fee : getFee(transaction),
-          denomination: DECIMALS,
-          decimals: DIGITS,
+          decimals: DECIMALS,
+          digits: DIGITS,
           showLastNonZeroDecimal: true
         });
 
   const txValue = formatAmount({
     input: transaction.value,
-    denomination: DECIMALS,
-    decimals: DIGITS,
+    decimals: DECIMALS,
+    digits: DIGITS,
     addCommas: false,
     showLastNonZeroDecimal: true
   });

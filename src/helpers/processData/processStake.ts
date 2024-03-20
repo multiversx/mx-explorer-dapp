@@ -10,8 +10,8 @@ export const processStake = (data: StakeType) => {
     activeValidators: new BigNumber(data.activeValidators).toFormat(0),
     totalStaked: formatAmount({
       input: data.totalStaked,
-      denomination: DECIMALS,
-      decimals: DIGITS,
+      decimals: DECIMALS,
+      digits: DIGITS,
       showLastNonZeroDecimal: false,
       addCommas: false
     }),
@@ -32,8 +32,8 @@ export const processStake = (data: StakeType) => {
       ? {
           minimumAuctionQualifiedTopUp: formatAmount({
             input: data.minimumAuctionQualifiedTopUp,
-            denomination: DECIMALS,
-            decimals: DIGITS,
+            decimals: DECIMALS,
+            digits: DIGITS,
             showLastNonZeroDecimal: false,
             addCommas: false
           })
@@ -43,8 +43,8 @@ export const processStake = (data: StakeType) => {
       ? {
           minimumAuctionQualifiedStake: formatAmount({
             input: data.minimumAuctionQualifiedStake,
-            denomination: DECIMALS,
-            decimals: DIGITS,
+            decimals: DECIMALS,
+            digits: DIGITS,
             showLastNonZeroDecimal: false,
             addCommas: false
           })

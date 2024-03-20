@@ -32,8 +32,8 @@ export const FormatUSD = ({
   const amount = decimals
     ? formatAmount({
         input: String(unprocessedAmount),
-        denomination: decimals,
-        decimals: DIGITS,
+        decimals,
+        digits: DIGITS,
         showLastNonZeroDecimal: true,
         addCommas: false
       })

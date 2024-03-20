@@ -92,7 +92,7 @@ export const TokenDetailsAccounts = () => {
                             value={account.balance}
                             showLastNonZeroDecimal={true}
                             showLabel={false}
-                            denomination={decimals}
+                            decimals={decimals}
                           />
                         </td>
                       </tr>
