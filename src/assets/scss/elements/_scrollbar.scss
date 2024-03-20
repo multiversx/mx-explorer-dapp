@@ -44,6 +44,7 @@
 
 .ubuntu,
 .windows,
+.linux,
 .blink:not(.ios),
 .webkit:not(.mac-os):not(.ios) {
   &.scrollbar {
@@ -84,9 +85,13 @@
   border-radius: 1rem;
 }
 
+.modal {
+  scrollbar-width: thin;
+}
+
 html {
+  scrollbar-width: thin;
   @supports (scrollbar-width: auto) {
     scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
-    scrollbar-width: thin;
   }
 }
