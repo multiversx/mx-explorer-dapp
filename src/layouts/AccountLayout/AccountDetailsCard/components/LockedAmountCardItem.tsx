@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
-import { CardItem, Denominate, LockedAmountTooltip } from 'components';
+import { CardItem, FormatAmount, LockedAmountTooltip } from 'components';
 
 import { faLock } from 'icons/solid';
 import { accountStakingSelector } from 'redux/selectors';
@@ -30,26 +30,26 @@ export const LockedAmountCardItem = ({
   const lockedDetails = [
     {
       label: 'Stake',
-      value: <Denominate value={bNtotalStaked.toString(10)} />
+      value: <FormatAmount value={bNtotalStaked.toString(10)} />
     },
     {
       label: 'Delegation',
-      value: <Denominate value={bNtotalActiveStake.toString(10)} />
+      value: <FormatAmount value={bNtotalActiveStake.toString(10)} />
     },
     {
       label: 'Legacy Delegation',
-      value: <Denominate value={bNtotalLegacyDelegation.toString(10)} />
+      value: <FormatAmount value={bNtotalLegacyDelegation.toString(10)} />
     },
     {
       label: 'Claimable Rewards',
-      value: <Denominate value={bNtotalClaimable.toString(10)} />
+      value: <FormatAmount value={bNtotalClaimable.toString(10)} />
     }
   ];
 
   if (bNUnstaked.isGreaterThan(0)) {
     lockedDetails.push({
       label: 'Unstaked',
-      value: <Denominate value={bNUnstaked.toString(10)} />
+      value: <FormatAmount value={bNUnstaked.toString(10)} />
     });
   }
 
@@ -58,7 +58,7 @@ export const LockedAmountCardItem = ({
       <div className='d-flex align-items-center'>
         {stakingDataReady ? (
           <span className='me-2'>
-            <Denominate value={bNtotalLocked.toString(10)} />
+            <FormatAmount value={bNtotalLocked.toString(10)} />
           </span>
         ) : (
           <>...</>

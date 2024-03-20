@@ -7,7 +7,7 @@ import {
   NetworkLink,
   Trim,
   Overlay,
-  Denominate,
+  FormatAmount,
   NodeDangerZoneTooltip,
   NodeFullHistoryIcon,
   NodeIssueIcon,
@@ -104,7 +104,7 @@ export const AuctionListBaseRow = ({
           className='cursor-context'
           persistent
         >
-          <Denominate value={bNStake.toString(10)} showTooltip={false} />
+          <FormatAmount value={bNStake.toString(10)} showTooltip={false} />
         </Overlay>
       </td>
       <td>

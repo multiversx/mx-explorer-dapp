@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { Denominate } from 'components';
+import { FormatAmount } from 'components';
 import { faDown, faUp } from 'icons/solid';
 import { stakeSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
@@ -45,7 +45,7 @@ export const AuctionListTresholdRow = ({
             </p>
             <h1>
               {isStakeFetched && unprocessed.minimumAuctionQualifiedStake ? (
-                <Denominate
+                <FormatAmount
                   value={unprocessed.minimumAuctionQualifiedStake}
                   superSuffix
                   decimals={4}

@@ -7,7 +7,7 @@ import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import {
   CardItem,
   CopyButton,
-  Denominate,
+  FormatAmount,
   NetworkLink,
   ShardSpan,
   TimeAgo,
@@ -164,7 +164,7 @@ export const AccountDetailsCard = () => {
             >
               <div className='d-flex align-items-center'>
                 {balance !== ELLIPSIS ? (
-                  <Denominate
+                  <FormatAmount
                     data-testid='balance'
                     value={balance}
                     decimals={4}

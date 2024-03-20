@@ -11,7 +11,7 @@ import { activeNetworkSelector } from 'redux/selectors';
 
 // TODO - will change into FormatAmount similar to sdk-dapp in a different PR
 
-export interface DenominateType {
+export interface FormatAmountType {
   value: string;
   showLastNonZeroDecimal?: boolean;
   showLabel?: boolean;
@@ -65,7 +65,7 @@ const CompleteValueTooltip = ({
   );
 };
 
-const formatAmountInvalid = (props: DenominateType) => {
+const formatAmountInvalid = (props: FormatAmountType) => {
   return (
     <span
       data-testid={
@@ -77,7 +77,7 @@ const formatAmountInvalid = (props: DenominateType) => {
   );
 };
 
-const formatAmountValid = (props: DenominateType, egldLabel?: string) => {
+const formatAmountValid = (props: FormatAmountType, egldLabel?: string) => {
   const {
     value,
     showLastNonZeroDecimal = false,
@@ -193,7 +193,7 @@ const formatAmountValid = (props: DenominateType, egldLabel?: string) => {
   );
 };
 
-export const Denominate = (props: DenominateType) => {
+export const FormatAmount = (props: FormatAmountType) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
   const { value } = props;
 

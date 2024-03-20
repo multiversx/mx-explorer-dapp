@@ -7,7 +7,7 @@ import {
   Loader,
   Pager,
   PageState,
-  Denominate,
+  FormatAmount,
   TokenLink,
   FormatUSD
 } from 'components';
@@ -95,7 +95,7 @@ export const AccountTokens = () => {
                   >
                     <div className='d-flex align-items-center flex-wrap gap-1'>
                       <div className='text-neutral-100'>
-                        <Denominate
+                        <FormatAmount
                           showLabel={false}
                           showSymbol={false}
                           value={token.balance ? token.balance : '0'}

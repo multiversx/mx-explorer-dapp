@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
-import { Denominate } from 'components';
+import { FormatAmount } from 'components';
 import { faLeaf } from 'icons/regular';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
 import { AccountDelegationLegacyType, IdentityType } from 'types';
@@ -77,7 +77,7 @@ export const AccountLegacyDelegation = ({
       {userActiveStake && userActiveStake !== '0' && (
         <DetailsBlock>
           <strong>
-            <Denominate value={new BigNumber(userActiveStake).toString(10)} />
+            <FormatAmount value={new BigNumber(userActiveStake).toString(10)} />
           </strong>
           <small>Amount Delegated</small>
         </DetailsBlock>
@@ -86,7 +86,9 @@ export const AccountLegacyDelegation = ({
       {userUnstakedStake && userUnstakedStake !== '0' && (
         <DetailsBlock>
           <strong>
-            <Denominate value={new BigNumber(userUnstakedStake).toString(10)} />
+            <FormatAmount
+              value={new BigNumber(userUnstakedStake).toString(10)}
+            />
           </strong>
           <small>Undelegated</small>
         </DetailsBlock>
@@ -95,7 +97,9 @@ export const AccountLegacyDelegation = ({
       {userWaitingStake && userWaitingStake !== '0' && (
         <DetailsBlock>
           <strong>
-            <Denominate value={new BigNumber(userWaitingStake).toString(10)} />
+            <FormatAmount
+              value={new BigNumber(userWaitingStake).toString(10)}
+            />
           </strong>
           <small>Waiting</small>
         </DetailsBlock>
@@ -104,7 +108,9 @@ export const AccountLegacyDelegation = ({
       <DetailsBlock>
         <strong>
           {claimableRewards ? (
-            <Denominate value={new BigNumber(claimableRewards).toString(10)} />
+            <FormatAmount
+              value={new BigNumber(claimableRewards).toString(10)}
+            />
           ) : (
             <>0 {egldLabel}</>
           )}

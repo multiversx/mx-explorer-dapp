@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, Denominate, PageState, AccountLink } from 'components';
+import {
+  Loader,
+  Pager,
+  FormatAmount,
+  PageState,
+  AccountLink
+} from 'components';
 import { useAdapter, useGetPage } from 'hooks';
 import { faUser } from 'icons/regular';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
@@ -82,7 +88,7 @@ export const TokenDetailsAccounts = () => {
                           />
                         </td>
                         <td>
-                          <Denominate
+                          <FormatAmount
                             value={account.balance}
                             showLastNonZeroDecimal={true}
                             showLabel={false}

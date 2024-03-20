@@ -7,7 +7,7 @@ import { ELLIPSIS } from 'appConstants';
 import { ReactComponent as DefaultImage } from 'assets/img/default.svg';
 import {
   CopyButton,
-  Denominate,
+  FormatAmount,
   NetworkLink,
   ShardSpan,
   ScAddressIcon,
@@ -218,7 +218,7 @@ export const ApplicationDetailsCard = () => {
             <>
               {balance !== ELLIPSIS ? (
                 <div className='stats-card-content-container'>
-                  <Denominate
+                  <FormatAmount
                     value={balance}
                     decimals={2}
                     showSymbol
@@ -243,7 +243,11 @@ export const ApplicationDetailsCard = () => {
             <>
               {developerReward !== undefined ? (
                 <div className='stats-card-content-container'>
-                  <Denominate value={developerReward} decimals={2} showSymbol />
+                  <FormatAmount
+                    value={developerReward}
+                    decimals={2}
+                    showSymbol
+                  />
                   <FormatUSD
                     amount={developerReward}
                     decimals={DECIMALS}

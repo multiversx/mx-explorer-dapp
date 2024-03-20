@@ -6,7 +6,7 @@ import {
   AccountLink,
   CopyButton,
   TransactionActionBlock,
-  Denominate
+  FormatAmount
 } from 'components';
 import { addressIsBech32, getOperationDirection } from 'helpers';
 import { faChevronRight } from 'icons/solid';
@@ -320,7 +320,10 @@ const OperationRow = ({
       return (
         <DetailedItem operation={operation} transaction={transaction}>
           <div className='d-flex align-items-center symbol text-truncate text-neutral-100'>
-            <Denominate value={operation.value} showLastNonZeroDecimal={true} />
+            <FormatAmount
+              value={operation.value}
+              showLastNonZeroDecimal={true}
+            />
           </div>
         </DetailedItem>
       );

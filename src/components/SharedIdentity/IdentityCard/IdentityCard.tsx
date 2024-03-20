@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
 import {
-  Denominate,
+  FormatAmount,
   MultilayerPercentageRing,
   SharedIdentity,
   Trim
@@ -138,7 +138,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 value={
                   <>
                     {identity.locked ? (
-                      <Denominate value={identity.locked} />
+                      <FormatAmount value={identity.locked} />
                     ) : (
                       'N/A'
                     )}

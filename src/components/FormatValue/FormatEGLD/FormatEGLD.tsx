@@ -11,7 +11,7 @@ export interface FormatEGLDUIType extends WithClassnameType {
   superSuffix?: boolean;
 }
 
-// TODO - will expand on FormatAmount ( Denominate )
+// TODO - will expand on FormatAmount ( FormatAmount )
 
 export const FormatEGLD = ({
   value,

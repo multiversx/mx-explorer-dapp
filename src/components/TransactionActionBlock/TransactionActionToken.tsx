@@ -1,4 +1,4 @@
-import { Denominate, FormatUSD, NetworkLink } from 'components';
+import { FormatAmount, FormatUSD, NetworkLink } from 'components';
 import { DECIMALS } from 'config';
 import { urlBuilder } from 'helpers';
 import { TransactionTokenArgumentType } from 'types';
@@ -20,7 +20,7 @@ export const TransactionActionToken = ({
         <>
           {!noValue && token.value && (
             <div className='me-1 text-truncate'>
-              <Denominate
+              <FormatAmount
                 value={token.value}
                 showLabel={false}
                 showSymbol={false}

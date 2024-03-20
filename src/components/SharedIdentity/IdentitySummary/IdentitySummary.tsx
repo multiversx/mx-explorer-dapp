@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import {
-  Denominate,
+  FormatAmount,
   NetworkLink,
   PageState,
   SharedIdentity,
@@ -87,7 +87,7 @@ export const IdentitySummary = ({
                     </span>
                     <h5 className='mb-0'>
                       {identity.locked ? (
-                        <Denominate value={identity.locked} />
+                        <FormatAmount value={identity.locked} />
                       ) : (
                         'N/A'
                       )}

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import {
   NftBadge,
   CollectionBlock,
-  Denominate,
+  FormatAmount,
   TimeAgo,
   AccountLink,
   NftPreview,
@@ -251,7 +251,7 @@ export const NftDetailsCard = () => {
                 value: (
                   <>
                     {decimals ? (
-                      <Denominate
+                      <FormatAmount
                         value={supply}
                         showLabel={false}
                         showSymbol={false}

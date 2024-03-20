@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useMatch, useNavigate } from 'react-router-dom';
 
 import {
-  Denominate,
+  FormatAmount,
   ScAddressIcon,
   ShardSpan,
   NetworkLink,
@@ -322,7 +322,7 @@ export const TransactionInfo = ({
               </DetailItem>
 
               <DetailItem title='Value' className='text-neutral-100'>
-                <Denominate
+                <FormatAmount
                   value={transaction.value.toString()}
                   showLastNonZeroDecimal
                 />
@@ -388,7 +388,7 @@ export const TransactionInfo = ({
                 {transaction.fee !== undefined &&
                 transaction.gasUsed !== undefined ? (
                   <>
-                    <Denominate
+                    <FormatAmount
                       value={transaction.fee ?? getFee(transaction)}
                       showLastNonZeroDecimal
                     />
@@ -439,7 +439,7 @@ export const TransactionInfo = ({
 
               <DetailItem title='Gas Price' className='text-neutral-100'>
                 {transaction.gasPrice !== undefined ? (
-                  <Denominate
+                  <FormatAmount
                     value={transaction.gasPrice.toString()}
                     showLastNonZeroDecimal
                   />

@@ -3,7 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 
 import { ELLIPSIS } from 'appConstants';
-import { NetworkLink, Denominate, Sort, LowLiquidityTooltip } from 'components';
+import {
+  NetworkLink,
+  FormatAmount,
+  Sort,
+  LowLiquidityTooltip
+} from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { useGetSort } from 'hooks';
 import { faDiamond } from 'icons/regular';
@@ -120,7 +125,7 @@ export const TokensTable = ({
                 </td>
                 <td>
                   {token.circulatingSupply && (
-                    <Denominate
+                    <FormatAmount
                       showLabel={false}
                       showSymbol={false}
                       value={

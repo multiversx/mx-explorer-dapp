@@ -3,7 +3,7 @@ import {
   NetworkLink,
   TimeAgo,
   Trim,
-  Denominate,
+  FormatAmount,
   AccountLink
 } from 'components';
 import { TransactionSCResultType } from 'types';
@@ -63,7 +63,7 @@ export const ScResultRow = ({ scResult, address }: ScResultRowType) => {
         </div>
       </td>
       <td>
-        <Denominate value={scResult.value} />
+        <FormatAmount value={scResult.value} />
       </td>
     </tr>
   );

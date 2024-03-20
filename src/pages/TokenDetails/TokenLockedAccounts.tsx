@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { Loader, AccountLink, PageState, Denominate } from 'components';
+import { Loader, AccountLink, PageState, FormatAmount } from 'components';
 import { useAdapter } from 'hooks';
 import { faUser } from 'icons/regular';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
@@ -75,7 +75,7 @@ export const TokenDetailsLockedAccounts = () => {
                         </td>
                         <td>{lockedAccount.name}</td>
                         <td>
-                          <Denominate
+                          <FormatAmount
                             value={lockedAccount.balance}
                             showLastNonZeroDecimal={true}
                             showLabel={false}

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, Denominate, AccountLink } from 'components';
+import { Loader, Pager, FormatAmount, AccountLink } from 'components';
 import { useAdapter, useGetPage, useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
@@ -102,7 +102,7 @@ export const Accounts = () => {
                                     />
                                   </td>
                                   <td className='text-neutral-100'>
-                                    <Denominate value={account.balance} />
+                                    <FormatAmount value={account.balance} />
                                   </td>
                                 </tr>
                               ))}

@@ -106,7 +106,7 @@ function format(
   return output;
 }
 
-interface DenominateType {
+interface FormatAmountType {
   input: string;
   denomination: number;
   decimals: number;
@@ -120,7 +120,7 @@ export const formatAmount = ({
   decimals,
   showLastNonZeroDecimal = false,
   addCommas = true
-}: DenominateType) => {
+}: FormatAmountType) => {
   if (!stringIsInteger(input, false)) {
     throw new Error('Invalid input');
   }
