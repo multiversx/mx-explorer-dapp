@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 
 import { ELLIPSIS } from 'appConstants';
-import { NetworkLink, Denominate, Sort } from 'components';
+import { NetworkLink, Denominate, Sort, LowLiquidityTooltip } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { useGetSort } from 'hooks';
 import { faDiamond } from 'icons/regular';
@@ -75,13 +75,32 @@ export const TokensTable = ({
                       </NetworkLink>
                     </div>
                     <div className='d-flex flex-column justify-content-center'>
-                      <NetworkLink
-                        to={urlBuilder.tokenDetails(token.identifier)}
-                        data-testid={`tokensLink${i}`}
-                        className='d-block token-ticker'
-                      >
-                        {token.ticker}
-                      </NetworkLink>
+                      <span className='d-flex align-items-center gap-2'>
+                        <NetworkLink
+                          to={urlBuilder.tokenDetails(token.identifier)}
+                          data-testid={`tokensLink${i}`}
+                          className='d-block token-ticker'
+                        >
+                          {token.ticker}
+                        </NetworkLink>
+                        {token.isLowLiquidity && (
+                          <LowLiquidityTooltip
+                            {...(token.totalLiquidity
+                              ? {
+                                  details: (
+                                    <>
+                                      ($
+                                      {new BigNumber(
+                                        token.totalLiquidity
+                                      ).toFormat(2)}
+                                      )
+                                    </>
+                                  )
+                                }
+                              : {})}
+                          />
+                        )}
+                      </span>
                       {token.assets && token.assets.description && (
                         <div
                           className='token-description text-wrap text-neutral-400 small d-none d-md-block'
