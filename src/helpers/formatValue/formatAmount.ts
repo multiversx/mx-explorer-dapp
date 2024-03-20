@@ -114,7 +114,7 @@ interface DenominateType {
   addCommas?: boolean;
 }
 
-export const denominate = ({
+export const formatAmount = ({
   input,
   denomination,
   decimals,

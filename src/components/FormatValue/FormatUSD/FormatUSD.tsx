@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 import { Overlay } from 'components';
 import { DIGITS } from 'config';
-import { denominate, formatUSD, stringIsFloat, FormatUSDType } from 'helpers';
+import { formatAmount, formatUSD, stringIsFloat, FormatUSDType } from 'helpers';
 
 import { economicsSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
@@ -30,7 +30,7 @@ export const FormatUSD = ({
 
   const displayDigits = digits ? digits : DIGITS;
   const amount = decimals
-    ? denominate({
+    ? formatAmount({
         input: String(unprocessedAmount),
         denomination: decimals,
         decimals: DIGITS,

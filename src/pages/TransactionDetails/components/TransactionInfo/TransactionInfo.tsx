@@ -24,7 +24,7 @@ import {
 import { DECIMALS, DIGITS } from 'config';
 import {
   addressIsBech32,
-  denominate,
+  formatAmount,
   formatDate,
   urlBuilder,
   isContract,
@@ -124,14 +124,14 @@ export const TransactionInfo = ({
   const transactionFee =
     transaction.fee === undefined && transaction.gasUsed === undefined
       ? 'N/A'
-      : denominate({
+      : formatAmount({
           input: transaction.fee ? transaction.fee : getFee(transaction),
           denomination: DECIMALS,
           decimals: DIGITS,
           showLastNonZeroDecimal: true
         });
 
-  const txValue = denominate({
+  const txValue = formatAmount({
     input: transaction.value,
     denomination: DECIMALS,
     decimals: DIGITS,

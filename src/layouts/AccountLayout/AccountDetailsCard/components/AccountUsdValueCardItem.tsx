@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { CardItem, LockedAmountTooltip, FormatUSD } from 'components';
 import { DECIMALS } from 'config';
-import { denominate } from 'helpers';
+import { formatAmount } from 'helpers';
 import { faDollarSign } from 'icons/solid';
 import {
   accountSelector,
@@ -29,7 +29,7 @@ export const AccountUsdValueCardItem = ({
   if (stakingDataReady) {
     totalWorth = totalWorth.plus(new BigNumber(totalLocked));
   }
-  const denominatedTotalWorth = denominate({
+  const formattedTotalWorth = formatAmount({
     input: totalWorth.toString(10),
     denomination: DECIMALS,
     decimals: 2,
@@ -37,7 +37,7 @@ export const AccountUsdValueCardItem = ({
     addCommas: false
   });
 
-  let totalUsdValue = new BigNumber(denominatedTotalWorth).times(
+  let totalUsdValue = new BigNumber(formattedTotalWorth).times(
     isEconomicsFetched ? new BigNumber(unprocessed.price) : 1
   );
   if (tokenBalance) {

@@ -1,3 +1,4 @@
+export * from './formatAmount';
 export * from './formatDate';
 export * from './formatHerotag';
 export * from './formatBigNumber';

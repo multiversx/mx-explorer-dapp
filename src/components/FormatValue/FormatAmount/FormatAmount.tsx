@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { MAX_DISPLAY_ZERO_DECIMALS } from 'appConstants';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { DECIMALS, DIGITS } from 'config';
-import { denominate } from 'helpers';
+import { formatAmount } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
 
 // TODO - will change into FormatAmount similar to sdk-dapp in a different PR
@@ -65,11 +65,11 @@ const CompleteValueTooltip = ({
   );
 };
 
-const denominateInvalid = (props: DenominateType) => {
+const formatAmountInvalid = (props: DenominateType) => {
   return (
     <span
       data-testid={
-        props['data-testid'] ? props['data-testid'] : 'denominateComponent'
+        props['data-testid'] ? props['data-testid'] : 'formatAmountComponent'
       }
     >
       <span className='int-amount'>...</span>
@@ -77,7 +77,7 @@ const denominateInvalid = (props: DenominateType) => {
   );
 };
 
-const denominateValid = (props: DenominateType, egldLabel?: string) => {
+const formatAmountValid = (props: DenominateType, egldLabel?: string) => {
   const {
     value,
     showLastNonZeroDecimal = false,
@@ -90,23 +90,23 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
   const denomination =
     props.denomination !== undefined ? props.denomination : DECIMALS;
 
-  const denominatedValue = denominate({
+  const formattedValue = formatAmount({
     input: value,
     denomination,
     decimals,
     showLastNonZeroDecimal
   });
 
-  const completeValue = denominate({
+  const completeValue = formatAmount({
     input: value,
     denomination,
     decimals,
     showLastNonZeroDecimal: true
   });
 
-  const valueParts = denominatedValue.split('.');
+  const valueParts = formattedValue.split('.');
   const hasNoDecimals = valueParts.length === 1;
-  const isNotZero = denominatedValue !== '0';
+  const isNotZero = formattedValue !== '0';
 
   if (decimals > 0 && hasNoDecimals && isNotZero) {
     let zeros = '';
@@ -121,8 +121,8 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
   const DisplayValue = () => {
     if (
       !showLastNonZeroDecimal &&
-      denominatedValue === '0' &&
-      denominatedValue !== completeValue
+      formattedValue === '0' &&
+      formattedValue !== completeValue
     ) {
       const valueParts = completeValue.split('.');
       const decimalArray = valueParts[1].split('');
@@ -159,16 +159,16 @@ const denominateValid = (props: DenominateType, egldLabel?: string) => {
   return (
     <span
       data-testid={
-        props['data-testid'] ? props['data-testid'] : 'denominateComponent'
+        props['data-testid'] ? props['data-testid'] : 'formatAmountComponent'
       }
-      className='denominate'
+      className='formatAmount'
     >
       {showSymbol && !props.token && (
         <>
           <MultiversXSymbol className='symbol' />{' '}
         </>
       )}
-      {showTooltip && completeValue !== denominatedValue ? (
+      {showTooltip && completeValue !== formattedValue ? (
         <CompleteValueTooltip completeValue={completeValue}>
           <DisplayValue />
         </CompleteValueTooltip>
@@ -198,6 +198,6 @@ export const Denominate = (props: DenominateType) => {
   const { value } = props;
 
   return !stringIsInteger(value)
-    ? denominateInvalid(props)
-    : denominateValid(props, egldLabel);
+    ? formatAmountInvalid(props)
+    : formatAmountValid(props, egldLabel);
 };

@@ -6,7 +6,6 @@ export * from './analytics';
 export * from './capitalize';
 export * from './capitalizeFirstLetter';
 export * from './copyToClipboard';
-export * from './denominate';
 export * from './downloadFile';
 export * from './formatValue';
 export * from './getValue';

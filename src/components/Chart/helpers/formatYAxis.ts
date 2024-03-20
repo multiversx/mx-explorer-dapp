@@ -12,7 +12,7 @@ export const formatYAxis = ({
   if (percentageMultiplier) {
     return `${numeral(Number(tick) * 100).format('0.0')}%`;
   } else if (decimals) {
-    const denominatedValue = formatAmount({
+    const formattedValue = formatAmount({
       input: new BigNumber(tick).toString(10),
       decimals,
       digits: 2,
@@ -20,7 +20,7 @@ export const formatYAxis = ({
       addCommas: false
     });
 
-    return `${numeral(denominatedValue).format('0a')}${
+    return `${numeral(formattedValue).format('0a')}${
       currency ? ` ${currency}` : ''
     }`;
   } else if (currency) {
