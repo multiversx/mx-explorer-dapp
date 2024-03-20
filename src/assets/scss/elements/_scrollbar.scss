@@ -3,15 +3,6 @@
 }
 
 @mixin webkit-scrollbar {
-  --scrollbar-color-thumb: #404040;
-  --scrollbar-color-thumb-hover: #525252;
-  --scrollbar-color-track: transparent;
-
-  /* Modern browsers with `scrollbar-*` support */
-  @supports (scrollbar-width: auto) {
-    scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
-  }
-
   /* Legacy browsers with `::-webkit-scrollbar-*` support */
   @supports selector(::-webkit-scrollbar) {
     &::-webkit-scrollbar,
@@ -91,4 +82,11 @@
   padding: 1px;
   overflow: hidden;
   border-radius: 1rem;
+}
+
+html {
+  @supports (scrollbar-width: auto) {
+    scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
+    scrollbar-width: thin;
+  }
 }
