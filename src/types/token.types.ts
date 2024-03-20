@@ -26,6 +26,8 @@ export interface TokenType {
   marketCap?: number;
   valueUsd?: number;
   assets?: TokenAssetType;
+  totalLiquidity?: number;
+  isLowLiquidity?: boolean;
   roles?: TokenRolesType[];
 }
 

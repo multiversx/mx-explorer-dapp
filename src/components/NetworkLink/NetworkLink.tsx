@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { useGetSubdomainNetwork } from 'hooks';
+import { getSubdomainNetwork } from 'helpers';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 import { NetworkLinkPropsType } from './types';
 
@@ -14,7 +14,7 @@ export const NetworkLink = ({
 }: NetworkLinkPropsType) => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
-  const subdomainNetwork = useGetSubdomainNetwork();
+  const { subdomainNetwork } = getSubdomainNetwork();
 
   const prependLink =
     activeNetworkId &&

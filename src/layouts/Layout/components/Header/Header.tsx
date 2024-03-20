@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
@@ -63,15 +63,22 @@ export const Header = (props: HeaderPropsType) => {
     );
   };
 
-  const onApplicationsClose = () => {
-    setApplicationsActive(false);
-    onExpand(false);
-  };
-
   const onMenuClose = () => {
     setMenuActive(false);
     onExpand(false);
   };
+
+  useEffect(() => {
+    const onClickOutsideApplications = () => {
+      setApplicationsActive(false);
+      onExpand(false);
+    };
+
+    window.addEventListener('pointerdown', onClickOutsideApplications);
+
+    return () =>
+      window.removeEventListener('pointerdown', onClickOutsideApplications);
+  }, [onExpand]);
 
   return (
     <header className='header'>
@@ -97,9 +104,8 @@ export const Header = (props: HeaderPropsType) => {
       </div>
 
       <div
-        tabIndex={0}
         onClick={onApplicationsToggle}
-        onBlur={() => setTimeout(onApplicationsClose, 100)}
+        onPointerDown={(e) => e.stopPropagation()}
         className={classNames('matrix', {
           active: applicationsActive
         })}
@@ -109,6 +115,7 @@ export const Header = (props: HeaderPropsType) => {
       </div>
 
       <div
+        onPointerDown={(e) => e.stopPropagation()}
         className={classNames('applicationswrapper', {
           active: applicationsActive
         })}
