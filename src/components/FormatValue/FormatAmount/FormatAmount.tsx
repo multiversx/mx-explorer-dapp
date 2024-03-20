@@ -72,7 +72,7 @@ const formatAmountInvalid = (props: FormatAmountType) => {
         props['data-testid'] ? props['data-testid'] : 'formatAmountComponent'
       }
     >
-      <span className='int-amount'>...</span>
+      <span className='inv-am'>...</span>
     </span>
   );
 };
@@ -139,8 +139,8 @@ const formatAmountValid = (props: FormatAmountType, egldLabel?: string) => {
       if (firstNonZeroIndex > MAX_DISPLAY_ZERO_DECIMALS) {
         return (
           <>
-            <span className='amount'>0</span>
-            <span className='decimals'>.0...0{nonZeroDecimals.join('')}</span>
+            <span className='am'>0</span>
+            <span className='dec'>.0...0{nonZeroDecimals.join('')}</span>
           </>
         );
       }
@@ -148,10 +148,8 @@ const formatAmountValid = (props: FormatAmountType, egldLabel?: string) => {
 
     return (
       <>
-        <span className='amount'>{valueParts[0]}</span>
-        {valueParts.length > 1 && (
-          <span className='decimals'>.{valueParts[1]}</span>
-        )}
+        <span className='am'>{valueParts[0]}</span>
+        {valueParts.length > 1 && <span className='dec'>.{valueParts[1]}</span>}
       </>
     );
   };
@@ -161,11 +159,11 @@ const formatAmountValid = (props: FormatAmountType, egldLabel?: string) => {
       data-testid={
         props['data-testid'] ? props['data-testid'] : 'formatAmountComponent'
       }
-      className='formatAmount'
+      className='fam'
     >
       {showSymbol && !props.token && (
         <>
-          <MultiversXSymbol className='symbol' />{' '}
+          <MultiversXSymbol className='sym' />{' '}
         </>
       )}
       {showTooltip && completeValue !== formattedValue ? (
@@ -179,11 +177,11 @@ const formatAmountValid = (props: FormatAmountType, egldLabel?: string) => {
       {showLabel && (
         <>
           {superSuffix ? (
-            <sup className='suffix'>
+            <sup className='suf'>
               &nbsp;{props.token ? props.token : egldLabel}
             </sup>
           ) : (
-            <span className='suffix'>
+            <span className='suf'>
               &nbsp;{props.token ? props.token : egldLabel}
             </span>
           )}

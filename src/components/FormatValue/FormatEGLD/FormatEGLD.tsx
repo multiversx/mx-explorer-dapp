@@ -31,15 +31,14 @@ export const FormatEGLD = ({
   const [amount, decimals] = String(value).replace(egldLabel, '').split('.');
 
   return (
-    <span className={classNames(className, 'formatted')}>
-      <MultiversXSymbol className='symbol' />{' '}
-      <span className='amount'>{amount}</span>
-      {decimals && <span className='decimals'>.{decimals}</span>}
+    <span className={classNames(className, 'fam-e')}>
+      <MultiversXSymbol className='sym' /> <span className='am'>{amount}</span>
+      {decimals && <span className='dec'>.{decimals}</span>}
       <>
         {superSuffix ? (
-          <sup className='suffix'>&nbsp;{egldLabel}</sup>
+          <sup className='suf'>&nbsp;{egldLabel}</sup>
         ) : (
-          <span className='suffix'>&nbsp;{egldLabel}</span>
+          <span className='suf'>&nbsp;{egldLabel}</span>
         )}
       </>
     </span>
