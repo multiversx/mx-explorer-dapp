@@ -324,7 +324,7 @@ export const TransactionInfo = ({
                   <>
                     {' '}
                     <FormatUSD
-                      amount={txValue}
+                      value={txValue}
                       usd={transaction.price}
                       digits={2}
                       className='text-neutral-400'
@@ -370,7 +370,7 @@ export const TransactionInfo = ({
                 <DetailItem title='Total Token Value'>
                   <span className='text-neutral-100'>
                     <FormatUSD
-                      amount={totalTxTokenUsdValue}
+                      value={totalTxTokenUsdValue}
                       usd={1}
                       digits={4}
                     />
@@ -390,7 +390,7 @@ export const TransactionInfo = ({
                       <>
                         {' '}
                         <FormatUSD
-                          amount={transactionFee}
+                          value={transactionFee}
                           usd={transaction.price}
                           digits={4}
                           className='text-neutral-400'

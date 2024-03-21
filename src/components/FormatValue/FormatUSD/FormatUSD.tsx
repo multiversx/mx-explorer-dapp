@@ -3,80 +3,70 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
-import { Overlay } from 'components';
-import { DECIMALS, DIGITS } from 'config';
-import { formatAmount, formatUSD, stringIsFloat, FormatUSDType } from 'helpers';
-
+import { FormatAmountUIType } from 'components';
+import { DIGITS } from 'config';
+import { formatAmount, stringIsFloat } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
-import { WithClassnameType } from 'types';
+import { FormatDisplayValue } from '../FormatDisplayValue';
 
-export interface FormatUSDUIType extends FormatUSDType, WithClassnameType {
-  decimals?: number;
-  showTooltip?: boolean;
+export interface FormatUSDUIType extends Omit<FormatAmountUIType, 'value'> {
+  value: string | number;
+  usd?: string | number;
+  showPrefix?: boolean;
 }
 
-export const FormatUSD = ({
-  amount: unprocessedAmount,
-  usd: usdValue,
-  digits = DIGITS,
-  decimals = DECIMALS,
-  maxDigits,
-  showPrefix = true,
-  showTooltip = true,
-  showLastNonZeroDecimal,
-  className
-}: FormatUSDUIType) => {
+export const FormatUSD = (props: FormatUSDUIType) => {
   const { isFetched, unprocessed } = useSelector(economicsSelector);
+  const {
+    value: unprocessedValue,
+    usd: usdValue,
+    digits = DIGITS,
+    decimals,
+    showSymbol = true,
+    showPrefix = true,
+    className
+  } = props;
 
   const amount = decimals
     ? formatAmount({
-        input: String(unprocessedAmount),
+        input: String(unprocessedValue),
         decimals,
         showLastNonZeroDecimal: true
       })
-    : unprocessedAmount;
+    : unprocessedValue;
+
   const formattedAmount = new BigNumber(amount).toFormat({
     groupSeparator: '',
     decimalSeparator: '.'
   });
 
+  if (!stringIsFloat(formattedAmount) || (!usdValue && !isFetched)) {
+    return (
+      <span
+        {...(props['data-testid']
+          ? { 'data-testid': props['data-testid'] }
+          : {})}
+        className={classNames(className, 'fam invalid')}
+      >
+        {ELLIPSIS}
+      </span>
+    );
+  }
+
   const usd =
     usdValue ?? (isFetched && unprocessed.price ? unprocessed.price : 1);
-
   const value = new BigNumber(amount).times(new BigNumber(usd));
-  const isEqual = new BigNumber(value).isEqualTo(
-    BigNumber(value).toFixed(digits)
-  );
+
+  const formattedValue = value.toFormat(digits);
+  const completeValue = value.toFormat();
 
   return (
-    <span className={classNames('d-inline-flex', className)}>
-      {!stringIsFloat(formattedAmount) || (!usdValue && !isFetched) ? (
-        ELLIPSIS
-      ) : (
-        <>
-          {showTooltip && !isEqual ? (
-            <Overlay title={`$${value.toFormat()}`} className='cursor-context'>
-              {formatUSD({
-                amount,
-                usd,
-                digits,
-                maxDigits,
-                showPrefix,
-                showLastNonZeroDecimal
-              })}
-            </Overlay>
-          ) : (
-            formatUSD({
-              amount,
-              usd,
-              digits,
-              maxDigits,
-              showPrefix,
-              showLastNonZeroDecimal
-            })
-          )}
-        </>
-      )}
-    </span>
+    <FormatDisplayValue
+      {...props}
+      formattedValue={formattedValue}
+      completeValue={completeValue}
+      showSymbol={showSymbol}
+      symbol={<>{showPrefix ? (value.isGreaterThan(0) ? '≈' : '=') : ''}$</>}
+    />
   );
 };

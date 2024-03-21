@@ -11,7 +11,6 @@ import {
   TokenLink,
   FormatUSD
 } from 'components';
-import { amountWithoutRounding } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
@@ -107,7 +106,7 @@ export const AccountTokens = () => {
                         <span>
                           (
                           <FormatUSD
-                            amount={token.valueUsd}
+                            value={token.valueUsd}
                             usd={1}
                             digits={2}
                             showPrefix={false}

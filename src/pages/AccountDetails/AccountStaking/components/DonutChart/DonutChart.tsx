@@ -39,7 +39,7 @@ export const DonutChart = ({
         </h6>
         <div className='text-neutral-400 small mb-0'>
           <FormatUSD
-            amount={bNtotalLocked.toString(10)}
+            value={bNtotalLocked.toString(10)}
             digits={2}
             showPrefix={false}
           />

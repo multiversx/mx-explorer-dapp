@@ -21,6 +21,7 @@ export const LowLiquidityTooltip = ({
         </>
       }
       className={classNames('cursor-context', className)}
+      persistent
     >
       <FontAwesomeIcon icon={faInfoCircle} className='text-warning' />
     </Overlay>

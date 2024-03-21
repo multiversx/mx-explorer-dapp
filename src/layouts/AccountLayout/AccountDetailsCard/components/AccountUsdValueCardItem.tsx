@@ -47,7 +47,7 @@ export const AccountUsdValueCardItem = ({
         {(balance || tokenBalance) && stakingDataReady && isEconomicsFetched ? (
           <span className='me-2'>
             <FormatUSD
-              amount={totalUsdValue.toString()}
+              value={totalUsdValue.toString()}
               usd={1}
               digits={2}
               showPrefix={false}
@@ -63,7 +63,7 @@ export const AccountUsdValueCardItem = ({
                 label: 'Available Balance',
                 value: (
                   <FormatUSD
-                    amount={new BigNumber(balance ?? 0).toString(10)}
+                    value={new BigNumber(balance ?? 0).toString(10)}
                     digits={2}
                     showPrefix={false}
                   />
@@ -73,7 +73,7 @@ export const AccountUsdValueCardItem = ({
                 label: 'Stake',
                 value: (
                   <FormatUSD
-                    amount={new BigNumber(totalLocked ?? 0).toString(10)}
+                    value={new BigNumber(totalLocked ?? 0).toString(10)}
                     digits={2}
                     showPrefix={false}
                   />
@@ -83,7 +83,7 @@ export const AccountUsdValueCardItem = ({
                 label: 'Token Balance',
                 value: (
                   <FormatUSD
-                    amount={new BigNumber(tokenBalance ?? 0).toString()}
+                    value={new BigNumber(tokenBalance ?? 0).toString()}
                     usd={1}
                     digits={2}
                     showPrefix={false}

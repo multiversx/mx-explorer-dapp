@@ -7,9 +7,10 @@ import {
   NetworkLink,
   FormatAmount,
   Sort,
-  LowLiquidityTooltip
+  LowLiquidityTooltip,
+  FormatUSD
 } from 'components';
-import { urlBuilder, amountWithoutRounding } from 'helpers';
+import { urlBuilder } from 'helpers';
 import { useGetSort } from 'hooks';
 import { faDiamond } from 'icons/regular';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'types';
@@ -94,10 +95,12 @@ export const TokensTable = ({
                               ? {
                                   details: (
                                     <>
-                                      ($
-                                      {new BigNumber(
-                                        token.totalLiquidity
-                                      ).toFormat(2)}
+                                      (
+                                      <FormatUSD
+                                        value={token.totalLiquidity}
+                                        usd={1}
+                                        digits={2}
+                                      />
                                       )
                                     </>
                                   )
@@ -120,7 +123,12 @@ export const TokensTable = ({
                 <td>{token.name}</td>
                 <td>
                   {token.price && (
-                    <>${amountWithoutRounding(token.price.toString(), 2)}</>
+                    <FormatUSD
+                      value={token.price}
+                      usd={1}
+                      digits={2}
+                      showPrefix={false}
+                    />
                   )}
                 </td>
                 <td>
@@ -140,7 +148,14 @@ export const TokensTable = ({
                 </td>
                 <td>
                   {token.marketCap && (
-                    <>${new BigNumber(token.marketCap).toFormat(0)}</>
+                    <>
+                      <FormatUSD
+                        value={token.marketCap}
+                        usd={1}
+                        digits={0}
+                        showPrefix={false}
+                      />
+                    </>
                   )}
                 </td>
                 <td>
