@@ -114,7 +114,7 @@ export const TokenDetailsCard = () => {
           ...(supply
             ? {
                 title: 'Supply',
-                value: new BigNumber(supply).toFormat()
+                value: new BigNumber(supply).toFormat(0)
               }
             : {})
         },
@@ -122,7 +122,7 @@ export const TokenDetailsCard = () => {
           ...(circulatingSupply
             ? {
                 title: 'Circulating',
-                value: new BigNumber(circulatingSupply).toFormat()
+                value: new BigNumber(circulatingSupply).toFormat(0)
               }
             : {})
         }

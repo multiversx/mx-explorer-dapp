@@ -10,7 +10,7 @@ export const formatBigNumber = (
     : new BigNumber(number).toFormat();
 
   if (bN.includes('.')) {
-    return bN.slice(0, bN.indexOf('.') + maxDigits + 1);
+    return bN.slice(0, bN.indexOf('.') + (maxDigits ? maxDigits + 1 : 0));
   }
 
   return bN;

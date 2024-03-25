@@ -73,7 +73,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     return (
       <>
         <span className='am'>{valueParts[0]}</span>
-        {valueParts.length > 1 && <span className='dec'>.{valueParts[1]}</span>}
+        {valueParts[1] && <span className='dec'>.{valueParts[1]}</span>}
       </>
     );
   };

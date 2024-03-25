@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 import { FormatAmountUIType } from 'components';
 import { DIGITS } from 'config';
-import { formatAmount, stringIsFloat } from 'helpers';
+import { formatAmount, stringIsFloat, formatBigNumber } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 import { FormatDisplayValue } from '../FormatDisplayValue';
 
@@ -55,10 +55,12 @@ export const FormatUSD = (props: FormatUSDUIType) => {
 
   const usd =
     usdValue ?? (isFetched && unprocessed.price ? unprocessed.price : 1);
-  const value = new BigNumber(amount).times(new BigNumber(usd));
+  const bNValue = new BigNumber(amount).times(new BigNumber(usd));
 
-  const formattedValue = value.toFormat(digits);
-  const completeValue = value.toFormat();
+  const completeValue = bNValue.toFormat();
+  const formattedValue = bNValue.isInteger()
+    ? completeValue
+    : formatBigNumber(bNValue, digits);
 
   return (
     <FormatDisplayValue
@@ -66,7 +68,7 @@ export const FormatUSD = (props: FormatUSDUIType) => {
       formattedValue={formattedValue}
       completeValue={completeValue}
       showSymbol={showSymbol}
-      symbol={<>{showPrefix ? (value.isGreaterThan(0) ? '≈' : '=') : ''}$</>}
+      symbol={<>{showPrefix ? (bNValue.isGreaterThan(0) ? '≈' : '=') : ''}$</>}
     />
   );
 };

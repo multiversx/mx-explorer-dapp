@@ -47,13 +47,15 @@ export const FormatAmount = (props: FormatAmountUIType) => {
     addCommas: true
   });
 
-  const completeValue = formatAmount({
-    input: value,
-    decimals,
-    digits,
-    showLastNonZeroDecimal: true,
-    addCommas: true
-  });
+  const completeValue = digits
+    ? formatAmount({
+        input: value,
+        decimals,
+        digits,
+        showLastNonZeroDecimal: true,
+        addCommas: true
+      })
+    : formattedValue;
 
   return (
     <FormatDisplayValue
@@ -62,6 +64,8 @@ export const FormatAmount = (props: FormatAmountUIType) => {
       completeValue={completeValue}
       egldLabel={egldLabel}
       data-testid={dataTestId}
+      showSymbol={showSymbol}
+      showLastNonZeroDecimal={showLastNonZeroDecimal}
       {...(showSymbol && !props.token
         ? {
             symbol: (
