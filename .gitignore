@@ -43,6 +43,7 @@ dist-ssr
 # Config
 /public/config.js
 /src/config/*
+!/src/config/helpers
 !/src/config.devnet.ts
 !/src/config.devnet-old.ts
 !/src/config.testnet.ts

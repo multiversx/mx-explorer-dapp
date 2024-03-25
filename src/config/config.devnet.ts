@@ -33,7 +33,7 @@ export const multiversxApps = allApps([
   },
   {
     id: 'xspotlight',
-    url: 'https://devnet.xspotlight.com/'
+    url: 'https://devnet.xspotlight.com'
   }
 ]);
 
