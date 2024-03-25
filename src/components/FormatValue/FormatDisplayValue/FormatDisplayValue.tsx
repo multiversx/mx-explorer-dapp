@@ -6,8 +6,8 @@ import { DIGITS } from 'config';
 
 export interface FormatDisplayValueUIType
   extends Omit<FormatAmountUIType, 'value'> {
-  formattedValue: string;
-  completeValue: string;
+  formattedValue: string | number;
+  completeValue: string | number;
   symbol?: React.ReactNode;
 }
 
@@ -27,7 +27,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     className
   } = props;
 
-  const valueParts = formattedValue.split('.');
+  const valueParts = String(formattedValue).split('.');
   const hasNoDecimals = valueParts.length === 1;
   const isFormattedValueZero = Number(formattedValue) === 0;
   const isZero = Number(completeValue) === 0;
@@ -48,7 +48,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
       isFormattedValueZero &&
       formattedValue !== completeValue
     ) {
-      const valueParts = completeValue.split('.');
+      const valueParts = String(completeValue).split('.');
       const decimalArray = valueParts?.[1]?.split('') ?? [];
       const firstNonZeroIndex = decimalArray.findIndex(
         (digit) => digit !== ZERO
@@ -94,7 +94,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
       {showLabel && (
         <>
           {superSuffix ? (
-            <sup className='suf'>&nbsp;{token ? token : egldLabel}</sup>
+            <sup className='suf'>{token ? token : egldLabel}</sup>
           ) : (
             <span className='suf'>&nbsp;{token ? token : egldLabel}</span>
           )}

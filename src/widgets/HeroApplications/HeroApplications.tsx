@@ -19,19 +19,15 @@ export const HeroApplications = () => {
     {
       label: 'Fees Captured',
       value: (
-        <FormatEGLD
-          value={new BigNumber(unprocessed.feesCaptured).toFormat(2)}
-          showEgldLabel
-          superSuffix
-        />
+        <FormatEGLD value={unprocessed.feesCaptured} showLabel superSuffix />
       )
     },
     {
       label: 'Developer Rewards',
       value: (
         <FormatEGLD
-          value={new BigNumber(unprocessed.developerRewards).toFormat(2)}
-          showEgldLabel
+          value={unprocessed.developerRewards}
+          showLabel
           superSuffix
         />
       )

@@ -1,46 +1,55 @@
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
+import { ELLIPSIS } from 'appConstants';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
+import { FormatAmountUIType } from 'components';
+import { DIGITS } from 'config';
+import { formatBigNumber, stringIsFloat } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
-import { WithClassnameType } from 'types';
 
-export interface FormatEGLDUIType extends WithClassnameType {
+import { FormatDisplayValue } from '../FormatDisplayValue';
+
+export interface FormatEGLDUIType extends Omit<FormatAmountUIType, 'value'> {
   value: string | number;
-  showEgldLabel?: boolean;
-  superSuffix?: boolean;
 }
 
-// TODO - will expand on FormatAmount ( FormatAmount )
+export const FormatEGLD = (props: FormatEGLDUIType) => {
+  const { egldLabel = '' } = useSelector(activeNetworkSelector);
+  const { value, showSymbol, digits = DIGITS, className } = props;
+  const numberValue = String(value).replace(/[^\d.-]/g, '');
 
-export const FormatEGLD = ({
-  value,
-  showEgldLabel,
-  superSuffix,
-  className
-}: FormatEGLDUIType) => {
-  const { egldLabel } = useSelector(activeNetworkSelector);
-
-  if (!value) {
-    return null;
-  }
-  if (!egldLabel || !(String(value).includes(egldLabel) || showEgldLabel)) {
-    return value;
+  if (!stringIsFloat(numberValue)) {
+    <span
+      className={classNames(className, 'fam invalid')}
+      {...(props['data-testid'] ? { 'data-testid': props['data-testid'] } : {})}
+    >
+      {ELLIPSIS}
+    </span>;
   }
 
-  const [amount, decimals] = String(value).replace(egldLabel, '').split('.');
+  const bNValue = new BigNumber(numberValue);
+  const completeValue = bNValue.toFormat();
+  const formattedValue = bNValue.isInteger()
+    ? completeValue
+    : formatBigNumber(bNValue, digits);
 
   return (
-    <span className={classNames(className, 'fam-e')}>
-      <MultiversXSymbol className='sym' /> <span className='am'>{amount}</span>
-      {decimals && <span className='dec'>.{decimals}</span>}
-      <>
-        {superSuffix ? (
-          <sup className='suf'>&nbsp;{egldLabel}</sup>
-        ) : (
-          <span className='suf'>&nbsp;{egldLabel}</span>
-        )}
-      </>
-    </span>
+    <FormatDisplayValue
+      {...props}
+      formattedValue={formattedValue}
+      completeValue={completeValue}
+      egldLabel={egldLabel}
+      {...(showSymbol && !props.token
+        ? {
+            symbol: (
+              <>
+                <MultiversXSymbol className='sym' />{' '}
+              </>
+            )
+          }
+        : {})}
+    />
   );
 };

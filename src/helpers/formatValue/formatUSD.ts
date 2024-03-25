@@ -1,11 +1,11 @@
 import BigNumber from 'bignumber.js';
-import { amountWithoutRounding } from 'helpers';
+import { DIGITS } from 'config';
+import { formatBigNumber } from 'helpers';
 
 export interface FormatUSDType {
   amount: string | number;
   usd?: string | number;
   digits?: number;
-  maxDigits?: number;
   showPrefix?: boolean;
   showLastNonZeroDecimal?: boolean;
 }
@@ -13,15 +13,14 @@ export interface FormatUSDType {
 export const formatUSD = ({
   amount,
   usd,
-  digits,
+  digits = DIGITS,
   showPrefix = true,
-  maxDigits,
   showLastNonZeroDecimal
 }: FormatUSDType) => {
   const value = new BigNumber(amount).times(usd ? new BigNumber(usd) : 1);
 
   const displayValue = showLastNonZeroDecimal
-    ? amountWithoutRounding(value, digits, maxDigits)
+    ? formatBigNumber(value, digits)
     : value.toFormat(digits);
 
   return `${
