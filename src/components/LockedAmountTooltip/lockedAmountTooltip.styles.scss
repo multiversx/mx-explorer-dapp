@@ -1,28 +1,22 @@
-#locked-amount-tooltip {
-  opacity: 1;
+.locked-amount-tooltip {
+  --tooltip-opacity: 1;
+  --tooltip-bg: var(--card-bg);
 
-  .arrow {
-    display: none;
+  .tooltip-arrow {
+    &::before {
+      --tooltip-bg: var(--border-color);
+    }
   }
-
   .tooltip-inner {
-    @extend .p-3;
-
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    box-shadow: none;
+    max-width: none;
     color: var(--body-color);
 
-    max-width: none !important;
-    // white-space: nowrap;
-
     .locked-item {
-      @extend .d-flex;
-
-      &:not(:last-child) {
-        @extend .mb-2;
-      }
-
       .locked-item-label {
         min-width: 8.5rem;
         text-align: left;
