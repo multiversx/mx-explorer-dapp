@@ -9,7 +9,7 @@ import { ReactComponent as DefaultImage } from 'assets/img/default-icon.svg';
 import {
   Loader,
   Pager,
-  Denominate,
+  FormatAmount,
   AccountLink,
   NetworkLink,
   Sort,
@@ -179,7 +179,7 @@ export const Applications = () => {
                                 )}
                               </td>
                               <td className='text-neutral-100'>
-                                <Denominate value={account.balance} />
+                                <FormatAmount value={account.balance} />
                               </td>
                               <td className='text-end'>
                                 {account.scrCount && (

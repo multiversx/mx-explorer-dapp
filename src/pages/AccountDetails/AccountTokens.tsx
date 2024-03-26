@@ -2,16 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
+import { ZERO } from 'appConstants';
 import {
   DetailItem,
   Loader,
   Pager,
   PageState,
-  Denominate,
+  FormatAmount,
   TokenLink,
   FormatUSD
 } from 'components';
-import { amountWithoutRounding } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
@@ -95,11 +95,11 @@ export const AccountTokens = () => {
                   >
                     <div className='d-flex align-items-center flex-wrap gap-1'>
                       <div className='text-neutral-100'>
-                        <Denominate
+                        <FormatAmount
                           showLabel={false}
                           showSymbol={false}
-                          value={token.balance ? token.balance : '0'}
-                          denomination={token.decimals}
+                          value={token.balance ? token.balance : ZERO}
+                          decimals={token.decimals}
                           showLastNonZeroDecimal
                         />
                       </div>
@@ -107,9 +107,8 @@ export const AccountTokens = () => {
                         <span>
                           (
                           <FormatUSD
-                            amount={token.valueUsd}
+                            value={token.valueUsd}
                             usd={1}
-                            digits={2}
                             showPrefix={false}
                             showLastNonZeroDecimal
                             className='text-neutral-400'

@@ -4,7 +4,7 @@ import {
   Trim,
   CopyButton,
   CardItem,
-  Denominate,
+  FormatAmount,
   LockedAmountTooltip,
   AccountLink
 } from 'components';
@@ -115,16 +115,16 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
           <CardItem title='Locked' icon={faLock}>
             <div className='d-flex align-items-center'>
               <span className='me-2'>
-                <Denominate value={locked} />
+                <FormatAmount value={locked} />
               </span>
 
               <LockedAmountTooltip
                 small
                 lockedDetails={[
-                  { label: 'Stake', value: <Denominate value={stake} /> },
+                  { label: 'Stake', value: <FormatAmount value={stake} /> },
                   {
                     label: 'Topup',
-                    value: <Denominate value={topUp} />
+                    value: <FormatAmount value={topUp} />
                   }
                 ]}
               />

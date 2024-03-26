@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 
-import { Denominate, NetworkLink, NftBadge, Overlay } from 'components';
+import { FormatAmount, NetworkLink, NftBadge, Overlay } from 'components';
 import { urlBuilder } from 'helpers';
 import { NftTypeEnum, TransactionTokenArgumentType } from 'types';
 
@@ -48,11 +48,11 @@ export const TransactionActionNft = ({
           {!noValue && token.type !== NftTypeEnum.NonFungibleESDT && (
             <div className={`me-1  ${token.svgUrl ? 'text-truncate' : ''}`}>
               {token.decimals !== undefined && tokenValue !== undefined ? (
-                <Denominate
+                <FormatAmount
                   value={String(tokenValue)}
                   showLabel={false}
                   showSymbol={false}
-                  denomination={token.decimals}
+                  decimals={token.decimals}
                   showLastNonZeroDecimal={showLastNonZeroDecimal}
                 />
               ) : (

@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 import { DECIMALS, DIGITS } from 'config';
-import { denominate } from 'helpers';
+import { formatAmount } from 'helpers';
 import {
   TransactionType,
   TransactionTokenArgumentType,
@@ -48,13 +48,13 @@ const getReceiptValue = (transaction: TransactionType) => {
       transaction?.receipt?.data &&
       transaction.receipt.data === 'refundedGas'
     ) {
-      const denominatedGas = denominate({
+      const formattedGas = formatAmount({
         input: transaction.receipt.value,
-        denomination: DECIMALS,
-        decimals: DIGITS,
+        decimals: DECIMALS,
+        digits: DIGITS,
         showLastNonZeroDecimal: true
       });
-      const gasRefunded = new BigNumber(denominatedGas)
+      const gasRefunded = new BigNumber(formattedGas)
         .times(transaction.gasPrice)
         .times(100);
 

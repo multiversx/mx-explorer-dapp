@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 import { DECIMALS, DIGITS } from 'config';
-import { denominate, truncateMiddle } from 'helpers';
+import { formatAmount, truncateMiddle } from 'helpers';
 import { ProviderType } from 'types';
 import { AccountStakingSliceType } from 'types/account.types';
 
@@ -58,12 +58,11 @@ export const prepareChartData = ({
             .plus(claimableRewards)
             .plus(userUnBondable);
 
-          const amount = denominate({
+          const amount = formatAmount({
             input: bNtotalLocked.toString(10),
-            denomination: DECIMALS,
-            decimals: DIGITS,
-            showLastNonZeroDecimal: false,
-            addCommas: false
+            decimals: DECIMALS,
+            digits: DIGITS,
+            showLastNonZeroDecimal: false
           });
 
           chartData.push({
@@ -77,12 +76,11 @@ export const prepareChartData = ({
       });
     }
     if (showDelegationLegacy && delegationLegacy) {
-      const amount = denominate({
+      const amount = formatAmount({
         input: bNtotalLegacyDelegation.toString(10),
-        denomination: DECIMALS,
-        decimals: DIGITS,
-        showLastNonZeroDecimal: false,
-        addCommas: false
+        decimals: DECIMALS,
+        digits: DIGITS,
+        showLastNonZeroDecimal: false
       });
       chartData.push({
         name: 'MultiversX Legacy Delegation',
@@ -91,12 +89,11 @@ export const prepareChartData = ({
       });
     }
     if (showStake && stake) {
-      const amount = denominate({
+      const amount = formatAmount({
         input: bNtotalStaked.toString(10),
-        denomination: DECIMALS,
-        decimals: DIGITS,
-        showLastNonZeroDecimal: false,
-        addCommas: false
+        decimals: DECIMALS,
+        digits: DIGITS,
+        showLastNonZeroDecimal: false
       });
       chartData.push({
         name: 'Staked Validator Nodes',

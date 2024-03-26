@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { Denominate } from 'components';
+import { FormatAmount } from 'components';
 import { stakeSelector } from 'redux/selectors';
 import { NodeType, WithClassnameType } from 'types';
 
@@ -37,7 +37,7 @@ export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
         })}
       >
         {bNTreshold.isGreaterThan(0) && <>+</>}
-        <Denominate value={bNTreshold.toString(10)} showSymbol={false} />
+        <FormatAmount value={bNTreshold.toString(10)} showSymbol={false} />
       </span>
     );
   }
@@ -45,7 +45,7 @@ export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
   return (
     <span className={classNames(className, 'text-red-400')}>
       -
-      <Denominate
+      <FormatAmount
         value={bNTreshold.absoluteValue().toString(10)}
         showSymbol={false}
       />

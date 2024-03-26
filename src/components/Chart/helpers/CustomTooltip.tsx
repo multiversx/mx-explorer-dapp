@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
-import { denominate, usdValue } from 'helpers';
+import { formatAmount, usdValue } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 
 const getTooltipLabel = (label: string) => {
@@ -39,7 +39,7 @@ export const CustomTooltip = ({
   label,
   currency,
   percentageMultiplier,
-  denomination,
+  decimals,
   customLabel,
   showUsdValue,
   dateFormat
@@ -49,7 +49,7 @@ export const CustomTooltip = ({
   label?: any;
   currency?: string;
   percentageMultiplier?: number;
-  denomination?: number;
+  decimals?: number;
   customLabel?: string;
   showUsdValue?: boolean;
   dateFormat?: string;
@@ -62,16 +62,14 @@ export const CustomTooltip = ({
         <ul className='recharts-tooltip-item-list list-unstyled'>
           {payload.map((entry: any) => {
             let displayValue = entry.value;
-            if (denomination) {
-              const denominatedValue = denominate({
+            if (decimals) {
+              const formattedValue = formatAmount({
                 input: new BigNumber(displayValue).toString(10),
-                denomination,
-                decimals: 2,
-                showLastNonZeroDecimal: false,
-                addCommas: false
+                decimals,
+                digits: 2
               });
 
-              displayValue = denominatedValue;
+              displayValue = formattedValue;
             }
             if (percentageMultiplier) {
               displayValue = Number(displayValue) * percentageMultiplier;

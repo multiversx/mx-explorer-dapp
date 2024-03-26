@@ -17,7 +17,7 @@ export const HeroStaking = ({ className }: WithClassnameType) => {
   const statistics: StatisticType[] = [
     {
       label: StakingStatisticsLabelEnum.TotalStaked,
-      value: <FormatEGLD value={totalStaked} showEgldLabel />,
+      value: <FormatEGLD value={totalStaked} showLabel />,
       detail: stakingPercentage
     },
     {

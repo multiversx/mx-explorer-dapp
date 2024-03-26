@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { Denominate, Led, Overlay } from 'components';
+import { FormatAmount, Led, Overlay } from 'components';
 import { faSquareInfo } from 'icons/solid';
 import { stakeSelector } from 'redux/selectors';
 import {
@@ -58,18 +58,18 @@ export const NodeDangerZoneTooltip = ({
                 </p>
                 <p className='mb-0'>
                   This node is only{' '}
-                  <Denominate
+                  <FormatAmount
                     value={bNStakeAboveTreshold.toString(10)}
-                    decimals={4}
+                    digits={4}
                   />{' '}
                   above the threshold level.
                   {bNStakeNeededAboveDangerZone.isGreaterThan(0) && (
                     <>
                       {' '}
                       Increase the staked amount with{' '}
-                      <Denominate
+                      <FormatAmount
                         value={bNStakeNeededAboveDangerZone.toString(10)}
-                        decimals={4}
+                        digits={4}
                       />{' '}
                       / node to exit the danger zone and move up in the auction
                       list.

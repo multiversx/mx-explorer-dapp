@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 
 import {
   CopyButton,
-  Denominate,
+  FormatAmount,
   NetworkLink,
   Overlay,
   LockedStakeTooltip,
@@ -126,7 +126,7 @@ export const ProvidersTable = ({
                     tooltipClassName='tooltip-text-start tooltip-lg'
                     className='cursor-context'
                   >
-                    <Denominate value={provider.locked} showTooltip={false} />
+                    <FormatAmount value={provider.locked} showTooltip={false} />
                   </Overlay>
                 ) : (
                   <>N/A</>
@@ -154,9 +154,9 @@ export const ProvidersTable = ({
               <td>
                 {provider.serviceFee ? (
                   <>
-                    {formatBigNumber(
-                      new BigNumber(provider.serviceFee).times(100)
-                    )}
+                    {formatBigNumber({
+                      value: new BigNumber(provider.serviceFee).times(100)
+                    })}
                     %
                   </>
                 ) : (

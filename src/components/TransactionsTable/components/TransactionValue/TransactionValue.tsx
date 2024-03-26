@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
-import { Denominate, TransactionActionBlock, Overlay } from 'components';
+import { FormatAmount, TransactionActionBlock, Overlay } from 'components';
 import { getTransactionTokens } from 'helpers';
 import { faLayerPlus } from 'icons/regular';
 import { UITransactionType, NftTypeEnum, TransactionActionEnum } from 'types';
@@ -52,7 +52,7 @@ export const TransactionValue = ({
       transaction.action.name === TransactionActionEnum.wrapEgld ||
       transaction.action.name === TransactionActionEnum.unwrapEgld
     ) {
-      return <Denominate value={transaction.value} />;
+      return <FormatAmount value={transaction.value} />;
     }
 
     const transactionTokens = getTransactionTokens({
@@ -86,5 +86,5 @@ export const TransactionValue = ({
     }
   }
 
-  return <Denominate value={transaction.value} />;
+  return <FormatAmount value={transaction.value} />;
 };

@@ -7,7 +7,7 @@ import {
   NetworkLink,
   Trim,
   Overlay,
-  Denominate,
+  FormatAmount,
   NodeStatusIcon,
   NodeIssueIcon,
   NodeFullHistoryIcon,
@@ -136,7 +136,7 @@ export const StandardRow = ({
               tooltipClassName='tooltip-text-start tooltip-lg'
               className='cursor-context'
             >
-              <Denominate value={nodeData.locked} showTooltip={false} />
+              <FormatAmount value={nodeData.locked} showTooltip={false} />
             </Overlay>
           </td>
         )}

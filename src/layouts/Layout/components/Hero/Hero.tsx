@@ -32,7 +32,9 @@ export const Hero = () => {
   const { pathname } = useLocation();
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { id: activeNetworkId, egldLabel = '' } = useSelector(
+    activeNetworkSelector
+  );
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
   const { pageStats } = usePageStats();
 
@@ -109,7 +111,13 @@ export const Hero = () => {
                     title={item.title}
                     subTitle={item.subTitle}
                     icon={item.icon}
-                    value={<FormatEGLD value={item.value} />}
+                    value={
+                      String(item.value).includes(egldLabel) ? (
+                        <FormatEGLD value={item.value} superSuffix />
+                      ) : (
+                        item.value
+                      )
+                    }
                     className='card-solitary'
                   />
                 ))}

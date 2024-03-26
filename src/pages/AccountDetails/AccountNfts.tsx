@@ -8,7 +8,7 @@ import {
   Pager,
   PageState,
   CollectionBlock,
-  Denominate,
+  FormatAmount,
   NftBadge,
   NetworkLink
 } from 'components';
@@ -96,11 +96,11 @@ export const AccountNfts = () => {
                       {nft.balance !== undefined && (
                         <div className='me-1'>
                           {nft.decimals ? (
-                            <Denominate
+                            <FormatAmount
                               showLabel={false}
                               showSymbol={false}
                               value={nft.balance ? nft.balance : '0'}
-                              denomination={nft.decimals}
+                              decimals={nft.decimals}
                             />
                           ) : (
                             Number(nft.balance).toLocaleString('en')

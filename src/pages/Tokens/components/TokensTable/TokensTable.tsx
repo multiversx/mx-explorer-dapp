@@ -3,8 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 
 import { ELLIPSIS } from 'appConstants';
-import { NetworkLink, Denominate, Sort, LowLiquidityTooltip } from 'components';
-import { urlBuilder, amountWithoutRounding } from 'helpers';
+import {
+  NetworkLink,
+  FormatAmount,
+  Sort,
+  LowLiquidityTooltip,
+  FormatUSD
+} from 'components';
+import { urlBuilder } from 'helpers';
 import { useGetSort } from 'hooks';
 import { faDiamond } from 'icons/regular';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'types';
@@ -89,10 +95,11 @@ export const TokensTable = ({
                               ? {
                                   details: (
                                     <>
-                                      ($
-                                      {new BigNumber(
-                                        token.totalLiquidity
-                                      ).toFormat(2)}
+                                      (
+                                      <FormatUSD
+                                        value={token.totalLiquidity}
+                                        usd={1}
+                                      />
                                       )
                                     </>
                                   )
@@ -115,12 +122,12 @@ export const TokensTable = ({
                 <td>{token.name}</td>
                 <td>
                   {token.price && (
-                    <>${amountWithoutRounding(token.price.toString(), 2)}</>
+                    <FormatUSD value={token.price} usd={1} showPrefix={false} />
                   )}
                 </td>
                 <td>
                   {token.circulatingSupply && (
-                    <Denominate
+                    <FormatAmount
                       showLabel={false}
                       showSymbol={false}
                       value={
@@ -128,14 +135,21 @@ export const TokensTable = ({
                           ? String(token.circulatingSupply)
                           : '0'
                       }
-                      denomination={token.decimals}
-                      decimals={0}
+                      decimals={token.decimals}
+                      digits={0}
                     />
                   )}
                 </td>
                 <td>
                   {token.marketCap && (
-                    <>${new BigNumber(token.marketCap).toFormat(0)}</>
+                    <>
+                      <FormatUSD
+                        value={token.marketCap}
+                        usd={1}
+                        digits={0}
+                        showPrefix={false}
+                      />
+                    </>
                   )}
                 </td>
                 <td>

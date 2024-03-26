@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useMatch, useNavigate } from 'react-router-dom';
 
 import {
-  Denominate,
+  FormatAmount,
   ShardSpan,
   NetworkLink,
   TimeAgo,
@@ -20,10 +20,9 @@ import {
   TransactionGuardianIcon,
   AccountLink
 } from 'components';
-import { DECIMALS, DIGITS } from 'config';
 import {
   addressIsBech32,
-  denominate,
+  formatAmount,
   formatDate,
   urlBuilder,
   isContract,
@@ -123,18 +122,13 @@ export const TransactionInfo = ({
   const transactionFee =
     transaction.fee === undefined && transaction.gasUsed === undefined
       ? 'N/A'
-      : denominate({
+      : formatAmount({
           input: transaction.fee ? transaction.fee : getFee(transaction),
-          denomination: DECIMALS,
-          decimals: DIGITS,
           showLastNonZeroDecimal: true
         });
 
-  const txValue = denominate({
+  const txValue = formatAmount({
     input: transaction.value,
-    denomination: DECIMALS,
-    decimals: DIGITS,
-    addCommas: false,
     showLastNonZeroDecimal: true
   });
 
@@ -320,7 +314,7 @@ export const TransactionInfo = ({
               </DetailItem>
 
               <DetailItem title='Value' className='text-neutral-100'>
-                <Denominate
+                <FormatAmount
                   value={transaction.value.toString()}
                   showLastNonZeroDecimal
                 />
@@ -328,9 +322,8 @@ export const TransactionInfo = ({
                   <>
                     {' '}
                     <FormatUSD
-                      amount={txValue}
+                      value={txValue}
                       usd={transaction.price}
-                      digits={2}
                       className='text-neutral-400'
                     />
                   </>
@@ -374,7 +367,7 @@ export const TransactionInfo = ({
                 <DetailItem title='Total Token Value'>
                   <span className='text-neutral-100'>
                     <FormatUSD
-                      amount={totalTxTokenUsdValue}
+                      value={totalTxTokenUsdValue}
                       usd={1}
                       digits={4}
                     />
@@ -386,7 +379,7 @@ export const TransactionInfo = ({
                 {transaction.fee !== undefined &&
                 transaction.gasUsed !== undefined ? (
                   <>
-                    <Denominate
+                    <FormatAmount
                       value={transaction.fee ?? getFee(transaction)}
                       showLastNonZeroDecimal
                     />
@@ -394,9 +387,8 @@ export const TransactionInfo = ({
                       <>
                         {' '}
                         <FormatUSD
-                          amount={transactionFee}
+                          value={transactionFee}
                           usd={transaction.price}
-                          digits={4}
                           className='text-neutral-400'
                         />
                       </>
@@ -409,16 +401,19 @@ export const TransactionInfo = ({
 
               {transaction.price !== undefined && (
                 <DetailItem title={`${egldLabel} Price`}>
-                  <span className='text-neutral-100'>{`$${new BigNumber(
-                    transaction.price
-                  ).toFormat(2)}`}</span>
+                  <FormatUSD
+                    value={1}
+                    usd={transaction.price}
+                    showPrefix={false}
+                    className='text-neutral-100'
+                  />
                 </DetailItem>
               )}
 
               <DetailItem title='Gas Limit'>
                 {transaction.gasLimit !== undefined ? (
                   <span className='text-neutral-100'>
-                    {transaction.gasLimit.toLocaleString('en')}
+                    {new BigNumber(transaction.gasLimit).toFormat()}
                   </span>
                 ) : (
                   <span>N/A</span>
@@ -428,7 +423,7 @@ export const TransactionInfo = ({
               <DetailItem title='Gas Used'>
                 {transaction.gasUsed !== undefined ? (
                   <span className='text-neutral-100'>
-                    {transaction.gasUsed.toLocaleString('en')}
+                    {new BigNumber(transaction.gasUsed).toFormat()}
                   </span>
                 ) : (
                   <span>N/A</span>
@@ -437,7 +432,7 @@ export const TransactionInfo = ({
 
               <DetailItem title='Gas Price' className='text-neutral-100'>
                 {transaction.gasPrice !== undefined ? (
-                  <Denominate
+                  <FormatAmount
                     value={transaction.gasPrice.toString()}
                     showLastNonZeroDecimal
                   />

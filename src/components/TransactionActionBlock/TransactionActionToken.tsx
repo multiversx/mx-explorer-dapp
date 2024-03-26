@@ -1,4 +1,4 @@
-import { Denominate, FormatUSD, NetworkLink } from 'components';
+import { FormatAmount, FormatUSD, NetworkLink } from 'components';
 import { DECIMALS } from 'config';
 import { urlBuilder } from 'helpers';
 import { TransactionTokenArgumentType } from 'types';
@@ -12,7 +12,7 @@ export const TransactionActionToken = ({
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
 }) => {
-  const denomination = token.decimals !== undefined ? token.decimals : DECIMALS;
+  const decimals = token.decimals !== undefined ? token.decimals : DECIMALS;
 
   return (
     <div className='token-action-block d-contents'>
@@ -20,11 +20,11 @@ export const TransactionActionToken = ({
         <>
           {!noValue && token.value && (
             <div className='me-1 text-truncate'>
-              <Denominate
+              <FormatAmount
                 value={token.value}
                 showLabel={false}
                 showSymbol={false}
-                denomination={denomination}
+                decimals={decimals}
                 showLastNonZeroDecimal={showLastNonZeroDecimal}
               />
             </div>
@@ -48,7 +48,7 @@ export const TransactionActionToken = ({
           </NetworkLink>
           {token?.valueUSD && (
             <div className='me-1 text-truncate text-neutral-400 ms-1 text-lh-24'>
-              (<FormatUSD amount={token.valueUSD} digits={2} usd={1} />)
+              (<FormatUSD value={token.valueUSD} usd={1} />)
             </div>
           )}
         </>

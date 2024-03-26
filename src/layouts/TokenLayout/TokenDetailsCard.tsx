@@ -5,9 +5,9 @@ import {
   SocialIcons,
   SocialWebsite,
   RolesBadges,
-  HeroDetailsCard
+  HeroDetailsCard,
+  FormatUSD
 } from 'components';
-import { amountWithoutRounding } from 'helpers';
 
 import { tokenSelector } from 'redux/selectors';
 
@@ -80,22 +80,32 @@ export const TokenDetailsCard = () => {
         { title: 'Properties', value: <RolesBadges {...token} /> }
       ]}
       statsCards={[
-        {
-          ...(price && marketCap
-            ? {
+        ...(price && marketCap
+          ? [
+              {
                 title: 'Price',
-                value: <>${amountWithoutRounding(price.toString(), 4)}</>
-              }
-            : {})
-        },
-        {
-          ...(price && marketCap
-            ? {
+                value: (
+                  <FormatUSD
+                    value={price}
+                    usd={1}
+                    digits={4}
+                    showPrefix={false}
+                  />
+                )
+              },
+              {
                 title: 'Market Cap',
-                value: <>${new BigNumber(marketCap).toFormat(0)}</>
+                value: (
+                  <FormatUSD
+                    value={marketCap}
+                    digits={0}
+                    usd={1}
+                    showPrefix={false}
+                  />
+                )
               }
-            : {})
-        },
+            ]
+          : []),
         { title: 'Holders', value: new BigNumber(accounts).toFormat() },
         { title: 'Transactions', value: new BigNumber(transactions).toFormat() }
       ]}
@@ -104,7 +114,7 @@ export const TokenDetailsCard = () => {
           ...(supply
             ? {
                 title: 'Supply',
-                value: new BigNumber(supply).toFormat()
+                value: new BigNumber(supply).toFormat(0)
               }
             : {})
         },
@@ -112,7 +122,7 @@ export const TokenDetailsCard = () => {
           ...(circulatingSupply
             ? {
                 title: 'Circulating',
-                value: new BigNumber(circulatingSupply).toFormat()
+                value: new BigNumber(circulatingSupply).toFormat(0)
               }
             : {})
         }

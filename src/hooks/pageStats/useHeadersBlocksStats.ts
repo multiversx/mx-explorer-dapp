@@ -32,15 +32,15 @@ export const useHeadersBlocksStats = () => {
 
     dispatch(
       setPageHeaderBlocksStats({
-        totalNetworkFees: new BigNumber(result.data.totalNetworkFees).toFormat(
-          0
-        ),
+        totalNetworkFees: new BigNumber(
+          result.data.totalNetworkFees
+        ).toFormat(),
         totalDeveloperRewards: new BigNumber(
           result.data.totalDeveloperRewards
-        ).toFormat(0),
+        ).toFormat(),
         totalApplicationsDeployed: new BigNumber(
           result.data.totalApplicationsDeployed
-        ).toFormat(0),
+        ).toFormat(),
         blockHeight: new BigNumber(unprocessed.blocks).toFormat(0)
       })
     );
