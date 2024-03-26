@@ -1,18 +1,14 @@
 import { useSelector } from 'react-redux';
 
+import { SHARE_PREFIX } from 'config';
 import { capitalize } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const useGetExplorerTitle = () => {
   const { id } = useSelector(activeNetworkSelector);
-  const customLinkPrefix = process.env.VITE_APP_SHARE_PREFIX
-    ? `${capitalize(
-        String(process.env.VITE_APP_SHARE_PREFIX).replace('-', ' ')
-      )}`
-    : '';
   const explorerTitle =
-    id !== 'mainnet' && customLinkPrefix
-      ? `${customLinkPrefix} Explorer`
+    id !== 'mainnet' && SHARE_PREFIX
+      ? `${capitalize(SHARE_PREFIX)} Explorer`
       : 'Explorer';
 
   return explorerTitle;

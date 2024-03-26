@@ -7,7 +7,6 @@ import { useMatch, useNavigate } from 'react-router-dom';
 
 import {
   FormatAmount,
-  ScAddressIcon,
   ShardSpan,
   NetworkLink,
   TimeAgo,
@@ -266,7 +265,6 @@ export const TransactionInfo = ({
 
               <DetailItem title='From'>
                 <div className='d-flex align-items-center'>
-                  <ScAddressIcon initiator={transaction.sender} />
                   {addressIsBech32(transaction.sender) ? (
                     <>
                       <AccountLink

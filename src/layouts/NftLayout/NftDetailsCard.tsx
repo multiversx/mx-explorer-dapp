@@ -45,12 +45,7 @@ export const NftDetailsCard = () => {
   } = nftState;
   const [showData, setShowData] = useState(!Boolean(scamInfo));
 
-  const show = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setShowData((existing) => !existing);
-  };
-
-  const showPreviewDetails = !scamInfo && assets;
+  const showPreviewDetails = (!scamInfo || showData) && assets;
   const titleTickerText =
     ticker !== undefined &&
     ticker !== collection &&
@@ -58,7 +53,7 @@ export const NftDetailsCard = () => {
       ? ticker
       : '';
   const title = `${
-    !scamInfo
+    !scamInfo || showData
       ? `${name} ${
           titleTickerText && titleTickerText !== name
             ? `(${titleTickerText})`
@@ -74,11 +69,14 @@ export const NftDetailsCard = () => {
     metadata.description !== assets.description &&
     !assets.description.includes(metadata.description);
 
+  const show = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowData((existing) => !existing);
+  };
+
   return (
     <HeroDetailsCard
-      title={
-        scamInfo ? (showData ? title : `[Hidden - ${scamInfo.info}]`) : title
-      }
+      title={!scamInfo || showData ? title : `[Hidden - ${scamInfo.info}]`}
       icon={
         showPreviewDetails ? nftPreview || assets?.svgUrl || assets?.pngUrl : ''
       }
@@ -96,27 +94,10 @@ export const NftDetailsCard = () => {
       }
       descriptionContent={
         scamInfo ? (
-          <>
-            {scamInfo && (
-              <div className='d-flex align-items-center flex-wrap gap-3'>
-                <span className='text-warning d-flex align-items-center ms-2'>
-                  <FontAwesomeIcon
-                    icon={faExclamationTriangle}
-                    size='sm'
-                    className='text-warning me-2'
-                  />
-                  {scamInfo.info}
-                </span>
-                <a
-                  href='/#'
-                  onClick={show}
-                  className='small-font text-neutral-400'
-                >
-                  {!showData ? 'Show' : 'Hide'} original content
-                </a>
-              </div>
-            )}
-          </>
+          <div className='d-flex align-items-center flex-wrap gap-2 my-3 text-warning'>
+            <FontAwesomeIcon icon={faExclamationTriangle} size='sm' />
+            {scamInfo.info}
+          </div>
         ) : null
       }
       isVerified={isVerified}
@@ -176,7 +157,6 @@ export const NftDetailsCard = () => {
         { title: 'Type', value: <NftBadge type={type} /> },
         { title: 'Collection', value: <CollectionBlock nft={nftState} /> },
         { title: 'Identifier', value: identifier },
-
         {
           ...(decimals !== undefined
             ? {
@@ -230,6 +210,22 @@ export const NftDetailsCard = () => {
                       <NftPreview token={nftState} />
                     )}
                   </>
+                )
+              }
+            : {})
+        },
+        {
+          ...(scamInfo
+            ? {
+                title: '',
+                value: (
+                  <a
+                    href='/#'
+                    onClick={show}
+                    className='small-font text-neutral-400'
+                  >
+                    {!showData ? 'Show' : 'Hide'} original content
+                  </a>
                 )
               }
             : {})
