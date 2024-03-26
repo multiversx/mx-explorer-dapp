@@ -58,7 +58,7 @@ export const NftDetailsCard = () => {
       ? ticker
       : '';
   const title = `${
-    !scamInfo
+    !scamInfo || showData
       ? `${name} ${
           titleTickerText && titleTickerText !== name
             ? `(${titleTickerText})`
@@ -96,27 +96,10 @@ export const NftDetailsCard = () => {
       }
       descriptionContent={
         scamInfo ? (
-          <>
-            {scamInfo && (
-              <div className='d-flex align-items-center flex-wrap gap-3'>
-                <span className='text-warning d-flex align-items-center ms-2'>
-                  <FontAwesomeIcon
-                    icon={faExclamationTriangle}
-                    size='sm'
-                    className='text-warning me-2'
-                  />
-                  {scamInfo.info}
-                </span>
-                <a
-                  href='/#'
-                  onClick={show}
-                  className='small-font text-neutral-400'
-                >
-                  {!showData ? 'Show' : 'Hide'} original content
-                </a>
-              </div>
-            )}
-          </>
+          <div className='d-flex align-items-center flex-wrap gap-2 my-3 text-warning'>
+            <FontAwesomeIcon icon={faExclamationTriangle} size='sm' />
+            {scamInfo.info}
+          </div>
         ) : null
       }
       isVerified={isVerified}
@@ -230,6 +213,22 @@ export const NftDetailsCard = () => {
                       <NftPreview token={nftState} />
                     )}
                   </>
+                )
+              }
+            : {})
+        },
+        {
+          ...(scamInfo
+            ? {
+                title: '',
+                value: (
+                  <a
+                    href='/#'
+                    onClick={show}
+                    className='small-font text-neutral-400'
+                  >
+                    {!showData ? 'Show' : 'Hide'} original content
+                  </a>
                 )
               }
             : {})

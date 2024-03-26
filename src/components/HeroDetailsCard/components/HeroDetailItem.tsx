@@ -17,7 +17,7 @@ export const HeroDetailItem = ({
   value,
   children
 }: HeroDetailItemUIType) => {
-  if (!title || !(children || value)) {
+  if (title === undefined || !(children || value)) {
     return null;
   }
 
