@@ -45,12 +45,7 @@ export const NftDetailsCard = () => {
   } = nftState;
   const [showData, setShowData] = useState(!Boolean(scamInfo));
 
-  const show = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setShowData((existing) => !existing);
-  };
-
-  const showPreviewDetails = !scamInfo && assets;
+  const showPreviewDetails = (!scamInfo || showData) && assets;
   const titleTickerText =
     ticker !== undefined &&
     ticker !== collection &&
@@ -74,11 +69,14 @@ export const NftDetailsCard = () => {
     metadata.description !== assets.description &&
     !assets.description.includes(metadata.description);
 
+  const show = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowData((existing) => !existing);
+  };
+
   return (
     <HeroDetailsCard
-      title={
-        scamInfo ? (showData ? title : `[Hidden - ${scamInfo.info}]`) : title
-      }
+      title={!scamInfo || showData ? title : `[Hidden - ${scamInfo.info}]`}
       icon={
         showPreviewDetails ? nftPreview || assets?.svgUrl || assets?.pngUrl : ''
       }
@@ -159,7 +157,6 @@ export const NftDetailsCard = () => {
         { title: 'Type', value: <NftBadge type={type} /> },
         { title: 'Collection', value: <CollectionBlock nft={nftState} /> },
         { title: 'Identifier', value: identifier },
-
         {
           ...(decimals !== undefined
             ? {
