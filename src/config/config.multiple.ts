@@ -1,13 +1,8 @@
 import { NetworkType } from 'types/network.types';
-import {
-  allApps,
-  getInternalNetworks,
-  links as sharedLinks,
-  schema
-} from './sharedConfig';
-export * from './sharedConfig';
+import { getInternalNetworks, getInternalLinks } from './helpers';
+import { allApps, schema } from './sharedConfig';
 
-export const links: typeof sharedLinks = [];
+export * from './sharedConfig';
 
 export const networks: NetworkType[] = [
   {
@@ -50,6 +45,8 @@ export const networks: NetworkType[] = [
   // Internal Testnets
   ...getInternalNetworks()
 ];
+
+export const links = getInternalLinks(networks);
 
 export const multiversxApps = allApps();
 

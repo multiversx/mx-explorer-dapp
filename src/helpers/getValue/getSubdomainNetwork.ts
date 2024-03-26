@@ -1,20 +1,20 @@
-import { networks } from 'config';
+import { networks, SHARE_PREFIX } from 'config';
 
 const getSubdomain = (hostname: string) => {
   const hostnameArray = hostname.split('.');
   const allNetworkIds = networks.map((network) => network.id);
-  const defaultPrefix = process.env.VITE_APP_SHARE_PREFIX
-    ? String(process.env.VITE_APP_SHARE_PREFIX).replace('-', '')
-    : '';
+  const defaultPrefix = SHARE_PREFIX.toLowerCase();
+  const defaultSuffix = '-explorer';
 
   const isSubSubdomain =
     Boolean(defaultPrefix) &&
-    hostnameArray?.[1] === `${defaultPrefix}-explorer`;
+    hostnameArray?.[1] === `${defaultPrefix}${defaultSuffix}`;
 
   const foundSubdomain = hostnameArray.find(
     (host) =>
-      allNetworkIds.includes(host.toLowerCase().replaceAll('-explorer', '')) &&
-      !allNetworkIds.includes(defaultPrefix)
+      allNetworkIds.includes(
+        host.toLowerCase().replaceAll(defaultSuffix, '')
+      ) && !allNetworkIds.includes(defaultPrefix)
   );
 
   return {
@@ -25,10 +25,10 @@ const getSubdomain = (hostname: string) => {
 };
 
 export const getSubdomainNetwork = () => {
-  const { subdomain, isSubSubdomain } = window?.location?.hostname
-    ? getSubdomain(window.location.hostname)
-    : { subdomain: undefined, isSubSubdomain: false };
-
+  if (!window?.location?.hostname) {
+    return { subdomain: undefined, isSubSubdomain: false };
+  }
+  const { subdomain, isSubSubdomain } = getSubdomain(window.location.hostname);
   const foundSubdomainNetwork = networks.find(
     ({ id }) => id === subdomain || (subdomain && id?.endsWith(subdomain))
   );
