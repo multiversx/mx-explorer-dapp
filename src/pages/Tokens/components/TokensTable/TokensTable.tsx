@@ -99,7 +99,6 @@ export const TokensTable = ({
                                       <FormatUSD
                                         value={token.totalLiquidity}
                                         usd={1}
-                                        digits={2}
                                       />
                                       )
                                     </>
@@ -123,12 +122,7 @@ export const TokensTable = ({
                 <td>{token.name}</td>
                 <td>
                   {token.price && (
-                    <FormatUSD
-                      value={token.price}
-                      usd={1}
-                      digits={2}
-                      showPrefix={false}
-                    />
+                    <FormatUSD value={token.price} usd={1} showPrefix={false} />
                   )}
                 </td>
                 <td>

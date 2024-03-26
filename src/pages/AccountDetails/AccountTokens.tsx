@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
+import { ZERO } from 'appConstants';
 import {
   DetailItem,
   Loader,
@@ -97,7 +98,7 @@ export const AccountTokens = () => {
                         <FormatAmount
                           showLabel={false}
                           showSymbol={false}
-                          value={token.balance ? token.balance : '0'}
+                          value={token.balance ? token.balance : ZERO}
                           decimals={token.decimals}
                           showLastNonZeroDecimal
                         />
@@ -108,7 +109,6 @@ export const AccountTokens = () => {
                           <FormatUSD
                             value={token.valueUsd}
                             usd={1}
-                            digits={2}
                             showPrefix={false}
                             showLastNonZeroDecimal
                             className='text-neutral-400'

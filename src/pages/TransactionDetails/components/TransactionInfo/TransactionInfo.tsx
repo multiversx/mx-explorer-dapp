@@ -326,7 +326,6 @@ export const TransactionInfo = ({
                     <FormatUSD
                       value={txValue}
                       usd={transaction.price}
-                      digits={2}
                       className='text-neutral-400'
                     />
                   </>
@@ -392,7 +391,6 @@ export const TransactionInfo = ({
                         <FormatUSD
                           value={transactionFee}
                           usd={transaction.price}
-                          digits={4}
                           className='text-neutral-400'
                         />
                       </>
@@ -405,16 +403,19 @@ export const TransactionInfo = ({
 
               {transaction.price !== undefined && (
                 <DetailItem title={`${egldLabel} Price`}>
-                  <span className='text-neutral-100'>{`$${new BigNumber(
-                    transaction.price
-                  ).toFormat(2)}`}</span>
+                  <FormatUSD
+                    value={1}
+                    usd={transaction.price}
+                    showPrefix={false}
+                    className='text-neutral-100'
+                  />
                 </DetailItem>
               )}
 
               <DetailItem title='Gas Limit'>
                 {transaction.gasLimit !== undefined ? (
                   <span className='text-neutral-100'>
-                    {transaction.gasLimit.toLocaleString('en')}
+                    {new BigNumber(transaction.gasLimit).toFormat()}
                   </span>
                 ) : (
                   <span>N/A</span>
@@ -424,7 +425,7 @@ export const TransactionInfo = ({
               <DetailItem title='Gas Used'>
                 {transaction.gasUsed !== undefined ? (
                   <span className='text-neutral-100'>
-                    {transaction.gasUsed.toLocaleString('en')}
+                    {new BigNumber(transaction.gasUsed).toFormat()}
                   </span>
                 ) : (
                   <span>N/A</span>

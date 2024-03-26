@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import {
   AccountLink,
   CopyButton,

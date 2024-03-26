@@ -49,7 +49,6 @@ export const AccountUsdValueCardItem = ({
             <FormatUSD
               value={totalUsdValue.toString()}
               usd={1}
-              digits={2}
               showPrefix={false}
             />
           </span>
@@ -64,7 +63,6 @@ export const AccountUsdValueCardItem = ({
                 value: (
                   <FormatUSD
                     value={new BigNumber(balance ?? 0).toString(10)}
-                    digits={2}
                     showPrefix={false}
                   />
                 )
@@ -74,7 +72,6 @@ export const AccountUsdValueCardItem = ({
                 value: (
                   <FormatUSD
                     value={new BigNumber(totalLocked ?? 0).toString(10)}
-                    digits={2}
                     showPrefix={false}
                   />
                 )
@@ -85,7 +82,6 @@ export const AccountUsdValueCardItem = ({
                   <FormatUSD
                     value={new BigNumber(tokenBalance ?? 0).toString()}
                     usd={1}
-                    digits={2}
                     showPrefix={false}
                   />
                 )
