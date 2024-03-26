@@ -33,7 +33,7 @@ export const FormatEGLD = (props: FormatEGLDUIType) => {
   const completeValue = bNValue.toFormat();
   const formattedValue = bNValue.isInteger()
     ? completeValue
-    : formatBigNumber(bNValue, digits);
+    : formatBigNumber({ value: bNValue, digits });
 
   return (
     <FormatDisplayValue

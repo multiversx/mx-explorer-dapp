@@ -63,7 +63,7 @@ export const NodesEligibilityPercentageBar = ({
               <div className='name'>Not Qualified</div>
               <div className='description'>{notQualifiedAuctionValidators}</div>
               <div className='value'>
-                {formatBigNumber(percentageNotQualified)}%
+                {formatBigNumber({ value: percentageNotQualified })}%
               </div>
             </div>
           )
@@ -116,7 +116,7 @@ export const NodesEligibilityPercentageBar = ({
               <div className='name'>Qualified</div>
               <div className='description'>{qualifiedAuctionValidators}</div>
               <div className='value'>
-                {formatBigNumber(percentageQualified)}%
+                {formatBigNumber({ value: percentageQualified })}%
               </div>
             </div>
           )

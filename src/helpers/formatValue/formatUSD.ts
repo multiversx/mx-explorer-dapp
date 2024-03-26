@@ -20,7 +20,7 @@ export const formatUSD = ({
   const value = new BigNumber(amount).times(usd ? new BigNumber(usd) : 1);
 
   const displayValue = showLastNonZeroDecimal
-    ? formatBigNumber(value, digits)
+    ? formatBigNumber({ value, digits })
     : value.toFormat(digits);
 
   return `${

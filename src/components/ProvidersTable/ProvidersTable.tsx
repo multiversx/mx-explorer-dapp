@@ -154,9 +154,9 @@ export const ProvidersTable = ({
               <td>
                 {provider.serviceFee ? (
                   <>
-                    {formatBigNumber(
-                      new BigNumber(provider.serviceFee).times(100)
-                    )}
+                    {formatBigNumber({
+                      value: new BigNumber(provider.serviceFee).times(100)
+                    })}
                     %
                   </>
                 ) : (
