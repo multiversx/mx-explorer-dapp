@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { NetworkLink, NftBadge } from 'components';
+import { NetworkLink, NftBadge, Overlay } from 'components';
 import { urlBuilder } from 'helpers';
 import { faHexagonCheck } from 'icons/solid';
 
@@ -30,21 +29,13 @@ export const CollectionLink = ({ collection, ...rest }: CollectionLinkType) => (
     </NetworkLink>
 
     {collection.isVerified && (
-      <OverlayTrigger
-        placement='top'
-        delay={{ show: 0, hide: 400 }}
-        overlay={(props: any) => (
-          <Tooltip {...props} show={props.show.toString()}>
-            Verified
-          </Tooltip>
-        )}
-      >
+      <Overlay title='Verified'>
         <FontAwesomeIcon
           icon={faHexagonCheck}
           size='sm'
           className='ms-2 text-yellow-spotlight'
         />
-      </OverlayTrigger>
+      </Overlay>
     )}
     <NftBadge type={collection.type} className='ms-2' />
   </>

@@ -5,12 +5,7 @@ import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 import { FormatAmountUIType } from 'components';
 import { DIGITS } from 'config';
-import {
-  formatAmount,
-  stringIsFloat,
-  formatBigNumber,
-  amountWithoutRounding
-} from 'helpers';
+import { formatAmount, stringIsFloat, formatBigNumber } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 import { FormatDisplayValue } from '../FormatDisplayValue';
 
@@ -66,10 +61,6 @@ export const FormatUSD = (props: FormatUSDUIType) => {
   const formattedValue = bNValue.isInteger()
     ? completeValue
     : formatBigNumber({ value: bNValue, digits });
-
-  const ceva = amountWithoutRounding(bNValue.toFormat(), 4);
-
-  console.log('------', completeValue, formattedValue, ceva);
 
   return (
     <FormatDisplayValue

@@ -14,10 +14,10 @@ import {
   faTiktok
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { ReactComponent as CoinGecko } from 'assets/img/logos/coingecko.svg';
 import { ReactComponent as CoinMarketCap } from 'assets/img/logos/coinmarketcap.svg';
+import { Overlay } from 'components';
 import { faGlobe, faEnvelope, faPencil, faFileAlt } from 'icons/regular';
 
 const getFaIcon = (icon: string) => {
@@ -90,15 +90,13 @@ export const SocialIcons = ({
         }
 
         return (
-          <OverlayTrigger
-            placement='top'
-            delay={{ show: 250, hide: 400 }}
-            overlay={(props) => (
-              <Tooltip id='social-tooltip' {...props}>
+          <Overlay
+            title={
+              <>
                 <span className='text-capitalize'>{social}: </span>
                 {assets[social]}
-              </Tooltip>
-            )}
+              </>
+            }
             key={`social-icon-${i}`}
           >
             {social === 'email' ? (
@@ -119,7 +117,7 @@ export const SocialIcons = ({
                 <Icon icon={social} />
               </a>
             )}
-          </OverlayTrigger>
+          </Overlay>
         );
       })}
     </div>

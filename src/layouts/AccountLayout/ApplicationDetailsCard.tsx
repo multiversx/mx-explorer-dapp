@@ -219,7 +219,11 @@ export const ApplicationDetailsCard = () => {
               {balance !== ELLIPSIS ? (
                 <div className='stats-card-content-container'>
                   <FormatAmount value={balance} data-testid='balance' />
-                  <FormatUSD value={balance} className='balance-usd' />
+                  <FormatUSD
+                    value={balance}
+                    decimals={DECIMALS}
+                    className='balance-usd'
+                  />
                 </div>
               ) : (
                 balance
@@ -234,7 +238,11 @@ export const ApplicationDetailsCard = () => {
               {developerReward !== undefined ? (
                 <div className='stats-card-content-container'>
                   <FormatAmount value={developerReward} />
-                  <FormatUSD value={developerReward} className='balance-usd' />
+                  <FormatUSD
+                    value={developerReward}
+                    decimals={DECIMALS}
+                    className='balance-usd'
+                  />
                 </div>
               ) : (
                 <span className='text-neutral-400'>N/A</span>
