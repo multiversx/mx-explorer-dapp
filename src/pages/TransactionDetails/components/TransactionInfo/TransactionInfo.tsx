@@ -338,7 +338,7 @@ export const TransactionInfo = ({
               </DetailItem>
 
               <DetailItem title='Method'>
-                <div className='badge badge-outline badge-outline-green-alt'>
+                <div className='badge badge-outline badge-outline-green-alt text-truncate mw-inherit'>
                   {getTransactionMethod(transaction)}
                 </div>
               </DetailItem>

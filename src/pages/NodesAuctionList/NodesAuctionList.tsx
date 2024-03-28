@@ -43,6 +43,7 @@ export const NodesAuctionList = () => {
 
   const isCustomSize = ![PAGE_SIZE, AUCTION_LIST_MAX_NODES].includes(pageSize);
   const size = isCustomSize ? pageSize : AUCTION_LIST_MAX_NODES;
+
   let filterText = '';
   if (!nodeFilters.isQualified) {
     filterText = 'Unqualified';
@@ -53,20 +54,23 @@ export const NodesAuctionList = () => {
   if (nodeFilters.isAuctionDangerZone) {
     filterText = 'Danger Zone';
   }
-
+  if (Object.keys(nodeFilters).length === 0) {
+    filterText = '';
+  }
   if (!sort.sort) {
-    sort.sort = 'auctionPosition';
-    sort.order = SortOrderEnum.asc;
+    sort.sort = 'locked';
+    sort.order = SortOrderEnum.desc;
   }
 
   const hasNoFilters =
     [search, ...Object.keys(nodeFilters)].every((el) => el === undefined) &&
-    sort.sort === 'auctionPosition';
+    sort.sort === 'locked';
 
   const fetchNodes = () => {
     setDataReady(undefined);
     const auctionListFilters = {
       ...nodeFilters,
+      type: 'validator',
       isAuctioned: true,
       search
     };

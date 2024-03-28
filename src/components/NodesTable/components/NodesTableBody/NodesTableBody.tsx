@@ -2,7 +2,7 @@ import { useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
-import { PAGE_SIZE, AUCTION_LIST_MAX_NODES } from 'appConstants';
+import { PAGE_SIZE, AUCTION_LIST_MAX_NODES, ZERO } from 'appConstants';
 import { PageState } from 'components';
 import { getExpandRowDetails, ExpandRowDetailsType } from 'helpers';
 import { useGetNodeFilters, useGetPage, useGetSearch, useGetSort } from 'hooks';
@@ -38,13 +38,18 @@ const findTresholdNode = (
   node: NodeType,
   minimumAuctionQualifiedStake?: string
 ) => {
-  const bNStake = new BigNumber(node.stake ?? 0).plus(node.auctionTopUp ?? 0);
+  const bNLocked = new BigNumber(node.locked);
   const bNMinimumAuctionStake = new BigNumber(
     minimumAuctionQualifiedStake ?? 0
   );
 
+  //TODO - remove when api issue is fixed - node is qualified / issue on locked values
+  if (bNLocked.isLessThan(node.auctionTopUp ?? ZERO)) {
+    return true;
+  }
+
   return (
-    bNStake.isGreaterThanOrEqualTo(bNMinimumAuctionStake) &&
+    bNLocked.isGreaterThanOrEqualTo(bNMinimumAuctionStake) &&
     node.auctionQualified
   );
 };
