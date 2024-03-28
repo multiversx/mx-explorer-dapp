@@ -29,7 +29,7 @@ export const formatBigNumber = ({
   }
 
   const amountDigits = formattedAmount.split('.')?.[1];
-  if (amountDigits) {
+  if (amountDigits && digits) {
     for (let i = 0; i < amountDigits.length; i++) {
       if (amountDigits.charAt(i) === ZERO) {
         digits++;
