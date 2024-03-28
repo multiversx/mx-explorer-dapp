@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
-import { CardItem, FormatAmount, LockedAmountTooltip } from 'components';
 
+import { ELLIPSIS } from 'appConstants';
+import { CardItem, FormatAmount, LockedAmountTooltip } from 'components';
 import { faLock } from 'icons/solid';
 import { accountStakingSelector } from 'redux/selectors';
 
@@ -57,11 +58,9 @@ export const LockedAmountCardItem = ({
     <CardItem className={cardItemClass} title='Stake' icon={faLock}>
       <div className='d-flex align-items-center'>
         {stakingDataReady ? (
-          <span className='me-2'>
-            <FormatAmount value={bNtotalLocked.toString(10)} />
-          </span>
+          <FormatAmount value={bNtotalLocked.toString(10)} />
         ) : (
-          <>...</>
+          ELLIPSIS
         )}
         {stakingDataReady && (
           <LockedAmountTooltip lockedDetails={lockedDetails} />

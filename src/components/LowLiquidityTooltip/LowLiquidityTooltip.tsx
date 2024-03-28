@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { FormatUSD, Overlay } from 'components';
-import { faInfoCircle } from 'icons/regular';
+import { faSquareInfo } from 'icons/solid';
 import { TokenType, WithClassnameType } from 'types';
 
 export interface LowLiquidityTooltipUIType extends WithClassnameType {
@@ -39,7 +39,7 @@ export const LowLiquidityTooltip = ({
       className={classNames(className)}
       persistent
     >
-      <FontAwesomeIcon icon={faInfoCircle} className='text-warning' />
+      <FontAwesomeIcon icon={faSquareInfo} className='text-warning' />
     </Overlay>
   );
 };

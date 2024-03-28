@@ -17,11 +17,11 @@ import {
   Overlay,
   TimeAgo,
   Trim,
-  TableWrapper
+  TableWrapper,
+  InfoTooltip
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetPage, useGetSort, useIsMainnet } from 'hooks';
-import { faInfoCircle } from 'icons/regular';
 import { faBadgeCheck } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
@@ -190,7 +190,7 @@ export const Applications = () => {
                               </td>
                               <td className='text-end'>
                                 {account.deployedAt ? (
-                                  <div className='d-flex align-items-center justify-content-end gap-2'>
+                                  <div className='d-flex align-items-center justify-content-end'>
                                     <TimeAgo
                                       value={account.deployedAt}
                                       short
@@ -198,7 +198,7 @@ export const Applications = () => {
                                       tooltip
                                     />
                                     {account.deployTxHash && (
-                                      <Overlay
+                                      <InfoTooltip
                                         title={
                                           <>
                                             <span className='text-neutral-400'>
@@ -217,14 +217,8 @@ export const Applications = () => {
                                             </NetworkLink>
                                           </>
                                         }
-                                        className='cursor-context'
                                         persistent
-                                      >
-                                        <FontAwesomeIcon
-                                          icon={faInfoCircle}
-                                          className='text-neutral-500'
-                                        />
-                                      </Overlay>
+                                      />
                                     )}
                                   </div>
                                 ) : (

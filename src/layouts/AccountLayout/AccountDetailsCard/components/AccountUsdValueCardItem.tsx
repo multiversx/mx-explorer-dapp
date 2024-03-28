@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
+import { ELLIPSIS } from 'appConstants';
 import { CardItem, LockedAmountTooltip, FormatUSD } from 'components';
 import { DECIMALS } from 'config';
 import { formatAmount } from 'helpers';
@@ -46,15 +47,13 @@ export const AccountUsdValueCardItem = ({
     <CardItem className={cardItemClass} title='Value' icon={faDollarSign}>
       <div className='d-flex align-items-center'>
         {(balance || tokenBalance) && stakingDataReady && isEconomicsFetched ? (
-          <span className='me-2'>
-            <FormatUSD
-              value={totalUsdValue.toString()}
-              usd={1}
-              showPrefix={false}
-            />
-          </span>
+          <FormatUSD
+            value={totalUsdValue.toString()}
+            usd={1}
+            showPrefix={false}
+          />
         ) : (
-          <>...</>
+          ELLIPSIS
         )}
         {stakingDataReady && isEconomicsFetched && (
           <LockedAmountTooltip

@@ -114,9 +114,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         {type !== 'observer' && locked !== undefined && (
           <CardItem title='Locked' icon={faLock}>
             <div className='d-flex align-items-center'>
-              <span className='me-2'>
-                <FormatAmount value={locked} />
-              </span>
+              <FormatAmount value={locked} />
               <LockedAmountTooltip
                 small
                 lockedDetails={[

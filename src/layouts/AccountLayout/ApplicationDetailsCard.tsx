@@ -15,17 +15,17 @@ import {
   TimeAgo,
   PropertyPill,
   FormatUSD,
-  Overlay,
   AccountLink,
   SocialIcons,
   SocialWebsite,
-  HeroDetailsCard
+  HeroDetailsCard,
+  InfoTooltip
 } from 'components';
 
 import { DECIMALS } from 'config';
 import { isContract, urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
-import { faExclamationTriangle, faInfoCircle } from 'icons/regular';
+import { faExclamationTriangle } from 'icons/regular';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountUpgradeType } from 'types';
 
@@ -280,7 +280,8 @@ export const ApplicationDetailsCard = () => {
                     showAgo
                     tooltip
                   />
-                  <Overlay
+
+                  <InfoTooltip
                     title={
                       <>
                         <span className='text-neutral-400'>
@@ -299,14 +300,9 @@ export const ApplicationDetailsCard = () => {
                         )}
                       </>
                     }
-                    className='cursor-context'
+                    iconClassName='d-inline-flex small'
                     persistent
-                  >
-                    <FontAwesomeIcon
-                      icon={faInfoCircle}
-                      className='text-neutral-500'
-                    />
-                  </Overlay>
+                  />
                 </div>
               ) : (
                 <span className='text-neutral-400'>N/A</span>
