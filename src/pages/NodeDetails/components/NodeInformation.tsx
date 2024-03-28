@@ -117,7 +117,6 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
               <span className='me-2'>
                 <FormatAmount value={locked} />
               </span>
-
               <LockedAmountTooltip
                 small
                 lockedDetails={[

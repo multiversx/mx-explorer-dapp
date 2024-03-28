@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import { Collapse, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Collapse } from 'react-bootstrap';
 
 import { METACHAIN_SHARD_ID } from 'appConstants';
 import {
@@ -12,7 +12,8 @@ import {
   DetailItem,
   CopyButton,
   IdentityBlock,
-  BlockGasUsed
+  BlockGasUsed,
+  Overlay
 } from 'components';
 import { formatDate, formatSize, urlBuilder } from 'helpers';
 import { faChevronLeft, faChevronRight, faClock } from 'icons/regular';
@@ -126,24 +127,20 @@ export const BlockData = (props: BlockDataType) => {
           </div>
         </DetailItem>
         <DetailItem title='Size'>
-          <OverlayTrigger
-            placement='top'
-            delay={{ show: 0, hide: 400 }}
-            overlay={(props: any) => (
-              <Tooltip id='size' {...props} show={props.show.toString()}>
+          <Overlay
+            title={
+              <>
                 {formatSize(block.size)} (size)
                 {block.sizeTxs !== undefined && (
                   <> + {formatSize(block.sizeTxs)} (sizetxs)</>
                 )}
-              </Tooltip>
-            )}
+              </>
+            }
           >
-            <span>
-              {block.sizeTxs !== undefined
-                ? formatSize(block.size + block.sizeTxs)
-                : formatSize(block.size)}
-            </span>
-          </OverlayTrigger>
+            {block.sizeTxs !== undefined
+              ? formatSize(block.size + block.sizeTxs)
+              : formatSize(block.size)}
+          </Overlay>
         </DetailItem>
         <DetailItem title='Gas Used'>
           <div className='d-flex flex-column align-items-start'>

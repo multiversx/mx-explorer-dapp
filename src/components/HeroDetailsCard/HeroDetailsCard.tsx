@@ -140,7 +140,9 @@ export const HeroDetailsCard = ({
               {title && (
                 <div
                   className={classNames('hero-details-card-title text-break', {
-                    'mb-spacer': !Boolean(description || descriptionContent)
+                    'mb-3 mb-md-spacer': !Boolean(
+                      description || descriptionContent
+                    )
                   })}
                 >
                   <div className='d-flex align-items-center'>
