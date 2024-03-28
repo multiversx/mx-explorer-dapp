@@ -43,17 +43,15 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
   }
 
   const DisplayValue = () => {
-    if (
-      !showLastNonZeroDecimal &&
-      isFormattedValueZero &&
-      formattedValue !== completeValue
-    ) {
-      const valueParts = String(completeValue).split('.');
-      const decimalArray = valueParts?.[1]?.split('') ?? [];
+    const completeValueParts = String(completeValue).split('.');
+    const decimalArray = completeValueParts?.[1]?.split('') ?? [];
+    const areAllDigitsZeroes = decimalArray.every((digit) => digit === ZERO);
+    if (!showLastNonZeroDecimal && formattedValue !== completeValue) {
       const firstNonZeroIndex = decimalArray.findIndex(
         (digit) => digit !== ZERO
       );
       const nonZeroDecimals = [];
+
       for (let i = firstNonZeroIndex; i <= decimalArray.length - 1; i++) {
         if (nonZeroDecimals.length < Math.max(digits, 2)) {
           nonZeroDecimals.push(decimalArray[i]);
@@ -73,7 +71,9 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     return (
       <>
         <span className='am'>{valueParts[0]}</span>
-        {valueParts[1] && <span className='dec'>.{valueParts[1]}</span>}
+        {valueParts[1] && !areAllDigitsZeroes && (
+          <span className='dec'>.{valueParts[1]}</span>
+        )}
       </>
     );
   };
