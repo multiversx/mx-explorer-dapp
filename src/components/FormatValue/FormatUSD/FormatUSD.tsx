@@ -67,10 +67,6 @@ export const FormatUSD = (props: FormatUSDUIType) => {
     ? completeValue
     : formatBigNumber({ value: bNValue, digits });
 
-  const ceva = amountWithoutRounding(bNValue.toFormat(), 4);
-
-  console.log('------', completeValue, formattedValue, ceva);
-
   return (
     <FormatDisplayValue
       {...props}
