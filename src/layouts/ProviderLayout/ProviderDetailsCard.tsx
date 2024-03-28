@@ -94,10 +94,7 @@ export const ProviderDetailsCard = ({
         <CardItem title='Locked' icon={faLock}>
           {provider.locked ? (
             <div className='d-flex align-items-center'>
-              <span className='me-2'>
-                <FormatAmount value={provider.locked} />
-              </span>
-
+              <FormatAmount value={provider.locked} />
               <LockedAmountTooltip
                 small
                 lockedDetails={[

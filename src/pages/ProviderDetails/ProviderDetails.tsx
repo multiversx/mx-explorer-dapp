@@ -60,13 +60,13 @@ export const ProviderDetails = () => {
           <ProviderTabs />
           {dataReady === true && (
             <>
+              <NodesFilters />
               <Pager
                 total={totalNodes}
                 className='d-flex ms-auto me-auto me-sm-0'
                 showFirstAndLast={false}
                 show
               />
-              <NodesFilters />
             </>
           )}
         </div>
