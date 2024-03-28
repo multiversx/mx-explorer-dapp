@@ -5,12 +5,7 @@ import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 import { FormatAmountUIType } from 'components';
 import { DIGITS } from 'config';
-import {
-  formatAmount,
-  stringIsFloat,
-  formatBigNumber,
-  amountWithoutRounding
-} from 'helpers';
+import { formatAmount, stringIsFloat, formatBigNumber } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 import { FormatDisplayValue } from '../FormatDisplayValue';
 

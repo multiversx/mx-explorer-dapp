@@ -6,7 +6,8 @@ import {
   SocialWebsite,
   RolesBadges,
   HeroDetailsCard,
-  FormatUSD
+  FormatUSD,
+  LowLiquidityTooltip
 } from 'components';
 
 import { tokenSelector } from 'redux/selectors';
@@ -83,7 +84,11 @@ export const TokenDetailsCard = () => {
         ...(price && marketCap
           ? [
               {
-                title: 'Price',
+                title: (
+                  <>
+                    Price <LowLiquidityTooltip token={token} className='ms-1' />
+                  </>
+                ),
                 value: (
                   <FormatUSD
                     value={price}
