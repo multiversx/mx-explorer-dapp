@@ -91,7 +91,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
       ) : (
         <DisplayValue />
       )}
-      {showLabel && (
+      {showLabel && (token || egldLabel) && (
         <>
           {superSuffix ? (
             <sup className='suf'>{token ? token : egldLabel}</sup>

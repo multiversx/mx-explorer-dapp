@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js';
 
 import { FormatAmount, FormatUSD, Chart } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
+import { DECIMALS } from 'config';
 import { ProviderType } from 'types';
 import { AccountStakingSliceType } from 'types/account.types';
 
@@ -38,7 +39,11 @@ export const DonutChart = ({
           <FormatAmount value={bNtotalLocked.toString(10)} />
         </h6>
         <div className='text-neutral-400 small mb-0'>
-          <FormatUSD value={bNtotalLocked.toString(10)} showPrefix={false} />
+          <FormatUSD
+            value={bNtotalLocked.toString(10)}
+            decimals={DECIMALS}
+            showPrefix={false}
+          />
         </div>
       </div>
       <Chart.Donut config={config} />

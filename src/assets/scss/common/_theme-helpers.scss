@@ -5,6 +5,9 @@
 .cursor-context {
   cursor: context-menu;
 }
+a > .cursor-context {
+  cursor: pointer;
+}
 .cursor-pointer {
   cursor: pointer;
 }
