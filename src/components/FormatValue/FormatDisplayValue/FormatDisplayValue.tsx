@@ -56,7 +56,9 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
         return (
           <>
             <span className='am'>0</span>
-            <span className='dec'>.0...0{nonZeroDecimals.join('')}</span>
+            <span className='dec'>
+              .0<sub>{firstNonZeroIndex - 2}</sub>0{nonZeroDecimals.join('')}
+            </span>
           </>
         );
       }
