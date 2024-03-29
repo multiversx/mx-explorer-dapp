@@ -8,7 +8,7 @@ import { ELLIPSIS } from 'appConstants';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { DECIMALS, DIGITS } from 'config';
 import { formatAmount } from 'helpers';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
 import { FormatDisplayValue } from '../FormatDisplayValue';
 import { FormatUSD } from '../FormatUSD';
 
@@ -22,6 +22,7 @@ export interface FormatAmountUIType extends SdkDappFormatAmountType {
 
 export const FormatAmount = (props: FormatAmountUIType) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
+  const { isFetched, unprocessed } = useSelector(economicsSelector);
   const {
     value,
     className,
@@ -72,7 +73,7 @@ export const FormatAmount = (props: FormatAmountUIType) => {
     showUsdValue &&
     !isZero &&
     (showSymbol || showLabel) &&
-    (!token || usd);
+    ((isFetched && unprocessed.price) || (usd && !token));
 
   return (
     <FormatDisplayValue

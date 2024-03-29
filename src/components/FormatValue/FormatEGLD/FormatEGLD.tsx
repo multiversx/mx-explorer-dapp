@@ -7,7 +7,7 @@ import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { FormatAmountUIType, FormatUSD } from 'components';
 import { DIGITS } from 'config';
 import { formatBigNumber, stringIsFloat } from 'helpers';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
 
 import { FormatDisplayValue } from '../FormatDisplayValue';
 
@@ -19,6 +19,7 @@ export interface FormatEGLDUIType extends Omit<FormatAmountUIType, 'value'> {
 
 export const FormatEGLD = (props: FormatEGLDUIType) => {
   const { egldLabel = '' } = useSelector(activeNetworkSelector);
+  const { isFetched, unprocessed } = useSelector(economicsSelector);
   const {
     value,
     usd,
@@ -44,7 +45,10 @@ export const FormatEGLD = (props: FormatEGLDUIType) => {
     ? completeValue
     : formatBigNumber({ value: bNValue, digits });
 
-  const showUsdValueTooltip = !bNValue.isZero() && showUsdValue;
+  const showUsdValueTooltip =
+    !bNValue.isZero() &&
+    showUsdValue &&
+    ((isFetched && unprocessed.price) || usd);
 
   return (
     <FormatDisplayValue
