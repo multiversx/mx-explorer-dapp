@@ -211,7 +211,7 @@ export const BlockData = (props: BlockDataType) => {
             {block.notarizedBlocksHashes === undefined ||
             (Array.isArray(block.notarizedBlocksHashes) &&
               block.notarizedBlocksHashes.length === 0) ? (
-              <span className='text-neutral-400 na-item'>N/A</span>
+              <span className='text-neutral-400'>N/A</span>
             ) : (
               <div className='hash-group'>
                 {block.notarizedBlocksHashes.map((item, i) => (
@@ -235,7 +235,7 @@ export const BlockData = (props: BlockDataType) => {
           {block.miniBlocksHashes === undefined ||
           (Array.isArray(block.miniBlocksHashes) &&
             block.miniBlocksHashes.length === 0) ? (
-            <span className='text-neutral-400 na-item'>N/A</span>
+            <span className='text-neutral-400'>N/A</span>
           ) : (
             <div className='hash-group'>
               {block.miniBlocksHashes.map((item) => (

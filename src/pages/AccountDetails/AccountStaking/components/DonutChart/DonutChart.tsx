@@ -36,7 +36,10 @@ export const DonutChart = ({
           {bNtotalLocked.isEqualTo(0) ? 'No staking' : 'Total Staked'}
         </h5>
         <h6 className='mb-1'>
-          <FormatAmount value={bNtotalLocked.toString(10)} />
+          <FormatAmount
+            value={bNtotalLocked.toString(10)}
+            showUsdValue={false}
+          />
         </h6>
         <div className='text-neutral-400 small mb-0'>
           <FormatUSD

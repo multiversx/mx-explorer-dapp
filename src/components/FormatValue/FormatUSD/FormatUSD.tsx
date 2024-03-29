@@ -68,6 +68,7 @@ export const FormatUSD = (props: FormatUSDUIType) => {
       formattedValue={formattedValue}
       completeValue={completeValue}
       showSymbol={showSymbol}
+      showTooltipSymbol
       symbol={<>{showPrefix ? (bNValue.isGreaterThan(0) ? '≈' : '=') : ''}$</>}
     />
   );

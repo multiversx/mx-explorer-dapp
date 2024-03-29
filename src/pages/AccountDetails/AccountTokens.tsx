@@ -100,6 +100,7 @@ export const AccountTokens = () => {
                           showSymbol={false}
                           value={token.balance ? token.balance : ZERO}
                           decimals={token.decimals}
+                          showUsdValue={false}
                           showLastNonZeroDecimal
                         />
                       </div>

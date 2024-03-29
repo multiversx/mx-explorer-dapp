@@ -87,7 +87,7 @@ const ActionText = ({
   entry: any;
   transaction: TransactionType;
 }) => {
-  const { egldLabel } = useSelector(activeNetworkSelector);
+  const { egldLabel = 'EGLD' } = useSelector(activeNetworkSelector);
 
   switch (true) {
     case typeof entry === 'string':

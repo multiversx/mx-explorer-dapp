@@ -316,6 +316,7 @@ export const TransactionInfo = ({
               <DetailItem title='Value' className='text-neutral-100'>
                 <FormatAmount
                   value={transaction.value.toString()}
+                  showUsdValue={false}
                   showLastNonZeroDecimal
                 />
                 {transaction.price !== undefined && (
@@ -381,6 +382,7 @@ export const TransactionInfo = ({
                   <>
                     <FormatAmount
                       value={transaction.fee ?? getFee(transaction)}
+                      showUsdValue={false}
                       showLastNonZeroDecimal
                     />
                     {transaction.price !== undefined && (
@@ -434,6 +436,7 @@ export const TransactionInfo = ({
                 {transaction.gasPrice !== undefined ? (
                   <FormatAmount
                     value={transaction.gasPrice.toString()}
+                    usd={transaction.price}
                     showLastNonZeroDecimal
                   />
                 ) : (
