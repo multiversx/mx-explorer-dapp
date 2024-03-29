@@ -38,7 +38,7 @@ export const TokenLink = ({ token }: { token: TokenType }) => {
           <>
             {token.type === TokenTypeEnum.MetaESDT &&
             detailsIdentifier !== token.identifier ? (
-              <Overlay title={token.identifier}>
+              <Overlay title={token.identifier} truncate>
                 <TokenComponent />
               </Overlay>
             ) : (

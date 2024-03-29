@@ -81,7 +81,7 @@ export const NodeDangerZoneTooltip = ({
                 </p>
               </>
             }
-            className='side-action cursor-context'
+            className='side-action'
             tooltipClassName='tooltip-text-start tooltip-lg'
             persistent
           >

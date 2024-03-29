@@ -62,13 +62,14 @@ export const AccountName = ({
             <IdentityLogo className='herotag-logo' />
           </Overlay>
         )}
-        <Overlay title={description} tooltipClassName='account-name'>
-          <div
-            className={classNames('text-truncate', className)}
-            data-testid={dataTestId}
-          >
-            {name}
-          </div>
+        <Overlay
+          title={description}
+          tooltipClassName='account-name'
+          data-testid={dataTestId}
+          className={className}
+          truncate
+        >
+          {name}
         </Overlay>
       </>
     );

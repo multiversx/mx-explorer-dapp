@@ -19,16 +19,15 @@ export const TransactionActionToken = ({
       {token && token.token && (
         <>
           {!noValue && token.value && (
-            <div className='me-1 text-truncate'>
-              <FormatAmount
-                value={token.value}
-                showLabel={false}
-                showSymbol={false}
-                decimals={decimals}
-                showLastNonZeroDecimal={showLastNonZeroDecimal}
-                showUsdValue={false}
-              />
-            </div>
+            <FormatAmount
+              value={token.value}
+              showLabel={false}
+              showSymbol={false}
+              decimals={decimals}
+              showLastNonZeroDecimal={showLastNonZeroDecimal}
+              showUsdValue={false}
+              className='me-1'
+            />
           )}
           <NetworkLink
             to={urlBuilder.tokenDetails(token.token)}

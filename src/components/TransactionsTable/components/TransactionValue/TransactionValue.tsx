@@ -29,7 +29,7 @@ const MultipleTokensBadge = ({
   );
 
   return (
-    <Overlay title={<Tooltip />} className='cursor-context multiple-tokens'>
+    <Overlay title={<Tooltip />} className='multiple-tokens'>
       <FontAwesomeIcon icon={faLayerPlus} className='ms-1 text-neutral-400' />
     </Overlay>
   );

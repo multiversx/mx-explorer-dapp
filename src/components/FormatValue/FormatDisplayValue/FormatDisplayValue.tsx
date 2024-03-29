@@ -108,6 +108,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
             </>
           }
           persistent
+          truncate
         >
           <DisplayValue />
         </Overlay>

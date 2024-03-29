@@ -97,7 +97,7 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
               />
             }
             tooltipClassName='tooltip-text-start tooltip-lg'
-            className='cursor-context'
+            truncate
           >
             <FormatAmount value={identity.locked} showTooltip={false} />
           </Overlay>

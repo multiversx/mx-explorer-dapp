@@ -24,7 +24,6 @@ export const MultilayerPercentageBar = ({
             key={`progress-bar-${i}`}
             className={classNames(
               'progress-bar',
-              'cursor-context',
               `step-${i + 1}`,
               step.className
             )}

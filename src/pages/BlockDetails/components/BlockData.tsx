@@ -136,6 +136,7 @@ export const BlockData = (props: BlockDataType) => {
                 )}
               </>
             }
+            truncate
           >
             {block.sizeTxs !== undefined
               ? formatSize(block.size + block.sizeTxs)

@@ -124,7 +124,7 @@ export const ProvidersTable = ({
                       />
                     }
                     tooltipClassName='tooltip-text-start tooltip-lg'
-                    className='cursor-context'
+                    truncate
                   >
                     <FormatAmount value={provider.locked} showTooltip={false} />
                   </Overlay>

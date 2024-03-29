@@ -112,8 +112,8 @@ export const AuctionListBaseRow = ({
         <Overlay
           title={<NodeLockedStakeTooltip node={nodeData} showAuctionTopup />}
           tooltipClassName='tooltip-text-start tooltip-lg'
-          className='cursor-context'
           persistent
+          truncate
         >
           <FormatAmount value={bNLocked.toString(10)} showTooltip={false} />
         </Overlay>

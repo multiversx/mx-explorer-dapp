@@ -1,11 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { MultilayerPercentageBar, Overlay, Led } from 'components';
+import { MultilayerPercentageBar, Led, InfoTooltip } from 'components';
 import { formatBigNumber } from 'helpers';
-import { faSquareInfo } from 'icons/solid';
 import { stakeSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
@@ -79,7 +77,7 @@ export const NodesEligibilityPercentageBar = ({
             >
               <div className='name'>
                 Danger Zone
-                <Overlay
+                <InfoTooltip
                   title={
                     <>
                       <p className='mb-2 h6'>
@@ -92,11 +90,8 @@ export const NodesEligibilityPercentageBar = ({
                       </p>
                     </>
                   }
-                  className='side-action cursor-context'
                   tooltipClassName='tooltip-text-start tooltip-lg'
-                >
-                  <FontAwesomeIcon icon={faSquareInfo} />
-                </Overlay>
+                />
               </div>
               <div className='description'>{dangerZoneValidators}</div>
             </div>

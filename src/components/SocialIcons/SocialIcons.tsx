@@ -98,6 +98,7 @@ export const SocialIcons = ({
               </>
             }
             key={`social-icon-${i}`}
+            truncate
           >
             {social === 'email' ? (
               <a

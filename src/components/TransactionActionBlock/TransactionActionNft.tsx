@@ -82,7 +82,7 @@ export const TransactionActionNft = ({
                 : {})}
             >
               {token.type === NftTypeEnum.MetaESDT && token?.svgUrl ? (
-                <Overlay title={displayIdentifier}>
+                <Overlay title={displayIdentifier} truncate>
                   <TokenInfo />
                 </Overlay>
               ) : (

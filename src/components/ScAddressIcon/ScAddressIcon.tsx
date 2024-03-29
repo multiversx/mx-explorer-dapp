@@ -23,7 +23,7 @@ export const ScAddressIcon = ({
     isContract(secondInitiator, SC_INIT_CHARACTERS_LENGTH);
 
   return showIcon ? (
-    <Overlay title='Smart Contract' className='cursor-context'>
+    <Overlay title='Smart Contract'>
       <FontAwesomeIcon
         icon={faCommand}
         className='me-1 text-primary'

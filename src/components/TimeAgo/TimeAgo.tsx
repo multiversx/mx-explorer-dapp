@@ -27,7 +27,7 @@ export const TimeAgo = ({
   }
 
   return tooltip ? (
-    <Overlay title={formatDate(value, false, true)}>
+    <Overlay title={formatDate(value, false, true)} truncate>
       <span>
         {result}
         {showAgo ? ' ago' : ''}

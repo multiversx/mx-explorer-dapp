@@ -54,7 +54,7 @@ export const Overlay = ({
       <span
         ref={ref}
         className={classNames(className, 'cursor-context', {
-          'text-truncate': !Boolean(className) || truncate
+          'text-truncate': truncate
         })}
         {...(style ? { style: style } : {})}
         {...(persistent

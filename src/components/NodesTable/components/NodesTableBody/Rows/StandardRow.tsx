@@ -134,7 +134,7 @@ export const StandardRow = ({
             <Overlay
               title={<NodeLockedStakeTooltip node={nodeData} />}
               tooltipClassName='tooltip-text-start tooltip-lg'
-              className='cursor-context'
+              truncate
             >
               <FormatAmount value={nodeData.locked} showTooltip={false} />
             </Overlay>
