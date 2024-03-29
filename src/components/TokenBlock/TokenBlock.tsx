@@ -1,4 +1,4 @@
-import { Denominate, TokenLink } from 'components';
+import { FormatAmount, TokenLink } from 'components';
 import { DECIMALS } from 'config';
 import { TokenType } from 'types';
 
@@ -8,16 +8,16 @@ interface TokenBlockType {
 }
 
 export const TokenBlock = ({ value, operationToken }: TokenBlockType) => {
-  const denomination =
+  const decimals =
     operationToken.decimals !== undefined ? operationToken.decimals : DECIMALS;
 
   return (
     <div className='token-block d-flex text-truncate'>
       {value && (
         <div className='me-1'>
-          <Denominate
+          <FormatAmount
             value={value}
-            denomination={denomination}
+            decimals={decimals}
             showLabel={false}
             showSymbol={false}
             showLastNonZeroDecimal={true}

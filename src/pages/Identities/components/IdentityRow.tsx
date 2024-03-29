@@ -9,7 +9,7 @@ import {
   PageState,
   NodesTable,
   SharedIdentity,
-  Denominate,
+  FormatAmount,
   PercentageBar,
   Overlay,
   LockedStakeTooltip
@@ -97,9 +97,9 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
               />
             }
             tooltipClassName='tooltip-text-start tooltip-lg'
-            className='cursor-context'
+            truncate
           >
-            <Denominate value={identity.locked} showTooltip={false} />
+            <FormatAmount value={identity.locked} showTooltip={false} />
           </Overlay>
         </td>
         <td>

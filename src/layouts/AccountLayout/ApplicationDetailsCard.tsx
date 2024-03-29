@@ -7,7 +7,7 @@ import { ELLIPSIS } from 'appConstants';
 import { ReactComponent as DefaultImage } from 'assets/img/default.svg';
 import {
   CopyButton,
-  Denominate,
+  FormatAmount,
   NetworkLink,
   ShardSpan,
   ScAddressIcon,
@@ -15,17 +15,17 @@ import {
   TimeAgo,
   PropertyPill,
   FormatUSD,
-  Overlay,
   AccountLink,
   SocialIcons,
   SocialWebsite,
-  HeroDetailsCard
+  HeroDetailsCard,
+  InfoTooltip
 } from 'components';
 
 import { DECIMALS } from 'config';
 import { isContract, urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
-import { faExclamationTriangle, faInfoCircle } from 'icons/regular';
+import { faExclamationTriangle } from 'icons/regular';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountUpgradeType } from 'types';
 
@@ -218,16 +218,14 @@ export const ApplicationDetailsCard = () => {
             <>
               {balance !== ELLIPSIS ? (
                 <div className='stats-card-content-container'>
-                  <Denominate
+                  <FormatAmount
                     value={balance}
-                    decimals={2}
-                    showSymbol
+                    showUsdValue={false}
                     data-testid='balance'
                   />
                   <FormatUSD
-                    amount={balance}
+                    value={balance}
                     decimals={DECIMALS}
-                    digits={2}
                     className='balance-usd'
                   />
                 </div>
@@ -243,11 +241,10 @@ export const ApplicationDetailsCard = () => {
             <>
               {developerReward !== undefined ? (
                 <div className='stats-card-content-container'>
-                  <Denominate value={developerReward} decimals={2} showSymbol />
+                  <FormatAmount value={developerReward} showUsdValue={false} />
                   <FormatUSD
-                    amount={developerReward}
+                    value={developerReward}
                     decimals={DECIMALS}
-                    digits={2}
                     className='balance-usd'
                   />
                 </div>
@@ -287,7 +284,8 @@ export const ApplicationDetailsCard = () => {
                     showAgo
                     tooltip
                   />
-                  <Overlay
+
+                  <InfoTooltip
                     title={
                       <>
                         <span className='text-neutral-400'>
@@ -306,14 +304,9 @@ export const ApplicationDetailsCard = () => {
                         )}
                       </>
                     }
-                    className='cursor-context'
+                    iconClassName='d-inline-flex small'
                     persistent
-                  >
-                    <FontAwesomeIcon
-                      icon={faInfoCircle}
-                      className='text-neutral-500'
-                    />
-                  </Overlay>
+                  />
                 </div>
               ) : (
                 <span className='text-neutral-400'>N/A</span>

@@ -5,9 +5,10 @@ import {
   SocialIcons,
   SocialWebsite,
   RolesBadges,
-  HeroDetailsCard
+  HeroDetailsCard,
+  FormatUSD,
+  LowLiquidityTooltip
 } from 'components';
-import { amountWithoutRounding } from 'helpers';
 
 import { tokenSelector } from 'redux/selectors';
 
@@ -24,6 +25,7 @@ export const TokenDetailsCard = () => {
     circulatingSupply,
     accounts,
     transactions,
+    transfersCount,
     price,
     marketCap
   } = token;
@@ -80,31 +82,48 @@ export const TokenDetailsCard = () => {
         { title: 'Properties', value: <RolesBadges {...token} /> }
       ]}
       statsCards={[
-        {
-          ...(price && marketCap
-            ? {
-                title: 'Price',
-                value: <>${amountWithoutRounding(price.toString(), 4)}</>
-              }
-            : {})
-        },
-        {
-          ...(price && marketCap
-            ? {
+        ...(price && marketCap
+          ? [
+              {
+                title: (
+                  <>
+                    Price <LowLiquidityTooltip token={token} className='ms-1' />
+                  </>
+                ),
+                value: (
+                  <FormatUSD
+                    value={price}
+                    usd={1}
+                    digits={4}
+                    showPrefix={false}
+                  />
+                )
+              },
+              {
                 title: 'Market Cap',
-                value: <>${new BigNumber(marketCap).toFormat(0)}</>
+                value: (
+                  <FormatUSD
+                    value={marketCap}
+                    digits={0}
+                    usd={1}
+                    showPrefix={false}
+                  />
+                )
               }
-            : {})
-        },
+            ]
+          : []),
         { title: 'Holders', value: new BigNumber(accounts).toFormat() },
-        { title: 'Transactions', value: new BigNumber(transactions).toFormat() }
+        {
+          title: 'Transactions',
+          value: new BigNumber(transfersCount || transactions || 0).toFormat()
+        }
       ]}
       smallStatsCards={[
         {
           ...(supply
             ? {
                 title: 'Supply',
-                value: new BigNumber(supply).toFormat()
+                value: new BigNumber(supply).toFormat(0)
               }
             : {})
         },
@@ -112,7 +131,7 @@ export const TokenDetailsCard = () => {
           ...(circulatingSupply
             ? {
                 title: 'Circulating',
-                value: new BigNumber(circulatingSupply).toFormat()
+                value: new BigNumber(circulatingSupply).toFormat(0)
               }
             : {})
         }

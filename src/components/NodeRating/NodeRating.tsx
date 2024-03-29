@@ -64,10 +64,7 @@ export const NodeRating = ({ node, className }: NodeRatingType) => {
               : ratingDifference.toFormat()
           } compared to Epoch Start Rating`}
         >
-          <FontAwesomeIcon
-            icon={icon}
-            className={classNames('cursor-context', iconColor)}
-          />
+          <FontAwesomeIcon icon={icon} className={classNames(iconColor)} />
         </Overlay>
       )}
     </div>

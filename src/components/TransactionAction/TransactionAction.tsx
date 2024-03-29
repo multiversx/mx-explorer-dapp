@@ -5,7 +5,7 @@ import { ReactComponent as DefaultAvatar } from 'assets/img/default-avatar.svg';
 import {
   NetworkLink,
   AccountLink,
-  Denominate,
+  FormatAmount,
   TransactionActionBlock,
   NftBadge
 } from 'components';
@@ -87,7 +87,7 @@ const ActionText = ({
   entry: any;
   transaction: TransactionType;
 }) => {
-  const { egldLabel } = useSelector(activeNetworkSelector);
+  const { egldLabel = 'EGLD' } = useSelector(activeNetworkSelector);
 
   switch (true) {
     case typeof entry === 'string':
@@ -157,7 +157,7 @@ const ActionText = ({
     case Boolean(entry.value):
       return (
         <span>
-          <Denominate
+          <FormatAmount
             value={entry.value}
             showLabel={false}
             showSymbol={false}
@@ -169,7 +169,7 @@ const ActionText = ({
     case Boolean(entry.egldValue):
       return (
         <span>
-          <Denominate value={entry.egldValue} showLastNonZeroDecimal />
+          <FormatAmount value={entry.egldValue} showLastNonZeroDecimal />
         </span>
       );
 

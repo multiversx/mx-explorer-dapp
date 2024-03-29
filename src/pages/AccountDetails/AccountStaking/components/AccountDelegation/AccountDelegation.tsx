@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
-import { Denominate } from 'components';
+import { FormatAmount } from 'components';
 import { activeNetworkSelector } from 'redux/selectors';
 import { AccountDelegationType, ProviderType } from 'types';
 
@@ -39,7 +39,7 @@ export const AccountDelegation = ({
       {userActiveStake !== '0' && (
         <DetailsBlock>
           <strong>
-            <Denominate value={userActiveStake} />
+            <FormatAmount value={userActiveStake} />
           </strong>
           <small>Amount Staked</small>
         </DetailsBlock>
@@ -48,7 +48,7 @@ export const AccountDelegation = ({
       {bNtotalUserUnStakedValue && (
         <DetailsBlock>
           <strong>
-            <Denominate value={bNtotalUserUnStakedValue.toString(10)} />
+            <FormatAmount value={bNtotalUserUnStakedValue.toString(10)} />
           </strong>
           <small>Undelegated</small>
         </DetailsBlock>
@@ -57,7 +57,7 @@ export const AccountDelegation = ({
       <DetailsBlock>
         <strong>
           {claimableRewards ? (
-            <Denominate value={claimableRewards} />
+            <FormatAmount value={claimableRewards} />
           ) : (
             <>0 {egldLabel}</>
           )}

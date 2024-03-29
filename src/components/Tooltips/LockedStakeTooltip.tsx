@@ -1,4 +1,4 @@
-import { Denominate } from 'components';
+import { FormatAmount } from 'components';
 
 export interface LockedStakeTooltipUIType {
   stake?: string;
@@ -21,17 +21,17 @@ export const LockedStakeTooltip = ({
     <div className='d-flex flex-column gap-1'>
       {stake !== undefined && (
         <p className='mb-0'>
-          Staked: <Denominate value={stake} showTooltip={false} />
+          Staked: <FormatAmount value={stake} showTooltip={false} />
         </p>
       )}
       {topUp !== undefined && !(showAuctionTopup && topUp === auctionTopUp) && (
         <p className='mb-0'>
-          Top Up: <Denominate value={topUp} showTooltip={false} />
+          Top Up: <FormatAmount value={topUp} showTooltip={false} />
         </p>
       )}
       {auctionTopUp !== undefined && showAuctionTopup && (
         <p className='mb-0'>
-          Qualified Top Up: <Denominate value={auctionTopUp} />
+          Qualified Top Up: <FormatAmount value={auctionTopUp} />
         </p>
       )}
     </div>

@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+import { ELLIPSIS } from 'appConstants';
 import { Loader, NetworkLink, Pager } from 'components';
 import {
   useAdapter,
@@ -37,7 +39,7 @@ export const Tokens = () => {
 
   const [tokens, setTokens] = useState<TokenType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
-  const [totalTokens, setTotalTokens] = useState<number | '...'>('...');
+  const [totalTokens, setTotalTokens] = useState<number | undefined>();
 
   const fetchTokens = () => {
     Promise.all([
@@ -80,7 +82,9 @@ export const Tokens = () => {
                           Tokens
                         </h5>
                         <span>
-                          {totalTokens}{' '}
+                          {totalTokens !== undefined
+                            ? new BigNumber(totalTokens).toFormat()
+                            : ELLIPSIS}{' '}
                           <span className='text-neutral-400'>Tokens</span>
                           {Boolean(
                             unprocessed.tokenMarketCap && unprocessed.marketCap

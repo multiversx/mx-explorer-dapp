@@ -1,10 +1,9 @@
-.denominate,
-.formatted {
+.fam {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  .suffix,
-  .decimals {
+  .suf,
+  .dec {
     opacity: 0.75;
   }
   sup {
@@ -16,7 +15,7 @@
     font-weight: 600;
     letter-spacing: -0.03em;
   }
-  .symbol {
+  .sym {
     width: auto;
     height: 0.438em;
     margin-bottom: 0.1em;

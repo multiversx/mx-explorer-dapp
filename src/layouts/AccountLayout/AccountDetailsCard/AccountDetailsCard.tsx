@@ -7,15 +7,15 @@ import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import {
   CardItem,
   CopyButton,
-  Denominate,
+  FormatAmount,
   NetworkLink,
   ShardSpan,
   TimeAgo,
-  Overlay
+  InfoTooltip
 } from 'components';
 import { urlBuilder, formatHerotag } from 'helpers';
 import { useAdapter } from 'hooks';
-import { faClock, faExclamationTriangle, faInfoCircle } from 'icons/regular';
+import { faClock, faExclamationTriangle } from 'icons/regular';
 import {
   faUser,
   faCoins,
@@ -164,10 +164,10 @@ export const AccountDetailsCard = () => {
             >
               <div className='d-flex align-items-center'>
                 {balance !== ELLIPSIS ? (
-                  <Denominate
-                    data-testid='balance'
+                  <FormatAmount
                     value={balance}
-                    decimals={4}
+                    digits={4}
+                    data-testid='balance'
                   />
                 ) : (
                   balance
@@ -179,7 +179,7 @@ export const AccountDetailsCard = () => {
             {isGuarded && (
               <CardItem className={cardItemClass} title='' icon={faShieldCheck}>
                 Guarded
-                <Overlay
+                <InfoTooltip
                   title={
                     <>
                       {activeGuardianServiceUid && (
@@ -194,14 +194,8 @@ export const AccountDetailsCard = () => {
                       )}
                     </>
                   }
-                  className='cursor-context ms-2'
-                  tooltipClassName='account-name'
-                >
-                  <FontAwesomeIcon
-                    icon={faInfoCircle}
-                    className='text-primary'
-                  />
-                </Overlay>
+                  persistent
+                />
               </CardItem>
             )}
             <CardItem className={cardItemClass} title='Nonce' icon={faUser}>

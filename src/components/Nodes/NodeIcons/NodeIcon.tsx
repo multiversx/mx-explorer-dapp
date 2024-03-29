@@ -14,10 +14,7 @@ export interface NodeIconUIType extends WithClassnameType {
 export const NodeIcon = ({ title, icon, small, className }: NodeIconUIType) => {
   if (icon && title) {
     return (
-      <Overlay
-        title={title}
-        className='node-icon text-neutral-400 cursor-context'
-      >
+      <Overlay title={title} className='node-icon text-neutral-400 '>
         <FontAwesomeIcon
           icon={icon}
           className={classNames(className)}

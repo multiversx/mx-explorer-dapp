@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import {
   CardItem,
   CopyButton,
-  Denominate,
+  FormatAmount,
   LockedAmountTooltip,
   AccountLink
 } from 'components';
@@ -94,20 +94,17 @@ export const ProviderDetailsCard = ({
         <CardItem title='Locked' icon={faLock}>
           {provider.locked ? (
             <div className='d-flex align-items-center'>
-              <span className='me-2'>
-                <Denominate value={provider.locked} />
-              </span>
-
+              <FormatAmount value={provider.locked} />
               <LockedAmountTooltip
                 small
                 lockedDetails={[
                   {
                     label: 'Stake',
-                    value: <Denominate value={provider.stake} />
+                    value: <FormatAmount value={provider.stake} />
                   },
                   {
                     label: 'Topup',
-                    value: <Denominate value={provider.topUp} />
+                    value: <FormatAmount value={provider.topUp} />
                   }
                 ]}
               />
@@ -123,7 +120,7 @@ export const ProviderDetailsCard = ({
 
         <CardItem title='Cumulated Rewards' icon={faCoins}>
           {provider.cumulatedRewards ? (
-            <Denominate value={provider.cumulatedRewards} />
+            <FormatAmount value={provider.cumulatedRewards} />
           ) : (
             <>0</>
           )}

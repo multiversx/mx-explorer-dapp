@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
-import { Denominate } from 'components';
+import { FormatAmount } from 'components';
 import { AccountStakeType } from 'types';
 
 import { DetailsBlock } from '../DetailsBlock';
@@ -33,7 +33,7 @@ export const AccountStake = ({ stake }: { stake: AccountStakeType }) => {
       {totalStaked && totalStaked !== '0' && (
         <DetailsBlock>
           <strong>
-            <Denominate value={new BigNumber(totalStaked).toString(10)} />
+            <FormatAmount value={new BigNumber(totalStaked).toString(10)} />
           </strong>
           <small>Amount Staked</small>
         </DetailsBlock>
@@ -42,7 +42,7 @@ export const AccountStake = ({ stake }: { stake: AccountStakeType }) => {
       {bNtotalUnstaked && (
         <DetailsBlock>
           <strong>
-            <Denominate value={new BigNumber(bNtotalUnstaked).toString(10)} />
+            <FormatAmount value={new BigNumber(bNtotalUnstaked).toString(10)} />
           </strong>
           <small>Unstaked</small>
         </DetailsBlock>

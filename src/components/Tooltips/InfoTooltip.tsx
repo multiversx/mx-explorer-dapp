@@ -2,18 +2,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { Overlay, OverlayUIType } from 'components';
-import { faInfoCircle } from 'icons/regular';
+import { faSquareInfo } from 'icons/solid';
 
-export const InfoTooltip = ({
-  title,
-  className,
-  tooltipClassName
-}: OverlayUIType) => (
-  <Overlay
-    title={title}
-    className={classNames('side-action cursor-context', className)}
-    tooltipClassName={classNames('tooltip-lg', tooltipClassName)}
-  >
-    <FontAwesomeIcon icon={faInfoCircle} />
-  </Overlay>
-);
+export interface InfoTooltipUIType extends OverlayUIType {
+  iconClassName?: string;
+}
+
+export const InfoTooltip = (props: InfoTooltipUIType) => {
+  const { iconClassName, className } = props;
+
+  return (
+    <Overlay {...props} className={classNames('side-action ', className)}>
+      <FontAwesomeIcon
+        icon={faSquareInfo}
+        className={classNames(iconClassName)}
+      />
+    </Overlay>
+  );
+};

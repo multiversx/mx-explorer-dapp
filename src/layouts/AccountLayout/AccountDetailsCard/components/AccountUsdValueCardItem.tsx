@@ -1,9 +1,10 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
+import { ELLIPSIS } from 'appConstants';
 import { CardItem, LockedAmountTooltip, FormatUSD } from 'components';
 import { DECIMALS } from 'config';
-import { denominate } from 'helpers';
+import { formatAmount } from 'helpers';
 import { faDollarSign } from 'icons/solid';
 import {
   accountSelector,
@@ -29,15 +30,13 @@ export const AccountUsdValueCardItem = ({
   if (stakingDataReady) {
     totalWorth = totalWorth.plus(new BigNumber(totalLocked));
   }
-  const denominatedTotalWorth = denominate({
+  const formattedTotalWorth = formatAmount({
     input: totalWorth.toString(10),
-    denomination: DECIMALS,
-    decimals: 2,
-    showLastNonZeroDecimal: true,
-    addCommas: false
+    digits: 2,
+    showLastNonZeroDecimal: true
   });
 
-  let totalUsdValue = new BigNumber(denominatedTotalWorth).times(
+  let totalUsdValue = new BigNumber(formattedTotalWorth).times(
     isEconomicsFetched ? new BigNumber(unprocessed.price) : 1
   );
   if (tokenBalance) {
@@ -48,16 +47,13 @@ export const AccountUsdValueCardItem = ({
     <CardItem className={cardItemClass} title='Value' icon={faDollarSign}>
       <div className='d-flex align-items-center'>
         {(balance || tokenBalance) && stakingDataReady && isEconomicsFetched ? (
-          <span className='me-2'>
-            <FormatUSD
-              amount={totalUsdValue.toString()}
-              usd={1}
-              digits={2}
-              showPrefix={false}
-            />
-          </span>
+          <FormatUSD
+            value={totalUsdValue.toString()}
+            usd={1}
+            showPrefix={false}
+          />
         ) : (
-          <>...</>
+          ELLIPSIS
         )}
         {stakingDataReady && isEconomicsFetched && (
           <LockedAmountTooltip
@@ -66,10 +62,9 @@ export const AccountUsdValueCardItem = ({
                 label: 'Available Balance',
                 value: (
                   <FormatUSD
-                    amount={new BigNumber(balance ?? 0).toString(10)}
-                    decimals={DECIMALS}
-                    digits={2}
+                    value={new BigNumber(balance ?? 0).toString(10)}
                     showPrefix={false}
+                    decimals={DECIMALS}
                   />
                 )
               },
@@ -77,10 +72,9 @@ export const AccountUsdValueCardItem = ({
                 label: 'Stake',
                 value: (
                   <FormatUSD
-                    amount={new BigNumber(totalLocked ?? 0).toString(10)}
-                    decimals={DECIMALS}
-                    digits={2}
+                    value={new BigNumber(totalLocked ?? 0).toString(10)}
                     showPrefix={false}
+                    decimals={DECIMALS}
                   />
                 )
               },
@@ -88,9 +82,8 @@ export const AccountUsdValueCardItem = ({
                 label: 'Token Balance',
                 value: (
                   <FormatUSD
-                    amount={new BigNumber(tokenBalance ?? 0).toString()}
+                    value={new BigNumber(tokenBalance ?? 0).toString()}
                     usd={1}
-                    digits={2}
                     showPrefix={false}
                   />
                 )

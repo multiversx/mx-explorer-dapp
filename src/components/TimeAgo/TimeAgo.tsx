@@ -1,5 +1,4 @@
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-
+import { Overlay } from 'components';
 import { formatDate } from 'helpers';
 import { WithClassnameType } from 'types';
 import { timeAgo } from './helpers/timeAgo';
@@ -28,20 +27,12 @@ export const TimeAgo = ({
   }
 
   return tooltip ? (
-    <OverlayTrigger
-      placement='top'
-      delay={{ show: 0, hide: 400 }}
-      overlay={(props) => (
-        <Tooltip id='button-tooltip' {...props}>
-          {formatDate(value, false, true)}
-        </Tooltip>
-      )}
-    >
+    <Overlay title={formatDate(value, false, true)} truncate>
       <span>
         {result}
         {showAgo ? ' ago' : ''}
       </span>
-    </OverlayTrigger>
+    </Overlay>
   ) : (
     <>
       {result}

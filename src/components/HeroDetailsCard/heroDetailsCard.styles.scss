@@ -2,9 +2,10 @@
 
 .hero-details-card {
   background-color: var(--black);
-
   &-overview {
-    margin-top: 1.5rem;
+    @include media-breakpoint-up(md) {
+      margin-top: 1.5rem;
+    }
   }
   &-logo {
     width: 3rem;

@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import {
-  Denominate,
+  FormatAmount,
   NetworkLink,
+  Overlay,
   PageState,
   SharedIdentity,
   Trim
@@ -42,21 +42,13 @@ export const IdentitySummary = ({
                           </span>
                         </NetworkLink>
                         {featured && (
-                          <OverlayTrigger
-                            placement='top'
-                            delay={{ show: 0, hide: 400 }}
-                            overlay={(props: any) => (
-                              <Tooltip {...props} show={props.show.toString()}>
-                                Verified
-                              </Tooltip>
-                            )}
-                          >
+                          <Overlay title='Verified'>
                             <FontAwesomeIcon
                               icon={faBadgeCheck}
                               size='lg'
                               className='ms-2 text-primary'
                             />
-                          </OverlayTrigger>
+                          </Overlay>
                         )}
                       </>
                     ) : (
@@ -87,7 +79,7 @@ export const IdentitySummary = ({
                     </span>
                     <h5 className='mb-0'>
                       {identity.locked ? (
-                        <Denominate value={identity.locked} />
+                        <FormatAmount value={identity.locked} />
                       ) : (
                         'N/A'
                       )}

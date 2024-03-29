@@ -15,7 +15,7 @@ export * from './CopyButton';
 export * from './DataDecode';
 export * from './DetailItem';
 export * from './Filters';
-export * from './Format';
+export * from './FormatValue';
 export * from './HeroDetailsCard';
 export * from './IdentityBlock';
 export * from './ImageWithFallback';
