@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
-import { FormatAmountUIType } from 'components';
+import { FormatAmountUIType, FormatUSD } from 'components';
 import { DIGITS } from 'config';
 import { formatBigNumber, stringIsFloat } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -13,11 +13,20 @@ import { FormatDisplayValue } from '../FormatDisplayValue';
 
 export interface FormatEGLDUIType extends Omit<FormatAmountUIType, 'value'> {
   value: string | number;
+  showUsdValue?: boolean;
+  usd?: string | number;
 }
 
 export const FormatEGLD = (props: FormatEGLDUIType) => {
   const { egldLabel = '' } = useSelector(activeNetworkSelector);
-  const { value, showSymbol, digits = DIGITS, className } = props;
+  const {
+    value,
+    usd,
+    digits = DIGITS,
+    showSymbol,
+    showUsdValue = true,
+    className
+  } = props;
   const numberValue = String(value).replace(/[^\d.-]/g, '');
 
   if (!stringIsFloat(numberValue)) {
@@ -35,17 +44,37 @@ export const FormatEGLD = (props: FormatEGLDUIType) => {
     ? completeValue
     : formatBigNumber({ value: bNValue, digits });
 
+  const showUsdValueTooltip = !bNValue.isZero() && showUsdValue;
+
   return (
     <FormatDisplayValue
       {...props}
       formattedValue={formattedValue}
       completeValue={completeValue}
       egldLabel={egldLabel}
+      showTooltipLabel
       {...(showSymbol && !props.token
         ? {
             symbol: (
               <>
                 <MultiversXSymbol className='sym' />{' '}
+              </>
+            )
+          }
+        : {})}
+      {...(showUsdValueTooltip
+        ? {
+            details: (
+              <>
+                {usd ? '' : 'Current '}
+                USD Value:{' '}
+                <FormatUSD
+                  usd={usd}
+                  value={numberValue}
+                  digits={digits}
+                  showTooltip={false}
+                  showPrefix={false}
+                />
               </>
             )
           }

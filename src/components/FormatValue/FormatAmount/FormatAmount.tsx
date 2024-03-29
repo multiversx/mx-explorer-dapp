@@ -1,5 +1,6 @@
 import { FormatAmountPropsType as SdkDappFormatAmountType } from '@multiversx/sdk-dapp/UI/FormatAmount/formatAmount.types';
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
@@ -9,11 +10,14 @@ import { DECIMALS, DIGITS } from 'config';
 import { formatAmount } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
 import { FormatDisplayValue } from '../FormatDisplayValue';
+import { FormatUSD } from '../FormatUSD';
 
 export interface FormatAmountUIType extends SdkDappFormatAmountType {
   showTooltip?: boolean;
   showSymbol?: boolean;
   superSuffix?: boolean;
+  showUsdValue?: boolean;
+  usd?: string | number;
 }
 
 export const FormatAmount = (props: FormatAmountUIType) => {
@@ -21,10 +25,15 @@ export const FormatAmount = (props: FormatAmountUIType) => {
   const {
     value,
     className,
+    token,
     digits = DIGITS,
     decimals = DECIMALS,
     showLastNonZeroDecimal = false,
-    showSymbol = true
+    showSymbol = true,
+    showUsdValue = true,
+    showLabel,
+    showTooltip = true,
+    usd
   } = props;
   const dataTestId = props['data-testid'] ?? 'formatAmountComponent';
 
@@ -39,6 +48,7 @@ export const FormatAmount = (props: FormatAmountUIType) => {
     );
   }
 
+  const isZero = new BigNumber(value).isZero();
   const formattedValue = formatAmount({
     input: value,
     decimals,
@@ -57,6 +67,13 @@ export const FormatAmount = (props: FormatAmountUIType) => {
       })
     : formattedValue;
 
+  const showUsdValueTooltip =
+    showTooltip &&
+    showUsdValue &&
+    !isZero &&
+    (showSymbol || showLabel) &&
+    (!token || usd);
+
   return (
     <FormatDisplayValue
       {...props}
@@ -66,11 +83,30 @@ export const FormatAmount = (props: FormatAmountUIType) => {
       data-testid={dataTestId}
       showSymbol={showSymbol}
       showLastNonZeroDecimal={showLastNonZeroDecimal}
-      {...(showSymbol && !props.token
+      showTooltipLabel
+      {...(showSymbol && !token
         ? {
             symbol: (
               <>
                 <MultiversXSymbol className='sym' />{' '}
+              </>
+            )
+          }
+        : {})}
+      {...(showUsdValueTooltip
+        ? {
+            details: (
+              <>
+                {usd ? '' : 'Current '}
+                USD Value:{' '}
+                <FormatUSD
+                  usd={usd}
+                  value={value}
+                  decimals={decimals}
+                  digits={digits}
+                  showTooltip={false}
+                  showPrefix={false}
+                />
               </>
             )
           }

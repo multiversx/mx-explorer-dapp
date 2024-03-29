@@ -26,6 +26,7 @@ export const TransactionActionToken = ({
                 showSymbol={false}
                 decimals={decimals}
                 showLastNonZeroDecimal={showLastNonZeroDecimal}
+                showUsdValue={false}
               />
             </div>
           )}

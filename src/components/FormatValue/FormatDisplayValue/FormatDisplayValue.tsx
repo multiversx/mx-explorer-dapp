@@ -9,6 +9,9 @@ export interface FormatDisplayValueUIType
   formattedValue: string | number;
   completeValue: string | number;
   symbol?: React.ReactNode;
+  details?: React.ReactNode;
+  showTooltipSymbol?: boolean;
+  showTooltipLabel?: boolean;
 }
 
 export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
@@ -18,29 +21,20 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     token,
     symbol,
     egldLabel,
+    details,
     digits = DIGITS,
     showLastNonZeroDecimal = false,
     showLabel = true,
     showTooltip = true,
     showSymbol = false,
     superSuffix = false,
+    showTooltipSymbol = false,
+    showTooltipLabel = false,
     className
   } = props;
 
   const valueParts = String(formattedValue).split('.');
-  const hasNoDecimals = valueParts.length === 1;
-  const isFormattedValueZero = Number(formattedValue) === 0;
   const isZero = Number(completeValue) === 0;
-
-  if (digits > 0 && hasNoDecimals && !isFormattedValueZero) {
-    let zeros = '';
-
-    for (let i = 1; i <= digits; i++) {
-      zeros = zeros + ZERO;
-    }
-
-    valueParts.push(zeros);
-  }
 
   const DisplayValue = () => {
     const completeValueParts = String(completeValue).split('.');
@@ -78,14 +72,41 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     );
   };
 
+  const showCompleteValue =
+    completeValue !== formattedValue &&
+    String(completeValue).length > String(formattedValue).length &&
+    !isZero;
+  const displayTooltip = showTooltip && (details || showCompleteValue);
+
   return (
     <span
       className={classNames(className, 'fam')}
       {...(props['data-testid'] ? { 'data-testid': props['data-testid'] } : {})}
     >
       {showSymbol && symbol && <>{symbol}</>}
-      {showTooltip && completeValue !== formattedValue && !isZero ? (
-        <Overlay title={completeValue} persistent>
+      {displayTooltip ? (
+        <Overlay
+          title={
+            <>
+              {showCompleteValue && (
+                <>
+                  {showSymbol && showTooltipSymbol && symbol && <>{symbol}</>}
+                  {completeValue}
+                  {showLabel && showTooltipLabel && (token || egldLabel) && (
+                    <>&nbsp;{token ? token : egldLabel}</>
+                  )}
+                </>
+              )}
+              {details ? (
+                <>
+                  {showCompleteValue && <br />}
+                  {details}
+                </>
+              ) : null}
+            </>
+          }
+          persistent
+        >
           <DisplayValue />
         </Overlay>
       ) : (
