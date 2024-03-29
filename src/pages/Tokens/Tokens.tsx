@@ -82,7 +82,7 @@ export const Tokens = () => {
                           Tokens
                         </h5>
                         <span>
-                          {totalTokens
+                          {totalTokens !== undefined
                             ? new BigNumber(totalTokens).toFormat()
                             : ELLIPSIS}{' '}
                           <span className='text-neutral-400'>Tokens</span>
