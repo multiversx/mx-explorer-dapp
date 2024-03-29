@@ -24,27 +24,30 @@ export const NodeDangerZoneTooltip = ({
     isFetched: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
-  const { stake, auctionTopUp, isInDangerZone } = node;
+  const { locked, isInDangerZone } = node;
 
   if (
     !isStakeFetched ||
     minimumAuctionQualifiedStake === undefined ||
-    stake === undefined ||
+    locked === undefined ||
     !node.auctionQualified
   ) {
     return null;
   }
 
-  const bNStake = new BigNumber(stake).plus(auctionTopUp ?? 0);
+  const bNLocked = new BigNumber(locked);
   const bNMinimumAuctionStake = new BigNumber(minimumAuctionQualifiedStake);
 
-  if (bNStake.isGreaterThanOrEqualTo(bNMinimumAuctionStake) && isInDangerZone) {
+  if (
+    bNLocked.isGreaterThanOrEqualTo(bNMinimumAuctionStake) &&
+    isInDangerZone
+  ) {
     const bNDangerZoneTreshold = bNMinimumAuctionStake
       .times(105)
       .dividedBy(100)
       .decimalPlaces(0, 1);
-    const bNStakeAboveTreshold = bNStake.minus(bNMinimumAuctionStake);
-    const bNStakeNeededAboveDangerZone = bNDangerZoneTreshold.minus(bNStake);
+    const bNLockedAboveTreshold = bNLocked.minus(bNMinimumAuctionStake);
+    const bNLockedNeededAboveDangerZone = bNDangerZoneTreshold.minus(bNLocked);
 
     return (
       <div className={classNames('d-flex align-items-center gap-1', className)}>
@@ -59,16 +62,16 @@ export const NodeDangerZoneTooltip = ({
                 <p className='mb-0'>
                   This node is only{' '}
                   <FormatAmount
-                    value={bNStakeAboveTreshold.toString(10)}
+                    value={bNLockedAboveTreshold.toString(10)}
                     digits={4}
                   />{' '}
                   above the threshold level.
-                  {bNStakeNeededAboveDangerZone.isGreaterThan(0) && (
+                  {bNLockedNeededAboveDangerZone.isGreaterThan(0) && (
                     <>
                       {' '}
                       Increase the staked amount with{' '}
                       <FormatAmount
-                        value={bNStakeNeededAboveDangerZone.toString(10)}
+                        value={bNLockedNeededAboveDangerZone.toString(10)}
                         digits={4}
                       />{' '}
                       / node to exit the danger zone and move up in the auction

@@ -16,7 +16,7 @@ import {
   SharedIdentity
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { nodesIdentitiesSelector } from 'redux/selectors';
+import { nodesIdentitiesSelector, stakeSelector } from 'redux/selectors';
 import { NodeType, WithClassnameType } from 'types';
 
 export interface AuctionListBaseRowUIType extends WithClassnameType {
@@ -32,13 +32,24 @@ export const AuctionListBaseRow = ({
   className
 }: AuctionListBaseRowUIType) => {
   const { nodesIdentities } = useSelector(nodesIdentitiesSelector);
+  const { isFetched: isStakeFetched, minimumAuctionQualifiedStake } =
+    useSelector(stakeSelector);
+
+  if (!isStakeFetched || !minimumAuctionQualifiedStake) {
+    return null;
+  }
+
+  const bNLocked = new BigNumber(nodeData.locked);
+  const bNMinimumAuctionStake = new BigNumber(minimumAuctionQualifiedStake);
+
+  const isDangerZone =
+    nodeData.isInDangerZone &&
+    nodeData.auctionQualified &&
+    bNLocked.isGreaterThanOrEqualTo(bNMinimumAuctionStake);
+
   const nodeIdentity = nodesIdentities.find(
     (identity) => nodeData.identity && identity.identity === nodeData.identity
   );
-  const bNStake = new BigNumber(nodeData.stake).plus(
-    nodeData.auctionTopUp ?? 0
-  );
-
   const nodeIdentityLink = nodeData.identity
     ? urlBuilder.identityDetails(nodeData.identity)
     : urlBuilder.nodeDetails(nodeData.bls);
@@ -46,8 +57,8 @@ export const AuctionListBaseRow = ({
   return (
     <tr
       className={classNames(className, {
-        q: nodeData.auctionQualified && !nodeData.isInDangerZone,
-        dz: nodeData.isInDangerZone && nodeData.auctionQualified,
+        q: nodeData.auctionQualified && !isDangerZone,
+        dz: isDangerZone,
         nq: !nodeData.auctionQualified
       })}
     >
@@ -104,7 +115,7 @@ export const AuctionListBaseRow = ({
           className='cursor-context'
           persistent
         >
-          <FormatAmount value={bNStake.toString(10)} showTooltip={false} />
+          <FormatAmount value={bNLocked.toString(10)} showTooltip={false} />
         </Overlay>
       </td>
       <td>
