@@ -119,6 +119,7 @@ export const TokensTable = ({
                           : '0'
                       }
                       decimals={token.decimals}
+                      showUsdValue={false}
                       digits={0}
                     />
                   )}

@@ -322,6 +322,7 @@ const OperationRow = ({
             <FormatAmount
               value={operation.value}
               showLastNonZeroDecimal={true}
+              showUsdValue={false}
             />
           </div>
         </DetailedItem>

@@ -1,6 +1,6 @@
 import { FormatAmountType as SdkDappFormatAmountType } from '@multiversx/sdk-dapp/utils/operations/formatAmount';
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
-import { MAX_DISPLAY_ZERO_DECIMALS } from 'appConstants';
+import { MAX_DISPLAY_ZERO_DECIMALS, ZERO } from 'appConstants';
 import { DECIMALS, DIGITS } from 'config';
 
 interface FormatAmountType extends SdkDappFormatAmountType {
@@ -35,7 +35,7 @@ export function formatAmount({
   if (decimals !== 0) {
     // make sure we have enough characters
     while (array.length < decimals + 1) {
-      array.unshift('0');
+      array.unshift(ZERO);
     }
 
     // add our dot
@@ -43,13 +43,13 @@ export function formatAmount({
 
     // make sure there are enough digits after the dot
     while (array.length - array.indexOf('.') <= digits) {
-      array.push('0');
+      array.push(ZERO);
     }
 
     if (showLastNonZeroDecimal) {
       let nonZeroDigitIndex = 0;
       for (let i = array.length - 1; i > 0; i--) {
-        if (array[i] !== '0') {
+        if (array[i] !== ZERO) {
           nonZeroDigitIndex = i + 1;
           break;
         }
@@ -64,7 +64,7 @@ export function formatAmount({
         maxDisplayZeroDecimals
       );
       for (let i = 1; i <= minDecimalLength; i++) {
-        if (array?.[array.indexOf('.') + i] === '0') {
+        if (array?.[array.indexOf('.') + i] === ZERO) {
           zeroDecimals++;
         } else {
           break;
@@ -73,6 +73,10 @@ export function formatAmount({
       const displayDecimals = zeroDecimals > 0 ? zeroDecimals + digits : digits;
 
       array = array.slice(0, array.indexOf('.') + displayDecimals + 1);
+
+      while (array[array.length - 1] === ZERO) {
+        array.pop();
+      }
     }
   }
 
@@ -94,7 +98,7 @@ export function formatAmount({
 
   const allDecimalsZero = array
     .slice(array.indexOf('.') + 1)
-    .every((digit) => digit.toString() === '0');
+    .every((digit) => digit.toString() === ZERO);
 
   const string = array.join('');
 
