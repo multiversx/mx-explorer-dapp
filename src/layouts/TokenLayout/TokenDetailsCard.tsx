@@ -25,6 +25,7 @@ export const TokenDetailsCard = () => {
     circulatingSupply,
     accounts,
     transactions,
+    transfersCount,
     price,
     marketCap
   } = token;
@@ -112,7 +113,10 @@ export const TokenDetailsCard = () => {
             ]
           : []),
         { title: 'Holders', value: new BigNumber(accounts).toFormat() },
-        { title: 'Transactions', value: new BigNumber(transactions).toFormat() }
+        {
+          title: 'Transactions',
+          value: new BigNumber(transfersCount || transactions || 0).toFormat()
+        }
       ]}
       smallStatsCards={[
         {

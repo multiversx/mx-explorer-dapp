@@ -141,9 +141,9 @@ export const TokensTable = ({
                     : 0}
                 </td>
                 <td>
-                  {token.transactions
-                    ? new BigNumber(token.transactions).toFormat()
-                    : 0}
+                  {new BigNumber(
+                    token.transfersCount || token.transactions || 0
+                  ).toFormat()}
                 </td>
               </tr>
               {typeof totalTokens === 'number' &&
