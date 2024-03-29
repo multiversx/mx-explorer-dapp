@@ -106,7 +106,7 @@ export const NodesAuctionList = () => {
     Promise.all([...nodesPromiseArray, getNodesCount(auctionListFilters)]).then(
       ([firstNodes, secondNodes, count]) => {
         const allNodes = [
-          ...(sort.order === SortOrderEnum.desc
+          ...(sort.order === SortOrderEnum.asc
             ? [...(secondNodes.data ?? []), ...(firstNodes.data ?? [])]
             : [...(firstNodes.data ?? []), ...(secondNodes.data ?? [])])
         ];
