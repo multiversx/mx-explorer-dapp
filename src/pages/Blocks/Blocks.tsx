@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams, Navigate } from 'react-router-dom';
 
-import { BlocksTable, Loader, Pager, ShardSpan } from 'components';
+import { BlocksTable, Loader, Pager, PageSize, ShardSpan } from 'components';
 import { FailedBlocks } from 'components/BlocksTable/components/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import {
@@ -120,7 +120,8 @@ export const Blocks = () => {
                         />
                       </div>
 
-                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer table-footer'>
+                        <PageSize />
                         <Pager
                           total={totalBlocks}
                           show={state.blocks.length > 0}

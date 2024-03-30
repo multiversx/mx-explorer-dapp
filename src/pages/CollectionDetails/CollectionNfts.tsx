@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import {
   Loader,
   Pager,
+  PageSize,
   NetworkLink,
   AccountLink,
   PageState,
@@ -139,7 +140,8 @@ export const CollectionNfts = () => {
               </div>
             </div>
 
-            <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+            <div className='card-footer table-footer'>
+              <PageSize />
               <Pager
                 total={totalCollectionNfts}
                 show={collectionNfts.length > 0}

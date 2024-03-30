@@ -23,7 +23,9 @@ export const PageSize = ({
   const currentSize = Math.min(paramSize, maxSize);
   const sizeArray = [
     ...new Set([PAGE_SIZE, 10, 50, 75, 100, currentSize])
-  ].sort();
+  ].sort(function (a, b) {
+    return a - b;
+  });
   const validSizeArray = maxSize
     ? sizeArray.filter((option) => option <= maxSize)
     : sizeArray;

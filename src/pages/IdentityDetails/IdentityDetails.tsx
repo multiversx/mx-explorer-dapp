@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, PageState, ProvidersTable } from 'components';
+import { Loader, Pager, PageSize, PageState, ProvidersTable } from 'components';
 import { NodesFilters, NodesTable, SharedIdentity } from 'components';
 import {
   useAdapter,
@@ -161,7 +161,8 @@ export const IdentityDetails = () => {
                     />
                   </NodesTable>
                 </div>
-                <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                <div className='card-footer table-footer'>
+                  <PageSize />
                   <Pager total={totalNodes} show />
                 </div>
               </div>

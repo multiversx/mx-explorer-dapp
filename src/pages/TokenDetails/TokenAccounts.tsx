@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import {
   Loader,
   Pager,
+  PageSize,
   FormatAmount,
   PageState,
   AccountLink
@@ -101,7 +102,8 @@ export const TokenDetailsAccounts = () => {
                 </table>
               </div>
             </div>
-            <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+            <div className='card-footer table-footer'>
+              <PageSize />
               <Pager total={accountsCount} show={accounts.length > 0} />
             </div>
           </>

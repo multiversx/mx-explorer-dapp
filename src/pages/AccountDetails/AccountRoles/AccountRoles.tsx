@@ -7,7 +7,8 @@ import {
   PageState,
   CollectionLink,
   TokenLink,
-  Pager
+  Pager,
+  PageSize
 } from 'components';
 import { capitalize } from 'helpers';
 import { useAdapter } from 'hooks';
@@ -142,7 +143,8 @@ export const AccountRoles = ({ type }: { type: AccountRolesTypeEnum }) => {
           )}
       </div>
       {dataReady === true && accountRolesTokens.length > 0 && (
-        <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+        <div className='card-footer table-footer'>
+          <PageSize />
           <Pager
             total={accountRolesTokensCount}
             show={accountRolesTokens.length > 0}

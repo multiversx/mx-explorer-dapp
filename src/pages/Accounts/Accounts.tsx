@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, FormatAmount, AccountLink } from 'components';
+import { Loader, Pager, PageSize, FormatAmount, AccountLink } from 'components';
 import { useAdapter, useGetPage, useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
@@ -111,7 +111,8 @@ export const Accounts = () => {
                         </div>
                       </div>
 
-                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer table-footer'>
+                        <PageSize />
                         <Pager
                           total={totalAccounts}
                           show={accounts.length > 0}

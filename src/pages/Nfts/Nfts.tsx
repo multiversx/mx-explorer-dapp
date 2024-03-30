@@ -6,6 +6,7 @@ import {
   NetworkLink,
   AccountLink,
   Pager,
+  PageSize,
   CollectionBlock,
   NftBadge
 } from 'components';
@@ -134,7 +135,8 @@ export const Nfts = () => {
                         </div>
                       </div>
 
-                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer table-footer'>
+                        <PageSize />
                         <Pager total={totalNfts} show={nfts.length > 0} />
                       </div>
                     </>

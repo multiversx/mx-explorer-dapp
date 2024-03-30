@@ -13,7 +13,7 @@ import {
 import { pagerHelper } from './helpers/pagerHelper';
 
 export interface PagerUIType {
-  total: number | typeof ELLIPSIS;
+  total?: number | typeof ELLIPSIS;
   show?: boolean;
   itemsPerPage?: number;
   showFirstAndLast?: boolean;
@@ -22,7 +22,7 @@ export interface PagerUIType {
 }
 
 export const Pager = ({
-  total,
+  total = ELLIPSIS,
   show = false,
   itemsPerPage = PAGE_SIZE,
   showFirstAndLast = true,

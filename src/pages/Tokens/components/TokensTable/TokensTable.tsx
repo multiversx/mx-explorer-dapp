@@ -18,10 +18,10 @@ import { EgldRow } from './EgldRow';
 
 export const TokensTable = ({
   tokens,
-  totalTokens
+  totalTokens = ELLIPSIS
 }: {
   tokens: TokenType[];
-  totalTokens: typeof ELLIPSIS | number;
+  totalTokens?: typeof ELLIPSIS | number;
 }) => {
   const { order } = useGetSort();
 
