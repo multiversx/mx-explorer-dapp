@@ -182,7 +182,7 @@ export const ChartContractsTransactions = ({
   const onChange = useCallback(
     (option: SingleValue<SelectOptionType>) => {
       if (option && option.value && isFetched) {
-        const value = option.value.replace('transactions', '');
+        const value = String(option.value).replace('transactions', '');
         const [transactionsKey, contractsKey, totalKey] = [
           `transactions${value}`,
           `scResults${value}`,

@@ -87,7 +87,7 @@ export const ChartStake = ({ className }: WithClassnameType) => {
   const onChange = useCallback(
     (option: SingleValue<SelectOptionType>) => {
       if (option && option.value && isFetched) {
-        setData(dataMap.get(option.value));
+        setData(dataMap.get(String(option.value)));
       }
     },
     [isFetched]

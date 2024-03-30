@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import { default as ReactSelect, SingleValue, components } from 'react-select';
 
 export interface SelectOptionType {
-  label: string;
-  value: string;
+  label: string | number;
+  value: string | number;
 }
 
 export interface SelectPropsType {
@@ -63,6 +63,7 @@ export const Select = (props: SelectPropsType) => (
     className='react-select'
     isMulti={false}
     isSearchable={false}
+    menuPlacement={'auto'}
     defaultValue={props.defaultValue || props.options.find(() => true)}
     components={{
       Menu,
