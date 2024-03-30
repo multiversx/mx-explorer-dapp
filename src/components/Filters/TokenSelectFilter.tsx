@@ -10,6 +10,7 @@ import {
 } from 'react-select-async-paginate';
 
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
+import { SelectOptionType } from 'components';
 import { useAdapter, useGetHash, useActiveRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
@@ -45,16 +46,14 @@ const defaultAdditional: AdditionalType = {
   page: 1
 };
 
-export type SelectOptionType = {
-  value: string;
-  label: string;
+export interface TokenSelectOptionType extends SelectOptionType {
   svgUrl?: string;
-};
+}
 
 export interface TokenSelectFilterType {
   name: string;
   filter: TransactionFiltersEnum;
-  options?: SelectOptionType[];
+  options?: TokenSelectOptionType[];
   placeholder?: string;
   hasCustomSearch?: boolean;
   hasShowAllOption?: boolean;
@@ -71,14 +70,14 @@ const Option: typeof components.Option = (props) => {
   return (
     <components.Option {...props}>
       <div className='d-flex align-items-center symbol text-truncate'>
-        {(props?.data as SelectOptionType)?.svgUrl && (
+        {(props?.data as TokenSelectOptionType)?.svgUrl && (
           <img
-            src={(props.data as SelectOptionType).svgUrl}
+            src={(props.data as TokenSelectOptionType).svgUrl}
             alt=''
             className='side-icon me-1'
           />
         )}
-        {(props.data as SelectOptionType).value === egldSearchLabel && (
+        {(props.data as TokenSelectOptionType).value === egldSearchLabel && (
           <EgldSymbol className='side-icon me-1' />
         )}
         <span className='text-truncate'>{props.label}</span>

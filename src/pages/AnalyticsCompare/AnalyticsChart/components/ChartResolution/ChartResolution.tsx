@@ -2,8 +2,7 @@ import { Fragment, useMemo } from 'react';
 import classNames from 'classnames';
 import { SingleValue } from 'react-select';
 
-import { ChartSelect } from 'pages/Home/components/ChartSelect';
-import { ChartSelectOptionType } from 'pages/Home/components/ChartSelect/types';
+import { Select, SelectOptionType } from 'components';
 
 import styles from './styles.module.scss';
 import {
@@ -36,7 +35,7 @@ export const ChartResolutionSelector = ({
   onChange,
   isResponsive = false
 }: ChartResolutionSelectorPropsType) => {
-  const options: ChartSelectOptionType[] = [
+  const options: SelectOptionType[] = [
     {
       label: '7d',
       value: ChartResolution['week'].range
@@ -70,7 +69,7 @@ export const ChartResolutionSelector = ({
   }, [value]);
 
   const onChangeHandler = (
-    option: SingleValue<ChartSelectOptionType> | ChartSelectOptionType
+    option: SingleValue<SelectOptionType> | SelectOptionType
   ) => {
     const value: ChartResolutionRangeType =
       (option?.value as ChartResolutionRangeType) ??
@@ -88,7 +87,7 @@ export const ChartResolutionSelector = ({
           [styles.responsive]: isResponsive
         })}
       >
-        <ChartSelect
+        <Select
           options={options}
           onChange={onChangeHandler}
           value={dropdownValue}
