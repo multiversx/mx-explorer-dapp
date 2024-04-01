@@ -155,12 +155,10 @@ export const AnalyticsCompare = () => {
               })}
             </div>
 
-            <div className='row pb-5'>
-              <AnalyticsStackedChart
-                firstSeries={selectedPills[0]}
-                secondSeries={selectedPills[1]}
-              />
-            </div>
+            <AnalyticsStackedChart
+              firstSeries={selectedPills[0]}
+              secondSeries={selectedPills[1]}
+            />
           </div>
           <div className='card-footer'></div>
         </div>
