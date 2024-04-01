@@ -173,7 +173,10 @@ export const NftDetailsCard = () => {
               }
             : {})
         },
-        { title: 'Creator', value: <AccountLink address={creator} /> },
+        {
+          title: 'Creator',
+          value: <AccountLink address={creator} fetchAssets />
+        },
         {
           ...(timestamp !== undefined
             ? {
