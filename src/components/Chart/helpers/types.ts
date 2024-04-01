@@ -126,6 +126,8 @@ export interface StackedChartConfig {
   stacked?: boolean;
   stackedLabel?: string;
   customDomain?: boolean;
+  tickCountY?: number;
+  height?: number;
 }
 
 export interface ChartComposedConfigType {

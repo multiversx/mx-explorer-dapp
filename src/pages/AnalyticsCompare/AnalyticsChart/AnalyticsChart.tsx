@@ -21,17 +21,15 @@ export interface AnalyticsChartDataType {
   timestamp: number;
 }
 
-export const AnalyticsChart = ({
-  series,
-  title,
-  stacked,
-  stackedLabel,
-  customDomain
-}: {
-  series: ChartListType[];
-  title?: React.ReactNode;
-} & StackedChartConfig) => {
+export const AnalyticsChart = (
+  props: {
+    series: ChartListType[];
+    title?: React.ReactNode;
+  } & StackedChartConfig
+) => {
   const ref = useRef(null);
+
+  const { series, title } = props;
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const [range, setRange] = useState<ChartResolutionRangeType>('month');
@@ -160,14 +158,12 @@ export const AnalyticsChart = ({
         {dataReady === true &&
           seriesConfig?.every((x) => x.data?.length > 0) && (
             <Chart.Composed
+              {...props}
               seriesConfig={seriesConfig}
               tooltip={{
                 dateFormat: 'dd, MMM D YYYY'
               }}
               showLegend={true}
-              stacked={stacked}
-              stackedLabel={stackedLabel}
-              customDomain={customDomain}
             />
           )}
       </div>
