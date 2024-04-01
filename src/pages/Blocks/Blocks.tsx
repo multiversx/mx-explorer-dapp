@@ -28,7 +28,7 @@ export const Blocks = () => {
   const [searchParams] = useSearchParams();
   const isMainnet = useIsMainnet();
   const { shard } = useGetTransactionFilters();
-  const { page, firstPageRefreshTrigger } = useGetPage();
+  const { page, size, firstPageRefreshTrigger } = useGetPage();
   const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
 
   const networkRoute = useNetworkRoute();
@@ -48,7 +48,7 @@ export const Blocks = () => {
   }, [shard]);
 
   useEffect(() => {
-    getBlocks({ page, shard, withProposerIdentity: true }).then(
+    getBlocks({ page, size, shard, withProposerIdentity: true }).then(
       ({ success, data }) => {
         if (ref.current !== null) {
           if (success && data) {
