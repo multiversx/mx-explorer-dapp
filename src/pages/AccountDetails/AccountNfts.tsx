@@ -6,6 +6,7 @@ import {
   DetailItem,
   Loader,
   Pager,
+  PageSize,
   PageState,
   CollectionBlock,
   FormatAmount,
@@ -139,7 +140,8 @@ export const AccountNfts = () => {
       </div>
 
       {dataReady === true && accountNfts.length > 0 && (
-        <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+        <div className='card-footer table-footer'>
+          <PageSize />
           <Pager total={accountNftsCount} show={accountNfts.length > 0} />
         </div>
       )}

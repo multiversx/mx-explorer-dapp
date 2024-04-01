@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
+import { Select, SelectOptionType } from 'components';
 import { useFetchGrowthTransactions } from 'hooks';
 import { growthTransactionsSelector } from 'redux/selectors';
 import {
@@ -15,8 +16,6 @@ import {
 import { ChartContractsTransactionsUIType } from './types';
 import { ChartArea } from '../ChartArea';
 import { PayloadType } from '../ChartArea/types';
-import { ChartSelect } from '../ChartSelect';
-import { ChartSelectOptionType } from '../ChartSelect/types';
 
 const getSum = (
   first: GrowthChartDataType[],
@@ -78,7 +77,7 @@ export const ChartContractsTransactions = ({
       .trim()
   );
 
-  const filters: ChartSelectOptionType[] = [
+  const filters: SelectOptionType[] = [
     {
       label: '7d',
       value: 'transactions7d'
@@ -181,9 +180,9 @@ export const ChartContractsTransactions = ({
   );
 
   const onChange = useCallback(
-    (option: SingleValue<ChartSelectOptionType>) => {
+    (option: SingleValue<SelectOptionType>) => {
       if (option && option.value && isFetched) {
-        const value = option.value.replace('transactions', '');
+        const value = String(option.value).replace('transactions', '');
         const [transactionsKey, contractsKey, totalKey] = [
           `transactions${value}`,
           `scResults${value}`,
@@ -261,7 +260,7 @@ export const ChartContractsTransactions = ({
         <div className='headerwrapper'>
           {title && <h5 className='title'>{title}</h5>}
           <div className='filters'>
-            <ChartSelect
+            <Select
               options={filters}
               onChange={onChange}
               defaultValue={defaultValue}

@@ -9,6 +9,7 @@ import { ReactComponent as DefaultImage } from 'assets/img/default-icon.svg';
 import {
   Loader,
   Pager,
+  PageSize,
   FormatAmount,
   AccountLink,
   NetworkLink,
@@ -232,7 +233,8 @@ export const Applications = () => {
                     </TableWrapper>
                   </div>
 
-                  <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                  <div className='card-footer table-footer'>
+                    <PageSize />
                     <Pager total={totalAccounts} show={accounts.length > 0} />
                   </div>
                 </>

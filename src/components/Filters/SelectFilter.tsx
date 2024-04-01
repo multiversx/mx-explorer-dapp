@@ -2,13 +2,9 @@ import { useSearchParams } from 'react-router-dom';
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
+import { SelectOptionType } from 'components';
 import { isHash, addressIsBech32, capitalize } from 'helpers';
 import { TransactionFiltersEnum } from 'types';
-
-interface SelectOptionType {
-  value: string;
-  label: string;
-}
 
 export interface SelectFilterType {
   name: string;

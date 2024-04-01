@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
+import {
+  Loader,
+  Pager,
+  PageSize,
+  PageState,
+  NodesTable,
+  NodesFilters
+} from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -84,7 +91,8 @@ export const NodesQueue = () => {
               <NodesTable.Body nodes={nodes} queue />
             </NodesTable>
           </div>
-          <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+          <div className='card-footer table-footer'>
+            <PageSize />
             <Pager total={totalNodes} show />
           </div>
         </>

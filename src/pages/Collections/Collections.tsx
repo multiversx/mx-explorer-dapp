@@ -8,6 +8,7 @@ import {
   NetworkLink,
   AccountLink,
   Pager,
+  PageSize,
   CollectionLink,
   TimeAgo
 } from 'components';
@@ -215,7 +216,8 @@ export const Collections = () => {
                         </div>
                       </div>
 
-                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer table-footer'>
+                        <PageSize />
                         <Pager
                           total={totalCollections}
                           show={collections.length > 0}

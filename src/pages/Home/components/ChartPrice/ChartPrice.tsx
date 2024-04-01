@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
+import { Select, SelectOptionType } from 'components';
 import { useFetchGrowthPrice } from 'hooks';
 import { faCircleUp, faCircleDown, faCircleMinus } from 'icons/solid';
 import { growthPriceSelector } from 'redux/selectors';
@@ -12,8 +13,6 @@ import { PriceStatisticsLabelEnum, StatisticType, TrendEnum } from 'types';
 import styles from './styles.module.scss';
 
 import { ChartRoot } from '../ChartRoot';
-import { ChartSelect } from '../ChartSelect';
-import { ChartSelectOptionType } from '../ChartSelect/types';
 
 export const ChartPrice = () => {
   const {
@@ -28,7 +27,7 @@ export const ChartPrice = () => {
     isFetched
   } = useSelector(growthPriceSelector);
 
-  const filters: ChartSelectOptionType[] = [
+  const filters: SelectOptionType[] = [
     {
       label: '7d',
       value: 'price7d'
@@ -75,7 +74,7 @@ export const ChartPrice = () => {
   const [data, setData] = useState(dataMap.get(initialFilter));
 
   const onChange = useCallback(
-    (option: SingleValue<ChartSelectOptionType>) => {
+    (option: SingleValue<SelectOptionType>) => {
       if (option && option.value && isFetched) {
         setData(dataMap.get(option.value));
       }
@@ -110,7 +109,7 @@ export const ChartPrice = () => {
         </div>
 
         <div className={styles.right}>
-          <ChartSelect
+          <Select
             options={filters}
             onChange={onChange}
             defaultValue={defaultValue}

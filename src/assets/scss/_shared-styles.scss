@@ -166,6 +166,18 @@
     }
   }
 }
+.table-footer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
 
 .page-state-sm {
   .icon-state {

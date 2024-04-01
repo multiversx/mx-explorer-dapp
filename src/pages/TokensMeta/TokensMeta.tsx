@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 
-import { Loader, NetworkLink, AccountLink, Pager } from 'components';
+import { Loader, NetworkLink, AccountLink, Pager, PageSize } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetSearch, useActiveRoute, useGetPage } from 'hooks';
 import { faDiamond } from 'icons/regular';
@@ -199,7 +199,8 @@ export const TokensMeta = () => {
                         </div>
                       </div>
 
-                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer table-footer'>
+                        <PageSize />
                         <Pager
                           total={totalMetaCollections}
                           show={metaCollections.length > 0}

@@ -7,6 +7,7 @@ import { IDENTITIES_FIELDS } from 'appConstants';
 import {
   Loader,
   Pager,
+  PageSize,
   PageState,
   NodesTableHero,
   NodesTable,
@@ -196,7 +197,8 @@ export const NodesAuctionList = () => {
             </NodesTable>
           </div>
           {(isCustomSize || !hasNoFilters) && (
-            <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+            <div className='card-footer table-footer'>
+              <PageSize />
               <Pager total={totalNodes} itemsPerPage={pageSize} show />
             </div>
           )}

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { ELLIPSIS } from 'appConstants';
-import { Loader, NetworkLink, Pager } from 'components';
+import { Loader, NetworkLink, Pager, PageSize } from 'components';
 import {
   useAdapter,
   useGetSearch,
@@ -148,7 +148,8 @@ export const Tokens = () => {
                         />
                       </div>
 
-                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer table-footer'>
+                        <PageSize />
                         <Pager total={totalTokens} show={tokens.length > 0} />
                       </div>
                     </>

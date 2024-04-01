@@ -7,6 +7,7 @@ import {
   DetailItem,
   Loader,
   Pager,
+  PageSize,
   PageState,
   FormatAmount,
   TokenLink,
@@ -129,7 +130,8 @@ export const AccountTokens = () => {
       </div>
 
       {dataReady === true && accountTokens.length > 0 && (
-        <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+        <div className='card-footer table-footer'>
+          <PageSize />
           <Pager total={accountTokensCount} show={accountTokens.length > 0} />
         </div>
       )}
