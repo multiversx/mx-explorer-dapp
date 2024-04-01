@@ -29,7 +29,9 @@ export const ChartComposed = ({
   stacked,
   stackedLabel,
   showLegend = true,
-  customDomain = false
+  customDomain = false,
+  tickCountY = 10,
+  height = 320
 }: ChartComposedProps) => {
   const [hoveredSeries, setHoveredSeries] = useState<string>();
   const [hiddenSeries, setHiddenSeries] =
@@ -59,7 +61,11 @@ export const ChartComposed = ({
   };
 
   const getSeriesOpacity = (series: ChartConfigType) => {
-    return hoveredSeries === series.label ? 0.3 : 1;
+    if (!hoveredSeries) {
+      return 1;
+    }
+
+    return hoveredSeries === series.label ? 1 : 0.3;
   };
 
   const getLegendPayload = () => {
@@ -140,14 +146,13 @@ export const ChartComposed = ({
   };
 
   const calculateDomain = ([alpha, beta]: number[]): [number, number] => {
-    const start = alpha - alpha / 90;
     const end = beta + beta / 90;
 
     if (!isFinite(alpha) && !isFinite(beta)) {
       return [0, 0];
     }
 
-    return [start, end];
+    return [0, end];
   };
 
   return (
@@ -156,7 +161,7 @@ export const ChartComposed = ({
         hasOnlyStartEndTick ? 'has-only-start-end-tick' : ''
       }`}
     >
-      <ResponsiveContainer width='100%' height={448}>
+      <ResponsiveContainer width='100%' height={height}>
         <ComposedChart data={chartData}>
           <defs>
             <linearGradient id='transparent' x1='0' y1='0' x2='0' y2='1'>
@@ -220,7 +225,7 @@ export const ChartComposed = ({
                 stroke={sc.stroke}
                 dy={2}
                 domain={customDomain ? calculateDomain : [0, 'dataMax']}
-                tickCount={customDomain ? undefined : 10}
+                tickCount={tickCountY}
               />
               <Area
                 type='monotone'

@@ -245,6 +245,8 @@ export const Analytics = () => {
                 title={'Total Accounts'}
                 series={usersChart}
                 customDomain={true}
+                tickCountY={6}
+                height={420}
               />
             </div>
           </ChartWrapper>
@@ -266,6 +268,7 @@ export const Analytics = () => {
                     </Overlay>
                   </div>
                 }
+                height={420}
               />
             </div>
           </ChartWrapper>
@@ -281,6 +284,7 @@ export const Analytics = () => {
               <AnalyticsChart
                 title={'New Applications Deployed'}
                 series={newStuffCreatedChart}
+                height={420}
               />
             </div>
           </ChartWrapper>
@@ -290,6 +294,7 @@ export const Analytics = () => {
                 title={'Staking Metrics'}
                 series={stakingMetricsChart}
                 customDomain={true}
+                tickCountY={6}
               />
             </div>
           </ChartWrapper>
@@ -299,12 +304,17 @@ export const Analytics = () => {
                 title={'Users Staking'}
                 series={usersStakingChart}
                 customDomain={true}
+                tickCountY={6}
               />
             </div>
           </ChartWrapper>
           <ChartWrapper size='half'>
             <div className='px-3 pb-3'>
-              <AnalyticsChart title='APR Metrics' series={aprsChart} />
+              <AnalyticsChart
+                title='APR Metrics'
+                series={aprsChart}
+                height={360}
+              />
             </div>
           </ChartWrapper>
           <ChartWrapper size='half'>
@@ -312,6 +322,7 @@ export const Analytics = () => {
               <AnalyticsChart
                 title={'Fees Metrics'}
                 series={networkAndDeveloperFeesChart}
+                height={360}
               />
             </div>
           </ChartWrapper>

@@ -183,6 +183,7 @@ export const AnalyticsStackedChart = ({
                 dateFormat: 'dd, MMM D YYYY'
               }}
               showLegend={true}
+              height={460}
             ></Chart.Composed>
           )}
         </div>
