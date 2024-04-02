@@ -38,7 +38,7 @@ export const nftLayout: TitledRouteObject[] = [
       },
       {
         path: nftRoutes.nftDetailsAccounts,
-        title: 'NFT Owners',
+        title: 'NFT Holders',
         preventScroll: true,
         Component: NftAccounts
       }

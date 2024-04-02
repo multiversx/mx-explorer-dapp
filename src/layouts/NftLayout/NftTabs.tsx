@@ -32,7 +32,7 @@ export const NftTabs = () => {
     {
       show: type && type === NftTypeEnum.SemiFungibleESDT,
       tabTo: urlBuilder.nftDetailsAccounts(identifier),
-      tabLabel: 'Owners',
+      tabLabel: 'Holders',
       activationRoutes: [nftRoutes.nftDetailsAccounts]
     }
   ];
