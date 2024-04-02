@@ -76,10 +76,13 @@ export const NodesTableBody = ({
   const [notQualifiedExpanded, setNotQualifiedExpanded] = useState(false);
 
   const isAuctionSortDesc =
-    sort === 'auctionPosition' && order === SortOrderEnum.desc;
+    (sort === 'auctionPosition' && order === SortOrderEnum.desc) ||
+    (sort === 'locked' && order === SortOrderEnum.asc);
   const hasNoFilters =
     [search, ...Object.keys(nodeFilters)].every((el) => el === undefined) &&
-    ((sort === undefined && auctionList) || sort === 'auctionPosition');
+    ((sort === undefined && auctionList) ||
+      sort === 'auctionPosition' ||
+      sort === 'locked');
   const isCustomSize = ![PAGE_SIZE, AUCTION_LIST_MAX_NODES].includes(pageSize);
 
   const tresholdIndex = isAuctionSortDesc

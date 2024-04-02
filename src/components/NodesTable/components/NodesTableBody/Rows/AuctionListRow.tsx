@@ -23,7 +23,9 @@ export const AuctionListRow = ({
   expandRowConfig
 }: AuctionListRowUIType) => {
   const { sort, order } = useGetSort();
-  const isSortDesc = sort === 'auctionPosition' && order === SortOrderEnum.desc;
+  const isSortDesc =
+    (sort === 'auctionPosition' && order === SortOrderEnum.desc) ||
+    (sort === 'locked' && order === SortOrderEnum.asc);
 
   const hasExpand = Boolean(
     expandRowConfig?.qualifiedExpandPosition ||
