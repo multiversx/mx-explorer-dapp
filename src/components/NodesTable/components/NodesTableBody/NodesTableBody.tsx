@@ -93,6 +93,10 @@ export const NodesTableBody = ({
         findTresholdNode(node, minimumAuctionQualifiedStake)
       );
 
+  const nextPositionQualified = isAuctionSortDesc
+    ? nodes?.[tresholdIndex >= 1 ? tresholdIndex - 1 : 0]?.auctionQualified
+    : nodes?.[tresholdIndex + 1]?.auctionQualified;
+
   const expandRowConfig =
     auctionList && hasNoFilters && !isCustomSize
       ? ({
@@ -121,7 +125,10 @@ export const NodesTableBody = ({
     <tbody>
       {nodes.map((nodeData, index) => {
         const showTresholdRow = Boolean(
-          tresholdIndex && index === tresholdIndex && hasNoFilters
+          tresholdIndex &&
+            index === tresholdIndex &&
+            hasNoFilters &&
+            !nextPositionQualified
         );
 
         if (statistics) {
