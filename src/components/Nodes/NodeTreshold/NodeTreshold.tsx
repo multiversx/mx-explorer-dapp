@@ -29,23 +29,16 @@ export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
   const bNMinimumQualifiedStake = new BigNumber(minimumAuctionQualifiedStake);
   const bNTreshold = bNLocked.minus(bNMinimumQualifiedStake);
 
-  if (bNTreshold.isGreaterThanOrEqualTo(0)) {
-    return (
-      <span
-        className={classNames(className, {
-          'text-success':
-            auctionQualified && !isInDangerZone && bNTreshold.isGreaterThan(0)
-        })}
-      >
-        {bNTreshold.isGreaterThan(0) && <>+</>}
-        <FormatAmount value={bNTreshold.toString(10)} showSymbol={false} />
-      </span>
-    );
-  }
-
   return (
-    <span className={classNames(className, 'text-red-400')}>
-      -
+    <span
+      className={classNames(className, {
+        'text-success':
+          auctionQualified && !isInDangerZone && bNTreshold.isGreaterThan(0),
+        'text-red-400': !auctionQualified && bNTreshold.isLessThan(0)
+      })}
+    >
+      {bNTreshold.isGreaterThan(0) && <>+</>}
+      {bNTreshold.isLessThan(0) && <>-</>}
       <FormatAmount
         value={bNTreshold.absoluteValue().toString(10)}
         showSymbol={false}
