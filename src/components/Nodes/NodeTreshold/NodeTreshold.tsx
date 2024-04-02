@@ -16,7 +16,7 @@ export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
     unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
 
-  const { locked, isInDangerZone } = node;
+  const { locked, isInDangerZone, auctionQualified } = node;
   if (
     !isStakeFetched ||
     minimumAuctionQualifiedStake === undefined ||
@@ -33,7 +33,8 @@ export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
     return (
       <span
         className={classNames(className, {
-          'text-success': !isInDangerZone && bNTreshold.isGreaterThan(0)
+          'text-success':
+            auctionQualified && !isInDangerZone && bNTreshold.isGreaterThan(0)
         })}
       >
         {bNTreshold.isGreaterThan(0) && <>+</>}
