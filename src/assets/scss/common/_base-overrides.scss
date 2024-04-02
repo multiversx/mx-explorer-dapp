@@ -29,6 +29,10 @@ dd {
   margin-bottom: 0;
 }
 
+*::selection {
+  background: rgba(var(--neutral-300-rgb), 0.3);
+}
+
 // webkit being webkit
 input {
   color-scheme: dark;
