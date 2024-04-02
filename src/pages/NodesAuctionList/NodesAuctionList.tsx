@@ -192,6 +192,7 @@ export const NodesAuctionList = () => {
               itemsPerPage={pageSize}
               total={totalNodes}
               className='d-flex ms-auto me-auto me-sm-0'
+              showFirstAndLast={false}
               show
             />
           )}
