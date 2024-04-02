@@ -106,10 +106,23 @@ export const NodesAuctionList = () => {
 
     Promise.all([...nodesPromiseArray, getNodesCount(auctionListFilters)]).then(
       ([firstNodes, secondNodes, count]) => {
+        const qualiNodes = firstNodes.data
+          ? firstNodes.data.filter(
+              (node: NodeType) => node.auctionQualified && !node.isInDangerZone
+            )
+          : [];
+        const dzNodes = firstNodes.data
+          ? firstNodes.data.filter((node: NodeType) => node.isInDangerZone)
+          : [];
+        const sortedFirst = [
+          ...(sort.order === SortOrderEnum.asc
+            ? [...(dzNodes ?? []), ...(qualiNodes ?? [])]
+            : [...(qualiNodes ?? []), ...(dzNodes ?? [])])
+        ];
         const allNodes = [
           ...(sort.order === SortOrderEnum.asc
-            ? [...(secondNodes.data ?? []), ...(firstNodes.data ?? [])]
-            : [...(firstNodes.data ?? []), ...(secondNodes.data ?? [])])
+            ? [...(secondNodes.data ?? []), ...(sortedFirst ?? [])]
+            : [...(sortedFirst ?? []), ...(secondNodes.data ?? [])])
         ];
 
         const identityArray = allNodes
