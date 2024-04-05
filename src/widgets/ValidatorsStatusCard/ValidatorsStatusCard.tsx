@@ -41,7 +41,8 @@ export const ValidatorsStatusCard = ({
   const ref = useRef(null);
 
   const { markers } = useSelector(markersSelector);
-  const { totalValidators, unprocessed } = useSelector(stakeSelector);
+  const { totalValidators, allStakedNodes, unprocessed } =
+    useSelector(stakeSelector);
 
   const [continentsRank, setContinentsRank] =
     useState<RankType[]>(placeHolderRank);
@@ -57,6 +58,9 @@ export const ValidatorsStatusCard = ({
       );
     }
   }, [markers, unprocessed]);
+
+  // TODO: temporay until changed on api
+  const tempDisplay = allStakedNodes ?? totalValidators;
 
   return (
     <div
@@ -75,7 +79,7 @@ export const ValidatorsStatusCard = ({
         <LargeCard
           continentsRank={continentsRank}
           markers={markers}
-          totalValidators={totalValidators}
+          totalValidators={tempDisplay}
         />
       )}
     </div>

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
+import { ELLIPSIS } from 'appConstants';
 import { FormatAmount } from 'components';
 import { faDown, faUp } from 'icons/solid';
 import { stakeSelector } from 'redux/selectors';
@@ -17,11 +18,7 @@ export const AuctionListTresholdRow = ({
   isSortDesc,
   className
 }: AuctionListTresholdRowUIType) => {
-  const {
-    isFetched: isStakeFetched,
-    minimumAuctionQualifiedStake,
-    unprocessed
-  } = useSelector(stakeSelector);
+  const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
 
   return (
     <tr className={classNames('treshold-row', className)}>
@@ -51,7 +48,7 @@ export const AuctionListTresholdRow = ({
                   superSuffix
                 />
               ) : (
-                minimumAuctionQualifiedStake
+                ELLIPSIS
               )}
             </h1>
           </div>

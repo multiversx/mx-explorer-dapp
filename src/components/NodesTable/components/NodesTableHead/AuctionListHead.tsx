@@ -14,7 +14,7 @@ export const AuctionListHead = ({ showPosition }: AuctionListHeadUIType) => {
       </th>
       <th className='th-key'>Public Key</th>
       <th className='th-stake'>
-        <Sort id='locked' field='Stake / Node' />
+        <Sort id='locked' field='Qualified Stake / Node' />
       </th>
       <th className='th-treshold'>Above Treshold</th>
       <th className='th-info'></th>

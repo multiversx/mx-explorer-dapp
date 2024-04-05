@@ -96,14 +96,13 @@ export const ProviderDetailsCard = ({
             <div className='d-flex align-items-center'>
               <FormatAmount value={provider.locked} />
               <LockedAmountTooltip
-                small
                 lockedDetails={[
                   {
                     label: 'Stake',
                     value: <FormatAmount value={provider.stake} />
                   },
                   {
-                    label: 'Topup',
+                    label: 'Top Up',
                     value: <FormatAmount value={provider.topUp} />
                   }
                 ]}

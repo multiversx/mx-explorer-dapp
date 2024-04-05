@@ -38,7 +38,9 @@ const findTresholdNode = (
   node: NodeType,
   minimumAuctionQualifiedStake?: string
 ) => {
-  const bNLocked = new BigNumber(node.locked);
+  const bNLocked = new BigNumber(node.stake).plus(
+    node.auctionQualified ? node.auctionTopUp ?? 0 : 0
+  );
   const bNMinimumAuctionStake = new BigNumber(
     minimumAuctionQualifiedStake ?? 0
   );

@@ -119,13 +119,22 @@ export const StandardRow = ({
       )}
       {(type === 'validator' || status === 'auction') && nodeData.locked && (
         <td className='text-end'>
-          <Overlay
-            title={<NodeLockedStakeTooltip node={nodeData} />}
-            tooltipClassName='tooltip-text-start tooltip-lg'
-            truncate
-          >
-            <FormatAmount value={nodeData.locked} showTooltip={false} />
-          </Overlay>
+          {status !== 'auction' || nodeData.auctionQualified ? (
+            <Overlay
+              title={
+                <NodeLockedStakeTooltip
+                  node={nodeData}
+                  showAuctionTopup={status === 'auction'}
+                />
+              }
+              tooltipClassName='tooltip-text-start tooltip-lg'
+              truncate
+            >
+              <FormatAmount value={nodeData.locked} showTooltip={false} />
+            </Overlay>
+          ) : (
+            <FormatAmount value={nodeData.locked} />
+          )}
         </td>
       )}
       <td className='text-end'>

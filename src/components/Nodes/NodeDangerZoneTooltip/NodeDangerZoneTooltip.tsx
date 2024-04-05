@@ -24,18 +24,19 @@ export const NodeDangerZoneTooltip = ({
     isFetched: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
-  const { locked, isInDangerZone } = node;
+  const { locked, stake, auctionTopUp, isInDangerZone, auctionQualified } =
+    node;
 
   if (
     !isStakeFetched ||
     minimumAuctionQualifiedStake === undefined ||
     locked === undefined ||
-    !node.auctionQualified
+    !auctionQualified
   ) {
     return null;
   }
 
-  const bNLocked = new BigNumber(locked);
+  const bNLocked = new BigNumber(stake).plus(auctionTopUp ?? 0);
   const bNMinimumAuctionStake = new BigNumber(minimumAuctionQualifiedStake);
 
   if (isInDangerZone) {
