@@ -43,6 +43,7 @@ export const stakeSlice = createSlice({
         action.payload.notQualifiedAuctionValidators;
       state.eligibleValidators = action.payload.eligibleValidators;
       state.waitingValidators = action.payload.waitingValidators;
+      state.allStakedNodes = action.payload.allStakedNodes;
 
       state.unprocessed = action.payload.unprocessed;
       state.isFetched = action.payload.isFetched;

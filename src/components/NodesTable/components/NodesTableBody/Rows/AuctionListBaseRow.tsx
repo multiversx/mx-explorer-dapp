@@ -32,14 +32,19 @@ export const AuctionListBaseRow = ({
   className
 }: AuctionListBaseRowUIType) => {
   const { nodesIdentities } = useSelector(nodesIdentitiesSelector);
-  const { isFetched: isStakeFetched, minimumAuctionQualifiedStake } =
-    useSelector(stakeSelector);
+  const {
+    isFetched: isStakeFetched,
+    unprocessed: { minimumAuctionQualifiedStake }
+  } = useSelector(stakeSelector);
 
   if (!isStakeFetched || !minimumAuctionQualifiedStake) {
     return null;
   }
 
-  const bNLocked = new BigNumber(nodeData.locked);
+  const bNAuctionTopup = new BigNumber(nodeData.auctionTopUp ?? 0);
+  const bNLocked = new BigNumber(nodeData.stake).plus(
+    nodeData.auctionQualified ? bNAuctionTopup : 0
+  );
   const bNMinimumAuctionStake = new BigNumber(minimumAuctionQualifiedStake);
 
   const isDangerZone =
@@ -109,14 +114,18 @@ export const AuctionListBaseRow = ({
         </div>
       </td>
       <td>
-        <Overlay
-          title={<NodeLockedStakeTooltip node={nodeData} showAuctionTopup />}
-          tooltipClassName='tooltip-text-start tooltip-lg'
-          persistent
-          truncate
-        >
-          <FormatAmount value={bNLocked.toString(10)} showTooltip={false} />
-        </Overlay>
+        {nodeData.auctionQualified ? (
+          <Overlay
+            title={<NodeLockedStakeTooltip node={nodeData} showAuctionTopup />}
+            tooltipClassName='tooltip-text-start tooltip-lg'
+            persistent
+            truncate
+          >
+            <FormatAmount value={bNLocked.toString(10)} showTooltip={false} />
+          </Overlay>
+        ) : (
+          <FormatAmount value={bNLocked.toString(10)} />
+        )}
       </td>
       <td>
         <NodeTreshold node={nodeData} />

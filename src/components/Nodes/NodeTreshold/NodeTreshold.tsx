@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
+import { ELLIPSIS } from 'appConstants';
 import { FormatAmount } from 'components';
 import { stakeSelector } from 'redux/selectors';
 import { NodeType, WithClassnameType } from 'types';
@@ -16,16 +17,19 @@ export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
     unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
 
-  const { locked, isInDangerZone, auctionQualified } = node;
+  const { locked, stake, auctionTopUp, isInDangerZone, auctionQualified } =
+    node;
   if (
     !isStakeFetched ||
     minimumAuctionQualifiedStake === undefined ||
     locked === undefined
   ) {
-    return null;
+    return ELLIPSIS;
   }
 
-  const bNLocked = new BigNumber(locked);
+  const bNLocked = new BigNumber(stake).plus(
+    auctionQualified ? auctionTopUp ?? 0 : 0
+  );
   const bNMinimumQualifiedStake = new BigNumber(minimumAuctionQualifiedStake);
   const bNTreshold = bNLocked.minus(bNMinimumQualifiedStake);
 

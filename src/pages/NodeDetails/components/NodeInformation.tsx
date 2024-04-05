@@ -42,7 +42,9 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     issues,
     position,
     fullHistory,
-    owner
+    owner,
+    auctionQualified,
+    auctionTopUp
   } = nodeData;
 
   const versionOudated =
@@ -116,13 +118,20 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             <div className='d-flex align-items-center'>
               <FormatAmount value={locked} />
               <LockedAmountTooltip
-                small
                 lockedDetails={[
                   { label: 'Stake', value: <FormatAmount value={stake} /> },
                   {
-                    label: 'Topup',
+                    label: 'Top Up',
                     value: <FormatAmount value={topUp} />
-                  }
+                  },
+                  ...(auctionQualified && auctionTopUp
+                    ? [
+                        {
+                          label: 'Qualified Top Up',
+                          value: <FormatAmount value={auctionTopUp} />
+                        }
+                      ]
+                    : [])
                 ]}
               />
             </div>

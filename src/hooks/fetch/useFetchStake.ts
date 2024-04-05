@@ -49,10 +49,6 @@ export const useFetchStake = () => {
                 .minus(data.qualifiedAuctionValidators)
                 .toNumber()
             }
-          : {}),
-        // TODO: temporary
-        ...(data.minimumAuctionQualifiedStake === '2500'
-          ? { minimumAuctionQualifiedStake: '2500000000000000000000' }
           : {})
       };
 

@@ -24,14 +24,15 @@ export const LockedStakeTooltip = ({
           Staked: <FormatAmount value={stake} showTooltip={false} />
         </p>
       )}
-      {topUp !== undefined && !(showAuctionTopup && topUp === auctionTopUp) && (
+      {topUp !== undefined && (
         <p className='mb-0'>
           Top Up: <FormatAmount value={topUp} showTooltip={false} />
         </p>
       )}
       {auctionTopUp !== undefined && showAuctionTopup && (
         <p className='mb-0'>
-          Qualified Top Up: <FormatAmount value={auctionTopUp} />
+          Qualified Top Up:{' '}
+          <FormatAmount value={auctionTopUp} showTooltip={false} />
         </p>
       )}
     </div>

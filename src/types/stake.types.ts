@@ -14,6 +14,7 @@ export interface StakeType {
   dangerZoneValidators?: number;
   eligibleValidators?: number;
   waitingValidators?: number;
+  allStakedNodes?: number;
 
   // not in API
   notQualifiedAuctionValidators?: number;
@@ -35,6 +36,7 @@ export interface StakeSliceType extends SliceType {
   dangerZoneValidators?: string;
   eligibleValidators?: string;
   waitingValidators?: string;
+  allStakedNodes?: string;
 
   // not in API
   notQualifiedAuctionValidators?: string;

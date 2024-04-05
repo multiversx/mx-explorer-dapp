@@ -72,6 +72,11 @@ export const processStake = (data: StakeType) => {
       ? {
           waitingValidators: new BigNumber(data.waitingValidators).toFormat(0)
         }
+      : {}),
+    ...(data.allStakedNodes !== undefined
+      ? {
+          allStakedNodes: new BigNumber(data.allStakedNodes).toFormat(0)
+        }
       : {})
   };
 };

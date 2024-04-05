@@ -1,6 +1,9 @@
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
-import { Led, NodeDangerZoneTooltip } from 'components';
+import { Led, NodeDangerZoneTooltip, InfoTooltip } from 'components';
+import { stakeSelector } from 'redux/selectors';
 import {
   NodeType,
   WithClassnameType,
@@ -17,7 +20,18 @@ export const NodeQualification = ({
   showDangerZone = false,
   className
 }: NodeQualificationUIType) => {
-  const { auctionQualified, isInDangerZone } = node;
+  const {
+    isFetched: isStakeFetched,
+    unprocessed: { minimumAuctionQualifiedStake }
+  } = useSelector(stakeSelector);
+  const { stake, auctionTopUp, auctionQualified, isInDangerZone } = node;
+
+  const bNAuctionTopup = new BigNumber(auctionTopUp ?? 0);
+  const bNTotalLocked = new BigNumber(stake).plus(bNAuctionTopup);
+  const isDropped =
+    !auctionQualified &&
+    bNTotalLocked.isGreaterThan(minimumAuctionQualifiedStake ?? 0) &&
+    bNAuctionTopup.isGreaterThan(0);
 
   const NodeStatusComponent = () => {
     if (auctionQualified) {
@@ -46,6 +60,9 @@ export const NodeQualification = ({
         <span className='text-neutral-500'>
           {NodeQualificationStatusEnum.notQualified}
         </span>
+        {isStakeFetched && minimumAuctionQualifiedStake && isDropped && (
+          <InfoTooltip title='Dropped' className='ms-0' />
+        )}
       </>
     );
   };
