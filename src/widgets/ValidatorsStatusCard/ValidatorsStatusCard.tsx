@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
 import { useFetchStake, useFetchMarkers, useFetchShards } from 'hooks';
-import { stakeSelector, markersSelector } from 'redux/selectors';
+import {
+  stakeSelector,
+  markersSelector,
+  shardsSelector
+} from 'redux/selectors';
 import { RankType } from 'types';
 
 import { LargeCard } from './components/LargeCard';
@@ -41,8 +46,17 @@ export const ValidatorsStatusCard = ({
   const ref = useRef(null);
 
   const { markers } = useSelector(markersSelector);
-  const { totalValidators, allStakedNodes, unprocessed } =
-    useSelector(stakeSelector);
+  const { totalValidators, unprocessed } = useSelector(stakeSelector);
+
+  // TODO - Temporary
+  const shards = useSelector(shardsSelector);
+  const shardNodesCount = shards.reduce(
+    (acc, shard) => acc + shard.activeValidators,
+    0
+  );
+  const tempCount = new BigNumber(shardNodesCount)
+    .plus(unprocessed?.qualifiedAuctionValidators ?? 0)
+    .toFormat(0);
 
   const [continentsRank, setContinentsRank] =
     useState<RankType[]>(placeHolderRank);
@@ -59,9 +73,6 @@ export const ValidatorsStatusCard = ({
     }
   }, [markers, unprocessed]);
 
-  // TODO: temporay until changed on api
-  const tempDisplay = allStakedNodes ?? totalValidators;
-
   return (
     <div
       className={`card validators-status-card ${
@@ -73,13 +84,13 @@ export const ValidatorsStatusCard = ({
         <SmallCard
           continentsRank={continentsRank}
           markers={markers}
-          totalValidators={totalValidators}
+          totalValidators={tempCount ?? totalValidators}
         />
       ) : (
         <LargeCard
           continentsRank={continentsRank}
           markers={markers}
-          totalValidators={tempDisplay}
+          totalValidators={tempCount ?? totalValidators}
         />
       )}
     </div>
