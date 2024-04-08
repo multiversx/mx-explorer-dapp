@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { ELLIPSIS } from 'appConstants';
+import { ELLIPSIS, MAX_ACOUNT_TOKENS_BALANCE } from 'appConstants';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import {
   CardItem,
@@ -13,7 +13,12 @@ import {
   TimeAgo,
   InfoTooltip
 } from 'components';
-import { urlBuilder, formatHerotag } from 'helpers';
+import {
+  urlBuilder,
+  formatHerotag,
+  formatBigNumber,
+  getTotalTokenUsdValue
+} from 'helpers';
 import { useAdapter } from 'hooks';
 import { faClock, faExclamationTriangle } from 'icons/regular';
 import {
@@ -23,18 +28,22 @@ import {
   faHexagonVerticalNft,
   faShieldCheck
 } from 'icons/solid';
+
 import {
   activeNetworkSelector,
   accountSelector,
   accountExtraSelector
 } from 'redux/selectors';
+import { setAccountExtra } from 'redux/slices';
+
+import { SortOrderEnum } from 'types';
 
 import { AccountUsdValueCardItem } from './components/AccountUsdValueCardItem';
 import { LockedAmountCardItem } from './components/LockedAmountCardItem';
 
 export const AccountDetailsCard = () => {
   const ref = useRef(null);
-
+  const dispatch = useDispatch();
   const { account } = useSelector(accountSelector);
   const { accountExtra } = useSelector(accountExtraSelector);
   const {
@@ -51,55 +60,86 @@ export const AccountDetailsCard = () => {
     activeGuardianServiceUid
   } = account;
   const { firstTransactionDate } = accountExtra;
-  const { id: activeNetworkId, adapter } = useSelector(activeNetworkSelector);
-  const { getAccountTokensCount, getAccountNftsCount } = useAdapter();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const {
+    getAccountTokensCount,
+    getAccountNftsCount,
+    getAccountTokens,
+    getAccountTransfers
+  } = useAdapter();
 
-  const [accountTokensCount, setAccountTokensCount] = React.useState<number>();
-  const [accountNftsCount, setAccountNftsCount] = React.useState<number>();
+  const [accountTokensCount, setAccountTokensCount] = React.useState<
+    number | typeof ELLIPSIS
+  >(ELLIPSIS);
+  const [accountNftsCount, setAccountNftsCount] = React.useState<
+    number | typeof ELLIPSIS
+  >(ELLIPSIS);
 
-  const tokensActive = adapter === 'api';
-  const cardItemClass = tokensActive ? 'n4' : '';
-
-  const fetchAccountTokensCount = () => {
-    if (tokensActive) {
-      getAccountTokensCount({ address, includeMetaESDT: true }).then(
-        (accountTokensCountData) => {
-          if (ref.current !== null) {
-            if (accountTokensCountData.success) {
-              const accountTokens =
-                typeof accountTokensCountData.data === 'number'
-                  ? accountTokensCountData.data
-                  : 0;
-
-              setAccountTokensCount(accountTokens);
-            }
+  const fetchAccountDetails = () => {
+    Promise.all([
+      getAccountTokens({
+        address,
+        size: MAX_ACOUNT_TOKENS_BALANCE,
+        fields: 'valueUsd',
+        includeMetaESDT: false
+      }),
+      getAccountTransfers({
+        address,
+        size: 1,
+        order: SortOrderEnum.asc,
+        fields: 'timestamp'
+      }),
+      getAccountTokensCount({ address, includeMetaESDT: true }),
+      getAccountNftsCount({ address, excludeMetaESDT: true })
+    ]).then(
+      ([
+        accountTokensValueData,
+        accountTransfersData,
+        accountTokensCountData,
+        accountNftsCountData
+      ]) => {
+        if (accountTransfersData.success) {
+          if (
+            accountTransfersData?.data &&
+            accountTransfersData.data.length > 0
+          ) {
+            const firstTransactionDate =
+              accountTransfersData.data[0]?.['timestamp'];
+            dispatch(
+              setAccountExtra({
+                accountExtra: {
+                  firstTransactionDate
+                },
+                isFetched: true
+              })
+            );
           }
         }
-      );
-    }
-  };
-  const fetchAccountNftsCount = () => {
-    if (tokensActive) {
-      getAccountNftsCount({ address, excludeMetaESDT: true }).then(
-        (accountNftsCountData) => {
-          if (ref.current !== null) {
-            if (accountNftsCountData.success) {
-              const accountNfts =
-                typeof accountNftsCountData.data === 'number'
-                  ? accountNftsCountData.data
-                  : 0;
-
-              setAccountNftsCount(accountNfts);
-            }
-          }
+        if (accountTokensValueData.success) {
+          const tokenBalance = getTotalTokenUsdValue(
+            accountTokensValueData.data
+          );
+          dispatch(
+            setAccountExtra({
+              accountExtra: {
+                tokenBalance
+              },
+              isFetched: true
+            })
+          );
         }
-      );
-    }
+        if (accountTokensCountData.success) {
+          setAccountTokensCount(accountTokensCountData.data);
+        }
+        if (accountNftsCountData.success) {
+          setAccountNftsCount(accountNftsCountData.data);
+        }
+      }
+    );
   };
 
   useEffect(() => {
-    fetchAccountNftsCount();
-    fetchAccountTokensCount();
+    fetchAccountDetails();
   }, [txCount, activeNetworkId, address]);
 
   return address !== '' ? (
@@ -157,11 +197,7 @@ export const AccountDetailsCard = () => {
             </div>
           </div>
           <div className='card-body card-item-container my-n2 mx-spacing'>
-            <CardItem
-              className={cardItemClass}
-              title='Balance'
-              customIcon={<MultiversXSymbol />}
-            >
+            <CardItem title='Balance' customIcon={<MultiversXSymbol />}>
               <div className='d-flex align-items-center'>
                 {balance !== ELLIPSIS ? (
                   <FormatAmount
@@ -174,10 +210,10 @@ export const AccountDetailsCard = () => {
                 )}
               </div>
             </CardItem>
-            <LockedAmountCardItem cardItemClass={cardItemClass} />
-            <AccountUsdValueCardItem cardItemClass={cardItemClass} />
+            <LockedAmountCardItem />
+            <AccountUsdValueCardItem />
             {isGuarded && (
-              <CardItem className={cardItemClass} title='' icon={faShieldCheck}>
+              <CardItem title='' icon={faShieldCheck}>
                 Guarded
                 <InfoTooltip
                   title={
@@ -198,30 +234,18 @@ export const AccountDetailsCard = () => {
                 />
               </CardItem>
             )}
-            <CardItem className={cardItemClass} title='Nonce' icon={faUser}>
-              {nonce !== undefined ? nonce.toLocaleString('en') : ELLIPSIS}
+            <CardItem title='Nonce' icon={faUser}>
+              {nonce !== undefined
+                ? formatBigNumber({ value: nonce })
+                : ELLIPSIS}
             </CardItem>
-            {tokensActive && (
-              <CardItem className={cardItemClass} title='Tokens' icon={faCoins}>
-                {accountTokensCount !== undefined
-                  ? accountTokensCount
-                  : ELLIPSIS}
-              </CardItem>
-            )}
-            {tokensActive && (
-              <CardItem
-                className={cardItemClass}
-                title='NFTs'
-                icon={faHexagonVerticalNft}
-              >
-                {accountNftsCount !== undefined ? accountNftsCount : ELLIPSIS}
-              </CardItem>
-            )}
-            <CardItem
-              className={cardItemClass}
-              title='Shard'
-              icon={faLayerGroup}
-            >
+            <CardItem title='Tokens' icon={faCoins}>
+              {accountTokensCount}
+            </CardItem>
+            <CardItem title='NFTs' icon={faHexagonVerticalNft}>
+              {accountNftsCount}
+            </CardItem>
+            <CardItem title='Shard' icon={faLayerGroup}>
               {shard !== undefined ? (
                 <NetworkLink
                   to={urlBuilder.shard(shard)}
@@ -234,11 +258,7 @@ export const AccountDetailsCard = () => {
               )}
             </CardItem>
             {firstTransactionDate && (
-              <CardItem
-                className={cardItemClass}
-                title='Active Since'
-                icon={faClock}
-              >
+              <CardItem title='Active Since' icon={faClock}>
                 <TimeAgo value={firstTransactionDate} tooltip showAgo />
               </CardItem>
             )}

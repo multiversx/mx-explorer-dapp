@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
@@ -9,7 +10,7 @@ import { accountStakingSelector } from 'redux/selectors';
 export const LockedAmountCardItem = ({
   cardItemClass
 }: {
-  cardItemClass: string;
+  cardItemClass?: string;
 }) => {
   const {
     stakingDataReady,
@@ -55,7 +56,7 @@ export const LockedAmountCardItem = ({
   }
 
   return (
-    <CardItem className={cardItemClass} title='Stake' icon={faLock}>
+    <CardItem className={classNames(cardItemClass)} title='Stake' icon={faLock}>
       <div className='d-flex align-items-center'>
         {stakingDataReady ? (
           <FormatAmount value={bNtotalLocked.toString(10)} />
