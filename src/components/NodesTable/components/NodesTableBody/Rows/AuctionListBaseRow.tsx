@@ -45,12 +45,8 @@ export const AuctionListBaseRow = ({
   const bNLocked = new BigNumber(nodeData.stake).plus(
     nodeData.auctionQualified ? bNAuctionTopup : 0
   );
-  const bNMinimumAuctionStake = new BigNumber(minimumAuctionQualifiedStake);
 
-  const isDangerZone =
-    nodeData.isInDangerZone &&
-    nodeData.auctionQualified &&
-    bNLocked.isGreaterThanOrEqualTo(bNMinimumAuctionStake);
+  const isDangerZone = nodeData.isInDangerZone && nodeData.auctionQualified;
 
   const nodeIdentity = nodesIdentities.find(
     (identity) => nodeData.identity && identity.identity === nodeData.identity
