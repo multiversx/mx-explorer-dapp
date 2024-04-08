@@ -60,7 +60,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
       if (firstNonZeroIndex > MAX_DISPLAY_ZERO_DECIMALS) {
         return (
           <>
-            <span className='am'>0</span>
+            <span className='am'>{valueParts[0]}</span>
             <span className='dec'>
               .0<sub>{firstNonZeroIndex - 2}</sub>0{nonZeroDecimals.join('')}
             </span>
