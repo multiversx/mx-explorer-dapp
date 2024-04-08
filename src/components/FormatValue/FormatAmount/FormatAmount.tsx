@@ -80,11 +80,12 @@ export const FormatAmount = (props: FormatAmountUIType) => {
       {...props}
       formattedValue={formattedValue}
       completeValue={completeValue}
-      egldLabel={egldLabel}
+      label={egldLabel}
       data-testid={dataTestId}
       showSymbol={showSymbol}
       showLastNonZeroDecimal={showLastNonZeroDecimal}
       showTooltipLabel
+      spacedLabel
       {...(showSymbol && !token
         ? {
             symbol: (

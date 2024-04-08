@@ -9,9 +9,11 @@ export interface FormatDisplayValueUIType
   formattedValue: string | number;
   completeValue: string | number;
   symbol?: React.ReactNode;
+  label?: React.ReactNode;
   details?: React.ReactNode;
   showTooltipSymbol?: boolean;
   showTooltipLabel?: boolean;
+  spacedLabel?: boolean;
 }
 
 export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
@@ -20,6 +22,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     completeValue,
     token,
     symbol,
+    label,
     egldLabel,
     details,
     digits = DIGITS,
@@ -30,11 +33,13 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     superSuffix = false,
     showTooltipSymbol = false,
     showTooltipLabel = false,
+    spacedLabel = false,
     className
   } = props;
 
   const valueParts = String(formattedValue).split('.');
   const isZero = Number(completeValue) === 0;
+  const displayLabel = label ?? (token ? token : egldLabel);
 
   const DisplayValue = () => {
     const completeValueParts = String(completeValue).split('.');
@@ -94,8 +99,11 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
                 <>
                   {showSymbol && showTooltipSymbol && symbol && <>{symbol}</>}
                   {completeValue}
-                  {showLabel && showTooltipLabel && (token || egldLabel) && (
-                    <>&nbsp;{token ? token : egldLabel}</>
+                  {showLabel && showTooltipLabel && displayLabel && (
+                    <>
+                      {spacedLabel && <>&nbsp;</>}
+                      {displayLabel}
+                    </>
                   )}
                 </>
               )}
@@ -115,12 +123,15 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
       ) : (
         <DisplayValue />
       )}
-      {showLabel && (token || egldLabel) && (
+      {showLabel && displayLabel && (
         <>
           {superSuffix ? (
-            <sup className='suf'>{token ? token : egldLabel}</sup>
+            <sup className='suf'>{displayLabel}</sup>
           ) : (
-            <span className='suf'>&nbsp;{token ? token : egldLabel}</span>
+            <span className='suf'>
+              {spacedLabel && <>&nbsp;</>}
+              {displayLabel}
+            </span>
           )}
         </>
       )}
