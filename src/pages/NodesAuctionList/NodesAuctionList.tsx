@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -67,6 +68,24 @@ export const NodesAuctionList = () => {
     [search, ...Object.keys(nodeFilters)].every((el) => el === undefined) &&
     sort.sort === 'locked';
 
+  const sortLocked = (a: NodeType, b: NodeType) => {
+    if (sort.sort !== 'locked') {
+      return 0;
+    }
+
+    const totalLockedA = new BigNumber(a.stake).plus(a.auctionTopUp ?? 0);
+    const totalLockedB = new BigNumber(b.stake).plus(b.auctionTopUp ?? 0);
+    const isDesc = sort.order === SortOrderEnum.asc;
+
+    return totalLockedA?.isGreaterThan(totalLockedB)
+      ? isDesc
+        ? 1
+        : -1
+      : isDesc
+      ? -1
+      : 1;
+  };
+
   const fetchNodes = () => {
     setDataReady(undefined);
     const auctionListFilters = {
@@ -107,18 +126,27 @@ export const NodesAuctionList = () => {
     Promise.all([...nodesPromiseArray, getNodesCount(auctionListFilters)]).then(
       ([firstNodes, secondNodes, count]) => {
         const qualifiedNodes = firstNodes.data
-          ? firstNodes.data.filter(
-              (node: NodeType) => node.auctionQualified && !node.isInDangerZone
-            )
+          ? firstNodes.data
+              .filter(
+                (node: NodeType) =>
+                  node.auctionQualified && !node.isInDangerZone
+              )
+              .sort(sortLocked)
           : [];
         const dzNodes = firstNodes.data
-          ? firstNodes.data.filter((node: NodeType) => node.isInDangerZone)
+          ? firstNodes.data
+              .filter((node: NodeType) => node.isInDangerZone)
+              .sort(sortLocked)
           : [];
         const notQualifiedNodes = firstNodes.data
-          ? firstNodes.data.filter(
-              (node: NodeType) => !node.auctionQualified && !node.isInDangerZone
-            )
+          ? firstNodes.data
+              .filter(
+                (node: NodeType) =>
+                  !node.auctionQualified && !node.isInDangerZone
+              )
+              .sort(sortLocked)
           : [];
+
         const sortedFirst = [
           ...(sort.order === SortOrderEnum.asc
             ? [
