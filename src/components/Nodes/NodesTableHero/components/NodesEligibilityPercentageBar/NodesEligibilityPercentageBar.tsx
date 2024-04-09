@@ -81,7 +81,7 @@ export const NodesEligibilityPercentageBar = ({
                   title={
                     <>
                       <p className='mb-2 h6'>
-                        Danger Zone <Led color='bg-red-400 ms-1' />
+                        Danger Zone <Led color='bg-orange-400 ms-1' />
                       </p>
                       <p className='text-neutral-400 mb-0'>
                         {dangerZoneValidators} nodes are under the 5% threshold

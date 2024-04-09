@@ -57,7 +57,7 @@ export const NodeDangerZoneTooltip = ({
               title={
                 <>
                   <p className='mb-2 h6'>
-                    Danger Zone <Led color='bg-danger ms-1' />
+                    Danger Zone <Led color='bg-orange-400 ms-1' />
                   </p>
                   <p className='mb-0'>
                     This node is only{' '}
