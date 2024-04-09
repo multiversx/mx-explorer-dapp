@@ -276,3 +276,22 @@ button.badge {
     padding: 0.75rem 1.125rem;
   }
 }
+
+/* General Badges
+-------------------------------------------------- */
+
+.badge-sm {
+  --#{$prefix}badge-padding-x: 0.25rem;
+  --#{$prefix}badge-padding-y: 0;
+  --#{$prefix}badge-font-size: 0.75rem;
+  --#{$prefix}badge-font-weight: 600;
+  --#{$prefix}badge-color: var(--#{$prefix}neutral-100);
+  --#{$prefix}badge-border-radius: 0.125rem;
+
+  line-height: 1rem;
+  font-family: var(--#{$prefix}font-headings-semibold);
+  background-color: rgba(
+    var(--#{$prefix}badge-bg, var(--#{$prefix}neutral-650-rgb)),
+    var(--#{$prefix}bg-opacity, 1)
+  );
+}

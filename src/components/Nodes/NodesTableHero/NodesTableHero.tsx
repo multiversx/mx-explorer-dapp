@@ -47,7 +47,7 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
   return (
     <div
       className={classNames(
-        'nodes-table-hero font-headings-regular w-100 mb-3',
+        'nodes-table-hero font-headings-regular w-100 mb-2',
         className
       )}
     >
