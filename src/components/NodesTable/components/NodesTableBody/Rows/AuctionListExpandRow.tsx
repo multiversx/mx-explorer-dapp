@@ -1,6 +1,8 @@
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
+import { stakeSelector } from 'redux/selectors';
 import { NodeType, WithClassnameType } from 'types';
 
 import { AuctionListBaseRow } from './AuctionListBaseRow';
@@ -78,6 +80,10 @@ export const AuctionListExpandRow = ({
     setNotQualifiedExpanded
   } = expandRowConfig;
 
+  const {
+    unprocessed: { notQualifiedAuctionValidators }
+  } = useSelector(stakeSelector);
+
   const hasQualifiedExpand =
     qualifiedExpandPosition &&
     qualifiedExpandClosePosition &&
@@ -104,6 +110,11 @@ export const AuctionListExpandRow = ({
     index >= notQualifiedExpandPosition &&
     index < notQualifiedExpandClosePosition;
 
+  const isInDangerZone =
+    nodeData.auctionQualified &&
+    nodeData.isInDangerZone &&
+    notQualifiedAuctionValidators;
+
   if (isQualifiedHidden || isDangerZoneHidden || isNotQualifiedHidden) {
     return (
       <AuctionListBaseRow
@@ -111,14 +122,8 @@ export const AuctionListExpandRow = ({
         index={index}
         showPosition={showPosition}
         className={classNames('dh', {
-          qv:
-            qualifiedExpanded &&
-            nodeData.auctionQualified &&
-            !nodeData.isInDangerZone,
-          dzv:
-            dangerZoneExpanded &&
-            nodeData.auctionQualified &&
-            nodeData.isInDangerZone,
+          qv: qualifiedExpanded && nodeData.auctionQualified && !isInDangerZone,
+          dzv: dangerZoneExpanded && isInDangerZone,
           nqv: notQualifiedExpanded && !nodeData.auctionQualified
         })}
       />

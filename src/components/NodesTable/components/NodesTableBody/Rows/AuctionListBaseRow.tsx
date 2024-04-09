@@ -34,7 +34,7 @@ export const AuctionListBaseRow = ({
   const { nodesIdentities } = useSelector(nodesIdentitiesSelector);
   const {
     isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionQualifiedStake }
+    unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
 
   if (!isStakeFetched || !minimumAuctionQualifiedStake) {
@@ -46,7 +46,10 @@ export const AuctionListBaseRow = ({
     nodeData.auctionQualified ? bNAuctionTopup : 0
   );
 
-  const isDangerZone = nodeData.isInDangerZone && nodeData.auctionQualified;
+  const isDangerZone =
+    nodeData.isInDangerZone &&
+    nodeData.auctionQualified &&
+    notQualifiedAuctionValidators;
 
   const nodeIdentity = nodesIdentities.find(
     (identity) => nodeData.identity && identity.identity === nodeData.identity

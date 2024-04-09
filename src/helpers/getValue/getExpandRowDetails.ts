@@ -22,9 +22,13 @@ const isDangerZone = (node: NodeType) => {
 const isNotQualified = (node: NodeType) => {
   return !node.auctionQualified;
 };
+const isQualifiedIncludingDangerZone = (node: NodeType) => {
+  return node.auctionQualified;
+};
 
 export const getExpandRowDetails = (
-  nodes: NodeType[] = []
+  nodes: NodeType[] = [],
+  hasDangerZone?: boolean
 ): ExpandRowDetailsType => {
   const MIN_ROW_COUNT = 9;
 
@@ -41,16 +45,25 @@ export const getExpandRowDetails = (
     notQualifiedExpandClosePosition,
     remainingNotQualifiedValidators;
 
-  const qualifiedNotInDangerZoneValidators = nodes.filter(isQualified) ?? [];
-  const dangerZoneValidators = nodes.filter(isDangerZone) ?? [];
+  const qualifiedNotInDangerZoneValidators =
+    nodes.filter(
+      hasDangerZone ? isQualified : isQualifiedIncludingDangerZone
+    ) ?? [];
+  const dangerZoneValidators = hasDangerZone
+    ? nodes.filter(isDangerZone) ?? []
+    : [];
   const notQualifiedValidators = nodes.filter(isNotQualified) ?? [];
 
   if (
     hasMinElements &&
     qualifiedNotInDangerZoneValidators.length >= MIN_ROW_COUNT
   ) {
-    const qualifiedFirst = nodes.findIndex(isQualified);
-    const qualifiedLast = nodes.findLastIndex(isQualified);
+    const qualifiedFirst = nodes.findIndex(
+      hasDangerZone ? isQualified : isQualifiedIncludingDangerZone
+    );
+    const qualifiedLast = nodes.findLastIndex(
+      hasDangerZone ? isQualified : isQualifiedIncludingDangerZone
+    );
     qualifiedExpandPosition = qualifiedFirst + 1 + displayRows;
     qualifiedExpandClosePosition = qualifiedLast + 1 - displayRows;
 
