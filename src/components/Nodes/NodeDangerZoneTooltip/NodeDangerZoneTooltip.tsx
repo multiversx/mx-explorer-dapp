@@ -22,16 +22,17 @@ export const NodeDangerZoneTooltip = ({
 }: NodeDangerZoneTooltipUIType) => {
   const {
     isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionQualifiedStake }
+    unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
   const { locked, stake, auctionTopUp, isInDangerZone, auctionQualified } =
     node;
 
   if (
     !isStakeFetched ||
+    !auctionQualified ||
+    !notQualifiedAuctionValidators ||
     minimumAuctionQualifiedStake === undefined ||
-    locked === undefined ||
-    !auctionQualified
+    locked === undefined
   ) {
     return null;
   }

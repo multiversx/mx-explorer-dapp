@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
 import {
   NodeRating,
@@ -15,7 +16,7 @@ import {
   NodeQualification
 } from 'components';
 import { urlBuilder } from 'helpers';
-
+import { stakeSelector } from 'redux/selectors';
 import { NodeType } from 'types';
 
 export interface StandardRowUIType {
@@ -34,13 +35,20 @@ export const StandardRow = ({
   status,
   showPosition
 }: StandardRowUIType) => {
+  const {
+    unprocessed: { notQualifiedAuctionValidators }
+  } = useSelector(stakeSelector);
+
+  const isInDangerZone =
+    nodeData.isInDangerZone &&
+    nodeData.auctionQualified &&
+    notQualifiedAuctionValidators &&
+    status === 'auction';
+
   return (
     <tr
       className={classNames({
-        dz:
-          nodeData?.isInDangerZone &&
-          nodeData.auctionQualified &&
-          status === 'auction'
+        dz: isInDangerZone
       })}
     >
       {status === 'queued' && (

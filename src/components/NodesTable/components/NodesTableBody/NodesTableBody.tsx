@@ -66,7 +66,7 @@ export const NodesTableBody = ({
   showPosition
 }: NodesTableBodyUIType) => {
   const {
-    unprocessed: { minimumAuctionQualifiedStake }
+    unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
   const { search } = useGetSearch();
   const { sort, order } = useGetSort();
@@ -102,7 +102,7 @@ export const NodesTableBody = ({
   const expandRowConfig =
     auctionList && hasNoFilters && !isCustomSize
       ? ({
-          ...getExpandRowDetails(nodes),
+          ...getExpandRowDetails(nodes, Boolean(notQualifiedAuctionValidators)),
           qualifiedExpanded,
           dangerZoneExpanded,
           notQualifiedExpanded,

@@ -14,7 +14,7 @@ export interface NodeTresholdUIType extends WithClassnameType {
 export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
   const {
     isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionQualifiedStake }
+    unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
 
   const { locked, stake, auctionTopUp, isInDangerZone, auctionQualified } =
@@ -33,11 +33,14 @@ export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
   const bNMinimumQualifiedStake = new BigNumber(minimumAuctionQualifiedStake);
   const bNTreshold = bNLocked.minus(bNMinimumQualifiedStake);
 
+  const isHighlightedTreshhold =
+    (auctionQualified && bNTreshold.isGreaterThan(0) && !isInDangerZone) ||
+    (auctionQualified && isInDangerZone && !notQualifiedAuctionValidators);
+
   return (
     <span
       className={classNames(className, {
-        'text-success':
-          auctionQualified && !isInDangerZone && bNTreshold.isGreaterThan(0),
+        'text-success': isHighlightedTreshhold,
         'text-red-400': !auctionQualified && bNTreshold.isLessThan(0)
       })}
     >

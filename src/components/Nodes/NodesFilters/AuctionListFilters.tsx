@@ -136,27 +136,29 @@ export const AuctionListFilters = ({
               )}
             </button>
           </li>
-          <li className='list-inline-item me-0'>
-            <button
-              type='button'
-              onClick={() => {
-                nodeDangerZoneLink(true);
-              }}
-              className={`badge px-2 br-lg ${
-                isAuctionDangerZone
-                  ? 'badge-grey'
-                  : 'badge-outline badge-outline-grey'
-              }`}
-            >
-              <Led color='bg-red-400 me-1' />
-              Danger Zone{' '}
-              {dangerZoneValidators !== undefined && (
-                <span className='badge badge-grey p-1 ms-1'>
-                  {new BigNumber(dangerZoneValidators).toFormat(0)}
-                </span>
-              )}
-            </button>
-          </li>
+          {Boolean(notQualifiedAuctionValidators) && (
+            <li className='list-inline-item me-0'>
+              <button
+                type='button'
+                onClick={() => {
+                  nodeDangerZoneLink(true);
+                }}
+                className={`badge px-2 br-lg ${
+                  isAuctionDangerZone
+                    ? 'badge-grey'
+                    : 'badge-outline badge-outline-grey'
+                }`}
+              >
+                <Led color='bg-red-400 me-1' />
+                Danger Zone{' '}
+                {dangerZoneValidators !== undefined && (
+                  <span className='badge badge-grey p-1 ms-1'>
+                    {new BigNumber(dangerZoneValidators).toFormat(0)}
+                  </span>
+                )}
+              </button>
+            </li>
+          )}
           <li className='list-inline-item me-0'>
             <button
               type='button'

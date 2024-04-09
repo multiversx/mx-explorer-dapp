@@ -22,7 +22,7 @@ export const NodeQualification = ({
 }: NodeQualificationUIType) => {
   const {
     isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionQualifiedStake }
+    unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
   const { stake, auctionTopUp, auctionQualified, isInDangerZone } = node;
 
@@ -35,7 +35,7 @@ export const NodeQualification = ({
 
   const NodeStatusComponent = () => {
     if (auctionQualified) {
-      if (showDangerZone && isInDangerZone) {
+      if (showDangerZone && isInDangerZone && notQualifiedAuctionValidators) {
         return (
           <>
             <Led color='bg-red-400' />
