@@ -52,7 +52,7 @@ export const NodesEligibilityPercentageBar = ({
         {
           name: 'Not Qualified',
           value: percentageNotQualified.toFixed(2),
-          className: 'bg-neutral-750',
+          className: 'bg-red-400',
           legend: (
             <div
               className='legend'
@@ -69,7 +69,7 @@ export const NodesEligibilityPercentageBar = ({
         {
           name: 'Danger Zone',
           value: percentageDangerZone.toFixed(2),
-          className: 'bg-red-400',
+          className: 'bg-orange-400',
           legend: (
             <div
               className='legend'
@@ -81,7 +81,7 @@ export const NodesEligibilityPercentageBar = ({
                   title={
                     <>
                       <p className='mb-2 h6'>
-                        Danger Zone <Led color='bg-danger ms-1' />
+                        Danger Zone <Led color='bg-red-400 ms-1' />
                       </p>
                       <p className='text-neutral-400 mb-0'>
                         {dangerZoneValidators} nodes are under the 5% threshold

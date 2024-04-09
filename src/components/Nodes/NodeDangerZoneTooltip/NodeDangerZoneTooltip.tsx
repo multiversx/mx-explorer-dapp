@@ -50,7 +50,7 @@ export const NodeDangerZoneTooltip = ({
 
     return (
       <div className={classNames('d-flex align-items-center gap-1', className)}>
-        <span className='text-red-400'>
+        <span className='text-orange-400'>
           {NodeQualificationStatusEnum.dangerZone}
           {bNLocked.isGreaterThanOrEqualTo(bNMinimumAuctionStake) && (
             <Overlay
@@ -85,7 +85,10 @@ export const NodeDangerZoneTooltip = ({
               tooltipClassName='tooltip-text-start tooltip-lg'
               persistent
             >
-              <FontAwesomeIcon icon={faSquareInfo} className='text-red-400' />
+              <FontAwesomeIcon
+                icon={faSquareInfo}
+                className='text-orange-400'
+              />
             </Overlay>
           )}
         </span>

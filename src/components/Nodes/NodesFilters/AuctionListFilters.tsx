@@ -149,7 +149,7 @@ export const AuctionListFilters = ({
                     : 'badge-outline badge-outline-grey'
                 }`}
               >
-                <Led color='bg-red-400 me-1' />
+                <Led color='bg-orange-400 me-1' />
                 Danger Zone{' '}
                 {dangerZoneValidators !== undefined && (
                   <span className='badge badge-grey p-1 ms-1'>
@@ -171,7 +171,7 @@ export const AuctionListFilters = ({
                   : 'badge-outline badge-outline-grey'
               }`}
             >
-              <Led color='bg-neutral-750 me-1' />
+              <Led color='bg-red-400 me-1' />
               Not Qualified{' '}
               {notQualifiedAuctionValidators !== undefined && (
                 <span className='badge badge-grey p-1 ms-1'>
