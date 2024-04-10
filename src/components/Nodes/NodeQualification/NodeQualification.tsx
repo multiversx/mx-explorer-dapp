@@ -22,7 +22,7 @@ export const NodeQualification = ({
 }: NodeQualificationUIType) => {
   const {
     isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionQualifiedStake }
+    unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
   const { stake, auctionTopUp, auctionQualified, isInDangerZone } = node;
 
@@ -35,10 +35,10 @@ export const NodeQualification = ({
 
   const NodeStatusComponent = () => {
     if (auctionQualified) {
-      if (showDangerZone && isInDangerZone) {
+      if (showDangerZone && isInDangerZone && notQualifiedAuctionValidators) {
         return (
           <>
-            <Led color='bg-red-400' />
+            <Led color='bg-orange-400' />
             <NodeDangerZoneTooltip node={node} />
           </>
         );
@@ -56,12 +56,12 @@ export const NodeQualification = ({
 
     return (
       <>
-        <Led color='bg-neutral-500' />
-        <span className='text-neutral-500'>
+        <Led color='bg-red-400' />
+        <span className='text-red-400'>
           {NodeQualificationStatusEnum.notQualified}
         </span>
         {isStakeFetched && minimumAuctionQualifiedStake && isDropped && (
-          <InfoTooltip title='Dropped' className='ms-0' />
+          <InfoTooltip title='Dropped' className='ms-0 text-red-400' />
         )}
       </>
     );

@@ -55,7 +55,7 @@ export const ValidatorsStatusCard = ({
     0
   );
   const tempCount = new BigNumber(shardNodesCount)
-    .plus(unprocessed?.qualifiedAuctionValidators ?? 0)
+    .plus(unprocessed?.auctionValidators ?? 0)
     .toFormat(0);
 
   const [continentsRank, setContinentsRank] =

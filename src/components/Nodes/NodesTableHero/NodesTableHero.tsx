@@ -12,7 +12,7 @@ import { faClock } from 'icons/solid';
 import { stakeSelector, statsSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
-import { NodesEligibilityPercentageBar } from './components';
+import { NodesOverviewCards } from './components';
 
 export const NodesTableHero = ({ className }: WithClassnameType) => {
   const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
@@ -45,22 +45,24 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
   }
 
   return (
-    <div className={classNames('nodes-table-hero w-100 mb-3', className)}>
+    <div
+      className={classNames(
+        'nodes-table-hero font-headings-regular w-100 mb-2',
+        className
+      )}
+    >
       <div className='row gy-3'>
-        <div className='col-xl-7'>
-          <div className='card bg-neutral-800-opacity-60 h-100'>
-            <div className='card-body d-flex flex-column gap-3'>
-              <h4 className='mb-0'>Qualified Nodes</h4>
-              <NodesEligibilityPercentageBar />
-            </div>
+        <div className='col-xl-6'>
+          <div className='d-flex flex-wrap gap-3'>
+            <NodesOverviewCards />
           </div>
         </div>
-        <div className='col-xl-5'>
+        <div className='col-xl-6'>
           <div className='d-flex flex-column gap-3 h-100'>
             <div className='card bg-neutral-800-opacity-60 flex-fill'>
-              <div className='card-body d-flex align-items-center'>
-                <div className='d-flex w-100 flex-wrap gap-3 align-items-start justify-content-between'>
-                  <div className='text-primary-100 small'>
+              <div className='card-body py-3 d-flex align-items-center'>
+                <div className='d-flex w-100 flex-wrap gap-1 gap-sm-3 align-items-start justify-content-between'>
+                  <div className='text-primary-100'>
                     <FontAwesomeIcon icon={faClock} className='me-2' />
                     {epoch !== undefined ? (
                       <>Epoch {new BigNumber(epoch).toFormat(0)}</>
@@ -87,9 +89,9 @@ export const NodesTableHero = ({ className }: WithClassnameType) => {
             </div>
             {unprocessed.minimumAuctionQualifiedStake && (
               <div className='card bg-neutral-800-opacity-60 flex-fill'>
-                <div className='card-body d-flex align-items-center'>
-                  <div className='d-flex w-100 flex-wrap gap-3 align-items-start justify-content-between'>
-                    <div className='text-neutral-500 small'>
+                <div className='card-body py-3 d-flex align-items-center'>
+                  <div className='d-flex w-100 flex-wrap gap-1 gap-sm-3 align-items-start justify-content-between'>
+                    <div className='text-neutral-500'>
                       Node Qualification Threshold
                     </div>
                     <h3 className='mb-0 text-lh-24'>
