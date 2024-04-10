@@ -86,6 +86,7 @@
     "cy:run": "node scripts/cypress.ts"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "6.0.0",
     "@types/file-saver": "2.0.5",
     "@types/lodash.clonedeep": "4.5.7",
     "@types/numeral": "2.0.2",
