@@ -68,8 +68,10 @@ export const TokenDetailsLockedAccounts = () => {
                       <th>Address</th>
                       <th>Name</th>
                       <th>Balance</th>
-                      {hasSupply && <th>Percentage</th>}
-                      {price && <th>Value</th>}
+                      {hasSupply && (
+                        <th className='percentage-column'>Percentage</th>
+                      )}
+                      {price && <th className='value-column'>Value</th>}
                     </tr>
                   </thead>
                   <tbody data-testid='tokenLockedAccountsTable'>

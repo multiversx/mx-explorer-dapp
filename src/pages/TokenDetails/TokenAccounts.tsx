@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -84,10 +85,14 @@ export const TokenDetailsAccounts = () => {
                 <table className='table mb-0'>
                   <thead>
                     <tr>
-                      <th>Address</th>
+                      <th className={classNames({ 'w-50': !price })}>
+                        Address
+                      </th>
                       <th>Balance</th>
-                      {hasSupply && <th>Percentage</th>}
-                      {price && <th>Value</th>}
+                      {hasSupply && (
+                        <th className='percentage-column'>Percentage</th>
+                      )}
+                      {price && <th className='value-column'>Value</th>}
                     </tr>
                   </thead>
                   <tbody data-testid='accountsTable'>
@@ -103,10 +108,8 @@ export const TokenDetailsAccounts = () => {
                               <AccountLink
                                 address={account.address}
                                 assets={account?.assets}
-                                className={
-                                  hasSupply ? 'hash hash-xl' : 'full-hash'
-                                }
-                                linkClassName={hasSupply ? '' : 'trim-only-sm'}
+                                className={price ? 'hash hash-xl' : 'full-hash'}
+                                linkClassName={price ? '' : 'trim-only-sm'}
                               />
                             </div>
                           </td>

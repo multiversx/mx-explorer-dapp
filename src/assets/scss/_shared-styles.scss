@@ -135,6 +135,14 @@
       padding-left: 1rem;
     }
   }
+  th {
+    &.percentage-column {
+      width: 12rem;
+    }
+    &.value-column {
+      width: 12.5rem;
+    }
+  }
 }
 .table-wrapper {
   overflow-x: auto;
