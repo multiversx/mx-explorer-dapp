@@ -55,8 +55,9 @@ export const FormatEGLD = (props: FormatEGLDUIType) => {
       {...props}
       formattedValue={formattedValue}
       completeValue={completeValue}
-      egldLabel={egldLabel}
+      label={egldLabel}
       showTooltipLabel
+      spacedLabel
       {...(showSymbol && !props.token
         ? {
             symbol: (

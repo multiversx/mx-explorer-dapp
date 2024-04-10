@@ -1,6 +1,12 @@
 import classNames from 'classnames';
 
-import { ScAddressIcon, ShardSpan, NetworkLink, AccountName } from 'components';
+import {
+  ScAddressIcon,
+  ShardSpan,
+  NetworkLink,
+  AccountName,
+  LockedTokenAddressIcon
+} from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
 import { AccountAssetType, WithClassnameType } from 'types';
 
@@ -9,12 +15,14 @@ export interface AccountLinkType extends WithClassnameType {
   assets?: AccountAssetType;
   linkClassName?: string;
   fetchAssets?: boolean;
+  showLockedAccounts?: boolean;
 }
 
 export const AccountLink = ({
   address,
   assets,
   fetchAssets = false,
+  showLockedAccounts = true,
   className,
   linkClassName,
   'data-testid': testId
@@ -47,6 +55,9 @@ export const AccountLink = ({
         </NetworkLink>
       ) : (
         <ShardSpan shard={address} />
+      )}
+      {showLockedAccounts && (
+        <LockedTokenAddressIcon address={address} className='ms-1' />
       )}
     </div>
   );

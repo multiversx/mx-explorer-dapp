@@ -97,10 +97,6 @@ export const TransactionRow = ({
       </td>
       <td>
         <div className='d-flex align-items-center sender'>
-          {showLockedAccounts && (
-            <LockedTokenAddressIcon address={transaction.sender} />
-          )}
-
           {directionOut ? (
             <>
               <ScAddressIcon initiator={transaction.sender} />
@@ -108,11 +104,15 @@ export const TransactionRow = ({
                 address={transaction.sender}
                 assets={transaction.senderAssets}
               />
+              {showLockedAccounts && (
+                <LockedTokenAddressIcon address={transaction.sender} />
+              )}
             </>
           ) : (
             <AccountLink
               address={transaction.sender}
               assets={transaction.senderAssets}
+              showLockedAccounts={showLockedAccounts}
               data-testid='senderLink'
             />
           )}
@@ -132,17 +132,19 @@ export const TransactionRow = ({
 
       <td>
         <div className='d-flex align-items-center receiver'>
-          {showLockedAccounts && <LockedTokenAddressIcon address={receiver} />}
-
           {directionIn ? (
             <>
               <ScAddressIcon initiator={receiver} />
               <AccountName address={receiver} assets={receiverAssets} />
+              {showLockedAccounts && (
+                <LockedTokenAddressIcon address={receiver} />
+              )}
             </>
           ) : (
             <AccountLink
               address={receiver}
               assets={receiverAssets}
+              showLockedAccounts={showLockedAccounts}
               data-testid='receiverLink'
             />
           )}

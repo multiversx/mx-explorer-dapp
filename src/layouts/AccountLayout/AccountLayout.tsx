@@ -1,15 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import BigNumber from 'bignumber.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 
-import { MAX_ACOUNT_TOKENS_BALANCE } from 'appConstants';
 import { Loader } from 'components';
-import { addressIsBech32, getTotalTokenUsdValue, isContract } from 'helpers';
+import { addressIsBech32, isContract } from 'helpers';
 import { useAdapter, useGetPage, useFetchAccountStakingDetails } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { setAccount, setAccountExtra } from 'redux/slices';
-import { SortOrderEnum } from 'types';
+import { setAccount } from 'redux/slices';
 
 import { AccountDetailsCard } from './AccountDetailsCard';
 import { ApplicationDetailsCard } from './ApplicationDetailsCard';
@@ -23,7 +20,7 @@ export const AccountLayout = () => {
   const dispatch = useDispatch();
   const { hash: address } = useParams();
 
-  const { getAccount, getAccountTokens, getAccountTransfers } = useAdapter();
+  const { getAccount } = useAdapter();
   const { fetchAccountStakingDetails } = useFetchAccountStakingDetails();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -41,56 +38,10 @@ export const AccountLayout = () => {
     }
   };
 
-  const fetchExtraDetails = () => {
-    if (address) {
-      if (isContract(address)) {
-        getAccountTokens({
-          address,
-          size: MAX_ACOUNT_TOKENS_BALANCE,
-          fields: 'valueUsd',
-          includeMetaESDT: false
-        }).then(({ data, success }) => {
-          let tokenBalance = new BigNumber(0).toString();
-          if (success && data) {
-            const totalTokenUsdValue = getTotalTokenUsdValue(data);
-            tokenBalance = totalTokenUsdValue;
-          }
-          dispatch(
-            setAccountExtra({
-              accountExtra: {
-                tokenBalance
-              },
-              isFetched: success
-            })
-          );
-        });
-      } else {
-        fetchAccountStakingDetails({ address });
-        getAccountTransfers({
-          address,
-          size: 1,
-          order: SortOrderEnum.asc,
-          fields: 'timestamp'
-        }).then(({ data, success }) => {
-          let firstTransactionDate = undefined;
-          if (success && data && data.length > 0) {
-            firstTransactionDate = data[0]?.['timestamp'];
-          }
-          dispatch(
-            setAccountExtra({
-              accountExtra: {
-                firstTransactionDate
-              },
-              isFetched: success
-            })
-          );
-        });
-      }
-    }
-  };
-
   useEffect(() => {
-    fetchExtraDetails();
+    if (address && !isContract(address)) {
+      fetchAccountStakingDetails({ address });
+    }
   }, [address, activeNetworkId]);
 
   useEffect(() => {

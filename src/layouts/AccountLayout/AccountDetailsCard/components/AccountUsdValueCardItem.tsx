@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
@@ -16,12 +17,13 @@ import {
 export const AccountUsdValueCardItem = ({
   cardItemClass
 }: {
-  cardItemClass: string;
+  cardItemClass?: string;
 }) => {
   const { isFetched: isEconomicsFetched, unprocessed } =
     useSelector(economicsSelector);
   const { account } = useSelector(accountSelector);
-  const { accountExtra } = useSelector(accountExtraSelector);
+  const { accountExtra, isFetched: isAccountExtraFetched } =
+    useSelector(accountExtraSelector);
   const { balance } = account;
   const { tokenBalance } = accountExtra;
   const { stakingDataReady, totalLocked } = useSelector(accountStakingSelector);
@@ -43,10 +45,17 @@ export const AccountUsdValueCardItem = ({
     totalUsdValue = totalUsdValue.plus(new BigNumber(tokenBalance));
   }
 
+  const isDataReady =
+    isAccountExtraFetched && stakingDataReady && isEconomicsFetched;
+
   return (
-    <CardItem className={cardItemClass} title='Value' icon={faDollarSign}>
+    <CardItem
+      className={classNames(cardItemClass)}
+      title='Value'
+      icon={faDollarSign}
+    >
       <div className='d-flex align-items-center'>
-        {(balance || tokenBalance) && stakingDataReady && isEconomicsFetched ? (
+        {(balance || tokenBalance) && isDataReady ? (
           <FormatUSD
             value={totalUsdValue.toString()}
             usd={1}
@@ -55,7 +64,7 @@ export const AccountUsdValueCardItem = ({
         ) : (
           ELLIPSIS
         )}
-        {stakingDataReady && isEconomicsFetched && (
+        {isDataReady && (
           <LockedAmountTooltip
             lockedDetails={[
               {

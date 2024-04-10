@@ -1,8 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
-import { Loader, AccountLink, PageState, FormatAmount } from 'components';
+import {
+  Loader,
+  AccountLink,
+  PageState,
+  FormatAmount,
+  FormatNumber,
+  FormatUSD,
+  PercentageBar
+} from 'components';
+import { formatBigNumber, parseAmount } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faUser } from 'icons/regular';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
@@ -14,10 +23,8 @@ export const TokenDetailsLockedAccounts = () => {
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { token } = useSelector(tokenSelector);
-  const { decimals } = token;
+  const { identifier, price, supply, decimals } = token;
   const { getTokenSupply } = useAdapter();
-
-  const { hash: tokenId } = useParams() as any;
 
   const [tokenLockedAccounts, setTokenLockedAccounts] = useState<
     TokenLockedAccountType[]
@@ -25,7 +32,7 @@ export const TokenDetailsLockedAccounts = () => {
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchTokenLockedAccounts = () => {
-    getTokenSupply({ tokenId }).then(({ data, success }) => {
+    getTokenSupply({ tokenId: identifier }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success && data?.lockedAccounts) {
           setTokenLockedAccounts(data.lockedAccounts);
@@ -37,10 +44,11 @@ export const TokenDetailsLockedAccounts = () => {
 
   useEffect(() => {
     fetchTokenLockedAccounts();
-  }, [activeNetworkId]);
+  }, [activeNetworkId, identifier]);
 
   const showLockedAccounts =
     dataReady === true && tokenLockedAccounts.length > 0;
+  const hasSupply = new BigNumber(supply ?? 0).isGreaterThan(0);
 
   return (
     <div ref={ref}>
@@ -58,33 +66,76 @@ export const TokenDetailsLockedAccounts = () => {
                   <thead>
                     <tr>
                       <th>Address</th>
-                      <th className='w-25'>Name</th>
-                      <th className='w-25'>Balance</th>
+                      <th>Name</th>
+                      <th>Balance</th>
+                      {hasSupply && (
+                        <th className='percentage-column'>Percentage</th>
+                      )}
+                      {price && <th className='value-column'>Value</th>}
                     </tr>
                   </thead>
                   <tbody data-testid='tokenLockedAccountsTable'>
-                    {tokenLockedAccounts.map((lockedAccount, i) => (
-                      <tr key={lockedAccount.address}>
-                        <td>
-                          <AccountLink
-                            address={lockedAccount.address}
-                            assets={lockedAccount?.assets}
-                            className='full-hash'
-                            linkClassName='trim-only-sm'
-                          />
-                        </td>
-                        <td>{lockedAccount.name}</td>
-                        <td>
-                          <FormatAmount
-                            value={lockedAccount.balance}
-                            showLastNonZeroDecimal={true}
-                            showLabel={false}
-                            showSymbol={false}
-                            decimals={decimals}
-                          />
-                        </td>
-                      </tr>
-                    ))}
+                    {tokenLockedAccounts.map((lockedAccount) => {
+                      const holdingsPercentage = new BigNumber(
+                        lockedAccount.balance
+                      )
+                        .times(100)
+                        .dividedBy(parseAmount(supply, decimals));
+
+                      return (
+                        <tr key={lockedAccount.address}>
+                          <td>
+                            <AccountLink
+                              address={lockedAccount.address}
+                              assets={lockedAccount?.assets}
+                              showLockedAccounts={false}
+                              className={
+                                hasSupply ? 'hash hash-lg' : 'full-hash'
+                              }
+                              linkClassName={hasSupply ? '' : 'trim-only-sm'}
+                            />
+                          </td>
+                          <td>{lockedAccount.name}</td>
+                          <td>
+                            <FormatAmount
+                              value={lockedAccount.balance}
+                              decimals={decimals}
+                              showLastNonZeroDecimal={true}
+                              showLabel={false}
+                              showSymbol={false}
+                              showUsdValue={false}
+                            />
+                          </td>
+                          {hasSupply && (
+                            <td>
+                              <div className='mb-1'>
+                                <FormatNumber
+                                  value={holdingsPercentage}
+                                  label='%'
+                                />
+                              </div>
+                              <PercentageBar
+                                overallPercent={0}
+                                fillPercent={holdingsPercentage.toNumber()}
+                                fillPercentLabel={`${formatBigNumber({
+                                  value: holdingsPercentage
+                                })}%`}
+                                type='small'
+                              />
+                            </td>
+                          )}
+                          {price && (
+                            <td>
+                              <FormatUSD
+                                value={lockedAccount.balance}
+                                decimals={decimals}
+                                usd={price}
+                              />
+                            </td>
+                          )}
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
