@@ -8,7 +8,7 @@ export const AuctionListHead = ({ showPosition }: AuctionListHeadUIType) => {
   return (
     <tr>
       {showPosition && <th className='th-rank'>#</th>}
-      <th className='th-eligibility'>Qualified</th>
+      <th className='th-eligibility'>Qualification</th>
       <th className='th-identity'>
         <Sort id='name' field='Validator' />
       </th>

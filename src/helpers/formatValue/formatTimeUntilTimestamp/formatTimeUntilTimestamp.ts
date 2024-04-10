@@ -10,7 +10,8 @@ import {
 export const formatTimeUntilTimestamp = ({
   timestamp,
   excludeTimeGroup,
-  showZeroDecimal = true
+  showZeroDecimal = true,
+  showHourZeroDecimal = false
 }: FormatTimeUntilTimestampPropsType): TimeGroupType[] => {
   const targetTimestamp = moment.unix(timestamp);
   const presentTimestamp = moment().unix();
@@ -25,7 +26,10 @@ export const formatTimeUntilTimestamp = ({
   const days = String(Math.floor(durationAsSeconds.asDays()));
   const formatters: FormatterType[] = [
     [TimeGroupLabelEnum.days, showZeroDecimal ? days.padStart(2, '0') : days],
-    [TimeGroupLabelEnum.hours, showZeroDecimal ? 'HH' : 'H'],
+    [
+      TimeGroupLabelEnum.hours,
+      showZeroDecimal && showHourZeroDecimal ? 'HH' : 'H'
+    ],
     [TimeGroupLabelEnum.minutes, showZeroDecimal ? 'mm' : 'm'],
     [TimeGroupLabelEnum.seconds, showZeroDecimal ? 'ss' : 's']
   ];

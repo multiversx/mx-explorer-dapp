@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Led } from 'components';
 import { faSearch, faTimes } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
+import { formatBigNumber } from 'helpers';
 
 export interface AuctionListFiltersUIType {
   onlySearch?: boolean;
@@ -86,6 +88,10 @@ export const AuctionListFilters = ({
     setSearchParams(nextUrlParams);
   };
 
+  const isAllActive = [search, isQualified, isAuctionDangerZone].every(
+    (el) => el === undefined
+  );
+
   return (
     <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
       <h5 className='table-title d-flex align-items-center' data-testid='title'>
@@ -99,18 +105,15 @@ export const AuctionListFilters = ({
               onClick={() => {
                 resetFiltersLink();
               }}
-              className={`badge px-2 br-lg ${
-                [search, isQualified, isAuctionDangerZone].every(
-                  (el) => el === undefined
-                )
-                  ? 'badge-grey'
-                  : 'badge-outline badge-outline-grey'
-              }`}
+              className={classNames(
+                'btn btn-tab d-flex align-items-center gap-1',
+                { active: isAllActive }
+              )}
             >
               All
               {auctionValidators !== undefined && (
-                <span className='badge badge-grey p-1 ms-1'>
-                  {new BigNumber(auctionValidators).toFormat(0)}
+                <span className='badge badge-sm'>
+                  {formatBigNumber({ value: auctionValidators })}
                 </span>
               )}
             </button>
@@ -121,17 +124,16 @@ export const AuctionListFilters = ({
               onClick={() => {
                 nodeQualifiedLink(true);
               }}
-              className={`badge px-2 br-lg ${
-                isQualified === 'true' && !isAuctionDangerZone
-                  ? 'badge-grey'
-                  : 'badge-outline badge-outline-grey'
-              }`}
+              className={classNames(
+                'btn btn-tab d-flex align-items-center gap-1',
+                { active: isQualified === 'true' && !isAuctionDangerZone }
+              )}
             >
-              <Led color='bg-green-400 me-1' />
+              <Led color='bg-green-400' />
               Qualified{' '}
               {qualifiedAuctionValidators !== undefined && (
-                <span className='badge badge-grey p-1 ms-1'>
-                  {new BigNumber(qualifiedAuctionValidators).toFormat(0)}
+                <span className='badge badge-sm'>
+                  {formatBigNumber({ value: qualifiedAuctionValidators })}
                 </span>
               )}
             </button>
@@ -143,17 +145,16 @@ export const AuctionListFilters = ({
                 onClick={() => {
                   nodeDangerZoneLink(true);
                 }}
-                className={`badge px-2 br-lg ${
-                  isAuctionDangerZone
-                    ? 'badge-grey'
-                    : 'badge-outline badge-outline-grey'
-                }`}
+                className={classNames(
+                  'btn btn-tab d-flex align-items-center gap-1',
+                  { active: isAuctionDangerZone }
+                )}
               >
-                <Led color='bg-red-400 me-1' />
-                Danger Zone{' '}
+                <Led color='bg-orange-400' />
+                Danger Zone
                 {dangerZoneValidators !== undefined && (
-                  <span className='badge badge-grey p-1 ms-1'>
-                    {new BigNumber(dangerZoneValidators).toFormat(0)}
+                  <span className='badge badge-sm'>
+                    {formatBigNumber({ value: dangerZoneValidators })}
                   </span>
                 )}
               </button>
@@ -165,17 +166,16 @@ export const AuctionListFilters = ({
               onClick={() => {
                 nodeQualifiedLink(false);
               }}
-              className={`badge px-2 br-lg ${
-                isQualified === 'false'
-                  ? 'badge-grey'
-                  : 'badge-outline badge-outline-grey'
-              }`}
+              className={classNames(
+                'btn btn-tab d-flex align-items-center gap-1',
+                { active: isQualified === 'false' }
+              )}
             >
-              <Led color='bg-neutral-750 me-1' />
-              Not Qualified{' '}
+              <Led color='bg-red-400' />
+              Not Qualified
               {notQualifiedAuctionValidators !== undefined && (
-                <span className='badge badge-grey p-1 ms-1'>
-                  {new BigNumber(notQualifiedAuctionValidators).toFormat(0)}
+                <span className='badge badge-sm'>
+                  {formatBigNumber({ value: notQualifiedAuctionValidators })}
                 </span>
               )}
             </button>

@@ -9,6 +9,7 @@ export type FormatterType = [TimeGroupLabelEnum, string];
 export interface FormatTimeUntilTimestampPropsType {
   excludeTimeGroup?: TimeGroupLabelEnum[];
   showZeroDecimal?: boolean;
+  showHourZeroDecimal?: boolean;
   timestamp: number;
 }
 
