@@ -19,7 +19,7 @@ export const AUCTION_LIST_MIN_DISPLAY_ROW_COUNT = 6;
 
 export const LEGACY_DELEGATION_NODES_IDENTITY = 'multiversx';
 export const HEROTAG_SUFFIX = '.elrond';
-export const TEMP_LOCAL_NOTIFICATION_DISMISSED = 'tempNotificationDismissed1';
+export const TEMP_LOCAL_NOTIFICATION_DISMISSED = 'tempNotificationDismissed2';
 export const NEW_VERSION_NOTIFICATION = 'newExplorerVersion';
 
 export const SC_INIT_CHARACTERS_LENGTH = 13;

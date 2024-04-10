@@ -81,11 +81,11 @@ export const interfaceSlice = createSlice({
     ) => {
       const removedNotificationId = action.payload;
       if (removedNotificationId === TEMP_LOCAL_NOTIFICATION_DISMISSED) {
-        const in30Days = new Date(moment().add(30, 'days').toDate());
+        const in10Days = new Date(moment().add(10, 'days').toDate());
         storage.saveToLocal({
           key: TEMP_LOCAL_NOTIFICATION_DISMISSED,
           data: TEMP_LOCAL_NOTIFICATION_DISMISSED,
-          expirationDate: in30Days
+          expirationDate: in10Days
         });
       }
       state.notifications = state.notifications.filter(

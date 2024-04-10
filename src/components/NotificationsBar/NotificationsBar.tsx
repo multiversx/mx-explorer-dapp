@@ -51,15 +51,16 @@ export const NotificationsBar = () => {
             )}
             {notification.id === TEMP_LOCAL_NOTIFICATION_DISMISSED && (
               <div className='w-100'>
-                Devnet hard-fork process scheduled for January 18, 2024 08:00
-                UTC.
                 <a
-                  href='https://t.me/MultiversXDevelopers/122519'
+                  href='https://governance.multiversx.com/proposal/erd1qqqqqqqqqqqqqpgq8xqp6c0kzwn3f2c5zsxfex6h69s2x9rwhg4smw0gfc/1'
                   target='_blank'
                   rel='noreferrer nofollow noopener'
-                  className='ms-1 text-black'
+                  className='text-black'
                 >
-                  <u>See More</u>
+                  <u>
+                    MultiversX Governance Vote is LIVE | Vote Now For The Vega
+                    (Staking V4) upgrade 🗳️
+                  </u>
                 </a>
               </div>
             )}
