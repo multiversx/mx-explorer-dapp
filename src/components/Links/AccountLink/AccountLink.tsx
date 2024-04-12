@@ -27,7 +27,7 @@ export const AccountLink = ({
   assets,
   fetchAssets = false,
   showLockedAccounts = true,
-  hasHighlight = true,
+  hasHighlight,
   className,
   linkClassName,
   'data-testid': testId

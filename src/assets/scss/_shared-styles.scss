@@ -523,3 +523,9 @@ img.loading {
   outline: 1px rgba(var(--orange-400-rgb), 0.3) dashed;
   outline-offset: 0.25rem;
 }
+.operations-list {
+  .text-highlighted {
+    box-shadow: 0 0 0 1px rgba(var(--orange-400-rgb), 0.1);
+    outline-offset: 1px;
+  }
+}

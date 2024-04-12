@@ -64,6 +64,7 @@ export const BlocksTable = ({
                     <ShardLink
                       shard={block.shard}
                       data-testid={`blockShardLink${i}`}
+                      hasHighlight
                     />
                   )}
                 </div>

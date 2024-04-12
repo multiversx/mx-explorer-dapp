@@ -37,6 +37,7 @@ export const CollectionRoles = () => {
                               assets={tokenRole?.assets}
                               className='full-hash'
                               linkClassName='trim-only-sm'
+                              hasHighlight
                             />
                           ) : (
                             <>Anyone</>

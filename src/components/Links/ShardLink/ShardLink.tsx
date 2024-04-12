@@ -18,7 +18,7 @@ export const ShardLink = ({
   shard,
   receiverShard,
   senderShard,
-  hasHighlight = true,
+  hasHighlight,
   className,
   'data-testid': dataTestId
 }: ShardLinkUIType) => {

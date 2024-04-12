@@ -132,6 +132,7 @@ export const ScResultsList = ({
                     <AccountLink
                       address={result.sender}
                       assets={result.senderAssets}
+                      hasHighlight
                     />
                     <CopyButton
                       text={result.sender}
@@ -148,6 +149,7 @@ export const ScResultsList = ({
                     <AccountLink
                       address={result.receiver}
                       assets={result.receiverAssets}
+                      hasHighlight
                     />
                     <CopyButton
                       text={result.receiver}

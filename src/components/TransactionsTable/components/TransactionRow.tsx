@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   AccountLink,
   ScAddressIcon,
-  ShardSpan,
   NetworkLink,
   TimeAgo,
   Trim,
@@ -82,6 +81,7 @@ export const TransactionRow = ({
             shard={transaction.senderShard}
             data-testid='shardFromLink'
             senderShard
+            hasHighlight
           />
           <FontAwesomeIcon
             icon={faArrowRight}
@@ -91,6 +91,7 @@ export const TransactionRow = ({
             shard={transaction.receiverShard}
             data-testid='shardToLink'
             receiverShard
+            hasHighlight
           />
         </div>
       </td>
@@ -113,6 +114,7 @@ export const TransactionRow = ({
             assets={transaction.senderAssets}
             showLockedAccounts={showLockedAccounts}
             data-testid='senderLink'
+            hasHighlight
           />
         )}
       </td>
@@ -147,6 +149,7 @@ export const TransactionRow = ({
             assets={receiverAssets}
             showLockedAccounts={showLockedAccounts}
             data-testid='receiverLink'
+            hasHighlight
           />
         )}
       </td>

@@ -189,6 +189,7 @@ export const TokensMeta = () => {
                                     <div className='d-flex trim-size-xl'>
                                       <AccountLink
                                         address={metaCollection.owner}
+                                        hasHighlight
                                       />
                                     </div>
                                   </td>

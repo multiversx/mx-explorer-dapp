@@ -93,6 +93,7 @@ export const TokenDetailsLockedAccounts = () => {
                                 hasSupply ? 'hash hash-lg' : 'full-hash'
                               }
                               linkClassName={hasSupply ? '' : 'trim-only-sm'}
+                              hasHighlight
                             />
                           </td>
                           <td>{lockedAccount.name}</td>
