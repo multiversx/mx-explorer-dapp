@@ -9,6 +9,7 @@ export type InterfaceSliceType = {
   activeTheme: ThemesEnum;
   explorerOrigin: ExplorerOriginType;
   notifications: NotificationType[];
+  highlightedText: string;
 };
 
 export function getInitialInterfaceState(): InterfaceSliceType {
@@ -26,7 +27,8 @@ export function getInitialInterfaceState(): InterfaceSliceType {
       pathname: '/',
       search: ''
     },
-    notifications: []
+    notifications: [],
+    highlightedText: ''
   };
 }
 
@@ -74,6 +76,12 @@ export const interfaceSlice = createSlice({
       state.notifications = state.notifications.filter(
         (n) => n.id !== removedNotificationId
       );
+    },
+    setHighlightedText: (
+      state: InterfaceSliceType,
+      action: PayloadAction<InterfaceSliceType['highlightedText']>
+    ) => {
+      state.highlightedText = action.payload;
     }
   }
 });
@@ -82,7 +90,8 @@ export const {
   setActiveTheme,
   setExplorerOrigin,
   addNotification,
-  removeNotification
+  removeNotification,
+  setHighlightedText
 } = interfaceSlice.actions;
 
 export const interfaceReducer = interfaceSlice.reducer;

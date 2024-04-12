@@ -24,3 +24,8 @@ export const notificationsSelector = createSelector(
   stateSelector,
   (state) => state.notifications
 );
+
+export const highlightedTextSelector = createSelector(
+  stateSelector,
+  (state) => state.highlightedText
+);
