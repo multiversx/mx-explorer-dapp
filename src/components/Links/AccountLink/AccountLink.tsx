@@ -9,7 +9,6 @@ import {
   LockedTokenAddressIcon
 } from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
-
 import { interfaceSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices/interface';
 import { AccountAssetType, WithClassnameType } from 'types';

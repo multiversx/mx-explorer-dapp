@@ -8,7 +8,8 @@ import {
   Trim,
   LockedTokenAddressIcon,
   AccountName,
-  TransactionIcon
+  TransactionIcon,
+  ShardLink
 } from 'components';
 import { urlBuilder, getDisplayReceiver } from 'helpers';
 import { faArrowRight } from 'icons/regular';
@@ -77,22 +78,20 @@ export const TransactionRow = ({
       </td>
       <td>
         <div className='d-flex align-items-center'>
-          <NetworkLink
-            to={urlBuilder.senderShard(transaction.senderShard)}
+          <ShardLink
+            shard={transaction.senderShard}
             data-testid='shardFromLink'
-          >
-            <ShardSpan shard={transaction.senderShard} />
-          </NetworkLink>
+            senderShard
+          />
           <FontAwesomeIcon
             icon={faArrowRight}
             className='text-neutral-500 mx-2'
           />
-          <NetworkLink
-            to={urlBuilder.receiverShard(transaction.receiverShard)}
+          <ShardLink
+            shard={transaction.receiverShard}
             data-testid='shardToLink'
-          >
-            <ShardSpan shard={transaction.receiverShard} />
-          </NetworkLink>
+            receiverShard
+          />
         </div>
       </td>
       <td className='sender text-truncate'>
