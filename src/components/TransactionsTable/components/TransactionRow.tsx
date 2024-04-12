@@ -154,7 +154,7 @@ export const TransactionRow = ({
         )}
       </td>
       <td className='transaction-function'>
-        <TransactionMethod transaction={transaction} />
+        <TransactionMethod transaction={transaction} hasHighlight />
       </td>
       <td className='transaction-value'>
         <TransactionValue transaction={transaction} token={token} />
