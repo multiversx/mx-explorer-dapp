@@ -206,7 +206,10 @@ export const Collections = () => {
                                   </td>
                                   <td>
                                     <div className='d-flex trim-size-xl'>
-                                      <AccountLink address={collection.owner} />
+                                      <AccountLink
+                                        address={collection.owner}
+                                        hasHighlight
+                                      />
                                     </div>
                                   </td>
                                 </tr>

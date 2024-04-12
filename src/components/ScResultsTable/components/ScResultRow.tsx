@@ -45,7 +45,11 @@ export const ScResultRow = ({ scResult, address }: ScResultRowType) => {
           {directionOut ? (
             <Trim text={scResult.sender} />
           ) : (
-            <AccountLink address={scResult.sender} data-testid='senderLink' />
+            <AccountLink
+              address={scResult.sender}
+              data-testid='senderLink'
+              hasHighlight
+            />
           )}
         </div>
       </td>
@@ -58,6 +62,7 @@ export const ScResultRow = ({ scResult, address }: ScResultRowType) => {
             <AccountLink
               address={scResult.receiver}
               data-testid='receiverLink'
+              hasHighlight
             />
           )}
         </div>

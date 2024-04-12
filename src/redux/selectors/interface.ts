@@ -25,7 +25,7 @@ export const notificationsSelector = createSelector(
   (state) => state.notifications
 );
 
-export const shardsSelector = createSelector(
+export const highlightedTextSelector = createSelector(
   stateSelector,
-  (state) => state.shards
+  (state) => state.highlightedText
 );

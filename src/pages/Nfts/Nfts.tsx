@@ -125,7 +125,10 @@ export const Nfts = () => {
                                   </td>
                                   <td>
                                     <div className='d-flex trim-size-xl'>
-                                      <AccountLink address={nft.creator} />
+                                      <AccountLink
+                                        address={nft.creator}
+                                        hasHighlight
+                                      />
                                     </div>
                                   </td>
                                 </tr>

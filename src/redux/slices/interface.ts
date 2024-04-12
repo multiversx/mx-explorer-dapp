@@ -1,24 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
 
-import {
-  METACHAIN_SHARD_ID,
-  TEMP_LOCAL_NOTIFICATION_DISMISSED
-} from 'appConstants';
+import { TEMP_LOCAL_NOTIFICATION_DISMISSED } from 'appConstants';
 import { storage } from 'helpers';
-import { sortShards } from 'helpers/sortShards';
-import {
-  ExplorerOriginType,
-  ThemesEnum,
-  NotificationType,
-  ShardType
-} from 'types';
+import { ExplorerOriginType, ThemesEnum, NotificationType } from 'types';
 
 export type InterfaceSliceType = {
   activeTheme: ThemesEnum;
   explorerOrigin: ExplorerOriginType;
   notifications: NotificationType[];
-  shards: ShardType[];
+  highlightedText: string;
 };
 
 export function getInitialInterfaceState(): InterfaceSliceType {
@@ -37,7 +28,7 @@ export function getInitialInterfaceState(): InterfaceSliceType {
       search: ''
     },
     notifications: [],
-    shards: []
+    highlightedText: ''
   };
 }
 
@@ -56,12 +47,6 @@ export const interfaceSlice = createSlice({
       action: PayloadAction<InterfaceSliceType['explorerOrigin']>
     ) => {
       state.explorerOrigin = action.payload;
-    },
-    setShards: (
-      state: InterfaceSliceType,
-      action: PayloadAction<InterfaceSliceType['shards']>
-    ) => {
-      state.shards = sortShards({ shards: action.payload, METACHAIN_SHARD_ID });
     },
     addNotification: (
       state: InterfaceSliceType,
@@ -91,6 +76,12 @@ export const interfaceSlice = createSlice({
       state.notifications = state.notifications.filter(
         (n) => n.id !== removedNotificationId
       );
+    },
+    setHighlightedText: (
+      state: InterfaceSliceType,
+      action: PayloadAction<InterfaceSliceType['highlightedText']>
+    ) => {
+      state.highlightedText = action.payload;
     }
   }
 });
@@ -98,9 +89,9 @@ export const interfaceSlice = createSlice({
 export const {
   setActiveTheme,
   setExplorerOrigin,
-  setShards,
   addNotification,
-  removeNotification
+  removeNotification,
+  setHighlightedText
 } = interfaceSlice.actions;
 
 export const interfaceReducer = interfaceSlice.reducer;

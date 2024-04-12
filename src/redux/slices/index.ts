@@ -3,6 +3,7 @@ export * from './accountExtra';
 export * from './accountStaking';
 export * from './collection';
 export * from './economics';
+export * from './general';
 export * from './stake';
 export * from './growthHero';
 export * from './growthMostUsed';

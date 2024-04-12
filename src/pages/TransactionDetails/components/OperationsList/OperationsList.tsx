@@ -132,7 +132,11 @@ const OperationBlock = ({
       )}
       {addressIsBech32(address) ? (
         <>
-          <AccountLink address={address} assets={operationAssets} />
+          <AccountLink
+            address={address}
+            assets={operationAssets}
+            hasHighlight
+          />
           <CopyButton text={address} className='side-action ms-2' />
         </>
       ) : (
