@@ -95,28 +95,27 @@ export const TransactionRow = ({
           </NetworkLink>
         </div>
       </td>
-      <td>
-        <div className='d-flex align-items-center sender'>
-          {directionOut ? (
-            <>
-              <ScAddressIcon initiator={transaction.sender} />
-              <AccountName
-                address={transaction.sender}
-                assets={transaction.senderAssets}
-              />
-              {showLockedAccounts && (
-                <LockedTokenAddressIcon address={transaction.sender} />
-              )}
-            </>
-          ) : (
-            <AccountLink
+      <td className='sender text-truncate'>
+        {directionOut ? (
+          <>
+            <ScAddressIcon initiator={transaction.sender} />
+            <AccountName
               address={transaction.sender}
               assets={transaction.senderAssets}
-              showLockedAccounts={showLockedAccounts}
-              data-testid='senderLink'
+              className='text-neutral-400'
             />
-          )}
-        </div>
+            {showLockedAccounts && (
+              <LockedTokenAddressIcon address={transaction.sender} />
+            )}
+          </>
+        ) : (
+          <AccountLink
+            address={transaction.sender}
+            assets={transaction.senderAssets}
+            showLockedAccounts={showLockedAccounts}
+            data-testid='senderLink'
+          />
+        )}
       </td>
       {showDirectionCol === true && (
         <td>
@@ -130,25 +129,27 @@ export const TransactionRow = ({
         </td>
       )}
 
-      <td>
-        <div className='d-flex align-items-center receiver'>
-          {directionIn ? (
-            <>
-              <ScAddressIcon initiator={receiver} />
-              <AccountName address={receiver} assets={receiverAssets} />
-              {showLockedAccounts && (
-                <LockedTokenAddressIcon address={receiver} />
-              )}
-            </>
-          ) : (
-            <AccountLink
+      <td className='receiver text-truncate'>
+        {directionIn ? (
+          <>
+            <ScAddressIcon initiator={receiver} />
+            <AccountName
               address={receiver}
               assets={receiverAssets}
-              showLockedAccounts={showLockedAccounts}
-              data-testid='receiverLink'
+              className='text-neutral-400'
             />
-          )}
-        </div>
+            {showLockedAccounts && (
+              <LockedTokenAddressIcon address={receiver} />
+            )}
+          </>
+        ) : (
+          <AccountLink
+            address={receiver}
+            assets={receiverAssets}
+            showLockedAccounts={showLockedAccounts}
+            data-testid='receiverLink'
+          />
+        )}
       </td>
       <td className='transaction-function'>
         <TransactionMethod transaction={transaction} />
