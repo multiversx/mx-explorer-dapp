@@ -514,3 +514,18 @@ img.loading {
   overflow-wrap: break-word; // inline elements
   line-break: auto; // characters
 }
+
+.text-highlighted {
+  width: fit-content;
+  border-radius: 0.125rem;
+  background-color: rgba(var(--orange-400-rgb), 0.1);
+  box-shadow: 0 0 0 0.25rem rgba(var(--orange-400-rgb), 0.1);
+  outline: 1px rgba(var(--orange-400-rgb), 0.3) dashed;
+  outline-offset: 0.25rem;
+}
+.operations-list {
+  .text-highlighted {
+    box-shadow: 0 0 0 1px rgba(var(--orange-400-rgb), 0.1);
+    outline-offset: 1px;
+  }
+}

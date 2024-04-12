@@ -176,6 +176,7 @@ export const Applications = () => {
                                   <AccountLink
                                     address={account.ownerAddress}
                                     assets={account.ownerAssets}
+                                    className='hash'
                                   />
                                 )}
                               </td>

@@ -8,6 +8,7 @@ import { accountExtraReducer } from './slices/accountExtra';
 import { accountStakingReducer } from './slices/accountStaking';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
+import { generalReducer } from './slices/general';
 import { growthEconomicsReducer } from './slices/growthEconomics';
 import { growthHeroReducer } from './slices/growthHero';
 import { growthMostUsedReducer } from './slices/growthMostUsed';
@@ -57,6 +58,7 @@ export const customIgnoredSlices = {
   accountStaking: accountStakingReducer,
   collection: collectionReducer,
   economics: economicsReducer,
+  general: generalReducer,
   stake: stakeReducer,
   growthHero: growthHeroReducer,
   growthMostUsed: growthMostUsedReducer,

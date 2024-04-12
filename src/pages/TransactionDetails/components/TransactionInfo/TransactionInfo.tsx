@@ -270,6 +270,7 @@ export const TransactionInfo = ({
                       <AccountLink
                         address={transaction.sender}
                         assets={transaction.senderAssets}
+                        hasHighlight
                       />
                       <CopyButton className='me-2' text={transaction.sender} />
                       <NetworkLink
@@ -296,6 +297,7 @@ export const TransactionInfo = ({
                     <AccountLink
                       address={transaction.receiver}
                       assets={transaction.receiverAssets}
+                      hasHighlight
                     />
                     <CopyButton className='me-2' text={transaction.receiver} />
                     {!isNaN(transaction.receiverShard) && (

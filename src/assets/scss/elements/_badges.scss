@@ -184,6 +184,14 @@ button.badge {
       );
     }
   }
+  &-highlight {
+    background-color: rgba(var(--orange-400-rgb), 0.1);
+    outline: 1px rgba(var(--orange-400-rgb), 0.8) dashed;
+    outline-offset: -1px;
+    &:before {
+      background: none;
+    }
+  }
 
   &.badge-rounded {
     line-height: 1rem;

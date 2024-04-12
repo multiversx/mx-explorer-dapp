@@ -4,9 +4,10 @@ import {
   TimeAgo,
   Trim,
   BlockGasUsed,
-  IdentityBlock
+  IdentityBlock,
+  ShardLink
 } from 'components';
-import { formatSize, urlBuilder } from 'helpers';
+import { formatSize } from 'helpers';
 import { BlockType } from 'types';
 
 export const BlocksTable = ({
@@ -60,12 +61,11 @@ export const BlocksTable = ({
                   {shard !== undefined ? (
                     <ShardSpan shard={block.shard} />
                   ) : (
-                    <NetworkLink
-                      to={urlBuilder.shard(block.shard)}
+                    <ShardLink
+                      shard={block.shard}
                       data-testid={`blockShardLink${i}`}
-                    >
-                      <ShardSpan shard={block.shard} />
-                    </NetworkLink>
+                      hasHighlight
+                    />
                   )}
                 </div>
               </td>

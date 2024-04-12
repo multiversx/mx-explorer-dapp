@@ -113,6 +113,7 @@ const ActionText = ({
           address={entry.address}
           assets={entryAssets}
           data-testid='receiverLink'
+          hasHighlight
         />
       ) : (
         ''
