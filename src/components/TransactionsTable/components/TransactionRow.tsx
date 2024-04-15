@@ -97,7 +97,7 @@ export const TransactionRow = ({
       </td>
       <td className='sender text-truncate'>
         {directionOut ? (
-          <>
+          <div className='d-flex align-items-center'>
             <ScAddressIcon initiator={transaction.sender} />
             <AccountName
               address={transaction.sender}
@@ -107,7 +107,7 @@ export const TransactionRow = ({
             {showLockedAccounts && (
               <LockedTokenAddressIcon address={transaction.sender} />
             )}
-          </>
+          </div>
         ) : (
           <AccountLink
             address={transaction.sender}
@@ -132,7 +132,7 @@ export const TransactionRow = ({
 
       <td className='receiver text-truncate'>
         {directionIn ? (
-          <>
+          <div className='d-flex align-items-center'>
             <ScAddressIcon initiator={receiver} />
             <AccountName
               address={receiver}
@@ -142,7 +142,7 @@ export const TransactionRow = ({
             {showLockedAccounts && (
               <LockedTokenAddressIcon address={receiver} />
             )}
-          </>
+          </div>
         ) : (
           <AccountLink
             address={receiver}
