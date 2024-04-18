@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
+import { LOW_LIQUIDITY_DISPLAY_TRESHOLD } from 'appConstants';
 import {
   DetailItem,
   Loader,
@@ -9,7 +11,8 @@ import {
   PageState,
   Denominate,
   NetworkLink,
-  Overlay
+  Overlay,
+  LowLiquidityTooltip
 } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
@@ -104,7 +107,9 @@ export const AccountTokens = () => {
                   decimals,
                   assets,
                   ticker,
-                  valueUsd
+                  valueUsd,
+                  isLowLiquidity,
+                  totalLiquidity
                 }) => {
                   const identifierArray = identifier.split('-');
                   if (identifierArray.length > 2) {
@@ -141,19 +146,42 @@ export const AccountTokens = () => {
 
                   return (
                     <DetailItem title={name} key={identifier}>
-                      <div className='d-flex align-items-center'>
-                        <div className='me-1'>
-                          <Denominate
-                            showLabel={false}
-                            value={balance ? balance : '0'}
-                            denomination={decimals}
-                            showLastNonZeroDecimal
-                          />
-                        </div>
+                      <div className='d-flex flex-wrap gap-1 align-items-center text-break'>
+                        <Denominate
+                          showLabel={false}
+                          value={balance ? balance : '0'}
+                          denomination={decimals}
+                          showLastNonZeroDecimal
+                        />
+
                         {valueUsd && (
-                          <span className='text-neutral-400 me-1'>
-                            (${amountWithoutRounding(valueUsd)})
-                          </span>
+                          <>
+                            {(!isLowLiquidity ||
+                              new BigNumber(valueUsd).isLessThan(
+                                LOW_LIQUIDITY_DISPLAY_TRESHOLD
+                              )) && (
+                              <span className='text-neutral-400'>
+                                (${amountWithoutRounding(valueUsd)})
+                              </span>
+                            )}
+                            {isLowLiquidity && (
+                              <LowLiquidityTooltip
+                                {...(totalLiquidity
+                                  ? {
+                                      details: (
+                                        <>
+                                          ($
+                                          {new BigNumber(
+                                            totalLiquidity
+                                          ).toFormat(2)}
+                                          )
+                                        </>
+                                      )
+                                    }
+                                  : {})}
+                              />
+                            )}
+                          </>
                         )}
 
                         <NetworkLink

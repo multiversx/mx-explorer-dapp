@@ -43,9 +43,9 @@ export const AccountUsdValueCardItem = ({
 
   return (
     <CardItem className={cardItemClass} title='Value' icon={faDollarSign}>
-      <div className='d-flex align-items-center'>
+      <div className='d-flex align-items-center text-truncate gap-2'>
         {(balance || tokenBalance) && stakingDataReady && isEconomicsFetched ? (
-          <span className='me-2'>
+          <span className='text-truncate'>
             <FormatUSD
               amount={totalUsdValue.toString()}
               usd={1}
