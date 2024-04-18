@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
+
+import { LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD } from 'appConstants';
 import {
   AccountLink,
   SocialIcons,
@@ -80,9 +82,14 @@ export const TokenDetailsCard = () => {
                         ${amountWithoutRounding(price.toString(), 4)}
                       </SmallDetailItem>
 
-                      <SmallDetailItem title='Market Cap'>
-                        ${new BigNumber(marketCap).toFormat(0)}
-                      </SmallDetailItem>
+                      {!token.isLowLiquidity ||
+                        (new BigNumber(marketCap).isLessThan(
+                          LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
+                        ) && (
+                          <SmallDetailItem title='Market Cap'>
+                            ${new BigNumber(marketCap).toFormat(0)}
+                          </SmallDetailItem>
+                        ))}
 
                       {totalLiquidity && (
                         <SmallDetailItem title='Total Liquidity'>
