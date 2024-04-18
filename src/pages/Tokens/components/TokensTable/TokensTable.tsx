@@ -2,7 +2,10 @@ import { Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 
-import { ELLIPSIS } from 'appConstants';
+import {
+  ELLIPSIS,
+  LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
+} from 'appConstants';
 import { NetworkLink, Denominate, Sort, LowLiquidityTooltip } from 'components';
 import { urlBuilder, amountWithoutRounding } from 'helpers';
 import { useGetSort } from 'hooks';
@@ -133,9 +136,11 @@ export const TokensTable = ({
                   )}
                 </td>
                 <td>
-                  {token.marketCap && (
-                    <>${new BigNumber(token.marketCap).toFormat(0)}</>
-                  )}
+                  {token.marketCap &&
+                    (!token.isLowLiquidity ||
+                      new BigNumber(token.marketCap).isLessThan(
+                        LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
+                      )) && <>${new BigNumber(token.marketCap).toFormat(0)}</>}
                 </td>
                 <td>
                   {token.accounts
