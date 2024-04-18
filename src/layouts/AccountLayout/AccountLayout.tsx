@@ -5,7 +5,8 @@ import { Outlet, useParams } from 'react-router-dom';
 
 import {
   LEGACY_DELEGATION_NODES_IDENTITY,
-  MAX_ACOUNT_TOKENS_BALANCE
+  MAX_ACOUNT_TOKENS_BALANCE,
+  LOW_LIQUIDITY_DISPLAY_TRESHOLD
 } from 'appConstants';
 import { Loader } from 'components';
 import { addressIsBech32, getTotalTokenUsdValue } from 'helpers';
@@ -16,7 +17,8 @@ import {
   IdentityType,
   ProviderType,
   DelegationType,
-  SortOrderEnum
+  SortOrderEnum,
+  TokenType
 } from 'types';
 
 import { AccountDetailsCard } from './AccountDetailsCard';
@@ -50,7 +52,7 @@ export const AccountLayout = () => {
         getAccountTokens({
           address,
           size: MAX_ACOUNT_TOKENS_BALANCE,
-          fields: 'valueUsd',
+          fields: ['valueUsd', 'isLowLiquidity'].join(','),
           includeMetaESDT: false
         })
       ]).then(([accountDetailsData, accountTokensValueUsdData]) => {
@@ -61,9 +63,15 @@ export const AccountLayout = () => {
             accountTokensValueUsdData.success &&
             accountTokensValueUsdData?.data
           ) {
-            const totalTokenUsdValue = getTotalTokenUsdValue(
-              accountTokensValueUsdData.data
+            const validTokenValues = accountTokensValueUsdData.data.filter(
+              (token: TokenType) =>
+                token.valueUsd &&
+                (!token.isLowLiquidity ||
+                  new BigNumber(token.valueUsd).isLessThan(
+                    LOW_LIQUIDITY_DISPLAY_TRESHOLD
+                  ))
             );
+            const totalTokenUsdValue = getTotalTokenUsdValue(validTokenValues);
             tokenBalance = totalTokenUsdValue;
           }
 
