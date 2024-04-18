@@ -45,7 +45,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     const completeValueParts = String(completeValue).split('.');
     const decimalArray = completeValueParts?.[1]?.split('') ?? [];
     const areAllDigitsZeroes = decimalArray.every((digit) => digit === ZERO);
-    if (!showLastNonZeroDecimal && formattedValue !== completeValue) {
+    if (!showLastNonZeroDecimal) {
       const firstNonZeroIndex = decimalArray.findIndex(
         (digit) => digit !== ZERO
       );

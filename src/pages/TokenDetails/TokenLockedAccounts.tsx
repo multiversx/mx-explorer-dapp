@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
+import { LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD } from 'appConstants';
 import {
   Loader,
   AccountLink,
@@ -23,7 +24,8 @@ export const TokenDetailsLockedAccounts = () => {
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { token } = useSelector(tokenSelector);
-  const { identifier, price, supply, decimals } = token;
+  const { identifier, price, marketCap, supply, isLowLiquidity, decimals } =
+    token;
   const { getTokenSupply } = useAdapter();
 
   const [tokenLockedAccounts, setTokenLockedAccounts] = useState<
@@ -49,6 +51,13 @@ export const TokenDetailsLockedAccounts = () => {
   const showLockedAccounts =
     dataReady === true && tokenLockedAccounts.length > 0;
   const hasSupply = new BigNumber(supply ?? 0).isGreaterThan(0);
+  const showValue =
+    price &&
+    marketCap &&
+    (!isLowLiquidity ||
+      new BigNumber(marketCap).isLessThan(
+        LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
+      ));
 
   return (
     <div ref={ref}>
@@ -71,7 +80,7 @@ export const TokenDetailsLockedAccounts = () => {
                       {hasSupply && (
                         <th className='percentage-column'>Percentage</th>
                       )}
-                      {price && <th className='value-column'>Value</th>}
+                      {showValue && <th className='value-column'>Value</th>}
                     </tr>
                   </thead>
                   <tbody data-testid='tokenLockedAccountsTable'>
@@ -93,7 +102,6 @@ export const TokenDetailsLockedAccounts = () => {
                                 hasSupply ? 'hash hash-lg' : 'full-hash'
                               }
                               linkClassName={hasSupply ? '' : 'trim-only-sm'}
-                              hasHighlight
                             />
                           </td>
                           <td>{lockedAccount.name}</td>
@@ -125,7 +133,7 @@ export const TokenDetailsLockedAccounts = () => {
                               />
                             </td>
                           )}
-                          {price && (
+                          {showValue && (
                             <td>
                               <FormatUSD
                                 value={lockedAccount.balance}

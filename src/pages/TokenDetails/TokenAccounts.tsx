@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
+import { LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD } from 'appConstants';
 import {
   Loader,
   Pager,
@@ -34,7 +35,9 @@ export const TokenDetailsAccounts = () => {
   const {
     identifier,
     price,
+    marketCap,
     supply,
+    isLowLiquidity,
     decimals,
     accounts: totalAccounts
   } = token;
@@ -64,6 +67,13 @@ export const TokenDetailsAccounts = () => {
 
   const hasSupply = new BigNumber(supply ?? 0).isGreaterThan(0);
   const showAccounts = dataReady === true && accounts.length > 0;
+  const showValue =
+    price &&
+    marketCap &&
+    (!isLowLiquidity ||
+      new BigNumber(marketCap).isLessThan(
+        LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
+      ));
 
   return (
     <div ref={ref}>
@@ -92,7 +102,7 @@ export const TokenDetailsAccounts = () => {
                       {hasSupply && (
                         <th className='percentage-column'>Percentage</th>
                       )}
-                      {price && <th className='value-column'>Value</th>}
+                      {showValue && <th className='value-column'>Value</th>}
                     </tr>
                   </thead>
                   <tbody data-testid='accountsTable'>
@@ -141,7 +151,7 @@ export const TokenDetailsAccounts = () => {
                               />
                             </td>
                           )}
-                          {price && (
+                          {showValue && (
                             <td>
                               <FormatUSD
                                 value={account.balance}
