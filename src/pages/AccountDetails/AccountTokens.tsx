@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { ZERO } from 'appConstants';
+import { ZERO, LOW_LIQUIDITY_DISPLAY_TRESHOLD } from 'appConstants';
 import {
   DetailItem,
   Loader,
@@ -11,7 +12,8 @@ import {
   PageState,
   FormatAmount,
   TokenLink,
-  FormatUSD
+  FormatUSD,
+  LowLiquidityTooltip
 } from 'components';
 import { useAdapter, useGetPage } from 'hooks';
 import { faCoins } from 'icons/solid';
@@ -105,20 +107,24 @@ export const AccountTokens = () => {
                           showLastNonZeroDecimal
                         />
                       </div>
-                      {token.valueUsd && (
-                        <span>
-                          (
-                          <FormatUSD
-                            value={token.valueUsd}
-                            usd={1}
-                            showPrefix={false}
-                            showLastNonZeroDecimal
-                            className='text-neutral-400'
-                          />
-                          )
-                        </span>
-                      )}
-
+                      {token.valueUsd &&
+                        (!token.isLowLiquidity ||
+                          new BigNumber(token.valueUsd).isLessThan(
+                            LOW_LIQUIDITY_DISPLAY_TRESHOLD
+                          )) && (
+                          <span>
+                            (
+                            <FormatUSD
+                              value={token.valueUsd}
+                              usd={1}
+                              showPrefix={false}
+                              showLastNonZeroDecimal
+                              className='text-neutral-400'
+                            />
+                            )
+                          </span>
+                        )}
+                      <LowLiquidityTooltip token={token} />
                       <TokenLink token={token} />
                     </div>
                   </DetailItem>

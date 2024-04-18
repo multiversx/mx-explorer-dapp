@@ -27,7 +27,7 @@ export const LowLiquidityTooltip = ({
     <Overlay
       title={
         <>
-          Less than 1% of total Token Supply captured in xExchange Liquidity
+          Less than 0.5% of total Token Supply captured in xExchange Liquidity
           Pools.
           {showTotalLiquidity && totalLiquidity && (
             <>

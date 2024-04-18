@@ -60,6 +60,7 @@ export const AccountUsdValueCardItem = ({
             value={totalUsdValue.toString()}
             usd={1}
             showPrefix={false}
+            className='text-truncate'
           />
         ) : (
           ELLIPSIS

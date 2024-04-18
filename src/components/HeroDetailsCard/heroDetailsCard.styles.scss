@@ -170,11 +170,4 @@
       }
     }
   }
-  &.token-details {
-    @include media-breakpoint-up(xl) {
-      .small-stats-cards-container {
-        max-width: 20rem;
-      }
-    }
-  }
 }

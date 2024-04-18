@@ -1,8 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ELLIPSIS, MAX_ACOUNT_TOKENS_BALANCE } from 'appConstants';
+import {
+  ELLIPSIS,
+  MAX_ACOUNT_TOKENS_BALANCE,
+  LOW_LIQUIDITY_DISPLAY_TRESHOLD
+} from 'appConstants';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import {
   CardItem,
@@ -28,15 +33,13 @@ import {
   faHexagonVerticalNft,
   faShieldCheck
 } from 'icons/solid';
-
 import {
   activeNetworkSelector,
   accountSelector,
   accountExtraSelector
 } from 'redux/selectors';
 import { setAccountExtra } from 'redux/slices';
-
-import { SortOrderEnum } from 'types';
+import { SortOrderEnum, TokenType } from 'types';
 
 import { AccountUsdValueCardItem } from './components/AccountUsdValueCardItem';
 import { LockedAmountCardItem } from './components/LockedAmountCardItem';
@@ -80,7 +83,7 @@ export const AccountDetailsCard = () => {
       getAccountTokens({
         address,
         size: MAX_ACOUNT_TOKENS_BALANCE,
-        fields: 'valueUsd',
+        fields: ['valueUsd', 'isLowLiquidity'].join(','),
         includeMetaESDT: false
       }),
       getAccountTransfers({
@@ -116,9 +119,15 @@ export const AccountDetailsCard = () => {
           }
         }
         if (accountTokensValueData.success) {
-          const tokenBalance = getTotalTokenUsdValue(
-            accountTokensValueData.data
+          const validTokenValues = accountTokensValueData.data.filter(
+            (token: TokenType) =>
+              token.valueUsd &&
+              (!token.isLowLiquidity ||
+                new BigNumber(token.valueUsd).isLessThan(
+                  LOW_LIQUIDITY_DISPLAY_TRESHOLD
+                ))
           );
+          const tokenBalance = getTotalTokenUsdValue(validTokenValues);
           dispatch(
             setAccountExtra({
               accountExtra: {
