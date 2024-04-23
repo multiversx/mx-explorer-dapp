@@ -104,6 +104,22 @@ export interface ProviderType {
   maxRedelegateAmountAllowed?: string;
 }
 
+export interface AuctionValidatorType {
+  name: string;
+  stake: string;
+  locked: string;
+  identity?: string;
+  description?: string;
+  avatar?: string;
+  auctionTopUp?: string;
+  qualifiedStake?: string;
+  auctionValidators?: number;
+  qualifiedAuctionValidators?: number;
+  dangerZoneValidators?: number;
+  droppedValidators?: number;
+  auctionPosition?: number;
+}
+
 export enum NodeQualificationStatusEnum {
   qualified = 'Qualified',
   notQualified = 'Not Qualified',
