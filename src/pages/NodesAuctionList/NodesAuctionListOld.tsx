@@ -12,8 +12,7 @@ import {
   PageState,
   NodesTableHero,
   NodesTable,
-  AuctionListFilters,
-  NodesAuctionListTable
+  AuctionListFilters
 } from 'components';
 import { processNodesIdentities } from 'helpers';
 import {
@@ -29,7 +28,7 @@ import { nodesIdentitiesSelector } from 'redux/selectors';
 import { setNodesIdentities } from 'redux/slices/nodesIdentities';
 import { NodeType, SortOrderEnum } from 'types';
 
-export const NodesAuctionList = () => {
+export const NodesAuctionListOld = () => {
   const dispatch = useDispatch();
   const { nodesIdentities } = useSelector(nodesIdentitiesSelector);
   const { getNodes, getNodesCount, getIdentities } = useAdapter();
@@ -207,7 +206,7 @@ export const NodesAuctionList = () => {
     );
   };
 
-  useEffect(fetchNodes, []);
+  useEffect(fetchNodes, [searchParams]);
 
   return (
     <div className='card nodes-auction-list'>
@@ -216,6 +215,15 @@ export const NodesAuctionList = () => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <NodesTableHero />
           <AuctionListFilters />
+          {dataReady === true && (isCustomSize || !hasNoFilters) && (
+            <Pager
+              itemsPerPage={pageSize}
+              total={totalNodes}
+              className='d-flex ms-auto me-auto me-sm-0'
+              showFirstAndLast={false}
+              show
+            />
+          )}
         </div>
       </div>
 
@@ -233,9 +241,23 @@ export const NodesAuctionList = () => {
       )}
 
       {dataReady === true && nodes.length > 0 && (
-        <div className='card-body'>
-          <NodesAuctionListTable />
-        </div>
+        <>
+          <div className='card-body'>
+            <NodesTable auctionList showPosition={hasNoFilters}>
+              <NodesTable.Body
+                nodes={nodes}
+                auctionList
+                showPosition={hasNoFilters}
+              />
+            </NodesTable>
+          </div>
+          {(isCustomSize || !hasNoFilters) && (
+            <div className='card-footer table-footer'>
+              <PageSize />
+              <Pager total={totalNodes} itemsPerPage={pageSize} show />
+            </div>
+          )}
+        </>
       )}
     </div>
   );

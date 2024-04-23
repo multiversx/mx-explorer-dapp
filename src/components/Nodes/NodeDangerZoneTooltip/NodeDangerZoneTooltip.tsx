@@ -4,55 +4,64 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { FormatAmount, Led, Overlay } from 'components';
-import { faSquareInfo } from 'icons/solid';
+import { faDiamondExclamation } from 'icons/solid';
 import { stakeSelector } from 'redux/selectors';
-import {
-  NodeType,
-  WithClassnameType,
-  NodeQualificationStatusEnum
-} from 'types';
+import { WithClassnameType, NodeQualificationStatusEnum } from 'types';
 
 export interface NodeDangerZoneTooltipUIType extends WithClassnameType {
-  node: NodeType;
+  qualifiedStake?: string;
+  isInDangerZone?: boolean;
+  auctionQualified?: boolean;
+  showText?: boolean;
 }
 
 export const NodeDangerZoneTooltip = ({
-  node,
+  qualifiedStake,
+  isInDangerZone,
+  auctionQualified = true,
+  showText,
   className
 }: NodeDangerZoneTooltipUIType) => {
   const {
     isFetched: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
-  const { locked, stake, auctionTopUp, isInDangerZone, auctionQualified } =
-    node;
 
   if (
     !isStakeFetched ||
     !auctionQualified ||
     !notQualifiedAuctionValidators ||
-    minimumAuctionQualifiedStake === undefined ||
-    locked === undefined
+    !minimumAuctionQualifiedStake ||
+    qualifiedStake === undefined
   ) {
     return null;
   }
 
-  const bNLocked = new BigNumber(stake).plus(auctionTopUp ?? 0);
+  const bNQualifiedStake = new BigNumber(qualifiedStake);
   const bNMinimumAuctionStake = new BigNumber(minimumAuctionQualifiedStake);
 
-  if (isInDangerZone) {
+  const displayDangerZone =
+    isInDangerZone ??
+    bNQualifiedStake.isGreaterThanOrEqualTo(bNMinimumAuctionStake);
+
+  if (displayDangerZone) {
     const bNDangerZoneTreshold = bNMinimumAuctionStake
       .times(105)
       .dividedBy(100)
       .decimalPlaces(0, 1);
-    const bNLockedAboveTreshold = bNLocked.minus(bNMinimumAuctionStake);
-    const bNLockedNeededAboveDangerZone = bNDangerZoneTreshold.minus(bNLocked);
+    const bNLockedAboveTreshold = bNQualifiedStake.minus(bNMinimumAuctionStake);
+    const bNLockedNeededAboveDangerZone =
+      bNDangerZoneTreshold.minus(bNQualifiedStake);
+
+    if (bNLockedNeededAboveDangerZone.isLessThan(0)) {
+      return null;
+    }
 
     return (
       <div className={classNames('d-flex align-items-center gap-1', className)}>
         <span className='text-orange-400'>
-          {NodeQualificationStatusEnum.dangerZone}
-          {bNLocked.isGreaterThanOrEqualTo(bNMinimumAuctionStake) && (
+          {showText && <>{NodeQualificationStatusEnum.dangerZone}</>}
+          {bNQualifiedStake.isGreaterThanOrEqualTo(bNMinimumAuctionStake) && (
             <Overlay
               title={
                 <>
@@ -81,12 +90,11 @@ export const NodeDangerZoneTooltip = ({
                   </p>
                 </>
               }
-              className='side-action'
               tooltipClassName='tooltip-text-start tooltip-lg'
               persistent
             >
               <FontAwesomeIcon
-                icon={faSquareInfo}
+                icon={faDiamondExclamation}
                 className='text-orange-400'
               />
             </Overlay>

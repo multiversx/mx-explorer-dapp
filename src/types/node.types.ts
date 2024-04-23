@@ -43,6 +43,7 @@ export interface NodeType {
 
   auctionPosition?: number;
   auctionTopUp?: string;
+  qualifiedStake?: string;
   auctionQualified?: boolean;
   isInDangerZone?: boolean;
 
@@ -105,9 +106,10 @@ export interface ProviderType {
 }
 
 export interface AuctionValidatorType {
-  name: string;
+  //name: string;
   stake: string;
   locked: string;
+  owner?: string;
   identity?: string;
   description?: string;
   avatar?: string;
@@ -118,6 +120,7 @@ export interface AuctionValidatorType {
   dangerZoneValidators?: number;
   droppedValidators?: number;
   auctionPosition?: number;
+  distribution?: any;
 }
 
 export enum NodeQualificationStatusEnum {

@@ -3,53 +3,67 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
-import { FormatAmount } from 'components';
+import { FormatAmount, FormatNumber } from 'components';
 import { stakeSelector } from 'redux/selectors';
-import { NodeType, WithClassnameType } from 'types';
+import { WithClassnameType } from 'types';
 
 export interface NodeTresholdUIType extends WithClassnameType {
-  node: NodeType;
+  qualifiedStake?: string;
+  showPercentage?: boolean;
 }
 
-export const NodeTreshold = ({ node, className }: NodeTresholdUIType) => {
+export const NodeTreshold = ({
+  qualifiedStake,
+  showPercentage,
+  className
+}: NodeTresholdUIType) => {
   const {
     isFetched: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
 
-  const { locked, stake, auctionTopUp, isInDangerZone, auctionQualified } =
-    node;
   if (
     !isStakeFetched ||
     minimumAuctionQualifiedStake === undefined ||
-    locked === undefined
+    qualifiedStake === undefined
   ) {
     return ELLIPSIS;
   }
 
-  const bNLocked = new BigNumber(stake).plus(
-    auctionQualified ? auctionTopUp ?? 0 : 0
-  );
+  const bNQualifiedStake = new BigNumber(qualifiedStake);
   const bNMinimumQualifiedStake = new BigNumber(minimumAuctionQualifiedStake);
-  const bNTreshold = bNLocked.minus(bNMinimumQualifiedStake);
+  const bNTreshold = bNQualifiedStake.minus(bNMinimumQualifiedStake);
 
-  const isHighlightedTreshhold =
-    (auctionQualified && bNTreshold.isGreaterThan(0) && !isInDangerZone) ||
-    (auctionQualified && isInDangerZone && !notQualifiedAuctionValidators);
+  // num*amount/100
+  const tresholdPercentage = new BigNumber(bNTreshold.absoluteValue())
+    .times(100)
+    .dividedBy(bNMinimumQualifiedStake);
+
+  const sign = bNTreshold.isGreaterThan(0)
+    ? '+'
+    : bNTreshold.isLessThan(0)
+    ? '-'
+    : '';
 
   return (
     <span
       className={classNames(className, {
-        'text-success': isHighlightedTreshhold,
-        'text-red-400': !auctionQualified && bNTreshold.isLessThan(0)
+        'text-success': bNTreshold.isGreaterThan(0),
+        'text-red-400':
+          notQualifiedAuctionValidators && bNTreshold.isLessThan(0)
       })}
     >
-      {bNTreshold.isGreaterThan(0) && <>+</>}
-      {bNTreshold.isLessThan(0) && <>-</>}
+      {sign}
       <FormatAmount
         value={bNTreshold.absoluteValue().toString(10)}
         showSymbol={false}
       />
+      {showPercentage && tresholdPercentage && !bNTreshold.isZero() && (
+        <span className='opacity-50 ms-1'>
+          ({sign}
+          <FormatNumber value={tresholdPercentage} label='%' />)
+        </span>
+      )}
     </span>
   );
 };
