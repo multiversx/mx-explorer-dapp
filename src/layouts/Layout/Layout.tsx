@@ -11,8 +11,7 @@ import {
   useNetworkRouter,
   useLoopManager,
   useCheckVersion,
-  useGetURLNetwork,
-  useTempStorageNotification
+  useGetURLNetwork
 } from 'hooks';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 
@@ -38,7 +37,6 @@ export const Layout = () => {
   useNetworkRouter();
   useLoopManager();
   useCheckVersion();
-  useTempStorageNotification();
 
   const offline = !window.navigator.onLine;
 
