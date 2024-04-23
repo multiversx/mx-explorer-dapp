@@ -44,7 +44,7 @@ export const AccountStaking = () => {
       )
     : [];
 
-  const needsData = address && stakingDataReady && address !== stateAddress;
+  const needsData = address && address !== stateAddress;
   const hasStaking = showDelegation || showDelegationLegacy || showStake;
   const isReady =
     providerDataReady &&

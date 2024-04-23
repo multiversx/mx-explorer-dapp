@@ -29,25 +29,31 @@ export const DonutChart = ({
     }
   ];
 
+  const hasNoActiveStake = bNtotalLocked.isEqualTo(0);
+
   return (
     <>
       <div className='staking-details-center'>
         <h5 className='mb-1'>
-          {bNtotalLocked.isEqualTo(0) ? 'No staking' : 'Total Staked'}
+          {hasNoActiveStake ? 'No staking' : 'Total Staked'}
         </h5>
-        <h6 className='mb-1'>
-          <FormatAmount
-            value={bNtotalLocked.toString(10)}
-            showUsdValue={false}
-          />
-        </h6>
-        <div className='text-neutral-400 small mb-0'>
-          <FormatUSD
-            value={bNtotalLocked.toString(10)}
-            decimals={DECIMALS}
-            showPrefix={false}
-          />
-        </div>
+        {!hasNoActiveStake && (
+          <>
+            <h6 className='mb-1'>
+              <FormatAmount
+                value={bNtotalLocked.toString(10)}
+                showUsdValue={false}
+              />
+            </h6>
+            <div className='text-neutral-400 small mb-0'>
+              <FormatUSD
+                value={bNtotalLocked.toString(10)}
+                decimals={DECIMALS}
+                showPrefix={false}
+              />
+            </div>
+          </>
+        )}
       </div>
       <Chart.Donut config={config} />
     </>
