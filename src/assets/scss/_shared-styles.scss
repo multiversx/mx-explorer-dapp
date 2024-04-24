@@ -32,6 +32,23 @@
       border-bottom-right-radius: $input-border-radius-lg !important;
     }
   }
+  &.input-group-search {
+    .form-control {
+      border: 1px solid var(--neutral-800);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      line-height: 1;
+      padding: 0.625rem 1rem;
+      background-color: var(--neutral-850);
+      border-top-right-radius: 0.5rem !important;
+      border-bottom-right-radius: 0.5rem !important;
+    }
+    .input-group-text {
+      top: 1px;
+      bottom: 1px;
+      background-color: var(--neutral-850);
+    }
+  }
   &.input-group-sm {
     .form-control {
       border-top-right-radius: $input-border-radius-sm !important;
@@ -399,6 +416,12 @@ div.side-icon {
 
 .card-header-item:first-of-type:last-of-type:not(.table-card-header) {
   margin-bottom: 0 !important;
+}
+
+.search-md {
+  @include media-breakpoint-up(xl) {
+    max-width: 16rem;
+  }
 }
 
 .search-sm {

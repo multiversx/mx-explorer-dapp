@@ -100,7 +100,7 @@ export const AuctionListFilters = ({
       <h3 className='mb-4' data-testid='title'>
         Validators
       </h3>
-      <div className='d-flex flex-wrap align-items-center justify-content-between'>
+      <div className='d-flex flex-wrap align-items-center justify-content-between gap-3'>
         <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
           <li className='list-inline-item me-0'>
             <button
@@ -188,8 +188,8 @@ export const AuctionListFilters = ({
             </button>
           </li>
         </ul>
-        <div role='search' className={onlySearch ? 'search-lg' : 'search-sm'}>
-          <div className='input-group input-group-sm input-group-seamless'>
+        <div role='search' className={onlySearch ? 'search-lg' : 'search-md'}>
+          <div className='input-group input-group-search input-group-seamless'>
             <input
               type='text'
               className='form-control'
