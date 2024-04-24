@@ -24,7 +24,7 @@ export interface StandardRowUIType {
   index: number;
   type?: NodeType['type'];
   status?: NodeType['status'];
-  showTresholdRow?: boolean;
+  showThresholdRow?: boolean;
   showPosition?: boolean;
 }
 

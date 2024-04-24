@@ -7,16 +7,16 @@ import { FormatAmount, FormatNumber } from 'components';
 import { stakeSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
-export interface NodeTresholdUIType extends WithClassnameType {
+export interface NodeThresholdUIType extends WithClassnameType {
   qualifiedStake?: string;
   showPercentage?: boolean;
 }
 
-export const NodeTreshold = ({
+export const NodeThreshold = ({
   qualifiedStake,
   showPercentage,
   className
-}: NodeTresholdUIType) => {
+}: NodeThresholdUIType) => {
   const {
     isFetched: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
@@ -32,36 +32,36 @@ export const NodeTreshold = ({
 
   const bNQualifiedStake = new BigNumber(qualifiedStake);
   const bNMinimumQualifiedStake = new BigNumber(minimumAuctionQualifiedStake);
-  const bNTreshold = bNQualifiedStake.minus(bNMinimumQualifiedStake);
+  const bNThreshold = bNQualifiedStake.minus(bNMinimumQualifiedStake);
 
   // num*amount/100
-  const tresholdPercentage = new BigNumber(bNTreshold.absoluteValue())
+  const thresholdPercentage = new BigNumber(bNThreshold.absoluteValue())
     .times(100)
     .dividedBy(bNMinimumQualifiedStake);
 
-  const sign = bNTreshold.isGreaterThan(0)
+  const sign = bNThreshold.isGreaterThan(0)
     ? '+'
-    : bNTreshold.isLessThan(0)
+    : bNThreshold.isLessThan(0)
     ? '-'
     : '';
 
   return (
     <span
       className={classNames(className, {
-        'text-success': bNTreshold.isGreaterThan(0),
+        'text-success': bNThreshold.isGreaterThan(0),
         'text-red-400':
-          notQualifiedAuctionValidators && bNTreshold.isLessThan(0)
+          notQualifiedAuctionValidators && bNThreshold.isLessThan(0)
       })}
     >
       {sign}
       <FormatAmount
-        value={bNTreshold.absoluteValue().toString(10)}
+        value={bNThreshold.absoluteValue().toString(10)}
         showSymbol={false}
       />
-      {showPercentage && tresholdPercentage && !bNTreshold.isZero() && (
+      {showPercentage && thresholdPercentage && !bNThreshold.isZero() && (
         <span className='opacity-50 ms-1'>
           ({sign}
-          <FormatNumber value={tresholdPercentage} label='%' />)
+          <FormatNumber value={thresholdPercentage} label='%' />)
         </span>
       )}
     </span>

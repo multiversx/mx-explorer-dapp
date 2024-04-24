@@ -13,7 +13,7 @@ import {
   NodesTableHero,
   NodesTable,
   AuctionListFilters,
-  NodesAuctionListTable
+  AuctionListTable
 } from 'components';
 import { processNodesIdentities } from 'helpers';
 import {
@@ -234,7 +234,7 @@ export const NodesAuctionList = () => {
 
       {dataReady === true && nodes.length > 0 && (
         <div className='card-body'>
-          <NodesAuctionListTable />
+          <AuctionListTable />
         </div>
       )}
     </div>

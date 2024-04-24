@@ -136,6 +136,8 @@
     }
   }
   th {
+    color: var(--neutral-300);
+    font-family: var(--font-headings-regular);
     &.percentage-column {
       width: 12rem;
     }

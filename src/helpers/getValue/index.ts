@@ -1,5 +1,4 @@
 export * from './getDisplayReceiver';
-export * from './getExpandRowDetails';
 export * from './getNftText';
 export * from './getNodeIcon';
 export * from './getNodeIssue';

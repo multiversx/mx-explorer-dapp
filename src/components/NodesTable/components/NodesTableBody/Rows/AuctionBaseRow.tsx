@@ -12,25 +12,25 @@ import {
   NodeFullHistoryIcon,
   NodeIssueIcon,
   NodeLockedStakeTooltip,
-  NodeTreshold,
+  NodeThreshold,
   SharedIdentity
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { nodesIdentitiesSelector, stakeSelector } from 'redux/selectors';
 import { NodeType, WithClassnameType } from 'types';
 
-export interface AuctionListBaseRowUIType extends WithClassnameType {
+export interface AuctionBaseRowUIType extends WithClassnameType {
   nodeData: NodeType;
   index?: number;
   showPosition?: boolean;
 }
 
-export const AuctionListBaseRow = ({
+export const AuctionBaseRow = ({
   nodeData,
   index,
   showPosition,
   className
-}: AuctionListBaseRowUIType) => {
+}: AuctionBaseRowUIType) => {
   const { nodesIdentities } = useSelector(nodesIdentitiesSelector);
   const {
     isFetched: isStakeFetched,
@@ -127,7 +127,7 @@ export const AuctionListBaseRow = ({
         )}
       </td>
       <td>
-        <NodeTreshold node={nodeData} />
+        <NodeThreshold node={nodeData} />
       </td>
       <td>
         <NodeDangerZoneTooltip node={nodeData} />

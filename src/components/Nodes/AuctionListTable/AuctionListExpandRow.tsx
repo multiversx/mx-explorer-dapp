@@ -1,31 +1,27 @@
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
 
-import { stakeSelector } from 'redux/selectors';
-import { NodeType, WithClassnameType } from 'types';
+import { WithClassnameType } from 'types';
 
 import { AuctionListBaseRow } from './AuctionListBaseRow';
-import { ExpandRowConfigType } from '../NodesTableBody';
+import { ExpandRowConfigType, AuctionListBaseRowUIType } from './types';
 
-export interface AuctionListExpandRowUIType extends WithClassnameType {
-  nodeData: NodeType;
-  index: number;
+export interface NodesAuctionListExpandRowUIType
+  extends AuctionListBaseRowUIType {
   expandRowConfig: ExpandRowConfigType;
   colSpan?: number;
-  showPosition?: boolean;
 }
 
 interface ExpandRowUIType extends WithClassnameType {
-  nodeCount: number;
-  nodeText: string;
+  validatorCount: number;
+  validatorText: string;
   onClick: () => void;
   colSpan?: number;
 }
 
 const ExpandRow = ({
-  nodeCount,
-  nodeText,
+  validatorCount,
+  validatorText,
   onClick,
   colSpan,
   className
@@ -33,9 +29,9 @@ const ExpandRow = ({
   return (
     <tr className={classNames('expand-row', className)}>
       <td colSpan={colSpan}>
-        <div className='content-wrapper text-neutral-400 d-flex align-items-start gap-3'>
+        <div className='content-wrapper text-neutral-400 d-flex align-items-start font-headings-regular gap-3'>
           <span>
-            .. {new BigNumber(nodeCount).toFormat()} more {nodeText}
+            .. {new BigNumber(validatorCount).toFormat()} more {validatorText}
           </span>
           <button
             type='button'
@@ -57,41 +53,29 @@ const ExpandRow = ({
 export const AuctionListExpandRow = ({
   colSpan = 7,
   index,
-  nodeData,
+  validator,
   expandRowConfig,
   showPosition,
   className
-}: AuctionListExpandRowUIType) => {
+}: NodesAuctionListExpandRowUIType) => {
   const {
     qualifiedExpandPosition,
     qualifiedExpandClosePosition,
     remainingQualifiedValidators,
-    dangerZoneExpandPosition,
-    dangerZoneExpandClosePosition,
-    remainingDangerZoneValidators,
     notQualifiedExpandPosition,
     notQualifiedExpandClosePosition,
     remainingNotQualifiedValidators,
     qualifiedExpanded,
-    dangerZoneExpanded,
     notQualifiedExpanded,
     setQualifiedExpanded,
-    setDangerZoneExpanded,
     setNotQualifiedExpanded
   } = expandRowConfig;
-
-  const {
-    unprocessed: { notQualifiedAuctionValidators }
-  } = useSelector(stakeSelector);
 
   const hasQualifiedExpand =
     qualifiedExpandPosition &&
     qualifiedExpandClosePosition &&
     remainingQualifiedValidators;
-  const hasDangerZoneExpand =
-    dangerZoneExpandPosition &&
-    dangerZoneExpandClosePosition &&
-    remainingDangerZoneValidators;
+
   const hasNotQualifiedExpand =
     notQualifiedExpandPosition &&
     notQualifiedExpandClosePosition &&
@@ -101,30 +85,27 @@ export const AuctionListExpandRow = ({
     hasQualifiedExpand &&
     index >= qualifiedExpandPosition &&
     index < qualifiedExpandClosePosition;
-  const isDangerZoneHidden =
-    hasDangerZoneExpand &&
-    index >= dangerZoneExpandPosition &&
-    index < dangerZoneExpandClosePosition;
+
   const isNotQualifiedHidden =
     hasNotQualifiedExpand &&
     index >= notQualifiedExpandPosition &&
     index < notQualifiedExpandClosePosition;
 
-  const isInDangerZone =
-    nodeData.auctionQualified &&
-    nodeData.isInDangerZone &&
-    notQualifiedAuctionValidators;
-
-  if (isQualifiedHidden || isDangerZoneHidden || isNotQualifiedHidden) {
+  if (isQualifiedHidden || isNotQualifiedHidden) {
     return (
       <AuctionListBaseRow
-        nodeData={nodeData}
+        validator={validator}
         index={index}
         showPosition={showPosition}
         className={classNames('dh', {
-          qv: qualifiedExpanded && nodeData.auctionQualified && !isInDangerZone,
-          dzv: dangerZoneExpanded && isInDangerZone,
-          nqv: notQualifiedExpanded && !nodeData.auctionQualified
+          qv:
+            qualifiedExpanded &&
+            new BigNumber(
+              validator.qualifiedAuctionValidators ?? 0
+            ).isGreaterThan(0),
+          nqv:
+            notQualifiedExpanded &&
+            new BigNumber(validator.qualifiedAuctionValidators ?? 0).isZero()
         })}
       />
     );
@@ -137,28 +118,10 @@ export const AuctionListExpandRow = ({
   ) {
     return (
       <ExpandRow
-        nodeCount={remainingQualifiedValidators}
-        nodeText='Qualified nodes'
+        validatorCount={remainingQualifiedValidators}
+        validatorText='Qualified validators'
         onClick={() => {
           setQualifiedExpanded(true);
-          return;
-        }}
-        colSpan={colSpan}
-        className={className}
-      />
-    );
-  }
-  if (
-    hasDangerZoneExpand &&
-    index === dangerZoneExpandClosePosition &&
-    !dangerZoneExpanded
-  ) {
-    return (
-      <ExpandRow
-        nodeCount={remainingDangerZoneValidators}
-        nodeText='nodes in Danger Zone'
-        onClick={() => {
-          setDangerZoneExpanded(true);
           return;
         }}
         colSpan={colSpan}
@@ -173,8 +136,8 @@ export const AuctionListExpandRow = ({
   ) {
     return (
       <ExpandRow
-        nodeCount={remainingNotQualifiedValidators}
-        nodeText='Not Qualified nodes'
+        validatorCount={remainingNotQualifiedValidators}
+        validatorText='Not Qualified validators'
         onClick={() => {
           setNotQualifiedExpanded(true);
           return;
@@ -187,7 +150,7 @@ export const AuctionListExpandRow = ({
 
   return (
     <AuctionListBaseRow
-      nodeData={nodeData}
+      validator={validator}
       index={index}
       showPosition={showPosition}
     />

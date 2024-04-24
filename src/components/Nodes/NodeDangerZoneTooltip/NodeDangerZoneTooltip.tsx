@@ -45,13 +45,15 @@ export const NodeDangerZoneTooltip = ({
     bNQualifiedStake.isGreaterThanOrEqualTo(bNMinimumAuctionStake);
 
   if (displayDangerZone) {
-    const bNDangerZoneTreshold = bNMinimumAuctionStake
+    const bNDangerZoneThreshold = bNMinimumAuctionStake
       .times(105)
       .dividedBy(100)
       .decimalPlaces(0, 1);
-    const bNLockedAboveTreshold = bNQualifiedStake.minus(bNMinimumAuctionStake);
+    const bNLockedAboveThreshold = bNQualifiedStake.minus(
+      bNMinimumAuctionStake
+    );
     const bNLockedNeededAboveDangerZone =
-      bNDangerZoneTreshold.minus(bNQualifiedStake);
+      bNDangerZoneThreshold.minus(bNQualifiedStake);
 
     if (bNLockedNeededAboveDangerZone.isLessThan(0)) {
       return null;
@@ -69,9 +71,9 @@ export const NodeDangerZoneTooltip = ({
                     Danger Zone <Led color='bg-orange-400 ms-1' />
                   </p>
                   <p className='mb-0'>
-                    This node is only{' '}
+                    Only{' '}
                     <FormatAmount
-                      value={bNLockedAboveTreshold.toString(10)}
+                      value={bNLockedAboveThreshold.toString(10)}
                       digits={4}
                     />{' '}
                     above the threshold level.
