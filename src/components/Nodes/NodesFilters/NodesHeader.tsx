@@ -2,7 +2,7 @@ import classNames from 'classnames';
 
 import { TableSearch } from 'components';
 import { useGetNodeFilters, useGetSearch } from 'hooks';
-import { WithClassnameType } from 'types';
+import { WithClassnameType, NodeStatusEnum, NodeTypeEnum } from 'types';
 
 export interface NodesHeaderUIType extends WithClassnameType {
   searchValue?: string | number;
@@ -14,16 +14,16 @@ export const NodesHeader = ({ searchValue, className }: NodesHeaderUIType) => {
   const { status, type } = nodeFilters;
 
   const getNodesFilterTitle = () => {
-    if (type === 'validator') {
+    if (type === NodeTypeEnum.validator) {
       return 'Validating Nodes';
     }
-    if (type === 'observer') {
+    if (type === NodeTypeEnum.observer) {
       return 'Observers';
     }
-    if (status === 'auction') {
+    if (status === NodeStatusEnum.auction) {
       return 'Auction List';
     }
-    if (status === 'queued') {
+    if (status === NodeStatusEnum.queued) {
       return 'Queued Nodes';
     }
     if (Object.keys(nodeFilters).length === 0 && !search) {

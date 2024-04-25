@@ -9,7 +9,13 @@ import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import { useAdapter, useIsMainnet } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { statsSelector } from 'redux/selectors';
-import { BlockType, IdentityType, NodeType } from 'types';
+import {
+  BlockType,
+  IdentityType,
+  NodeType,
+  NodeStatusEnum,
+  NodeTypeEnum
+} from 'types';
 
 import { NetworkMetrics } from './components/NetworkMetrics';
 import { NodeInformation } from './components/NodeInformation';
@@ -57,8 +63,8 @@ export const NodeDetails = () => {
           const fetchIdentity =
             isMainnet && nodeData.data.identity !== undefined;
           const hasExtendedInfo =
-            nodeData.data.type !== 'observer' &&
-            nodeData.data.status !== 'queued';
+            nodeData.data.type !== NodeTypeEnum.observer &&
+            nodeData.data.status !== NodeStatusEnum.queued;
 
           const shard = nodeData.data.shard;
 
@@ -126,8 +132,8 @@ export const NodeDetails = () => {
 
   const showExtendedInfo =
     node.data !== undefined &&
-    node.data.type !== 'observer' &&
-    node.data.status !== 'queued';
+    node.data.type !== NodeTypeEnum.observer &&
+    node.data.status !== NodeStatusEnum.queued;
 
   return (
     <>

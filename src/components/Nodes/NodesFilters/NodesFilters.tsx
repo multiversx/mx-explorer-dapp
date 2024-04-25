@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { formatBigNumber } from 'helpers';
 import { faEye, faGavel } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
-import { SortOrderEnum } from 'types';
+import { SortOrderEnum, NodeStatusEnum, NodeTypeEnum } from 'types';
 
 export interface NodesFiltersUIType {
   allCount?: string | number;
@@ -56,11 +56,11 @@ export const NodesFilters = ({
       ...(statusValue ? { status: statusValue } : {})
     };
 
-    if (statusValue === 'queued') {
+    if (statusValue === NodeStatusEnum.queued) {
       nextUrlParams.sort = 'position';
       nextUrlParams.order = SortOrderEnum.asc;
     }
-    if (statusValue === 'auction') {
+    if (statusValue === NodeStatusEnum.auction) {
       nextUrlParams.sort = 'qualifiedStake';
       nextUrlParams.order = SortOrderEnum.asc;
     }
@@ -126,11 +126,11 @@ export const NodesFilters = ({
           <button
             type='button'
             onClick={() => {
-              nodeTypeLink('validator');
+              nodeTypeLink(NodeTypeEnum.validator);
             }}
             className={classNames(
               'btn btn-tab d-flex align-items-center gap-1',
-              { active: type === 'validator' && issues !== 'true' }
+              { active: type === NodeTypeEnum.validator && issues !== 'true' }
             )}
           >
             Validator Nodes
@@ -145,12 +145,12 @@ export const NodesFilters = ({
           <button
             type='button'
             onClick={() => {
-              nodeTypeLink('observer');
+              nodeTypeLink(NodeTypeEnum.observer);
             }}
             data-testid='filterByObservers'
             className={classNames(
               'btn btn-tab d-flex align-items-center gap-1',
-              { active: type === 'observer' }
+              { active: type === NodeTypeEnum.observer }
             )}
           >
             <FontAwesomeIcon icon={faEye} />
@@ -167,12 +167,12 @@ export const NodesFilters = ({
             <button
               type='button'
               onClick={() => {
-                nodeStatusLink('auction');
+                nodeStatusLink(NodeStatusEnum.auction);
               }}
               data-testid='filterByValidators'
               className={classNames(
                 'btn btn-tab d-flex align-items-center gap-1',
-                { active: status === 'auction' }
+                { active: status === NodeStatusEnum.auction }
               )}
             >
               <FontAwesomeIcon icon={faGavel} />
@@ -190,12 +190,12 @@ export const NodesFilters = ({
             <button
               type='button'
               onClick={() => {
-                nodeStatusLink('queued');
+                nodeStatusLink(NodeStatusEnum.queued);
               }}
               data-testid='filterByValidators'
               className={classNames(
                 'btn btn-tab d-flex align-items-center gap-1',
-                { active: status === 'queued' }
+                { active: status === NodeStatusEnum.queued }
               )}
             >
               Queued

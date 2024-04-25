@@ -3,16 +3,8 @@ import { SliceType } from 'types/general.types';
 export interface NodeType {
   bls: string;
   name: string;
-  type: 'observer' | 'validator';
-  status?:
-    | 'waiting'
-    | 'eligible'
-    | 'new'
-    | 'jailed'
-    | 'leaving'
-    | 'inactive'
-    | 'queued'
-    | 'auction';
+  type: NodeTypeEnum;
+  status?: NodeStatusEnum;
   online: boolean;
   rating: number;
   tempRating: number;
@@ -50,6 +42,23 @@ export interface NodeType {
   // TODO check if used
   receivedShardID?: number;
   computedShardID?: number;
+}
+
+export enum NodeTypeEnum {
+  observer = 'observer',
+  validator = 'validator'
+}
+
+export enum NodeStatusEnum {
+  new = 'new',
+  unknown = 'unknown',
+  waiting = 'waiting',
+  eligible = 'eligible',
+  jailed = 'jailed',
+  queued = 'queued',
+  leaving = 'leaving',
+  inactive = 'inactive',
+  auction = 'auction'
 }
 
 export interface IdentityType {

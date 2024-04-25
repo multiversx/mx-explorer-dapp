@@ -1,5 +1,5 @@
 import { getNodeIcon } from 'helpers';
-import { NodeType } from 'types';
+import { NodeType, NodeStatusEnum, NodeTypeEnum } from 'types';
 
 import { NodeIcon } from './NodeIcon';
 
@@ -14,25 +14,25 @@ export const NodeStatusIcon = ({
 
   if (icon) {
     switch (true) {
-      case node.type === 'observer':
+      case node.type === NodeTypeEnum.observer:
         return <NodeIcon title='Observer' icon={icon} small={small} />;
 
-      case node.status === 'new':
+      case node.status === NodeStatusEnum.new:
         return <NodeIcon title='New' icon={icon} small={small} />;
 
-      case node.status === 'inactive':
+      case node.status === NodeStatusEnum.inactive:
         return <NodeIcon title='Inactive' icon={icon} small={small} />;
 
       case node.receivedShardID !== node.computedShardID:
         return <NodeIcon title='Changing Shard' icon={icon} small={small} />;
 
-      case node.status === 'waiting':
+      case node.status === NodeStatusEnum.waiting:
         return <NodeIcon title='Waiting' icon={icon} small={small} />;
 
-      case node.status === 'queued':
+      case node.status === NodeStatusEnum.queued:
         return <NodeIcon title='Queued' icon={icon} small={small} />;
 
-      case node.status === 'auction':
+      case node.status === NodeStatusEnum.auction:
         return <NodeIcon title='Auction' icon={icon} small={small} />;
     }
   }
