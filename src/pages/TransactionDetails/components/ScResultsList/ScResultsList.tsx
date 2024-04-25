@@ -67,7 +67,7 @@ export const ScResultsList = ({
           behavior: 'smooth'
         });
       }
-    }, 200);
+    }, 600);
   }, [formattedHash]);
 
   return (

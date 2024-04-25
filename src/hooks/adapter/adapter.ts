@@ -193,7 +193,7 @@ export const useAdapter = () => {
 
     /* SC Results */
 
-    getScResult: (hash: string) => provider({ url: `/sc-results/${hash}` }),
+    getScResult: (hash: string) => provider({ url: `/results/${hash}` }),
 
     getScResults: ({
       page = 1,
@@ -203,14 +203,14 @@ export const useAdapter = () => {
       size?: number;
     }) =>
       provider({
-        url: '/sc-results',
+        url: '/results',
         params: {
           from: (page - 1) * size,
           size
         }
       }),
 
-    getScResultsCount: () => provider({ url: '/sc-results/c' }),
+    getScResultsCount: () => provider({ url: '/results/c' }),
 
     /* Account */
 

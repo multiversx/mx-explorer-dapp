@@ -8,7 +8,7 @@ export const urlBuilder = {
   senderShard: (shard: number | string) => `/transactions?senderShard=${shard}`,
   transactionDetails: (hash: number | string) => `/transactions/${hash}`,
   transactionDetailsScResults: (hash: string) =>
-    `/transactions/${hash}/sc-results`,
+    `/transactions/${hash}/results`,
   transactionDetailsLogs: (hash: string) => `/transactions/${hash}/logs`,
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accountDetails: (address: string) => `/accounts/${address}`,
@@ -17,8 +17,7 @@ export const urlBuilder = {
   accountDetailsStaking: (address: string) => `/accounts/${address}/staking`,
   accountDetailsAnalytics: (address: string) =>
     `/accounts/${address}/analytics`,
-  accountDetailsScResults: (address: string) =>
-    `/accounts/${address}/sc-results`,
+  accountDetailsScResults: (address: string) => `/accounts/${address}/results`,
   accountDetailsContracts: (address: string) =>
     `/accounts/${address}/contracts`,
   accountDetailsUpgrades: (address: string) => `/accounts/${address}/upgrades`,
