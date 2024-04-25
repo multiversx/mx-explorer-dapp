@@ -5,26 +5,26 @@ export const StatisticsHead = () => {
     <tr>
       <th data-testid='node'>Public Key</th>
       <th data-testid='name'>
-        <Sort id='name' field='Name' />
+        <Sort id='name' text='Name' />
       </th>
 
       <th data-testid='leaderSuccess'>
-        <Sort id='leaderSuccess' field='Leader Success' />
+        <Sort id='leaderSuccess' text='Leader Success' />
       </th>
       <th data-testid='leaderFailure'>
-        <Sort id='leaderFailure' field='Leader Failure' />
+        <Sort id='leaderFailure' text='Leader Failure' />
       </th>
       <th data-testid='validatorSuccess'>
-        <Sort id='validatorSuccess' field='Validator Success' />
+        <Sort id='validatorSuccess' text='Validator Success' />
       </th>
       <th data-testid='validatorFailure'>
-        <Sort id='validatorFailure' field='Validator Failure' />
+        <Sort id='validatorFailure' text='Validator Failure' />
       </th>
       <th data-testid='validatorIgnoredSignatures'>
-        <Sort id='validatorIgnoredSignatures' field='Ignored Signature' />
+        <Sort id='validatorIgnoredSignatures' text='X Sign.' />
       </th>
       <th data-testid='tempRating'>
-        <Sort id='tempRating' field='Temp Rating' />
+        <Sort id='tempRating' text='Temp Rating' />
       </th>
     </tr>
   );

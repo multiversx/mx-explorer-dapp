@@ -17,7 +17,7 @@ export const StandardHead = ({
   <tr>
     {status === 'queued' && (
       <th data-testid='position'>
-        <Sort id='position' field='Position' />
+        {hideFilters ? 'Position' : <Sort id='position' text='Position' />}
       </th>
     )}
     {status === 'auction' && showPosition && (
@@ -25,11 +25,13 @@ export const StandardHead = ({
     )}
     <th data-testid='node'>Public Key</th>
     <th data-testid='name'>
-      <Sort id='name' field='Name' />
+      {hideFilters ? 'Name' : <Sort id='name' text='Name' />}
     </th>
-    <th data-testid='shard'>Shard{hideFilters ? '' : <ShardFilter />}</th>
+    <th data-testid='shard'>
+      {hideFilters ? 'Shard' : <ShardFilter text='Shard' />}
+    </th>
     <th data-testid='version'>
-      <Sort id='version' field='Version' />
+      {hideFilters ? 'Version' : <Sort id='version' text='Version' />}
     </th>
     {status !== 'auction' && (
       <th
@@ -37,26 +39,32 @@ export const StandardHead = ({
         data-testid='validatorIgnoredSignatures'
         style={{ maxWidth: '8rem' }}
       >
-        <Sort id='validatorIgnoredSignatures' field='Ignored Signatures' />
+        {hideFilters ? (
+          'X Sign.'
+        ) : (
+          <Sort id='validatorIgnoredSignatures' text='X Sign.' />
+        )}
       </th>
     )}
     <th className='text-end' data-testid='status'>
-      Status
-      {hideFilters ? '' : <StatusFilter />}
+      {hideFilters ? 'Status' : <StatusFilter text='Status' />}
     </th>
     {status === 'auction' && (
       <th className='text-end' data-testid='qualified'>
-        Qualified
-        {hideFilters ? '' : <QualifiedFilter />}
+        {hideFilters ? 'Qualified' : <QualifiedFilter text='Qualified' />}
       </th>
     )}
     {(type === 'validator' || status === 'auction') && (
       <th className='text-end' data-testid='lockedStake'>
-        <Sort id='locked' field='Locked Stake' />
+        {hideFilters ? (
+          'Locked Stake'
+        ) : (
+          <Sort id='locked' text='Locked Stake' />
+        )}
       </th>
     )}
     <th className='text-end' data-testid='tempRating'>
-      <Sort id='tempRating' field='Rating' />
+      {hideFilters ? 'Rating' : <Sort id='tempRating' text='Rating' />}
     </th>
     <th className='text-end' data-testid='nonce'>
       Nonce

@@ -36,17 +36,17 @@ export const TokensTable = ({
             <th>Token</th>
             <th>Name</th>
             <th data-testid={TokenSortEnum.price}>
-              <Sort id={TokenSortEnum.price} field='Price' />
+              <Sort id={TokenSortEnum.price} text='Price' />
             </th>
             <th>Circulating Supply</th>
             <th data-testid={TokenSortEnum.marketCap}>
-              <Sort id={TokenSortEnum.marketCap} field='Market Cap' />
+              <Sort id={TokenSortEnum.marketCap} text='Market Cap' />
             </th>
             <th data-testid={TokenSortEnum.accounts}>
-              <Sort id={TokenSortEnum.accounts} field='Holders' />
+              <Sort id={TokenSortEnum.accounts} text='Holders' />
             </th>
             <th data-testid={TokenSortEnum.transactions}>
-              <Sort id={TokenSortEnum.transactions} field='Transactions' />
+              <Sort id={TokenSortEnum.transactions} text='Transactions' />
             </th>
           </tr>
         </thead>
