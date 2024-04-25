@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
-import { useAdapter } from 'hooks';
+import { isHash, urlBuilder } from 'helpers';
+import { useAdapter, useNetworkRoute } from 'hooks';
 import { faExchangeAlt } from 'icons/regular';
 import { refreshSelector } from 'redux/selectors/refresh';
 import { TransactionType, TransactionApiStatusEnum } from 'types';
@@ -13,23 +14,37 @@ import { TransactionInfo } from './components/TransactionInfo';
 export const TransactionDetails = () => {
   const params: any = useParams();
   const { hash: transactionId } = params;
-  const ref = useRef(null);
+  const navigate = useNavigate();
+  const networkRoute = useNetworkRoute();
 
   const { timestamp } = useSelector(refreshSelector);
-
-  const { getTransaction } = useAdapter();
+  const { getTransaction, getScResult } = useAdapter();
 
   const [transaction, setTransaction] = useState<TransactionType | undefined>();
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
-  const fetchTransaction = () => {
+  const fetchTransaction = async () => {
     if (transactionId) {
-      getTransaction(transactionId).then(({ data, success }) => {
-        if (ref.current !== null) {
-          setTransaction(data);
-          setDataReady(success);
+      const { data, success } = await getTransaction(transactionId);
+      if (!success && !data && isHash(transactionId)) {
+        const { data: scData, success: scSuccess } = await getScResult(
+          transactionId
+        );
+        if (scData?.originalTxHash && scData.hash && scSuccess) {
+          const options = {
+            pathname: networkRoute(
+              urlBuilder.transactionDetails(scData.originalTxHash)
+            ),
+            hash: scData.hash
+          };
+          navigate(options, { replace: true });
+
+          return;
         }
-      });
+      }
+
+      setTransaction(data);
+      setDataReady(success);
     }
   };
 
@@ -46,36 +61,37 @@ export const TransactionDetails = () => {
     }
   };
 
-  useEffect(fetchTransaction, [transactionId]);
-
+  useEffect(() => {
+    fetchTransaction();
+  }, [transactionId]);
   useEffect(checkRefetch, [timestamp]);
 
-  return (
-    <>
-      {dataReady === undefined && <Loader />}
-      {dataReady === false && (
-        <PageState
-          icon={faExchangeAlt}
-          title='Unable to locate this transaction hash'
-          description={
-            <div className='px-spacer'>
-              <span className='text-break-all'>{transactionId}</span>
-            </div>
-          }
-          isError
-        />
-      )}
-      <div ref={ref}>
-        {dataReady === true && transaction && (
-          <div className='container page-content'>
-            <div className='row'>
-              <div className='col-12'>
-                <TransactionInfo transaction={transaction} />
-              </div>
-            </div>
+  if (dataReady === undefined) {
+    return <Loader />;
+  }
+
+  if (dataReady === false || !transaction) {
+    return (
+      <PageState
+        icon={faExchangeAlt}
+        title='Unable to locate this transaction hash'
+        description={
+          <div className='px-spacer'>
+            <span className='text-break-all'>{transactionId}</span>
           </div>
-        )}
+        }
+        isError
+      />
+    );
+  }
+
+  return (
+    <div className='container page-content'>
+      <div className='row'>
+        <div className='col-12'>
+          <TransactionInfo transaction={transaction} />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
