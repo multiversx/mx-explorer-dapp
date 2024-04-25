@@ -10,6 +10,11 @@ export const processStake = (data: StakeType) => {
     totalStaked: formatAmount({
       input: data.totalStaked
     }),
+    ...(data.totalObservers !== undefined
+      ? {
+          totalObservers: new BigNumber(data.totalObservers).toFormat(0)
+        }
+      : {}),
     ...(data.nakamotoCoefficient !== undefined
       ? {
           nakamotoCoefficient: new BigNumber(data.nakamotoCoefficient).toFormat(
@@ -49,13 +54,7 @@ export const processStake = (data: StakeType) => {
           ).toFormat(0)
         }
       : {}),
-    ...(data.notQualifiedAuctionValidators !== undefined
-      ? {
-          notQualifiedAuctionValidators: new BigNumber(
-            data.notQualifiedAuctionValidators
-          ).toFormat(0)
-        }
-      : {}),
+
     ...(data.dangerZoneValidators !== undefined
       ? {
           dangerZoneValidators: new BigNumber(
@@ -76,6 +75,27 @@ export const processStake = (data: StakeType) => {
     ...(data.allStakedNodes !== undefined
       ? {
           allStakedNodes: new BigNumber(data.allStakedNodes).toFormat(0)
+        }
+      : {}),
+
+    // TODO: temporary - not in API
+    ...(data.notQualifiedAuctionValidators !== undefined
+      ? {
+          notQualifiedAuctionValidators: new BigNumber(
+            data.notQualifiedAuctionValidators
+          ).toFormat(0)
+        }
+      : {}),
+    ...(data.totalNodes !== undefined
+      ? {
+          totalNodes: new BigNumber(data.totalNodes).toFormat(0)
+        }
+      : {}),
+    ...(data.totalValidatorNodes !== undefined
+      ? {
+          totalValidatorNodes: new BigNumber(data.totalValidatorNodes).toFormat(
+            0
+          )
         }
       : {})
   };

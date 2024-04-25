@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { ELLIPSIS } from 'appConstants';
 import {
   Loader,
   Pager,
   PageSize,
   PageState,
   NodesTable,
-  NodesFilters
+  NodesFilters,
+  NodesHeader
 } from 'components';
 import {
   useAdapter,
@@ -29,14 +31,15 @@ export const Nodes = () => {
   const nodeFilters = useGetNodeFilters();
   const sort = useGetSort();
   const [nodes, setNodes] = useState<NodeType[]>([]);
-  const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
+  const [totalNodes, setTotalNodes] = useState<number | typeof ELLIPSIS>(
+    ELLIPSIS
+  );
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const { type, status } = Object.fromEntries(searchParams);
 
   const fetchNodes = () => {
     setDataReady(undefined);
-
     Promise.all([
       getNodes({ ...nodeFilters, ...sort, search, page, size }),
       getNodesCount({ ...nodeFilters, ...sort, search })
@@ -58,15 +61,18 @@ export const Nodes = () => {
         <NodesTabs />
 
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-          <NodesFilters />
-          {dataReady === true && (
-            <Pager
-              total={totalNodes}
-              className='d-flex ms-auto me-auto me-sm-0'
-              showFirstAndLast={false}
-              show
-            />
-          )}
+          <NodesHeader searchValue={totalNodes} />
+          <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
+            <NodesFilters />
+            {dataReady === true && (
+              <Pager
+                total={totalNodes}
+                className='d-flex ms-auto me-auto me-sm-0'
+                showFirstAndLast={false}
+                show
+              />
+            )}
+          </div>
         </div>
       </div>
 

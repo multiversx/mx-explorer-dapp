@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
@@ -96,7 +95,7 @@ export const AuctionListFilters = ({
   );
 
   return (
-    <div className='filters w-100'>
+    <div className='filters auction-list-filters w-100'>
       <h3 className='mb-4' data-testid='title'>
         Validators
       </h3>

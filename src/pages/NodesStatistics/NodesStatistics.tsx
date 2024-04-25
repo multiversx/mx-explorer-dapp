@@ -7,7 +7,7 @@ import {
   PageSize,
   PageState,
   NodesTable,
-  NodesFilters
+  TableSearch
 } from 'components';
 import {
   useAdapter,
@@ -61,9 +61,8 @@ export const NodesStatistics = () => {
     <div className='card position-unset' ref={ref}>
       <div className='card-header position-unset'>
         <NodesTabs />
-
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-          <NodesFilters onlySearch />
+          <TableSearch searchValue={totalNodes} placeholderText='node' />
           {dataReady === true && (
             <Pager
               total={totalNodes}

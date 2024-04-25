@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { PageState, FormatNumber } from 'components';
-
+import { getStringPlural } from 'helpers';
 import { useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
@@ -21,7 +21,6 @@ export interface AuctionListTableUIType extends WithClassnameType {
 }
 
 export const AuctionListTable = ({
-  auctionListValidators = [],
   showPosition = true,
   className
 }: AuctionListTableUIType) => {
@@ -35,13 +34,6 @@ export const AuctionListTable = ({
 
   const [qualifiedExpanded, setQualifiedExpanded] = useState(false);
   const [notQualifiedExpanded, setNotQualifiedExpanded] = useState(false);
-
-  const getNodePlural = (value: BigNumber) => {
-    if (value.isGreaterThan(1) || value.isZero()) {
-      return 'nodes';
-    }
-    return 'node';
-  };
 
   let filterText = '';
   if (isQualified !== undefined) {
@@ -189,15 +181,15 @@ export const AuctionListTable = ({
             <td></td>
             <td className='text-neutral-300'>
               <FormatNumber value={tableTotalAuction} />{' '}
-              {getNodePlural(tableTotalAuction)}
+              {getStringPlural(tableTotalAuction, { string: 'node' })}
             </td>
             <td className='text-neutral-300'>
               <FormatNumber value={tableTotalDropped} />{' '}
-              {getNodePlural(tableTotalDropped)}
+              {getStringPlural(tableTotalDropped, { string: 'node' })}
             </td>
             <td className='text-neutral-300'>
               <FormatNumber value={tableTotalQualified} />{' '}
-              {getNodePlural(tableTotalQualified)}
+              {getStringPlural(tableTotalQualified, { string: 'node' })}
             </td>
             <td></td>
             <td></td>
