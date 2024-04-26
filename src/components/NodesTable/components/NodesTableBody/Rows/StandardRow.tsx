@@ -1,6 +1,3 @@
-import classNames from 'classnames';
-import { useSelector } from 'react-redux';
-
 import {
   NodeRating,
   NodeStatus,
@@ -9,14 +6,14 @@ import {
   Trim,
   Overlay,
   FormatAmount,
-  NodeStatusIcon,
+  NodeChangingShardIcon,
   NodeIssueIcon,
   NodeFullHistoryIcon,
   NodeLockedStakeTooltip,
-  NodeQualification
+  NodeQualification,
+  NodeOnlineIcon
 } from 'components';
-import { urlBuilder } from 'helpers';
-import { stakeSelector } from 'redux/selectors';
+import { formatBigNumber, urlBuilder } from 'helpers';
 import { NodeType } from 'types';
 
 export interface StandardRowUIType {
@@ -32,25 +29,10 @@ export const StandardRow = ({
   nodeData,
   index,
   type,
-  status,
-  showPosition
+  status
 }: StandardRowUIType) => {
-  const {
-    unprocessed: { notQualifiedAuctionValidators }
-  } = useSelector(stakeSelector);
-
-  const isInDangerZone =
-    nodeData.isInDangerZone &&
-    nodeData.auctionQualified &&
-    notQualifiedAuctionValidators &&
-    status === 'auction';
-
   return (
-    <tr
-      className={classNames({
-        dz: isInDangerZone
-      })}
-    >
+    <tr>
       {status === 'queued' && (
         <td>
           {nodeData.position ? (
@@ -62,14 +44,15 @@ export const StandardRow = ({
       )}
       <td>
         <div className='d-flex align-items-center gap-1 hash'>
-          <NodeStatusIcon node={nodeData} />
-          <NodeFullHistoryIcon node={nodeData} small={true} />
+          <NodeOnlineIcon node={nodeData} />
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}
             className='trim-wrapper'
           >
             <Trim text={nodeData.bls} />
           </NetworkLink>
+          <NodeChangingShardIcon node={nodeData} />
+          <NodeFullHistoryIcon node={nodeData} small={true} />
           <NodeIssueIcon node={nodeData} />
         </div>
       </td>
@@ -104,7 +87,7 @@ export const StandardRow = ({
       {status !== 'auction' && (
         <td style={{ maxWidth: '8rem' }}>
           {nodeData.validatorIgnoredSignatures ? (
-            nodeData.validatorIgnoredSignatures.toLocaleString('en')
+            formatBigNumber({ value: nodeData.validatorIgnoredSignatures })
           ) : (
             <span className='text-neutral-400'>N/A</span>
           )}

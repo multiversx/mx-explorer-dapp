@@ -108,6 +108,7 @@ import {
   faUserCheck,
   faUserFriends,
   faUserLock,
+  faXmark as faClose,
   faWifi as faWifiSlash
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -152,6 +153,7 @@ export {
   faCity,
   faClock,
   faClone,
+  faClose,
   faCode,
   faCogs,
   faCoins,

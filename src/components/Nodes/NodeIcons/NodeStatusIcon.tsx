@@ -1,6 +1,7 @@
 import { getNodeIcon } from 'helpers';
 import { NodeType, NodeStatusEnum, NodeTypeEnum } from 'types';
 
+import { NodeChangingShardIcon } from './NodeChangingShardIcon';
 import { NodeIcon } from './NodeIcon';
 
 export const NodeStatusIcon = ({
@@ -10,8 +11,11 @@ export const NodeStatusIcon = ({
   node: NodeType;
   small?: boolean;
 }) => {
-  const icon = getNodeIcon(node);
+  if (node.receivedShardID !== node.computedShardID) {
+    return <NodeChangingShardIcon node={node} small={small} />;
+  }
 
+  const icon = getNodeIcon(node);
   if (icon) {
     switch (true) {
       case node.type === NodeTypeEnum.observer:
@@ -22,9 +26,6 @@ export const NodeStatusIcon = ({
 
       case node.status === NodeStatusEnum.inactive:
         return <NodeIcon title='Inactive' icon={icon} small={small} />;
-
-      case node.receivedShardID !== node.computedShardID:
-        return <NodeIcon title='Changing Shard' icon={icon} small={small} />;
 
       case node.status === NodeStatusEnum.waiting:
         return <NodeIcon title='Waiting' icon={icon} small={small} />;

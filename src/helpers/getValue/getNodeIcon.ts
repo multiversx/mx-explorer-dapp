@@ -6,9 +6,9 @@ import {
   faSnooze,
   faSync,
   faLock,
-  faExclamationTriangle,
   faGavel
 } from 'icons/regular';
+import { faExclamationTriangle } from 'icons/solid';
 import { NodeType, NodeStatusEnum, NodeTypeEnum } from 'types';
 
 export const getNodeIcon = (node: NodeType) => {

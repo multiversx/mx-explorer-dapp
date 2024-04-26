@@ -1,9 +1,10 @@
 import {
-  Sort,
-  ShardFilter,
   NodesGeneralFilter,
   NodesQualifiedFilter,
-  NodesStatusFilter
+  NodesStatusFilter,
+  Overlay,
+  Sort,
+  ShardFilter
 } from 'components';
 import { NodeType } from 'types';
 
@@ -40,9 +41,12 @@ export const StandardHead = ({
     {status !== 'auction' && (
       <th data-testid='validatorIgnoredSignatures' style={{ maxWidth: '8rem' }}>
         {hideFilters ? (
-          'X Sign.'
+          <Overlay title='Ignored Signatures'>X Sign.</Overlay>
         ) : (
-          <Sort id='validatorIgnoredSignatures' text='X Sign.' />
+          <Sort
+            id='validatorIgnoredSignatures'
+            text={<Overlay title='Ignored Signatures'>X Sign.</Overlay>}
+          />
         )}
       </th>
     )}

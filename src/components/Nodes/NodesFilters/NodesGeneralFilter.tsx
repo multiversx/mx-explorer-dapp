@@ -43,6 +43,9 @@ export const NodesGeneralFilter = ({ text }: { text: React.ReactNode }) => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
+          <Dropdown.Item as={Anchor} eventKey=''>
+            All
+          </Dropdown.Item>
           <Dropdown.Item
             as={Anchor}
             eventKey='true'
@@ -56,9 +59,6 @@ export const NodesGeneralFilter = ({ text }: { text: React.ReactNode }) => {
             className={`dropdown-item ${online === 'false' ? 'active' : ''}`}
           >
             Offline
-          </Dropdown.Item>
-          <Dropdown.Item as={Anchor} eventKey=''>
-            Show All
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
