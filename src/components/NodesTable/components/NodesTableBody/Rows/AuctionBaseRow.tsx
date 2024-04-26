@@ -13,7 +13,10 @@ import {
   NodeIssueIcon,
   NodeLockedStakeTooltip,
   NodeThreshold,
-  SharedIdentity
+  SharedIdentity,
+  NodeChangingShardIcon,
+  ShardSpan,
+  NodeOnlineIcon
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { nodesIdentitiesSelector, stakeSelector } from 'redux/selectors';
@@ -51,66 +54,57 @@ export const AuctionBaseRow = ({
     nodeData.auctionQualified &&
     notQualifiedAuctionValidators;
 
-  const nodeIdentity = nodesIdentities.find(
-    (identity) => nodeData.identity && identity.identity === nodeData.identity
-  );
-  const nodeIdentityLink = nodeData.identity
-    ? urlBuilder.identityDetails(nodeData.identity)
-    : urlBuilder.nodeDetails(nodeData.bls);
-
   return (
-    <tr
-      className={classNames(className, {
-        q: nodeData.auctionQualified && !isDangerZone,
-        dz: isDangerZone,
-        nq: !nodeData.auctionQualified
-      })}
-    >
-      {showPosition && <td>{index ?? nodeData.auctionPosition}</td>}
+    <tr className={classNames(className)}>
       <td>
-        <NodeQualification node={nodeData} showDangerZone={false} />
-      </td>
-      <td>
-        <div className='d-flex align-items-center'>
-          {nodeIdentity && (
-            <NetworkLink to={nodeIdentityLink}>
-              <SharedIdentity.Avatar identity={nodeIdentity} />
-            </NetworkLink>
-          )}
-          <div className='d-flex flex-column'>
-            {nodeIdentity && (
-              <NetworkLink
-                to={nodeIdentityLink}
-                className='trim-wrapper trim-size-xl'
-              >
-                {nodeIdentity?.name && nodeIdentity.name.length > 70 ? (
-                  <Trim text={nodeIdentity?.name} />
-                ) : (
-                  <>{nodeIdentity?.name ?? 'N/A'}</>
-                )}
-              </NetworkLink>
-            )}
-            {nodeData.name ? (
-              <div className='truncate-item-lg text-neutral-400'>
-                {nodeData.name}
-              </div>
-            ) : (
-              <span className='text-neutral-400'>N/A</span>
-            )}
-          </div>
-        </div>
-      </td>
-      <td>
-        <div className='d-flex align-items-center gap-1 hash'>
-          <NodeFullHistoryIcon node={nodeData} />
+        <div className='d-flex align-items-center gap-1 hash hash-lg'>
+          {showPosition && <td>{index ?? nodeData.auctionPosition}</td>}
+          <NodeOnlineIcon node={nodeData} className='mx-2' />
+          <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)}>
+            <SharedIdentity.Avatar
+              identity={nodeData.identityInfo}
+              className='identity-avatar-md me-1'
+              showTooltip
+            />
+          </NetworkLink>
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}
             className='trim-wrapper'
           >
             <Trim text={nodeData.bls} />
           </NetworkLink>
+          <NodeChangingShardIcon node={nodeData} />
+          <NodeFullHistoryIcon node={nodeData} small={true} />
           <NodeIssueIcon node={nodeData} />
         </div>
+      </td>
+      <td>
+        {nodeData.name ? (
+          <div className='truncate-item-lg'>{nodeData.name}</div>
+        ) : (
+          <span className='text-neutral-400'>N/A</span>
+        )}
+      </td>
+      <td>
+        <div className='d-flex'>
+          {nodeData.shard !== undefined ? (
+            <NetworkLink
+              to={urlBuilder.shard(nodeData.shard)}
+              data-testid={`shardLink${index}`}
+            >
+              <ShardSpan shard={nodeData.shard} />
+            </NetworkLink>
+          ) : (
+            <span className='text-neutral-400'>N/A</span>
+          )}
+        </div>
+      </td>
+      <td>
+        {nodeData.version ? (
+          nodeData.version
+        ) : (
+          <span className='text-neutral-400'>N/A</span>
+        )}
       </td>
       <td>
         {nodeData.auctionQualified ? (
@@ -127,10 +121,10 @@ export const AuctionBaseRow = ({
         )}
       </td>
       <td>
-        <NodeThreshold node={nodeData} />
+        <NodeThreshold qualifiedStake={nodeData.qualifiedStake} />
       </td>
       <td>
-        <NodeDangerZoneTooltip node={nodeData} />
+        <NodeQualification node={nodeData} showDangerZone={false} />
       </td>
     </tr>
   );

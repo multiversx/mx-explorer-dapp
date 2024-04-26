@@ -20,7 +20,7 @@ export const AuctionRow = ({
   const { sort, order } = useGetSort();
   const isSortDesc =
     (sort === 'auctionPosition' && order === SortOrderEnum.desc) ||
-    (sort === 'locked' && order === SortOrderEnum.asc);
+    (sort === 'locked' && order === SortOrderEnum.asc); // TODO: replace locked with qualifiedStake
 
   return (
     <>

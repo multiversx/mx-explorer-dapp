@@ -24,7 +24,7 @@ export const AuctionListRow = ({
   expandRowConfig
 }: AuctionListRowUIType) => {
   const { sort, order } = useGetSort();
-  const isSortDesc = sort === 'qualifiedStake' && order === SortOrderEnum.desc;
+  const isSortDesc = sort === 'locked' && order === SortOrderEnum.desc; // TODO: replace locked with qualifiedStake
 
   const hasExpand = Boolean(
     expandRowConfig?.qualifiedExpandPosition ||

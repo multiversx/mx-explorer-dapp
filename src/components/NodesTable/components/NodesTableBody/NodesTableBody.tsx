@@ -53,8 +53,7 @@ export const NodesTableBody = ({
   const { sort, order } = useGetSort();
   const { status: nodeStatus, ...nodeFilters } = useGetNodeFilters();
 
-  const isAuctionSortDesc =
-    sort === 'qualifiedStake' && order === SortOrderEnum.desc;
+  const isAuctionSortDesc = sort === 'locked' && order === SortOrderEnum.desc; // TODO: replace locked with qualifiedStake
   const hasNoFilters = [search, ...Object.keys(nodeFilters)].every(
     (el) => el === undefined
   );

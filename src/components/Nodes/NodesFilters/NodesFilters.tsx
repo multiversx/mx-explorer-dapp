@@ -61,8 +61,8 @@ export const NodesFilters = ({
       nextUrlParams.order = SortOrderEnum.asc;
     }
     if (statusValue === NodeStatusEnum.auction) {
-      nextUrlParams.sort = 'qualifiedStake';
-      nextUrlParams.order = SortOrderEnum.asc;
+      nextUrlParams.sort = 'locked'; // TODO: replace locked with qualifiedStake
+      nextUrlParams.order = SortOrderEnum.desc;
     }
     setSearchParams(nextUrlParams);
   };

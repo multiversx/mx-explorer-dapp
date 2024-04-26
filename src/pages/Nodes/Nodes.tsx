@@ -20,7 +20,7 @@ import {
 } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
-import { NodeType } from 'types';
+import { NodeStatusEnum, NodeType } from 'types';
 
 export const Nodes = () => {
   const ref = useRef(null);
@@ -94,11 +94,13 @@ export const Nodes = () => {
             <NodesTable
               type={type as NodeType['type']}
               status={status as NodeType['status']}
+              auctionList={status === NodeStatusEnum.auction}
             >
               <NodesTable.Body
                 nodes={nodes}
                 type={type as NodeType['type']}
                 status={status as NodeType['status']}
+                auctionList={status === NodeStatusEnum.auction}
               />
             </NodesTable>
           </div>
