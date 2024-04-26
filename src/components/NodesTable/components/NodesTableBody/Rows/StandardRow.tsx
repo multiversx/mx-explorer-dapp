@@ -11,7 +11,8 @@ import {
   NodeFullHistoryIcon,
   NodeLockedStakeTooltip,
   NodeQualification,
-  NodeOnlineIcon
+  NodeOnlineIcon,
+  SharedIdentity
 } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
 import { NodeType } from 'types';
@@ -43,8 +44,15 @@ export const StandardRow = ({
         </td>
       )}
       <td>
-        <div className='d-flex align-items-center gap-1 hash'>
-          <NodeOnlineIcon node={nodeData} />
+        <div className='d-flex align-items-center gap-1 hash hash-lg'>
+          <NodeOnlineIcon node={nodeData} className='mx-2' />
+          <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)}>
+            <SharedIdentity.Avatar
+              identity={nodeData.identityInfo}
+              className='identity-avatar-md me-1'
+              showTooltip
+            />
+          </NetworkLink>
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}
             className='trim-wrapper'

@@ -81,6 +81,7 @@ export interface GetNodesType extends SortableApiType {
   isQualified?: boolean;
   isAuctioned?: boolean;
   isAuctionDangerZone?: boolean;
+  withIdentityInfo?: boolean;
 }
 
 export interface GetIdentitiesType extends SortableApiType {

@@ -32,7 +32,7 @@ export interface NodeType {
   validatorIgnoredSignatures?: number;
   position?: number;
   fullHistory?: boolean;
-
+  identityInfo?: IdentityType;
   auctionPosition?: number;
   auctionTopUp?: string;
   qualifiedStake?: string;

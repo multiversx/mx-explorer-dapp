@@ -86,7 +86,8 @@ export const ProvidersTable = ({
                 <div className='d-flex align-items-center hash hash-lg gap-2'>
                   {showIdentity && (
                     <SharedIdentity.Avatar
-                      identity={provider.identityInfo || {}}
+                      identity={provider.identityInfo}
+                      className='me-2'
                     />
                   )}
                   <NetworkLink

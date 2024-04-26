@@ -1,24 +1,32 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 
 import { Led, Overlay } from 'components';
 import { faClose } from 'icons/regular';
-import { NodeType } from 'types';
+import { NodeType, WithClassnameType } from 'types';
 
-export const NodeOnlineIcon = ({ node }: { node: NodeType }) => {
+export interface NodeOnlineIconUIType extends WithClassnameType {
+  node: NodeType;
+}
+
+export const NodeOnlineIcon = ({ node, className }: NodeOnlineIconUIType) => {
   const { online, syncProgress } = node;
 
   if (online && !syncProgress) {
     return (
       <Overlay title='Online'>
-        <Led color='bg-success' />
+        <Led color={classNames('bg-success', className)} />
       </Overlay>
     );
   }
   if (!online && !syncProgress) {
     return (
       <Overlay title='Offline'>
-        <FontAwesomeIcon icon={faClose} className='text-red-400' />
+        <FontAwesomeIcon
+          icon={faClose}
+          className={classNames('text-red-400', className)}
+        />
       </Overlay>
     );
   }
@@ -26,7 +34,7 @@ export const NodeOnlineIcon = ({ node }: { node: NodeType }) => {
   if (syncProgress && new BigNumber(syncProgress).isGreaterThan(0)) {
     return (
       <Overlay title='Syncing'>
-        <Led color='bg-primary' />
+        <Led color={classNames('bg-primary', className)} />
       </Overlay>
     );
   }

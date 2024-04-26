@@ -41,7 +41,14 @@ export const Nodes = () => {
   const fetchNodes = () => {
     setDataReady(undefined);
     Promise.all([
-      getNodes({ ...nodeFilters, ...sort, search, page, size }),
+      getNodes({
+        ...nodeFilters,
+        ...sort,
+        search,
+        page,
+        size,
+        withIdentityInfo: true
+      }),
       getNodesCount({ ...nodeFilters, ...sort, search })
     ]).then(([nodesData, count]) => {
       setNodes(nodesData.data);

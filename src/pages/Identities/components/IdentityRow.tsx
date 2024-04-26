@@ -74,7 +74,7 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
         <td>
           <div className='d-flex align-items-center'>
             <NetworkLink to={link}>
-              <SharedIdentity.Avatar identity={identity} />
+              <SharedIdentity.Avatar identity={identity} className='me-2' />
             </NetworkLink>
             {identity.name && identity.name.length > 70 ? (
               <NetworkLink to={link} className='trim-wrapper trim-size-xl'>
