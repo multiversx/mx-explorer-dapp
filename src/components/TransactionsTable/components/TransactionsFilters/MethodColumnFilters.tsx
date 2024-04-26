@@ -67,7 +67,7 @@ export const MethodColumnFilters = ({
     >
       <div
         className='d-inline-block side-action cursor-pointer'
-        data-testid='StatusFilterButton'
+        data-testid='methodColumnFilter'
       >
         <FontAwesomeIcon
           icon={method !== undefined ? faFilterSolid : faFilter}

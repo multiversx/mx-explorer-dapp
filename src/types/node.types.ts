@@ -4,7 +4,7 @@ export interface NodeType {
   bls: string;
   name: string;
   type: NodeTypeEnum;
-  status?: NodeStatusEnum;
+  status?: NodeApiStatusEnum;
   online: boolean;
   rating: number;
   tempRating: number;
@@ -60,6 +60,19 @@ export enum NodeStatusEnum {
   inactive = 'inactive',
   auction = 'auction'
 }
+
+export enum NodeStatusRawEnum {
+  staked = 'staked',
+  unStaked = 'unStaked',
+  notStaked = 'notStaked'
+}
+
+const NodeApiStatusEnum = {
+  ...NodeStatusEnum,
+  ...NodeStatusRawEnum
+};
+
+export type NodeApiStatusEnum = NodeStatusEnum | NodeStatusRawEnum;
 
 export interface IdentityType {
   name: string;

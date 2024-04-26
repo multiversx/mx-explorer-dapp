@@ -1,7 +1,7 @@
 import {
   NetworkLink,
   Trim,
-  NodeStatus,
+  NodeOnlineState,
   NodeStatusIcon,
   NodeIssueIcon
 } from 'components';
@@ -47,7 +47,7 @@ export const QueueRow = ({ nodeData }: { nodeData: NodeType }) => {
         )}
       </td>
       <td>
-        <NodeStatus node={nodeData} className='align-items-end' />
+        <NodeOnlineState node={nodeData} className='align-items-end' />
       </td>
     </tr>
   );

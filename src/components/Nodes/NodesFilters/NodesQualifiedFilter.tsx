@@ -12,7 +12,7 @@ enum DropdownKeyEnum {
   dangerZone = 'dangerZone'
 }
 
-export const QualifiedFilter = ({ text }: { text: React.ReactNode }) => {
+export const NodesQualifiedFilter = ({ text }: { text: React.ReactNode }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { isAuctionDangerZone, isQualified } = Object.fromEntries(searchParams);
 

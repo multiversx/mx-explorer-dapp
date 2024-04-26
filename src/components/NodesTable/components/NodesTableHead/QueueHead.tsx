@@ -1,4 +1,4 @@
-import { Sort, StatusFilter } from 'components';
+import { Sort, NodesGeneralFilter } from 'components';
 
 export const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
   return (
@@ -14,7 +14,7 @@ export const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
         <Sort id='version' text='Version' />
       </th>
       <th className='text-end' data-testid='status'>
-        {hideFilters ? 'Status' : <StatusFilter text='Status' />}
+        {hideFilters ? 'Status' : <NodesGeneralFilter text='Status' />}
       </th>
     </tr>
   );

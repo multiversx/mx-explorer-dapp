@@ -39,7 +39,7 @@ export const AgeColumnFilters = ({
     >
       <div
         className='d-inline-block side-action cursor-pointer'
-        data-testid='StatusFilterButton'
+        data-testid='ageColumnFilter'
       >
         <FontAwesomeIcon
           icon={

@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
 
-export const StatusFilter = ({ text }: { text: React.ReactNode }) => {
+export const NodesGeneralFilter = ({ text }: { text: React.ReactNode }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { online, page, size, ...rest } = Object.fromEntries(searchParams);
 

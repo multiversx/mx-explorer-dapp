@@ -1,4 +1,4 @@
-import { DetailItem, NodeStatus } from 'components';
+import { DetailItem, NodeOnlineState } from 'components';
 import { NodeType } from 'types';
 
 // import { PercentageBar } from './components/PercentageBar';
@@ -36,7 +36,7 @@ export const NetworkMetrics = ({ node }: { node: NodeType }) => {
           </DetailItem> */}
 
         <DetailItem title='Status' colWidth='3'>
-          <NodeStatus node={node} />
+          <NodeOnlineState node={node} />
         </DetailItem>
       </div>
     </div>

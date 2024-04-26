@@ -1,4 +1,10 @@
-import { Sort, QualifiedFilter, ShardFilter, StatusFilter } from 'components';
+import {
+  Sort,
+  ShardFilter,
+  NodesGeneralFilter,
+  NodesQualifiedFilter,
+  NodesStatusFilter
+} from 'components';
 import { NodeType } from 'types';
 
 export interface StandardHeadUIType {
@@ -11,8 +17,7 @@ export interface StandardHeadUIType {
 export const StandardHead = ({
   type,
   status,
-  hideFilters,
-  showPosition
+  hideFilters
 }: StandardHeadUIType) => (
   <tr>
     {status === 'queued' && (
@@ -20,10 +25,9 @@ export const StandardHead = ({
         {hideFilters ? 'Position' : <Sort id='position' text='Position' />}
       </th>
     )}
-    {status === 'auction' && showPosition && (
-      <th data-testid='auctionPosition'>#</th>
-    )}
-    <th data-testid='node'>Public Key</th>
+    <th data-testid='node'>
+      {hideFilters ? 'Public Key' : <NodesGeneralFilter text='Public Key' />}
+    </th>
     <th data-testid='name'>
       {hideFilters ? 'Name' : <Sort id='name' text='Name' />}
     </th>
@@ -34,11 +38,7 @@ export const StandardHead = ({
       {hideFilters ? 'Version' : <Sort id='version' text='Version' />}
     </th>
     {status !== 'auction' && (
-      <th
-        className='text-end'
-        data-testid='validatorIgnoredSignatures'
-        style={{ maxWidth: '8rem' }}
-      >
+      <th data-testid='validatorIgnoredSignatures' style={{ maxWidth: '8rem' }}>
         {hideFilters ? (
           'X Sign.'
         ) : (
@@ -46,16 +46,16 @@ export const StandardHead = ({
         )}
       </th>
     )}
-    <th className='text-end' data-testid='status'>
-      {hideFilters ? 'Status' : <StatusFilter text='Status' />}
+    <th data-testid='status'>
+      {hideFilters ? 'Status' : <NodesStatusFilter text='Status' />}
     </th>
     {status === 'auction' && (
-      <th className='text-end' data-testid='qualified'>
-        {hideFilters ? 'Qualified' : <QualifiedFilter text='Qualified' />}
+      <th data-testid='qualified'>
+        {hideFilters ? 'Qualified' : <NodesQualifiedFilter text='Qualified' />}
       </th>
     )}
     {(type === 'validator' || status === 'auction') && (
-      <th className='text-end' data-testid='lockedStake'>
+      <th data-testid='lockedStake'>
         {hideFilters ? (
           'Locked Stake'
         ) : (
@@ -63,7 +63,7 @@ export const StandardHead = ({
         )}
       </th>
     )}
-    <th className='text-end' data-testid='tempRating'>
+    <th data-testid='tempRating'>
       {hideFilters ? 'Rating' : <Sort id='tempRating' text='Rating' />}
     </th>
     <th className='text-end' data-testid='nonce'>

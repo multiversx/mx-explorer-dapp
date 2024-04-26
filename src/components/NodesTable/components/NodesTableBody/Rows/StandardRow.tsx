@@ -60,9 +60,6 @@ export const StandardRow = ({
           )}
         </td>
       )}
-      {status === 'auction' && showPosition && (
-        <td>{index ?? nodeData.auctionPosition}</td>
-      )}
       <td>
         <div className='d-flex align-items-center gap-1 hash'>
           <NodeStatusIcon node={nodeData} />
@@ -105,7 +102,7 @@ export const StandardRow = ({
         )}
       </td>
       {status !== 'auction' && (
-        <td className='text-end' style={{ maxWidth: '8rem' }}>
+        <td style={{ maxWidth: '8rem' }}>
           {nodeData.validatorIgnoredSignatures ? (
             nodeData.validatorIgnoredSignatures.toLocaleString('en')
           ) : (
@@ -114,10 +111,10 @@ export const StandardRow = ({
         </td>
       )}
       <td>
-        <NodeStatus node={nodeData} className='align-items-end' />
+        <NodeStatus node={nodeData} />
       </td>
       {status === 'auction' && (
-        <td className='text-end'>
+        <td>
           <NodeQualification
             node={nodeData}
             showDangerZone={true}
@@ -126,7 +123,7 @@ export const StandardRow = ({
         </td>
       )}
       {(type === 'validator' || status === 'auction') && nodeData.locked && (
-        <td className='text-end'>
+        <td>
           {status !== 'auction' || nodeData.auctionQualified ? (
             <Overlay
               title={
@@ -145,8 +142,8 @@ export const StandardRow = ({
           )}
         </td>
       )}
-      <td className='text-end'>
-        <NodeRating node={nodeData} className='justify-content-end' />
+      <td>
+        <NodeRating node={nodeData} />
       </td>
       <td className='text-end'>
         {nodeData.nonce ? (
