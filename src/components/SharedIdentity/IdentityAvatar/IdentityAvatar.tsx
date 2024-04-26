@@ -4,8 +4,15 @@ import { PLACEHOLDER_IMAGE_PATH } from 'appConstants';
 import { ImageWithFallback, Overlay } from 'components';
 import { IdentityType, WithClassnameType } from 'types';
 
+interface BaseIdentityType {
+  name: string;
+  avatar?: string;
+  identity?: string;
+  description?: string;
+}
+
 export interface IdentityAvatarUIType extends WithClassnameType {
-  identity?: IdentityType;
+  identity?: BaseIdentityType;
   showTooltip?: boolean;
 }
 
@@ -37,6 +44,7 @@ export const IdentityAvatar = ({
       </Overlay>
     );
   }
+
   return (
     <ImageWithFallback
       className={classNames(

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS } from 'appConstants';
-import { getStringPlural } from 'helpers';
+import { formatBigNumber, getStringPlural } from 'helpers';
 import { useGetSearch } from 'hooks';
 import { faSearch, faTimes } from 'icons/regular';
 import { WithClassnameType } from 'types';
@@ -49,7 +49,9 @@ export const TableSearch = ({
     const placeholderAddonText = search
       ? ''
       : `${
-          searchValue && searchValue !== ELLIPSIS ? `${searchValue} ` : ''
+          searchValue && searchValue !== ELLIPSIS
+            ? `${formatBigNumber({ value: searchValue })} `
+            : ''
         }${searchPlaceholder}`;
 
     setPlaceholderAddonText(placeholderAddonText);

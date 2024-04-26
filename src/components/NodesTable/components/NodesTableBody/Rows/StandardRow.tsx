@@ -92,15 +92,7 @@ export const StandardRow = ({
           <span className='text-neutral-400'>N/A</span>
         )}
       </td>
-      {status !== 'auction' && (
-        <td style={{ maxWidth: '8rem' }}>
-          {nodeData.validatorIgnoredSignatures ? (
-            formatBigNumber({ value: nodeData.validatorIgnoredSignatures })
-          ) : (
-            <span className='text-neutral-400'>N/A</span>
-          )}
-        </td>
-      )}
+
       <td>
         <NodeStatus node={nodeData} />
       </td>
@@ -123,6 +115,7 @@ export const StandardRow = ({
                   showAuctionTopup={status === 'auction'}
                 />
               }
+              className='text-neutral-100'
               tooltipClassName='tooltip-text-start tooltip-lg'
               truncate
             >
@@ -130,6 +123,15 @@ export const StandardRow = ({
             </Overlay>
           ) : (
             <FormatAmount value={nodeData.locked} />
+          )}
+        </td>
+      )}
+      {status !== 'auction' && (
+        <td style={{ maxWidth: '8rem' }}>
+          {nodeData.validatorIgnoredSignatures ? (
+            formatBigNumber({ value: nodeData.validatorIgnoredSignatures })
+          ) : (
+            <span className='text-neutral-400'>N/A</span>
           )}
         </td>
       )}

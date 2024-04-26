@@ -38,18 +38,6 @@ export const StandardHead = ({
     <th data-testid='version'>
       {hideFilters ? 'Version' : <Sort id='version' text='Version' />}
     </th>
-    {status !== 'auction' && (
-      <th data-testid='validatorIgnoredSignatures' style={{ maxWidth: '8rem' }}>
-        {hideFilters ? (
-          <Overlay title='Ignored Signatures'>X Sign.</Overlay>
-        ) : (
-          <Sort
-            id='validatorIgnoredSignatures'
-            text={<Overlay title='Ignored Signatures'>X Sign.</Overlay>}
-          />
-        )}
-      </th>
-    )}
     <th data-testid='status'>
       {hideFilters ? 'Status' : <NodesStatusFilter text='Status' />}
     </th>
@@ -64,6 +52,18 @@ export const StandardHead = ({
           'Locked Stake'
         ) : (
           <Sort id='locked' text='Locked Stake' />
+        )}
+      </th>
+    )}
+    {status !== 'auction' && (
+      <th data-testid='validatorIgnoredSignatures' style={{ maxWidth: '8rem' }}>
+        {hideFilters ? (
+          <Overlay title='Ignored Signatures'>X Sign.</Overlay>
+        ) : (
+          <Sort
+            id='validatorIgnoredSignatures'
+            text={<Overlay title='Ignored Signatures'>X Sign.</Overlay>}
+          />
         )}
       </th>
     )}
