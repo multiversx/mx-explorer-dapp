@@ -71,7 +71,10 @@ export const AuctionListBaseRow = ({
       <td>
         <div className='d-flex align-items-center'>
           <NetworkLink to={identityLink}>
-            <SharedIdentity.Avatar identity={{ identity, name, avatar }} />
+            <SharedIdentity.Avatar
+              identity={{ identity, name, avatar }}
+              className='identity-avatar-md me-2'
+            />
           </NetworkLink>
           <div className='d-flex flex-column'>
             {identityLink && (

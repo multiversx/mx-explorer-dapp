@@ -1,4 +1,4 @@
-import { Sort } from 'components';
+import { Sort, Overlay } from 'components';
 
 export const StatisticsHead = () => {
   return (
@@ -21,7 +21,10 @@ export const StatisticsHead = () => {
         <Sort id='validatorFailure' text='Validator Failure' />
       </th>
       <th data-testid='validatorIgnoredSignatures'>
-        <Sort id='validatorIgnoredSignatures' text='X Sign.' />
+        <Sort
+          id='validatorIgnoredSignatures'
+          text={<Overlay title='Ignored Signatures'>X Sign.</Overlay>}
+        />
       </th>
       <th data-testid='tempRating'>
         <Sort id='tempRating' text='Temp Rating' />

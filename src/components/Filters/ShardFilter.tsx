@@ -51,6 +51,9 @@ export const ShardFilter = ({ text }: { text: React.ReactNode }) => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
+          <Dropdown.Item as={Anchor} eventKey=''>
+            All
+          </Dropdown.Item>
           {shards.map((entry, i) => {
             return (
               <Dropdown.Item
@@ -65,9 +68,6 @@ export const ShardFilter = ({ text }: { text: React.ReactNode }) => {
               </Dropdown.Item>
             );
           })}
-          <Dropdown.Item as={Anchor} eventKey=''>
-            Show All
-          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </div>
