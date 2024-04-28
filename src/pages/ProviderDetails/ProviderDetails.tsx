@@ -66,14 +66,12 @@ export const ProviderDetails = () => {
           <NodesHeader searchValue={totalNodes} />
           <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
             <NodesFilters />
-            {dataReady === true && (
-              <Pager
-                total={totalNodes}
-                className='d-flex ms-auto me-auto me-sm-0'
-                showFirstAndLast={false}
-                show
-              />
-            )}
+            <Pager
+              total={totalNodes}
+              className='d-flex ms-auto me-auto me-sm-0'
+              showFirstAndLast={false}
+              show
+            />
           </div>
         </div>
       </div>
