@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS } from 'appConstants';
@@ -23,7 +23,6 @@ import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { NodeStatusEnum, NodeType } from 'types';
 
 export const Nodes = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { getNodes, getNodesCount } = useAdapter();
   const { search } = useGetSearch();
@@ -36,7 +35,7 @@ export const Nodes = () => {
   );
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
-  const { type, status } = Object.fromEntries(searchParams);
+  const { type, status, isAuctioned } = Object.fromEntries(searchParams);
 
   const fetchNodes = () => {
     setDataReady(undefined);
@@ -54,16 +53,14 @@ export const Nodes = () => {
       setNodes(nodesData.data);
       setTotalNodes(count.data);
 
-      if (ref.current !== null) {
-        setDataReady(nodesData.success && count.success);
-      }
+      setDataReady(nodesData.success && count.success);
     });
   };
 
   useEffect(fetchNodes, [searchParams]);
 
   return (
-    <div className='card position-unset' ref={ref}>
+    <div className='card position-unset'>
       <div className='card-header position-unset'>
         <NodesTabs />
 
@@ -94,13 +91,17 @@ export const Nodes = () => {
             <NodesTable
               type={type as NodeType['type']}
               status={status as NodeType['status']}
-              auctionList={status === NodeStatusEnum.auction}
+              auctionList={Boolean(
+                status === NodeStatusEnum.auction || isAuctioned
+              )}
             >
               <NodesTable.Body
                 nodes={nodes}
                 type={type as NodeType['type']}
                 status={status as NodeType['status']}
-                auctionList={status === NodeStatusEnum.auction}
+                auctionList={Boolean(
+                  status === NodeStatusEnum.auction || isAuctioned
+                )}
               />
             </NodesTable>
           </div>

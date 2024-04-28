@@ -24,16 +24,20 @@ export const LockedStakeTooltip = ({
           Staked: <FormatAmount value={stake} showTooltip={false} />
         </p>
       )}
-      {topUp !== undefined && (
-        <p className='mb-0'>
-          Top Up: <FormatAmount value={topUp} showTooltip={false} />
-        </p>
-      )}
-      {auctionTopUp !== undefined && showAuctionTopup && (
+
+      {showAuctionTopup && auctionTopUp !== undefined ? (
         <p className='mb-0'>
           Qualified Top Up:{' '}
           <FormatAmount value={auctionTopUp} showTooltip={false} />
         </p>
+      ) : (
+        <>
+          {topUp !== undefined && (
+            <p className='mb-0'>
+              Top Up: <FormatAmount value={topUp} showTooltip={false} />
+            </p>
+          )}
+        </>
       )}
     </div>
   );

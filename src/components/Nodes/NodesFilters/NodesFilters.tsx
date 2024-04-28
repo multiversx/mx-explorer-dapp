@@ -34,7 +34,7 @@ export const NodesFilters = ({
   } = useSelector(stakeSelector);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { search, status, issues, type, fullHistory } =
+  const { search, status, issues, type, fullHistory, isAuctioned } =
     Object.fromEntries(searchParams);
 
   const nodeStatusLink = (statusValue: string) => {
@@ -46,6 +46,7 @@ export const NodesFilters = ({
       page,
       sort,
       order,
+      isAuctioned,
       isAuctionDangerZone,
       isQualified,
       ...rest
@@ -60,7 +61,7 @@ export const NodesFilters = ({
       nextUrlParams.sort = 'position';
       nextUrlParams.order = SortOrderEnum.asc;
     }
-    if (statusValue === NodeStatusEnum.auction) {
+    if (statusValue === NodeStatusEnum.auction || isAuctioned) {
       nextUrlParams.sort = 'locked'; // TODO: replace locked with qualifiedStake
       nextUrlParams.order = SortOrderEnum.desc;
     }
@@ -94,9 +95,14 @@ export const NodesFilters = ({
   const queueDisplayBadge = queueCount ?? queueSize;
   const auctionDisplayBadge = auctionListCount ?? auctionValidators;
 
-  const isAllActive = [search, status, issues, type, fullHistory].every(
-    (el) => el === undefined
-  );
+  const isAllActive = [
+    search,
+    status,
+    issues,
+    type,
+    fullHistory,
+    isAuctioned
+  ].every((el) => el === undefined);
 
   return (
     <div className='d-flex flex-wrap align-items-center justify-content-between gap-3'>
@@ -141,27 +147,6 @@ export const NodesFilters = ({
             )}
           </button>
         </li>
-        <li className='list-inline-item me-0'>
-          <button
-            type='button'
-            onClick={() => {
-              nodeTypeLink(NodeTypeEnum.observer);
-            }}
-            data-testid='filterByObservers'
-            className={classNames(
-              'btn btn-tab d-flex align-items-center gap-1',
-              { active: type === NodeTypeEnum.observer }
-            )}
-          >
-            <FontAwesomeIcon icon={faEye} />
-            Observers
-            {observersDisplayBadge !== undefined && (
-              <span className='badge badge-sm'>
-                {formatBigNumber({ value: observersDisplayBadge })}
-              </span>
-            )}
-          </button>
-        </li>
         {auctionValidators !== undefined && (
           <li className='list-inline-item me-0'>
             <button
@@ -172,7 +157,7 @@ export const NodesFilters = ({
               data-testid='filterByValidators'
               className={classNames(
                 'btn btn-tab d-flex align-items-center gap-1',
-                { active: status === NodeStatusEnum.auction }
+                { active: status === NodeStatusEnum.auction || isAuctioned }
               )}
             >
               <FontAwesomeIcon icon={faGavel} />
@@ -207,6 +192,27 @@ export const NodesFilters = ({
             </button>
           </li>
         )}
+        <li className='list-inline-item me-0'>
+          <button
+            type='button'
+            onClick={() => {
+              nodeTypeLink(NodeTypeEnum.observer);
+            }}
+            data-testid='filterByObservers'
+            className={classNames(
+              'btn btn-tab d-flex align-items-center gap-1',
+              { active: type === NodeTypeEnum.observer }
+            )}
+          >
+            <FontAwesomeIcon icon={faEye} />
+            Observers
+            {observersDisplayBadge !== undefined && (
+              <span className='badge badge-sm'>
+                {formatBigNumber({ value: observersDisplayBadge })}
+              </span>
+            )}
+          </button>
+        </li>
       </ul>
     </div>
   );

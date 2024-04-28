@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IDENTITIES_FIELDS } from 'appConstants';
 import { processNodesIdentities } from 'helpers';
 import { useAdapter } from 'hooks';
-import { nodesIdentitiesSelector } from 'redux/selectors';
 import { setNodesIdentities } from 'redux/slices/nodesIdentities';
 
 let currentRequest: any = null;
@@ -12,7 +11,6 @@ let currentRequest: any = null;
 export const useFetchNodesIdentities = () => {
   const dispatch = useDispatch();
   const { getIdentities } = useAdapter();
-  const { nodesIdentities } = useSelector(nodesIdentitiesSelector);
 
   const getNodesIdentitiesOnce = () => {
     if (currentRequest) {

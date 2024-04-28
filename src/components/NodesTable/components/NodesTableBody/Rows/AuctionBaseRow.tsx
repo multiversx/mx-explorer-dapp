@@ -8,7 +8,6 @@ import {
   Trim,
   Overlay,
   FormatAmount,
-  NodeDangerZoneTooltip,
   NodeFullHistoryIcon,
   NodeIssueIcon,
   NodeLockedStakeTooltip,
@@ -19,7 +18,7 @@ import {
   NodeOnlineIcon
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { nodesIdentitiesSelector, stakeSelector } from 'redux/selectors';
+import { stakeSelector } from 'redux/selectors';
 import { NodeType, WithClassnameType } from 'types';
 
 export interface AuctionBaseRowUIType extends WithClassnameType {
@@ -34,10 +33,9 @@ export const AuctionBaseRow = ({
   showPosition,
   className
 }: AuctionBaseRowUIType) => {
-  const { nodesIdentities } = useSelector(nodesIdentitiesSelector);
   const {
     isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
+    unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
 
   if (!isStakeFetched || !minimumAuctionQualifiedStake) {
@@ -45,20 +43,18 @@ export const AuctionBaseRow = ({
   }
 
   const bNAuctionTopup = new BigNumber(nodeData.auctionTopUp ?? 0);
-  const bNLocked = new BigNumber(nodeData.stake).plus(
-    nodeData.auctionQualified ? bNAuctionTopup : 0
-  );
-
-  const isDangerZone =
-    nodeData.isInDangerZone &&
-    nodeData.auctionQualified &&
-    notQualifiedAuctionValidators;
+  const bNqualifiedStake =
+    nodeData.qualifiedStake !== undefined
+      ? new BigNumber(nodeData.qualifiedStake)
+      : new BigNumber(nodeData.stake).plus(
+          nodeData.auctionQualified ? bNAuctionTopup : 0
+        );
 
   return (
     <tr className={classNames(className)}>
       <td>
         <div className='d-flex align-items-center gap-1 hash hash-lg'>
-          {showPosition && <td>{index ?? nodeData.auctionPosition}</td>}
+          {showPosition && <span>{index ?? nodeData.auctionPosition}</span>}
           <NodeOnlineIcon node={nodeData} className='mx-2' />
           <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)}>
             <SharedIdentity.Avatar
@@ -106,7 +102,7 @@ export const AuctionBaseRow = ({
           <span className='text-neutral-400'>N/A</span>
         )}
       </td>
-      <td>
+      <td className='text-neutral-100'>
         {nodeData.auctionQualified ? (
           <Overlay
             title={<NodeLockedStakeTooltip node={nodeData} showAuctionTopup />}
@@ -114,14 +110,17 @@ export const AuctionBaseRow = ({
             persistent
             truncate
           >
-            <FormatAmount value={bNLocked.toString(10)} showTooltip={false} />
+            <FormatAmount
+              value={bNqualifiedStake.toString(10)}
+              showTooltip={false}
+            />
           </Overlay>
         ) : (
-          <FormatAmount value={bNLocked.toString(10)} />
+          <FormatAmount value={bNqualifiedStake.toString(10)} />
         )}
       </td>
       <td>
-        <NodeThreshold qualifiedStake={nodeData.qualifiedStake} />
+        <NodeThreshold qualifiedStake={bNqualifiedStake.toString(10)} />
       </td>
       <td>
         <NodeQualification node={nodeData} showDangerZone={false} />
