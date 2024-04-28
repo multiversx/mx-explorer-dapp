@@ -16,7 +16,7 @@ import {
   useGetSort
 } from 'hooks';
 import { faCity, faCode } from 'icons/regular';
-import { IdentityType, NodeType, ProviderType } from 'types';
+import { IdentityType, NodeStatusEnum, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {
   const { hash: id } = useParams() as any;
@@ -27,7 +27,7 @@ export const IdentityDetails = () => {
   const { page, size } = useGetPage();
   const { sort, order } = useGetSort();
   const { search } = useGetSearch();
-  const { type, status } = nodeFilters;
+  const { type, status, isAuctioned } = nodeFilters;
 
   const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
   const [identity, setIdentity] = useState<IdentityType>();
@@ -142,27 +142,28 @@ export const IdentityDetails = () => {
                     <NodesHeader searchValue={totalNodes} />
                     <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
                       <NodesFilters />
-                      {dataReady === true && (
-                        <Pager
-                          total={totalNodes}
-                          className='d-flex ms-auto me-auto me-sm-0'
-                          showFirstAndLast={false}
-                          show={nodes.length > 0}
-                        />
-                      )}
+                      <Pager
+                        total={totalNodes}
+                        className='d-flex ms-auto me-auto me-sm-0'
+                        showFirstAndLast={false}
+                        show
+                      />
                     </div>
                   </div>
                 </div>
-
                 <div className='card-body'>
                   <NodesTable
                     type={type as NodeType['type']}
                     status={status as NodeType['status']}
+                    auctionList={Boolean(isAuctioned)}
+                    queue={status === NodeStatusEnum.queued}
                   >
                     <NodesTable.Body
                       nodes={nodes}
                       type={type as NodeType['type']}
                       status={status as NodeType['status']}
+                      auctionList={Boolean(isAuctioned)}
+                      queue={status === NodeStatusEnum.queued}
                     />
                   </NodesTable>
                 </div>

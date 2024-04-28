@@ -19,7 +19,7 @@ import {
 } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { ProviderTabs } from 'layouts/ProviderLayout/ProviderTabs';
-import { NodeType } from 'types';
+import { NodeStatusEnum, NodeType } from 'types';
 
 export const ProviderDetails = () => {
   const { hash: address } = useParams() as any;
@@ -33,7 +33,7 @@ export const ProviderDetails = () => {
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
 
-  const { type, status } = nodeFilters;
+  const { type, status, isAuctioned } = nodeFilters;
 
   const fetchNodes = () => {
     setDataReady(undefined);
@@ -71,7 +71,7 @@ export const ProviderDetails = () => {
                 total={totalNodes}
                 className='d-flex ms-auto me-auto me-sm-0'
                 showFirstAndLast={false}
-                show={nodes.length > 0}
+                show
               />
             )}
           </div>
@@ -87,11 +87,15 @@ export const ProviderDetails = () => {
             <NodesTable
               type={type as NodeType['type']}
               status={status as NodeType['status']}
+              auctionList={Boolean(isAuctioned)}
+              queue={status === NodeStatusEnum.queued}
             >
               <NodesTable.Body
                 nodes={nodes}
                 type={type as NodeType['type']}
                 status={status as NodeType['status']}
+                auctionList={Boolean(isAuctioned)}
+                queue={status === NodeStatusEnum.queued}
               />
             </NodesTable>
           </div>
