@@ -43,17 +43,17 @@ export const StandardRow = ({
 
   return (
     <tr>
-      {status === NodeStatusEnum.queued && (
-        <td>
-          {nodeData.position ? (
-            <div>{nodeData.position}</div>
-          ) : (
-            <span className='text-neutral-400'>N/A</span>
-          )}
-        </td>
-      )}
       <td>
         <div className='d-flex align-items-center gap-1 hash hash-lg'>
+          {status === NodeStatusEnum.queued && (
+            <>
+              {nodeData.position ? (
+                nodeData.position
+              ) : (
+                <span className='text-neutral-400'>N/A</span>
+              )}
+            </>
+          )}
           <NodeOnlineIcon node={nodeData} className='ms-1 me-2' />
           <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)}>
             <SharedIdentity.Avatar

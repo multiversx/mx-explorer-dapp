@@ -5,7 +5,7 @@ import { PageState } from 'components';
 import { useGetNodeFilters, useGetSearch, useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
-import { NodeType, SortOrderEnum } from 'types';
+import { NodeStatusEnum, NodeType, NodeTypeEnum, SortOrderEnum } from 'types';
 
 import { AuctionRow } from './Rows/AuctionRow';
 import { QueueRow } from './Rows/QueueRow';
@@ -76,11 +76,14 @@ export const NodesTableBody = ({
   if (queue) {
     colSpan = 5;
   }
-  if (status === 'auction') {
-    colSpan = showPosition ? 10 : 9;
+  if (status === NodeStatusEnum.auction) {
+    colSpan = 9;
   }
   if (auctionList) {
-    colSpan = showPosition ? 7 : 6;
+    colSpan = 7;
+  }
+  if (type === NodeTypeEnum.observer) {
+    colSpan = 5;
   }
 
   return (
@@ -123,7 +126,13 @@ export const NodesTableBody = ({
       {nodes.length === 0 && (
         <tr>
           <td colSpan={colSpan}>
-            <PageState icon={faCogs} title='No Nodes' isError />
+            <PageState
+              icon={faCogs}
+              title={`No ${
+                type === NodeTypeEnum.observer ? 'Observers' : 'Nodes'
+              }`}
+              isError
+            />
           </td>
         </tr>
       )}

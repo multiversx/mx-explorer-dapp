@@ -9,6 +9,8 @@ import { stakeSelector } from 'redux/selectors';
 import { SortOrderEnum, NodeStatusEnum, NodeTypeEnum } from 'types';
 
 export interface NodesFiltersUIType {
+  showGlobalValues?: boolean;
+  showObservers?: boolean;
   allCount?: string | number;
   validatorCount?: string | number;
   observerCount?: string | number;
@@ -17,6 +19,8 @@ export interface NodesFiltersUIType {
 }
 
 export const NodesFilters = ({
+  showObservers,
+  showGlobalValues,
   allCount,
   validatorCount,
   observerCount,
@@ -34,24 +38,21 @@ export const NodesFilters = ({
   } = useSelector(stakeSelector);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { search, status, issues, type, fullHistory, isAuctioned } =
-    Object.fromEntries(searchParams);
+  const {
+    status,
+    type,
+    issues,
+    fullHistory,
+    page,
+    sort,
+    order,
+    isAuctioned,
+    isAuctionDangerZone,
+    isQualified,
+    ...rest
+  } = Object.fromEntries(searchParams);
 
   const nodeStatusLink = (statusValue: string) => {
-    const {
-      status,
-      type,
-      issues,
-      fullHistory,
-      page,
-      sort,
-      order,
-      isAuctioned,
-      isAuctionDangerZone,
-      isQualified,
-      ...rest
-    } = Object.fromEntries(searchParams);
-
     const nextUrlParams: { [k: string]: string } = {
       ...rest,
       ...(statusValue ? { status: statusValue } : {})
@@ -69,20 +70,6 @@ export const NodesFilters = ({
   };
 
   const nodeAuctionLink = (auction: boolean) => {
-    const {
-      status,
-      type,
-      issues,
-      fullHistory,
-      page,
-      sort,
-      order,
-      isAuctioned,
-      isAuctionDangerZone,
-      isQualified,
-      ...rest
-    } = Object.fromEntries(searchParams);
-
     const nextUrlParams: { [k: string]: string } = {
       ...rest,
       ...(auction ? { isAuctioned: String(auction) } : {})
@@ -95,19 +82,6 @@ export const NodesFilters = ({
   };
 
   const nodeTypeLink = (typeValue: string) => {
-    const {
-      type,
-      status,
-      issues,
-      fullHistory,
-      page,
-      sort,
-      order,
-      isAuctioned,
-      isAuctionDangerZone,
-      isQualified,
-      ...rest
-    } = Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
       ...(typeValue ? { type: typeValue } : {})
@@ -116,11 +90,16 @@ export const NodesFilters = ({
     setSearchParams(nextUrlParams);
   };
 
-  const allDisplayBadge = allCount ?? totalNodes;
-  const validatorDisplayBadge = validatorCount ?? totalValidatorNodes;
-  const observersDisplayBadge = observerCount ?? totalObservers;
-  const queueDisplayBadge = queueCount ?? queueSize;
-  const auctionDisplayBadge = auctionListCount ?? auctionValidators;
+  const allDisplayBadge =
+    allCount ?? (showGlobalValues ? totalNodes : undefined);
+  const validatorDisplayBadge =
+    validatorCount ?? (showGlobalValues ? totalValidatorNodes : undefined);
+  const observersDisplayBadge =
+    observerCount ?? (showGlobalValues ? totalObservers : undefined);
+  const queueDisplayBadge =
+    queueCount ?? (showGlobalValues ? queueSize : undefined);
+  const auctionDisplayBadge =
+    auctionListCount ?? (showGlobalValues ? auctionValidators : undefined);
 
   const isAllActive =
     [type, isAuctioned].every((el) => el === undefined) &&
@@ -221,27 +200,29 @@ export const NodesFilters = ({
             </button>
           </li>
         )}
-        <li className='list-inline-item me-0'>
-          <button
-            type='button'
-            onClick={() => {
-              nodeTypeLink(NodeTypeEnum.observer);
-            }}
-            data-testid='filterByObservers'
-            className={classNames(
-              'btn btn-tab d-flex align-items-center gap-1',
-              { active: type === NodeTypeEnum.observer && !isAuctioned }
-            )}
-          >
-            <FontAwesomeIcon icon={faEye} />
-            Observers
-            {observersDisplayBadge !== undefined && (
-              <span className='badge badge-sm'>
-                {formatBigNumber({ value: observersDisplayBadge })}
-              </span>
-            )}
-          </button>
-        </li>
+        {showObservers && (
+          <li className='list-inline-item me-0'>
+            <button
+              type='button'
+              onClick={() => {
+                nodeTypeLink(NodeTypeEnum.observer);
+              }}
+              data-testid='filterByObservers'
+              className={classNames(
+                'btn btn-tab d-flex align-items-center gap-1',
+                { active: type === NodeTypeEnum.observer && !isAuctioned }
+              )}
+            >
+              <FontAwesomeIcon icon={faEye} />
+              Observers
+              {observersDisplayBadge !== undefined && (
+                <span className='badge badge-sm'>
+                  {formatBigNumber({ value: observersDisplayBadge })}
+                </span>
+              )}
+            </button>
+          </li>
+        )}
       </ul>
     </div>
   );

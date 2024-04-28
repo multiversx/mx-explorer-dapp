@@ -46,7 +46,10 @@ export const NodesHeader = ({ searchValue, className }: NodesHeaderUIType) => {
           {filterTitle}
         </h3>
       )}
-      <TableSearch searchValue={searchValue} placeholderText='node' />
+      <TableSearch
+        searchValue={searchValue}
+        placeholderText={type === NodeTypeEnum.observer ? 'observer' : 'node'}
+      />
     </div>
   );
 };

@@ -21,13 +21,15 @@ export const StandardHead = ({
   hideFilters
 }: StandardHeadUIType) => (
   <tr>
-    {status === NodeStatusEnum.queued && (
-      <th data-testid='position'>
-        {hideFilters ? 'Position' : <Sort id='position' text='Position' />}
-      </th>
-    )}
     <th data-testid='node'>
-      {hideFilters ? 'Public Key' : <NodesGeneralFilter text='Public Key' />}
+      <div className='d-flex align-items-center'>
+        {hideFilters ? 'Public Key' : <NodesGeneralFilter text='Public Key' />}
+        {status === NodeStatusEnum.queued && !hideFilters && (
+          <Overlay title='Sort by Queue Position'>
+            <Sort id='position' text='' />
+          </Overlay>
+        )}
+      </div>
     </th>
     <th data-testid='name'>
       {hideFilters ? 'Name' : <Sort id='name' text='Name' />}

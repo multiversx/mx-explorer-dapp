@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import {
@@ -7,7 +7,8 @@ import {
   PageSize,
   PageState,
   NodesTable,
-  NodesFilters
+  NodesFilters,
+  NodesHeader
 } from 'components';
 import {
   useAdapter,
@@ -21,7 +22,6 @@ import { ProviderTabs } from 'layouts/ProviderLayout/ProviderTabs';
 import { NodeType } from 'types';
 
 export const ProviderDetails = () => {
-  const ref = useRef(null);
   const { hash: address } = useParams() as any;
   const [searchParams] = useSearchParams();
   const { getNodes, getNodesCount } = useAdapter();
@@ -52,37 +52,39 @@ export const ProviderDetails = () => {
       setNodes(nodesData.data);
       setTotalNodes(count.data);
 
-      if (ref.current !== null) {
-        setDataReady(nodesData.success && count.success);
-      }
+      setDataReady(nodesData.success && count.success);
     });
   };
 
   useEffect(fetchNodes, [searchParams]);
 
+  if (dataReady === undefined) {
+    return <Loader />;
+  }
+
+  if (dataReady === false) {
+    return <PageState icon={faCogs} title='Unable to load nodes' isError />;
+  }
+
   return (
-    <div className='card' ref={ref}>
+    <div className='card'>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <ProviderTabs />
-          {dataReady === true && (
-            <>
-              <NodesFilters />
+          <NodesHeader searchValue={totalNodes} />
+          <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
+            <NodesFilters />
+            {dataReady === true && (
               <Pager
                 total={totalNodes}
                 className='d-flex ms-auto me-auto me-sm-0'
                 showFirstAndLast={false}
-                show
+                show={nodes.length > 0}
               />
-            </>
-          )}
+            )}
+          </div>
         </div>
       </div>
-
-      {dataReady === undefined && <Loader />}
-      {dataReady === false && (
-        <PageState icon={faCogs} title='Unable to load nodes' isError />
-      )}
 
       {dataReady === true && (
         <>
