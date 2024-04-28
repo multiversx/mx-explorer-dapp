@@ -26,7 +26,13 @@ const findThresholdNode = (
   node: NodeType,
   minimumAuctionQualifiedStake?: string
 ) => {
-  const bNqualifiedStake = new BigNumber(node.qualifiedStake ?? 0);
+  const bNAuctionTopup = new BigNumber(node.auctionTopUp ?? 0);
+  const bNqualifiedStake =
+    node.qualifiedStake !== undefined
+      ? new BigNumber(node.qualifiedStake)
+      : new BigNumber(node.stake).plus(
+          node.auctionQualified ? bNAuctionTopup : 0
+        );
   const bNMinimumAuctionStake = new BigNumber(
     minimumAuctionQualifiedStake ?? 0
   );

@@ -68,6 +68,32 @@ export const NodesFilters = ({
     setSearchParams(nextUrlParams);
   };
 
+  const nodeAuctionLink = (auction: boolean) => {
+    const {
+      status,
+      type,
+      issues,
+      fullHistory,
+      page,
+      sort,
+      order,
+      isAuctioned,
+      isAuctionDangerZone,
+      isQualified,
+      ...rest
+    } = Object.fromEntries(searchParams);
+
+    const nextUrlParams: { [k: string]: string } = {
+      ...rest,
+      ...(auction ? { isAuctioned: String(auction) } : {})
+    };
+
+    nextUrlParams.sort = 'locked'; // TODO: replace locked with qualifiedStake
+    nextUrlParams.order = SortOrderEnum.desc;
+
+    setSearchParams(nextUrlParams);
+  };
+
   const nodeTypeLink = (typeValue: string) => {
     const {
       type,
@@ -77,6 +103,7 @@ export const NodesFilters = ({
       page,
       sort,
       order,
+      isAuctioned,
       isAuctionDangerZone,
       isQualified,
       ...rest
@@ -95,14 +122,7 @@ export const NodesFilters = ({
   const queueDisplayBadge = queueCount ?? queueSize;
   const auctionDisplayBadge = auctionListCount ?? auctionValidators;
 
-  const isAllActive = [
-    search,
-    status,
-    issues,
-    type,
-    fullHistory,
-    isAuctioned
-  ].every((el) => el === undefined);
+  const isAllActive = [type, isAuctioned].every((el) => el === undefined);
 
   return (
     <div className='d-flex flex-wrap align-items-center justify-content-between gap-3'>
@@ -136,7 +156,12 @@ export const NodesFilters = ({
             }}
             className={classNames(
               'btn btn-tab d-flex align-items-center gap-1',
-              { active: type === NodeTypeEnum.validator && issues !== 'true' }
+              {
+                active:
+                  type === NodeTypeEnum.validator &&
+                  issues !== 'true' &&
+                  !isAuctioned
+              }
             )}
           >
             Validator Nodes
@@ -152,12 +177,12 @@ export const NodesFilters = ({
             <button
               type='button'
               onClick={() => {
-                nodeStatusLink(NodeStatusEnum.auction);
+                nodeAuctionLink(true);
               }}
               data-testid='filterByValidators'
               className={classNames(
                 'btn btn-tab d-flex align-items-center gap-1',
-                { active: status === NodeStatusEnum.auction || isAuctioned }
+                { active: isAuctioned }
               )}
             >
               <FontAwesomeIcon icon={faGavel} />
@@ -180,7 +205,7 @@ export const NodesFilters = ({
               data-testid='filterByValidators'
               className={classNames(
                 'btn btn-tab d-flex align-items-center gap-1',
-                { active: status === NodeStatusEnum.queued }
+                { active: status === NodeStatusEnum.queued && !isAuctioned }
               )}
             >
               Queued
@@ -201,7 +226,7 @@ export const NodesFilters = ({
             data-testid='filterByObservers'
             className={classNames(
               'btn btn-tab d-flex align-items-center gap-1',
-              { active: type === NodeTypeEnum.observer }
+              { active: type === NodeTypeEnum.observer && !isAuctioned }
             )}
           >
             <FontAwesomeIcon icon={faEye} />
