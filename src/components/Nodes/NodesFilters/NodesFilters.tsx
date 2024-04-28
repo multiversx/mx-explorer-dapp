@@ -159,10 +159,7 @@ export const NodesFilters = ({
             className={classNames(
               'btn btn-tab d-flex align-items-center gap-1',
               {
-                active:
-                  type === NodeTypeEnum.validator &&
-                  issues !== 'true' &&
-                  !isAuctioned
+                active: type === NodeTypeEnum.validator && !isAuctioned
               }
             )}
           >

@@ -53,6 +53,21 @@
   --#{$prefix}btn-hover-bg: var(--#{$prefix}black);
   --#{$prefix}btn-active-bg: var(--#{$prefix}black);
 }
+
+.btn-dark-950 {
+  --#{$prefix}btn-color: var(--#{$prefix}neutral-600);
+  --#{$prefix}btn-bg: var(--#{$prefix}neutral-950);
+  --#{$prefix}btn-border-color: transparent;
+  --#{$prefix}btn-hover-border-color: transparent;
+  --#{$prefix}btn-focus-box-shadow: none;
+
+  --#{$prefix}btn-hover-color: var(--#{$prefix}primary);
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}black);
+
+  --#{$prefix}btn-active-color: var(--#{$prefix}primary);
+  --#{$prefix}btn-active-bg: var(--#{$prefix}black);
+  --#{$prefix}btn-active-border-color: transparent;
+}
 .form-select,
 .form-control {
   background-color: var(--#{$prefix}neutral-800);

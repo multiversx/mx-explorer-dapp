@@ -50,7 +50,7 @@ export const NodesTableBody = ({
   type,
   status,
   auctionList,
-  showPosition = true
+  showPosition
 }: NodesTableBodyUIType) => {
   const {
     unprocessed: { minimumAuctionQualifiedStake }

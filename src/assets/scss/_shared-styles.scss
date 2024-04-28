@@ -555,3 +555,15 @@ img.loading {
     outline-offset: 1px;
   }
 }
+
+.dropdown-toggle {
+  &.no-toggle {
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.btn-general-filter {
+  --btn-padding-x: 0.725rem;
+}

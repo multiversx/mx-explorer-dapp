@@ -54,7 +54,7 @@ export const StandardRow = ({
       )}
       <td>
         <div className='d-flex align-items-center gap-1 hash hash-lg'>
-          <NodeOnlineIcon node={nodeData} className='mx-2' />
+          <NodeOnlineIcon node={nodeData} className='ms-1 me-2' />
           <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)}>
             <SharedIdentity.Avatar
               identity={nodeData.identityInfo}
