@@ -58,14 +58,6 @@ export const ProviderDetails = () => {
 
   useEffect(fetchNodes, [searchParams]);
 
-  if (dataReady === undefined) {
-    return <Loader />;
-  }
-
-  if (dataReady === false) {
-    return <PageState icon={faCogs} title='Unable to load nodes' isError />;
-  }
-
   return (
     <div className='card'>
       <div className='card-header'>
@@ -85,7 +77,10 @@ export const ProviderDetails = () => {
           </div>
         </div>
       </div>
-
+      {dataReady === undefined && <Loader />}
+      {dataReady === false && (
+        <PageState icon={faCogs} title='Unable to load nodes' isError />
+      )}
       {dataReady === true && (
         <>
           <div className='card-body'>
@@ -102,7 +97,7 @@ export const ProviderDetails = () => {
           </div>
           <div className='card-footer table-footer'>
             <PageSize />
-            <Pager total={totalNodes} show />
+            <Pager total={totalNodes} show={nodes.length > 0} />
           </div>
         </>
       )}
