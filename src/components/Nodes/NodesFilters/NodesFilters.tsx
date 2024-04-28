@@ -122,7 +122,9 @@ export const NodesFilters = ({
   const queueDisplayBadge = queueCount ?? queueSize;
   const auctionDisplayBadge = auctionListCount ?? auctionValidators;
 
-  const isAllActive = [type, isAuctioned].every((el) => el === undefined);
+  const isAllActive =
+    [type, isAuctioned].every((el) => el === undefined) &&
+    status !== NodeStatusEnum.queued;
 
   return (
     <div className='d-flex flex-wrap align-items-center justify-content-between gap-3'>
@@ -205,7 +207,12 @@ export const NodesFilters = ({
               data-testid='filterByValidators'
               className={classNames(
                 'btn btn-tab d-flex align-items-center gap-1',
-                { active: status === NodeStatusEnum.queued && !isAuctioned }
+                {
+                  active:
+                    status === NodeStatusEnum.queued &&
+                    !isAuctioned &&
+                    type === undefined
+                }
               )}
             >
               Queued

@@ -20,7 +20,7 @@ import {
 } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
-import { NodeStatusEnum, NodeType } from 'types';
+import { NodeType } from 'types';
 
 export const Nodes = () => {
   const [searchParams] = useSearchParams();
@@ -73,7 +73,7 @@ export const Nodes = () => {
                 total={totalNodes}
                 className='d-flex ms-auto me-auto me-sm-0'
                 showFirstAndLast={false}
-                show
+                show={nodes.length > 0}
               />
             )}
           </div>
@@ -91,23 +91,19 @@ export const Nodes = () => {
             <NodesTable
               type={type as NodeType['type']}
               status={status as NodeType['status']}
-              auctionList={Boolean(
-                status === NodeStatusEnum.auction || isAuctioned
-              )}
+              auctionList={Boolean(isAuctioned)}
             >
               <NodesTable.Body
                 nodes={nodes}
                 type={type as NodeType['type']}
                 status={status as NodeType['status']}
-                auctionList={Boolean(
-                  status === NodeStatusEnum.auction || isAuctioned
-                )}
+                auctionList={Boolean(isAuctioned)}
               />
             </NodesTable>
           </div>
           <div className='card-footer table-footer'>
             <PageSize />
-            <Pager total={totalNodes} show />
+            <Pager total={totalNodes} show={nodes.length > 0} />
           </div>
         </>
       )}

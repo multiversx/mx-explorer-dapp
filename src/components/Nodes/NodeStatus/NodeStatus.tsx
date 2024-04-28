@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
-import { Led, PercentageBar } from 'components';
+import { PercentageBar } from 'components';
 import { getNodeStatusDisplay } from 'helpers';
 import { NodeType, WithClassnameType } from 'types';
 

@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import {
   NodeRating,
   NodeStatus,
@@ -15,7 +16,7 @@ import {
   SharedIdentity
 } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
-import { NodeType } from 'types';
+import { NodeStatusEnum, NodeType, NodeTypeEnum } from 'types';
 
 export interface StandardRowUIType {
   nodeData: NodeType;
@@ -32,9 +33,17 @@ export const StandardRow = ({
   type,
   status
 }: StandardRowUIType) => {
+  const bNAuctionTopup = new BigNumber(nodeData.auctionTopUp ?? 0);
+  const bNqualifiedStake =
+    nodeData.qualifiedStake !== undefined
+      ? new BigNumber(nodeData.qualifiedStake)
+      : new BigNumber(nodeData.stake).plus(
+          nodeData.auctionQualified ? bNAuctionTopup : 0
+        );
+
   return (
     <tr>
-      {status === 'queued' && (
+      {status === NodeStatusEnum.queued && (
         <td>
           {nodeData.position ? (
             <div>{nodeData.position}</div>
@@ -92,52 +101,70 @@ export const StandardRow = ({
           <span className='text-neutral-400'>N/A</span>
         )}
       </td>
-
-      <td>
-        <NodeStatus node={nodeData} />
-      </td>
-      {status === 'auction' && (
+      {type !== NodeTypeEnum.observer && (
         <td>
-          <NodeQualification
-            node={nodeData}
-            showDangerZone={true}
-            className='justify-content-end'
-          />
+          <NodeStatus node={nodeData} />
         </td>
       )}
-      {(type === 'validator' || status === 'auction') && nodeData.locked && (
+      {status === NodeStatusEnum.auction && (
         <td>
-          {status !== 'auction' || nodeData.auctionQualified ? (
+          <NodeQualification node={nodeData} showDangerZone />
+        </td>
+      )}
+      {(type === NodeTypeEnum.validator ||
+        status === NodeStatusEnum.auction) && (
+        <td>
+          {status !== NodeStatusEnum.auction || nodeData.auctionQualified ? (
             <Overlay
               title={
                 <NodeLockedStakeTooltip
                   node={nodeData}
-                  showAuctionTopup={status === 'auction'}
+                  showAuctionTopup={
+                    status === NodeStatusEnum.auction ||
+                    nodeData.auctionQualified
+                  }
                 />
               }
               className='text-neutral-100'
               tooltipClassName='tooltip-text-start tooltip-lg'
               truncate
             >
-              <FormatAmount value={nodeData.locked} showTooltip={false} />
+              <FormatAmount
+                value={
+                  nodeData.auctionQualified
+                    ? bNqualifiedStake.toString(10)
+                    : nodeData.locked
+                }
+                showTooltip={false}
+              />
             </Overlay>
           ) : (
-            <FormatAmount value={nodeData.locked} />
+            <FormatAmount
+              value={
+                nodeData.auctionQualified
+                  ? bNqualifiedStake.toString(10)
+                  : nodeData.locked
+              }
+            />
           )}
         </td>
       )}
-      {status !== 'auction' && (
-        <td style={{ maxWidth: '8rem' }}>
-          {nodeData.validatorIgnoredSignatures ? (
-            formatBigNumber({ value: nodeData.validatorIgnoredSignatures })
-          ) : (
-            <span className='text-neutral-400'>N/A</span>
+      {type !== NodeTypeEnum.observer && (
+        <>
+          {status !== NodeStatusEnum.auction && (
+            <td style={{ maxWidth: '8rem' }}>
+              {nodeData.validatorIgnoredSignatures ? (
+                formatBigNumber({ value: nodeData.validatorIgnoredSignatures })
+              ) : (
+                <span className='text-neutral-400'>N/A</span>
+              )}
+            </td>
           )}
-        </td>
+          <td>
+            <NodeRating node={nodeData} />
+          </td>
+        </>
       )}
-      <td>
-        <NodeRating node={nodeData} />
-      </td>
       <td className='text-end'>
         {nodeData.nonce ? (
           nodeData.nonce

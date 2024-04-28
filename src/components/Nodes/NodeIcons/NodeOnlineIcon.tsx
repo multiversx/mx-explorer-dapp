@@ -32,8 +32,10 @@ export const NodeOnlineIcon = ({ node, className }: NodeOnlineIconUIType) => {
   }
 
   if (syncProgress && new BigNumber(syncProgress).isGreaterThan(0)) {
+    const fillPercent = new BigNumber(syncProgress || 0).times(100);
+
     return (
-      <Overlay title='Syncing'>
+      <Overlay title={`Syncing (${fillPercent.toFormat(2)}%)`}>
         <Led color={classNames('bg-primary', className)} />
       </Overlay>
     );

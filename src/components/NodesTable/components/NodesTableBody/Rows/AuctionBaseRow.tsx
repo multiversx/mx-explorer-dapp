@@ -123,7 +123,7 @@ export const AuctionBaseRow = ({
         <NodeThreshold qualifiedStake={bNqualifiedStake.toString(10)} />
       </td>
       <td>
-        <NodeQualification node={nodeData} showDangerZone={false} />
+        <NodeQualification node={nodeData} showDangerZone />
       </td>
     </tr>
   );
