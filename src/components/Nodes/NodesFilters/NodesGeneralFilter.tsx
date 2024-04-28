@@ -84,7 +84,7 @@ export const NodesGeneralFilter = ({ text }: { text: React.ReactNode }) => {
           }
         }}
       >
-        <Dropdown.Toggle className='btn-general-filter btn-dark-950 no-toggle ms-n2 my-n2 me-2'>
+        <Dropdown.Toggle className='btn-general-filter btn-dark-980 no-toggle ms-n2 my-n2 me-2'>
           <FontAwesomeIcon
             icon={isFiltered ? faFilterSolid : faFilter}
             className={isFiltered ? 'text-primary' : ''}
