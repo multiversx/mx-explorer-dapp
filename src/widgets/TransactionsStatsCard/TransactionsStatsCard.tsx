@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
-import { useFetchGrowthHero, useIsMainnet } from 'hooks';
+import { useFetchGrowthHero, useHasGrowthWidgets } from 'hooks';
 import { faCirclePlus } from 'icons/solid';
 import {
   growthHeroSelector,
@@ -17,8 +17,7 @@ export const TransactionsStatsCard = ({
 }: {
   className?: string;
 }) => {
-  const isMainnet = useIsMainnet();
-
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const { totalTransactions, totalTransactionsToday } =
     useSelector(growthHeroSelector);
   const { transactions } = useSelector(statsSelector);
@@ -27,14 +26,14 @@ export const TransactionsStatsCard = ({
   const fetchHero = useFetchGrowthHero();
 
   useEffect(() => {
-    if (isMainnet) {
-      fetchHero(true);
+    if (hasGrowthWidgets) {
+      fetchHero();
     }
-  }, [timestamp, isMainnet]);
+  }, [timestamp, hasGrowthWidgets]);
 
   return (
     <>
-      {isMainnet ? (
+      {hasGrowthWidgets ? (
         <StatsCard
           title='Total Transactions'
           value={totalTransactions}

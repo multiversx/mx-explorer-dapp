@@ -10,7 +10,7 @@ import {
 import { Loader, Led } from 'components';
 import { ChartListType } from 'components/Chart/helpers/types';
 import { Tabs } from 'components/Tabs';
-import { useAdapter, useIsMainnet, useNetworkRoute } from 'hooks';
+import { useAdapter, useHasGrowthWidgets, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
 
@@ -24,7 +24,7 @@ export const AnalyticsCompare = () => {
   const ref = useRef(null);
   const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
 
   const [searchParams] = useSearchParams();
   const location = useLocation();
@@ -101,7 +101,7 @@ export const AnalyticsCompare = () => {
     });
   }, [selectedPills]);
 
-  if (!isMainnet) {
+  if (!hasGrowthWidgets) {
     navigate(networkRoute('/'));
   }
 

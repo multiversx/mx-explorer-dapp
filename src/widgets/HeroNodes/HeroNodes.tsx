@@ -1,27 +1,29 @@
 import { useSelector } from 'react-redux';
 
 import { MultilayerPercentageRing } from 'components';
-import { useIsMainnet } from 'hooks';
+import { useHasGrowthWidgets } from 'hooks';
 import { ChartStake } from 'pages/Home/components/ChartStake';
 import { nodesVersionsSelector } from 'redux/selectors';
 import { ValidatorsStatusCard } from 'widgets';
 
 export const HeroNodes = () => {
   const { nodesVersions } = useSelector(nodesVersionsSelector);
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
 
   return (
     <div className='hero-nodes card-body pb-3'>
       <div className='row'>
-        {isMainnet && (
+        {hasGrowthWidgets && (
           <div className='col-lg-5 mb-3'>
             <ChartStake className='unstyled-chart-box bg-neutral-950' />
           </div>
         )}
-        <div className={`mb-3 ${isMainnet ? 'col-lg-7' : 'col'}`}>
+        <div className={`mb-3 ${hasGrowthWidgets ? 'col-lg-7' : 'col'}`}>
           <div className='h-100 d-flex flex-column'>
             <ValidatorsStatusCard
-              className={`mb-3 mb-lg-0 ${isMainnet ? 'mainnet-layout' : ''}`}
+              className={`mb-3 mb-lg-0 ${
+                hasGrowthWidgets ? 'mainnet-layout' : ''
+              }`}
             />
 
             <div className='card distribution-card weighted-node-card d-lg-none'>

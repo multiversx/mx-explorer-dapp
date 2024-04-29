@@ -21,12 +21,12 @@ import {
   TableWrapper,
   InfoTooltip
 } from 'components';
-import { urlBuilder } from 'helpers';
-import { useAdapter, useGetPage, useGetSort, useIsMainnet } from 'hooks';
+import { formatBigNumber, urlBuilder } from 'helpers';
+import { useAdapter, useGetPage, useGetSort, useHasGrowthWidgets } from 'hooks';
 import { faBadgeCheck } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
-import { AccountType } from 'types';
+import { AccountType, SortOrderEnum } from 'types';
 import { MostUsedApplications } from 'widgets';
 
 import { FailedApplications } from './components/FailedApplications';
@@ -34,11 +34,11 @@ import { NoApplications } from './components/NoApplications';
 
 export const Applications = () => {
   const [searchParams] = useSearchParams();
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
 
-  const { sort, order } = useGetSort();
+  const sort = useGetSort();
   const { page, size } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
 
@@ -49,18 +49,21 @@ export const Applications = () => {
     ELLIPSIS
   );
 
+  if (!sort.sort) {
+    sort.sort = 'transfersLast24h';
+    sort.order = SortOrderEnum.desc;
+  }
+
   const fetchApplications = () => {
     setDataChanged(true);
     Promise.all([
       getAccounts({
         page,
         size: size ?? 15,
-        sort,
-        order,
+        ...sort,
         isSmartContract: true,
         withOwnerAssets: true,
-        withDeployInfo: true,
-        withScrCount: true
+        withDeployInfo: true
       }),
       getAccountsCount({ isSmartContract: true })
     ])
@@ -82,11 +85,10 @@ export const Applications = () => {
 
   return (
     <div className='container page-content'>
-      {isMainnet && <MostUsedApplications className='mb-3' />}
+      {hasGrowthWidgets && <MostUsedApplications className='mb-3' />}
       {(dataReady === undefined ||
-        (isMainnet && Object.keys(pageHeadersAccounts).length === 0)) && (
-        <Loader />
-      )}
+        (hasGrowthWidgets &&
+          Object.keys(pageHeadersAccounts).length === 0)) && <Loader />}
       {dataReady === false && <FailedApplications />}
       {dataReady === true && (
         <div className='row'>
@@ -126,7 +128,12 @@ export const Applications = () => {
                             <th>
                               <Sort id='balance' field='Balance' />
                             </th>
-                            <th className='text-end'>Transactions</th>
+                            <th className='text-end'>
+                              <Sort
+                                id='transfersLast24h'
+                                field='Transactions / 24h'
+                              />
+                            </th>
                             <th className='text-end'>Deployed</th>
                           </tr>
                         </thead>
@@ -184,9 +191,11 @@ export const Applications = () => {
                                 <FormatAmount value={account.balance} />
                               </td>
                               <td className='text-end'>
-                                {account.scrCount && (
+                                {account.transfersLast24h && (
                                   <>
-                                    {new BigNumber(account.scrCount).toFormat()}
+                                    {formatBigNumber({
+                                      value: account.transfersLast24h
+                                    })}
                                   </>
                                 )}
                               </td>

@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import { Loader } from 'components';
-import { useIsMainnet, useFetchGrowthMostUsed } from 'hooks';
+import { useHasGrowthWidgets, useFetchGrowthMostUsed } from 'hooks';
 import { growthMostUsedSelector } from 'redux/selectors';
 
 import { MostUsedApplications } from './MostUsedApplications';
@@ -9,14 +9,14 @@ import { MostUsedCollections } from './MostUsedCollections';
 import { MostUsedTokens } from './MostUsedTokens';
 
 export const MostUsed = () => {
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
 
   const { isFetched, dailyMostTransactedNFTs, dailyMostTransactedTokens } =
     useSelector(growthMostUsedSelector);
 
   useFetchGrowthMostUsed();
 
-  if (!isMainnet) {
+  if (!hasGrowthWidgets) {
     return null;
   }
 
