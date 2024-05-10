@@ -10,7 +10,7 @@ import {
   Pager,
   PageSize,
   PageState,
-  NodesTableHero,
+  AuctionListCards,
   NodesTable,
   AuctionListFilters
 } from 'components';
@@ -213,7 +213,7 @@ export const NodesAuctionListOld = () => {
       <div className='card-header'>
         <NodesTabs />
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-          <NodesTableHero />
+          <AuctionListCards />
           <AuctionListFilters />
           {dataReady === true && (isCustomSize || !hasNoFilters) && (
             <Pager

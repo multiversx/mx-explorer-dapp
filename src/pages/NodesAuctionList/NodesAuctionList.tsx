@@ -7,11 +7,8 @@ import { PAGE_SIZE, AUCTION_LIST_MAX_NODES } from 'appConstants';
 import { IDENTITIES_FIELDS } from 'appConstants';
 import {
   Loader,
-  Pager,
-  PageSize,
   PageState,
-  NodesTableHero,
-  NodesTable,
+  AuctionListCards,
   AuctionListFilters,
   AuctionListTable
 } from 'components';
@@ -214,7 +211,7 @@ export const NodesAuctionList = () => {
       <div className='card-header'>
         <NodesTabs />
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-          <NodesTableHero />
+          <AuctionListCards />
           <AuctionListFilters />
         </div>
       </div>

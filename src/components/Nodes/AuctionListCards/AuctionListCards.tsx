@@ -14,7 +14,7 @@ import { WithClassnameType } from 'types';
 
 import { NodesOverviewCards } from './components';
 
-export const NodesTableHero = ({ className }: WithClassnameType) => {
+export const AuctionListCards = ({ className }: WithClassnameType) => {
   const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
   const {
     isFetched: isStatsFetched,
