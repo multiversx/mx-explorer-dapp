@@ -46,6 +46,7 @@ export const NodesFilters = ({
     page,
     sort,
     order,
+    search,
     isAuctioned,
     isAuctionDangerZone,
     isQualified,

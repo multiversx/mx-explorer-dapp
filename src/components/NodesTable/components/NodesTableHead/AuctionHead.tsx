@@ -1,13 +1,42 @@
+import {
+  NodesGeneralFilter,
+  NodesQualifiedFilter,
+  NodesStatusFilter,
+  Overlay,
+  Sort,
+  ShardFilter
+} from 'components';
+
+import { NodesTableFilterHead } from '../NodesTableFilterHead';
+
 export const AuctionHead = () => {
   return (
-    <tr>
-      <th data-testid='node'>Public Key</th>
-      <th data-testid='name'>Name</th>
-      <th data-testid='shard'>Shard</th>
-      <th data-testid='version'>Version</th>
-      <th data-testid='qualifiedStake'>Qualified Stake / Node</th>
-      <th data-testid='delta'>Delta</th>
-      <th data-testid='status'>Status</th>
-    </tr>
+    <thead>
+      <tr>
+        <th scope='col' data-testid='node'>
+          <NodesGeneralFilter text='Public Key' />
+        </th>
+        <th scope='col' data-testid='name'>
+          <Sort id='name' text='Name' />
+        </th>
+        <th scope='col' data-testid='shard'>
+          <ShardFilter text='Shard' />
+        </th>
+        <th scope='col' data-testid='version'>
+          <Sort id='version' text='Version' />
+        </th>
+        <th scope='col' data-testid='qualifiedStake'>
+          {/* { TODO: replace locked with qualifiedStake} */}
+          <Sort id='qualifiedStake' text='Qualified Stake / Node' />
+        </th>
+        <th scope='col' data-testid='delta'>
+          <Sort id='qualifiedStake' text='Delta' />
+        </th>
+        <th scope='col' data-testid='status'>
+          <NodesQualifiedFilter text='Status' />
+        </th>
+      </tr>
+      <NodesTableFilterHead colSpan={7} />
+    </thead>
   );
 };

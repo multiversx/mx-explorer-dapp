@@ -3,7 +3,7 @@ import { Sort, NodesGeneralFilter, Overlay } from 'components';
 export const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
   return (
     <tr>
-      <th data-testid='node'>
+      <th scope='col' data-testid='node'>
         <div className='d-flex align-items-center'>
           {hideFilters ? (
             'Public Key'
@@ -17,10 +17,10 @@ export const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
           )}
         </div>
       </th>
-      <th data-testid='name'>
+      <th scope='col' data-testid='name'>
         <Sort id='name' text='Name' />
       </th>
-      <th data-testid='version'>
+      <th scope='col' data-testid='version'>
         <Sort id='version' text='Version' />
       </th>
     </tr>

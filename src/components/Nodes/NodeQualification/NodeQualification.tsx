@@ -3,7 +3,8 @@ import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { Led, NodeDangerZoneTooltip, InfoTooltip, Overlay } from 'components';
+import { Led, NodeDangerZoneTooltip, Overlay } from 'components';
+import { useGetNodeFilters } from 'hooks';
 import { faScissors } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
 import {
@@ -14,18 +15,17 @@ import {
 
 export interface NodeQualificationUIType extends WithClassnameType {
   node: NodeType;
-  showDangerZone?: boolean;
 }
 
 export const NodeQualification = ({
   node,
-  showDangerZone = false,
   className
 }: NodeQualificationUIType) => {
   const {
     isFetched: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
+  const { isAuctionDangerZone, isQualified } = useGetNodeFilters();
   const {
     stake,
     auctionTopUp,
@@ -45,6 +45,9 @@ export const NodeQualification = ({
     bNqualifiedStake.isGreaterThan(minimumAuctionQualifiedStake ?? 0) &&
     bNAuctionTopup.isGreaterThan(0);
 
+  const showDangerZone =
+    (isAuctionDangerZone && isQualified) || notQualifiedAuctionValidators;
+
   const NodeStatusComponent = () => {
     if (auctionQualified) {
       return (
@@ -53,9 +56,7 @@ export const NodeQualification = ({
           <span className='text-success'>
             {NodeQualificationStatusEnum.qualified}
           </span>
-          {Boolean(
-            showDangerZone && isInDangerZone && notQualifiedAuctionValidators
-          ) && (
+          {Boolean(isInDangerZone && showDangerZone) && (
             <NodeDangerZoneTooltip
               auctionQualified={auctionQualified}
               qualifiedStake={bNqualifiedStake.toString(10)}

@@ -108,7 +108,7 @@ export const StandardRow = ({
       )}
       {status === NodeStatusEnum.auction && (
         <td>
-          <NodeQualification node={nodeData} showDangerZone />
+          <NodeQualification node={nodeData} />
         </td>
       )}
       {(type === NodeTypeEnum.validator ||

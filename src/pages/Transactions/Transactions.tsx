@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { TransactionsTable, PulsatingLed } from 'components';
-import { shardSpanText } from 'components/ShardSpan';
 import { MethodList } from 'components/TransactionsTable/components/TransactionsFilters';
+import { getShardText } from 'helpers';
 import {
   useAdapter,
   useGetPage,
@@ -67,13 +67,13 @@ export const Transactions = () => {
                   {senderShard !== undefined && (
                     <>
                       <span>&nbsp;from&nbsp;</span>
-                      {shardSpanText(senderShard)}
+                      {getShardText(senderShard)}
                     </>
                   )}
                   {receiverShard !== undefined && (
                     <>
                       <span>&nbsp;to&nbsp;</span>
-                      {shardSpanText(receiverShard)}
+                      {getShardText(receiverShard)}
                     </>
                   )}
                   <MethodList />

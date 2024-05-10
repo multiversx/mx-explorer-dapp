@@ -8,17 +8,8 @@ import { NodeTypeEnum } from 'types';
 
 export const NodesGeneralFilter = ({ text }: { text: React.ReactNode }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const {
-    online,
-    page,
-    size,
-    fullHistory,
-    issues,
-    isAuctioned,
-    isAuctionDangerZone,
-    isQualified,
-    ...rest
-  } = Object.fromEntries(searchParams);
+  const { online, page, size, fullHistory, issues, ...rest } =
+    Object.fromEntries(searchParams);
 
   const resetFiltersLink = () => {
     const nextUrlParams = {
@@ -43,17 +34,24 @@ export const NodesGeneralFilter = ({ text }: { text: React.ReactNode }) => {
     const nextUrlParams = {
       ...rest,
       ...(online !== undefined ? { online } : {}),
-      ...(issuesValue
-        ? { issues: String(issuesValue), type: NodeTypeEnum.validator }
-        : {})
+      ...(issuesValue ? { issues: String(issuesValue) } : {})
     };
 
     setSearchParams(nextUrlParams);
   };
 
   const fullHistoryLink = (fullHistoryValue: boolean) => {
+    const {
+      status,
+      sort,
+      order,
+      isAuctioned,
+      isAuctionDangerZone,
+      isQualified,
+      ...filtered
+    } = rest;
     const nextUrlParams = {
-      ...rest,
+      ...filtered,
       ...(online !== undefined ? { online } : {}),
       ...(fullHistoryValue
         ? { fullHistory: String(fullHistoryValue), type: NodeTypeEnum.observer }

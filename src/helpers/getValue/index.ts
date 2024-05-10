@@ -5,6 +5,7 @@ export * from './getNodeIssue';
 export * from './getNodeStatusDisplay';
 export * from './getOperationDirection';
 export * from './getPercentage';
+export * from './getShardText';
 export * from './getStringPlural';
 export * from './getSubdomainNetwork';
 export * from './getTotalTokenUsdValue';

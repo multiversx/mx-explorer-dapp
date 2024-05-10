@@ -57,6 +57,7 @@ export * from './SmallDetailItem';
 export * from './SocialIcons';
 export * from './Sort';
 export * from './SpotlightButton';
+export * from './TableFiltersHead';
 export * from './TableWrapper';
 export * from './Tabs';
 export * from './TimeAgo';

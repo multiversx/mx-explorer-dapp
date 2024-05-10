@@ -16,15 +16,19 @@ import {
   faGavel
 } from 'icons/solid';
 import {
-  NodeType,
   NodeStatusEnum,
+  NodeApiStatusEnum,
   NodeStatusRawEnum,
   NodeTypeEnum
 } from 'types';
 
-export const getNodeStatusDisplay = (node: NodeType) => {
-  const { status, type } = node;
-
+export const getNodeStatusDisplay = ({
+  type,
+  status
+}: {
+  type?: NodeTypeEnum;
+  status?: NodeApiStatusEnum;
+}) => {
   if (type === NodeTypeEnum.observer) {
     return {
       textColor: 'text-neutral-400',
