@@ -1,8 +1,6 @@
 import {
   NodesGeneralFilter,
   NodesQualifiedFilter,
-  NodesStatusFilter,
-  Overlay,
   Sort,
   ShardFilter
 } from 'components';
