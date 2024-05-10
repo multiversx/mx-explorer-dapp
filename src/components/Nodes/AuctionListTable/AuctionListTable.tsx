@@ -147,10 +147,10 @@ export const AuctionListTable = ({
         <thead>
           <tr>
             {showPosition && <th className='th-rank'>#</th>}
-            <th className='th-identity'>Identity</th>
-            <th className='th-auction-nodes'>Auction List Nodes</th>
-            <th className='th-dropped'>Dropped</th>
+            <th className='th-identity'>Validator</th>
+            <th className='th-auction-nodes'>Auction List</th>
             <th className='th-qualified'>Qualified</th>
+            <th className='th-dropped'>Not Qualified</th>
             <th className='th-stake'>Qualified Stake / Node</th>
             <th className='th-delta'>Delta</th>
           </tr>
@@ -183,12 +183,12 @@ export const AuctionListTable = ({
               {getStringPlural(tableTotalAuction, { string: 'node' })}
             </td>
             <td className='text-neutral-300'>
-              <FormatNumber value={tableTotalDropped} />{' '}
-              {getStringPlural(tableTotalDropped, { string: 'node' })}
-            </td>
-            <td className='text-neutral-300'>
               <FormatNumber value={tableTotalQualified} />{' '}
               {getStringPlural(tableTotalQualified, { string: 'node' })}
+            </td>
+            <td className='text-neutral-300'>
+              <FormatNumber value={tableTotalDropped} />{' '}
+              {getStringPlural(tableTotalDropped, { string: 'node' })}
             </td>
             <td></td>
             <td></td>

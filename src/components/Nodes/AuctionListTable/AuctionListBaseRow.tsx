@@ -56,7 +56,7 @@ export const AuctionListBaseRow = ({
   const computedDroppedValidators = bNauctionValidators
     .minus(bNqualifiedAuctionValidators)
     .toNumber();
-  const displayDroppedValidators =
+  const formattedDroppedValidators =
     droppedValidators ?? computedDroppedValidators;
 
   return (
@@ -98,20 +98,17 @@ export const AuctionListBaseRow = ({
         </div>
       </td>
       <td>{auctionValidators ? auctionValidators : ELLIPSIS}</td>
-      <td className='text-red-400'>
-        {displayDroppedValidators ? displayDroppedValidators : ZERO}
-      </td>
       <td>
         <div
           className={classNames('d-flex align-items-center gap-2', {
             'text-success': qualifiedAuctionValidators,
-            'text-red-400': !qualifiedAuctionValidators
+            'text-neutral-400': !qualifiedAuctionValidators
           })}
         >
           <Led
             color={classNames('mt-0', {
               'bg-success': qualifiedAuctionValidators,
-              'bg-red-400': !qualifiedAuctionValidators
+              'bg-neutral-400': !qualifiedAuctionValidators
             })}
           />
           {qualifiedAuctionValidators && qualifiedAuctionValidators > 0 ? (
@@ -124,6 +121,14 @@ export const AuctionListBaseRow = ({
               <NodeDangerZoneTooltip qualifiedStake={qualifiedStake} />
             )}
         </div>
+      </td>
+      <td
+        className={classNames('mt-0', {
+          'text-red-400': formattedDroppedValidators,
+          'text-neutral-400': !formattedDroppedValidators
+        })}
+      >
+        {formattedDroppedValidators ? formattedDroppedValidators : ZERO}
       </td>
       <td className='text-neutral-100'>
         {qualifiedStake ? (

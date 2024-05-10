@@ -19,7 +19,7 @@ export const NodeThreshold = ({
 }: NodeThresholdUIType) => {
   const {
     isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
+    unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
 
   if (
@@ -49,8 +49,7 @@ export const NodeThreshold = ({
     <span
       className={classNames(className, {
         'text-success': bNThreshold.isGreaterThan(0),
-        'text-red-400':
-          notQualifiedAuctionValidators && bNThreshold.isLessThan(0)
+        'text-red-400': bNThreshold.isLessThan(0)
       })}
     >
       {sign}
