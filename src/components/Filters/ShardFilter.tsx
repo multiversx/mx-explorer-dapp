@@ -9,8 +9,9 @@ import { useFetchShards } from 'hooks';
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
 import { shardsSelector } from 'redux/selectors';
+import { TableFilterUIType } from 'types';
 
-export const ShardFilter = ({ text }: { text: React.ReactNode }) => {
+export const ShardFilter = ({ text, hideFilters }: TableFilterUIType) => {
   const shards = useSelector(shardsSelector);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,6 +27,10 @@ export const ShardFilter = ({ text }: { text: React.ReactNode }) => {
 
     setSearchParams(nextUrlParams);
   };
+
+  if (hideFilters) {
+    return text;
+  }
 
   return (
     <div

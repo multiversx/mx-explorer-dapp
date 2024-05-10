@@ -8,9 +8,9 @@ import { useSearchParams } from 'react-router-dom';
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
 import { stakeSelector } from 'redux/selectors';
-import { NodeStatusEnum } from 'types';
+import { TableFilterUIType, NodeStatusEnum } from 'types';
 
-export const NodesStatusFilter = ({ text }: { text: React.ReactNode }) => {
+export const NodesStatusFilter = ({ text, hideFilters }: TableFilterUIType) => {
   const { queueSize, auctionValidators } = useSelector(stakeSelector);
   const [searchParams, setSearchParams] = useSearchParams();
   const { status, page, size, ...rest } = Object.fromEntries(searchParams);
@@ -23,6 +23,10 @@ export const NodesStatusFilter = ({ text }: { text: React.ReactNode }) => {
 
     setSearchParams(nextUrlParams);
   };
+
+  if (hideFilters) {
+    return text;
+  }
 
   return (
     <div

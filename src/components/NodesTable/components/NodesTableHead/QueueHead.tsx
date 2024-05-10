@@ -8,11 +8,7 @@ export const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
       <tr>
         <th scope='col' data-testid='node'>
           <div className='d-flex align-items-center'>
-            {hideFilters ? (
-              'Public Key'
-            ) : (
-              <NodesGeneralFilter text='Public Key' />
-            )}
+            <NodesGeneralFilter text='Public Key' hideFilters={hideFilters} />
             {!hideFilters && (
               <Overlay title='Sort by Queue Position'>
                 <Sort id='position' text='' />

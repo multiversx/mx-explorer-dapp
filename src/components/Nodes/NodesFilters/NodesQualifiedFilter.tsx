@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
+import { TableFilterUIType } from 'types';
 
 enum DropdownKeyEnum {
   qualified = 'qualified',
@@ -12,7 +13,10 @@ enum DropdownKeyEnum {
   dangerZone = 'dangerZone'
 }
 
-export const NodesQualifiedFilter = ({ text }: { text: React.ReactNode }) => {
+export const NodesQualifiedFilter = ({
+  text,
+  hideFilters
+}: TableFilterUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { isAuctionDangerZone, isQualified } = Object.fromEntries(searchParams);
 
@@ -52,6 +56,10 @@ export const NodesQualifiedFilter = ({ text }: { text: React.ReactNode }) => {
 
   const hasAuctionFilter =
     isQualified !== undefined || isAuctionDangerZone !== undefined;
+
+  if (hideFilters) {
+    return text;
+  }
 
   return (
     <div

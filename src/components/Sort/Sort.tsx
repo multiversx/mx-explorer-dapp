@@ -3,9 +3,13 @@ import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 
 import { faSort, faSortDown, faSortUp } from 'icons/duotone';
-import { SortOrderEnum } from 'types';
+import { SortOrderEnum, TableFilterUIType } from 'types';
 
-export const Sort = ({ id, text }: { text: React.ReactNode; id: string }) => {
+export interface TableSortUIType extends TableFilterUIType {
+  id: string;
+}
+
+export const Sort = ({ id, text, hideFilters }: TableSortUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { order, sort, ...rest } = Object.fromEntries(searchParams);
 
@@ -32,6 +36,10 @@ export const Sort = ({ id, text }: { text: React.ReactNode; id: string }) => {
 
     setSearchParams(nextUrlParams);
   };
+
+  if (hideFilters) {
+    return text;
+  }
 
   return (
     <div

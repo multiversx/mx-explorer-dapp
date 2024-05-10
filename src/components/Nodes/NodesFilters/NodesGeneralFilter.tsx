@@ -4,9 +4,12 @@ import { useSearchParams } from 'react-router-dom';
 
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
-import { NodeTypeEnum } from 'types';
+import { TableFilterUIType, NodeTypeEnum } from 'types';
 
-export const NodesGeneralFilter = ({ text }: { text: React.ReactNode }) => {
+export const NodesGeneralFilter = ({
+  text,
+  hideFilters
+}: TableFilterUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { online, page, size, fullHistory, issues, ...rest } =
     Object.fromEntries(searchParams);
@@ -65,8 +68,12 @@ export const NodesGeneralFilter = ({ text }: { text: React.ReactNode }) => {
     (filter) => filter !== undefined
   );
 
+  if (hideFilters) {
+    return text;
+  }
+
   return (
-    <div>
+    <>
       <Dropdown
         className='d-inline-flex'
         onSelect={(eventKey: string | null) => {
@@ -123,6 +130,6 @@ export const NodesGeneralFilter = ({ text }: { text: React.ReactNode }) => {
         </Dropdown.Menu>
       </Dropdown>
       {text}
-    </div>
+    </>
   );
 };

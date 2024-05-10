@@ -3,6 +3,11 @@ export enum ThemesEnum {
   testnet = 'testnet'
 }
 
+export interface TableFilterUIType {
+  text: React.ReactNode;
+  hideFilters?: boolean;
+}
+
 export interface NotificationType {
   id: string;
   text: string;

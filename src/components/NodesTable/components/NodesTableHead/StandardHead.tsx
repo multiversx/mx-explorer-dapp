@@ -26,11 +26,7 @@ export const StandardHead = ({
     <tr>
       <th scope='col' data-testid='node'>
         <div className='d-flex align-items-center'>
-          {hideFilters ? (
-            'Public Key'
-          ) : (
-            <NodesGeneralFilter text='Public Key' />
-          )}
+          <NodesGeneralFilter text='Public Key' hideFilters={hideFilters} />
           {status === NodeStatusEnum.queued && !hideFilters && (
             <Overlay title='Sort by Queue Position'>
               <Sort id='position' text='' />
@@ -39,49 +35,38 @@ export const StandardHead = ({
         </div>
       </th>
       <th scope='col' data-testid='name'>
-        {hideFilters ? 'Name' : <Sort id='name' text='Name' />}
+        <Sort id='name' text='Name' hideFilters={hideFilters} />
       </th>
       <th scope='col' data-testid='shard'>
-        {hideFilters ? 'Shard' : <ShardFilter text='Shard' />}
+        <ShardFilter text='Shard' hideFilters={hideFilters} />
       </th>
       <th scope='col' data-testid='version'>
-        {hideFilters ? 'Version' : <Sort id='version' text='Version' />}
+        <Sort id='version' text='Version' hideFilters={hideFilters} />
       </th>
       {type !== NodeTypeEnum.observer && (
         <th scope='col' data-testid='status'>
-          {hideFilters ? 'Status' : <NodesStatusFilter text='Status' />}
+          <NodesStatusFilter text='Status' hideFilters={hideFilters} />
         </th>
       )}
       {status === NodeStatusEnum.auction && (
         <th scope='col' data-testid='qualified'>
-          {hideFilters ? (
-            'Qualified'
-          ) : (
-            <NodesQualifiedFilter text='Qualified' />
-          )}
+          <NodesQualifiedFilter text='Qualified' hideFilters={hideFilters} />
         </th>
       )}
       {(type === NodeTypeEnum.validator ||
         status === NodeStatusEnum.auction) && (
         <th scope='col' data-testid='lockedStake'>
-          {hideFilters ? (
-            status === NodeStatusEnum.auction ? (
-              'Qualified Stake / Node'
-            ) : (
-              'Locked Stake'
-            )
-          ) : (
-            <Sort
-              id={
-                'locked' // TODO: replace locked with qualifiedStake: status === NodeStatusEnum.auction ? 'qualifiedStake' : 'locked'
-              }
-              text={
-                status === NodeStatusEnum.auction
-                  ? 'Qualified Stake / Node'
-                  : 'Locked Stake'
-              }
-            />
-          )}
+          <Sort
+            id={
+              'locked' // TODO: replace locked with qualifiedStake: status === NodeStatusEnum.auction ? 'qualifiedStake' : 'locked'
+            }
+            text={
+              status === NodeStatusEnum.auction
+                ? 'Qualified Stake / Node'
+                : 'Locked Stake'
+            }
+            hideFilters={hideFilters}
+          />
         </th>
       )}
       {type !== NodeTypeEnum.observer && (
@@ -92,18 +77,15 @@ export const StandardHead = ({
               data-testid='validatorIgnoredSignatures'
               style={{ maxWidth: '8rem' }}
             >
-              {hideFilters ? (
-                <Overlay title='Ignored Signatures'>X Sign.</Overlay>
-              ) : (
-                <Sort
-                  id='validatorIgnoredSignatures'
-                  text={<Overlay title='Ignored Signatures'>X Sign.</Overlay>}
-                />
-              )}
+              <Sort
+                id='validatorIgnoredSignatures'
+                text={<Overlay title='Ignored Signatures'>X Sign.</Overlay>}
+                hideFilters={hideFilters}
+              />
             </th>
           )}
           <th scope='col' data-testid='tempRating'>
-            {hideFilters ? 'Rating' : <Sort id='tempRating' text='Rating' />}
+            <Sort id='tempRating' text='Rating' hideFilters={hideFilters} />
           </th>
         </>
       )}
