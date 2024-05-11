@@ -81,6 +81,12 @@ export const AccountTabs = () => {
       extra: true
     },
     {
+      tabLabel: 'Nodes',
+      tabTo: urlBuilder.accountDetailsNodes(address),
+      activationRoutes: [accountsRoutes.accountNodes],
+      extra: true
+    },
+    {
       tabLabel: 'Token Roles',
       tabTo: urlBuilder.accountDetailsTokenRoles(address),
       activationRoutes: [accountsRoutes.accountRolesTokens],

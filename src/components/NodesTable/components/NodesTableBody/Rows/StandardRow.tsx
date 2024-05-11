@@ -75,7 +75,9 @@ export const StandardRow = ({
       </td>
       <td>
         {nodeData.name ? (
-          <div className='truncate-item-lg'>{nodeData.name}</div>
+          <div className='truncate-item-lg' title={nodeData.name}>
+            {nodeData.name}
+          </div>
         ) : (
           <span className='text-neutral-400'>N/A</span>
         )}

@@ -11,7 +11,7 @@ export interface NodesHeaderUIType extends WithClassnameType {
 export const NodesHeader = ({ searchValue, className }: NodesHeaderUIType) => {
   const nodeFilters = useGetNodeFilters();
   const { search } = useGetSearch();
-  const { status, type } = nodeFilters;
+  const { status, type, isAuctioned } = nodeFilters;
 
   const getNodesFilterTitle = () => {
     if (type === NodeTypeEnum.validator) {
@@ -20,7 +20,7 @@ export const NodesHeader = ({ searchValue, className }: NodesHeaderUIType) => {
     if (type === NodeTypeEnum.observer) {
       return 'Observers';
     }
-    if (status === NodeStatusEnum.auction) {
+    if (status === NodeStatusEnum.auction || isAuctioned) {
       return 'Auction List';
     }
     if (status === NodeStatusEnum.queued) {

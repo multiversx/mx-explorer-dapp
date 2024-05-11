@@ -81,6 +81,7 @@ export interface GetNodesType extends SortableApiType {
   isQualified?: boolean;
   isAuctioned?: boolean;
   isAuctionDangerZone?: boolean;
+  owner?: string;
   withIdentityInfo?: boolean;
 }
 
@@ -176,6 +177,7 @@ export interface AdapterProviderPropsType {
     withTxCount?: boolean;
     withScrCount?: boolean;
     withIdentityInfo?: boolean;
+    owner?: string;
   };
   timeout: number;
   timestamp?: number;

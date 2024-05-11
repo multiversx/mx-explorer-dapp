@@ -42,6 +42,7 @@ export const urlBuilder = {
     `/accounts/${address}/roles/tokens`,
   accountDetailsCollectionRoles: (address: string) =>
     `/accounts/${address}/roles/collections`,
+  accountDetailsNodes: (address: string) => `/accounts/${address}/nodes`,
   identityDetails: (id: string) => `/identities/${id}`,
   tokens: (params?: GetTokensType) => {
     const urlSearch = params

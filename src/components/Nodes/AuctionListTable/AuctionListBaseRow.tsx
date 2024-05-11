@@ -44,7 +44,7 @@ export const AuctionListBaseRow = ({
   const identityLink = identity
     ? urlBuilder.identityDetails(identity)
     : owner
-    ? urlBuilder.accountDetails(owner)
+    ? urlBuilder.accountDetailsNodes(owner)
     : bls
     ? urlBuilder.nodeDetails(bls)
     : '';

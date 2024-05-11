@@ -60,8 +60,8 @@ export const Nodes = () => {
   useEffect(fetchNodes, [searchParams]);
 
   return (
-    <div className='card position-unset'>
-      <div className='card-header position-unset'>
+    <div className='card'>
+      <div className='card-header'>
         <NodesTabs />
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <NodesHeader searchValue={totalNodes} />

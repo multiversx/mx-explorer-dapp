@@ -45,6 +45,7 @@ export const useShowGlobalStats = () => {
     case activeRoute(accountsRoutes.accountCodeEvents):
     case activeRoute(accountsRoutes.accountRolesCollections):
     case activeRoute(accountsRoutes.accountRolesTokens):
+    case activeRoute(accountsRoutes.accountNodes):
     case isCollectionDetails:
     case activeRoute(collectionRoutes.collectionDetailsRoles):
     case activeRoute(collectionRoutes.collectionDetailsTransactions):

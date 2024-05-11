@@ -4,7 +4,7 @@ import { Anchor, Dropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 import { NetworkLink } from 'components';
-import { useActiveRoute } from 'hooks';
+import { useActiveRoute, useNetworkRoute } from 'hooks';
 import { faEllipsis } from 'icons/regular';
 
 import { TabsPropsType, TabType } from './types';
@@ -40,6 +40,7 @@ export const Tabs = (props: TabsPropsType) => {
 
   const navigate = useNavigate();
   const activeRoute = useActiveRoute();
+  const networkRoute = useNetworkRoute();
   const filteredTabs = tabs.filter((tab) => tab.show !== false);
   const displayTabs = filteredTabs.filter((tab) => Boolean(!tab?.extra));
   const extraTabs = filteredTabs.filter((tab) => Boolean(tab?.extra));
@@ -62,7 +63,7 @@ export const Tabs = (props: TabsPropsType) => {
         <Dropdown
           onSelect={(eventKey) => {
             if (eventKey) {
-              navigate(eventKey);
+              navigate(networkRoute(eventKey));
             }
           }}
         >

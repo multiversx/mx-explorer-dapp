@@ -98,6 +98,7 @@ export function getNodeParams({
   isQualified,
   isAuctioned,
   isAuctionDangerZone,
+  owner,
   // not on api
   isCount = false
 }: GetNodesType) {
@@ -124,7 +125,8 @@ export function getNodeParams({
     ...(fullHistory !== undefined ? { fullHistory } : {}),
     ...(isQualified !== undefined ? { isQualified } : {}),
     ...(isAuctioned !== undefined ? { isAuctioned } : {}),
-    ...(isAuctionDangerZone !== undefined ? { isAuctionDangerZone } : {})
+    ...(isAuctionDangerZone !== undefined ? { isAuctionDangerZone } : {}),
+    ...(owner !== undefined ? { owner } : {})
   };
 
   return params;

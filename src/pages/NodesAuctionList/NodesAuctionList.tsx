@@ -38,7 +38,7 @@ export const NodesAuctionList = () => {
 
   const fetcAuctionListValidators = () => {
     setDataReady(undefined);
-    getAuctionNodes({}).then(({ data, success }) => {
+    getAuctionNodes().then(({ data, success }) => {
       if (success) {
         setAuctionListValidators(data);
       }
