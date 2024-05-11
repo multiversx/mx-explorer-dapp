@@ -10,7 +10,7 @@ import {
   useNetworkRoute,
   useGetTransactionFilters,
   useGetPage,
-  useIsMainnet
+  useHasGrowthWidgets
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { BlockType } from 'types';
@@ -26,7 +26,7 @@ interface StateType {
 export const Blocks = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const { shard } = useGetTransactionFilters();
   const { page, size, firstPageRefreshTrigger } = useGetPage();
   const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
@@ -78,7 +78,7 @@ export const Blocks = () => {
   ) : (
     <>
       {(dataReady === undefined ||
-        (isMainnet && Object.keys(pageHeadersBlocks).length === 0)) && (
+        (hasGrowthWidgets && Object.keys(pageHeadersBlocks).length === 0)) && (
         <Loader />
       )}
       {dataReady === false && <FailedBlocks />}

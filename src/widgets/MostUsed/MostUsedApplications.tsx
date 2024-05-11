@@ -5,7 +5,11 @@ import { useSelector } from 'react-redux';
 
 import { Loader, Overlay, ShowcaseCard, Trim, NetworkLink } from 'components';
 import { urlBuilder, addressIsBech32 } from 'helpers';
-import { useIsMainnet, useFetchGrowthMostUsed, useScollInView } from 'hooks';
+import {
+  useHasGrowthWidgets,
+  useFetchGrowthMostUsed,
+  useScollInView
+} from 'hooks';
 import { faAngleLeft, faAngleRight, faBadgeCheck } from 'icons/solid';
 import { growthMostUsedSelector } from 'redux/selectors';
 import { applicationsRoutes } from 'routes';
@@ -19,7 +23,7 @@ export const MostUsedApplications = ({
   showDashboardLink = false,
   className
 }: MostUsedApplicationsUIType) => {
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
 
   const { isFetched, dailyMostUsedApplications } = useSelector(
     growthMostUsedSelector
@@ -34,7 +38,7 @@ export const MostUsedApplications = ({
     showRightInViewArrow
   } = useScollInView();
 
-  if (!isMainnet) {
+  if (!hasGrowthWidgets) {
     return null;
   }
 

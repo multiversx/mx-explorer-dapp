@@ -3,7 +3,12 @@ import { useLocation } from 'react-router-dom';
 
 import { FormatEGLD, Search } from 'components';
 import { getSubdomainNetwork } from 'helpers';
-import { useActiveRoute, useIsMainnet, usePageStats } from 'hooks';
+import {
+  useActiveRoute,
+  useIsMainnet,
+  useHasGrowthWidgets,
+  usePageStats
+} from 'hooks';
 import { ChartContractsTransactions } from 'pages/Home/components/ChartContractsTransactions';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
@@ -32,6 +37,7 @@ export const Hero = () => {
   const { pathname } = useLocation();
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const { id: activeNetworkId, egldLabel = '' } = useSelector(
     activeNetworkSelector
   );
@@ -42,11 +48,11 @@ export const Hero = () => {
   const isAnalytics =
     activeRoute(analyticsRoutes.analytics) ||
     activeRoute(analyticsRoutes.compare);
-  const showCustomStats = useShowCustomStats() && isMainnet;
+  const showCustomStats = useShowCustomStats() && hasGrowthWidgets;
   const showGlobalStats = useShowGlobalStats();
   const showNodesStats = useShowNodesStats();
-  const showApplicationsStats = useShowApplicationsStats() && isMainnet;
-  const showTransactionsStats = useShowTransactionStats() && isMainnet;
+  const showApplicationsStats = useShowApplicationsStats() && hasGrowthWidgets;
+  const showTransactionsStats = useShowTransactionStats() && hasGrowthWidgets;
 
   const { subdomainNetwork } = getSubdomainNetwork();
   const pathArray = pathname.split('/').filter((path) => path);
