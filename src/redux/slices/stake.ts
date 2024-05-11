@@ -44,7 +44,7 @@ export const stakeSlice = createSlice({
       state.waitingValidators = action.payload.waitingValidators;
       state.allStakedNodes = action.payload.allStakedNodes;
 
-      // TODO: temporary - not in API
+      // not in API
       state.notQualifiedAuctionValidators =
         action.payload.notQualifiedAuctionValidators;
       state.totalNodes = action.payload.totalNodes;

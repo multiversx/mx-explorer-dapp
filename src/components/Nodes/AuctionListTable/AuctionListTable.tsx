@@ -86,7 +86,8 @@ export const AuctionListTable = ({
         return false;
       });
 
-  const isAuctionSortDesc = sort === 'locked' && order === SortOrderEnum.desc; // TODO: replace locked with qualifiedStake
+  const isAuctionSortDesc =
+    sort === 'qualifiedStake' && order === SortOrderEnum.desc;
 
   const expandRowConfig = {
     ...getExpandRowDetails(filteredValidators),

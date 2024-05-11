@@ -78,7 +78,7 @@ export const processStake = (data: StakeType) => {
         }
       : {}),
 
-    // TODO: temporary - not in API
+    // not in API
     ...(data.notQualifiedAuctionValidators !== undefined
       ? {
           notQualifiedAuctionValidators: new BigNumber(

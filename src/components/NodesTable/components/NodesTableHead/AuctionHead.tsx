@@ -24,7 +24,6 @@ export const AuctionHead = () => {
           <Sort id='version' text='Version' />
         </th>
         <th scope='col' data-testid='qualifiedStake'>
-          {/* { TODO: replace locked with qualifiedStake} */}
           <Sort id='qualifiedStake' text='Qualified Stake / Node' />
         </th>
         <th scope='col' data-testid='delta'>

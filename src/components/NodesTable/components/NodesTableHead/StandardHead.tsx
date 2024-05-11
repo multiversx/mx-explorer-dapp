@@ -57,9 +57,7 @@ export const StandardHead = ({
         status === NodeStatusEnum.auction) && (
         <th scope='col' data-testid='lockedStake'>
           <Sort
-            id={
-              'locked' // TODO: replace locked with qualifiedStake: status === NodeStatusEnum.auction ? 'qualifiedStake' : 'locked'
-            }
+            id={status === NodeStatusEnum.auction ? 'qualifiedStake' : 'locked'}
             text={
               status === NodeStatusEnum.auction
                 ? 'Qualified Stake / Node'

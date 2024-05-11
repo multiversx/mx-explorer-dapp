@@ -18,9 +18,7 @@ export const AuctionRow = ({
   showPosition
 }: AuctionRowUIType) => {
   const { sort, order } = useGetSort();
-  const isSortDesc =
-    (sort === 'auctionPosition' && order === SortOrderEnum.desc) ||
-    (sort === 'locked' && order === SortOrderEnum.asc); // TODO: replace locked with qualifiedStake
+  const isSortDesc = sort === 'qualifiedStake' && order === SortOrderEnum.asc;
 
   return (
     <>
