@@ -47,16 +47,20 @@ export const CollectionDetailsCard = () => {
 
   const title = `${
     assets && !scamInfo
-      ? `${name} ${ticker !== name ? `(${ticker})` : ''}`
+      ? `${name}${ticker !== name ? ` (${ticker})` : ''}`
       : ticker
   } ${titleTypeText}`;
+  const seoTitle =
+    assets && !scamInfo && name
+      ? `${name}${ticker !== name ? ` (${ticker})` : ''} ${titleTypeText}`
+      : `${titleTypeText} Details`;
 
   return (
     <HeroDetailsCard
       title={title}
       icon={assets?.pngUrl || assets?.svgUrl}
       seoDetails={{
-        text: '',
+        title: seoTitle,
         description: assets?.description,
         completeDetails: Boolean(!scamInfo && assets)
       }}

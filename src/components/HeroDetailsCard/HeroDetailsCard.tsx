@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { Helmet } from 'react-helmet-async';
 
 import { ImageWithFallback } from 'components';
-import { useGetExplorerTitle } from 'hooks';
+import { useGetExplorerTitle, useIsMainnet } from 'hooks';
 import { WithClassnameType } from 'types';
 import { StatsCard, SmallStatsCard, StatsCardUIType } from 'widgets';
 
@@ -53,12 +53,13 @@ export const HeroDetailsCard = ({
   className,
   'data-testid-prefix': testIdPrefix = ''
 }: HeroDetailsCardUIType) => {
+  const isMainnet = useIsMainnet();
   const explorerTitle = useGetExplorerTitle();
-  const seoTitle = `${
-    seoDetails?.title ?? (typeof title === 'string' ? title : '')
-  }${
-    seoDetails?.title !== seoDetails?.details ? ` (${seoDetails?.details})` : ''
-  } ${seoDetails?.text ?? ''}`;
+  const seoTitle = `${seoDetails?.title}${
+    seoDetails?.details && seoDetails?.title !== seoDetails.details
+      ? ` (${seoDetails.details})`
+      : ''
+  }${seoDetails?.text ? ` ${seoDetails.text}` : ''}`;
   const seoDescription =
     seoDetails?.description ??
     (typeof description === 'string' ? String(description) : '');
@@ -67,37 +68,36 @@ export const HeroDetailsCard = ({
 
   return (
     <>
-      {seoDetails?.completeDetails && (
+      {seoDetails && isMainnet && (
         <Helmet prioritizeSeoTags={true}>
           <title>{`${seoTitle} • MultiversX ${explorerTitle}`}</title>
-          {seoDescription && (
-            <meta name='description' content={seoDescription} />
+          {seoDetails.completeDetails && (
+            <>
+              {seoDescription && (
+                <meta name='description' content={seoDescription} />
+              )}
+              <meta
+                name='twitter:title'
+                content={`${seoTitle} • MultiversX ${explorerTitle}`}
+              />
+              {seoDescription && (
+                <meta name='twitter:description' content={seoDescription} />
+              )}
+              {seoDetails?.icon && (
+                <meta name='twitter:image' content={seoDetails.icon} />
+              )}
+              <meta
+                property='og:title'
+                content={`${seoTitle} • MultiversX ${explorerTitle}`}
+              />
+              {seoDescription && (
+                <meta property='og:description' content={seoDescription} />
+              )}
+              {seoDetails?.icon && (
+                <meta property='og:image' content={seoDetails.icon} />
+              )}
+            </>
           )}
-          <meta
-            name='twitter:title'
-            content={`${seoTitle} • MultiversX ${explorerTitle}`}
-          />
-          {seoDescription && (
-            <meta name='twitter:description' content={seoDescription} />
-          )}
-          {seoDetails?.icon && (
-            <meta name='twitter:image' content={seoDetails.icon} />
-          )}
-          <meta
-            property='og:title'
-            content={`${seoTitle} • MultiversX ${explorerTitle}`}
-          />
-          {seoDescription && (
-            <meta property='og:description' content={seoDescription} />
-          )}
-          {seoDetails?.icon && (
-            <meta property='og:image' content={seoDetails.icon} />
-          )}
-        </Helmet>
-      )}
-      {seoDetails && !seoDetails.completeDetails && (
-        <Helmet prioritizeSeoTags={true}>
-          <title>{`${seoTitle} • MultiversX ${explorerTitle}`}</title>
         </Helmet>
       )}
       <div
