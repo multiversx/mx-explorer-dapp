@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { FormatAmount, Led, Overlay } from 'components';
+import { useGetNodeFilters } from 'hooks';
 import { faDiamondExclamation } from 'icons/solid';
 import { stakeSelector } from 'redux/selectors';
 import { WithClassnameType, NodeQualificationStatusEnum } from 'types';
@@ -22,15 +23,20 @@ export const NodeDangerZoneTooltip = ({
   showText,
   className
 }: NodeDangerZoneTooltipUIType) => {
+  const { isAuctionDangerZone, isQualified } = useGetNodeFilters();
   const {
     isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionQualifiedStake }
+    unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
+
+  const showDangerZone =
+    (isAuctionDangerZone && isQualified) || notQualifiedAuctionValidators;
 
   if (
     !isStakeFetched ||
     !auctionQualified ||
     !minimumAuctionQualifiedStake ||
+    !showDangerZone ||
     qualifiedStake === undefined
   ) {
     return null;

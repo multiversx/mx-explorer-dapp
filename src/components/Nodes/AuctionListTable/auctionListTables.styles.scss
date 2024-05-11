@@ -9,6 +9,12 @@
     overflow-y: clip;
   }
 
+  tfoot {
+    td {
+      border-top-width: 1px;
+    }
+  }
+
   .th-auction-nodes,
   .th-dropped,
   .th-qualified {

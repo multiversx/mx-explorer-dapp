@@ -2,11 +2,11 @@ import { useState } from 'react';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 
+import { ELLIPSIS } from 'appConstants';
 import { PageState, FormatNumber } from 'components';
 import { getStringPlural } from 'helpers';
-import { useGetSort } from 'hooks';
+import { useGetNodeFilters, useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
 import { AuctionValidatorType, SortOrderEnum, WithClassnameType } from 'types';
@@ -21,15 +21,20 @@ export interface AuctionListTableUIType extends WithClassnameType {
 }
 
 export const AuctionListTable = ({
+  auctionListValidators = [],
   showPosition = true,
   className
 }: AuctionListTableUIType) => {
-  const [searchParams] = useSearchParams();
   const { sort, order } = useGetSort();
-  const { isQualified, isAuctionDangerZone } = Object.fromEntries(searchParams);
+  const { isQualified, isAuctionDangerZone } = useGetNodeFilters();
 
   const {
-    unprocessed: { minimumAuctionQualifiedStake }
+    unprocessed: {
+      minimumAuctionQualifiedStake,
+      auctionValidators,
+      qualifiedAuctionValidators,
+      notQualifiedAuctionValidators
+    }
   } = useSelector(stakeSelector);
 
   const [qualifiedExpanded, setQualifiedExpanded] = useState(false);
@@ -53,7 +58,7 @@ export const AuctionListTable = ({
     ? auctionListValidators
     : auctionListValidators.filter((validator) => {
         if (
-          isQualified === 'true' &&
+          isQualified &&
           isAuctionDangerZone === undefined &&
           new BigNumber(
             validator.qualifiedAuctionValidators ?? 0
@@ -62,7 +67,7 @@ export const AuctionListTable = ({
           return true;
         }
         if (
-          isAuctionDangerZone === 'true' &&
+          isAuctionDangerZone &&
           new BigNumber(
             validator.qualifiedAuctionValidators ?? 0
           ).isGreaterThan(0) &&
@@ -72,7 +77,7 @@ export const AuctionListTable = ({
         }
 
         if (
-          isQualified === 'false' &&
+          isQualified === false &&
           new BigNumber(validator.qualifiedAuctionValidators ?? 0).isZero()
         ) {
           return true;
@@ -104,6 +109,15 @@ export const AuctionListTable = ({
       accumulator.plus(new BigNumber(currentValue?.auctionValidators ?? 0)),
     new BigNumber(0)
   );
+
+  const tableTotalQualified = filteredValidators.reduce(
+    (accumulator, currentValue) =>
+      accumulator.plus(
+        new BigNumber(currentValue?.qualifiedAuctionValidators ?? 0)
+      ),
+    new BigNumber(0)
+  );
+
   const tableTotalDropped = filteredValidators.reduce(
     (accumulator, currentValue) =>
       accumulator.plus(
@@ -115,13 +129,6 @@ export const AuctionListTable = ({
       ),
     new BigNumber(0)
   );
-  const tableTotalQualified = filteredValidators.reduce(
-    (accumulator, currentValue) =>
-      accumulator.plus(
-        new BigNumber(currentValue?.qualifiedAuctionValidators ?? 0)
-      ),
-    new BigNumber(0)
-  );
 
   const qualifiedValidators = filteredValidators.filter((validator) =>
     new BigNumber(validator.qualifiedAuctionValidators ?? 0).isGreaterThan(0)
@@ -129,6 +136,16 @@ export const AuctionListTable = ({
   const notQualifiedValidators = filteredValidators.filter((validator) =>
     new BigNumber(validator.qualifiedAuctionValidators ?? 0).isZero()
   );
+
+  const footerTotalAuction = hasNoFilters
+    ? auctionValidators
+    : tableTotalAuction;
+  const footerTotalQualified = hasNoFilters
+    ? qualifiedAuctionValidators
+    : tableTotalQualified;
+  const footerTotalDropped = hasNoFilters
+    ? notQualifiedAuctionValidators
+    : tableTotalDropped;
 
   if (filteredValidators.length === 0) {
     return (
@@ -175,25 +192,47 @@ export const AuctionListTable = ({
               />
             );
           })}
+        </tbody>
+        <tfoot>
           <tr>
             {showPosition && <td></td>}
             <td></td>
             <td className='text-neutral-300'>
-              <FormatNumber value={tableTotalAuction} />{' '}
-              {getStringPlural(tableTotalAuction, { string: 'node' })}
+              {footerTotalAuction !== undefined ? (
+                <>
+                  <FormatNumber value={footerTotalAuction} />{' '}
+                  {getStringPlural(footerTotalAuction, { string: 'node' })}
+                </>
+              ) : (
+                ELLIPSIS
+              )}
             </td>
             <td className='text-neutral-300'>
-              <FormatNumber value={tableTotalQualified} />{' '}
-              {getStringPlural(tableTotalQualified, { string: 'node' })}
+              {footerTotalQualified !== undefined ? (
+                <>
+                  <FormatNumber value={footerTotalQualified} />{' '}
+                  {getStringPlural(footerTotalQualified, {
+                    string: 'node'
+                  })}
+                </>
+              ) : (
+                ELLIPSIS
+              )}
             </td>
             <td className='text-neutral-300'>
-              <FormatNumber value={tableTotalDropped} />{' '}
-              {getStringPlural(tableTotalDropped, { string: 'node' })}
+              {footerTotalDropped !== undefined ? (
+                <>
+                  <FormatNumber value={tableTotalDropped} />{' '}
+                  {getStringPlural(tableTotalDropped, { string: 'node' })}
+                </>
+              ) : (
+                ELLIPSIS
+              )}
             </td>
             <td></td>
             <td></td>
           </tr>
-        </tbody>
+        </tfoot>
       </table>
     </div>
   );

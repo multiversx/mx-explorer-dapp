@@ -31,6 +31,7 @@ export const AuctionListBaseRow = ({
     owner,
     identity,
     avatar,
+    bls,
     auctionTopUp,
     qualifiedStake,
     auctionValidators,
@@ -43,9 +44,9 @@ export const AuctionListBaseRow = ({
   const identityLink = identity
     ? urlBuilder.identityDetails(identity)
     : owner
-    ? urlBuilder.providerDetails(owner)
-    : name
-    ? urlBuilder.nodeDetails(name)
+    ? urlBuilder.accountDetails(owner)
+    : bls
+    ? urlBuilder.nodeDetails(bls)
     : '';
 
   const bNauctionValidators = new BigNumber(auctionValidators ?? 0);
@@ -58,6 +59,19 @@ export const AuctionListBaseRow = ({
     .toNumber();
   const formattedDroppedValidators =
     droppedValidators ?? computedDroppedValidators;
+
+  const IdentityName = () => {
+    if (name) {
+      return <>{name.length > 70 ? <Trim text={name} /> : name}</>;
+    }
+    if (owner) {
+      return <Trim text={owner} />;
+    }
+    if (bls) {
+      return <Trim text={name} />;
+    }
+    return 'N/A';
+  };
 
   return (
     <tr
@@ -77,18 +91,12 @@ export const AuctionListBaseRow = ({
             />
           </NetworkLink>
           <div className='d-flex flex-column'>
-            {identityLink && (
-              <NetworkLink
-                to={identityLink}
-                className='trim-wrapper trim-size-xl font-headings-regular'
-              >
-                {name && name.length > 70 ? (
-                  <Trim text={name} />
-                ) : (
-                  <>{name ?? 'N/A'}</>
-                )}
-              </NetworkLink>
-            )}
+            <NetworkLink
+              to={identityLink}
+              className='trim-wrapper trim-size-xl font-headings-regular'
+            >
+              <IdentityName />
+            </NetworkLink>
             {details && (
               <span className='text-neutral-400 trim-wrapper trim-size-xl'>
                 <Trim text={details} className='text-neutral-400' />

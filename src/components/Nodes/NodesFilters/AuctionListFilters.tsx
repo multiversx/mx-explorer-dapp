@@ -13,12 +13,10 @@ import { faDiamondExclamation } from 'icons/solid';
 import { stakeSelector } from 'redux/selectors';
 
 export interface AuctionListFiltersUIType {
-  onlySearch?: boolean;
+  hasSearch?: boolean;
 }
 
-export const AuctionListFilters = ({
-  onlySearch
-}: AuctionListFiltersUIType) => {
+export const AuctionListFilters = ({ hasSearch }: AuctionListFiltersUIType) => {
   const {
     unprocessed: {
       qualifiedAuctionValidators,
@@ -187,42 +185,44 @@ export const AuctionListFilters = ({
             </button>
           </li>
         </ul>
-        <div role='search' className={onlySearch ? 'search-lg' : 'search-md'}>
-          <div className='input-group input-group-search input-group-seamless'>
-            <input
-              type='text'
-              className='form-control'
-              value={inputValue || ''}
-              onChange={changeValidatorValue}
-              onKeyDown={(keyEvent: React.KeyboardEvent) => {
-                if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-                  updateSearchValue(inputValue);
-                }
-              }}
-              placeholder='Search'
-              name='validatorSearch'
-              data-testid='validatorSearch'
-            />
-
-            {inputValue ? (
-              <button
-                type='reset'
-                className='input-group-text'
-                onClick={() => {
-                  updateSearchValue('');
-                  setInputValue('');
+        {hasSearch && (
+          <div role='search' className='search-md'>
+            <div className='input-group input-group-search input-group-seamless'>
+              <input
+                type='text'
+                className='form-control'
+                value={inputValue || ''}
+                onChange={changeValidatorValue}
+                onKeyDown={(keyEvent: React.KeyboardEvent) => {
+                  if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+                    updateSearchValue(inputValue);
+                  }
                 }}
-                data-testid='resetSearch'
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </button>
-            ) : (
-              <button type='submit' className='input-group-text'>
-                <FontAwesomeIcon icon={faSearch} />
-              </button>
-            )}
+                placeholder='Search'
+                name='validatorSearch'
+                data-testid='validatorSearch'
+              />
+
+              {inputValue ? (
+                <button
+                  type='reset'
+                  className='input-group-text'
+                  onClick={() => {
+                    updateSearchValue('');
+                    setInputValue('');
+                  }}
+                  data-testid='resetSearch'
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              ) : (
+                <button type='submit' className='input-group-text'>
+                  <FontAwesomeIcon icon={faSearch} />
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -131,6 +131,7 @@ export interface AuctionValidatorType {
   name: string;
   stake: string;
   locked: string;
+  bls?: string;
   owner?: string;
   identity?: string;
   description?: string;

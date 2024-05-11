@@ -16,6 +16,14 @@ export const NetworkLink = ({
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
   const { subdomainNetwork } = getSubdomainNetwork();
 
+  if (!to) {
+    return (
+      <span data-testid={dataTestId} className={rest?.className}>
+        {children}
+      </span>
+    );
+  }
+
   if (!to.startsWith('/')) {
     console.error('Link not prepeded by / : ', to);
     to = `/${to}`;

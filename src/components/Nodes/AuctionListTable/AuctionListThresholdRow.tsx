@@ -23,6 +23,10 @@ export const AuctionListThresholdRow = ({
   className
 }: AuctionListThresholdRowUIType) => {
   const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
+  const { qualifiedValidators, notQualifiedValidators } =
+    thresholdRowConfig ?? {};
+  const hasValidatorCount =
+    qualifiedValidators !== undefined && notQualifiedValidators !== undefined;
 
   return (
     <tr className={classNames('threshold-row', className)}>
@@ -31,31 +35,25 @@ export const AuctionListThresholdRow = ({
           <div className='d-flex flex-fill flex-column w-0'>
             <div className='d-flex align-items-center gap-2 text-neutral-500'>
               <FontAwesomeIcon icon={faUp} />
-              {thresholdRowConfig?.qualifiedValidators &&
-                thresholdRowConfig?.notQualifiedValidators && (
-                  <FormatNumber
-                    value={
-                      isSortDesc
-                        ? thresholdRowConfig.notQualifiedValidators
-                        : thresholdRowConfig.qualifiedValidators
-                    }
-                  />
-                )}{' '}
+              {hasValidatorCount && (
+                <FormatNumber
+                  value={
+                    isSortDesc ? notQualifiedValidators : qualifiedValidators
+                  }
+                />
+              )}{' '}
               {isSortDesc ? 'Not Qualified' : 'Qualified'}
             </div>
             <hr className='d-flex flex-fill text-neutral-800 opacity-100 my-2' />
             <div className='d-flex align-items-center gap-2 text-neutral-500'>
               <FontAwesomeIcon icon={faDown} />
-              {thresholdRowConfig?.qualifiedValidators &&
-                thresholdRowConfig?.notQualifiedValidators && (
-                  <FormatNumber
-                    value={
-                      isSortDesc
-                        ? thresholdRowConfig.qualifiedValidators
-                        : thresholdRowConfig.notQualifiedValidators
-                    }
-                  />
-                )}{' '}
+              {hasValidatorCount && (
+                <FormatNumber
+                  value={
+                    isSortDesc ? qualifiedValidators : notQualifiedValidators
+                  }
+                />
+              )}{' '}
               {isSortDesc ? 'Qualified' : 'Not Qualified'}
             </div>
           </div>
