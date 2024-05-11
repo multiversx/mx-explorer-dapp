@@ -22,11 +22,16 @@ import {
   InfoTooltip
 } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
-import { useAdapter, useGetPage, useGetSort, useHasGrowthWidgets } from 'hooks';
+import {
+  useAdapter,
+  useGetPage,
+  useGetSort,
+  useHasGrowthWidgets,
+  useFetchGrowthMostUsed
+} from 'hooks';
 import { faBadgeCheck } from 'icons/solid';
-import { activeNetworkSelector } from 'redux/selectors';
-import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
-import { AccountType, SortOrderEnum } from 'types';
+import { activeNetworkSelector, growthMostUsedSelector } from 'redux/selectors';
+import { AccountType } from 'types';
 import { MostUsedApplications } from 'widgets';
 
 import { FailedApplications } from './components/FailedApplications';
@@ -36,7 +41,10 @@ export const Applications = () => {
   const [searchParams] = useSearchParams();
   const hasGrowthWidgets = useHasGrowthWidgets();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
+  const { isFetched: isGrowthDataFetched } = useSelector(
+    growthMostUsedSelector
+  );
+  useFetchGrowthMostUsed();
 
   const sort = useGetSort();
   const { page, size } = useGetPage();
@@ -49,21 +57,17 @@ export const Applications = () => {
     ELLIPSIS
   );
 
-  if (!sort.sort) {
-    sort.sort = 'transfersLast24h';
-    sort.order = SortOrderEnum.desc;
-  }
-
   const fetchApplications = () => {
     setDataChanged(true);
     Promise.all([
       getAccounts({
         page,
-        size: size ?? 15,
-        ...sort,
+        size,
         isSmartContract: true,
         withOwnerAssets: true,
-        withDeployInfo: true
+        withDeployInfo: true,
+        withScrCount: true,
+        ...sort
       }),
       getAccountsCount({ isSmartContract: true })
     ])
@@ -83,12 +87,13 @@ export const Applications = () => {
     fetchApplications();
   }, [activeNetworkId, searchParams]);
 
+  if (dataReady === undefined || (hasGrowthWidgets && !isGrowthDataFetched)) {
+    return <Loader />;
+  }
+
   return (
     <div className='container page-content'>
       {hasGrowthWidgets && <MostUsedApplications className='mb-3' />}
-      {(dataReady === undefined ||
-        (hasGrowthWidgets &&
-          Object.keys(pageHeadersAccounts).length === 0)) && <Loader />}
       {dataReady === false && <FailedApplications />}
       {dataReady === true && (
         <div className='row'>
@@ -128,7 +133,7 @@ export const Applications = () => {
                             <th>
                               <Sort id='balance' field='Balance' />
                             </th>
-                            <th className='text-end'>
+                            <th>
                               <Sort
                                 id='transfersLast24h'
                                 field='Transactions / 24h'
@@ -190,12 +195,17 @@ export const Applications = () => {
                               <td className='text-neutral-100'>
                                 <FormatAmount value={account.balance} />
                               </td>
-                              <td className='text-end'>
-                                {account.transfersLast24h && (
+                              <td>
+                                {account.transfersLast24h ? (
+                                  formatBigNumber({
+                                    value: account.transfersLast24h
+                                  })
+                                ) : (
                                   <>
-                                    {formatBigNumber({
-                                      value: account.transfersLast24h
-                                    })}
+                                    {account.scrCount &&
+                                      formatBigNumber({
+                                        value: account.scrCount
+                                      })}
                                   </>
                                 )}
                               </td>
