@@ -62,13 +62,13 @@ export const NftDetailsCard = () => {
       : titleTickerText
   } ${getNftText(type)}`;
   const seoTitle =
-    !scamInfo && name && assets
+    !scamInfo && assets
       ? `${name}${
           titleTickerText && titleTickerText !== name
             ? ` (${titleTickerText})`
             : ''
-        } ${getNftText(type)}`
-      : `${getNftText(type)} Details`;
+        }`
+      : '';
 
   const nftPreview = media?.[0]?.thumbnailUrl ?? media?.[0]?.url;
   const description = metadata?.description ?? assets?.description;

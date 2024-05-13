@@ -51,9 +51,9 @@ export const CollectionDetailsCard = () => {
       : ticker
   } ${titleTypeText}`;
   const seoTitle =
-    assets && !scamInfo && name
-      ? `${name}${ticker !== name ? ` (${ticker})` : ''} ${titleTypeText}`
-      : `${titleTypeText} Details`;
+    assets && !scamInfo
+      ? `${name}${ticker !== name ? ` (${ticker})` : ''}`
+      : '';
 
   return (
     <HeroDetailsCard

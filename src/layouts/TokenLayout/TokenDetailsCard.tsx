@@ -37,8 +37,8 @@ export const TokenDetailsCard = () => {
     assets ? `${name} ${ticker !== name ? `(${ticker})` : ''}` : ticker
   } Token`;
   const seoTitle = assets
-    ? `${name}${ticker !== name ? ` (${ticker})` : ''} Token`
-    : 'Token Details';
+    ? `${name}${ticker !== name ? ` (${ticker})` : ''}`
+    : '';
 
   const detailItems = [
     assets?.description
