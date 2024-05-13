@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, Outlet } from 'react-router-dom';
 import { UAParser } from 'ua-parser-js';
 
-import { NotificationsBar, NetworkReady } from 'components';
+import { NotificationsBar, NetworkReady, MetaTags } from 'components';
 import {
   useFetchStats,
   useFetchEconomics,
@@ -88,6 +88,7 @@ export const Layout = () => {
           <Footer />
         </div>
       </NetworkReady>
+      <MetaTags />
     </div>
   );
 };

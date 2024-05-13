@@ -24,7 +24,7 @@ export const metaTagsSlice = createSlice({
   initialState: getInitialMetaTagsState(),
   reducers: {
     setMetaTags: (state: MetaTagsType, action: PayloadAction<MetaTagsType>) => {
-      state.pageName = action.payload.pageName;
+      state.pageName = action.payload.pageName ?? state.pageName;
       state.pageDetails = action.payload.pageDetails;
       state.description = action.payload.description ?? DEFAULT_DESCRIPTION;
       state.preview = action.payload.preview ?? DEFAULT_PREVIEW;
