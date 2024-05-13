@@ -17,7 +17,7 @@ import {
   useGetSearch,
   useGetPage,
   useActiveRoute,
-  useIsMainnet
+  useHasGrowthWidgets
 } from 'hooks';
 import { pageHeadersCollectionsStatsSelector } from 'redux/selectors/pageHeadersCollectionsStats';
 import { collectionRoutes } from 'routes';
@@ -29,7 +29,7 @@ import { NoCollections } from './components/NoCollections';
 
 export const Collections = () => {
   const ref = useRef(null);
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const activeRoute = useActiveRoute();
   const { page, size } = useGetPage();
   const { search } = useGetSearch();
@@ -84,9 +84,8 @@ export const Collections = () => {
   return (
     <>
       {(dataReady === undefined ||
-        (isMainnet && Object.keys(pageHeadersCollections).length === 0)) && (
-        <Loader />
-      )}
+        (hasGrowthWidgets &&
+          Object.keys(pageHeadersCollections).length === 0)) && <Loader />}
       {dataReady === false && <FailedCollections />}
 
       <div ref={ref}>

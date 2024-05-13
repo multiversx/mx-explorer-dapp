@@ -11,7 +11,7 @@ import {
   useGetSort,
   useActiveRoute,
   useGetPage,
-  useIsMainnet
+  useHasGrowthWidgets
 } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
 import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
@@ -27,7 +27,7 @@ export const Tokens = () => {
   const ref = useRef(null);
 
   const activeRoute = useActiveRoute();
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const { search: searchLocation } = useLocation();
   const { search } = useGetSearch();
   const { page, size } = useGetPage();
@@ -61,7 +61,7 @@ export const Tokens = () => {
   return (
     <>
       {(dataReady === undefined ||
-        (isMainnet && Object.keys(pageHeadersTokens).length === 0)) && (
+        (hasGrowthWidgets && Object.keys(pageHeadersTokens).length === 0)) && (
         <Loader />
       )}
       {dataReady === false && <FailedTokens />}
