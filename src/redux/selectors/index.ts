@@ -14,6 +14,7 @@ export * from './growthEconomics';
 export * from './interface';
 export * from './markers';
 export * from './miniBlock';
+export * from './metaTags';
 export * from './networks';
 export * from './nft';
 export * from './nodesIdentities';

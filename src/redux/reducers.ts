@@ -18,6 +18,7 @@ import { growthStakingReducer } from './slices/growthStaking';
 import { growthTransactionsReducer } from './slices/growthTransactions';
 import { interfaceReducer } from './slices/interface';
 import { markersReducer } from './slices/markers';
+import { metaTagsReducer } from './slices/metaTags';
 import { miniBlockReducer } from './slices/miniBlock';
 import { networkReducer } from './slices/networks';
 import { nftReducer } from './slices/nft';
@@ -71,6 +72,7 @@ export const customIgnoredSlices = {
   stats: statsReducer,
   token: tokenReducer,
   markers: markersReducer,
+  metaTags: metaTagsReducer,
   miniBlock: miniBlockReducer,
   nft: nftReducer,
   nodesIdentities: nodesIdentitiesReducer,
