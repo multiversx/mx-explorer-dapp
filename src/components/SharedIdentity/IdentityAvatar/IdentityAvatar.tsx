@@ -2,10 +2,10 @@ import classNames from 'classnames';
 
 import { PLACEHOLDER_IMAGE_PATH } from 'appConstants';
 import { ImageWithFallback, Overlay } from 'components';
-import { IdentityType, WithClassnameType } from 'types';
+import { WithClassnameType } from 'types';
 
 interface BaseIdentityType {
-  name: string;
+  name?: string;
   avatar?: string;
   identity?: string;
   description?: string;

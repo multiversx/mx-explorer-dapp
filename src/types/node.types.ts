@@ -128,11 +128,11 @@ export interface ProviderType {
 }
 
 export interface AuctionValidatorType {
-  name: string;
-  stake: string;
-  locked: string;
+  owner: string;
+  name?: string;
+  stake?: string;
+  locked?: string;
   bls?: string;
-  owner?: string;
   identity?: string;
   provider?: string;
   description?: string;
