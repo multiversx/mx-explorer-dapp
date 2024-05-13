@@ -106,21 +106,23 @@ export const Links = (props: LinksPropsType) => {
   };
 
   return (
-    <div className='links'>
+    <menu className='links navbar-nav mt-0' role='menubar'>
       {links.map((link) => {
         return (
-          <NetworkLink
-            key={link.label}
-            to={link.to}
-            onClick={onClick}
-            className={classNames('link', {
-              active: getIsLinkActive(link)
-            })}
-          >
-            {link.label}
-          </NetworkLink>
+          <li key={link.label} role='presentation'>
+            <NetworkLink
+              to={link.to}
+              onClick={onClick}
+              className={classNames('link nav-item', {
+                active: getIsLinkActive(link)
+              })}
+              role='menuitem'
+            >
+              {link.label}
+            </NetworkLink>
+          </li>
         );
       })}
-    </div>
+    </menu>
   );
 };
