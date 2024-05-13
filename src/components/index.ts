@@ -26,6 +26,7 @@ export * from './LockedAmountTooltip';
 export * from './LowLiquidityTooltip';
 export * from './LockedTokenAddressIcon';
 export * from './Marquee';
+export * from './MetaTags';
 export * from './ModalLink';
 export * from './MultilayerPercentage';
 export * from './NetworkReady';
