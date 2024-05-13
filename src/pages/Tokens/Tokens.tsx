@@ -101,7 +101,7 @@ export const Tokens = () => {
                     </div>
                     <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
                       <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
-                        <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+                        <menu className='list-inline m-0 d-flex flex-wrap gap-2'>
                           <li className='list-inline-item me-0'>
                             <NetworkLink
                               to={tokensRoutes.tokens}
@@ -128,7 +128,7 @@ export const Tokens = () => {
                               Meta-ESDT
                             </NetworkLink>
                           </li>
-                        </ul>
+                        </menu>
                         <Filters />
                       </div>
                       {tokens && tokens.length > 0 && (

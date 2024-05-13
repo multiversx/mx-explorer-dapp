@@ -39,8 +39,9 @@ export const TransactionActionToken = ({
               {token.svgUrl && (
                 <img
                   src={token.svgUrl}
-                  alt={token.name}
                   className='side-icon me-1'
+                  alt=''
+                  role='presentation'
                 />
               )}
               <span className='text-truncate'>{token.ticker}</span>

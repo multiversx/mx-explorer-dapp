@@ -97,7 +97,7 @@ export const Collections = () => {
                   <div className='card-header'>
                     <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
                       <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
-                        <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+                        <menu className='list-inline m-0 d-flex flex-wrap gap-2'>
                           <li className='list-inline-item me-0'>
                             <NetworkLink
                               to={collectionRoutes.collections}
@@ -138,7 +138,7 @@ export const Collections = () => {
                               SFT
                             </NetworkLink>
                           </li>
-                        </ul>
+                        </menu>
                         <Filters />
                       </div>
                       <div className='d-none d-sm-flex'>

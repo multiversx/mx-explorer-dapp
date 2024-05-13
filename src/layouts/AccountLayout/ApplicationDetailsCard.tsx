@@ -84,7 +84,7 @@ export const ApplicationDetailsCard = () => {
       iconPlaceholder={<DefaultImage />}
       isVerified={isVerified}
       seoDetails={{
-        text: `${assets?.name ? '' : `${address} App`}`,
+        title: assets?.name ?? 'Application',
         description: assets?.description,
         completeDetails: Boolean(assets?.name)
       }}

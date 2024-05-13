@@ -21,7 +21,8 @@ export const IdentityBlock = ({ block }: { block: BlockType }) => {
               <img
                 src={block?.proposerIdentity?.avatar}
                 className='side-icon me-1'
-                alt=' '
+                alt=''
+                role='presentation'
               />
             )}
             <div className='text-truncate'>{block?.proposerIdentity?.name}</div>

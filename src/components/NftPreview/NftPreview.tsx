@@ -60,7 +60,7 @@ export const Thumbnail = ({
             )}
             <img
               src={thumbnail}
-              alt=' '
+              alt='Preview'
               onLoad={() => {
                 setLoaded(true);
               }}

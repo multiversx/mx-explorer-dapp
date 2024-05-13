@@ -113,18 +113,21 @@ export const ValidatorMap = ({ markers, className }: ValidatorMapType) => {
           scale: 200,
           center: [15, 0]
         }}
+        focusable={false}
+        aria-hidden={true}
+        role='img'
       >
         <Geographies geography={countries}>
           {({ geographies }: any) =>
             geographies.map((geo: any) => (
-              <Geography key={geo.rsmKey} geography={geo} />
+              <Geography key={geo.rsmKey} geography={geo} tabIndex={-1} />
             ))
           }
         </Geographies>
         {localMarkers.map(({ city, longitude, latitude, validators }) => (
           <Marker key={longitude} coordinates={[longitude, latitude]}>
             <MarkerToolTip city={city} validators={validators}>
-              <g>
+              <g tabIndex={-1}>
                 <circle
                   r={calcRadius(validators)}
                   className={`validator-map-marker ${
