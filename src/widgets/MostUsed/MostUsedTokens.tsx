@@ -10,10 +10,10 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
     <div className='card card-black h-100'>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-          <h5 className='table-title text-capitalize'>
+          <p className='h5 table-title text-capitalize'>
             Most transacted Tokens{'  '}
             <span className='text-neutral-500 ms-1'>(daily)</span>
-          </h5>
+          </p>
           <NetworkLink to={tokensRoutes.tokens} className='btn btn-sm btn-dark'>
             Dashboard
           </NetworkLink>
@@ -46,8 +46,9 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
                           {token.extraInfo?.assets?.svgUrl && (
                             <img
                               src={token.extraInfo?.assets.svgUrl}
-                              alt={token.extraInfo?.name ?? token.key}
                               className='side-icon me-1'
+                              alt=''
+                              role='presentation'
                             />
                           )}
                           <div className='text-truncate'>
