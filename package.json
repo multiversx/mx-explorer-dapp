@@ -114,7 +114,7 @@
     "mochawesome-report-generator": "6.2.0",
     "prettier": "3.0.0",
     "run-script-os": "1.1.6",
-    "sass": "1.77.1",
+    "sass": "1.62.1",
     "typescript": "5.1.6",
     "vite": "4.4.12",
     "vite-plugin-mkcert": "1.16.0",
