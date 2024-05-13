@@ -27,7 +27,7 @@ export const metaTagsSlice = createSlice({
       state.pageName = action.payload.pageName ?? state.pageName;
       state.pageDetails = action.payload.pageDetails;
       state.description = action.payload.description ?? DEFAULT_DESCRIPTION;
-      state.preview = action.payload.preview ?? DEFAULT_PREVIEW;
+      // state.preview = action.payload.preview ?? DEFAULT_PREVIEW; - disabled for now
     }
   }
 });

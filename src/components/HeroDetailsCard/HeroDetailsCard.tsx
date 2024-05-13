@@ -62,9 +62,8 @@ export const HeroDetailsCard = ({
       setTimeout(() => {
         dispatch(
           setMetaTags({
-            pageDetails: seoDetails?.title ?? '',
-            description: seoDetails?.description ?? '',
-            preview: seoDetails?.icon ?? ''
+            pageDetails: seoDetails?.title,
+            description: seoDetails?.description
           })
         );
       });
