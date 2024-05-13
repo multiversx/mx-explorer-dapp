@@ -134,6 +134,7 @@ export interface AuctionValidatorType {
   bls?: string;
   owner?: string;
   identity?: string;
+  provider?: string;
   description?: string;
   avatar?: string;
   auctionTopUp?: string;

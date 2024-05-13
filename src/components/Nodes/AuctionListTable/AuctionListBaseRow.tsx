@@ -15,8 +15,27 @@ import {
   Trim
 } from 'components';
 import { urlBuilder } from 'helpers';
+import { AuctionValidatorType } from 'types';
 
 import { AuctionListBaseRowUIType } from './types';
+
+const getIdentityLink = (validator: AuctionValidatorType) => {
+  const { identity, provider, bls, owner } = validator;
+  if (identity) {
+    return urlBuilder.identityDetails(identity);
+  }
+  if (provider) {
+    return urlBuilder.providerDetails(provider);
+  }
+  if (bls) {
+    return urlBuilder.nodeDetails(bls);
+  }
+  if (owner) {
+    return urlBuilder.accountDetailsNodes(owner);
+  }
+
+  return '';
+};
 
 export const AuctionListBaseRow = ({
   validator,
@@ -32,6 +51,7 @@ export const AuctionListBaseRow = ({
     identity,
     avatar,
     bls,
+    provider,
     auctionTopUp,
     qualifiedStake,
     auctionValidators,
@@ -41,13 +61,7 @@ export const AuctionListBaseRow = ({
     auctionPosition
   } = validator;
 
-  const identityLink = identity
-    ? urlBuilder.identityDetails(identity)
-    : owner
-    ? urlBuilder.accountDetailsNodes(owner)
-    : bls
-    ? urlBuilder.nodeDetails(bls)
-    : '';
+  const identityLink = getIdentityLink(validator);
 
   const bNauctionValidators = new BigNumber(auctionValidators ?? 0);
   const bNqualifiedAuctionValidators = new BigNumber(
@@ -64,11 +78,14 @@ export const AuctionListBaseRow = ({
     if (name) {
       return <>{name.length > 70 ? <Trim text={name} /> : name}</>;
     }
-    if (owner) {
-      return <Trim text={owner} />;
+    if (provider) {
+      return <Trim text={provider} />;
     }
     if (bls) {
-      return <Trim text={name} />;
+      return <Trim text={bls} />;
+    }
+    if (owner) {
+      return <Trim text={owner} />;
     }
     return 'N/A';
   };
