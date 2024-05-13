@@ -185,7 +185,8 @@ const ActionText = ({
               <img
                 src={entry.providerAvatar}
                 className='side-icon rounded-circle ms-lg-1 me-2'
-                alt=' '
+                alt=''
+                role='presentation'
               />
             ) : (
               <DefaultAvatar className='side-icon rounded-circle ms-lg-1 me-2' />

@@ -20,8 +20,9 @@ export const CollectionLink = ({ collection, ...rest }: CollectionLinkType) => (
         {collection?.assets?.svgUrl && (
           <img
             src={collection.assets.svgUrl}
-            alt={collection.name}
             className='side-icon me-1'
+            alt=''
+            role='presentation'
           />
         )}
         <div>{collection.ticker ?? collection.collection}</div>

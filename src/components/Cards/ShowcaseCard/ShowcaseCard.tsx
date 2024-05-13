@@ -48,7 +48,8 @@ export const ShowcaseCard = ({
     >
       <img
         src={icon ?? SVG_ICON_PLACEHOLDER_IMAGE_PATH}
-        alt=' '
+        alt=''
+        role='presentation'
         className={classNames('icon-blur-bg img-fluid', {
           default: !Boolean(icon)
         })}

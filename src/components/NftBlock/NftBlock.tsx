@@ -42,8 +42,9 @@ export const NftBlock = ({ value, operationToken }: NftBlockType) => (
                 {operationToken.assets.svgUrl && (
                   <img
                     src={operationToken.assets.svgUrl}
-                    alt={operationToken.name}
                     className='side-icon me-1'
+                    alt=''
+                    role='presentation'
                   />
                 )}
                 <div className='text-truncate'>

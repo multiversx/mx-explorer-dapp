@@ -165,7 +165,11 @@ export const AccountDetailsCard = () => {
                     <div className='d-flex align-items-center'>
                       {assets?.iconSvg && (
                         <div className='side-icon me-1'>
-                          <img src={assets?.iconSvg} alt=' ' />
+                          <img
+                            src={assets?.iconSvg}
+                            alt=''
+                            role='presentation'
+                          />
                         </div>
                       )}
                       <div>{assets?.name ?? 'Address Details'}</div>

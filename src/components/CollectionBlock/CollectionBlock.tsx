@@ -21,7 +21,8 @@ export const CollectionBlock = ({ nft }: { nft: NftType }) => (
               <img
                 src={nft.assets.svgUrl}
                 className='side-icon me-1'
-                alt={nft.collection}
+                alt=''
+                role='presentation'
               />
             )}
             <div className='text-truncate'>{nft.ticker ?? nft.collection}</div>
