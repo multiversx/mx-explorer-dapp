@@ -20,15 +20,12 @@ import { AuctionValidatorType } from 'types';
 import { AuctionListBaseRowUIType } from './types';
 
 const getIdentityLink = (validator: AuctionValidatorType) => {
-  const { identity, provider, bls, owner } = validator;
+  const { identity, provider, owner } = validator;
   if (identity) {
     return urlBuilder.identityDetails(identity);
   }
   if (provider) {
     return urlBuilder.providerDetails(provider);
-  }
-  if (bls) {
-    return urlBuilder.nodeDetails(bls);
   }
   if (owner) {
     return urlBuilder.accountDetailsNodes(owner);
@@ -50,7 +47,6 @@ export const AuctionListBaseRow = ({
     owner,
     identity,
     avatar,
-    bls,
     provider,
     auctionTopUp,
     qualifiedStake,
@@ -80,9 +76,6 @@ export const AuctionListBaseRow = ({
     }
     if (provider) {
       return <Trim text={provider} />;
-    }
-    if (bls) {
-      return <Trim text={bls} />;
     }
     if (owner) {
       return <Trim text={owner} />;
