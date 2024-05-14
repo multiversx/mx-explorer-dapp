@@ -106,12 +106,10 @@ export const AuctionListBaseRow = ({
               className='trim-wrapper trim-size-xl font-headings-regular'
             >
               <IdentityName />
+              {details && (
+                <span className='text-neutral-400 ms-1'>({details})</span>
+              )}
             </NetworkLink>
-            {details && (
-              <span className='text-neutral-400 trim-wrapper trim-size-xl'>
-                <Trim text={details} className='text-neutral-400' />
-              </span>
-            )}
           </div>
         </div>
       </td>

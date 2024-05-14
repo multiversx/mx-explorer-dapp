@@ -20,6 +20,45 @@ export interface AuctionListTableUIType extends WithClassnameType {
   showPosition?: boolean;
 }
 
+const getValidatorDetails = ({
+  validator,
+  validators
+}: {
+  validator: AuctionValidatorType;
+  validators: AuctionValidatorType[];
+}) => {
+  if (!validator || !validators || validators.length === 0) {
+    return '';
+  }
+
+  const { provider, distribution } = validator;
+  if (distribution && Object.keys(distribution).length > 1) {
+    if (provider && distribution[provider]) {
+      return 'Provider';
+    }
+
+    return 'Direct';
+  }
+
+  const multipleIdentityEntries = validators.filter(
+    (filteredValidator) =>
+      validator.identity && validator.identity === filteredValidator.identity
+  ).length;
+  if (multipleIdentityEntries > 1) {
+    return `+${multipleIdentityEntries} more`;
+  }
+
+  const multipleOwnerEntries = validators.filter(
+    (filteredValidator) =>
+      validator.owner && validator.owner === filteredValidator.owner
+  ).length;
+  if (multipleOwnerEntries > 1) {
+    return `+${multipleIdentityEntries} more entries`;
+  }
+
+  return '';
+};
+
 export const AuctionListTable = ({
   auctionListValidators = [],
   showPosition = true,
@@ -178,10 +217,15 @@ export const AuctionListTable = ({
             const showThresholdRow = Boolean(
               thresholdIndex && index === thresholdIndex && hasNoFilters
             );
+            const details = getValidatorDetails({
+              validator,
+              validators: filteredValidators
+            });
 
             return (
               <AuctionListRow
                 validator={validator}
+                details={details}
                 index={index}
                 key={index}
                 expandRowConfig={expandRowConfig}

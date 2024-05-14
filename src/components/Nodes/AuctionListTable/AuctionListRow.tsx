@@ -18,6 +18,7 @@ export interface AuctionListRowUIType extends AuctionListBaseRowUIType {
 
 export const AuctionListRow = ({
   validator,
+  details,
   thresholdRowConfig,
   index,
   showPosition,
@@ -43,6 +44,7 @@ export const AuctionListRow = ({
       {hasExpand && index && expandRowConfig ? (
         <AuctionListExpandRow
           validator={validator}
+          details={details}
           expandRowConfig={expandRowConfig}
           showPosition={showPosition}
           index={index}
@@ -50,6 +52,7 @@ export const AuctionListRow = ({
       ) : (
         <AuctionListBaseRow
           validator={validator}
+          details={details}
           index={index}
           showPosition={showPosition}
         />

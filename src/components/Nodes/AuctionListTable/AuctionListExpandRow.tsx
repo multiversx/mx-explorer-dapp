@@ -54,6 +54,7 @@ export const AuctionListExpandRow = ({
   colSpan = 7,
   index,
   validator,
+  details,
   expandRowConfig,
   showPosition,
   className
@@ -95,6 +96,7 @@ export const AuctionListExpandRow = ({
     return (
       <AuctionListBaseRow
         validator={validator}
+        details={details}
         index={index}
         showPosition={showPosition}
         className={classNames('dh', {
@@ -151,6 +153,7 @@ export const AuctionListExpandRow = ({
   return (
     <AuctionListBaseRow
       validator={validator}
+      details={details}
       index={index}
       showPosition={showPosition}
     />
