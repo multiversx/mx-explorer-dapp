@@ -90,15 +90,6 @@
 /* Base - TODO: Cleanup / split into files
 -------------------------------------------------- */
 
-.ubuntu,
-.windows,
-.blink:not(.ios),
-.webkit:not(.mac-os):not(.ios) {
-  &.scrollbar {
-    margin-right: -1rem;
-  }
-}
-
 .ios {
   .form-control {
     font-size: 1rem;
