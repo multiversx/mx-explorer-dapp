@@ -35,6 +35,9 @@ export const Switcher = () => {
         id='network-switch'
         variant='dark'
         className='btn-unstyled control'
+        aria-haspopup='true'
+        aria-controls='network-switch-menu'
+        aria-label='Change Network'
       >
         <div className='value text-truncate'>{activeNetworkName}</div>
         <FontAwesomeIcon
@@ -44,7 +47,11 @@ export const Switcher = () => {
         />
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu
+        id='network-switch-menu'
+        role='menu'
+        aria-labelledby='network-switch'
+      >
         {links.length > 0 ? (
           <>
             {links.map((link) => (
@@ -56,6 +63,7 @@ export const Switcher = () => {
                   active: activeNetworkId === link.id
                 })}
                 href={link.url}
+                role='menuitem'
               >
                 {link.name}
               </a>
@@ -74,6 +82,7 @@ export const Switcher = () => {
                       active: activeNetworkId === link.id
                     })}
                     href={link.url}
+                    role='menuitem'
                   >
                     {link.name}
                   </a>
@@ -87,6 +96,7 @@ export const Switcher = () => {
                     href={link.url}
                     key={link.url}
                     active={activeNetworkId === link.id}
+                    role='menuitem'
                   >
                     {link.name}
                   </Dropdown.Item>

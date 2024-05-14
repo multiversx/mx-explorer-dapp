@@ -69,7 +69,7 @@ export const Header = (props: HeaderPropsType) => {
 
   return (
     <header className='header'>
-      <div className='wrapper'>
+      <div className='logo-wrapper'>
         <NetworkLink to='/' className='logo' aria-label='MultiversX Explorer'>
           {isMainnet ? (
             <MultiversXLogo />
@@ -82,6 +82,31 @@ export const Header = (props: HeaderPropsType) => {
         </NetworkLink>
       </div>
 
+      <div
+        className={classNames('menu-wrapper', {
+          active: menuActive
+        })}
+      >
+        <Links onClick={onMenuClose} />
+        <Switcher />
+      </div>
+
+      <button
+        type='button'
+        id='ecosystem-menu-button'
+        onClick={onEcosystemMenuToggle}
+        onPointerDown={(e) => e.stopPropagation()}
+        className={classNames('matrix btn-unstyled  btn btn-dark', {
+          active: ecosystemMenuActive
+        })}
+        aria-haspopup='true'
+        aria-controls='ecosystem-menu'
+        aria-label='Ecosystem Menu'
+      >
+        <FontAwesomeIcon icon={faGrid} className='desktop' />
+        <FontAwesomeIcon icon={faGrid2} className='mobile' />
+      </button>
+
       <div className='burger' onClick={onMenuToggle}>
         <div className={classNames('bars', { active: menuActive })}>
           {Array.from({ length: 3 }).map((_item, index) => (
@@ -91,32 +116,12 @@ export const Header = (props: HeaderPropsType) => {
       </div>
 
       <div
-        onClick={onEcosystemMenuToggle}
-        onPointerDown={(e) => e.stopPropagation()}
-        className={classNames('matrix', {
-          active: ecosystemMenuActive
-        })}
-      >
-        <FontAwesomeIcon icon={faGrid} className='desktop' />
-        <FontAwesomeIcon icon={faGrid2} className='mobile' />
-      </div>
-
-      <div
         onPointerDown={(e) => e.stopPropagation()}
         className={classNames('ecosystem-menu-wrapper', {
           active: ecosystemMenuActive
         })}
       >
         <EcosystemMenu />
-      </div>
-
-      <div
-        className={classNames('menu-wrapper', {
-          active: menuActive
-        })}
-      >
-        <Links onClick={onMenuClose} />
-        <Switcher />
       </div>
     </header>
   );

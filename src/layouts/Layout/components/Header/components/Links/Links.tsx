@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { NetworkLink } from 'components';
 import { isContract, addressIsBech32 } from 'helpers';
-import { useActiveRoute, useIsMainnet } from 'hooks';
+import { useActiveRoute, useIsMainnet, useHasGrowthWidgets } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import {
   blocksRoutes,
@@ -26,6 +26,7 @@ export const Links = (props: LinksPropsType) => {
   const activeRoute = useActiveRoute();
   const { hash: address } = useParams();
 
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const isMainnet = useIsMainnet();
   const isAdapterAPI = adapter === 'api';
   const isOnAccountRoute =
@@ -62,7 +63,7 @@ export const Links = (props: LinksPropsType) => {
       label: 'Apps',
       show: true,
       to: applicationsRoutes.applications,
-      activeRoutes: [applicationsRoutes.applications]
+      activeRoutes: Object.values(applicationsRoutes)
     },
     {
       label: 'Tokens',
@@ -88,7 +89,7 @@ export const Links = (props: LinksPropsType) => {
     {
       label: 'Analytics',
       to: analyticsRoutes.analytics,
-      show: isAdapterAPI && isMainnet,
+      show: isAdapterAPI && isMainnet && hasGrowthWidgets,
       activeRoutes: Object.values(analyticsRoutes)
     }
   ].filter((link) => link.show);
@@ -106,21 +107,23 @@ export const Links = (props: LinksPropsType) => {
   };
 
   return (
-    <div className='links'>
+    <menu className='links navbar-nav mt-0' role='menubar'>
       {links.map((link) => {
         return (
-          <NetworkLink
-            key={link.label}
-            to={link.to}
-            onClick={onClick}
-            className={classNames('link', {
-              active: getIsLinkActive(link)
-            })}
-          >
-            {link.label}
-          </NetworkLink>
+          <li key={link.label} role='presentation'>
+            <NetworkLink
+              to={link.to}
+              onClick={onClick}
+              className={classNames('link nav-item', {
+                active: getIsLinkActive(link)
+              })}
+              role='menuitem'
+            >
+              {link.label}
+            </NetworkLink>
+          </li>
         );
       })}
-    </div>
+    </menu>
   );
 };

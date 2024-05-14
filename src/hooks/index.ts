@@ -10,6 +10,7 @@ export * from './useGetExplorerTitle';
 export * from './useGetHash';
 export * from './useGetRemainingTime';
 export * from './useGetURLNetwork';
+export * from './useHasGrowthWidgets';
 export * from './useIsDevnet';
 export * from './useIsMainnet';
 export * from './useIsTestnet';

@@ -36,6 +36,9 @@ export const TokenDetailsCard = () => {
   const title = `${
     assets ? `${name} ${ticker !== name ? `(${ticker})` : ''}` : ticker
   } Token`;
+  const seoTitle = assets
+    ? `${name}${ticker !== name ? ` (${ticker})` : ''}`
+    : '';
 
   const detailItems = [
     assets?.description
@@ -127,7 +130,7 @@ export const TokenDetailsCard = () => {
       title={title}
       icon={assets?.svgUrl || assets?.pngUrl}
       seoDetails={{
-        text: '',
+        title: seoTitle,
         description: assets?.description,
         completeDetails: Boolean(assets)
       }}

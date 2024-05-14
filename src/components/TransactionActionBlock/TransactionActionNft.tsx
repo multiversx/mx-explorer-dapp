@@ -32,7 +32,12 @@ export const TransactionActionNft = ({
   const TokenInfo = () => (
     <div className='d-flex align-items-center symbol text-truncate'>
       {token.svgUrl && (
-        <img src={token.svgUrl} alt={token.name} className='side-icon me-1' />
+        <img
+          src={token.svgUrl}
+          className='side-icon me-1'
+          alt=''
+          role='presentation'
+        />
       )}
       <span className='text-truncate'>{displayIdentifier}</span>
     </div>

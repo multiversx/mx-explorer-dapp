@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { processGrowthEconomics } from 'helpers';
-import { useAdapter, useIsMainnet } from 'hooks';
+import { useAdapter, useHasGrowthWidgets } from 'hooks';
 import { growthEconomicsSelector } from 'redux/selectors';
 import { setGrowthEconomics } from 'redux/slices/growthEconomics';
 
 let currentRequest: any = null;
 
 export const useFetchGrowthEconomics = () => {
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
   const { getGrowthWidget } = useAdapter();
   const { isFetched } = useSelector(growthEconomicsSelector);
@@ -53,7 +53,7 @@ export const useFetchGrowthEconomics = () => {
   };
 
   useEffect(() => {
-    if (!isFetched && isMainnet) {
+    if (!isFetched && hasGrowthWidgets) {
       fetchGrowthEconomics();
     }
   }, []);

@@ -40,7 +40,9 @@ export const HeroHome = () => {
                 </div>
                 <TransactionsStatsCard />
                 <AccountsStatsCard />
-                {isMainnet && <ValidatorsStatusCard isSmall />}
+                {isMainnet && process.env.VITE_APP_MARKERS_API_URL && (
+                  <ValidatorsStatusCard isSmall />
+                )}
               </div>
             </div>
             <div className='col-lg-4 d-flex flex-row align-items-end justify-content-center justify-content-lg-end mt-3 mt-lg-0 gap-spacer gap-lg-2'>

@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { processGrowthPrice } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAdapter, useHasGrowthWidgets } from 'hooks';
 import { growthPriceSelector } from 'redux/selectors';
 import { setGrowthPrice } from 'redux/slices/growthPrice';
 
 export const useFetchGrowthPrice = () => {
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
   const { isFetched } = useSelector(growthPriceSelector);
   const { getGrowthWidget } = useAdapter();
@@ -34,5 +35,9 @@ export const useFetchGrowthPrice = () => {
     }
   };
 
-  useEffect(fetchGrowthPrice, []);
+  useEffect(() => {
+    if (hasGrowthWidgets) {
+      fetchGrowthPrice();
+    }
+  }, [hasGrowthWidgets]);
 };

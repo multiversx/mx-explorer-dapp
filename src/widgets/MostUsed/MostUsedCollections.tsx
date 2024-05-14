@@ -16,10 +16,10 @@ export const MostUsedCollections = ({
     <div className='card card-black h-100'>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-          <h5 className='table-title text-capitalize'>
+          <p className='h5 table-title text-capitalize'>
             Most transacted NFTs{'  '}
             <span className='text-neutral-500 ms-1'>(daily)</span>
-          </h5>
+          </p>
           <NetworkLink
             to={collectionRoutes.collections}
             className='btn btn-sm btn-dark'
@@ -57,8 +57,9 @@ export const MostUsedCollections = ({
                           {collection.extraInfo.assets?.svgUrl && (
                             <img
                               src={collection.extraInfo.assets.svgUrl}
-                              alt={collection.extraInfo?.name ?? collection.key}
                               className='side-icon me-1'
+                              alt=''
+                              role='presentation'
                             />
                           )}
                           <div className='text-truncate'>
