@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageSize, FormatAmount, AccountLink } from 'components';
-import { useAdapter, useGetPage, useIsMainnet } from 'hooks';
+import { useAdapter, useGetPage, useHasGrowthWidgets } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { AccountType } from 'types';
@@ -14,7 +14,7 @@ import { NoAccounts } from './components/NoAccounts';
 export const Accounts = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
 
@@ -52,9 +52,8 @@ export const Accounts = () => {
   return (
     <>
       {(dataReady === undefined ||
-        (isMainnet && Object.keys(pageHeadersAccounts).length === 0)) && (
-        <Loader />
-      )}
+        (hasGrowthWidgets &&
+          Object.keys(pageHeadersAccounts).length === 0)) && <Loader />}
       {dataReady === false && <FailedAccounts />}
 
       <div ref={ref}>

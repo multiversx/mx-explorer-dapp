@@ -98,7 +98,7 @@ export const AuctionListFilters = ({
         Nodes
       </h5>
       {!onlySearch && (
-        <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+        <menu className='list-inline m-0 d-flex flex-wrap gap-2'>
           <li className='list-inline-item me-0'>
             <button
               type='button'
@@ -180,7 +180,7 @@ export const AuctionListFilters = ({
               )}
             </button>
           </li>
-        </ul>
+        </menu>
       )}
       <div role='search' className={onlySearch ? 'search-lg' : 'search-sm'}>
         <div className='input-group input-group-sm input-group-seamless'>

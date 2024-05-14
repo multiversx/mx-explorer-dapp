@@ -73,12 +73,13 @@ const Option: typeof components.Option = (props) => {
         {(props?.data as TokenSelectOptionType)?.svgUrl && (
           <img
             src={(props.data as TokenSelectOptionType).svgUrl}
-            alt=''
             className='side-icon me-1'
+            alt=''
+            role='presentation'
           />
         )}
         {(props.data as TokenSelectOptionType).value === egldSearchLabel && (
-          <EgldSymbol className='side-icon me-1' />
+          <EgldSymbol className='side-icon me-1' role='presentation' />
         )}
         <span className='text-truncate'>{props.label}</span>
       </div>

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
 import { InfoTooltip } from 'components';
-import { useFetchGrowthHero, useIsMainnet } from 'hooks';
+import { useFetchGrowthHero, useHasGrowthWidgets } from 'hooks';
 import { faCircleBolt } from 'icons/solid';
 import {
   growthHeroSelector,
@@ -13,8 +13,7 @@ import {
 import { StatsCard } from 'widgets';
 
 export const AccountsStatsCard = () => {
-  const isMainnet = useIsMainnet();
-
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const { totalAccounts, activeAccountsToday } =
     useSelector(growthHeroSelector);
   const { accounts } = useSelector(statsSelector);
@@ -23,14 +22,14 @@ export const AccountsStatsCard = () => {
   const fetchHero = useFetchGrowthHero();
 
   useEffect(() => {
-    if (isMainnet) {
+    if (hasGrowthWidgets) {
       fetchHero();
     }
-  }, [timestamp, isMainnet]);
+  }, [timestamp, hasGrowthWidgets]);
 
   return (
     <>
-      {isMainnet ? (
+      {hasGrowthWidgets ? (
         <StatsCard title='Total Accounts' value={totalAccounts}>
           <FontAwesomeIcon icon={faCircleBolt} className='me-2' />
           {activeAccountsToday} active today

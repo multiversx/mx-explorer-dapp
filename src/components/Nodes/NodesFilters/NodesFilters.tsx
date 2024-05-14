@@ -139,7 +139,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
   return (
     <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
       {!onlySearch && (
-        <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+        <menu className='list-inline m-0 d-flex flex-wrap gap-2'>
           <li className='list-inline-item me-0'>
             <button
               type='button'
@@ -346,7 +346,7 @@ export const NodesFilters = ({ onlySearch }: { onlySearch?: boolean }) => {
               </Dropdown.Menu>
             </Dropdown>
           </li>
-        </ul>
+        </menu>
       )}
       <div role='search' className={onlySearch ? 'search-lg' : 'search-sm'}>
         <div className='input-group input-group-sm input-group-seamless'>

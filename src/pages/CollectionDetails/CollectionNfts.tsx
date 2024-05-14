@@ -103,8 +103,9 @@ export const CollectionNfts = () => {
                                 {nft.assets && nft.assets.svgUrl && (
                                   <img
                                     src={nft.assets.svgUrl}
-                                    alt={nft.name}
                                     className='side-icon me-1'
+                                    alt=''
+                                    role='presentation'
                                   />
                                 )}
                                 <div>{nft.identifier}</div>

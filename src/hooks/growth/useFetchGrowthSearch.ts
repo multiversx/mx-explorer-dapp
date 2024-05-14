@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { processGrowthSearch } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAdapter, useHasGrowthWidgets } from 'hooks';
 import { growthSearchSelector } from 'redux/selectors';
 import { setGrowthSearch } from 'redux/slices/growthSearch';
 
 export const useFetchGrowthSearch = () => {
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
   const { isFetched } = useSelector(growthSearchSelector);
   const { getGrowthWidget } = useAdapter();
@@ -29,5 +30,9 @@ export const useFetchGrowthSearch = () => {
     }
   };
 
-  useEffect(fetchGrowthSearch, []);
+  useEffect(() => {
+    if (hasGrowthWidgets) {
+      fetchGrowthSearch();
+    }
+  }, [hasGrowthWidgets]);
 };

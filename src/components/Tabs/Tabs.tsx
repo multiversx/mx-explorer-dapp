@@ -47,16 +47,17 @@ export const Tabs = (props: TabsPropsType) => {
     extraTabs.filter((extraTab) => checkTabStatus(extraTab)).length > 0;
 
   return (
-    <div className='tabs'>
+    <menu className='navbar-nav flex-row flex-wrap tabs'>
       {displayTabs.map((tab) => (
-        <NetworkLink
-          key={tab.tabTo}
-          to={tab.tabTo}
-          className={`tab ${checkTabStatus(tab) ? 'active' : ''}`}
-          preventScrollReset={true}
-        >
-          {tab.tabLabel}
-        </NetworkLink>
+        <li key={tab.tabTo} className='d-flex'>
+          <NetworkLink
+            to={tab.tabTo}
+            className={`nav-item tab ${checkTabStatus(tab) ? 'active' : ''}`}
+            preventScrollReset={true}
+          >
+            {tab.tabLabel}
+          </NetworkLink>
+        </li>
       ))}
       {extraTabs.length > 0 && (
         <Dropdown
@@ -69,6 +70,7 @@ export const Tabs = (props: TabsPropsType) => {
           <Dropdown.Toggle
             as={CustomToggle}
             isExtraTabActive={isExtraTabActive}
+            aria-label='Show More'
           >
             <FontAwesomeIcon icon={faEllipsis} />
           </Dropdown.Toggle>
@@ -87,6 +89,6 @@ export const Tabs = (props: TabsPropsType) => {
           </Dropdown.Menu>
         </Dropdown>
       )}
-    </div>
+    </menu>
   );
 };

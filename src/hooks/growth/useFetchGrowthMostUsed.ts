@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useAdapter } from 'hooks';
+import { useAdapter, useHasGrowthWidgets } from 'hooks';
 import { growthMostUsedSelector } from 'redux/selectors';
 import { setGrowthMostUsed } from 'redux/slices/growthMostUsed';
 
 export const useFetchGrowthMostUsed = () => {
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
   const { isFetched } = useSelector(growthMostUsedSelector);
   const { getGrowthWidget } = useAdapter();
@@ -26,5 +27,9 @@ export const useFetchGrowthMostUsed = () => {
     }
   };
 
-  useEffect(fetchGrowthMostUsed, []);
+  useEffect(() => {
+    if (hasGrowthWidgets) {
+      fetchGrowthMostUsed();
+    }
+  }, [hasGrowthWidgets]);
 };

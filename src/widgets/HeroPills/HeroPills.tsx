@@ -1,11 +1,11 @@
-import { useIsMainnet } from 'hooks';
+import { useHasGrowthWidgets } from 'hooks';
 import { WithClassnameType } from 'types';
 import { ActiveAccountsHeroPill } from './ActiveAccountsHeroPill';
 import { EpochHeroPill } from './EpochHeroPill';
 import { PriceHeroPill } from './PriceHeroPill';
 
 export const HeroPills = ({ className }: WithClassnameType) => {
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
 
   return (
     <div className='hero-pills-wrapper'>
@@ -15,7 +15,7 @@ export const HeroPills = ({ className }: WithClassnameType) => {
         }`}
       >
         <EpochHeroPill />
-        {isMainnet && (
+        {hasGrowthWidgets && (
           <>
             <PriceHeroPill />
             <ActiveAccountsHeroPill />
