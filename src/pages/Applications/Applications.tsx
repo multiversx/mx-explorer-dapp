@@ -133,12 +133,7 @@ export const Applications = () => {
                             <th>
                               <Sort id='balance' field='Balance' />
                             </th>
-                            <th>
-                              <Sort
-                                id='transfersLast24h'
-                                field='Transactions / 24h'
-                              />
-                            </th>
+                            <th>Transactions</th>
                             <th className='text-end'>Deployed</th>
                           </tr>
                         </thead>
