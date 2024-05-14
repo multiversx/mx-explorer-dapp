@@ -148,7 +148,9 @@ export const Hero = () => {
                   <TransactionsStatsCard />
                   <AccountsStatsCard />
                   <BlockHeightStatsCard />
-                  {isMainnet && <ValidatorsStatusCard isSmall />}
+                  {isMainnet && process.env.VITE_APP_MARKERS_API_URL && (
+                    <ValidatorsStatusCard isSmall />
+                  )}
                 </div>
               )}
             </>
