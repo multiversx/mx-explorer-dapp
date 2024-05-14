@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { NetworkLink } from 'components';
 import { isContract, addressIsBech32 } from 'helpers';
-import { useActiveRoute, useIsMainnet } from 'hooks';
+import { useActiveRoute, useIsMainnet, useHasGrowthWidgets } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import {
   blocksRoutes,
@@ -26,6 +26,7 @@ export const Links = (props: LinksPropsType) => {
   const activeRoute = useActiveRoute();
   const { hash: address } = useParams();
 
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const isMainnet = useIsMainnet();
   const isAdapterAPI = adapter === 'api';
   const isOnAccountRoute =
@@ -62,7 +63,7 @@ export const Links = (props: LinksPropsType) => {
       label: 'Apps',
       show: true,
       to: applicationsRoutes.applications,
-      activeRoutes: [applicationsRoutes.applications]
+      activeRoutes: Object.values(applicationsRoutes)
     },
     {
       label: 'Tokens',
@@ -88,7 +89,7 @@ export const Links = (props: LinksPropsType) => {
     {
       label: 'Analytics',
       to: analyticsRoutes.analytics,
-      show: isAdapterAPI && isMainnet,
+      show: isAdapterAPI && isMainnet && hasGrowthWidgets,
       activeRoutes: Object.values(analyticsRoutes)
     }
   ].filter((link) => link.show);

@@ -6,5 +6,5 @@ export const useHasGrowthWidgets = () => {
     activeNetworkSelector
   );
 
-  return hasAccessToken && growthApi;
+  return Boolean(hasAccessToken && growthApi);
 };
