@@ -10,12 +10,9 @@ import { TransactionInPoolType } from 'types';
 
 export const TransactionsInPool = () => {
   const [searchParams] = useSearchParams();
-
   const { page, size } = useGetPage();
-
   const urlParams = useGetTransactionInPoolFilters();
   const { sender, receiver, type } = urlParams;
-
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
