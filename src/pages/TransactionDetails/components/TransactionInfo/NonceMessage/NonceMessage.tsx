@@ -5,17 +5,24 @@ import { useAdapter } from 'hooks';
 import { faAngleDown } from 'icons/regular';
 import { TransactionType, TransactionApiStatusEnum } from 'types';
 
+export interface NonceMessageBaseTransactionType {
+  sender: TransactionType['sender'];
+  receiver: TransactionType['receiver'];
+  nonce: TransactionType['nonce'];
+  status?: TransactionType['status'];
+  pendingResults?: TransactionType['pendingResults'];
+}
+
 export const NonceMessage = ({
   transaction
 }: {
-  transaction: TransactionType;
+  transaction: NonceMessageBaseTransactionType;
 }) => {
   const ref = useRef(null);
   const { getAccount } = useAdapter();
   const {
     sender: senderAddress,
     nonce: transactionNonce,
-    timestamp,
     status
   } = transaction;
   const [isDataReady, setIsDataReady] = useState<boolean>(false);
@@ -40,13 +47,13 @@ export const NonceMessage = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (senderAddress && isTxPending) {
+      if (senderAddress && (isTxPending || isTxPending === undefined)) {
         getSenderNonce();
       }
     }, 1000 * 60); // 1 minute
 
     return () => clearTimeout(timer);
-  }, [senderAddress, timestamp, isTxPending]);
+  }, [senderAddress, isTxPending]);
 
   return (
     <div ref={ref}>
