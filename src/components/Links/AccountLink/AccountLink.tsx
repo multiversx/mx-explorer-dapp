@@ -15,6 +15,7 @@ import { AccountAssetType, WithClassnameType } from 'types';
 
 export interface AccountLinkType extends WithClassnameType {
   address: string;
+  username?: string;
   assets?: AccountAssetType;
   linkClassName?: string;
   fetchAssets?: boolean;
@@ -25,6 +26,7 @@ export interface AccountLinkType extends WithClassnameType {
 export const AccountLink = ({
   address,
   assets,
+  username,
   fetchAssets = false,
   showLockedAccounts = true,
   hasHighlight,
@@ -62,6 +64,7 @@ export const AccountLink = ({
         >
           <AccountName
             address={address}
+            username={username}
             assets={assets}
             fetchAssets={fetchAssets}
             className={linkClassName}
