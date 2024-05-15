@@ -82,10 +82,10 @@ export const TransactionsInPoolTable = ({
                   <>
                     {transactionsInPool.length > 0 ? (
                       <>
-                        {transactionsInPool.map((transactionInPool) => (
+                        {transactionsInPool.map((transactionInPool, key) => (
                           <TransactionInPoolRow
                             transaction={transactionInPool}
-                            key={transactionInPool.txHash}
+                            key={`${transactionInPool.txHash}-${key}`}
                           />
                         ))}
                       </>
