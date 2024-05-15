@@ -1,5 +1,3 @@
-import { TransactionTableType } from 'types';
-
 import {
   AgeColumnFilters,
   FromColumnFilters,
@@ -8,7 +6,8 @@ import {
   MethodColumnFilters,
   ToColumnFilters,
   ValueColumnFilters
-} from '../TransactionsFilters';
+} from 'components';
+import { TransactionTableType } from 'types';
 
 export const Header = ({
   showDirectionCol = false,

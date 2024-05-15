@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { TransactionsTable, PulsatingLed } from 'components';
 import { shardSpanText } from 'components/ShardSpan';
-import { MethodList } from 'components/TransactionsTable/components/TransactionsFilters';
+import { MethodList } from 'components/TransactionsTable/components';
 import {
   useAdapter,
   useGetPage,
