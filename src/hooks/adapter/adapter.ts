@@ -9,7 +9,8 @@ import {
   GetNftsType,
   GetTokensType,
   GetAccountsType,
-  GetIdentitiesType
+  GetIdentitiesType,
+  GetTransactionsInPoolType
 } from 'types/adapter.types';
 
 import {
@@ -20,7 +21,8 @@ import {
   getProviderParams,
   getTokensParams,
   getCollectionsParams,
-  getNftsParams
+  getNftsParams,
+  getTransactionsInPoolParams
 } from './helpers';
 import { useAdapterConfig } from './useAdapterConfig';
 
@@ -211,6 +213,22 @@ export const useAdapter = () => {
       }),
 
     getScResultsCount: () => provider({ url: '/results/c' }),
+
+    /* Transactions Pool */
+
+    getTransactionInPool: (hash: string) => provider({ url: `/pool/${hash}` }),
+
+    getTransactionsInPool: (params: GetTransactionsInPoolType) =>
+      provider({
+        url: '/pool',
+        params: getTransactionsInPoolParams(params)
+      }),
+
+    getTransactionsInPoolCount: (params: GetTransactionsInPoolType) =>
+      provider({
+        url: '/pool/c',
+        params: getTransactionsInPoolParams({ isCount: true, ...params })
+      }),
 
     /* Account */
 

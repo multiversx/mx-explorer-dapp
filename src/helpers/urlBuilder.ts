@@ -10,6 +10,7 @@ export const urlBuilder = {
   transactionDetailsScResults: (hash: string) =>
     `/transactions/${hash}/results`,
   transactionDetailsLogs: (hash: string) => `/transactions/${hash}/logs`,
+  transactionInPoolDetails: (hash: string) => `/transactions/pool/${hash}`,
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accountDetails: (address: string) => `/accounts/${address}`,
   accountDetailsTokens: (address: string) => `/accounts/${address}/tokens`,
