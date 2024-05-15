@@ -71,7 +71,7 @@ export const AccountName = ({
           className={className}
           truncate
         >
-          {displayName}
+          {name}
         </Overlay>
       </>
     );
