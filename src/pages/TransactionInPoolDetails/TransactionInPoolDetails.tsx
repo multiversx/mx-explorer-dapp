@@ -7,7 +7,11 @@ import { isHash, urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faExchangeAlt } from 'icons/regular';
 import { refreshSelector } from 'redux/selectors/refresh';
-import { TransactionType, TransactionInPoolType } from 'types';
+import {
+  TransactionType,
+  TransactionSCResultType,
+  TransactionInPoolType
+} from 'types';
 
 import { TransactionInPoolInfo } from './components';
 
@@ -15,10 +19,13 @@ export const TransactionInPoolDetails = () => {
   const params: any = useParams();
   const { hash: transactionId } = params;
   const { timestamp } = useSelector(refreshSelector);
-  const { getTransaction, getTransactionInPool } = useAdapter();
+  const { getTransaction, getScResult, getTransactionInPool } = useAdapter();
 
   const [processedTransaction, setProcessedTransaction] = useState<
     TransactionType | undefined
+  >();
+  const [processedScResult, setProcessedScResult] = useState<
+    TransactionSCResultType | undefined
   >();
   const [transactionInPool, setTransactionInPool] = useState<
     TransactionInPoolType | undefined
@@ -28,12 +35,24 @@ export const TransactionInPoolDetails = () => {
   const fetchTransaction = async () => {
     if (transactionId) {
       const { data, success } = await getTransactionInPool(transactionId);
+
       if (!success && !data && isHash(transactionId)) {
         const { data: processedTxData, success: processedTxSuccess } =
           await getTransaction(transactionId);
 
         if (processedTxData && processedTxSuccess) {
           setProcessedTransaction(processedTxData);
+        }
+
+        if (!processedTxData && !processedTxSuccess) {
+          const {
+            data: processedScResultData,
+            success: processedScResultSuccess
+          } = await getScResult(transactionId);
+
+          if (processedScResultData && processedScResultSuccess) {
+            setProcessedScResult(processedScResultData);
+          }
         }
       }
 
@@ -67,6 +86,27 @@ export const TransactionInPoolDetails = () => {
             <div className='px-spacer'>
               <NetworkLink
                 to={urlBuilder.transactionDetails(processedTransaction.txHash)}
+                className='btn btn-primary'
+              >
+                View Transaction
+              </NetworkLink>
+            </div>
+          }
+        />
+      );
+    }
+
+    if (processedScResult?.originalTxHash && processedScResult?.hash) {
+      return (
+        <PageState
+          icon={faExchangeAlt}
+          title='Transaction was Processed'
+          action={
+            <div className='px-spacer'>
+              <NetworkLink
+                to={urlBuilder.transactionDetails(
+                  `${processedScResult.originalTxHash}#${processedScResult.hash}`
+                )}
                 className='btn btn-primary'
               >
                 View Transaction
