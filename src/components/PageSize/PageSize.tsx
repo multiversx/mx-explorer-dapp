@@ -9,9 +9,11 @@ import { WithClassnameType } from 'types';
 
 export interface PageSizeUIType extends WithClassnameType {
   maxSize?: number;
+  defaultSize?: number;
 }
 
 export const PageSize = ({
+  defaultSize = PAGE_SIZE,
   maxSize = MAX_RESULTS,
   className
 }: PageSizeUIType) => {
@@ -20,9 +22,9 @@ export const PageSize = ({
   const { page, size, ...rest } = params;
   const paramSize = stringIsInteger(String(size)) ? parseInt(size) : PAGE_SIZE;
 
-  const currentSize = Math.min(paramSize, maxSize);
+  const currentSize = Math.min(paramSize, maxSize, defaultSize);
   const sizeArray = [
-    ...new Set([PAGE_SIZE, 10, 50, 75, 100, currentSize])
+    ...new Set([PAGE_SIZE, 10, 50, 75, 100, currentSize, defaultSize])
   ].sort(function (a, b) {
     return a - b;
   });

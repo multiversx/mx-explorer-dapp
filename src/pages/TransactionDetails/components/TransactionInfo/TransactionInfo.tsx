@@ -43,8 +43,8 @@ import {
 } from 'types';
 
 import { DataField } from './DataField';
-import { NonceMessage } from './NonceMessage';
 import { TransactionErrorDisplay } from './TransactionErrorDisplay';
+import { TransactionWarningMessage } from './TransactionWarningMessage';
 import { EventsList } from '../EventsList';
 import { OperationsList } from '../OperationsList';
 import { ScResultsList } from '../ScResultsList';
@@ -449,7 +449,7 @@ export const TransactionInfo = ({
               <DetailItem title='Nonce'>
                 <>
                   <span className='text-neutral-100'>{transaction.nonce}</span>
-                  <NonceMessage transaction={transaction} />
+                  <TransactionWarningMessage transaction={transaction} />
                 </>
               </DetailItem>
 

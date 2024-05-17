@@ -6,7 +6,8 @@ import {
   GetProvidersType,
   GetTokensType,
   GetCollectionsType,
-  GetNftsType
+  GetNftsType,
+  GetTransactionsInPoolType
 } from 'types/adapter.types';
 
 export const getAccountParams = (address?: string) =>
@@ -75,6 +76,30 @@ export function getTransactionsParams({
     ...(search ? { search } : {}),
     ...(token ? { token } : {}),
     ...(hashes ? { hashes } : {})
+  };
+
+  return params;
+}
+
+export function getTransactionsInPoolParams({
+  page = 1,
+  size = PAGE_SIZE,
+  sender,
+  receiver,
+  type,
+  // not on api
+  isCount = false
+}: GetTransactionsInPoolType) {
+  const params: AdapterProviderPropsType['params'] = {
+    ...(isCount
+      ? {}
+      : {
+          from: (page - 1) * size,
+          size
+        }),
+    ...(sender ? { sender } : {}),
+    ...(receiver ? { receiver } : {}),
+    ...(type ? { type } : {})
   };
 
   return params;

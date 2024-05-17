@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import classNames from 'classnames';
 
 import { HEROTAG_SUFFIX } from 'appConstants';
 import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
@@ -10,12 +9,14 @@ import { AccountAssetType, WithClassnameType } from 'types';
 
 export interface AccountNameUIType extends WithClassnameType {
   address: string;
+  username?: string;
   assets?: AccountAssetType;
   fetchAssets?: boolean;
 }
 
 export const AccountName = ({
   address,
+  username,
   assets,
   fetchAssets = false,
   className,
@@ -46,14 +47,19 @@ export const AccountName = ({
   }, [address, fetchAssets, assets]);
 
   const displayAssets = assets || fetchedAssets;
+  const displayName = username || displayAssets?.name;
 
-  if (displayAssets?.name) {
-    const name = formatHerotag(displayAssets.name);
+  if (!address) {
+    return '-';
+  }
+
+  if (displayName) {
+    const name = formatHerotag(displayName);
     const description = `${name} (${address})`;
 
     return (
       <>
-        {displayAssets.name.endsWith(HEROTAG_SUFFIX) && (
+        {displayName.endsWith(HEROTAG_SUFFIX) && (
           <Overlay
             title='Herotag'
             className='herotag'
