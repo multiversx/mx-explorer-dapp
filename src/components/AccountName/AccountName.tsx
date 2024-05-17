@@ -49,6 +49,10 @@ export const AccountName = ({
   const displayAssets = assets || fetchedAssets;
   const displayName = username || displayAssets?.name;
 
+  if (!address) {
+    return '-';
+  }
+
   if (displayName) {
     const name = formatHerotag(displayName);
     const description = `${name} (${address})`;

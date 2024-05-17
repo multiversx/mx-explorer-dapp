@@ -37,6 +37,10 @@ export const AccountLink = ({
   const dispatch = useDispatch();
   const { highlightedText } = useSelector(interfaceSelector);
 
+  if (!address) {
+    return '-';
+  }
+
   return (
     <div
       className={classNames(

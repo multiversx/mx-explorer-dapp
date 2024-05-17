@@ -10,7 +10,8 @@ import { refreshSelector } from 'redux/selectors/refresh';
 import {
   TransactionType,
   TransactionSCResultType,
-  TransactionInPoolType
+  TransactionInPoolType,
+  TransactionApiStatusEnum
 } from 'types';
 
 import { TransactionInPoolInfo } from './components';
@@ -40,7 +41,11 @@ export const TransactionInPoolDetails = () => {
         const { data: processedTxData, success: processedTxSuccess } =
           await getTransaction(transactionId);
 
-        if (processedTxData && processedTxSuccess) {
+        if (
+          processedTxData &&
+          processedTxSuccess &&
+          processedTxData?.status !== TransactionApiStatusEnum.pending
+        ) {
           setProcessedTransaction(processedTxData);
         }
 

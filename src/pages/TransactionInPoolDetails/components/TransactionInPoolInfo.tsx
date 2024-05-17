@@ -10,7 +10,7 @@ import {
 } from 'components';
 import { addressIsBech32, isContract } from 'helpers';
 import { DataField } from 'pages/TransactionDetails/components/TransactionInfo/DataField';
-import { NonceMessage } from 'pages/TransactionDetails/components/TransactionInfo/NonceMessage';
+import { TransactionWarningMessage } from 'pages/TransactionDetails/components/TransactionInfo/TransactionWarningMessage';
 import { TransactionInPoolType } from 'types';
 
 export const TransactionInPoolInfo = ({
@@ -44,7 +44,13 @@ export const TransactionInPoolInfo = ({
                 <CopyButton className='me-2' text={transaction.sender} />
               </>
             ) : (
-              <ShardSpan shard={transaction.sender} />
+              <>
+                {transaction.sender ? (
+                  <ShardSpan shard={transaction.sender} />
+                ) : (
+                  '-'
+                )}
+              </>
             )}
           </div>
         </DetailItem>
@@ -105,7 +111,10 @@ export const TransactionInPoolInfo = ({
         <DetailItem title='Nonce'>
           <>
             <span className='text-neutral-100'>{transaction.nonce}</span>
-            <NonceMessage transaction={transaction} />
+            <TransactionWarningMessage
+              transaction={transaction}
+              isPoolTransaction
+            />
           </>
         </DetailItem>
 
