@@ -1,4 +1,4 @@
-import { SortOrderEnum } from 'types';
+import { SortOrderEnum, TransactionInPoolTypeEnum } from 'types';
 
 export interface BaseApiType {
   page?: number;
@@ -111,6 +111,12 @@ export interface GetTransactionsType extends SortableApiType {
   withUsername?: boolean;
   withBlockInfo?: boolean;
   isRelayed?: boolean;
+}
+
+export interface GetTransactionsInPoolType extends SortableApiType {
+  sender?: string;
+  receiver?: string;
+  type?: TransactionInPoolTypeEnum;
 }
 
 export interface GetProvidersType extends BaseApiType {

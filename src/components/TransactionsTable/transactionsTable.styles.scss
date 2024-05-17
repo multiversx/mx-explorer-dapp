@@ -44,6 +44,19 @@
       }
     }
   }
+  &.transactions-in-pool-table {
+    .table {
+      .sender,
+      .receiver {
+        min-width: 12rem;
+        max-width: 12rem;
+      }
+      .hash {
+        min-width: 18rem;
+        max-width: 18rem;
+      }
+    }
+  }
 }
 
 .filter-block {

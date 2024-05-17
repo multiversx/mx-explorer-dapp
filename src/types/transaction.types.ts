@@ -70,6 +70,27 @@ export interface TransactionSCResultLogType {
   events: EventType[];
 }
 
+// TRANSACTION IN POOL
+
+export interface TransactionInPoolType {
+  txHash: string;
+  sender: string;
+  receiver: string;
+  nonce: number;
+  value: string;
+  gasPrice: number;
+  gasLimit: number;
+  type: TransactionInPoolTypeEnum;
+  receiverUsername?: string;
+  data?: string;
+}
+
+export enum TransactionInPoolTypeEnum {
+  Transaction = 'Transaction',
+  SmartContractResult = 'SmartContractResult',
+  Reward = 'Reward'
+}
+
 // TRANSACTION LOGS
 
 export interface LogType {
@@ -101,7 +122,8 @@ export enum TransactionFiltersEnum {
   after = 'after',
   status = 'status',
   search = 'search',
-  token = 'token'
+  token = 'token',
+  transactionsInPoolType = 'type'
 }
 
 // Avoid issues with differences between methods and actions

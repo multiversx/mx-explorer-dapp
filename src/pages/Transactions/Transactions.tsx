@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { TransactionsTable, PulsatingLed } from 'components';
-import { MethodList } from 'components/TransactionsTable/components/TransactionsFilters';
+import { MethodList } from 'components/TransactionsTable/components';
 import { getShardText } from 'helpers';
 import {
   useAdapter,
