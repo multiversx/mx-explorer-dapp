@@ -3,12 +3,14 @@ import { Navigate } from 'react-router-dom';
 
 import { CardItem, Loader } from 'components';
 import { urlBuilder } from 'helpers';
+import { useNetworkRoute } from 'hooks';
 import { faTrophy } from 'icons/regular';
 import { NftTabs } from 'layouts/NftLayout/NftTabs';
 import { nftSelector } from 'redux/selectors';
 import { NftTypeEnum } from 'types';
 
 export const NftDetails = () => {
+  const networkRoute = useNetworkRoute();
   const { nftState } = useSelector(nftSelector);
   const { type, rarities, tags, metadata, identifier } = nftState;
 
@@ -20,7 +22,10 @@ export const NftDetails = () => {
 
   if (!showOverview) {
     return (
-      <Navigate replace to={urlBuilder.nftDetailsTransactions(identifier)} />
+      <Navigate
+        replace
+        to={networkRoute(urlBuilder.nftDetailsTransactions(identifier))}
+      />
     );
   }
 

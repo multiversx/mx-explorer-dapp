@@ -12,13 +12,10 @@ import { NftDetailsCard } from './NftDetailsCard';
 
 export const NftLayout = () => {
   const ref = useRef(null);
-  const { firstPageRefreshTrigger } = useGetPage();
-
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-
   const dispatch = useDispatch();
+  const { firstPageRefreshTrigger } = useGetPage();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getNft } = useAdapter();
-
   const { hash: identifier } = useParams();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -51,7 +48,6 @@ export const NftLayout = () => {
     <>
       {loading && <Loader />}
       {!loading && failed && <FailedNftDetails identifier={identifier} />}
-
       <div ref={ref}>
         {!loading && !failed && (
           <div className='container page-content'>
