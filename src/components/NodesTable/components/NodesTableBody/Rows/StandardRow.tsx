@@ -1,6 +1,4 @@
-import classNames from 'classnames';
-import { useSelector } from 'react-redux';
-
+import BigNumber from 'bignumber.js';
 import {
   NodeRating,
   NodeStatus,
@@ -9,22 +7,23 @@ import {
   Trim,
   Overlay,
   FormatAmount,
-  NodeStatusIcon,
+  NodeChangingShardIcon,
   NodeIssueIcon,
   NodeFullHistoryIcon,
   NodeLockedStakeTooltip,
-  NodeQualification
+  NodeQualification,
+  NodeOnlineIcon,
+  SharedIdentity
 } from 'components';
-import { urlBuilder } from 'helpers';
-import { stakeSelector } from 'redux/selectors';
-import { NodeType } from 'types';
+import { formatBigNumber, urlBuilder } from 'helpers';
+import { NodeStatusEnum, NodeType, NodeTypeEnum } from 'types';
 
 export interface StandardRowUIType {
   nodeData: NodeType;
   index: number;
   type?: NodeType['type'];
   status?: NodeType['status'];
-  showTresholdRow?: boolean;
+  showThresholdRow?: boolean;
   showPosition?: boolean;
 }
 
@@ -32,53 +31,53 @@ export const StandardRow = ({
   nodeData,
   index,
   type,
-  status,
-  showPosition
+  status
 }: StandardRowUIType) => {
-  const {
-    unprocessed: { notQualifiedAuctionValidators }
-  } = useSelector(stakeSelector);
-
-  const isInDangerZone =
-    nodeData.isInDangerZone &&
-    nodeData.auctionQualified &&
-    notQualifiedAuctionValidators &&
-    status === 'auction';
+  const bNAuctionTopup = new BigNumber(nodeData.auctionTopUp ?? 0);
+  const bNqualifiedStake =
+    nodeData.qualifiedStake !== undefined
+      ? new BigNumber(nodeData.qualifiedStake)
+      : new BigNumber(nodeData.stake).plus(
+          nodeData.auctionQualified ? bNAuctionTopup : 0
+        );
 
   return (
-    <tr
-      className={classNames({
-        dz: isInDangerZone
-      })}
-    >
-      {status === 'queued' && (
-        <td>
-          {nodeData.position ? (
-            <div>{nodeData.position}</div>
-          ) : (
-            <span className='text-neutral-400'>N/A</span>
-          )}
-        </td>
-      )}
-      {status === 'auction' && showPosition && (
-        <td>{index ?? nodeData.auctionPosition}</td>
-      )}
+    <tr>
       <td>
-        <div className='d-flex align-items-center gap-1 hash'>
-          <NodeStatusIcon node={nodeData} />
-          <NodeFullHistoryIcon node={nodeData} small={true} />
+        <div className='d-flex align-items-center gap-1 hash hash-lg'>
+          {status === NodeStatusEnum.queued && (
+            <>
+              {nodeData.position ? (
+                nodeData.position
+              ) : (
+                <span className='text-neutral-400'>N/A</span>
+              )}
+            </>
+          )}
+          <NodeOnlineIcon node={nodeData} className='ms-1 me-2' />
+          <NetworkLink to={urlBuilder.nodeDetails(nodeData.bls)}>
+            <SharedIdentity.Avatar
+              identity={nodeData.identityInfo}
+              className='identity-avatar-md me-1'
+              showTooltip
+            />
+          </NetworkLink>
           <NetworkLink
             to={urlBuilder.nodeDetails(nodeData.bls)}
             className='trim-wrapper'
           >
             <Trim text={nodeData.bls} />
           </NetworkLink>
+          <NodeChangingShardIcon node={nodeData} />
+          <NodeFullHistoryIcon node={nodeData} small={true} />
           <NodeIssueIcon node={nodeData} />
         </div>
       </td>
       <td>
         {nodeData.name ? (
-          <div className='truncate-item-lg'>{nodeData.name}</div>
+          <div className='truncate-item-lg' title={nodeData.name}>
+            {nodeData.name}
+          </div>
         ) : (
           <span className='text-neutral-400'>N/A</span>
         )}
@@ -104,50 +103,70 @@ export const StandardRow = ({
           <span className='text-neutral-400'>N/A</span>
         )}
       </td>
-      {status !== 'auction' && (
-        <td className='text-end' style={{ maxWidth: '8rem' }}>
-          {nodeData.validatorIgnoredSignatures ? (
-            nodeData.validatorIgnoredSignatures.toLocaleString('en')
-          ) : (
-            <span className='text-neutral-400'>N/A</span>
-          )}
+      {type !== NodeTypeEnum.observer && (
+        <td>
+          <NodeStatus node={nodeData} />
         </td>
       )}
-      <td>
-        <NodeStatus node={nodeData} className='align-items-end' />
-      </td>
-      {status === 'auction' && (
-        <td className='text-end'>
-          <NodeQualification
-            node={nodeData}
-            showDangerZone={true}
-            className='justify-content-end'
-          />
+      {status === NodeStatusEnum.auction && (
+        <td>
+          <NodeQualification node={nodeData} />
         </td>
       )}
-      {(type === 'validator' || status === 'auction') && nodeData.locked && (
-        <td className='text-end'>
-          {status !== 'auction' || nodeData.auctionQualified ? (
+      {(type === NodeTypeEnum.validator ||
+        status === NodeStatusEnum.auction) && (
+        <td>
+          {status !== NodeStatusEnum.auction || nodeData.auctionQualified ? (
             <Overlay
               title={
                 <NodeLockedStakeTooltip
                   node={nodeData}
-                  showAuctionTopup={status === 'auction'}
+                  showAuctionTopup={
+                    status === NodeStatusEnum.auction ||
+                    nodeData.auctionQualified
+                  }
                 />
               }
+              className='text-neutral-100'
               tooltipClassName='tooltip-text-start tooltip-lg'
               truncate
             >
-              <FormatAmount value={nodeData.locked} showTooltip={false} />
+              <FormatAmount
+                value={
+                  nodeData.auctionQualified
+                    ? bNqualifiedStake.toString(10)
+                    : nodeData.locked
+                }
+                showTooltip={false}
+              />
             </Overlay>
           ) : (
-            <FormatAmount value={nodeData.locked} />
+            <FormatAmount
+              value={
+                nodeData.auctionQualified
+                  ? bNqualifiedStake.toString(10)
+                  : nodeData.locked
+              }
+            />
           )}
         </td>
       )}
-      <td className='text-end'>
-        <NodeRating node={nodeData} className='justify-content-end' />
-      </td>
+      {type !== NodeTypeEnum.observer && (
+        <>
+          {status !== NodeStatusEnum.auction && (
+            <td style={{ maxWidth: '8rem' }}>
+              {nodeData.validatorIgnoredSignatures ? (
+                formatBigNumber({ value: nodeData.validatorIgnoredSignatures })
+              ) : (
+                <span className='text-neutral-400'>N/A</span>
+              )}
+            </td>
+          )}
+          <td>
+            <NodeRating node={nodeData} />
+          </td>
+        </>
+      )}
       <td className='text-end'>
         {nodeData.nonce ? (
           nodeData.nonce

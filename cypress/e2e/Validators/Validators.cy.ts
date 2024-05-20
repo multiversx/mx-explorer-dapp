@@ -11,7 +11,7 @@ describe('Validators', () => {
       'Name',
       'Shard',
       'Version',
-      'Ignored Signatures',
+      'X Sign.',
       'Status',
       'Rating',
       'Nonce'

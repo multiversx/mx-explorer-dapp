@@ -425,17 +425,21 @@ export const useAdapter = () => {
     getNode: (key: string) => getNodes({ url: `/nodes/${key}` }),
 
     getNodes: (params: GetNodesType) =>
-      getNodes({
+      provider({
         url: '/nodes',
         params: getNodeParams(params)
       }),
 
-    getNodesCount: (params: GetNodesType) => {
-      return getNodes({
+    getNodesCount: (params: GetNodesType) =>
+      provider({
         url: '/nodes/c',
         params: getNodeParams({ isCount: true, ...params })
-      });
-    },
+      }),
+
+    getAuctionNodes: () =>
+      provider({
+        url: '/nodes/auctions'
+      }),
 
     getNodesVersions,
 

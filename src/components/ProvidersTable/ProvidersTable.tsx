@@ -54,28 +54,28 @@ export const ProvidersTable = ({
           <tr>
             {showIdentity ? (
               <th>
-                <Sort field='Name' id='name' />
+                <Sort text='Name' id='name' />
               </th>
             ) : (
               <th>Address</th>
             )}
             <th>
-              <Sort field='Stake' id='locked' />
+              <Sort text='Stake' id='locked' />
             </th>
             <th>
-              <Sort field='Nodes' id='numNodes' />
+              <Sort text='Nodes' id='numNodes' />
             </th>
             <th>
-              <Sort field='Computed Net APR' id='apr' />
+              <Sort text='Computed Net APR' id='apr' />
             </th>
             <th>
-              <Sort field='Service fee' id='serviceFee' />
+              <Sort text='Service fee' id='serviceFee' />
             </th>
             <th>
-              <Sort field='Delegation cap' id='delegationCap' />
+              <Sort text='Delegation cap' id='delegationCap' />
             </th>
             <th>
-              <Sort field='Filled' id='filled' />
+              <Sort text='Filled' id='filled' />
             </th>
           </tr>
         </thead>
@@ -86,7 +86,8 @@ export const ProvidersTable = ({
                 <div className='d-flex align-items-center hash hash-lg gap-2'>
                   {showIdentity && (
                     <SharedIdentity.Avatar
-                      identity={provider.identityInfo || {}}
+                      identity={provider.identityInfo}
+                      className='me-2'
                     />
                   )}
                   <NetworkLink

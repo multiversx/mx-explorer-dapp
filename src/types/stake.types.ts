@@ -6,6 +6,7 @@ export interface StakeType {
   totalStaked: string;
   nakamotoCoefficient?: number;
 
+  totalObservers?: number;
   queueSize?: number;
   minimumAuctionQualifiedTopUp?: string;
   minimumAuctionQualifiedStake?: string;
@@ -17,6 +18,8 @@ export interface StakeType {
   allStakedNodes?: number;
 
   // not in API
+  totalNodes?: string;
+  totalValidatorNodes?: string;
   notQualifiedAuctionValidators?: number;
 }
 
@@ -27,6 +30,7 @@ export interface StakeSliceType extends SliceType {
   activeValidators: string;
   totalStaked: string;
   nakamotoCoefficient?: string;
+  totalObservers?: string;
 
   queueSize?: string;
   minimumAuctionQualifiedTopUp?: string;
@@ -39,5 +43,7 @@ export interface StakeSliceType extends SliceType {
   allStakedNodes?: string;
 
   // not in API
+  totalNodes?: string;
+  totalValidatorNodes?: string;
   notQualifiedAuctionValidators?: string;
 }

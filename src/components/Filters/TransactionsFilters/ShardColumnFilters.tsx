@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { SelectFilter } from 'components';
-import { shardSpanText } from 'components/ShardSpan';
+import { getShardText } from 'helpers';
 import { useFetchShards } from 'hooks';
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
@@ -26,7 +26,7 @@ export const ShardColumnFilters = ({
   const selectShards = stateShards.map((shard) => {
     return {
       value: shard.shard.toString(),
-      label: shardSpanText(shard.shard.toString())
+      label: getShardText(shard.shard.toString())
     };
   });
 

@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Led } from 'components';
-import { faSearch, faTimes } from 'icons/regular';
-import { stakeSelector } from 'redux/selectors';
 import { formatBigNumber } from 'helpers';
+import { faSearch, faTimes } from 'icons/regular';
+import { faDiamondExclamation } from 'icons/solid';
+
+import { stakeSelector } from 'redux/selectors';
 
 export interface AuctionListFiltersUIType {
-  onlySearch?: boolean;
+  hasSearch?: boolean;
 }
 
-export const AuctionListFilters = ({
-  onlySearch
-}: AuctionListFiltersUIType) => {
+export const AuctionListFilters = ({ hasSearch }: AuctionListFiltersUIType) => {
   const {
     unprocessed: {
       qualifiedAuctionValidators,
@@ -93,12 +93,12 @@ export const AuctionListFilters = ({
   );
 
   return (
-    <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
-      <h5 className='table-title d-flex align-items-center' data-testid='title'>
-        Nodes
-      </h5>
-      {!onlySearch && (
-        <menu className='list-inline m-0 d-flex flex-wrap gap-2'>
+    <div className='filters auction-list-filters w-100'>
+      <h3 className='mb-4' data-testid='title'>
+        Validators
+      </h3>
+      <div className='d-flex flex-wrap align-items-center justify-content-between gap-3'>
+        <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
           <li className='list-inline-item me-0'>
             <button
               type='button'
@@ -150,7 +150,11 @@ export const AuctionListFilters = ({
                   { active: isAuctionDangerZone }
                 )}
               >
-                <Led color='bg-orange-400' />
+                <FontAwesomeIcon
+                  icon={faDiamondExclamation}
+                  size='xs'
+                  className='text-warning me-1'
+                />
                 Danger Zone
                 {dangerZoneValidators !== undefined && (
                   <span className='badge badge-sm'>
@@ -180,43 +184,45 @@ export const AuctionListFilters = ({
               )}
             </button>
           </li>
-        </menu>
-      )}
-      <div role='search' className={onlySearch ? 'search-lg' : 'search-sm'}>
-        <div className='input-group input-group-sm input-group-seamless'>
-          <input
-            type='text'
-            className='form-control'
-            value={inputValue || ''}
-            onChange={changeValidatorValue}
-            onKeyDown={(keyEvent: React.KeyboardEvent) => {
-              if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-                updateSearchValue(inputValue);
-              }
-            }}
-            placeholder='Search'
-            name='validatorSearch'
-            data-testid='validatorSearch'
-          />
+        </ul>
+        {hasSearch && (
+          <div role='search' className='search-md'>
+            <div className='input-group input-group-search input-group-seamless'>
+              <input
+                type='text'
+                className='form-control'
+                value={inputValue || ''}
+                onChange={changeValidatorValue}
+                onKeyDown={(keyEvent: React.KeyboardEvent) => {
+                  if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+                    updateSearchValue(inputValue);
+                  }
+                }}
+                placeholder='Search'
+                name='validatorSearch'
+                data-testid='validatorSearch'
+              />
 
-          {inputValue ? (
-            <button
-              type='reset'
-              className='input-group-text'
-              onClick={() => {
-                updateSearchValue('');
-                setInputValue('');
-              }}
-              data-testid='resetSearch'
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
-          ) : (
-            <button type='submit' className='input-group-text'>
-              <FontAwesomeIcon icon={faSearch} />
-            </button>
-          )}
-        </div>
+              {inputValue ? (
+                <button
+                  type='reset'
+                  className='input-group-text'
+                  onClick={() => {
+                    updateSearchValue('');
+                    setInputValue('');
+                  }}
+                  data-testid='resetSearch'
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              ) : (
+                <button type='submit' className='input-group-text'>
+                  <FontAwesomeIcon icon={faSearch} />
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

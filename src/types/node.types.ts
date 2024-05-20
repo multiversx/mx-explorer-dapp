@@ -3,16 +3,8 @@ import { SliceType } from 'types/general.types';
 export interface NodeType {
   bls: string;
   name: string;
-  type: 'observer' | 'validator';
-  status?:
-    | 'waiting'
-    | 'eligible'
-    | 'new'
-    | 'jailed'
-    | 'leaving'
-    | 'inactive'
-    | 'queued'
-    | 'auction';
+  type: NodeTypeEnum;
+  status?: NodeApiStatusEnum;
   online: boolean;
   rating: number;
   tempRating: number;
@@ -40,9 +32,10 @@ export interface NodeType {
   validatorIgnoredSignatures?: number;
   position?: number;
   fullHistory?: boolean;
-
+  identityInfo?: IdentityType;
   auctionPosition?: number;
   auctionTopUp?: string;
+  qualifiedStake?: string;
   auctionQualified?: boolean;
   isInDangerZone?: boolean;
 
@@ -50,6 +43,36 @@ export interface NodeType {
   receivedShardID?: number;
   computedShardID?: number;
 }
+
+export enum NodeTypeEnum {
+  observer = 'observer',
+  validator = 'validator'
+}
+
+export enum NodeStatusEnum {
+  new = 'new',
+  unknown = 'unknown',
+  waiting = 'waiting',
+  eligible = 'eligible',
+  jailed = 'jailed',
+  queued = 'queued',
+  leaving = 'leaving',
+  inactive = 'inactive',
+  auction = 'auction'
+}
+
+export enum NodeStatusRawEnum {
+  staked = 'staked',
+  unStaked = 'unStaked',
+  notStaked = 'notStaked'
+}
+
+const NodeApiStatusEnum = {
+  ...NodeStatusEnum,
+  ...NodeStatusRawEnum
+};
+
+export type NodeApiStatusEnum = NodeStatusEnum | NodeStatusRawEnum;
 
 export interface IdentityType {
   name: string;
@@ -102,6 +125,26 @@ export interface ProviderType {
   totalUnBondedFromNodes?: string;
   maxDelegateAmountAllowed?: string;
   maxRedelegateAmountAllowed?: string;
+}
+
+export interface AuctionValidatorType {
+  owner: string;
+  name?: string;
+  stake?: string;
+  locked?: string;
+  bls?: string;
+  identity?: string;
+  provider?: string;
+  description?: string;
+  avatar?: string;
+  auctionTopUp?: string;
+  qualifiedStake?: string;
+  auctionValidators?: number;
+  qualifiedAuctionValidators?: number;
+  dangerZoneValidators?: number;
+  droppedValidators?: number;
+  auctionPosition?: number;
+  distribution?: any;
 }
 
 export enum NodeQualificationStatusEnum {

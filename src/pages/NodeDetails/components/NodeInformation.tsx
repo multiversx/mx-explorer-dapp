@@ -21,7 +21,7 @@ import {
   faCode,
   faUser
 } from 'icons/solid';
-import { NodeType } from 'types';
+import { NodeType, NodeTypeEnum } from 'types';
 
 import { Alert } from './Alert';
 
@@ -99,10 +99,10 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         </CardItem>
         <CardItem title='Type' icon={getNodeIcon(nodeData) || faCogs}>
           <>
-            {type === 'observer' && (
+            {type === NodeTypeEnum.observer && (
               <>Observer {Boolean(fullHistory) ? ' - Full History' : ''}</>
             )}
-            {type !== 'observer' && (
+            {type !== NodeTypeEnum.observer && (
               <>
                 Validator{' '}
                 <span className='text-neutral-400 ms-1'>({status})</span>
@@ -113,7 +113,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         <CardItem title='Nonce' icon={faStream}>
           {nonce ? nonce : <>N/A</>}
         </CardItem>
-        {type !== 'observer' && locked !== undefined && (
+        {type !== NodeTypeEnum.observer && locked !== undefined && (
           <CardItem title='Locked' icon={faLock}>
             <div className='d-flex align-items-center'>
               <FormatAmount value={locked} />

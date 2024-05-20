@@ -1,8 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageSize, PageState, ProvidersTable } from 'components';
-import { NodesFilters, NodesTable, SharedIdentity } from 'components';
+import {
+  NodesFilters,
+  NodesTable,
+  SharedIdentity,
+  NodesHeader
+} from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -11,10 +16,9 @@ import {
   useGetSort
 } from 'hooks';
 import { faCity, faCode } from 'icons/regular';
-import { IdentityType, NodeType, ProviderType } from 'types';
+import { IdentityType, NodeStatusEnum, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {
-  const ref = useRef(null);
   const { hash: id } = useParams() as any;
   const { getIdentity, getNodes, getNodesCount, getProviders } = useAdapter();
 
@@ -23,7 +27,7 @@ export const IdentityDetails = () => {
   const { page, size } = useGetPage();
   const { sort, order } = useGetSort();
   const { search } = useGetSearch();
-  const { type, status } = nodeFilters;
+  const { type, status, isAuctioned } = nodeFilters;
 
   const [dataReady, setDataReady] = useState<boolean | undefined>(undefined);
   const [identity, setIdentity] = useState<IdentityType>();
@@ -37,12 +41,10 @@ export const IdentityDetails = () => {
   const fetchData = () => {
     Promise.all([getIdentity(id), getProviders({ identity: id })]).then(
       ([identityData, providersData]) => {
-        if (ref.current !== null) {
-          setIdentity(identityData.data);
-          setProviders(providersData.data);
-          setProvidersFetched(providersData.success);
-          setDataReady(identityData.success);
-        }
+        setIdentity(identityData.data);
+        setProviders(providersData.data);
+        setProvidersFetched(providersData.success);
+        setDataReady(identityData.success);
       }
     );
   };
@@ -60,10 +62,8 @@ export const IdentityDetails = () => {
       }),
       getNodesCount({ ...nodeFilters, search, identity: id, sort, order })
     ]).then(([nodesData, nodesCount]) => {
-      if (ref.current !== null) {
-        setNodes(nodesData.data);
-        setTotalNodes(nodesCount.data);
-      }
+      setNodes(nodesData.data);
+      setTotalNodes(nodesCount.data);
     });
   };
 
@@ -74,16 +74,22 @@ export const IdentityDetails = () => {
     providersFetched === false ||
     (providersFetched && providers !== undefined && providers.length > 0);
 
+  if (dataReady === undefined) {
+    return <Loader />;
+  }
+
+  if (dataReady === false) {
+    return (
+      <PageState
+        icon={faCity}
+        title='Unable to load identity details'
+        isError
+      />
+    );
+  }
+
   return (
-    <div ref={ref}>
-      {dataReady === undefined && <Loader />}
-      {dataReady === false && (
-        <PageState
-          icon={faCity}
-          title='Unable to load identity details'
-          isError
-        />
-      )}
+    <>
       {dataReady === true && identity && (
         <>
           <div className='row' data-testid='identityDetailsContainer'>
@@ -133,43 +139,43 @@ export const IdentityDetails = () => {
               <div className='card'>
                 <div className='card-header'>
                   <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-                    <h5
-                      className='table-title d-flex align-items-center'
-                      data-testid='title'
-                    >
-                      Nodes
-                    </h5>
-                    <NodesFilters />
-                    <Pager
-                      total={totalNodes}
-                      className='d-flex ms-auto me-auto me-sm-0'
-                      showFirstAndLast={false}
-                      show
-                    />
+                    <NodesHeader searchValue={totalNodes} />
+                    <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
+                      <NodesFilters />
+                      <Pager
+                        total={totalNodes}
+                        className='d-flex ms-auto me-auto me-sm-0'
+                        showFirstAndLast={false}
+                        show
+                      />
+                    </div>
                   </div>
                 </div>
-
                 <div className='card-body'>
                   <NodesTable
                     type={type as NodeType['type']}
                     status={status as NodeType['status']}
+                    auctionList={Boolean(isAuctioned)}
+                    queue={status === NodeStatusEnum.queued}
                   >
                     <NodesTable.Body
                       nodes={nodes}
                       type={type as NodeType['type']}
                       status={status as NodeType['status']}
+                      auctionList={Boolean(isAuctioned)}
+                      queue={status === NodeStatusEnum.queued}
                     />
                   </NodesTable>
                 </div>
                 <div className='card-footer table-footer'>
                   <PageSize />
-                  <Pager total={totalNodes} show />
+                  <Pager total={totalNodes} show={nodes.length > 0} />
                 </div>
               </div>
             </div>
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };

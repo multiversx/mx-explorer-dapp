@@ -1,16 +1,13 @@
-import { useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
-import { PAGE_SIZE, AUCTION_LIST_MAX_NODES, ZERO } from 'appConstants';
 import { PageState } from 'components';
-import { getExpandRowDetails, ExpandRowDetailsType } from 'helpers';
-import { useGetNodeFilters, useGetPage, useGetSearch, useGetSort } from 'hooks';
+import { useGetNodeFilters, useGetSearch, useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
-import { NodeType, SortOrderEnum } from 'types';
+import { NodeStatusEnum, NodeType, NodeTypeEnum, SortOrderEnum } from 'types';
 
-import { AuctionListRow } from './Rows/AuctionListRow';
+import { AuctionRow } from './Rows/AuctionRow';
 import { QueueRow } from './Rows/QueueRow';
 import { StandardRow } from './Rows/StandardRow';
 import { StatisticsRow } from './Rows/StatisticsRow';
@@ -25,33 +22,23 @@ export interface NodesTableBodyUIType {
   showPosition?: boolean;
 }
 
-export interface ExpandRowConfigType extends ExpandRowDetailsType {
-  qualifiedExpanded: boolean;
-  dangerZoneExpanded: boolean;
-  notQualifiedExpanded: boolean;
-  setQualifiedExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-  setDangerZoneExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-  setNotQualifiedExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const findTresholdNode = (
+const findThresholdNode = (
   node: NodeType,
   minimumAuctionQualifiedStake?: string
 ) => {
-  const bNLocked = new BigNumber(node.stake).plus(
-    node.auctionQualified ? node.auctionTopUp ?? 0 : 0
-  );
+  const bNAuctionTopup = new BigNumber(node.auctionTopUp ?? 0);
+  const bNqualifiedStake =
+    node.qualifiedStake !== undefined
+      ? new BigNumber(node.qualifiedStake)
+      : new BigNumber(node.stake).plus(
+          node.auctionQualified ? bNAuctionTopup : 0
+        );
   const bNMinimumAuctionStake = new BigNumber(
     minimumAuctionQualifiedStake ?? 0
   );
 
-  //TODO - remove when api issue is fixed - node is qualified / issue on locked values
-  if (bNLocked.isLessThan(node.auctionTopUp ?? ZERO)) {
-    return true;
-  }
-
   return (
-    bNLocked.isGreaterThanOrEqualTo(bNMinimumAuctionStake) &&
+    bNqualifiedStake.isGreaterThanOrEqualTo(bNMinimumAuctionStake) &&
     node.auctionQualified
   );
 };
@@ -66,71 +53,45 @@ export const NodesTableBody = ({
   showPosition
 }: NodesTableBodyUIType) => {
   const {
-    unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
+    unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
   const { search } = useGetSearch();
   const { sort, order } = useGetSort();
-  const { size: pageSize } = useGetPage();
   const { status: nodeStatus, ...nodeFilters } = useGetNodeFilters();
 
-  const [qualifiedExpanded, setQualifiedExpanded] = useState(false);
-  const [dangerZoneExpanded, setDangerZoneExpanded] = useState(false);
-  const [notQualifiedExpanded, setNotQualifiedExpanded] = useState(false);
-
   const isAuctionSortDesc =
-    (sort === 'auctionPosition' && order === SortOrderEnum.desc) ||
-    (sort === 'locked' && order === SortOrderEnum.asc);
-  const hasNoFilters =
-    [search, ...Object.keys(nodeFilters)].every((el) => el === undefined) &&
-    ((sort === undefined && auctionList) ||
-      sort === 'auctionPosition' ||
-      sort === 'locked');
-  const isCustomSize = ![PAGE_SIZE, AUCTION_LIST_MAX_NODES].includes(pageSize);
+    sort === 'qualifiedStake' && order === SortOrderEnum.desc;
+  const hasNoFilters = [search, ...Object.keys(nodeFilters)].every(
+    (el) => el === undefined
+  );
 
-  const tresholdIndex = isAuctionSortDesc
+  const thresholdIndex = isAuctionSortDesc
     ? nodes.findIndex((node) =>
-        findTresholdNode(node, minimumAuctionQualifiedStake)
+        findThresholdNode(node, minimumAuctionQualifiedStake)
       )
     : nodes.findLastIndex((node) =>
-        findTresholdNode(node, minimumAuctionQualifiedStake)
+        findThresholdNode(node, minimumAuctionQualifiedStake)
       );
-
-  const nextPositionQualified = isAuctionSortDesc
-    ? nodes?.[tresholdIndex >= 1 ? tresholdIndex - 1 : 0]?.auctionQualified
-    : nodes?.[tresholdIndex + 1]?.auctionQualified;
-
-  const expandRowConfig =
-    auctionList && hasNoFilters && !isCustomSize
-      ? ({
-          ...getExpandRowDetails(nodes, Boolean(notQualifiedAuctionValidators)),
-          qualifiedExpanded,
-          dangerZoneExpanded,
-          notQualifiedExpanded,
-          setQualifiedExpanded,
-          setDangerZoneExpanded,
-          setNotQualifiedExpanded
-        } as ExpandRowConfigType)
-      : undefined;
 
   let colSpan = 8;
   if (queue) {
     colSpan = 5;
   }
-  if (status === 'auction') {
-    colSpan = showPosition ? 10 : 9;
+  if (status === NodeStatusEnum.auction) {
+    colSpan = 9;
   }
   if (auctionList) {
-    colSpan = showPosition ? 7 : 6;
+    colSpan = 7;
+  }
+  if (type === NodeTypeEnum.observer) {
+    colSpan = 5;
   }
 
   return (
     <tbody>
       {nodes.map((nodeData, index) => {
-        const showTresholdRow = Boolean(
-          tresholdIndex &&
-            index === tresholdIndex &&
-            hasNoFilters &&
-            !nextPositionQualified
+        const showThresholdRow = Boolean(
+          thresholdIndex && index === thresholdIndex && hasNoFilters
         );
 
         if (statistics) {
@@ -141,11 +102,10 @@ export const NodesTableBody = ({
         }
         if (auctionList) {
           return (
-            <AuctionListRow
+            <AuctionRow
               nodeData={nodeData}
               key={nodeData.bls}
-              showTresholdRow={showTresholdRow}
-              expandRowConfig={expandRowConfig}
+              showThresholdRow={showThresholdRow}
               index={index + 1}
               showPosition={showPosition}
             />
@@ -159,7 +119,7 @@ export const NodesTableBody = ({
             type={type}
             status={status}
             key={nodeData.bls}
-            showTresholdRow={showTresholdRow}
+            showThresholdRow={showThresholdRow}
             showPosition={showPosition}
           />
         );
@@ -167,7 +127,13 @@ export const NodesTableBody = ({
       {nodes.length === 0 && (
         <tr>
           <td colSpan={colSpan}>
-            <PageState icon={faCogs} title='No Nodes' isError />
+            <PageState
+              icon={faCogs}
+              title={`No ${
+                type === NodeTypeEnum.observer ? 'Observers' : 'Nodes'
+              }`}
+              isError
+            />
           </td>
         </tr>
       )}

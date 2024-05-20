@@ -52,7 +52,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
         <div className='row'>
           <div className='col-12 d-flex flex-row gap-3'>
             <div className='d-flex align-items-start align-items-md-center justify-content-center'>
-              <SharedIdentity.Avatar identity={identity} />
+              <SharedIdentity.Avatar identity={identity} className='me-2' />
             </div>
 
             <div className='d-flex flex-fill flex-column justify-content-center gap-1'>

@@ -1,8 +1,11 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { Led, NodeDangerZoneTooltip, InfoTooltip } from 'components';
+import { Led, NodeDangerZoneTooltip, Overlay } from 'components';
+import { useGetNodeFilters } from 'hooks';
+import { faScissors } from 'icons/regular';
 import { stakeSelector } from 'redux/selectors';
 import {
   NodeType,
@@ -12,44 +15,54 @@ import {
 
 export interface NodeQualificationUIType extends WithClassnameType {
   node: NodeType;
-  showDangerZone?: boolean;
 }
 
 export const NodeQualification = ({
   node,
-  showDangerZone = false,
   className
 }: NodeQualificationUIType) => {
   const {
     isFetched: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
-  const { stake, auctionTopUp, auctionQualified, isInDangerZone } = node;
+  const { isAuctionDangerZone, isQualified } = useGetNodeFilters();
+  const {
+    stake,
+    auctionTopUp,
+    qualifiedStake,
+    auctionQualified,
+    isInDangerZone
+  } = node;
 
   const bNAuctionTopup = new BigNumber(auctionTopUp ?? 0);
-  const bNTotalLocked = new BigNumber(stake).plus(bNAuctionTopup);
+  const bNqualifiedStake =
+    qualifiedStake !== undefined
+      ? new BigNumber(qualifiedStake)
+      : new BigNumber(stake).plus(auctionQualified ? bNAuctionTopup : 0);
+
   const isDropped =
     !auctionQualified &&
-    bNTotalLocked.isGreaterThan(minimumAuctionQualifiedStake ?? 0) &&
+    bNqualifiedStake.isGreaterThan(minimumAuctionQualifiedStake ?? 0) &&
     bNAuctionTopup.isGreaterThan(0);
+
+  const showDangerZone =
+    (isAuctionDangerZone && isQualified) || notQualifiedAuctionValidators;
 
   const NodeStatusComponent = () => {
     if (auctionQualified) {
-      if (showDangerZone && isInDangerZone && notQualifiedAuctionValidators) {
-        return (
-          <>
-            <Led color='bg-orange-400' />
-            <NodeDangerZoneTooltip node={node} />
-          </>
-        );
-      }
-
       return (
         <>
           <Led color='bg-success' />
           <span className='text-success'>
             {NodeQualificationStatusEnum.qualified}
           </span>
+          {Boolean(isInDangerZone && showDangerZone) && (
+            <NodeDangerZoneTooltip
+              auctionQualified={auctionQualified}
+              qualifiedStake={bNqualifiedStake.toString(10)}
+              isInDangerZone={isInDangerZone}
+            />
+          )}
         </>
       );
     }
@@ -61,7 +74,9 @@ export const NodeQualification = ({
           {NodeQualificationStatusEnum.notQualified}
         </span>
         {isStakeFetched && minimumAuctionQualifiedStake && isDropped && (
-          <InfoTooltip title='Dropped' className='ms-0 text-red-400' />
+          <Overlay title='Dropped'>
+            <FontAwesomeIcon icon={faScissors} className='text-red-400' />
+          </Overlay>
         )}
       </>
     );

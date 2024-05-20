@@ -131,7 +131,7 @@ export const Applications = () => {
                             <th>Name/Address</th>
                             <th>Owner</th>
                             <th>
-                              <Sort id='balance' field='Balance' />
+                              <Sort id='balance' text='Balance' />
                             </th>
                             <th>Transactions</th>
                             <th className='text-end'>Deployed</th>

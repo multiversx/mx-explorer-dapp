@@ -18,7 +18,7 @@ export const FormatNumber = (props: FormatNumberUIType) => {
   const bNamount = BigNumber.isBigNumber(value) ? value : new BigNumber(value);
   const completeValue = bNamount.toFormat();
 
-  if (!stringIsFloat(completeValue)) {
+  if (bNamount.isNaN()) {
     return (
       <span
         {...(props['data-testid']

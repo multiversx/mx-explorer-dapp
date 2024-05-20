@@ -6,32 +6,32 @@ import {
   faSnooze,
   faSync,
   faLock,
-  faExclamationTriangle,
   faGavel
 } from 'icons/regular';
-import { NodeType } from 'types';
+import { faExclamationTriangle } from 'icons/solid';
+import { NodeType, NodeStatusEnum, NodeTypeEnum } from 'types';
 
 export const getNodeIcon = (node: NodeType) => {
   switch (true) {
-    case node.type === 'observer':
+    case node.type === NodeTypeEnum.observer:
       return faEye;
 
-    case node.status === 'new':
+    case node.status === NodeStatusEnum.new:
       return faLeaf;
 
-    case node.status === 'inactive':
+    case node.status === NodeStatusEnum.inactive:
       return faSnooze;
 
     case node.receivedShardID !== node.computedShardID:
       return faSync;
 
-    case node.status === 'waiting':
+    case node.status === NodeStatusEnum.waiting:
       return faClock;
 
-    case node.status === 'queued':
+    case node.status === NodeStatusEnum.queued:
       return faFlagAlt;
 
-    case node.status === 'auction':
+    case node.status === NodeStatusEnum.auction:
       return faGavel;
 
     default:
@@ -41,7 +41,7 @@ export const getNodeIcon = (node: NodeType) => {
 
 export const getNodeIssueIcon = (node: NodeType) => {
   switch (true) {
-    case node.status === 'jailed':
+    case node.status === NodeStatusEnum.jailed:
       return faLock;
 
     case node.issues && node.issues.length > 0:

@@ -1,13 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { ELLIPSIS } from 'appConstants';
 import {
   Loader,
   Pager,
   PageSize,
   PageState,
   NodesTable,
-  NodesFilters
+  NodesFilters,
+  NodesHeader
 } from 'components';
 import {
   useAdapter,
@@ -21,7 +23,6 @@ import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { NodeType } from 'types';
 
 export const Nodes = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const { getNodes, getNodesCount } = useAdapter();
   const { search } = useGetSearch();
@@ -29,44 +30,50 @@ export const Nodes = () => {
   const nodeFilters = useGetNodeFilters();
   const sort = useGetSort();
   const [nodes, setNodes] = useState<NodeType[]>([]);
-  const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
+  const [totalNodes, setTotalNodes] = useState<number | typeof ELLIPSIS>(
+    ELLIPSIS
+  );
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
-  const { type, status } = Object.fromEntries(searchParams);
+  const { type, status, isAuctioned } = Object.fromEntries(searchParams);
 
   const fetchNodes = () => {
     setDataReady(undefined);
-
     Promise.all([
-      getNodes({ ...nodeFilters, ...sort, search, page, size }),
+      getNodes({
+        ...nodeFilters,
+        ...sort,
+        search,
+        page,
+        size,
+        withIdentityInfo: true
+      }),
       getNodesCount({ ...nodeFilters, ...sort, search })
     ]).then(([nodesData, count]) => {
       setNodes(nodesData.data);
       setTotalNodes(count.data);
 
-      if (ref.current !== null) {
-        setDataReady(nodesData.success && count.success);
-      }
+      setDataReady(nodesData.success && count.success);
     });
   };
 
   useEffect(fetchNodes, [searchParams]);
 
   return (
-    <div className='card position-unset' ref={ref}>
-      <div className='card-header position-unset'>
+    <div className='card'>
+      <div className='card-header'>
         <NodesTabs />
-
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-          <NodesFilters />
-          {dataReady === true && (
+          <NodesHeader searchValue={totalNodes} />
+          <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
+            <NodesFilters showGlobalValues showObservers />
             <Pager
               total={totalNodes}
               className='d-flex ms-auto me-auto me-sm-0'
               showFirstAndLast={false}
               show
             />
-          )}
+          </div>
         </div>
       </div>
 
@@ -81,17 +88,19 @@ export const Nodes = () => {
             <NodesTable
               type={type as NodeType['type']}
               status={status as NodeType['status']}
+              auctionList={Boolean(isAuctioned)}
             >
               <NodesTable.Body
                 nodes={nodes}
                 type={type as NodeType['type']}
                 status={status as NodeType['status']}
+                auctionList={Boolean(isAuctioned)}
               />
             </NodesTable>
           </div>
           <div className='card-footer table-footer'>
             <PageSize />
-            <Pager total={totalNodes} show />
+            <Pager total={totalNodes} show={nodes.length > 0} />
           </div>
         </>
       )}

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { NodeType } from 'types';
 import { NodesTableBody } from './components/NodesTableBody';
-import { AuctionListHead } from './components/NodesTableHead/AuctionListHead';
+import { AuctionHead } from './components/NodesTableHead/AuctionHead';
 import { QueueHead } from './components/NodesTableHead/QueueHead';
 import { StandardHead } from './components/NodesTableHead/StandardHead';
 import { StatisticsHead } from './components/NodesTableHead/StatisticsHead';
@@ -43,19 +43,17 @@ export default class NodesTable extends React.Component<NodesTableUIType> {
         })}
       >
         <table className='table mb-0'>
-          <thead>
-            {auctionList && <AuctionListHead showPosition={showPosition} />}
-            {statistics && <StatisticsHead />}
-            {queue && <QueueHead hideFilters={hideFilters} />}
-            {!statistics && !queue && !auctionList && (
-              <StandardHead
-                hideFilters={hideFilters}
-                type={type}
-                status={status}
-                showPosition={showPosition}
-              />
-            )}
-          </thead>
+          {auctionList && <AuctionHead />}
+          {statistics && <StatisticsHead />}
+          {queue && <QueueHead hideFilters={hideFilters} />}
+          {!statistics && !queue && !auctionList && (
+            <StandardHead
+              hideFilters={hideFilters}
+              type={type}
+              status={status}
+              showPosition={showPosition}
+            />
+          )}
           {children}
         </table>
       </div>

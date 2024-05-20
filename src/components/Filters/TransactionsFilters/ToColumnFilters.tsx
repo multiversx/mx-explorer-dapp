@@ -61,7 +61,7 @@ export const ToColumnFilters = ({
     >
       <div
         className='d-inline-block side-action cursor-pointer'
-        data-testid='StatusFilterButton'
+        data-testid='toColumnFilter'
       >
         <FontAwesomeIcon
           icon={receiver !== undefined ? faFilterSolid : faFilter}

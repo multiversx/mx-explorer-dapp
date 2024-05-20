@@ -1,22 +1,29 @@
-import { Sort, StatusFilter } from 'components';
+import { Sort, NodesGeneralFilter, Overlay } from 'components';
+
+import { NodesTableFilterHead } from '../NodesTableFilterHead';
 
 export const QueueHead = ({ hideFilters }: { hideFilters?: boolean }) => {
   return (
-    <tr>
-      <th data-testid='position'>
-        <Sort id='position' field='Position' />
-      </th>
-      <th data-testid='node'>Public Key</th>
-      <th data-testid='name'>
-        <Sort id='name' field='Name' />
-      </th>
-      <th data-testid='version'>
-        <Sort id='version' field='Version' />
-      </th>
-      <th className='text-end' data-testid='status'>
-        Status
-        {hideFilters === true ? '' : <StatusFilter />}
-      </th>
-    </tr>
+    <thead>
+      <tr>
+        <th scope='col' data-testid='node'>
+          <div className='d-flex align-items-center'>
+            <NodesGeneralFilter text='Public Key' hideFilters={hideFilters} />
+            {!hideFilters && (
+              <Overlay title='Sort by Queue Position'>
+                <Sort id='position' text='' />
+              </Overlay>
+            )}
+          </div>
+        </th>
+        <th scope='col' data-testid='name'>
+          <Sort id='name' text='Name' />
+        </th>
+        <th scope='col' data-testid='version'>
+          <Sort id='version' text='Version' />
+        </th>
+      </tr>
+      <NodesTableFilterHead colSpan={3} />
+    </thead>
   );
 };

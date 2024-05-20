@@ -10,7 +10,7 @@ let currentRequest: any = null;
 
 export const useFetchStake = () => {
   const dispatch = useDispatch();
-  const { getStake } = useAdapter();
+  const { getStake, getNodesCount } = useAdapter();
 
   const getStakeOnce = () => {
     if (currentRequest) {
@@ -19,7 +19,12 @@ export const useFetchStake = () => {
 
     const requestPromise = new Promise(async (resolve, reject) => {
       try {
-        const response = await getStake();
+        // TODO: temporary - not in API
+        const response = await Promise.all([
+          getStake(),
+          getNodesCount({}),
+          getNodesCount({ type: 'validator' })
+        ]);
         resolve(response);
       } catch (error) {
         reject(error);
@@ -33,23 +38,25 @@ export const useFetchStake = () => {
   };
 
   const fetchStake = async () => {
-    const { data, success } = await getStakeOnce();
+    const [stake, totalNodes, totalValidatorNodes] = await getStakeOnce();
 
-    if (data && success) {
+    if (stake?.data && stake?.success) {
       const hasValidatorData =
-        data.auctionValidators !== undefined &&
-        data.qualifiedAuctionValidators !== undefined;
+        stake.data.auctionValidators !== undefined &&
+        stake.data.qualifiedAuctionValidators !== undefined;
       const processedData = {
-        ...data,
+        ...stake.data,
         ...(hasValidatorData
           ? {
               notQualifiedAuctionValidators: new BigNumber(
-                data.auctionValidators
+                stake.data.auctionValidators
               )
-                .minus(data.qualifiedAuctionValidators)
+                .minus(stake.data.qualifiedAuctionValidators)
                 .toNumber()
             }
-          : {})
+          : {}),
+        totalNodes: totalNodes.data,
+        totalValidatorNodes: totalValidatorNodes.data
       };
 
       const processedStake = processStake(processedData);
@@ -63,7 +70,7 @@ export const useFetchStake = () => {
       );
     }
 
-    return { data, success };
+    return { data: stake.data, success: stake.success };
   };
 
   useEffect(() => {

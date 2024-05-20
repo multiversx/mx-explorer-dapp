@@ -29,6 +29,7 @@ export const stakeSlice = createSlice({
       state.activeValidators = action.payload.activeValidators;
       state.totalStaked = action.payload.totalStaked;
       state.nakamotoCoefficient = action.payload.nakamotoCoefficient;
+      state.totalObservers = action.payload.totalObservers;
 
       state.queueSize = action.payload.queueSize;
       state.minimumAuctionQualifiedTopUp =
@@ -39,11 +40,15 @@ export const stakeSlice = createSlice({
       state.qualifiedAuctionValidators =
         action.payload.qualifiedAuctionValidators;
       state.dangerZoneValidators = action.payload.dangerZoneValidators;
-      state.notQualifiedAuctionValidators =
-        action.payload.notQualifiedAuctionValidators;
       state.eligibleValidators = action.payload.eligibleValidators;
       state.waitingValidators = action.payload.waitingValidators;
       state.allStakedNodes = action.payload.allStakedNodes;
+
+      // not in API
+      state.notQualifiedAuctionValidators =
+        action.payload.notQualifiedAuctionValidators;
+      state.totalNodes = action.payload.totalNodes;
+      state.totalValidatorNodes = action.payload.totalValidatorNodes;
 
       state.unprocessed = action.payload.unprocessed;
       state.isFetched = action.payload.isFetched;

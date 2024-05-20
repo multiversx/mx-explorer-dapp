@@ -1,5 +1,5 @@
 import { faHistory } from 'icons/regular';
-import { NodeType } from 'types';
+import { NodeType, NodeTypeEnum } from 'types';
 
 import { NodeIcon } from './NodeIcon';
 
@@ -10,7 +10,7 @@ export const NodeFullHistoryIcon = ({
   node: NodeType;
   small?: boolean;
 }) => {
-  if (node.type === 'observer' && node.fullHistory) {
+  if (node.type === NodeTypeEnum.observer && node.fullHistory) {
     return <NodeIcon title='Full History' icon={faHistory} small={small} />;
   }
 

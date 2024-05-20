@@ -80,7 +80,7 @@ export const StatusColumnFilters = ({
     >
       <div
         className='d-inline-block side-action cursor-pointer'
-        data-testid='StatusFilterButton'
+        data-testid='transactionStatusColumnFilter'
       >
         <FontAwesomeIcon
           icon={
