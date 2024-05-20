@@ -51,11 +51,12 @@ Cypress.Commands.add('paginationHandler', (route) => {
     display: 'none'
   });
   cy.contains('button', '2').click();
-  cy.checkUrl('?page=2');
+  cy.checkUrl('page=2');
+  cy.contains('button', '3').click();
+  cy.checkUrl('page=3');
   cy.contains('button', '1').click();
-  cy.checkUrl('?page=1');
   cy.contains('button', 'Next').last().click();
-  cy.checkUrl('?page=2');
+  cy.checkUrl('page=2');
   cy.contains('button', 'Prev').click();
   cy.checkUrl(route);
   cy.apiIntercept(ApiMethodsEnum.GET, `${route}/`);
@@ -81,6 +82,6 @@ Cypress.Commands.add('checkHeaderElements', (payload: string) => {
 
 Cypress.Commands.add('accesPage', (page: string) => {
   cy.visit('/');
-  cy.get(`.links > [href="${page}"]`).click();
+  cy.get(`.links .link[href="${page}"]`).click();
   cy.checkUrl(page);
 });
