@@ -626,6 +626,29 @@ export const useAdapter = () => {
         })
       }),
 
+    getCollectionTransfers: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/collections/${identifier}/transfers`,
+        params: getTransactionsParams({
+          ...rest
+        })
+      }),
+
+    getCollectionTransfersCount: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/collections/${identifier}/transfers/count`,
+        params: getTransactionsParams({
+          isCount: true,
+          ...rest
+        })
+      }),
+
     // Nfts
 
     getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
@@ -677,6 +700,29 @@ export const useAdapter = () => {
     }: GetTransactionsType & { identifier: string }) =>
       provider({
         url: `/nfts/${identifier}/transactions/count`,
+        params: getTransactionsParams({
+          isCount: true,
+          ...rest
+        })
+      }),
+
+    getNftTransfers: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/nfts/${identifier}/transfers`,
+        params: getTransactionsParams({
+          ...rest
+        })
+      }),
+
+    getNftTransfersCount: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/nfts/${identifier}/transfers/count`,
         params: getTransactionsParams({
           isCount: true,
           ...rest
