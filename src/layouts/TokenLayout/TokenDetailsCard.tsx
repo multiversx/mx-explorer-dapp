@@ -67,6 +67,7 @@ export const TokenDetailsCard = () => {
         }
       : {},
     { title: 'Identifier', value: identifier },
+    !assets && ticker !== name ? { title: 'Name', value: name } : {},
     { title: 'Decimals', value: decimals },
     { title: 'Owner', value: <AccountLink address={owner} fetchAssets /> },
     { title: 'Properties', value: <RolesBadges {...token} /> }
