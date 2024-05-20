@@ -12,13 +12,10 @@ import { TokenDetailsCard } from './TokenDetailsCard';
 
 export const TokenLayout = () => {
   const ref = useRef(null);
-  const { firstPageRefreshTrigger } = useGetPage();
-
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-
   const dispatch = useDispatch();
+  const { firstPageRefreshTrigger } = useGetPage();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getToken } = useAdapter();
-
   const { hash: tokenId } = useParams();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSearchParams, useParams, Outlet } from 'react-router-dom';
+import { useParams, Outlet } from 'react-router-dom';
 
 import { Loader } from 'components';
 import { useAdapter, useGetPage } from 'hooks';
@@ -12,12 +12,10 @@ import { FailedCollectionDetails } from './FailedCollectionDetails';
 
 export const CollectionLayout = () => {
   const ref = useRef(null);
-  const { firstPageRefreshTrigger } = useGetPage();
-  const [searchParams] = useSearchParams();
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const dispatch = useDispatch();
+  const { firstPageRefreshTrigger } = useGetPage();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getCollection } = useAdapter();
-
   const { hash: collection } = useParams();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -41,11 +39,7 @@ export const CollectionLayout = () => {
 
   useEffect(() => {
     fetchCollectionDetails();
-  }, [firstPageRefreshTrigger, activeNetworkId, collection, searchParams]);
-
-  useEffect(() => {
-    setDataReady(undefined);
-  }, [collection, activeNetworkId, searchParams]);
+  }, [firstPageRefreshTrigger, activeNetworkId, collection]);
 
   const loading = dataReady === undefined;
   const failed = dataReady === false;
