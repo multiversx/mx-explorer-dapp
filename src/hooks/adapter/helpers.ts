@@ -124,6 +124,7 @@ export function getNodeParams({
   isAuctioned,
   isAuctionDangerZone,
   owner,
+  withIdentityInfo,
   // not on api
   isCount = false
 }: GetNodesType) {
@@ -137,7 +138,8 @@ export function getNodeParams({
           ...(from !== undefined ? { from } : {}),
           ...(size !== undefined ? { size } : {}),
           ...(sort !== undefined ? { sort } : {}),
-          ...(order !== undefined ? { order } : {})
+          ...(order !== undefined ? { order } : {}),
+          ...(withIdentityInfo !== undefined ? { withIdentityInfo } : {})
         }),
     ...(search !== undefined ? { search } : {}),
     ...(type !== undefined ? { type } : {}),

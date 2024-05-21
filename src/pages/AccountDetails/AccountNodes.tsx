@@ -49,8 +49,7 @@ export const AccountNodes = () => {
         search,
         page,
         size,
-        owner: address,
-        withIdentityInfo: true
+        owner: address
       }),
       getNodesCount({ ...nodeFilters, owner: address, withIdentityInfo: true })
     ]).then(([accountNodesData, accountNodesCountData]) => {
