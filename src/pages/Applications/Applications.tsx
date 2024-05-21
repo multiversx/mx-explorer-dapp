@@ -110,19 +110,13 @@ export const Applications = () => {
             <div className='card'>
               {accounts && accounts.length > 0 ? (
                 <>
-                  <div className='card-header pb-0'>
-                    <h5 className='mb-0'>Browse all deployed apps</h5>
-                  </div>
                   <div className='card-header'>
                     <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
                       <h5
                         data-testid='title'
                         className='table-title d-flex align-items-center'
                       >
-                        {totalAccounts !== ELLIPSIS
-                          ? `${new BigNumber(totalAccounts).toFormat()} `
-                          : ''}
-                        Applications
+                        Browse all deployed apps
                       </h5>
                       <Pager
                         total={totalAccounts}
