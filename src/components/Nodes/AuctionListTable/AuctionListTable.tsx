@@ -48,14 +48,6 @@ const getValidatorDetails = ({
     return `+${multipleIdentityEntries} more`;
   }
 
-  const multipleOwnerEntries = validators.filter(
-    (filteredValidator) =>
-      validator.owner && validator.owner === filteredValidator.owner
-  ).length;
-  if (multipleOwnerEntries > 1) {
-    return `+${multipleIdentityEntries} more entries`;
-  }
-
   return '';
 };
 
