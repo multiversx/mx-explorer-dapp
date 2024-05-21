@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { ELLIPSIS } from 'appConstants';
+import { ELLIPSIS, PAGE_SIZE } from 'appConstants';
 import { ReactComponent as DefaultImage } from 'assets/img/default-icon.svg';
 import {
   Loader,
@@ -27,17 +27,19 @@ import {
   useGetPage,
   useGetSort,
   useHasGrowthWidgets,
-  useFetchGrowthMostUsed
+  useFetchGrowthMostUsed,
+  useIsMainnet
 } from 'hooks';
 import { faBadgeCheck } from 'icons/solid';
 import { activeNetworkSelector, growthMostUsedSelector } from 'redux/selectors';
-import { AccountType } from 'types';
+import { AccountType, SortOrderEnum } from 'types';
 import { MostUsedApplications } from 'widgets';
 
 import { FailedApplications } from './components/FailedApplications';
 import { NoApplications } from './components/NoApplications';
 
 export const Applications = () => {
+  const isMainnet = useIsMainnet();
   const [searchParams] = useSearchParams();
   const hasGrowthWidgets = useHasGrowthWidgets();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -57,16 +59,23 @@ export const Applications = () => {
     ELLIPSIS
   );
 
+  const is24hCountAvailable = isMainnet;
+
+  if (!sort.sort && is24hCountAvailable) {
+    sort.sort = 'transfersLast24h';
+    sort.order = SortOrderEnum.desc;
+  }
+
   const fetchApplications = () => {
     setDataChanged(true);
     Promise.all([
       getAccounts({
         page,
-        size,
         isSmartContract: true,
         withOwnerAssets: true,
         withDeployInfo: true,
-        withScrCount: true,
+        ...(is24hCountAvailable ? {} : { withScrCount: true }),
+        ...(is24hCountAvailable ? { size } : { size: 15 }),
         ...sort
       }),
       getAccountsCount({ isSmartContract: true })
@@ -117,6 +126,7 @@ export const Applications = () => {
                       </h5>
                       <Pager
                         total={totalAccounts}
+                        itemsPerPage={is24hCountAvailable ? PAGE_SIZE : 15}
                         show={accounts.length > 0}
                         className='d-flex ms-auto me-auto me-sm-0'
                       />
@@ -133,7 +143,16 @@ export const Applications = () => {
                             <th>
                               <Sort id='balance' text='Balance' />
                             </th>
-                            <th>Transactions</th>
+                            <th>
+                              {is24hCountAvailable ? (
+                                <Sort
+                                  id='transfersLast24h'
+                                  text='Transactions / 24h'
+                                />
+                              ) : (
+                                'Transactions'
+                              )}
+                            </th>
                             <th className='text-end'>Deployed</th>
                           </tr>
                         </thead>
@@ -249,8 +268,15 @@ export const Applications = () => {
                   </div>
 
                   <div className='card-footer table-footer'>
-                    <PageSize />
-                    <Pager total={totalAccounts} show={accounts.length > 0} />
+                    <PageSize
+                      defaultSize={is24hCountAvailable ? PAGE_SIZE : 15}
+                      maxSize={PAGE_SIZE}
+                    />
+                    <Pager
+                      total={totalAccounts}
+                      itemsPerPage={is24hCountAvailable ? PAGE_SIZE : 15}
+                      show={accounts.length > 0}
+                    />
                   </div>
                 </>
               ) : (
