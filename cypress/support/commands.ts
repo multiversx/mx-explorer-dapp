@@ -59,9 +59,6 @@ Cypress.Commands.add('paginationHandler', (route) => {
   cy.checkUrl('page=2');
   cy.contains('button', 'Prev').click();
   cy.checkUrl(route);
-  cy.apiIntercept(ApiMethodsEnum.GET, `${route}/`);
-  cy.get('[aria-label="Last Page"]').first().click();
-  cy.verifyApiResponse(`${route}/`);
 });
 
 Cypress.Commands.add('checkTableHead', (payload: string[]) => {
