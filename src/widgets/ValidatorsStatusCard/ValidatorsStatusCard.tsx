@@ -4,11 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
 import { useFetchStake, useFetchMarkers, useFetchShards } from 'hooks';
-import {
-  stakeSelector,
-  markersSelector,
-  shardsSelector
-} from 'redux/selectors';
+import { markersSelector, shardsSelector } from 'redux/selectors';
 import { RankType } from 'types';
 
 import { LargeCard } from './components/LargeCard';
@@ -46,16 +42,13 @@ export const ValidatorsStatusCard = ({
   const ref = useRef(null);
 
   const { markers } = useSelector(markersSelector);
-  const { unprocessed } = useSelector(stakeSelector);
   const shards = useSelector(shardsSelector);
 
   const shardNodesCount = shards.reduce(
     (acc, shard) => acc + shard.validators,
     0
   );
-  const shardTotalValidators = new BigNumber(shardNodesCount)
-    .plus(unprocessed?.auctionValidators ?? 0)
-    .toFormat(0);
+  const shardTotalValidators = new BigNumber(shardNodesCount).toFormat(0);
 
   const [continentsRank, setContinentsRank] =
     useState<RankType[]>(placeHolderRank);
