@@ -15,6 +15,7 @@ import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import { urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
 import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
+import { blocksRoutes } from 'routes';
 import { BlockType } from 'types';
 
 export const LatestBlocks = () => {
@@ -70,17 +71,20 @@ export const LatestBlocks = () => {
   const Component = () => {
     return (
       <div className='card card-lg card-black' ref={ref}>
-        {blocksFetched === undefined && <Loader dataTestId='blocksLoader' />}
+        {blocksFetched === undefined && <Loader data-testid='blocksLoader' />}
         {blocksFetched === false && <FailedBlocks />}
         {blocksFetched === true && blocks.length === 0 && <NoBlocks />}
         {blocksFetched === true && blocks.length > 0 && (
           <>
             <div className='card-header'>
               <div className='d-flex justify-content-between align-items-center flex-wrap'>
-                <h5 className='mb-0 d-flex align-items-center'>
+                <div className='h5 mb-0 d-flex align-items-center'>
                   Recent Blocks <PulsatingLed className='ms-2 mt-1' />
-                </h5>
-                <NetworkLink to='/blocks' className='btn btn-sm btn-dark'>
+                </div>
+                <NetworkLink
+                  to={blocksRoutes.blocks}
+                  className='btn btn-sm btn-dark'
+                >
                   View All
                 </NetworkLink>
               </div>
@@ -98,7 +102,7 @@ export const LatestBlocks = () => {
                       <div className='d-flex align-items-center justify-content-between mb-3'>
                         <div className='d-flex align-items-center'>
                           <NetworkLink
-                            to={`/blocks/${block.hash}`}
+                            to={urlBuilder.blockDetails(block.hash)}
                             data-testid={`blockLink${i}`}
                           >
                             {block.nonce}
@@ -125,11 +129,11 @@ export const LatestBlocks = () => {
                       <div className='d-flex flex-row mt-1'>
                         <span className='me-2 text-neutral-400'>Hash:</span>
                         <NetworkLink
-                          to={`/blocks/${block.hash}`}
+                          to={urlBuilder.blockDetails(block.hash)}
                           className='trim-wrapper'
                         >
                           <Trim
-                            dataTestId={`blockHashLink${i}`}
+                            data-testid={`blockHashLink${i}`}
                             text={block.hash}
                           />
                         </NetworkLink>

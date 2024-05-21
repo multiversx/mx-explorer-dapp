@@ -10,7 +10,7 @@
   }
 
   .staking-chart-title {
-    background-color: var(--neutral-transparent);
+    background-color: var(--neutral-800-opacity-60);
     border-radius: $border-radius;
     @include media-breakpoint-up(lg) {
       border-top-left-radius: 0;
@@ -23,7 +23,7 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
-    min-height: 24rem;
+    min-height: 26rem;
     margin-top: -4rem;
     @include media-breakpoint-up(lg) {
       margin-top: 0;
@@ -53,11 +53,11 @@
     right: 0;
     bottom: 1rem;
     text-align: center;
-    background-color: var(--neutral-transparent);
+    background-color: var(--neutral-800-opacity-60);
     border-radius: $border-radius;
   }
   .delegation-title {
-    background-color: var(--neutral-transparent);
+    background-color: var(--neutral-800-opacity-60);
     border-radius: $border-radius;
   }
   .stake-container:first-of-type {

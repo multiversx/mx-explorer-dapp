@@ -40,10 +40,14 @@ $neutral-300: #d4d4d4;
 $neutral-400: #a3a3a3;
 $neutral-500: #737373;
 $neutral-600: #525252;
+$neutral-650: #4a4a4a;
 $neutral-700: #404040;
+$neutral-750: #2e2e2e;
 $neutral-800: #262626;
+$neutral-850: #212121;
 $neutral-900: #171717;
 $neutral-950: #121212;
+$neutral-980: #0a0a0a;
 
 $stone-50: #fafaf9;
 $stone-100: #f5f5f4;
@@ -289,10 +293,14 @@ $neutrals: (
   'neutral-400': $neutral-400,
   'neutral-500': $neutral-500,
   'neutral-600': $neutral-600,
+  'neutral-650': $neutral-650,
   'neutral-700': $neutral-700,
+  'neutral-750': $neutral-750,
   'neutral-800': $neutral-800,
+  'neutral-850': $neutral-850,
   'neutral-900': $neutral-900,
-  'neutral-950': $neutral-950
+  'neutral-950': $neutral-950,
+  'neutral-980': $neutral-980
 );
 
 $stones: (
@@ -509,6 +517,11 @@ $roses: (
   'rose-700': $rose-700,
   'rose-800': $rose-800,
   'rose-900': $rose-900
+);
+
+$opacities: (
+  60: 0.6,
+  70: 0.7
 );
 
 // -----------------------------------------

@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import {
-  Denominate,
+  FormatAmount,
   NetworkLink,
+  Overlay,
   PageState,
   SharedIdentity,
   Trim
@@ -29,7 +29,7 @@ export const IdentitySummary = ({
             <div className='col'>
               <div className='d-flex flex-column flex-xxl-row align-items-xxl-center'>
                 <div className='d-flex align-items-center min-w-0 mb-3 mb-xxl-0'>
-                  <SharedIdentity.Avatar identity={identity} />
+                  <SharedIdentity.Avatar identity={identity} className='me-2' />
 
                   <h5 className='mb-0 mx-2 d-flex'>
                     {identity.identity ? (
@@ -42,21 +42,13 @@ export const IdentitySummary = ({
                           </span>
                         </NetworkLink>
                         {featured && (
-                          <OverlayTrigger
-                            placement='top'
-                            delay={{ show: 0, hide: 400 }}
-                            overlay={(props: any) => (
-                              <Tooltip {...props} show={props.show.toString()}>
-                                Verified
-                              </Tooltip>
-                            )}
-                          >
+                          <Overlay title='Verified'>
                             <FontAwesomeIcon
                               icon={faBadgeCheck}
                               size='lg'
                               className='ms-2 text-primary'
                             />
-                          </OverlayTrigger>
+                          </Overlay>
                         )}
                       </>
                     ) : (
@@ -87,7 +79,7 @@ export const IdentitySummary = ({
                     </span>
                     <h5 className='mb-0'>
                       {identity.locked ? (
-                        <Denominate value={identity.locked} />
+                        <FormatAmount value={identity.locked} />
                       ) : (
                         'N/A'
                       )}
@@ -114,7 +106,7 @@ export const IdentitySummary = ({
             icon={faCity}
             title='Unable to load identity details'
             className='py-spacer my-auto page-state-sm'
-            dataTestId='errorScreen'
+            isError
           />
         )}
       </div>

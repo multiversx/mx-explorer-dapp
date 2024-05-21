@@ -1,9 +1,9 @@
-import { faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
 import {
-  Denominate,
+  FormatAmount,
   MultilayerPercentageRing,
   SharedIdentity,
   Trim
@@ -11,23 +11,23 @@ import {
 import { getValidLink } from 'helpers';
 import { faLink, faMapMarkerAlt } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
-import { NodesVersionsType, IdentityType } from 'types';
+import { IdentityType, MultilayerPercentageStepType } from 'types';
 import { StatsCard } from 'widgets';
 import { formatStakePercentLabel } from '../helpers';
 
 const prepareStakeDistribution = (identity: IdentityType) => {
-  const distribution: NodesVersionsType[] = [];
+  const distribution: MultilayerPercentageStepType[] = [];
 
   if (identity.distribution) {
     Object.keys(identity.distribution).forEach((key) => {
       distribution.push({
         name: key === 'direct' ? 'Direct' : key,
-        percent: Math.floor(identity.distribution[key] * 100)
+        value: Math.floor(identity.distribution[key] * 100)
       });
     });
   }
 
-  return distribution.sort((a, b) => b.percent - a.percent);
+  return distribution.sort((a, b) => Number(b.value) - Number(a.value));
 };
 
 export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
@@ -51,13 +51,13 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
       <div className='card-body'>
         <div className='row'>
           <div className='col-12 d-flex flex-row gap-3'>
-            <div className='d-flex align-items-center justify-content-center'>
-              <SharedIdentity.Avatar identity={identity} />
+            <div className='d-flex align-items-start align-items-md-center justify-content-center'>
+              <SharedIdentity.Avatar identity={identity} className='me-2' />
             </div>
 
             <div className='d-flex flex-fill flex-column justify-content-center gap-1'>
-              <div className='d-flex flex-wrap align-items-center'>
-                <h5 className='mb-0 identity-name me-2'>
+              <div className='d-flex flex-wrap align-items-center gap-2'>
+                <h5 className='mb-0 identity-name'>
                   {identityName.length > 70 ? (
                     <Trim text={identityName} />
                   ) : (
@@ -95,7 +95,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                   {twitterLink && (
                     <div className='d-flex align-items-center me-3'>
                       <FontAwesomeIcon
-                        icon={faTwitter}
+                        icon={faXTwitter}
                         className='identity-social-logo me-1'
                       />
                       <a
@@ -138,7 +138,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 value={
                   <>
                     {identity.locked ? (
-                      <Denominate value={identity.locked} />
+                      <FormatAmount value={identity.locked} />
                     ) : (
                       'N/A'
                     )}
@@ -179,7 +179,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                   </div>
                   <div className='distribution-card-value'>
                     {distribution && distribution.length > 0 ? (
-                      <MultilayerPercentageRing steps={distribution} trim />
+                      <MultilayerPercentageRing steps={distribution} hasTrim />
                     ) : (
                       <span className='text-neutral-400'>N/A</span>
                     )}

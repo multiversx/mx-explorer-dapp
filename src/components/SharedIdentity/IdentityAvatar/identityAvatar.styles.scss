@@ -1,7 +1,11 @@
 .identity-avatar {
   border: 1px solid var(--border-color);
-  min-width: 3rem;
-  min-height: 3rem;
+  width: 3rem;
+  height: 3rem;
+  &-md {
+    width: 1.875rem;
+    height: 1.875rem;
+  }
 }
 
 .identity-badge {

@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { Loader, NetworkLink, Pager } from 'components';
+import { ELLIPSIS } from 'appConstants';
+import { Loader, NetworkLink, Pager, PageSize } from 'components';
 import {
   useAdapter,
   useGetSearch,
   useGetSort,
   useActiveRoute,
   useGetPage,
-  useIsMainnet
+  useHasGrowthWidgets
 } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
 import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
@@ -25,19 +27,19 @@ export const Tokens = () => {
   const ref = useRef(null);
 
   const activeRoute = useActiveRoute();
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const { search: searchLocation } = useLocation();
   const { search } = useGetSearch();
   const { page, size } = useGetPage();
   const { sort, order } = useGetSort();
   const { getTokens, getTokensCount } = useAdapter();
 
-  const { ecosystemMarketCap } = useSelector(economicsSelector);
+  const { ecosystemMarketCap, unprocessed } = useSelector(economicsSelector);
   const pageHeadersTokens = useSelector(pageHeaderTokensStatsSelector);
 
   const [tokens, setTokens] = useState<TokenType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
-  const [totalTokens, setTotalTokens] = useState<number | '...'>('...');
+  const [totalTokens, setTotalTokens] = useState<number | undefined>();
 
   const fetchTokens = () => {
     Promise.all([
@@ -59,7 +61,7 @@ export const Tokens = () => {
   return (
     <>
       {(dataReady === undefined ||
-        (isMainnet && Object.keys(pageHeadersTokens).length === 0)) && (
+        (hasGrowthWidgets && Object.keys(pageHeadersTokens).length === 0)) && (
         <Loader />
       )}
       {dataReady === false && <FailedTokens />}
@@ -80,20 +82,26 @@ export const Tokens = () => {
                           Tokens
                         </h5>
                         <span>
-                          {totalTokens}{' '}
-                          <span className='text-neutral-400 pe-2 border-end me-2'>
-                            Tokens
-                          </span>{' '}
-                          <span className='text-neutral-400'>
-                            Ecosystem Market Cap:
-                          </span>{' '}
-                          {ecosystemMarketCap}
+                          {totalTokens !== undefined
+                            ? new BigNumber(totalTokens).toFormat()
+                            : ELLIPSIS}{' '}
+                          <span className='text-neutral-400'>Tokens</span>
+                          {Boolean(
+                            unprocessed.tokenMarketCap && unprocessed.marketCap
+                          ) && (
+                            <>
+                              <span className='ps-2 border-start ms-2 text-neutral-400'>
+                                Ecosystem Market Cap:
+                              </span>{' '}
+                              {ecosystemMarketCap}
+                            </>
+                          )}
                         </span>
                       </div>
                     </div>
                     <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
                       <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
-                        <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+                        <menu className='list-inline m-0 d-flex flex-wrap gap-2'>
                           <li className='list-inline-item me-0'>
                             <NetworkLink
                               to={tokensRoutes.tokens}
@@ -120,7 +128,7 @@ export const Tokens = () => {
                               Meta-ESDT
                             </NetworkLink>
                           </li>
-                        </ul>
+                        </menu>
                         <Filters />
                       </div>
                       {tokens && tokens.length > 0 && (
@@ -140,7 +148,8 @@ export const Tokens = () => {
                         />
                       </div>
 
-                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer table-footer'>
+                        <PageSize />
                         <Pager total={totalTokens} show={tokens.length > 0} />
                       </div>
                     </>

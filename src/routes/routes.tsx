@@ -9,14 +9,13 @@ import { EmptySearch } from 'pages/EmptySearch';
 import { HashSearch } from 'pages/HashSearch';
 import { Home } from 'pages/Home';
 import { PageNotFound } from 'pages/PageNotFound';
-import { TransactionDetails } from 'pages/TransactionDetails';
-import { Transactions } from 'pages/Transactions';
 
 import { generateNetworkRoutes } from './helpers/generateNetworkRoutes';
 import { wrapRoutes } from './helpers/wrapRoutes';
 import {
   accountLayout,
   accountsRoutes,
+  applicationsRoutes,
   blockLayout,
   blocksRoutes,
   collectionLayout,
@@ -25,16 +24,20 @@ import {
   nftRoutes,
   tokenLayout,
   tokensRoutes,
+  transactionsLayout,
+  transactionsRoutes,
   validatorLayout,
   validatorsRoutes
 } from './layouts';
 
 export {
   accountsRoutes,
+  applicationsRoutes,
   blocksRoutes,
   collectionRoutes,
   nftRoutes,
   tokensRoutes,
+  transactionsRoutes,
   validatorsRoutes
 };
 export interface TitledRouteObject extends NonIndexRouteObject {
@@ -53,14 +56,9 @@ export const searchRoutes = {
   query: '/search/:hash'
 };
 
-export const transactionsRoutes = {
-  transactions: '/transactions',
-  transactionDetails: '/transactions/:hash/*',
-  transactionDetailsLogs: '/transactions/:hash/logs'
-};
-
 export const routes = {
   ...accountsRoutes,
+  ...applicationsRoutes,
   ...analyticsRoutes,
   ...blocksRoutes,
   ...collectionRoutes,
@@ -94,16 +92,6 @@ const mainRoutes: TitledRouteObject[] = [
         Component: AnalyticsCompare
       },
       {
-        path: transactionsRoutes.transactions,
-        title: 'Transactions',
-        Component: Transactions
-      },
-      {
-        path: transactionsRoutes.transactionDetails,
-        title: 'Transaction Details',
-        Component: TransactionDetails
-      },
-      {
         path: searchRoutes.index,
         title: 'Search',
         Component: EmptySearch
@@ -118,6 +106,7 @@ const mainRoutes: TitledRouteObject[] = [
       ...collectionLayout,
       ...nftLayout,
       ...tokenLayout,
+      ...transactionsLayout,
       ...validatorLayout
     ]
   }

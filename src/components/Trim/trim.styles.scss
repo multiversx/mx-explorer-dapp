@@ -74,6 +74,13 @@
       color: var(--primary-200);
     }
   }
+  &.text-neutral-400 {
+    .ellipsis,
+    .left span,
+    .right span {
+      color: var(--neutral-400);
+    }
+  }
 
   /* IE fix */
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -93,6 +100,9 @@
     position: absolute;
     display: block;
     color: transparent;
+    &::selection {
+      color: transparent;
+    }
   }
 }
 
@@ -133,8 +143,22 @@ a:hover > .trim span {
       max-width: 12rem;
     }
     .hash-lg {
-      min-width: 16rem;
-      max-width: 16rem;
+      @include media-breakpoint-up(sm) {
+        min-width: 16rem;
+        max-width: 16rem;
+      }
+    }
+    .hash-xl {
+      @include media-breakpoint-up(sm) {
+        min-width: 20rem;
+        max-width: 20rem;
+      }
+    }
+    .hash-xxl {
+      @include media-breakpoint-up(sm) {
+        min-width: 24rem;
+        max-width: 24rem;
+      }
     }
   }
 }

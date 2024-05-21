@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { Tabs } from 'components/Tabs';
 import { urlBuilder } from 'helpers';
-import { faCircleCheck } from 'icons/solid';
+import { faBadgeCheck } from 'icons/solid';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
 
@@ -65,7 +65,7 @@ export const AccountTabs = () => {
           Code{' '}
           {isVerified && (
             <FontAwesomeIcon
-              icon={faCircleCheck}
+              icon={faBadgeCheck}
               size='xs'
               className='text-primary-200 ms-1'
             />
@@ -78,6 +78,12 @@ export const AccountTabs = () => {
       tabTo: urlBuilder.accountDetailsContracts(address),
       activationRoutes: [accountsRoutes.accountContracts],
       show: Boolean(code),
+      extra: true
+    },
+    {
+      tabLabel: 'Nodes',
+      tabTo: urlBuilder.accountDetailsNodes(address),
+      activationRoutes: [accountsRoutes.accountNodes],
       extra: true
     },
     {

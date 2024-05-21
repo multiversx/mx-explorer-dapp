@@ -24,7 +24,7 @@ export const HeroHome = () => {
       <div className='card-body d-flex flex-column justify-content-between'>
         <div className='row'>
           <div className='col-lg-6'>
-            <h1 className='h2 mb-4 font-primary-medium title'>
+            <h1 className='h2 mb-4 font-headings title'>
               MultiversX Blockchain {explorerTitle}
             </h1>
             <Search />
@@ -40,7 +40,9 @@ export const HeroHome = () => {
                 </div>
                 <TransactionsStatsCard />
                 <AccountsStatsCard />
-                {isMainnet && <ValidatorsStatusCard isSmall />}
+                {isMainnet && process.env.VITE_APP_MARKERS_API_URL && (
+                  <ValidatorsStatusCard isSmall />
+                )}
               </div>
             </div>
             <div className='col-lg-4 d-flex flex-row align-items-end justify-content-center justify-content-lg-end mt-3 mt-lg-0 gap-spacer gap-lg-2'>

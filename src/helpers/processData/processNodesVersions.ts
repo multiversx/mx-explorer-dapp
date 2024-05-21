@@ -1,12 +1,10 @@
 import BigNumber from 'bignumber.js';
 
-import {
-  NodesVersionsApiType,
-  NodesVersionsType
-} from 'types/nodesVersions.types';
+import { MultilayerPercentageStepType } from 'components/types';
+import { NodesVersionsApiType } from 'types/nodesVersions.types';
 
 const prepareNodesVersions = (data: NodesVersionsApiType) => {
-  const versions: NodesVersionsType[] = [];
+  const versions: MultilayerPercentageStepType[] = [];
 
   Object.keys(data).forEach((version) => {
     const percent = data[version];
@@ -14,12 +12,12 @@ const prepareNodesVersions = (data: NodesVersionsApiType) => {
     if (percent > 0) {
       versions.push({
         name: version,
-        percent: new BigNumber(percent).times(100).toNumber()
+        value: new BigNumber(percent).times(100).toNumber()
       });
     }
   });
 
-  return versions.sort((a, b) => b.percent - a.percent);
+  return versions.sort((a, b) => Number(b.value) - Number(a.value));
 };
 
 export const processNodesVersions = (data: NodesVersionsApiType) => {

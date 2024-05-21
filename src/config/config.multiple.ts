@@ -1,13 +1,8 @@
 import { NetworkType } from 'types/network.types';
-import {
-  allApps,
-  getInternalNetworks,
-  links as sharedLinks,
-  schema
-} from './sharedConfig';
-export * from './sharedConfig';
+import { getInternalNetworks, getInternalLinks } from './helpers';
+import { allApps, schema } from './sharedConfig';
 
-export const links: typeof sharedLinks = [];
+export * from './sharedConfig';
 
 export const networks: NetworkType[] = [
   {
@@ -35,21 +30,12 @@ export const networks: NetworkType[] = [
     nftExplorerAddress: 'https://devnet.xspotlight.com',
     apiAddress: 'https://devnet-api.multiversx.com'
   },
-  {
-    id: 'devnet-old',
-    name: 'Devnet Old',
-    chainId: 'D',
-    adapter: 'api',
-    theme: 'testnet',
-    egldLabel: 'xEGLD',
-    walletAddress: 'https://devnet-old-wallet.multiversx.com',
-    explorerAddress: 'https://devnet-old-explorer.multiversx.com',
-    apiAddress: 'https://devnet-old-api.multiversx.com'
-  },
 
   // Internal Testnets
   ...getInternalNetworks()
 ];
+
+export const links = getInternalLinks(networks);
 
 export const multiversxApps = allApps();
 

@@ -1,4 +1,5 @@
 import { ScamInfoType, SliceType } from './general.types';
+import { TokenAssetType } from './token.types';
 
 export enum NftTypeEnum {
   NonFungibleESDT = 'NonFungibleESDT',
@@ -29,13 +30,7 @@ export interface NftType {
     address: string;
     balance: string;
   }[];
-  assets?: {
-    website?: string;
-    description?: string;
-    status?: string;
-    pngUrl?: string;
-    svgUrl?: string;
-  };
+  assets?: TokenAssetType;
   metadata?: {
     description?: string;
     fileType?: string;
@@ -73,6 +68,7 @@ export interface NftType {
     };
   };
   scamInfo?: ScamInfoType;
+  isVerified?: boolean;
 }
 
 export interface NftAccountType {

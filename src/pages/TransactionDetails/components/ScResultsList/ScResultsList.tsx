@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import {
-  Denominate,
+  FormatAmount,
   CopyButton,
   Trim,
   NetworkLink,
@@ -132,6 +132,7 @@ export const ScResultsList = ({
                     <AccountLink
                       address={result.sender}
                       assets={result.senderAssets}
+                      hasHighlight
                     />
                     <CopyButton
                       text={result.sender}
@@ -148,6 +149,7 @@ export const ScResultsList = ({
                     <AccountLink
                       address={result.receiver}
                       assets={result.receiverAssets}
+                      hasHighlight
                     />
                     <CopyButton
                       text={result.receiver}
@@ -160,15 +162,8 @@ export const ScResultsList = ({
               {result.value !== undefined && (
                 <div className='row mb-3 d-flex flex-column flex-sm-row'>
                   <div className='col-sm-2 col-left'>Value</div>
-                  <div className='col-sm-10 text-wrap'>
-                    <span className='text-neutral-100'>
-                      <Denominate
-                        value={result.value}
-                        showLastNonZeroDecimal
-                        showLabel={false}
-                      />
-                    </span>{' '}
-                    {egldLabel}
+                  <div className='col-sm-10 text-wrap text-neutral-100'>
+                    <FormatAmount value={result.value} showLastNonZeroDecimal />
                   </div>
                 </div>
               )}

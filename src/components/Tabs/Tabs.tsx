@@ -4,7 +4,7 @@ import { Anchor, Dropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 import { NetworkLink } from 'components';
-import { useActiveRoute } from 'hooks';
+import { useActiveRoute, useNetworkRoute } from 'hooks';
 import { faEllipsis } from 'icons/regular';
 
 import { TabsPropsType, TabType } from './types';
@@ -40,6 +40,7 @@ export const Tabs = (props: TabsPropsType) => {
 
   const navigate = useNavigate();
   const activeRoute = useActiveRoute();
+  const networkRoute = useNetworkRoute();
   const filteredTabs = tabs.filter((tab) => tab.show !== false);
   const displayTabs = filteredTabs.filter((tab) => Boolean(!tab?.extra));
   const extraTabs = filteredTabs.filter((tab) => Boolean(tab?.extra));
@@ -47,28 +48,30 @@ export const Tabs = (props: TabsPropsType) => {
     extraTabs.filter((extraTab) => checkTabStatus(extraTab)).length > 0;
 
   return (
-    <div className='tabs'>
+    <menu className='navbar-nav flex-row flex-wrap tabs'>
       {displayTabs.map((tab) => (
-        <NetworkLink
-          key={tab.tabTo}
-          to={tab.tabTo}
-          className={`tab ${checkTabStatus(tab) ? 'active' : ''}`}
-          preventScrollReset={true}
-        >
-          {tab.tabLabel}
-        </NetworkLink>
+        <li key={tab.tabTo} className='d-flex'>
+          <NetworkLink
+            to={tab.tabTo}
+            className={`nav-item tab ${checkTabStatus(tab) ? 'active' : ''}`}
+            preventScrollReset={true}
+          >
+            {tab.tabLabel}
+          </NetworkLink>
+        </li>
       ))}
       {extraTabs.length > 0 && (
         <Dropdown
           onSelect={(eventKey) => {
             if (eventKey) {
-              navigate(eventKey);
+              navigate(networkRoute(eventKey));
             }
           }}
         >
           <Dropdown.Toggle
             as={CustomToggle}
             isExtraTabActive={isExtraTabActive}
+            aria-label='Show More'
           >
             <FontAwesomeIcon icon={faEllipsis} />
           </Dropdown.Toggle>
@@ -87,6 +90,6 @@ export const Tabs = (props: TabsPropsType) => {
           </Dropdown.Menu>
         </Dropdown>
       )}
-    </div>
+    </menu>
   );
 };

@@ -4,16 +4,17 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
+import { Select, SelectOptionType } from 'components';
 import { useFetchGrowthStaking } from 'hooks';
 import { growthStakingSelector, activeNetworkSelector } from 'redux/selectors';
-import { WithClassnameType } from 'types';
+import {
+  StatisticType,
+  StakingStatisticsLabelEnum,
+  WithClassnameType
+} from 'types';
 
-import { StakingStatisticsLabelEnum } from './enum';
 import styles from './styles.module.scss';
-import { StatisticType } from './types';
 import { ChartRoot } from '../ChartRoot';
-import { ChartSelect } from '../ChartSelect';
-import { ChartSelectOptionType } from '../ChartSelect/types';
 
 export const ChartStake = ({ className }: WithClassnameType) => {
   const {
@@ -29,7 +30,7 @@ export const ChartStake = ({ className }: WithClassnameType) => {
   } = useSelector(growthStakingSelector);
   const { egldLabel } = useSelector(activeNetworkSelector);
 
-  const filters: ChartSelectOptionType[] = [
+  const filters: SelectOptionType[] = [
     {
       label: '7d',
       value: 'totalStaked7d'
@@ -84,9 +85,9 @@ export const ChartStake = ({ className }: WithClassnameType) => {
   const [data, setData] = useState(dataMap.get(initialFilter));
 
   const onChange = useCallback(
-    (option: SingleValue<ChartSelectOptionType>) => {
+    (option: SingleValue<SelectOptionType>) => {
       if (option && option.value && isFetched) {
-        setData(dataMap.get(option.value));
+        setData(dataMap.get(String(option.value)));
       }
     },
     [isFetched]
@@ -112,7 +113,7 @@ export const ChartStake = ({ className }: WithClassnameType) => {
         </div>
 
         <div className={styles.right}>
-          <ChartSelect
+          <Select
             options={filters}
             onChange={onChange}
             defaultValue={defaultValue}

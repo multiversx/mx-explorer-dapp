@@ -50,6 +50,7 @@ export const TokenTransactions = () => {
             dataChanged={dataChanged}
             isDataReady={isDataReady}
             inactiveFilters={[TransactionFiltersEnum.token]}
+            showLockedAccounts
           />
         </div>
       </div>

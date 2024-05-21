@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 
+import { ELLIPSIS } from 'appConstants';
 import { ValidatorMap, ShardList, MultilayerPercentageRing } from 'components';
 import { useIsMainnet } from 'hooks';
 import { nodesVersionsSelector } from 'redux/selectors';
@@ -20,8 +21,10 @@ export const LargeCard = ({
   return (
     <div className={`card-body overflow-hidden ${className ?? ''}`}>
       <div className='card-title validator-card-title'>
-        <p className='text-neutral-500 mb-0'>Validators</p>
-        <h2 className='card-value text-primary'>{totalValidators}</h2>
+        <p className='text-neutral-500 font-headings mb-0'>Validators</p>
+        <h2 className='card-value text-primary'>
+          {totalValidators ?? ELLIPSIS}
+        </h2>
       </div>
       <div className='row flex-wrap-reverse'>
         <ShardList className='col-md-5' />
@@ -42,7 +45,7 @@ export const LargeCard = ({
           }
         >
           <div className='card-body d-flex flex-row flex-wrap align-items-center justify-content-between'>
-            <div className='distribution-card-title text-neutral-500 mb-2'>
+            <div className='distribution-card-title font-headings text-neutral-500 mb-2'>
               Stake Weighted Node Version
             </div>
             <div className='distribution-card-value'>

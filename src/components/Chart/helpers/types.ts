@@ -113,7 +113,7 @@ export interface ChartProps {
   category?: string;
   currency?: string;
   percentageMultiplier?: number;
-  denomination?: number;
+  decimals?: number;
   size?: ChartSizeEnum;
   hasOnlyStartEndTick?: boolean;
   tooltip?: {

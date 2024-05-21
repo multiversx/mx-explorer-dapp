@@ -6,7 +6,14 @@ import {
   GAS_PRICE as DEFAULT_GAS_PRICE
 } from '@multiversx/sdk-dapp/constants/index';
 import { object, string, boolean } from 'yup';
-import { NetworkUrlType, NetworkType } from 'types/network.types';
+import { NetworkUrlType } from 'types/network.types';
+
+interface AppLinksType {
+  id: string;
+  url: string;
+  name?: string;
+  custom?: boolean;
+}
 
 const GAS_PRICE = String(DEFAULT_GAS_PRICE);
 const DIGITS = 2;
@@ -20,28 +27,25 @@ export {
   GAS_PRICE
 };
 
-interface AppLinksType {
-  id: string;
-  url: string;
-  name?: string;
-  custom?: boolean;
-}
+export const SHARE_PREFIX = process.env.VITE_APP_SHARE_PREFIX
+  ? process.env.VITE_APP_SHARE_PREFIX.replace('-', '')
+  : '';
 
 export const links: NetworkUrlType[] = [
   {
     id: 'mainnet',
     name: 'Mainnet',
-    url: 'https://explorer.multiversx.com/'
+    url: 'https://explorer.multiversx.com'
   },
   {
     id: 'testnet',
     name: 'Testnet',
-    url: 'https://testnet-explorer.multiversx.com/'
+    url: 'https://testnet-explorer.multiversx.com'
   },
   {
     id: 'devnet',
     name: 'Devnet',
-    url: 'https://devnet-explorer.multiversx.com/'
+    url: 'https://devnet-explorer.multiversx.com'
   }
 ];
 
@@ -50,7 +54,7 @@ export const allApps = (apps?: AppLinksType[]): AppLinksType[] => {
     {
       id: 'main-site',
       name: 'Main site',
-      url: 'https://multiversx.com/'
+      url: 'https://multiversx.com'
     },
     {
       id: 'wallet',
@@ -65,27 +69,27 @@ export const allApps = (apps?: AppLinksType[]): AppLinksType[] => {
     {
       id: 'xexchange',
       name: 'xExchange',
-      url: 'https://xexchange.com/'
+      url: 'https://xexchange.com'
     },
     {
       id: 'xlaunchpad',
       name: 'xLaunchpad',
-      url: 'https://xlaunchpad.com/'
+      url: 'https://xlaunchpad.com'
     },
     {
       id: 'xspotlight',
       name: 'xSpotlight',
-      url: 'https://xspotlight.com/'
+      url: 'https://xspotlight.com'
     },
     {
       id: 'bridge',
       name: 'Bridge',
-      url: 'https://bridge.multiversx.com/'
+      url: 'https://bridge.multiversx.com'
     },
     {
       id: 'docs',
       name: 'Docs',
-      url: 'https://docs.multiversx.com/'
+      url: 'https://docs.multiversx.com'
     }
   ];
 
@@ -102,32 +106,6 @@ export const allApps = (apps?: AppLinksType[]): AppLinksType[] => {
   }
 
   return baseApps;
-};
-
-export const getInternalNetworks = (): NetworkType[] => {
-  if (process.env.VITE_APP_INTERNAL_NETWORKS) {
-    try {
-      const decodedNetworks = atob(
-        String(process.env.VITE_APP_INTERNAL_NETWORKS)
-      );
-
-      const parsedNetworks = JSON.parse(decodedNetworks);
-      if (parsedNetworks && parsedNetworks.length > 0) {
-        return parsedNetworks.map((network: NetworkType) => {
-          return {
-            ...network,
-            ...(!network?.adapter ? { adapter: 'api' } : {}),
-            ...(!network?.egldLabel ? { egldLabel: 'xEGLD' } : {}),
-            ...(!network?.chainId ? { chainId: 'T' } : {})
-          };
-        });
-      }
-    } catch {
-      return [];
-    }
-  }
-
-  return [];
 };
 
 export const networkBaseSchema = object({

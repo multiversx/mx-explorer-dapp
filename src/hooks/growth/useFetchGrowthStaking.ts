@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { processGrowthStaking } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAdapter, useHasGrowthWidgets } from 'hooks';
 import { growthStakingSelector } from 'redux/selectors';
 import { setGrowthStaking } from 'redux/slices/growthStaking';
 
 export const useFetchGrowthStaking = () => {
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
   const { isFetched } = useSelector(growthStakingSelector);
   const { getGrowthWidget } = useAdapter();
@@ -36,5 +37,9 @@ export const useFetchGrowthStaking = () => {
     }
   };
 
-  useEffect(fetchGrowthStaking, []);
+  useEffect(() => {
+    if (hasGrowthWidgets) {
+      fetchGrowthStaking();
+    }
+  }, [hasGrowthWidgets]);
 };

@@ -51,9 +51,7 @@
 
   .label {
     color: var(--neutral-500);
-    font-size: 0.875rem;
-    line-height: 1;
-    margin-bottom: 0.5rem;
+    font-family: var(--headings-font-family);
   }
 
   .price {

@@ -42,42 +42,86 @@ $main-colors: map-merge-multiple(
   $blues,
   $violets,
   $purples,
-  $primarys
+  $primarys,
+  $cyans
 );
+$main-colors-rgb: map-loop($main-colors, to-rgb, '$value');
 
 // Generate helper classes like text-primary-200 and bg-primary-500
-$helper-colors: map-merge-multiple($neutrals, $primarys);
+$helper-colors: map-merge-multiple(
+  $neutrals,
+  $primarys,
+  $reds,
+  $greens,
+  $oranges,
+  $blues,
+  $cyans
+);
+$helper-colors-rgb: map-loop($theme-colors, to-rgb, '$value');
 
-$utilities: map-merge(
+$helper-text-colors-rgb: map-loop($helper-colors, rgba-css-var, '$key', 'text');
+$helper-bg-colors-rgb: map-loop($helper-colors, rgba-css-var, '$key', 'bg');
+
+$utilities: map-merge-multiple(
   $utilities,
   (
     'color':
       map-merge(
         map-get($utilities, 'color'),
         (
-          local-vars: (),
+          property: color,
+          class: text,
+          local-vars: (
+            'text-opacity': 1
+          ),
           values:
             map-merge(
               map-get(map-get($utilities, 'color'), 'values'),
-              ($helper-colors)
+              ($helper-text-colors-rgb)
             )
         )
       )
-  )
-);
-
-$utilities: map-merge(
-  $utilities,
+  ),
   (
     'background-color':
       map-merge(
         map-get($utilities, 'background-color'),
         (
-          local-vars: (),
+          property: background-color,
+          class: bg,
+          local-vars: (
+            'bg-opacity': 1
+          ),
           values:
             map-merge(
               map-get(map-get($utilities, 'background-color'), 'values'),
-              ($helper-colors)
+              ($helper-bg-colors-rgb)
+            )
+        )
+      )
+  ),
+  (
+    'opacity':
+      map-merge(
+        map-get($utilities, 'opacity'),
+        (
+          values:
+            map-merge(
+              map-get(map-get($utilities, 'opacity'), 'values'),
+              ($opacities)
+            )
+        )
+      )
+  ),
+  (
+    'bg-opacity':
+      map-merge(
+        map-get($utilities, 'bg-opacity'),
+        (
+          values:
+            map-merge(
+              map-get(map-get($utilities, 'bg-opacity'), 'values'),
+              ($opacities)
             )
         )
       )
@@ -93,6 +137,10 @@ $utilities: map-merge(
 
   @each $color, $value in $main-colors {
     --#{$prefix}#{$color}: #{$value};
+  }
+
+  @each $color, $value in $main-colors-rgb {
+    --#{$prefix}#{$color}-rgb: #{$value};
   }
 }
 

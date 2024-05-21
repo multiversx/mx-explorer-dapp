@@ -1,20 +1,59 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
+import { Select, SelectOptionType } from 'components';
 import { useFetchGrowthTransactions } from 'hooks';
 import { growthTransactionsSelector } from 'redux/selectors';
+import {
+  GrowthChartDataType,
+  StatisticType,
+  TransactionsStatisticsLabelEnum
+} from 'types';
 
-import { TransactionsStatisticsLabelEnum } from './enum';
-import styles from './styles.module.scss';
-import { StatisticType } from './types';
-
+import { ChartContractsTransactionsUIType } from './types';
 import { ChartArea } from '../ChartArea';
 import { PayloadType } from '../ChartArea/types';
-import { ChartSelect } from '../ChartSelect';
-import { ChartSelectOptionType } from '../ChartSelect/types';
 
-export const ChartContractsTransactions = () => {
+const getSum = (
+  first: GrowthChartDataType[],
+  second: GrowthChartDataType[]
+) => {
+  const dayData = [...first, ...second].reduce(
+    ((map) => (acc: any, cur) => {
+      map.set(
+        cur.timestamp,
+        map.get(cur.timestamp) ||
+          acc[acc.push({ timestamp: cur.timestamp, value: 0 }) - 1]
+      );
+      const currentEntry = map.get(cur.timestamp);
+
+      currentEntry.value = new BigNumber(currentEntry.value)
+        .plus(new BigNumber(cur.value))
+        .toNumber();
+
+      return acc;
+    })(new Map()),
+    []
+  ) as GrowthChartDataType[];
+
+  return dayData;
+};
+
+export const ChartContractsTransactions = ({
+  title,
+  customStatistics = [],
+  showStatistics = true,
+  showTransactions = true,
+  showContracts = true,
+  showTotal = true,
+  simpleTooltip = false,
+  hasBorder = false,
+  isStandalone,
+  className
+}: ChartContractsTransactionsUIType) => {
   const {
     scResults,
     transactions,
@@ -28,14 +67,17 @@ export const ChartContractsTransactions = () => {
     isFetched
   } = useSelector(growthTransactionsSelector);
 
-  const [white, primary, violet500] = ['white', 'primary', 'violet-500'].map(
-    (color) =>
-      getComputedStyle(document.documentElement)
-        .getPropertyValue(`--${color}`)
-        .trim()
+  const [success, primary, violet500] = [
+    'success',
+    'primary',
+    'violet-500'
+  ].map((color) =>
+    getComputedStyle(document.documentElement)
+      .getPropertyValue(`--${color}`)
+      .trim()
   );
 
-  const filters: ChartSelectOptionType[] = [
+  const filters: SelectOptionType[] = [
     {
       label: '7d',
       value: 'transactions7d'
@@ -54,23 +96,26 @@ export const ChartContractsTransactions = () => {
     }
   ];
 
-  const statistics: StatisticType[] = [
-    {
-      label: TransactionsStatisticsLabelEnum.Transactions,
-      value: totalTransactions,
-      color: white
-    },
-    {
-      label: TransactionsStatisticsLabelEnum.Applications,
-      value: scResults,
-      color: primary
-    },
-    {
-      label: TransactionsStatisticsLabelEnum.Standard,
-      value: transactions,
-      color: violet500
-    }
-  ];
+  const statistics: StatisticType[] =
+    customStatistics.length > 0
+      ? customStatistics
+      : [
+          {
+            label: TransactionsStatisticsLabelEnum.Transactions,
+            value: totalTransactions,
+            color: primary
+          },
+          {
+            label: TransactionsStatisticsLabelEnum.Applications,
+            value: scResults,
+            color: showTotal ? success : primary
+          },
+          {
+            label: TransactionsStatisticsLabelEnum.Standard,
+            value: transactions,
+            color: violet500
+          }
+        ];
 
   const transactions365d = transactionsAll.slice(
     transactionsAll.length - 365,
@@ -104,29 +149,49 @@ export const ChartContractsTransactions = () => {
     [scResults7d, scResults30d, scResultsAll]
   );
 
+  const dataTotal = useMemo(
+    () =>
+      new Map([
+        ['total7d', getSum(transactions7d, scResults7d)],
+        ['total30d', getSum(transactions30d, scResults30d)],
+        ['total365d', getSum(transactions365d, scResults365d)],
+        ['totalAll', getSum(transactionsAll, scResultsAll)]
+      ]),
+    [
+      transactions7d,
+      transactions30d,
+      transactionsAll,
+      scResults7d,
+      scResults30d,
+      scResultsAll
+    ]
+  );
+
   const [transactionsPayload, setTransactionsPayload] = useState(
     dataTransactions.get('transactions30d')
   );
-
   const [contractsPayload, setContractsPayload] = useState(
     dataContracts.get('scResults30d')
   );
+  const [totalPayload, setTotalPayload] = useState(dataTotal.get('total30d'));
 
   const defaultValue = filters.find(
     (filter) => filter.value === 'transactions30d'
   );
 
   const onChange = useCallback(
-    (option: SingleValue<ChartSelectOptionType>) => {
+    (option: SingleValue<SelectOptionType>) => {
       if (option && option.value && isFetched) {
-        const value = option.value.replace('transactions', '');
-        const [transactionsKey, contractsKey] = [
+        const value = String(option.value).replace('transactions', '');
+        const [transactionsKey, contractsKey, totalKey] = [
           `transactions${value}`,
-          `scResults${value}`
+          `scResults${value}`,
+          `total${value}`
         ];
 
         setTransactionsPayload(dataTransactions.get(transactionsKey));
         setContractsPayload(dataContracts.get(contractsKey));
+        setTotalPayload(dataTotal.get(totalKey));
       }
     },
     [isFetched]
@@ -136,50 +201,77 @@ export const ChartContractsTransactions = () => {
     if (isFetched) {
       setTransactionsPayload(dataTransactions.get('transactions30d'));
       setContractsPayload(dataContracts.get('scResults30d'));
+      setTotalPayload(dataTotal.get('total30d'));
     }
-  }, [dataTransactions, dataContracts]);
+  }, [dataTransactions, dataContracts, dataTotal]);
 
   useFetchGrowthTransactions();
   useEffect(onInitialLoad, [onInitialLoad]);
 
   const payload: PayloadType[] = [
-    {
-      data: contractsPayload,
-      key: 'contractValue',
-      label: 'Applications',
-      color: primary
-    },
-    {
-      data: transactionsPayload,
-      key: 'transactionValue',
-      label: 'Standard',
-      color: violet500
-    }
+    ...(showTotal
+      ? [
+          {
+            data: totalPayload,
+            key: 'totalValue',
+            label: 'Total Transactions',
+            color: primary
+          }
+        ]
+      : []),
+    ...(showContracts
+      ? [
+          {
+            data: contractsPayload,
+            key: 'contractValue',
+            label: 'Applications',
+            color: showTotal ? success : primary
+          }
+        ]
+      : []),
+    ...(showTransactions
+      ? [
+          {
+            data: transactionsPayload,
+            key: 'transactionValue',
+            label: 'Standard',
+            color: violet500
+          }
+        ]
+      : [])
   ];
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.statistics}>
-        {statistics.map((statistic) => (
-          <div key={statistic.label} className={styles.statistic}>
-            <div className={styles.label}>{statistic.label}</div>
-            <div className={styles.value} style={{ color: statistic.color }}>
-              {statistic.value}
+    <div className={classNames(className, 'chart-contracts-transactions')}>
+      {showStatistics && (
+        <div className='statistics'>
+          {statistics.map((statistic) => (
+            <div key={statistic.label} className='statistic'>
+              <div className='label'>{statistic.label}</div>
+              <div className='value' style={{ color: statistic.color }}>
+                {statistic.value}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-
-      <div className={styles.charts}>
-        <div className={styles.filters}>
-          <ChartSelect
-            options={filters}
-            onChange={onChange}
-            defaultValue={defaultValue}
-          />
+          ))}
         </div>
+      )}
 
-        <ChartArea payload={payload} />
+      <div className={classNames('charts', { 'has-border': hasBorder })}>
+        <div className='headerwrapper'>
+          {title && <h5 className='title'>{title}</h5>}
+          <div className='filters'>
+            <Select
+              options={filters}
+              onChange={onChange}
+              defaultValue={defaultValue}
+            />
+          </div>
+        </div>
+        <ChartArea
+          payload={payload}
+          simpleTooltip={simpleTooltip}
+          {...(isStandalone ? { height: 244 } : {})}
+        />
       </div>
     </div>
   );

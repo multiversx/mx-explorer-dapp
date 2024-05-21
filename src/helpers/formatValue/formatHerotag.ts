@@ -5,7 +5,9 @@ export const formatHerotag = (address?: string) => {
     return '';
   }
 
-  return address.endsWith(HEROTAG_SUFFIX)
-    ? `${address.replaceAll(HEROTAG_SUFFIX, '')}`
-    : address;
+  const cleanName = address.replaceAll(/[^\p{L}\p{N}\p{P}\p{Z}\n]/gu, '');
+
+  return cleanName.endsWith(HEROTAG_SUFFIX)
+    ? `${cleanName.replaceAll(HEROTAG_SUFFIX, '')}`
+    : cleanName;
 };

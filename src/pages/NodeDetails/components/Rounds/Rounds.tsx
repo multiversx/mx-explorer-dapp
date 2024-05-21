@@ -20,7 +20,7 @@ export const RoundsPageState = ({ message }: { message: string }) => {
       icon={faRepeat}
       title={message}
       className='page-state-sm d-flex h-100 align-items-center justify-content-center'
-      dataTestId='roundsErrorScreen'
+      data-testid='roundsErrorScreen'
     />
   );
 };

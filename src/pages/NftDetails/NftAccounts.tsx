@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, AccountLink, PageState } from 'components';
+import { Loader, Pager, PageSize, AccountLink, PageState } from 'components';
 import { useAdapter, useGetPage } from 'hooks';
 import { faUser } from 'icons/regular';
 import { NftTabs } from 'layouts/NftLayout/NftTabs';
@@ -88,29 +88,25 @@ export const NftAccounts = () => {
                 </table>
               </div>
             </div>
-            <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+            <div className='card-footer table-footer'>
+              <PageSize />
               <Pager total={accountsCount} show={accounts.length > 0} />
             </div>
           </>
         ) : (
           <>
             {dataReady === undefined && (
-              <Loader dataTestId='nftAccountsLoader' />
+              <Loader data-testid='nftAccountsLoader' />
             )}
             {dataReady === false && (
               <PageState
                 icon={faUser}
                 title='Unable to load Accounts'
-                className='py-spacer my-auto'
-                dataTestId='errorScreen'
+                isError
               />
             )}
             {dataReady === true && accounts.length === 0 && (
-              <PageState
-                icon={faUser}
-                title='No Accounts'
-                className='py-spacer my-auto'
-              />
+              <PageState icon={faUser} title='No Accounts' />
             )}
           </>
         )}

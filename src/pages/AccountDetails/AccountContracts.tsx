@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import {
   Loader,
   Pager,
+  PageSize,
   PageState,
   NetworkLink,
   TimeAgo,
@@ -76,21 +77,16 @@ export const AccountContracts = () => {
         </div>
       </div>
       <div className='card-body'>
-        {dataReady === undefined && <Loader dataTestId='contractsLoader' />}
+        {dataReady === undefined && <Loader data-testid='contractsLoader' />}
         {dataReady === false && (
           <PageState
             icon={faCode}
             title='Unable to load Smart Contracts'
-            className='py-spacer my-auto'
-            dataTestId='errorScreen'
+            isError
           />
         )}
         {dataReady === true && accountContracts.length === 0 && (
-          <PageState
-            icon={faCode}
-            title='No Smart Contracts'
-            className='py-spacer my-auto'
-          />
+          <PageState icon={faCode} title='No Smart Contracts' />
         )}
         {dataReady === true && accountContracts.length > 0 && (
           <div className='table-wrapper animated-list'>
@@ -138,7 +134,8 @@ export const AccountContracts = () => {
         )}
       </div>
       {dataReady === true && accountContracts.length > 0 && (
-        <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+        <div className='card-footer table-footer'>
+          <PageSize />
           <Pager
             total={accountContractsCount}
             show={accountContracts.length > 0}

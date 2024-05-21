@@ -1,6 +1,7 @@
 import { CollectionLayout } from 'layouts/CollectionLayout';
 import { TokenLayout } from 'layouts/TokenLayout';
-import { CollectionAssets } from 'pages/CollectionDetails/CollectionAssets';
+import { CollectionRoles } from 'pages/CollectionDetails/CollectionRoles';
+import { CollectionTransactions } from 'pages/CollectionDetails/CollectionTransactions';
 import { TokenDetailsAccounts } from 'pages/TokenDetails/TokenAccounts';
 import { TokenDetailsLockedAccounts } from 'pages/TokenDetails/TokenLockedAccounts';
 import { TokenDetailsRoles } from 'pages/TokenDetails/TokenRoles';
@@ -15,6 +16,7 @@ export const tokensRoutes = {
   tokensMeta: '/meta-tokens',
   tokensMetaEsdt: '/meta-esdt',
   tokensMetaEsdtDetails: '/meta-esdt/:hash',
+  tokensMetaEsdtDetailsRoles: '/meta-esdt/:hash/roles',
   tokenDetails: '/tokens/:hash',
   tokenDetailsAccounts: '/tokens/:hash/accounts',
   tokenDetailsLockedAccounts: '/tokens/:hash/locked-accounts',
@@ -41,9 +43,15 @@ export const tokenLayout: TitledRouteObject[] = [
     children: [
       {
         path: tokensRoutes.tokensMetaEsdtDetails,
-        title: 'Meta-ESDT Details',
+        title: 'Meta-ESDT Transactions',
         preventScroll: true,
-        Component: CollectionAssets
+        Component: CollectionTransactions
+      },
+      {
+        path: tokensRoutes.tokensMetaEsdtDetailsRoles,
+        title: 'Meta-ESDT Roles',
+        preventScroll: true,
+        Component: CollectionRoles
       }
     ]
   },

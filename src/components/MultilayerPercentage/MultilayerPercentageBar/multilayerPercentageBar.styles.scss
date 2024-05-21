@@ -1,0 +1,32 @@
+.multilayer-percentage-bar {
+  .progress,
+  .progress-bar {
+    height: 1.5rem;
+  }
+
+  .step-1 {
+    background-color: var(--primary);
+  }
+
+  .step-2 {
+    background-color: shade-color(#23f7dd, 20%);
+  }
+
+  &.two-items {
+    .step-2 {
+      background-color: shade-color(#23f7dd, 30%);
+    }
+  }
+
+  .step-3 {
+    background-color: shade-color(#23f7dd, 30%);
+  }
+
+  .step-4 {
+    background-color: shade-color(#23f7dd, 40%);
+  }
+
+  .step-5 {
+    background-color: shade-color(#23f7dd, 50%);
+  }
+}

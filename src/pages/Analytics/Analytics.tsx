@@ -1,13 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Loader, Overlay, Tabs } from 'components';
+import { InfoTooltip, Loader, Tabs } from 'components';
 import { ChartListType } from 'components/Chart/helpers/types';
-import { useAdapter, useIsMainnet, useNetworkRoute } from 'hooks';
+import { useAdapter, useHasGrowthWidgets, useNetworkRoute } from 'hooks';
 
-import { faInfoCircle } from 'icons/regular';
 import { AnalyticsChart } from 'pages/AnalyticsCompare/AnalyticsChart';
 import { FailedAnalytics } from 'pages/AnalyticsCompare/components/FailedAnalytics';
 import { NoAnalytics } from 'pages/AnalyticsCompare/components/NoAnalytics';
@@ -21,7 +19,7 @@ import { ChartWrapper } from './components/ChartWrapper';
 export const Analytics = () => {
   const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { getAnalyticsChartList } = useAdapter();
@@ -192,7 +190,7 @@ export const Analytics = () => {
 
   useEffect(getData, [activeNetworkId]);
 
-  if (!isMainnet) {
+  if (!hasGrowthWidgets) {
     navigate(networkRoute('/'));
   }
 
@@ -220,7 +218,7 @@ export const Analytics = () => {
 
           <ChartWrapper>
             <div className='px-3 pb-3'>
-              <ChartContractsTransactions />
+              <ChartContractsTransactions isStandalone />
             </div>
           </ChartWrapper>
           <ChartWrapper size='half'>
@@ -257,15 +255,12 @@ export const Analytics = () => {
                 title={
                   <div className='d-flex align-items-center'>
                     Daily Active Users
-                    <Overlay
+                    <InfoTooltip
                       title='Number of accounts that have sent or received transactions in the last 24 hours'
                       className='d-inline-flex'
-                    >
-                      <FontAwesomeIcon
-                        icon={faInfoCircle}
-                        className='ms-2 small cursor-context text-neutral-400'
-                      />
-                    </Overlay>
+                      iconClassName='small'
+                      persistent
+                    />
                   </div>
                 }
                 height={420}

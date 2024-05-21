@@ -1,25 +1,28 @@
 import { useSelector } from 'react-redux';
 
 import { useFetchGrowthEconomics } from 'hooks';
-import { growthEconomicsSelector } from 'redux/selectors';
+import {
+  activeNetworkSelector,
+  growthEconomicsSelector
+} from 'redux/selectors';
+import { EconomicsLabelsEnum, StatisticType } from 'types';
 
-import { EconomicsLabelsEnum } from './enum';
 import styles from './styles.module.scss';
-import { EconomicsType } from './types';
 
 export const EconomicsCard = () => {
   const { developerRewards, applicationsDeployed, feesCaptured } = useSelector(
     growthEconomicsSelector
   );
+  const { egldLabel } = useSelector(activeNetworkSelector);
 
-  const economics: EconomicsType[] = [
+  const economics: StatisticType[] = [
     {
       label: EconomicsLabelsEnum.DeveloperRewards,
-      value: `${developerRewards} EGLD`
+      value: `${developerRewards} ${egldLabel}`
     },
     {
       label: EconomicsLabelsEnum.FeesCaptured,
-      value: `${feesCaptured} EGLD`
+      value: `${feesCaptured} ${egldLabel}`
     },
     {
       label: EconomicsLabelsEnum.ApplicationsDeployed,

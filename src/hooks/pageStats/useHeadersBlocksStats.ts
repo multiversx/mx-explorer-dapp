@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useAdapter, useIsMainnet } from 'hooks';
+import { useAdapter, useHasGrowthWidgets } from 'hooks';
 import { statsSelector } from 'redux/selectors';
 import { pageHeadersBlocksStatsSelector } from 'redux/selectors/pageHeadersBlocksStats';
 import {
@@ -15,7 +15,7 @@ export const useHeadersBlocksStats = () => {
   const headersBlocks = useSelector(pageHeadersBlocksStatsSelector);
   const { unprocessed } = useSelector(statsSelector);
 
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
 
@@ -32,15 +32,15 @@ export const useHeadersBlocksStats = () => {
 
     dispatch(
       setPageHeaderBlocksStats({
-        totalNetworkFees: new BigNumber(result.data.totalNetworkFees).toFormat(
-          0
-        ),
+        totalNetworkFees: new BigNumber(
+          result.data.totalNetworkFees
+        ).toFormat(),
         totalDeveloperRewards: new BigNumber(
           result.data.totalDeveloperRewards
-        ).toFormat(0),
+        ).toFormat(),
         totalApplicationsDeployed: new BigNumber(
           result.data.totalApplicationsDeployed
-        ).toFormat(0),
+        ).toFormat(),
         blockHeight: new BigNumber(unprocessed.blocks).toFormat(0)
       })
     );
@@ -48,10 +48,10 @@ export const useHeadersBlocksStats = () => {
   };
 
   useEffect(() => {
-    if (isMainnet) {
+    if (hasGrowthWidgets) {
       getHeadersBlocks();
     }
-  }, [isMainnet]);
+  }, [hasGrowthWidgets]);
 
   useEffect(() => {
     dispatch(

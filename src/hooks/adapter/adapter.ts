@@ -1,4 +1,4 @@
-import { PAGE_SIZE } from 'appConstants';
+import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
 import { AccountRolesTypeEnum } from 'types';
 import {
   GetBlocksType,
@@ -7,7 +7,10 @@ import {
   GetProvidersType,
   GetCollectionsType,
   GetNftsType,
-  GetTokensType
+  GetTokensType,
+  GetAccountsType,
+  GetIdentitiesType,
+  GetTransactionsInPoolType
 } from 'types/adapter.types';
 
 import {
@@ -18,7 +21,8 @@ import {
   getProviderParams,
   getTokensParams,
   getCollectionsParams,
-  getNftsParams
+  getNftsParams,
+  getTransactionsInPoolParams
 } from './helpers';
 import { useAdapterConfig } from './useAdapterConfig';
 
@@ -43,17 +47,15 @@ export const useAdapter = () => {
         url: '/blocks',
         params: {
           size,
-          ...{
-            fields: [
-              'hash',
-              'nonce',
-              'shard',
-              'size',
-              'sizeTxs',
-              'timestamp',
-              'txCount'
-            ].join(',')
-          }
+          fields: [
+            'hash',
+            'nonce',
+            'shard',
+            'size',
+            'sizeTxs',
+            'timestamp',
+            'txCount'
+          ].join(',')
         }
       }),
     getLatestTransactions: ({
@@ -65,26 +67,7 @@ export const useAdapter = () => {
         params: {
           size,
           withUsername,
-          ...{
-            fields: [
-              'txHash',
-              'receiver',
-              'receiverShard',
-              'receiverAssets',
-              'sender',
-              'senderShard',
-              'senderAssets',
-              'status',
-              'timestamp',
-              'value',
-              'miniBlockHash',
-              'round',
-              'tokenValue',
-              'tokenIdentifier',
-              'action',
-              'results'
-            ].join(',')
-          }
+          fields: TRANSACTIONS_TABLE_FIELDS.join(',')
         }
       }),
 
@@ -195,7 +178,7 @@ export const useAdapter = () => {
     getTransactionsCount: (params: GetTransactionsType) =>
       provider({
         url: '/transactions/c',
-        params: getTransactionsParams(params)
+        params: getTransactionsParams({ isCount: true, ...params })
       }),
 
     getTransfers: (params: GetTransactionsType) =>
@@ -207,7 +190,7 @@ export const useAdapter = () => {
     getTransfersCount: (params: GetTransactionsType) =>
       provider({
         url: '/transfers/c',
-        params: getTransactionsParams(params)
+        params: getTransactionsParams({ isCount: true, ...params })
       }),
 
     /* SC Results */
@@ -231,6 +214,22 @@ export const useAdapter = () => {
 
     getScResultsCount: () => provider({ url: '/results/c' }),
 
+    /* Transactions Pool */
+
+    getTransactionInPool: (hash: string) => provider({ url: `/pool/${hash}` }),
+
+    getTransactionsInPool: (params: GetTransactionsInPoolType) =>
+      provider({
+        url: '/pool',
+        params: getTransactionsInPoolParams(params)
+      }),
+
+    getTransactionsInPoolCount: (params: GetTransactionsInPoolType) =>
+      provider({
+        url: '/pool/c',
+        params: getTransactionsInPoolParams({ isCount: true, ...params })
+      }),
+
     /* Account */
 
     getAccount: ({
@@ -238,25 +237,37 @@ export const useAdapter = () => {
       ...rest
     }: {
       address: string;
+      fields?: string;
       withGuardianInfo?: boolean;
     }) => provider({ url: `/accounts/${address}`, params: rest }),
 
     getAccounts: ({
       page = 1,
-      size = PAGE_SIZE
-    }: {
-      page?: number;
-      size?: number;
-    }) =>
+      size = PAGE_SIZE,
+      isSmartContract = false,
+      withOwnerAssets = false,
+      withDeployInfo = false,
+      withTxCount = false,
+      withScrCount = false,
+      ...rest
+    }: GetAccountsType) =>
       provider({
         url: '/accounts',
+        timeout: 15000,
         params: {
           from: (page - 1) * size,
-          size
+          size,
+          isSmartContract,
+          ...(withOwnerAssets ? { withOwnerAssets } : {}),
+          ...(withDeployInfo ? { withDeployInfo } : {}),
+          ...(withTxCount ? { withTxCount } : {}),
+          ...(withScrCount ? { withScrCount } : {}),
+          ...rest
         }
       }),
 
-    getAccountsCount: () => provider({ url: '/accounts/c' }),
+    getAccountsCount: ({ isSmartContract }: GetAccountsType) =>
+      provider({ url: '/accounts/c', params: { isSmartContract } }),
 
     getAccountTransfers: ({ address, ...rest }: GetTransactionsType) =>
       provider({
@@ -270,6 +281,7 @@ export const useAdapter = () => {
       provider({
         url: `/accounts/${address}/transfers/c`,
         params: getTransactionsParams({
+          isCount: true,
           ...rest
         })
       }),
@@ -360,6 +372,14 @@ export const useAdapter = () => {
         }
       }),
 
+    getAccountAssets: ({ address }: { address: string }) =>
+      provider({
+        url: `/accounts/${address}`,
+        params: {
+          fields: 'assets,username'
+        }
+      }),
+
     /* Account Stake */
 
     getAccountDelegation: (address: string) =>
@@ -405,41 +425,33 @@ export const useAdapter = () => {
     getNode: (key: string) => getNodes({ url: `/nodes/${key}` }),
 
     getNodes: (params: GetNodesType) =>
-      getNodes({
+      provider({
         url: '/nodes',
         params: getNodeParams(params)
       }),
 
-    getNodesCount: ({
-      online,
-      issues,
-      search,
-      type,
-      shard,
-      status,
-      identity,
-      provider,
-      fullHistory
-    }: GetNodesType) =>
-      getNodes({
+    getNodesCount: (params: GetNodesType) =>
+      provider({
         url: '/nodes/c',
-        params: getNodeParams({
-          online,
-          issues,
-          search,
-          type,
-          shard,
-          status,
-          identity,
-          provider,
-          fullHistory
-        })
+        params: getNodeParams({ isCount: true, ...params })
+      }),
+
+    getAuctionNodes: () =>
+      provider({
+        url: '/nodes/auctions'
       }),
 
     getNodesVersions,
 
-    getIdentities: (identities?: string) =>
-      provider({ url: '/identities', params: { identities } }),
+    getIdentities: ({ identities, sort, order }: GetIdentitiesType) =>
+      provider({
+        url: '/identities',
+        params: {
+          identities,
+          ...(sort !== undefined ? { sort } : {}),
+          ...(order !== undefined ? { order } : {})
+        }
+      }),
 
     getIdentity: (identity: string) =>
       provider({ url: `/identities/${identity}` }),
@@ -509,6 +521,7 @@ export const useAdapter = () => {
       provider({
         url: `/tokens/${tokenId}/transactions/c`,
         params: getTransactionsParams({
+          isCount: true,
           ...rest
         })
       }),
@@ -531,6 +544,7 @@ export const useAdapter = () => {
       provider({
         url: `/tokens/${tokenId}/transfers/c`,
         params: getTransactionsParams({
+          isCount: true,
           ...rest
         })
       }),
@@ -589,6 +603,52 @@ export const useAdapter = () => {
         params: getCollectionsParams({ ...rest })
       }),
 
+    getCollectionTransactions: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/collections/${identifier}/transactions`,
+        params: getTransactionsParams({
+          ...rest
+        })
+      }),
+
+    getCollectionTransactionsCount: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/collections/${identifier}/transactions/count`,
+        params: getTransactionsParams({
+          isCount: true,
+          ...rest
+        })
+      }),
+
+    getCollectionTransfers: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/collections/${identifier}/transfers`,
+        params: getTransactionsParams({
+          ...rest
+        })
+      }),
+
+    getCollectionTransfersCount: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/collections/${identifier}/transfers/count`,
+        params: getTransactionsParams({
+          isCount: true,
+          ...rest
+        })
+      }),
+
     // Nfts
 
     getNft: (identifier: string) => provider({ url: `/nfts/${identifier}` }),
@@ -641,6 +701,30 @@ export const useAdapter = () => {
       provider({
         url: `/nfts/${identifier}/transactions/count`,
         params: getTransactionsParams({
+          isCount: true,
+          ...rest
+        })
+      }),
+
+    getNftTransfers: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/nfts/${identifier}/transfers`,
+        params: getTransactionsParams({
+          ...rest
+        })
+      }),
+
+    getNftTransfersCount: ({
+      identifier,
+      ...rest
+    }: GetTransactionsType & { identifier: string }) =>
+      provider({
+        url: `/nfts/${identifier}/transfers/count`,
+        params: getTransactionsParams({
+          isCount: true,
           ...rest
         })
       }),
@@ -649,7 +733,7 @@ export const useAdapter = () => {
     getStats,
     getShards,
 
-    getGlobalStake: () => provider({ url: '/stake' }),
+    getStake: () => provider({ url: '/stake' }),
 
     getEconomics: () => getEconomics({ url: '/economics' }),
 

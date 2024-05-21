@@ -39,6 +39,7 @@ export const CopyButton = ({ text, icon, className = '' }: CopyButtonType) => {
       href='/#'
       onClick={handleCopyToClipboard}
       className={`side-action ${className}`}
+      aria-label='Copy'
     >
       {copyResult.default || !copyResult.success ? (
         <FontAwesomeIcon icon={icon ? icon : faClone} />

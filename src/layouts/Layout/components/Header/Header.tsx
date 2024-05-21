@@ -1,38 +1,25 @@
 import { useState, MouseEvent, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
 
 import { ReactComponent as MultiversXLogo } from 'assets/img/logo-full.svg';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { NetworkLink } from 'components';
-import { capitalize } from 'helpers';
-import { useIsMainnet } from 'hooks';
+import { useIsMainnet, useGetExplorerTitle } from 'hooks';
 import { faGrid, faGrid2 } from 'icons/solid';
-import { activeNetworkSelector } from 'redux/selectors';
-import { Applications } from './components/Applications';
+import { EcosystemMenu } from './components/EcosystemMenu';
 import { Links } from './components/Links';
 import { Switcher } from './components/Switcher';
 import { HeaderPropsType } from './types';
 
 export const Header = (props: HeaderPropsType) => {
   const isMainnet = useIsMainnet();
-
-  const { id } = useSelector(activeNetworkSelector);
-  const customLinkPrefix = process.env.VITE_APP_SHARE_PREFIX
-    ? `${capitalize(
-        String(process.env.VITE_APP_SHARE_PREFIX).replace('-', ' ')
-      )}`
-    : '';
-  const explorerTitle =
-    id !== 'mainnet' && customLinkPrefix
-      ? `${customLinkPrefix} Explorer`
-      : 'Explorer';
+  const explorerTitle = useGetExplorerTitle();
 
   const { onExpand } = props;
 
   const [menuActive, setMenuActive] = useState(false);
-  const [applicationsActive, setApplicationsActive] = useState(false);
+  const [ecosystemMenuActive, setEcosystemMenuActive] = useState(false);
 
   const onMenuToggle = (event: MouseEvent) => {
     if (window.innerWidth <= 768) {
@@ -40,24 +27,24 @@ export const Header = (props: HeaderPropsType) => {
     }
 
     event.preventDefault();
-    setApplicationsActive(false);
+    setEcosystemMenuActive(false);
     setTimeout(
       () => setMenuActive((menuActive) => !menuActive),
-      applicationsActive ? 400 : 0
+      ecosystemMenuActive ? 400 : 0
     );
   };
 
-  const onApplicationsToggle = (event: MouseEvent) => {
+  const onEcosystemMenuToggle = (event: MouseEvent) => {
     event.preventDefault();
     setMenuActive(false);
 
     setTimeout(
       () => {
         if (window.innerWidth <= 768) {
-          onExpand(!applicationsActive);
+          onExpand(!ecosystemMenuActive);
         }
 
-        setApplicationsActive((applicationsActive) => !applicationsActive);
+        setEcosystemMenuActive((ecosystemMenuActive) => !ecosystemMenuActive);
       },
       menuActive ? 400 : 0
     );
@@ -69,20 +56,20 @@ export const Header = (props: HeaderPropsType) => {
   };
 
   useEffect(() => {
-    const onClickOutsideApplications = () => {
-      setApplicationsActive(false);
+    const onClickOutsideEcosystemMenu = () => {
+      setEcosystemMenuActive(false);
       onExpand(false);
     };
 
-    window.addEventListener('pointerdown', onClickOutsideApplications);
+    window.addEventListener('pointerdown', onClickOutsideEcosystemMenu);
 
     return () =>
-      window.removeEventListener('pointerdown', onClickOutsideApplications);
+      window.removeEventListener('pointerdown', onClickOutsideEcosystemMenu);
   }, [onExpand]);
 
   return (
     <header className='header'>
-      <div className='wrapper'>
+      <div className='logo-wrapper'>
         <NetworkLink to='/' className='logo' aria-label='MultiversX Explorer'>
           {isMainnet ? (
             <MultiversXLogo />
@@ -95,6 +82,31 @@ export const Header = (props: HeaderPropsType) => {
         </NetworkLink>
       </div>
 
+      <div
+        className={classNames('menu-wrapper', {
+          active: menuActive
+        })}
+      >
+        <Links onClick={onMenuClose} />
+        <Switcher />
+      </div>
+
+      <button
+        type='button'
+        id='ecosystem-menu-button'
+        onClick={onEcosystemMenuToggle}
+        onPointerDown={(e) => e.stopPropagation()}
+        className={classNames('matrix btn-unstyled  btn btn-dark', {
+          active: ecosystemMenuActive
+        })}
+        aria-haspopup='true'
+        aria-controls='ecosystem-menu'
+        aria-label='Ecosystem Menu'
+      >
+        <FontAwesomeIcon icon={faGrid} className='desktop' />
+        <FontAwesomeIcon icon={faGrid2} className='mobile' />
+      </button>
+
       <div className='burger' onClick={onMenuToggle}>
         <div className={classNames('bars', { active: menuActive })}>
           {Array.from({ length: 3 }).map((_item, index) => (
@@ -104,32 +116,12 @@ export const Header = (props: HeaderPropsType) => {
       </div>
 
       <div
-        onClick={onApplicationsToggle}
         onPointerDown={(e) => e.stopPropagation()}
-        className={classNames('matrix', {
-          active: applicationsActive
+        className={classNames('ecosystem-menu-wrapper', {
+          active: ecosystemMenuActive
         })}
       >
-        <FontAwesomeIcon icon={faGrid} className='desktop' />
-        <FontAwesomeIcon icon={faGrid2} className='mobile' />
-      </div>
-
-      <div
-        onPointerDown={(e) => e.stopPropagation()}
-        className={classNames('applicationswrapper', {
-          active: applicationsActive
-        })}
-      >
-        <Applications />
-      </div>
-
-      <div
-        className={classNames('menuwrapper', {
-          active: menuActive
-        })}
-      >
-        <Links onClick={onMenuClose} />
-        <Switcher />
+        <EcosystemMenu />
       </div>
     </header>
   );

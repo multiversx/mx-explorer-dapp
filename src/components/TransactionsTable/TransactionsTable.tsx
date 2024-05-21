@@ -1,13 +1,16 @@
-import { Pager, TableWrapper, Loader } from 'components';
+import { MAX_TRANSACTIONS_PAGE_SIZE } from 'appConstants';
+import { Pager, PageSize, TableWrapper, Loader } from 'components';
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { TransactionTableType } from 'types';
 
-import { FailedTransactions } from './components/FailedTransactions';
-import { Header } from './components/Header';
-import { NoTransactions } from './components/NoTransactions';
-import { TransactionRow } from './components/TransactionRow';
-import { MethodList } from './components/TransactionsFilters';
+import {
+  Header,
+  FailedTransactions,
+  NoTransactions,
+  TransactionRow,
+  MethodList
+} from './components';
 
 const ColSpanWrapper = ({
   children,
@@ -118,7 +121,8 @@ export const TransactionsTable = ({
           </TableWrapper>
         </div>
 
-        <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+        <div className='card-footer table-footer'>
+          <PageSize maxSize={MAX_TRANSACTIONS_PAGE_SIZE} />
           <Pager total={totalTransactions} show={transactions.length > 0} />
         </div>
       </div>

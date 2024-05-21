@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import {
   Loader,
   Pager,
+  PageSize,
   NetworkLink,
   AccountLink,
   PageState,
@@ -102,8 +103,9 @@ export const CollectionNfts = () => {
                                 {nft.assets && nft.assets.svgUrl && (
                                   <img
                                     src={nft.assets.svgUrl}
-                                    alt={nft.name}
                                     className='side-icon me-1'
+                                    alt=''
+                                    role='presentation'
                                   />
                                 )}
                                 <div>{nft.identifier}</div>
@@ -139,7 +141,8 @@ export const CollectionNfts = () => {
               </div>
             </div>
 
-            <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+            <div className='card-footer table-footer'>
+              <PageSize />
               <Pager
                 total={totalCollectionNfts}
                 show={collectionNfts.length > 0}
@@ -149,22 +152,17 @@ export const CollectionNfts = () => {
         ) : (
           <>
             {dataReady === undefined && (
-              <Loader dataTestId='collectionCollectionNftsLoader' />
+              <Loader data-testid='collectionCollectionNftsLoader' />
             )}
             {dataReady === false && (
               <PageState
                 icon={faUser}
                 title={`Unable to load ${getNftText(type)}`}
-                className='py-spacer my-auto'
-                dataTestId='errorScreen'
+                isError
               />
             )}
             {dataReady === true && collectionNfts.length === 0 && (
-              <PageState
-                icon={faUser}
-                title={`No ${getNftText(type)}s`}
-                className='py-spacer my-auto'
-              />
+              <PageState icon={faUser} title={`No ${getNftText(type)}s`} />
             )}
           </>
         )}

@@ -47,8 +47,7 @@ export const BlockDetails = () => {
               <span className='text-break-all'>{blockId}</span>
             </div>
           }
-          className='py-spacer my-auto'
-          dataTestId='errorScreen'
+          isError
         />
       )}
 

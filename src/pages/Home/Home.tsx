@@ -1,4 +1,4 @@
-import { useIsMainnet } from 'hooks';
+import { useHasGrowthWidgets } from 'hooks';
 import { MostUsed } from 'widgets';
 
 import { ChartContractsTransactions } from './components/ChartContractsTransactions';
@@ -9,19 +9,19 @@ import { LatestBlocks } from './components/LatestBlocks';
 import { LatestTransactions } from './components/LatestTransactions';
 
 export const Home = () => {
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
 
   return (
     <div className='home page-content container'>
-      {isMainnet && (
+      {hasGrowthWidgets && (
         <>
           <div className='d-xl-flex mt-3'>
             <ChartPrice />
-            <ChartStake />
+            <ChartStake className='pt-md-spacer' />
             <EconomicsCard />
           </div>
 
-          <ChartContractsTransactions />
+          <ChartContractsTransactions isStandalone />
           <MostUsed />
         </>
       )}

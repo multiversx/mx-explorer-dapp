@@ -6,9 +6,10 @@ import {
   DetailItem,
   Loader,
   Pager,
+  PageSize,
   PageState,
   CollectionBlock,
-  Denominate,
+  FormatAmount,
   NftBadge,
   NetworkLink
 } from 'components';
@@ -76,21 +77,12 @@ export const AccountNfts = () => {
       </div>
       <div className='card-body pt-0 px-lg-spacer py-lg-4'>
         <div className='px-0'>
-          {dataReady === undefined && <Loader dataTestId='nftsLoader' />}
+          {dataReady === undefined && <Loader data-testid='nftsLoader' />}
           {dataReady === false && (
-            <PageState
-              icon={faCoins}
-              title='Unable to load NFTs'
-              className='py-spacer my-auto'
-              dataTestId='errorScreen'
-            />
+            <PageState icon={faCoins} title='Unable to load NFTs' isError />
           )}
           {dataReady === true && accountNfts.length === 0 && (
-            <PageState
-              icon={faCoins}
-              title='No NFTs'
-              className='py-spacer my-auto'
-            />
+            <PageState icon={faCoins} title='No NFTs' />
           )}
 
           {dataReady === true && accountNfts.length > 0 && (
@@ -105,10 +97,11 @@ export const AccountNfts = () => {
                       {nft.balance !== undefined && (
                         <div className='me-1'>
                           {nft.decimals ? (
-                            <Denominate
+                            <FormatAmount
                               showLabel={false}
+                              showSymbol={false}
                               value={nft.balance ? nft.balance : '0'}
-                              denomination={nft.decimals}
+                              decimals={nft.decimals}
                             />
                           ) : (
                             Number(nft.balance).toLocaleString('en')
@@ -126,8 +119,9 @@ export const AccountNfts = () => {
                             {nft?.assets?.svgUrl && (
                               <img
                                 src={nft.assets.svgUrl}
-                                alt={nft.identifier}
                                 className='side-icon me-1'
+                                alt=''
+                                role='presentation'
                               />
                             )}
                             <div className='text-truncate'>
@@ -147,7 +141,8 @@ export const AccountNfts = () => {
       </div>
 
       {dataReady === true && accountNfts.length > 0 && (
-        <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+        <div className='card-footer table-footer'>
+          <PageSize />
           <Pager total={accountNftsCount} show={accountNfts.length > 0} />
         </div>
       )}

@@ -1,10 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 
 import { faSort, faSortDown, faSortUp } from 'icons/duotone';
-import { SortOrderEnum } from 'types';
+import { SortOrderEnum, TableFilterUIType } from 'types';
 
-export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
+export interface TableSortUIType extends TableFilterUIType {
+  id: string;
+}
+
+export const Sort = ({ id, text, hideFilters }: TableSortUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { order, sort, ...rest } = Object.fromEntries(searchParams);
 
@@ -32,14 +37,20 @@ export const Sort = ({ id, field }: { field: React.ReactNode; id: string }) => {
     setSearchParams(nextUrlParams);
   };
 
+  if (hideFilters) {
+    return text;
+  }
+
   return (
     <div
-      className='me-n1 cursor-pointer'
+      className={classNames('me-n1 cursor-pointer', {
+        'text-primary-100': sort === id
+      })}
       onClick={() => {
         updateSortValue();
       }}
     >
-      {field}
+      {text}
       {sort !== id && (
         <FontAwesomeIcon
           icon={faSort}

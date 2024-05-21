@@ -1,9 +1,14 @@
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { Search } from 'components';
+import { FormatEGLD, Search } from 'components';
 import { getSubdomainNetwork } from 'helpers';
-import { useActiveRoute, useIsMainnet, usePageStats } from 'hooks';
+import {
+  useActiveRoute,
+  useIsMainnet,
+  useHasGrowthWidgets,
+  usePageStats
+} from 'hooks';
 import { ChartContractsTransactions } from 'pages/Home/components/ChartContractsTransactions';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
@@ -15,10 +20,12 @@ import {
   HeroPills,
   StatsCard,
   HeroHome,
-  HeroNodes
+  HeroNodes,
+  HeroApplications
 } from 'widgets';
 
 import {
+  useShowApplicationsStats,
   useShowCustomStats,
   useShowGlobalStats,
   useShowNodesStats,
@@ -30,7 +37,10 @@ export const Hero = () => {
   const { pathname } = useLocation();
   const activeRoute = useActiveRoute();
   const isMainnet = useIsMainnet();
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const hasGrowthWidgets = useHasGrowthWidgets();
+  const { id: activeNetworkId, egldLabel = '' } = useSelector(
+    activeNetworkSelector
+  );
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
   const { pageStats } = usePageStats();
 
@@ -38,10 +48,11 @@ export const Hero = () => {
   const isAnalytics =
     activeRoute(analyticsRoutes.analytics) ||
     activeRoute(analyticsRoutes.compare);
-  const showCustomStats = useShowCustomStats() && isMainnet;
+  const showCustomStats = useShowCustomStats() && hasGrowthWidgets;
   const showGlobalStats = useShowGlobalStats();
   const showNodesStats = useShowNodesStats();
-  const showTransactionsStats = useShowTransactionStats() && isMainnet;
+  const showApplicationsStats = useShowApplicationsStats() && hasGrowthWidgets;
+  const showTransactionsStats = useShowTransactionStats() && hasGrowthWidgets;
 
   const { subdomainNetwork } = getSubdomainNetwork();
   const pathArray = pathname.split('/').filter((path) => path);
@@ -56,11 +67,14 @@ export const Hero = () => {
   const pageName = getCustomPageName({ pathname, basePage });
 
   let heroTypeClassName = '';
-  if (showTransactionsStats) {
+  if (showTransactionsStats && !showCustomStats) {
     heroTypeClassName = 'transactions-stats';
   }
   if (showNodesStats) {
     heroTypeClassName = 'nodes-stats';
+  }
+  if (showApplicationsStats) {
+    heroTypeClassName = 'applications-stats';
   }
 
   return (
@@ -95,34 +109,48 @@ export const Hero = () => {
             </h2>
           </div>
           {showCustomStats ? (
-            <div className='card-body d-flex flex-row flex-wrap gap-3 custom-stats'>
-              {pageStats?.data.map((item) => (
-                <StatsCard
-                  key={item.id}
-                  title={item.title}
-                  subTitle={item.subTitle}
-                  icon={item.icon}
-                  value={item.value ? item.value.toString() : ''}
-                  className='card-solitary'
-                />
-              ))}
+            <div className='card-body'>
+              <div className='d-flex flex-row flex-wrap gap-3 custom-stats'>
+                {pageStats?.data.map((item) => (
+                  <StatsCard
+                    key={item.id}
+                    title={item.title}
+                    subTitle={item.subTitle}
+                    icon={item.icon}
+                    value={
+                      String(item.value).includes(egldLabel) ? (
+                        <FormatEGLD value={item.value} superSuffix />
+                      ) : (
+                        item.value
+                      )
+                    }
+                    className='card-solitary'
+                  />
+                ))}
+              </div>
             </div>
           ) : (
             <>
+              {showApplicationsStats && <HeroApplications />}
               {showTransactionsStats && (
                 <div className='card-body p-0'>
                   <ChartContractsTransactions />
                 </div>
               )}
-
               {showNodesStats && <HeroNodes />}
 
-              {!(showTransactionsStats || showNodesStats) && (
+              {!(
+                showTransactionsStats ||
+                showNodesStats ||
+                showApplicationsStats
+              ) && (
                 <div className='card-body d-flex flex-row flex-wrap gap-3'>
                   <TransactionsStatsCard />
                   <AccountsStatsCard />
                   <BlockHeightStatsCard />
-                  {isMainnet && <ValidatorsStatusCard isSmall />}
+                  {isMainnet && process.env.VITE_APP_MARKERS_API_URL && (
+                    <ValidatorsStatusCard isSmall />
+                  )}
                 </div>
               )}
             </>

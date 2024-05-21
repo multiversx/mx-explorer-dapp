@@ -1,5 +1,5 @@
 import {
-  faTwitter,
+  faXTwitter,
   faLinkedin,
   faInstagram,
   faFacebook,
@@ -9,13 +9,15 @@ import {
   faMediumM,
   faMedium,
   faDiscord,
-  faReddit
+  faReddit,
+  faThreads,
+  faTiktok
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { ReactComponent as CoinGecko } from 'assets/img/logos/coingecko.svg';
 import { ReactComponent as CoinMarketCap } from 'assets/img/logos/coinmarketcap.svg';
+import { Overlay } from 'components';
 import { faGlobe, faEnvelope, faPencil, faFileAlt } from 'icons/regular';
 
 const getFaIcon = (icon: string) => {
@@ -27,7 +29,8 @@ const getFaIcon = (icon: string) => {
     case 'whitepaper':
       return faFileAlt;
     case 'twitter':
-      return faTwitter;
+    case 'x':
+      return faXTwitter;
     case 'instagram':
       return faInstagram;
     case 'linkedin':
@@ -48,6 +51,10 @@ const getFaIcon = (icon: string) => {
       return faDiscord;
     case 'reddit':
       return faReddit;
+    case 'threads':
+      return faThreads;
+    case 'tiktok':
+      return faTiktok;
     default:
       return faGlobe;
   }
@@ -64,41 +71,56 @@ const Icon = ({ icon }: { icon: string }) => {
   }
 };
 
-export const SocialIcons = ({ assets }: { assets: any }) => {
+export const SocialIcons = ({
+  assets,
+  excludeWebsite = false
+}: {
+  assets: any;
+  excludeWebsite?: boolean;
+}) => {
+  if (!assets || Object.keys(assets).length === 0) {
+    return null;
+  }
+
   return (
     <div className='social-icons mt-2 mt-lg-0'>
-      {Object.keys(assets).map((social, i) => (
-        <OverlayTrigger
-          placement='top'
-          delay={{ show: 250, hide: 400 }}
-          overlay={(props) => (
-            <Tooltip id='social-tooltip' {...props}>
-              <span className='text-capitalize'>{social}: </span>
-              {assets[social]}
-            </Tooltip>
-          )}
-          key={`social-icon-${i}`}
-        >
-          {social === 'email' ? (
-            <a
-              className='icon d-flex align-items-center justify-content-center'
-              href={`mailto:${assets[social]}`}
-            >
-              <Icon icon={social} />
-            </a>
-          ) : (
-            <a
-              target='_blank'
-              className='icon d-flex align-items-center justify-content-center'
-              href={assets[social]}
-              aria-label={social}
-              rel='noreferrer nofollow noopener'
-            >
-              <Icon icon={social} />
-            </a>
-          )}
-        </OverlayTrigger>
-      ))}
+      {Object.keys(assets).map((social, i) => {
+        if (excludeWebsite && social === 'website') {
+          return null;
+        }
+
+        return (
+          <Overlay
+            title={
+              <>
+                <span className='text-capitalize'>{social}: </span>
+                {assets[social]}
+              </>
+            }
+            key={`social-icon-${i}`}
+            truncate
+          >
+            {social === 'email' ? (
+              <a
+                className='icon d-flex align-items-center justify-content-center'
+                href={`mailto:${assets[social]}`}
+              >
+                <Icon icon={social} />
+              </a>
+            ) : (
+              <a
+                target='_blank'
+                className='icon d-flex align-items-center justify-content-center'
+                href={assets[social]}
+                aria-label={social}
+                rel='noreferrer nofollow noopener'
+              >
+                <Icon icon={social} />
+              </a>
+            )}
+          </Overlay>
+        );
+      })}
     </div>
   );
 };

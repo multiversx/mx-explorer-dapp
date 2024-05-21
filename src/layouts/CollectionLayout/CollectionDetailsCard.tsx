@@ -1,20 +1,21 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import {
   AccountLink,
   RolesBadges,
-  DetailItem,
   NftBadge,
   TimeAgo,
   SocialIcons,
+  SocialWebsite,
   SpotlightButton,
-  AssetsHelmet
+  HeroDetailsCard,
+  Overlay
 } from 'components';
 import { formatDate } from 'helpers';
 import { useActiveRoute } from 'hooks';
-import { faClock } from 'icons/regular';
+import { faExclamationTriangle, faClock } from 'icons/regular';
 import { faHexagonCheck } from 'icons/solid';
 import { collectionSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';
@@ -33,130 +34,134 @@ export const CollectionDetailsCard = () => {
     decimals,
     owner,
     isVerified,
+    nftCount,
+    holderCount,
     scamInfo
   } = collectionState;
 
-  const mergedAssets = {
-    ...(assets?.website
-      ? {
-          website: assets.website
-        }
-      : {}),
-    ...(assets?.social ? assets.social : {})
-  };
+  const titleTypeText =
+    activeRoute(tokensRoutes.tokensMetaEsdtDetails) ||
+    activeRoute(tokensRoutes.tokensMetaEsdtDetailsRoles)
+      ? 'Meta-ESDT'
+      : 'Collection';
 
-  const title = activeRoute(tokensRoutes.tokensMetaEsdtDetails)
-    ? 'Meta-ESDT'
-    : 'Collection';
+  const title = `${
+    assets && !scamInfo
+      ? `${name}${ticker !== name ? ` (${ticker})` : ''}`
+      : ticker
+  } ${titleTypeText}`;
+  const seoTitle =
+    assets && !scamInfo
+      ? `${name}${ticker !== name ? ` (${ticker})` : ''}`
+      : '';
 
-  return collection ? (
-    <>
-      <AssetsHelmet
-        text={`${title} Details`}
-        assets={assets}
-        ticker={ticker}
-        name={name}
-      />
-      <div className='token-details-card row mb-3'>
-        <div className='col-12'>
-          <div className='card'>
-            <div className='card-header'>
-              <div className='card-header-item d-flex align-items-center justify-content-between gap-3 flex-wrap'>
-                <h5
-                  data-testid='title'
-                  className='mb-0 d-flex align-items-center'
+  return (
+    <HeroDetailsCard
+      title={title}
+      icon={assets?.pngUrl || assets?.svgUrl}
+      seoDetails={{
+        title: seoTitle,
+        description: assets?.description,
+        completeDetails: Boolean(!scamInfo && assets)
+      }}
+      className='collection-details'
+      titleContent={
+        !scamInfo && type !== NftTypeEnum.MetaESDT ? (
+          <SpotlightButton path={`/collections/${collection}`} />
+        ) : null
+      }
+      descriptionContent={
+        scamInfo ? (
+          <span className='text-warning d-flex align-items-center ms-2'>
+            <FontAwesomeIcon
+              icon={faExclamationTriangle}
+              size='sm'
+              className='text-warning me-2'
+            />
+            {scamInfo.info}
+          </span>
+        ) : null
+      }
+      isVerified={isVerified}
+      verifiedComponent={
+        <Overlay title='Verified' className='d-inline-block'>
+          <FontAwesomeIcon
+            icon={faHexagonCheck}
+            size='sm'
+            className='text-yellow-spotlight'
+          />
+        </Overlay>
+      }
+      detailItems={[
+        assets?.description
+          ? {
+              title: 'Description',
+              value: (
+                <div
+                  className='description line-clamp-2'
+                  title={assets.description}
                 >
-                  {title} Details
-                </h5>
-                {!scamInfo && type !== NftTypeEnum.MetaESDT && (
-                  <SpotlightButton path={`/collections/${collection}`} />
-                )}
-              </div>
-            </div>
-            <div className='card-body'>
-              <DetailItem title='Name'>
-                <div className='d-flex align-items-center'>
-                  {assets?.svgUrl && (
-                    <img
-                      src={assets.svgUrl}
-                      alt={name}
-                      className='side-icon me-1'
-                    />
-                  )}
-                  <div>{name}</div>
-                  {isVerified && (
-                    <OverlayTrigger
-                      placement='top'
-                      delay={{ show: 0, hide: 400 }}
-                      overlay={(props: any) => (
-                        <Tooltip {...props} show={props.show.toString()}>
-                          Verified
-                        </Tooltip>
-                      )}
-                    >
-                      <FontAwesomeIcon
-                        icon={faHexagonCheck}
-                        size='sm'
-                        className='ms-2 text-yellow-spotlight'
-                      />
-                    </OverlayTrigger>
-                  )}
+                  {assets.description}
                 </div>
-              </DetailItem>
-              <DetailItem title='Collection'>{collection}</DetailItem>
-              {ticker !== undefined && ticker !== collection && (
-                <DetailItem title='Ticker'>{ticker}</DetailItem>
-              )}
-              <DetailItem title='Type'>
-                <NftBadge type={type} />
-              </DetailItem>
-              <DetailItem title='Owner'>
-                <AccountLink address={owner} />
-              </DetailItem>
-              {timestamp !== undefined && (
-                <DetailItem title='Created'>
+              )
+            }
+          : {},
+        assets?.website
+          ? {
+              title: 'Website',
+              value: <SocialWebsite link={assets.website} />
+            }
+          : {},
+        assets?.social && Object.keys(assets.social).length > 0
+          ? {
+              title: 'Other Links',
+              value: <SocialIcons assets={assets.social} excludeWebsite />
+            }
+          : {},
+        { title: 'Type', value: <NftBadge type={type} /> },
+        !assets && ticker !== name ? { title: 'Name', value: name } : {},
+        { title: 'Collection', value: collection },
+        decimals !== undefined
+          ? {
+              title: 'Decimals',
+              value: decimals
+            }
+          : {},
+        timestamp !== undefined
+          ? {
+              title: 'Created',
+              value: (
+                <>
                   <FontAwesomeIcon
                     icon={faClock}
                     className='me-2 text-neutral-400'
                   />
-                  <TimeAgo value={timestamp} />
+                  <TimeAgo value={timestamp} showAgo />
                   &nbsp;
                   <span className='text-neutral-400'>
                     ({formatDate(timestamp, false, true)})
                   </span>
-                </DetailItem>
-              )}
-              {decimals !== undefined && (
-                <DetailItem title='Decimals'>{decimals}</DetailItem>
-              )}
-              <DetailItem title='Properties'>
-                <RolesBadges {...collectionState} />
-              </DetailItem>
-              <DetailItem title='Social'>
-                {Object.keys(mergedAssets).length > 0 ? (
-                  <div className='d-flex h-100'>
-                    <SocialIcons assets={mergedAssets} />
-                  </div>
-                ) : (
-                  <span className='text-neutral-400'>N/A</span>
-                )}
-              </DetailItem>
-              <DetailItem title='Description'>
-                {assets?.description ? (
-                  <h2
-                    className='token-description h6 mb-0'
-                    title={assets.description}
-                  >
-                    {assets.description}
-                  </h2>
-                ) : (
-                  <span className='text-neutral-400'>N/A</span>
-                )}
-              </DetailItem>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  ) : null;
+                </>
+              )
+            }
+          : {},
+        { title: 'Owner', value: <AccountLink address={owner} fetchAssets /> },
+        { title: 'Properties', value: <RolesBadges {...collectionState} /> }
+      ]}
+      statsCards={[
+        holderCount !== undefined
+          ? {
+              title: 'Holders',
+              value: new BigNumber(holderCount).toFormat()
+            }
+          : {},
+        nftCount !== undefined
+          ? {
+              title: 'Items',
+              value: new BigNumber(nftCount).toFormat()
+            }
+          : {}
+      ]}
+    />
+  );
 };

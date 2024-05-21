@@ -1,6 +1,7 @@
 import { CollectionLayout } from 'layouts/CollectionLayout';
 import { CollectionAssets } from 'pages/CollectionDetails/CollectionAssets';
 import { CollectionRoles } from 'pages/CollectionDetails/CollectionRoles';
+import { CollectionTransactions } from 'pages/CollectionDetails/CollectionTransactions';
 import { Collections } from 'pages/Collections';
 
 import { TitledRouteObject } from '../routes';
@@ -10,7 +11,8 @@ export const collectionRoutes = {
   collectionsNft: '/collections/nft',
   collectionsSft: '/collections/sft',
   collectionDetails: '/collections/:hash',
-  collectionDetailsRoles: '/collections/:hash/roles'
+  collectionDetailsRoles: '/collections/:hash/roles',
+  collectionDetailsTransactions: '/collections/:hash/transactions'
 };
 
 export const collectionLayout: TitledRouteObject[] = [
@@ -42,6 +44,12 @@ export const collectionLayout: TitledRouteObject[] = [
         title: 'Collection Details',
         preventScroll: true,
         Component: CollectionAssets
+      },
+      {
+        path: collectionRoutes.collectionDetailsTransactions,
+        title: 'Collection Transactions',
+        preventScroll: true,
+        Component: CollectionTransactions
       },
       {
         path: collectionRoutes.collectionDetailsRoles,

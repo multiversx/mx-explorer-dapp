@@ -96,7 +96,7 @@ export const LatestTransactions = () => {
     return (
       <div className='card card-lg card-black latest-transactions' ref={ref}>
         {transactionsFetched === undefined && (
-          <Loader dataTestId='transactionsLoader' />
+          <Loader data-testid='transactionsLoader' />
         )}
         {transactionsFetched === false && <FailedTransactions />}
         {transactionsFetched === true && transactions.length === 0 && (
@@ -106,10 +106,10 @@ export const LatestTransactions = () => {
           <>
             <div className='card-header'>
               <div className='d-flex justify-content-between align-items-center flex-wrap'>
-                <h5 className='mb-0 d-flex align-items-center'>
+                <div className='h5 mb-0 d-flex align-items-center'>
                   Recent Transactions
                   <PulsatingLed className='ms-2 mt-1' />
-                </h5>
+                </div>
                 <NetworkLink to='/transactions' className='btn btn-sm btn-dark'>
                   View All
                 </NetworkLink>

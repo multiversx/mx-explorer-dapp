@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useMatch, useNavigate } from 'react-router-dom';
 
 import {
-  Denominate,
+  FormatAmount,
   ShardSpan,
   NetworkLink,
   TimeAgo,
@@ -20,10 +20,9 @@ import {
   TransactionGuardianIcon,
   AccountLink
 } from 'components';
-import { DECIMALS, DIGITS } from 'config';
 import {
   addressIsBech32,
-  denominate,
+  formatAmount,
   formatDate,
   urlBuilder,
   isContract,
@@ -44,8 +43,8 @@ import {
 } from 'types';
 
 import { DataField } from './DataField';
-import { NonceMessage } from './NonceMessage';
 import { TransactionErrorDisplay } from './TransactionErrorDisplay';
+import { TransactionWarningMessage } from './TransactionWarningMessage';
 import { EventsList } from '../EventsList';
 import { OperationsList } from '../OperationsList';
 import { ScResultsList } from '../ScResultsList';
@@ -123,25 +122,13 @@ export const TransactionInfo = ({
   const transactionFee =
     transaction.fee === undefined && transaction.gasUsed === undefined
       ? 'N/A'
-      : denominate({
+      : formatAmount({
           input: transaction.fee ? transaction.fee : getFee(transaction),
-          denomination: DECIMALS,
-          decimals: DIGITS,
           showLastNonZeroDecimal: true
         });
 
-  const formattedTxValue = denominate({
+  const txValue = formatAmount({
     input: transaction.value,
-    denomination: DECIMALS,
-    decimals: DIGITS,
-    showLastNonZeroDecimal: true
-  });
-
-  const txValue = denominate({
-    input: transaction.value,
-    denomination: DECIMALS,
-    decimals: DIGITS,
-    addCommas: false,
     showLastNonZeroDecimal: true
   });
 
@@ -283,6 +270,7 @@ export const TransactionInfo = ({
                       <AccountLink
                         address={transaction.sender}
                         assets={transaction.senderAssets}
+                        hasHighlight
                       />
                       <CopyButton className='me-2' text={transaction.sender} />
                       <NetworkLink
@@ -309,6 +297,7 @@ export const TransactionInfo = ({
                     <AccountLink
                       address={transaction.receiver}
                       assets={transaction.receiverAssets}
+                      hasHighlight
                     />
                     <CopyButton className='me-2' text={transaction.receiver} />
                     {!isNaN(transaction.receiverShard) && (
@@ -327,20 +316,25 @@ export const TransactionInfo = ({
               </DetailItem>
 
               <DetailItem title='Value' className='text-neutral-100'>
-                {formattedTxValue} {egldLabel}{' '}
+                <FormatAmount
+                  value={transaction.value.toString()}
+                  showUsdValue={false}
+                  showLastNonZeroDecimal
+                />
                 {transaction.price !== undefined && (
-                  <span className='text-neutral-400'>
+                  <>
+                    {' '}
                     <FormatUSD
-                      amount={txValue}
+                      value={txValue}
                       usd={transaction.price}
-                      digits={2}
+                      className='text-neutral-400'
                     />
-                  </span>
+                  </>
                 )}
               </DetailItem>
 
               <DetailItem title='Method'>
-                <div className='badge badge-outline badge-outline-green-alt'>
+                <div className='badge badge-outline badge-outline-green-alt text-truncate mw-inherit'>
                   {getTransactionMethod(transaction)}
                 </div>
               </DetailItem>
@@ -376,7 +370,7 @@ export const TransactionInfo = ({
                 <DetailItem title='Total Token Value'>
                   <span className='text-neutral-100'>
                     <FormatUSD
-                      amount={totalTxTokenUsdValue}
+                      value={totalTxTokenUsdValue}
                       usd={1}
                       digits={4}
                     />
@@ -384,19 +378,24 @@ export const TransactionInfo = ({
                 </DetailItem>
               )}
 
-              <DetailItem title='Transaction Fee'>
-                {transaction.gasUsed !== undefined ? (
+              <DetailItem title='Transaction Fee' className='text-neutral-100'>
+                {transaction.fee !== undefined &&
+                transaction.gasUsed !== undefined ? (
                   <>
-                    <span className='text-neutral-100'>{transactionFee}</span>{' '}
-                    {egldLabel}{' '}
+                    <FormatAmount
+                      value={transaction.fee ?? getFee(transaction)}
+                      showUsdValue={false}
+                      showLastNonZeroDecimal
+                    />
                     {transaction.price !== undefined && (
-                      <span className='text-neutral-400'>
+                      <>
+                        {' '}
                         <FormatUSD
-                          amount={transactionFee}
+                          value={transactionFee}
                           usd={transaction.price}
-                          digits={4}
+                          className='text-neutral-400'
                         />
-                      </span>
+                      </>
                     )}
                   </>
                 ) : (
@@ -406,16 +405,19 @@ export const TransactionInfo = ({
 
               {transaction.price !== undefined && (
                 <DetailItem title={`${egldLabel} Price`}>
-                  <span className='text-neutral-100'>{`$${new BigNumber(
-                    transaction.price
-                  ).toFormat(2)}`}</span>
+                  <FormatUSD
+                    value={1}
+                    usd={transaction.price}
+                    showPrefix={false}
+                    className='text-neutral-100'
+                  />
                 </DetailItem>
               )}
 
               <DetailItem title='Gas Limit'>
                 {transaction.gasLimit !== undefined ? (
                   <span className='text-neutral-100'>
-                    {transaction.gasLimit.toLocaleString('en')}
+                    {new BigNumber(transaction.gasLimit).toFormat()}
                   </span>
                 ) : (
                   <span>N/A</span>
@@ -425,21 +427,20 @@ export const TransactionInfo = ({
               <DetailItem title='Gas Used'>
                 {transaction.gasUsed !== undefined ? (
                   <span className='text-neutral-100'>
-                    {transaction.gasUsed.toLocaleString('en')}
+                    {new BigNumber(transaction.gasUsed).toFormat()}
                   </span>
                 ) : (
                   <span>N/A</span>
                 )}
               </DetailItem>
 
-              <DetailItem title='Gas Price'>
+              <DetailItem title='Gas Price' className='text-neutral-100'>
                 {transaction.gasPrice !== undefined ? (
-                  <span className='text-neutral-100'>
-                    <Denominate
-                      value={transaction.gasPrice.toString()}
-                      showLastNonZeroDecimal
-                    />
-                  </span>
+                  <FormatAmount
+                    value={transaction.gasPrice.toString()}
+                    usd={transaction.price}
+                    showLastNonZeroDecimal
+                  />
                 ) : (
                   <span>N/A</span>
                 )}
@@ -448,7 +449,7 @@ export const TransactionInfo = ({
               <DetailItem title='Nonce'>
                 <>
                   <span className='text-neutral-100'>{transaction.nonce}</span>
-                  <NonceMessage transaction={transaction} />
+                  <TransactionWarningMessage transaction={transaction} />
                 </>
               </DetailItem>
 

@@ -144,7 +144,7 @@ export const EgldRow = ({
         <div className='token-identity d-flex flex-row'>
           <div className='d-flex align-items-center me-3'>
             <span className='side-link'>
-              <div className='side-icon d-flex align-items-center justify-content-center'>
+              <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
                 <EgldSymbol />
               </div>
             </span>

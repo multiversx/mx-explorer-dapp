@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { NetworkLink, Overlay } from 'components';
+import { InfoTooltip, NetworkLink } from 'components';
 import { decodeForDisplay, DecodeMethodType } from 'components/DataDecode';
 import { getTransactionMessages, capitalizeFirstLetter } from 'helpers';
-import { faAngleDown, faInfoCircle } from 'icons/regular';
+import { faAngleDown } from 'icons/regular';
 import { transactionsRoutes } from 'routes';
 import {
   TransactionType,
@@ -67,11 +67,13 @@ export const TransactionErrorDisplay = ({
             style={{ marginTop: '2px' }}
             transform={{ rotate: 45 }}
           />
-          <div className='d-flex flex-wrap'>
-            <small className={`${messageColor} transaction-error-message me-1`}>
+          <div className='d-flex flex-wrap align-items-center'>
+            <small
+              className={`${messageColor} transaction-error-message text-break me-1`}
+            >
               {capitalizeFirstLetter(transactionMessage.toString().trim())}
             </small>
-            <div className='d-flex align-items-center justify-content-center gap-1'>
+            <div className='d-flex align-items-center justify-content-center'>
               {/* VM ERRORS */}
               {logsLink && messageIndex === transactionMessages.length - 1 && (
                 <>
@@ -79,20 +81,16 @@ export const TransactionErrorDisplay = ({
                     See logs
                   </NetworkLink>
                   {internalVMErrorEvent?.data && (
-                    <Overlay
+                    <InfoTooltip
                       title={
                         <InternalErrorDisplay
                           data={internalVMErrorEvent.data}
                         />
                       }
-                      className='d-flex'
                       tooltipClassName='vm-error-display'
-                    >
-                      <FontAwesomeIcon
-                        icon={faInfoCircle}
-                        className='small text-neutral-400 cursor-context'
-                      />
-                    </Overlay>
+                      iconClassName='small'
+                      persistent
+                    />
                   )}
                 </>
               )}
@@ -111,7 +109,7 @@ export const TransactionErrorDisplay = ({
             style={{ marginTop: '2px' }}
             transform={{ rotate: 45 }}
           />
-          <small className='transaction-error-message text-danger'>
+          <small className='transaction-error-message text-break text-danger'>
             Block Reverted
           </small>
         </div>

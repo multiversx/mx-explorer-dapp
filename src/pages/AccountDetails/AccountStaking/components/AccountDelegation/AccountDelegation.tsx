@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
-import { Denominate } from 'components';
+import { FormatAmount } from 'components';
 import { activeNetworkSelector } from 'redux/selectors';
-import { DelegationType, ProviderType } from 'types';
+import { AccountDelegationType, ProviderType } from 'types';
 
 import { DetailsBlock } from '../DetailsBlock';
 import { ProviderDetails } from '../ProviderDetails';
@@ -12,7 +12,7 @@ export const AccountDelegation = ({
   delegation,
   provider
 }: {
-  delegation: DelegationType;
+  delegation: AccountDelegationType;
   provider: ProviderType;
 }) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
@@ -39,7 +39,7 @@ export const AccountDelegation = ({
       {userActiveStake !== '0' && (
         <DetailsBlock>
           <strong>
-            <Denominate value={userActiveStake} />
+            <FormatAmount value={userActiveStake} />
           </strong>
           <small>Amount Staked</small>
         </DetailsBlock>
@@ -48,7 +48,7 @@ export const AccountDelegation = ({
       {bNtotalUserUnStakedValue && (
         <DetailsBlock>
           <strong>
-            <Denominate value={bNtotalUserUnStakedValue.toString(10)} />
+            <FormatAmount value={bNtotalUserUnStakedValue.toString(10)} />
           </strong>
           <small>Undelegated</small>
         </DetailsBlock>
@@ -57,7 +57,7 @@ export const AccountDelegation = ({
       <DetailsBlock>
         <strong>
           {claimableRewards ? (
-            <Denominate value={claimableRewards} />
+            <FormatAmount value={claimableRewards} />
           ) : (
             <>0 {egldLabel}</>
           )}

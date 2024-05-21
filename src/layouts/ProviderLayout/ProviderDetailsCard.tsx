@@ -3,15 +3,16 @@ import { useSelector } from 'react-redux';
 import {
   CardItem,
   CopyButton,
-  Denominate,
+  FormatAmount,
   LockedAmountTooltip,
   AccountLink
 } from 'components';
-import { DelegationCap } from 'components/ProvidersTable/components/DelegationCap';
 import {
-  PercentageFilled,
-  hasDelegationCap
-} from 'components/ProvidersTable/components/PercentageFilled';
+  DelegationCap,
+  PercentageFilled
+} from 'components/ProvidersTable/components';
+import { hasDelegationCap } from 'components/ProvidersTable/helpers';
+
 import {
   faServer,
   faLock,
@@ -93,20 +94,16 @@ export const ProviderDetailsCard = ({
         <CardItem title='Locked' icon={faLock}>
           {provider.locked ? (
             <div className='d-flex align-items-center'>
-              <span className='me-2'>
-                <Denominate value={provider.locked} />
-              </span>
-
+              <FormatAmount value={provider.locked} />
               <LockedAmountTooltip
-                small
                 lockedDetails={[
                   {
                     label: 'Stake',
-                    value: <Denominate value={provider.stake} />
+                    value: <FormatAmount value={provider.stake} />
                   },
                   {
-                    label: 'Topup',
-                    value: <Denominate value={provider.topUp} />
+                    label: 'Top Up',
+                    value: <FormatAmount value={provider.topUp} />
                   }
                 ]}
               />
@@ -122,7 +119,7 @@ export const ProviderDetailsCard = ({
 
         <CardItem title='Cumulated Rewards' icon={faCoins}>
           {provider.cumulatedRewards ? (
-            <Denominate value={provider.cumulatedRewards} />
+            <FormatAmount value={provider.cumulatedRewards} />
           ) : (
             <>0</>
           )}

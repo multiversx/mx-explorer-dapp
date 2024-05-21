@@ -13,7 +13,7 @@ export const NftTransactions = () => {
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { getNftTransactions, getNftTransactionsCount } = useAdapter();
+  const { getNftTransfers, getNftTransfersCount } = useAdapter();
   const { hash: identifier } = useParams();
 
   const {
@@ -22,7 +22,7 @@ export const NftTransactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getNftTransactions, getNftTransactionsCount, {
+  } = useFetchTransactions(getNftTransfers, getNftTransfersCount, {
     identifier
   });
 

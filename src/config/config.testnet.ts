@@ -29,11 +29,11 @@ export const multiversxApps = allApps([
   },
   {
     id: 'xspotlight',
-    url: 'https://testnet.xspotlight.com/'
+    url: 'https://testnet.xspotlight.com'
   },
   {
     id: 'bridge',
-    url: 'https://testnet-bridge.multiversx.com/'
+    url: 'https://testnet-bridge.multiversx.com'
   }
 ]);
 

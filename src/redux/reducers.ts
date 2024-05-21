@@ -8,7 +8,7 @@ import { accountExtraReducer } from './slices/accountExtra';
 import { accountStakingReducer } from './slices/accountStaking';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
-import { globalStakeReducer } from './slices/globalStake';
+import { generalReducer } from './slices/general';
 import { growthEconomicsReducer } from './slices/growthEconomics';
 import { growthHeroReducer } from './slices/growthHero';
 import { growthMostUsedReducer } from './slices/growthMostUsed';
@@ -18,15 +18,18 @@ import { growthStakingReducer } from './slices/growthStaking';
 import { growthTransactionsReducer } from './slices/growthTransactions';
 import { interfaceReducer } from './slices/interface';
 import { markersReducer } from './slices/markers';
+import { metaTagsReducer } from './slices/metaTags';
 import { miniBlockReducer } from './slices/miniBlock';
 import { networkReducer } from './slices/networks';
 import { nftReducer } from './slices/nft';
+import { nodesIdentitiesReducer } from './slices/nodesIdentities';
 import { nodesVersionsReducer } from './slices/nodesVersions';
 import { pageHeadersAccountsReducer } from './slices/pageHeadersAccountsStats';
 import { pageHeadersBlocksReducer } from './slices/pageHeadersBlocksStats';
 import { pageHeadersCollectionsReducer } from './slices/pageHeadersCollectionsStats';
 import { pageHeadersTokensReducer } from './slices/pageHeadersTokensStats';
 import { refreshReducer } from './slices/refresh';
+import { stakeReducer } from './slices/stake';
 import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
 
@@ -56,7 +59,8 @@ export const customIgnoredSlices = {
   accountStaking: accountStakingReducer,
   collection: collectionReducer,
   economics: economicsReducer,
-  globalStake: globalStakeReducer,
+  general: generalReducer,
+  stake: stakeReducer,
   growthHero: growthHeroReducer,
   growthMostUsed: growthMostUsedReducer,
   growthPrice: growthPriceReducer,
@@ -68,8 +72,10 @@ export const customIgnoredSlices = {
   stats: statsReducer,
   token: tokenReducer,
   markers: markersReducer,
+  metaTags: metaTagsReducer,
   miniBlock: miniBlockReducer,
   nft: nftReducer,
+  nodesIdentities: nodesIdentitiesReducer,
   nodesVersions: nodesVersionsReducer,
   pageHeadersBlocksStats: pageHeadersBlocksReducer,
   pageHeadersAccountsStats: pageHeadersAccountsReducer,

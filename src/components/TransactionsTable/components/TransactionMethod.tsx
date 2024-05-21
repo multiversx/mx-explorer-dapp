@@ -1,16 +1,23 @@
 import { useRef, useState, useLayoutEffect } from 'react';
 import classNames from 'classnames';
+import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Overlay } from 'components';
 import { getTransactionMethod, isEllipsisActive } from 'helpers';
+import { interfaceSelector } from 'redux/selectors';
+import { setHighlightedText } from 'redux/slices/interface';
 import { UITransactionType } from 'types';
 
 export interface TransactionMethodType {
   transaction: UITransactionType;
+  hasHighlight?: boolean;
 }
 
-export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
+export const TransactionMethod = ({
+  transaction,
+  hasHighlight
+}: TransactionMethodType) => {
   const badgeTextRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [isTextTruncated, setIsTextTruncated] = useState(false);
@@ -72,20 +79,39 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
     );
   };
 
-  const TransactionMethodBadge = () => (
-    <div className='d-inline-block'>
-      <TransactionMethodText>
-        <span className='badge badge-outline badge-outline-green'>
-          <div
-            className='transaction-function-badge text-truncate text-capitalize'
-            ref={badgeTextRef}
+  const TransactionMethodBadge = () => {
+    const dispatch = useDispatch();
+    const { highlightedText } = useSelector(interfaceSelector);
+    const isHighlightBadge =
+      hasHighlight && highlightedText === transactionMethodText;
+
+    return (
+      <div className='d-inline-block'>
+        <TransactionMethodText>
+          <span
+            className={classNames('badge badge-outline badge-outline-green', {
+              'badge-outline-highlight': isHighlightBadge
+            })}
+            {...(hasHighlight
+              ? {
+                  onMouseEnter: () => {
+                    dispatch(setHighlightedText(transactionMethodText));
+                  },
+                  onMouseLeave: () => dispatch(setHighlightedText(''))
+                }
+              : {})}
           >
-            {transactionMethodText}
-          </div>
-        </span>
-      </TransactionMethodText>
-    </div>
-  );
+            <div
+              className='transaction-function-badge text-truncate text-capitalize'
+              ref={badgeTextRef}
+            >
+              {transactionMethodText}
+            </div>
+          </span>
+        </TransactionMethodText>
+      </div>
+    );
+  };
 
   return showTooltip ? (
     <Overlay
@@ -102,6 +128,7 @@ export const TransactionMethod = ({ transaction }: TransactionMethodType) => {
         </>
       }
       className='method-tooltip'
+      persistent
     >
       <TransactionMethodBadge />
     </Overlay>

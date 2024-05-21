@@ -1,0 +1,27 @@
+.fam {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  .suf,
+  .dec {
+    opacity: 0.75;
+  }
+  sup {
+    margin-left: 0.125rem;
+    top: -0.4em;
+    font-size: 0.625em;
+    line-height: 1;
+    font-family: var(--font-headings-semibold);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .sym {
+    width: auto;
+    height: 0.438em;
+    margin-bottom: 0.1em;
+    vertical-align: middle;
+    path {
+      fill: currentColor;
+    }
+  }
+}

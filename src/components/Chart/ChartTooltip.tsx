@@ -1,8 +1,7 @@
-import { formatAmount } from '@multiversx/sdk-dapp/utils';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { capitalize, usdValue } from 'helpers';
+import { capitalize, formatAmount, usdValue } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 import { ChartConfigType } from './helpers/types';
 
@@ -87,9 +86,7 @@ export const ChartTooltip = ({
               displayValue = formatAmount({
                 input: new BigNumber(displayValue).toString(10),
                 decimals: currentSeries?.yAxisConfig?.decimals,
-                digits: 2,
-                showLastNonZeroDecimal: false,
-                addCommas: false
+                digits: 2
               });
             }
             if (currentSeries?.yAxisConfig?.percentageMultiplier) {

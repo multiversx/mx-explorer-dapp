@@ -1,8 +1,8 @@
 import {
   ScamInfoType,
-  StakeType,
-  DelegationType,
-  DelegationLegacyType,
+  AccountStakeType,
+  AccountDelegationType,
+  AccountDelegationLegacyType,
   ProviderType,
   IdentityType,
   SliceType,
@@ -24,6 +24,7 @@ export interface AccountType {
   ownerAddress?: string;
   developerReward?: string;
   deployedAt?: number;
+  deployTxHash?: string;
   scamInfo?: ScamInfoType;
   isUpgradeable?: boolean;
   isReadable?: boolean;
@@ -35,7 +36,8 @@ export interface AccountType {
   isGuarded?: boolean;
   activeGuardianAddress?: string;
   activeGuardianServiceUid?: string;
-  tokenBalance?: string;
+  ownerAssets?: AccountAssetType;
+  transfersLast24h?: number;
 }
 
 export interface AccountSliceType extends SliceType {
@@ -45,6 +47,7 @@ export interface AccountSliceType extends SliceType {
 export interface AccountStakingSliceType {
   accountStakingFetched: boolean;
 
+  address: string | undefined;
   totalStaked: string;
   totalDelegation: string;
   totalLegacyDelegation: string;
@@ -52,11 +55,11 @@ export interface AccountStakingSliceType {
   totalClaimable: string;
   totalActiveStake: string;
   totalUnstakedValue: string;
-  stake?: StakeType;
+  stake?: AccountStakeType;
   showStake: boolean;
-  delegationLegacy?: DelegationLegacyType;
+  delegationLegacy?: AccountDelegationLegacyType;
   showDelegationLegacy: boolean;
-  delegation?: DelegationType[];
+  delegation?: AccountDelegationType[];
   showDelegation: boolean;
   providerDataReady: undefined | boolean;
   stakingDataReady: undefined | boolean;
@@ -66,7 +69,8 @@ export interface AccountStakingSliceType {
 
 export interface AccountExtraSliceType extends SliceType {
   accountExtra: {
-    firstTransactionDate: number | undefined;
+    firstTransactionDate?: number;
+    tokenBalance?: string;
   };
 }
 
@@ -76,6 +80,9 @@ export interface AccountAssetType {
   tags?: string[];
   iconPng?: string;
   iconSvg?: string;
+  svgUrl?: string;
+  pngUrl?: string;
+  social?: { [key: string]: string };
 }
 
 export interface AccountSmartContractType {

@@ -2,48 +2,46 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
-import { Loader } from 'components';
-import {
-  useFetchGlobalStake,
-  useFetchNodesVersions,
-  useFetchShards
-} from 'hooks';
+import { Loader, PageState } from 'components';
+import { useFetchStake, useFetchNodesVersions, useFetchShards } from 'hooks';
+import { faCogs } from 'icons/regular';
 import {
   activeNetworkSelector,
   shardsSelector,
-  globalStakeSelector,
   nodesVersionsSelector
 } from 'redux/selectors';
 
 export const NodesLayout = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-
   const shards = useSelector(shardsSelector);
-  const { isFetched: isGlobalStakeFetched } = useSelector(globalStakeSelector);
-  const { isFetched: isNodesVersioonsFetched } = useSelector(
+  const { isFetched: isNodesVersionsFetched } = useSelector(
     nodesVersionsSelector
   );
 
   const [isDataReady, setIsDataReady] = useState<undefined | boolean>();
 
-  useFetchGlobalStake();
+  useFetchStake();
   useFetchNodesVersions();
   useFetchShards();
 
   useEffect(() => {
-    if (isGlobalStakeFetched && isNodesVersioonsFetched && shards.length > 0) {
-      setIsDataReady(true);
+    if (!(isNodesVersionsFetched && shards.length > 0)) {
+      setIsDataReady(false);
     }
-  }, [activeNetworkId, shards, isGlobalStakeFetched, isNodesVersioonsFetched]);
+    setIsDataReady(true);
+  }, [activeNetworkId, shards, isNodesVersionsFetched]);
+
+  if (isDataReady === undefined) {
+    return <Loader />;
+  }
+
+  if (!isDataReady) {
+    return <PageState icon={faCogs} title='Unable to load data' isError />;
+  }
 
   return (
-    <>
-      {isDataReady === undefined && <Loader />}
-      {isDataReady && (
-        <div className='container page-content'>
-          <Outlet />
-        </div>
-      )}
-    </>
+    <div className='container page-content'>
+      <Outlet />
+    </div>
   );
 };

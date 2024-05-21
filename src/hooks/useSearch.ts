@@ -17,6 +17,7 @@ export const useSearch = (searchHash: string) => {
     getAccount,
     getBlock,
     getTransaction,
+    getTransactionInPool,
     getNode,
     getMiniBlock,
     getToken,
@@ -115,44 +116,67 @@ export const useSearch = (searchHash: string) => {
             getBlock(searchHash),
             getScResult(searchHash),
             getTransaction(searchHash),
+            getTransactionInPool(searchHash),
             getMiniBlock(searchHash)
-          ]).then(([block, scResult, transaction, miniblock]) => {
-            switch (true) {
-              case block.success:
-                setSearchRoute(networkRoute(`/blocks/${searchHash}`));
-                break;
-              case scResult.success:
-                setSearchRoute(
-                  networkRoute(
-                    `/transactions/${scResult.data.originalTxHash}#${searchHash}`
-                  )
-                );
-                break;
-              case transaction.success:
-                setSearchRoute(networkRoute(`/transactions/${searchHash}`));
-                break;
-              case miniblock.success:
-                setSearchRoute(networkRoute(`/miniblocks/${searchHash}`));
-                break;
-              default:
-                if (isPubKeyAccount) {
-                  getAccount({ address: bech32.encode(searchHash) }).then(
-                    (account) => {
-                      if (account.success) {
-                        if (isContract(searchHash) || account.data.nonce > 0) {
-                          const newRoute = networkRoute(
-                            urlBuilder.accountDetails(bech32.encode(searchHash))
-                          );
-                          setSearchRoute(newRoute);
+          ]).then(
+            ([block, scResult, transaction, transactionInPool, miniblock]) => {
+              switch (true) {
+                case block.success:
+                  setSearchRoute(
+                    networkRoute(urlBuilder.blockDetails(searchHash))
+                  );
+                  break;
+                case scResult.success && scResult?.data?.originalTxHash:
+                  setSearchRoute(
+                    networkRoute(
+                      urlBuilder.transactionDetails(
+                        `${scResult.data.originalTxHash}#${searchHash}`
+                      )
+                    )
+                  );
+                  break;
+                case transaction.success:
+                  setSearchRoute(
+                    networkRoute(urlBuilder.transactionDetails(searchHash))
+                  );
+                  break;
+                case transactionInPool.success:
+                  setSearchRoute(
+                    networkRoute(
+                      urlBuilder.transactionInPoolDetails(searchHash)
+                    )
+                  );
+                  break;
+                case miniblock.success:
+                  setSearchRoute(
+                    networkRoute(urlBuilder.miniblockDetails(searchHash))
+                  );
+                  break;
+                default:
+                  if (isPubKeyAccount) {
+                    getAccount({ address: bech32.encode(searchHash) }).then(
+                      (account) => {
+                        if (account.success) {
+                          if (
+                            isContract(searchHash) ||
+                            account.data.nonce > 0
+                          ) {
+                            const newRoute = networkRoute(
+                              urlBuilder.accountDetails(
+                                bech32.encode(searchHash)
+                              )
+                            );
+                            setSearchRoute(newRoute);
+                          }
                         }
                       }
-                    }
-                  );
-                }
-                setSearchRoute(notFoundRoute);
-                break;
+                    );
+                  }
+                  setSearchRoute(notFoundRoute);
+                  break;
+              }
             }
-          });
+          );
 
           break;
 

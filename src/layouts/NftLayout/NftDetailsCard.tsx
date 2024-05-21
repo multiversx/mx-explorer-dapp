@@ -1,253 +1,258 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
 import {
-  DetailItem,
   NftBadge,
   CollectionBlock,
-  Denominate,
+  FormatAmount,
   TimeAgo,
-  CardItem,
   AccountLink,
-  SocialDetailItem,
-  DescriptionDetailItem,
   NftPreview,
   SpotlightButton,
-  AssetsHelmet
+  HeroDetailsCard,
+  Overlay,
+  SocialIcons,
+  SocialWebsite
 } from 'components';
 import { formatDate, getNftText } from 'helpers';
-import { faClock, faTrophy } from 'icons/regular';
+import { faClock, faExclamationTriangle } from 'icons/regular';
+import { faHexagonCheck } from 'icons/solid';
 import { nftSelector } from 'redux/selectors';
 import { NftTypeEnum } from 'types';
 
 export const NftDetailsCard = () => {
-  const ref = useRef(null);
-
   const { nftState } = useSelector(nftSelector);
-  const [showData, setShowData] = useState(false);
+  const {
+    identifier,
+    collection,
+    timestamp,
+    nonce,
+    type,
+    name,
+    creator,
+    royalties,
+    ticker,
+    uris,
+    decimals,
+    owner,
+    supply,
+    scamInfo,
+    media,
+    assets,
+    metadata,
+    isVerified
+  } = nftState;
+  const [showData, setShowData] = useState(!Boolean(scamInfo));
+
+  const showPreviewDetails = (!scamInfo || showData) && assets;
+  const titleTickerText =
+    ticker !== undefined &&
+    ticker !== collection &&
+    type === NftTypeEnum.MetaESDT
+      ? ticker
+      : '';
+  const title = `${
+    !scamInfo || showData
+      ? `${name} ${
+          titleTickerText && titleTickerText !== name
+            ? `(${titleTickerText})`
+            : ''
+        }`
+      : titleTickerText
+  } ${getNftText(type)}`;
+  const seoTitle =
+    !scamInfo && assets
+      ? `${name}${
+          titleTickerText && titleTickerText !== name
+            ? ` (${titleTickerText})`
+            : ''
+        }`
+      : '';
+
+  const nftPreview = media?.[0]?.thumbnailUrl ?? media?.[0]?.url;
+  const description = metadata?.description ?? assets?.description;
+  const hasExtraDescription =
+    metadata?.description &&
+    assets?.description &&
+    metadata.description !== assets.description &&
+    !assets.description.includes(metadata.description);
 
   const show = (e: React.MouseEvent) => {
     e.preventDefault();
     setShowData((existing) => !existing);
   };
 
-  return nftState ? (
-    <>
-      <AssetsHelmet
-        text={`${getNftText(nftState.type)} Details`}
-        assets={nftState?.assets}
-        ticker={nftState?.ticker}
-        name={nftState?.name}
-      />
-      <div ref={ref}>
-        <div className='token-details-card row mb-3'>
-          <div className='col-12'>
-            <div className='card'>
-              <div className='card-header'>
-                <div className='card-header-item d-flex align-items-center justify-content-between gap-3 flex-wrap'>
-                  <h5
-                    data-testid='title'
-                    className='mb-0 d-flex align-items-center'
-                  >
-                    {getNftText(nftState.type)} Details
-                  </h5>
-                  {!nftState.scamInfo && (
-                    <SpotlightButton path={`/nfts/${nftState.identifier}`} />
-                  )}
+  return (
+    <HeroDetailsCard
+      title={!scamInfo || showData ? title : `[Hidden - ${scamInfo.info}]`}
+      icon={
+        showPreviewDetails ? nftPreview || assets?.svgUrl || assets?.pngUrl : ''
+      }
+      seoDetails={{
+        title: seoTitle,
+        icon: nftPreview,
+        completeDetails: Boolean(!scamInfo && showPreviewDetails)
+      }}
+      className='nft-details'
+      titleContent={
+        !scamInfo && type !== NftTypeEnum.MetaESDT ? (
+          <SpotlightButton path={`/nfts/${identifier}`} />
+        ) : null
+      }
+      descriptionContent={
+        scamInfo ? (
+          <div className='d-flex align-items-center flex-wrap gap-2 my-3 text-warning'>
+            <FontAwesomeIcon icon={faExclamationTriangle} size='sm' />
+            {scamInfo.info}
+          </div>
+        ) : null
+      }
+      isVerified={isVerified}
+      verifiedComponent={
+        <Overlay title='Verified' className='verified-badge-wrapper'>
+          <FontAwesomeIcon
+            icon={faHexagonCheck}
+            size='sm'
+            className='text-yellow-spotlight'
+          />
+        </Overlay>
+      }
+      detailItems={[
+        description
+          ? {
+              title: 'Description',
+              value: (
+                <div className='description line-clamp-2' title={description}>
+                  {description}
                 </div>
-              </div>
-              <div className='card-body'>
-                <DetailItem title='Name'>
-                  {nftState.scamInfo ? (
+              )
+            }
+          : {},
+        hasExtraDescription
+          ? {
+              title: 'Collection',
+              value: (
+                <div
+                  className='description line-clamp-2'
+                  title={assets.description}
+                >
+                  {assets.description}
+                </div>
+              )
+            }
+          : {},
+        assets?.website
+          ? {
+              title: 'Website',
+              value: <SocialWebsite link={assets.website} />
+            }
+          : {},
+        assets?.social && Object.keys(assets.social).length > 0
+          ? {
+              title: 'Other Links',
+              value: <SocialIcons assets={assets.social} excludeWebsite />
+            }
+          : {},
+        { title: 'Type', value: <NftBadge type={type} /> },
+        !assets && ticker !== name ? { title: 'Name', value: name } : {},
+        { title: 'Collection', value: <CollectionBlock nft={nftState} /> },
+        { title: 'Identifier', value: identifier },
+        decimals !== undefined
+          ? {
+              title: 'Decimals',
+              value: decimals
+            }
+          : {},
+        owner !== undefined
+          ? {
+              title: 'Owner',
+              value: <AccountLink address={owner} fetchAssets />
+            }
+          : {},
+        {
+          title: 'Creator',
+          value: <AccountLink address={creator} fetchAssets />
+        },
+        timestamp !== undefined
+          ? {
+              title: 'Minted',
+              value: (
+                <>
+                  <FontAwesomeIcon
+                    icon={faClock}
+                    className='me-2 text-neutral-400'
+                  />
+                  <TimeAgo value={timestamp} showAgo />
+                  &nbsp;
+                  <span className='text-neutral-400'>
+                    ({formatDate(timestamp, false, true)})
+                  </span>
+                </>
+              )
+            }
+          : {},
+        uris !== undefined && uris[0]
+          ? {
+              title: 'Assets',
+              value: (
+                <>
+                  {scamInfo ? (
                     showData ? (
-                      nftState.name
+                      <NftPreview token={nftState} />
                     ) : (
-                      `[Hidden - ${nftState.scamInfo.info}]`
+                      `[Hidden - ${scamInfo.info}]`
                     )
                   ) : (
-                    <span className='text-neutral-100'>{nftState.name}</span>
+                    <NftPreview token={nftState} />
                   )}
-                </DetailItem>
-                <DetailItem title='Identifier'>
-                  {nftState.identifier}
-                </DetailItem>
-                {nftState.ticker !== undefined &&
-                  nftState.ticker !== nftState.collection &&
-                  nftState.type === NftTypeEnum.MetaESDT && (
-                    <DetailItem title='Ticker'>{nftState.ticker}</DetailItem>
-                  )}
-                {nftState.nonce && (
-                  <DetailItem title='Nonce'>{nftState.nonce}</DetailItem>
-                )}
-                <DetailItem title='Type'>
-                  <NftBadge type={nftState.type} />
-                </DetailItem>
-                <DetailItem title='Collection'>
-                  <CollectionBlock nft={nftState} />
-                </DetailItem>
-                {nftState.owner !== undefined && (
-                  <DetailItem title='Owner'>
-                    <AccountLink address={nftState.owner} />
-                  </DetailItem>
-                )}
-                <DetailItem title='Creator'>
-                  <AccountLink address={nftState.creator} />
-                </DetailItem>
-                {nftState.timestamp !== undefined && (
-                  <DetailItem title='Minted'>
-                    <FontAwesomeIcon
-                      icon={faClock}
-                      className='me-2 text-neutral-400'
+                </>
+              )
+            }
+          : {},
+        scamInfo
+          ? {
+              title: '',
+              value: (
+                <a
+                  href='/#'
+                  onClick={show}
+                  className='small-font text-neutral-400'
+                >
+                  {!showData ? 'Show' : 'Hide'} original content
+                </a>
+              )
+            }
+          : {}
+      ]}
+      statsCards={[
+        royalties !== undefined && royalties !== null
+          ? {
+              title: 'Royalties',
+              value: <>{royalties}%</>
+            }
+          : {},
+        supply !== undefined && type !== NftTypeEnum.NonFungibleESDT
+          ? {
+              title: 'Supply',
+              value: (
+                <>
+                  {decimals ? (
+                    <FormatAmount
+                      value={supply}
+                      showLabel={false}
+                      showSymbol={false}
+                      decimals={decimals}
                     />
-                    <TimeAgo value={nftState.timestamp} />
-                    &nbsp;
-                    <span className='text-neutral-400'>
-                      ({formatDate(nftState.timestamp, false, true)})
-                    </span>
-                  </DetailItem>
-                )}
-                {nftState.royalties !== undefined &&
-                  nftState.royalties !== null && (
-                    <DetailItem title='Royalties'>
-                      {nftState.royalties}%
-                    </DetailItem>
+                  ) : (
+                    Number(supply).toLocaleString('en')
                   )}
-                {nftState.supply !== undefined &&
-                  nftState.type !== NftTypeEnum.NonFungibleESDT && (
-                    <DetailItem title='Supply'>
-                      {nftState.decimals ? (
-                        <Denominate
-                          value={nftState.supply}
-                          showLabel={false}
-                          denomination={nftState.decimals}
-                        />
-                      ) : (
-                        Number(nftState.supply).toLocaleString('en')
-                      )}
-                    </DetailItem>
-                  )}
-                {nftState.decimals !== undefined && (
-                  <DetailItem title='Decimals'>{nftState.decimals}</DetailItem>
-                )}
-                {nftState?.assets && (
-                  <SocialDetailItem assets={nftState.assets} />
-                )}
-                {nftState?.assets?.description && (
-                  <DescriptionDetailItem
-                    description={nftState.assets.description}
-                  />
-                )}
-                {nftState.uris !== undefined && nftState.uris[0] && (
-                  <DetailItem title='Assets'>
-                    {nftState.scamInfo ? (
-                      showData ? (
-                        <NftPreview token={nftState} />
-                      ) : (
-                        `[Hidden - ${nftState.scamInfo.info}]`
-                      )
-                    ) : (
-                      <NftPreview token={nftState} />
-                    )}
-                  </DetailItem>
-                )}
-                {showData &&
-                  nftState.tags !== undefined &&
-                  nftState.tags.length > 0 && (
-                    <DetailItem title='Tags'>
-                      <div className='d-flex flex-wrap gap-2'>
-                        {nftState.tags.map((tag) => (
-                          <div
-                            key={tag}
-                            className='badge badge-outline badge-outline-grey gap-2'
-                          >
-                            #{tag}
-                          </div>
-                        ))}
-                      </div>
-                    </DetailItem>
-                  )}
-                {showData &&
-                  nftState?.rarities &&
-                  Object.keys(nftState.rarities).length > 0 && (
-                    <DetailItem title='Rarities'>
-                      <div className='card-item-container my-n2'>
-                        {nftState?.rarities?.openRarity?.rank && (
-                          <CardItem
-                            title='Open Rarity Rank'
-                            icon={faTrophy}
-                            className='nft-card-item'
-                          >
-                            {nftState.rarities.openRarity.rank}
-                          </CardItem>
-                        )}
-                        {nftState?.rarities?.statistical?.rank && (
-                          <CardItem
-                            title='Statistical Rank'
-                            icon={faTrophy}
-                            className='nft-card-item'
-                          >
-                            {nftState.rarities.statistical.rank}
-                          </CardItem>
-                        )}
-                        {nftState?.rarities?.jaccardDistances?.rank && (
-                          <CardItem
-                            title='Jaccard Distances Rank'
-                            icon={faTrophy}
-                            className='nft-card-item'
-                          >
-                            {nftState.rarities.jaccardDistances.rank}
-                          </CardItem>
-                        )}
-                        {nftState?.rarities?.trait?.rank && (
-                          <CardItem
-                            title='Trait Rank'
-                            icon={faTrophy}
-                            className='nft-card-item'
-                          >
-                            {nftState.rarities.trait.rank}
-                          </CardItem>
-                        )}
-                      </div>
-                    </DetailItem>
-                  )}
-                {showData && nftState?.metadata?.attributes && (
-                  <DetailItem title='Attributes'>
-                    <div className='attributes-holder'>
-                      {nftState.metadata.attributes.map(
-                        ({ value, trait_type }) => (
-                          <div
-                            className='attribute'
-                            key={`${trait_type}-${value}`}
-                          >
-                            <p className='trait' title={trait_type}>
-                              {trait_type}
-                            </p>
-                            <p className='value' title={value}>
-                              {value}
-                            </p>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </DetailItem>
-                )}
-                {nftState.scamInfo && (
-                  <DetailItem title=''>
-                    <a
-                      href='/#'
-                      onClick={show}
-                      className='small-font text-neutral-400'
-                    >
-                      {!showData ? 'Show' : 'Hide'} original content
-                    </a>
-                  </DetailItem>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  ) : null;
+                </>
+              )
+            }
+          : {},
+        { title: 'Nonce', value: nonce }
+      ]}
+    />
+  );
 };

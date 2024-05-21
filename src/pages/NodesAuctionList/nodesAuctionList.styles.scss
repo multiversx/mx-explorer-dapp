@@ -1,0 +1,15 @@
+.nodes-auction-list {
+  .auction-list-table {
+    .th-eligibility {
+      width: 12%;
+    }
+    .th-key {
+      width: 20%;
+    }
+    th,
+    td {
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+  }
+}

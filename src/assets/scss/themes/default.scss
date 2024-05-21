@@ -8,6 +8,10 @@
   --border-radius-medium: 16px;
   --border-radius-low: 8px;
   --headings-font-family: #{$headings-font-family};
+  --font-headings-regular: 'Roobert Regular', 'Inter', Roboto, 'Helvetica Neue',
+    'Noto Sans', 'Liberation Sans', sans-serif;
+  --font-headings-semibold: 'Roobert SemiBold', 'Inter', Roboto,
+    'Helvetica Neue', 'Noto Sans', 'Liberation Sans', sans-serif;
 
   --scrollbar-color-thumb: var(--neutral-700);
   --scrollbar-color-thumb-hover: var(--neutral-600);
@@ -17,10 +21,11 @@
   // Custom Common Variables
   --muted: var(--neutral-400);
   --muted-rgb: 212, 212, 212;
-  --card-bg: var(--neutral-950);
+  --card-bg: #{$card-bg};
+  --card-bg-rgb: 18, 18, 18;
 
   --table-header: #1d1d1d;
-  --neutral-transparent: rgba(38, 38, 38, 0.6);
+  --neutral-800-opacity-60: rgba(38, 38, 38, 0.6);
   --border-color: rgba(38, 38, 38, 0.8);
 
   --map-bg: #17201f;

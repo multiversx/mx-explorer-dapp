@@ -2,13 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   AccountLink,
   ScAddressIcon,
-  ShardSpan,
   NetworkLink,
   TimeAgo,
   Trim,
   LockedTokenAddressIcon,
   AccountName,
-  TransactionIcon
+  TransactionIcon,
+  ShardLink
 } from 'components';
 import { urlBuilder, getDisplayReceiver } from 'helpers';
 import { faArrowRight } from 'icons/regular';
@@ -77,46 +77,46 @@ export const TransactionRow = ({
       </td>
       <td>
         <div className='d-flex align-items-center'>
-          <NetworkLink
-            to={urlBuilder.senderShard(transaction.senderShard)}
+          <ShardLink
+            shard={transaction.senderShard}
             data-testid='shardFromLink'
-          >
-            <ShardSpan shard={transaction.senderShard} />
-          </NetworkLink>
+            senderShard
+            hasHighlight
+          />
           <FontAwesomeIcon
             icon={faArrowRight}
             className='text-neutral-500 mx-2'
           />
-          <NetworkLink
-            to={urlBuilder.receiverShard(transaction.receiverShard)}
+          <ShardLink
+            shard={transaction.receiverShard}
             data-testid='shardToLink'
-          >
-            <ShardSpan shard={transaction.receiverShard} />
-          </NetworkLink>
+            receiverShard
+            hasHighlight
+          />
         </div>
       </td>
-      <td>
-        <div className='d-flex align-items-center sender'>
-          {showLockedAccounts && (
-            <LockedTokenAddressIcon address={transaction.sender} />
-          )}
-
-          {directionOut ? (
-            <>
-              <ScAddressIcon initiator={transaction.sender} />
-              <AccountName
-                address={transaction.sender}
-                assets={transaction.senderAssets}
-              />
-            </>
-          ) : (
-            <AccountLink
+      <td className='sender text-truncate'>
+        {directionOut ? (
+          <div className='d-flex align-items-center'>
+            <ScAddressIcon initiator={transaction.sender} />
+            <AccountName
               address={transaction.sender}
               assets={transaction.senderAssets}
-              data-testid='senderLink'
+              className='text-neutral-400'
             />
-          )}
-        </div>
+            {showLockedAccounts && (
+              <LockedTokenAddressIcon address={transaction.sender} />
+            )}
+          </div>
+        ) : (
+          <AccountLink
+            address={transaction.sender}
+            assets={transaction.senderAssets}
+            showLockedAccounts={showLockedAccounts}
+            data-testid='senderLink'
+            hasHighlight
+          />
+        )}
       </td>
       {showDirectionCol === true && (
         <td>
@@ -130,26 +130,31 @@ export const TransactionRow = ({
         </td>
       )}
 
-      <td>
-        <div className='d-flex align-items-center receiver'>
-          {showLockedAccounts && <LockedTokenAddressIcon address={receiver} />}
-
-          {directionIn ? (
-            <>
-              <ScAddressIcon initiator={receiver} />
-              <AccountName address={receiver} assets={receiverAssets} />
-            </>
-          ) : (
-            <AccountLink
+      <td className='receiver text-truncate'>
+        {directionIn ? (
+          <div className='d-flex align-items-center'>
+            <ScAddressIcon initiator={receiver} />
+            <AccountName
               address={receiver}
               assets={receiverAssets}
-              data-testid='receiverLink'
+              className='text-neutral-400'
             />
-          )}
-        </div>
+            {showLockedAccounts && (
+              <LockedTokenAddressIcon address={receiver} />
+            )}
+          </div>
+        ) : (
+          <AccountLink
+            address={receiver}
+            assets={receiverAssets}
+            showLockedAccounts={showLockedAccounts}
+            data-testid='receiverLink'
+            hasHighlight
+          />
+        )}
       </td>
       <td className='transaction-function'>
-        <TransactionMethod transaction={transaction} />
+        <TransactionMethod transaction={transaction} hasHighlight />
       </td>
       <td className='transaction-value'>
         <TransactionValue transaction={transaction} token={token} />

@@ -7,12 +7,12 @@ describe('Validators', () => {
   });
   it('should properly display the table', () => {
     const tableHead = [
-      'Public key',
+      'Public Key',
       'Name',
       'Shard',
       'Version',
-      'Ignored Signatures',
       'Status',
+      'X Sign.',
       'Rating',
       'Nonce'
     ];

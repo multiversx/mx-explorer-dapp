@@ -19,7 +19,7 @@ const RenderActiveShape = (props: any) => {
   const docStyle = window.getComputedStyle(document.documentElement);
   const secondaryColor = docStyle.getPropertyValue('--neutral-400');
   const bodyColor = docStyle.getPropertyValue('--body-color');
-  const cardBgColor = docStyle.getPropertyValue('--card-bg');
+  const cardBgColor = docStyle.getPropertyValue('--neutral-950');
 
   const {
     cx,
@@ -53,6 +53,7 @@ const RenderActiveShape = (props: any) => {
         outerRadius={outerRadius}
         startAngle={startAngle}
         endAngle={endAngle}
+        cornerRadius={5}
         fill={fill}
         strokeWidth={percent === 1 ? 0 : 3}
         stroke={cardBgColor}
@@ -151,7 +152,7 @@ export const ChartDonut = ({ config }: ChartProps) => {
   }, [chartData, activeIndex]);
 
   const docStyle = window.getComputedStyle(document.documentElement);
-  const cardBgColor = docStyle.getPropertyValue('--card-bg');
+  const cardBgColor = docStyle.getPropertyValue('--neutral-950');
   const mutedColor = docStyle.getPropertyValue('--muted');
 
   return (
@@ -166,6 +167,7 @@ export const ChartDonut = ({ config }: ChartProps) => {
             cy='50%'
             innerRadius={75}
             outerRadius={100}
+            cornerRadius={5}
             dataKey='value'
             onMouseEnter={onPieEnter}
             onMouseLeave={onPieLeave}
@@ -197,7 +199,7 @@ export const ChartDonut = ({ config }: ChartProps) => {
             {activeSector?.name}: {activeSector?.value} {egldLabel}{' '}
             <span className='text-neutral-400'>
               <FormatUSD
-                amount={activeSector?.value}
+                value={activeSector?.value}
                 usd={unprocessed.price}
                 showPrefix={false}
               />

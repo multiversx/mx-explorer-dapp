@@ -1,6 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { faInfoCircle } from 'icons/regular';
+import { InfoTooltip } from 'components';
 
 interface LockedItemType {
   label: string;
@@ -15,19 +13,13 @@ export const LockedAmountTooltip = ({
   small?: boolean;
 }) => {
   return (
-    <OverlayTrigger
-      placement='bottom'
-      delay={{ show: 0, hide: 400 }}
-      overlay={(props: any) => (
-        <Tooltip
-          id='locked-amount-tooltip'
-          {...props}
-          show={props.show.toString()}
-        >
+    <InfoTooltip
+      title={
+        <>
           {lockedDetails.map(({ label, value }, i) => (
             <div
               key={i}
-              className={`locked-item ${small ? 'small-labels' : ''}`}
+              className={`locked-item d-flex ${small ? 'small-labels' : ''}`}
             >
               <span className='locked-item-label text-neutral-400'>
                 {label}
@@ -35,10 +27,11 @@ export const LockedAmountTooltip = ({
               <span>{value}</span>
             </div>
           ))}
-        </Tooltip>
-      )}
-    >
-      <FontAwesomeIcon icon={faInfoCircle} size='1x' className='text-primary' />
-    </OverlayTrigger>
+        </>
+      }
+      tooltipClassName='locked-amount-tooltip'
+      className='text-neutral-500'
+      persistent
+    />
   );
 };

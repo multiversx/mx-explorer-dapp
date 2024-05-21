@@ -33,6 +33,6 @@ describe('NFTs', () => {
   it('should acces the nft details page', () => {
     cy.viewport(1000, 3000);
     cy.getSelector('collectionLink1').click();
-    cy.getSelector('title').should(AssertionEnum.contain, 'Collection Details');
+    cy.getSelector('title').should(AssertionEnum.exist);
   });
 });

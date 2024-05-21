@@ -169,20 +169,56 @@ button.badge {
       );
     }
   }
+  &-yellow-alt {
+    color: var(--yellow-500);
+    background: linear-gradient(
+      90deg,
+      rgba(240, 77, 25, 0.05),
+      rgba(237, 136, 93, 0.05)
+    );
+    &:before {
+      background: linear-gradient(
+        90deg,
+        rgba(240, 77, 25, 0.4),
+        rgba(237, 136, 93, 0.4)
+      );
+    }
+  }
+  &-highlight {
+    background-color: rgba(var(--orange-400-rgb), 0.1);
+    outline: 1px rgba(var(--orange-400-rgb), 0.8) dashed;
+    outline-offset: -1px;
+    &:before {
+      background: none;
+    }
+  }
 
   &.badge-rounded {
-    line-height: 12px;
+    line-height: 1rem;
     border-radius: 6px;
-    font-weight: 600;
-    padding: 0.25rem 0.5rem;
+    padding: 0.125rem 0.5rem;
     &:before {
       border-radius: 6px;
     }
   }
 }
 
-.badge-direction {
+.badge-direction,
+.badge-propery {
   min-width: 40px;
+}
+
+.badge-property {
+  &.active {
+    @extend .badge-outline-primary-alt;
+  }
+  &.inactive {
+    @extend .badge-outline-yellow-alt;
+  }
+}
+
+.badge-direction {
+  font-weight: 600;
   &.out {
     @extend .badge-outline-yellow;
   }
@@ -247,4 +283,23 @@ button.badge {
   &.legend-item {
     padding: 0.75rem 1.125rem;
   }
+}
+
+/* General Badges
+-------------------------------------------------- */
+
+.badge-sm {
+  --#{$prefix}badge-padding-x: 0.25rem;
+  --#{$prefix}badge-padding-y: 0;
+  --#{$prefix}badge-font-size: 0.75rem;
+  --#{$prefix}badge-font-weight: 600;
+  --#{$prefix}badge-color: var(--#{$prefix}neutral-100);
+  --#{$prefix}badge-border-radius: 0.125rem;
+
+  line-height: 1rem;
+  font-family: var(--#{$prefix}font-headings-semibold);
+  background-color: rgba(
+    var(--#{$prefix}badge-bg, var(--#{$prefix}neutral-650-rgb)),
+    var(--#{$prefix}bg-opacity, 1)
+  );
 }

@@ -2,23 +2,49 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useAdapter } from 'hooks';
-import { interfaceSelector } from 'redux/selectors';
-import { setShards } from 'redux/slices/interface';
+import { generalSelector } from 'redux/selectors';
+import { setShards } from 'redux/slices/general';
+
+let currentRequest: any = null;
 
 export const useFetchShards = () => {
   const dispatch = useDispatch();
   const { getShards } = useAdapter();
-  const { shards } = useSelector(interfaceSelector);
+  const { shards } = useSelector(generalSelector);
 
-  const fetchShards = () => {
-    if (shards.length === 0) {
-      getShards().then(({ data, success }) => {
-        if (data && success) {
-          dispatch(setShards(data));
-        }
-      });
+  const getShardsOnce = () => {
+    if (currentRequest) {
+      return currentRequest;
     }
+
+    const requestPromise = new Promise(async (resolve, reject) => {
+      try {
+        const response = await getShards();
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      } finally {
+        currentRequest = null;
+      }
+    });
+
+    currentRequest = requestPromise;
+    return requestPromise;
   };
 
-  useEffect(fetchShards, []);
+  const fetchShards = async () => {
+    const { data, success } = await getShardsOnce();
+
+    if (data && success) {
+      dispatch(setShards(data));
+    }
+
+    return { data, success };
+  };
+
+  useEffect(() => {
+    if (shards.length === 0) {
+      fetchShards();
+    }
+  }, []);
 };

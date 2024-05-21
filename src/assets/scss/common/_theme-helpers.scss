@@ -5,6 +5,9 @@
 .cursor-context {
   cursor: context-menu;
 }
+a > .cursor-context {
+  cursor: pointer;
+}
 .cursor-pointer {
   cursor: pointer;
 }
@@ -30,35 +33,54 @@
 }
 
 // FONTS
-.font-primary-regular {
-  font-family: 'Roobert Medium', 'Inter', Roboto, 'Helvetica Neue', 'Noto Sans',
-    'Liberation Sans', sans-serif;
+.font-headings-regular {
+  font-family: var(--font-headings-regular);
   font-weight: 400;
 }
 
-.font-primary-medium {
+.font-headings {
   font-family: $headings-font-family;
   font-weight: 500;
 }
 
-.font-primary-semibold {
-  font-family: 'Roobert SemiBold', 'Inter', Roboto, 'Helvetica Neue',
-    'Noto Sans', 'Liberation Sans', sans-serif;
+.font-headings-semibold {
+  font-family: var(--font-headings-semibold);
   font-weight: 600;
 }
 
 .font-regular {
   font-family: $font-family-base;
 }
+.font-headings {
+  font-family: $headings-font-family;
+}
+
+.line-clamp-1,
+.line-clamp-2,
+.line-clamp-3 {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-1 {
+  -webkit-line-clamp: 1;
+}
+.line-clamp-2 {
+  -webkit-line-clamp: 2;
+}
+.line-clamp-3 {
+  -webkit-line-clamp: 3;
+}
 
 // TABLE
 .table {
   th {
     font-weight: 400;
-    background-color: var(--neutral-transparent);
+    background-color: var(--neutral-800-opacity-60);
     padding-top: 1rem;
     padding-bottom: 1rem;
     border-bottom-width: 0;
+    vertical-align: middle;
     &:first-of-type {
       padding-left: 1rem;
       border-top-left-radius: 0.5rem;
@@ -122,6 +144,11 @@
 
 // BUTTONS
 .btn-unstyled {
+  --btn-hover-color: inherit;
+  --btn-hover-bg: transparent;
+  --btn-active-color: inherit;
+  --btn-active-bg: transparent;
+
   background: none;
   color: inherit;
   border: none;
@@ -129,4 +156,31 @@
   font: inherit;
   cursor: pointer;
   outline: inherit;
+}
+
+.btn-link-unstyled {
+  --btn-active-color: inherit !important;
+  --btn-active-bg: transparent !important;
+
+  padding: 0;
+  font-size: inherit;
+  outline: 0;
+  border: 0;
+  box-shadow: none;
+  text-decoration: none;
+  &:focus,
+  &.focus,
+  &:active {
+    box-shadow: none;
+    text-decoration: none;
+  }
+  &:hover {
+    box-shadow: none;
+    text-decoration: none;
+    color: var(--primary);
+  }
+
+  &.dropdown-toggle::after {
+    display: none;
+  }
 }

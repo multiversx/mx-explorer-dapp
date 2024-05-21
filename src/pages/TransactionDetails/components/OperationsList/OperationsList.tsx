@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import {
   AccountLink,
   CopyButton,
   TransactionActionBlock,
-  Denominate
+  FormatAmount
 } from 'components';
 import { addressIsBech32, getOperationDirection } from 'helpers';
 import { faChevronRight } from 'icons/solid';
@@ -133,7 +132,11 @@ const OperationBlock = ({
       )}
       {addressIsBech32(address) ? (
         <>
-          <AccountLink address={address} assets={operationAssets} />
+          <AccountLink
+            address={address}
+            assets={operationAssets}
+            hasHighlight
+          />
           <CopyButton text={address} className='side-action ms-2' />
         </>
       ) : (
@@ -319,14 +322,12 @@ const OperationRow = ({
     case TransactionVisibleOperationEnum.egld:
       return (
         <DetailedItem operation={operation} transaction={transaction}>
-          <div className='d-flex align-items-center symbol text-truncate'>
-            <EgldSymbol className='side-icon me-1' />
-            <span className='text-truncate'>
-              <Denominate
-                value={operation.value}
-                showLastNonZeroDecimal={true}
-              />
-            </span>
+          <div className='d-flex align-items-center symbol text-truncate text-neutral-100'>
+            <FormatAmount
+              value={operation.value}
+              showLastNonZeroDecimal={true}
+              showUsdValue={false}
+            />
           </div>
         </DetailedItem>
       );

@@ -1,28 +1,45 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { Overlay } from 'components';
-import { faInfoCircle } from 'icons/regular';
-import { WithClassnameType } from 'types';
+import { FormatUSD, Overlay } from 'components';
+import { faSquareInfo } from 'icons/solid';
+import { TokenType, WithClassnameType } from 'types';
 
 export interface LowLiquidityTooltipUIType extends WithClassnameType {
-  details?: React.ReactNode;
+  token?: TokenType;
+  showTotalLiquidity?: boolean;
 }
 
 export const LowLiquidityTooltip = ({
-  details,
+  token,
+  showTotalLiquidity = true,
   className
 }: LowLiquidityTooltipUIType) => {
+  if (!token) {
+    return null;
+  }
+
+  const { totalLiquidity, isLowLiquidity } = token;
+  if (!isLowLiquidity) {
+    return null;
+  }
+
   return (
     <Overlay
       title={
         <>
           Less than 0.5% of total Token Supply captured in xExchange Liquidity
-          Pools. {details}
+          Pools.
+          {showTotalLiquidity && totalLiquidity && (
+            <>
+              (<FormatUSD value={totalLiquidity} usd={1} />)
+            </>
+          )}
         </>
       }
-      className={classNames('cursor-context', className)}
+      className={classNames(className)}
+      persistent
     >
-      <FontAwesomeIcon icon={faInfoCircle} className='text-warning' />
+      <FontAwesomeIcon icon={faSquareInfo} className='text-warning' />
     </Overlay>
   );
 };

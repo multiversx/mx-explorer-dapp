@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js';
 
 import { NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
+import { tokensRoutes } from 'routes';
 import { MostUsedTokensType } from 'types/growthWidgets';
 
 export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
@@ -9,10 +10,13 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
     <div className='card card-black h-100'>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-          <h5 className='table-title text-capitalize'>
+          <p className='h5 table-title text-capitalize'>
             Most transacted Tokens{'  '}
-            <span className='text-neutral-500 ml-1'>(daily)</span>
-          </h5>
+            <span className='text-neutral-500 ms-1'>(daily)</span>
+          </p>
+          <NetworkLink to={tokensRoutes.tokens} className='btn btn-sm btn-dark'>
+            Dashboard
+          </NetworkLink>
         </div>
       </div>
 
@@ -23,7 +27,7 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
               <tr>
                 <th>Rank</th>
                 <th>Token</th>
-                <th>Total Txn</th>
+                <th className='text-end'>Total Txn</th>
               </tr>
             </thead>
             <tbody data-testid='tokensTable'>
@@ -33,38 +37,37 @@ export const MostUsedTokens = ({ data }: { data: MostUsedTokensType[] }) => {
                   <td>
                     <NetworkLink
                       to={urlBuilder.tokenDetails(token.key)}
-                      className={`d-flex text-truncate text-primary-200 ${
-                        token?.extraInfo?.assets?.svgUrl ? 'side-link' : ''
+                      className={`d-flex align-items-center symbol trim text-truncate text-primary-200 w-min-content ${
+                        token.extraInfo?.assets?.svgUrl ? 'side-link' : ''
                       }`}
                     >
-                      <div className='d-flex align-items-center symbol trim text-truncate'>
-                        {token?.extraInfo ? (
-                          <>
-                            {token?.extraInfo?.assets?.svgUrl && (
-                              <img
-                                src={token?.extraInfo?.assets.svgUrl}
-                                alt={token?.extraInfo?.name ?? token.key}
-                                className='side-icon me-1'
-                              />
+                      {token.extraInfo ? (
+                        <>
+                          {token.extraInfo?.assets?.svgUrl && (
+                            <img
+                              src={token.extraInfo?.assets.svgUrl}
+                              className='side-icon me-1'
+                              alt=''
+                              role='presentation'
+                            />
+                          )}
+                          <div className='text-truncate'>
+                            {token.extraInfo?.name ? (
+                              <>
+                                {token.extraInfo.name} ({token.extraInfo.ticker}
+                                )
+                              </>
+                            ) : (
+                              <>{token.key}</>
                             )}
-                            <div className='text-truncate'>
-                              {token?.extraInfo?.name ? (
-                                <>
-                                  {token.extraInfo.name} (
-                                  {token.extraInfo.ticker})
-                                </>
-                              ) : (
-                                <>{token.key}</>
-                              )}
-                            </div>
-                          </>
-                        ) : (
-                          <div className='text-truncate'>{token.key}</div>
-                        )}
-                      </div>
+                          </div>
+                        </>
+                      ) : (
+                        <div className='text-truncate'>{token.key}</div>
+                      )}
                     </NetworkLink>
                   </td>
-                  <td className='text-center'>
+                  <td className='text-neutral-300 text-end fw-600 pe-2'>
                     {new BigNumber(token.value).toFormat()}
                   </td>
                 </tr>

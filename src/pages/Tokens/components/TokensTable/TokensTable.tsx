@@ -6,8 +6,14 @@ import {
   ELLIPSIS,
   LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
 } from 'appConstants';
-import { NetworkLink, Denominate, Sort, LowLiquidityTooltip } from 'components';
-import { urlBuilder, amountWithoutRounding } from 'helpers';
+import {
+  NetworkLink,
+  FormatAmount,
+  Sort,
+  LowLiquidityTooltip,
+  FormatUSD
+} from 'components';
+import { urlBuilder } from 'helpers';
 import { useGetSort } from 'hooks';
 import { faDiamond } from 'icons/regular';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'types';
@@ -15,10 +21,10 @@ import { EgldRow } from './EgldRow';
 
 export const TokensTable = ({
   tokens,
-  totalTokens
+  totalTokens = ELLIPSIS
 }: {
   tokens: TokenType[];
-  totalTokens: typeof ELLIPSIS | number;
+  totalTokens?: typeof ELLIPSIS | number;
 }) => {
   const { order } = useGetSort();
 
@@ -30,17 +36,17 @@ export const TokensTable = ({
             <th>Token</th>
             <th>Name</th>
             <th data-testid={TokenSortEnum.price}>
-              <Sort id={TokenSortEnum.price} field='Price' />
+              <Sort id={TokenSortEnum.price} text='Price' />
             </th>
             <th>Circulating Supply</th>
             <th data-testid={TokenSortEnum.marketCap}>
-              <Sort id={TokenSortEnum.marketCap} field='Market Cap' />
+              <Sort id={TokenSortEnum.marketCap} text='Market Cap' />
             </th>
             <th data-testid={TokenSortEnum.accounts}>
-              <Sort id={TokenSortEnum.accounts} field='Holders' />
+              <Sort id={TokenSortEnum.accounts} text='Holders' />
             </th>
             <th data-testid={TokenSortEnum.transactions}>
-              <Sort id={TokenSortEnum.transactions} field='Transactions' />
+              <Sort id={TokenSortEnum.transactions} text='Transactions' />
             </th>
           </tr>
         </thead>
@@ -68,10 +74,10 @@ export const TokensTable = ({
                           <img
                             src={token.assets.svgUrl}
                             alt={token.name}
-                            className='side-icon'
+                            className='side-icon side-icon-md-large'
                           />
                         ) : (
-                          <div className=' side-icon d-flex align-items-center justify-content-center'>
+                          <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
                             <FontAwesomeIcon icon={faDiamond} />
                           </div>
                         )}
@@ -86,23 +92,7 @@ export const TokensTable = ({
                         >
                           {token.ticker}
                         </NetworkLink>
-                        {token.isLowLiquidity && (
-                          <LowLiquidityTooltip
-                            {...(token.totalLiquidity
-                              ? {
-                                  details: (
-                                    <>
-                                      ($
-                                      {new BigNumber(
-                                        token.totalLiquidity
-                                      ).toFormat(2)}
-                                      )
-                                    </>
-                                  )
-                                }
-                              : {})}
-                          />
-                        )}
+                        <LowLiquidityTooltip token={token} />
                       </span>
                       {token.assets && token.assets.description && (
                         <div
@@ -118,20 +108,22 @@ export const TokensTable = ({
                 <td>{token.name}</td>
                 <td>
                   {token.price && (
-                    <>${amountWithoutRounding(token.price.toString(), 2)}</>
+                    <FormatUSD value={token.price} usd={1} showPrefix={false} />
                   )}
                 </td>
                 <td>
                   {token.circulatingSupply && (
-                    <Denominate
+                    <FormatAmount
                       showLabel={false}
+                      showSymbol={false}
                       value={
                         token.circulatingSupply
                           ? String(token.circulatingSupply)
                           : '0'
                       }
-                      denomination={token.decimals}
-                      decimals={0}
+                      decimals={token.decimals}
+                      showUsdValue={false}
+                      digits={0}
                     />
                   )}
                 </td>
@@ -140,7 +132,16 @@ export const TokensTable = ({
                     (!token.isLowLiquidity ||
                       new BigNumber(token.marketCap).isLessThan(
                         LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
-                      )) && <>${new BigNumber(token.marketCap).toFormat(0)}</>}
+                      )) && (
+                      <>
+                        <FormatUSD
+                          value={token.marketCap}
+                          usd={1}
+                          digits={0}
+                          showPrefix={false}
+                        />
+                      </>
+                    )}
                 </td>
                 <td>
                   {token.accounts
@@ -148,9 +149,9 @@ export const TokensTable = ({
                     : 0}
                 </td>
                 <td>
-                  {token.transactions
-                    ? new BigNumber(token.transactions).toFormat()
-                    : 0}
+                  {new BigNumber(
+                    token.transfersCount || token.transactions || 0
+                  ).toFormat()}
                 </td>
               </tr>
               {typeof totalTokens === 'number' &&

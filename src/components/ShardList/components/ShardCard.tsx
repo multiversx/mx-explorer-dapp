@@ -6,7 +6,7 @@ import { computeShardStatus } from '../helpers/computeShardStatus';
 interface ShardCardType {
   shard?: ShardType;
   customTitle?: string;
-  customValue?: string;
+  customValue?: string | number;
 }
 
 const dummyShard: ShardType = {
@@ -36,7 +36,7 @@ export const ShardCard = ({
             trackWidth={2}
             indicatorWidth={2}
             size={20}
-            className={customValue ? 'disabled' : status}
+            className={customValue !== undefined ? 'disabled' : status}
           />
         </div>
         <span className='text-neutral-400'>
@@ -45,7 +45,7 @@ export const ShardCard = ({
       </div>
 
       <h6 className='m-0'>
-        {customValue ? (
+        {customValue !== undefined ? (
           <span className='text-neutral-400'>{customValue}</span>
         ) : (
           <>

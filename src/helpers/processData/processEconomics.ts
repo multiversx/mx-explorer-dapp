@@ -7,8 +7,8 @@ export const processEconomics = (data: EconomicsType) => {
     .dividedBy(new BigNumber(data.circulatingSupply))
     .times(100)
     .toFormat(DIGITS);
-  const ecosystemMarketCap = new BigNumber(data.marketCap)
-    .plus(new BigNumber(data.tokenMarketCap ? data.tokenMarketCap : 0))
+  const ecosystemMarketCap = new BigNumber(data.marketCap ?? 0)
+    .plus(new BigNumber(data.tokenMarketCap ?? 0))
     .toFormat(0);
 
   return {

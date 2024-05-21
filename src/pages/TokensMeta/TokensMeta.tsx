@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 
-import { Loader, NetworkLink, AccountLink, Pager } from 'components';
+import { Loader, NetworkLink, AccountLink, Pager, PageSize } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetSearch, useActiveRoute, useGetPage } from 'hooks';
 import { faDiamond } from 'icons/regular';
@@ -69,7 +69,7 @@ export const TokensMeta = () => {
                     </div>
                     <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
                       <div className='filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
-                        <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+                        <menu className='list-inline m-0 d-flex flex-wrap gap-2'>
                           <li className='list-inline-item me-0'>
                             <NetworkLink
                               to={tokensRoutes.tokens}
@@ -94,7 +94,7 @@ export const TokensMeta = () => {
                               Meta-ESDT
                             </NetworkLink>
                           </li>
-                        </ul>
+                        </menu>
                         <Filters />
                       </div>
                       {metaCollections && metaCollections.length > 0 && (
@@ -140,10 +140,10 @@ export const TokensMeta = () => {
                                             <img
                                               src={metaCollection.assets.svgUrl}
                                               alt={metaCollection.name}
-                                              className='side-icon'
+                                              className='side-icon side-icon-md-large'
                                             />
                                           ) : (
-                                            <div className=' side-icon d-flex align-items-center justify-content-center'>
+                                            <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
                                               <FontAwesomeIcon
                                                 icon={faDiamond}
                                               />
@@ -189,6 +189,7 @@ export const TokensMeta = () => {
                                     <div className='d-flex trim-size-xl'>
                                       <AccountLink
                                         address={metaCollection.owner}
+                                        hasHighlight
                                       />
                                     </div>
                                   </td>
@@ -199,7 +200,8 @@ export const TokensMeta = () => {
                         </div>
                       </div>
 
-                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer table-footer'>
+                        <PageSize />
                         <Pager
                           total={totalMetaCollections}
                           show={metaCollections.length > 0}

@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { processGrowthTransactions } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAdapter, useHasGrowthWidgets } from 'hooks';
 import { growthTransactionsSelector } from 'redux/selectors';
 import { setGrowthTransactions } from 'redux/slices/growthTransactions';
 
 export const useFetchGrowthTransactions = () => {
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
   const { isFetched } = useSelector(growthTransactionsSelector);
   const { getGrowthWidget } = useAdapter();
@@ -46,5 +47,9 @@ export const useFetchGrowthTransactions = () => {
     }
   };
 
-  useEffect(fetchGrowthTransactions, []);
+  useEffect(() => {
+    if (hasGrowthWidgets) {
+      fetchGrowthTransactions();
+    }
+  }, [hasGrowthWidgets]);
 };

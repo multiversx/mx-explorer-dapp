@@ -67,7 +67,9 @@ export const TokenDetailsRoles = () => {
             <div className='card-footer'></div>
           </>
         ) : (
-          <>{roles === undefined && <Loader dataTestId='tokenRolesLoader' />}</>
+          <>
+            {roles === undefined && <Loader data-testid='tokenRolesLoader' />}
+          </>
         )}
       </div>
     </div>

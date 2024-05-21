@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { Loader, Pager, PageState, NodesTable, NodesFilters } from 'components';
+import {
+  Loader,
+  Pager,
+  PageSize,
+  PageState,
+  NodesTable,
+  TableSearch
+} from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
@@ -11,8 +18,7 @@ import {
 } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
-import { validatorsRoutes } from 'routes';
-import { NodeType } from 'types';
+import { NodeType, SortOrderEnum } from 'types';
 
 export const NodesQueue = () => {
   const ref = useRef(null);
@@ -28,7 +34,7 @@ export const NodesQueue = () => {
 
   if (!sort.sort) {
     sort.sort = 'position';
-    sort.order = 'asc';
+    sort.order = SortOrderEnum.asc;
   }
 
   const fetchNodes = () => {
@@ -62,7 +68,7 @@ export const NodesQueue = () => {
         <NodesTabs />
 
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-          <NodesFilters baseRoute={validatorsRoutes.queue} onlySearch />
+          <TableSearch searchValue={totalNodes} placeholderText='node' />
           {dataReady === true && (
             <Pager
               total={totalNodes}
@@ -75,12 +81,7 @@ export const NodesQueue = () => {
 
       {dataReady === undefined && <Loader />}
       {dataReady === false && (
-        <PageState
-          icon={faCogs}
-          title='Unable to load nodes'
-          className='py-spacer my-auto'
-          dataTestId='errorScreen'
-        />
+        <PageState icon={faCogs} title='Unable to load Nodes' isError />
       )}
 
       {dataReady === true && (
@@ -90,7 +91,8 @@ export const NodesQueue = () => {
               <NodesTable.Body nodes={nodes} queue />
             </NodesTable>
           </div>
-          <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+          <div className='card-footer table-footer'>
+            <PageSize />
             <Pager total={totalNodes} show />
           </div>
         </>

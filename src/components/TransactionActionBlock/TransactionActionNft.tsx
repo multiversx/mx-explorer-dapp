@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 
-import { Denominate, NetworkLink, NftBadge, Overlay } from 'components';
+import { FormatAmount, NetworkLink, NftBadge, Overlay } from 'components';
 import { urlBuilder } from 'helpers';
 import { NftTypeEnum, TransactionTokenArgumentType } from 'types';
 
@@ -32,7 +32,12 @@ export const TransactionActionNft = ({
   const TokenInfo = () => (
     <div className='d-flex align-items-center symbol text-truncate'>
       {token.svgUrl && (
-        <img src={token.svgUrl} alt={token.name} className='side-icon me-1' />
+        <img
+          src={token.svgUrl}
+          className='side-icon me-1'
+          alt=''
+          role='presentation'
+        />
       )}
       <span className='text-truncate'>{displayIdentifier}</span>
     </div>
@@ -48,10 +53,11 @@ export const TransactionActionNft = ({
           {!noValue && token.type !== NftTypeEnum.NonFungibleESDT && (
             <div className={`me-1  ${token.svgUrl ? 'text-truncate' : ''}`}>
               {token.decimals !== undefined && tokenValue !== undefined ? (
-                <Denominate
+                <FormatAmount
                   value={String(tokenValue)}
                   showLabel={false}
-                  denomination={token.decimals}
+                  showSymbol={false}
+                  decimals={token.decimals}
                   showLastNonZeroDecimal={showLastNonZeroDecimal}
                 />
               ) : (
@@ -81,7 +87,7 @@ export const TransactionActionNft = ({
                 : {})}
             >
               {token.type === NftTypeEnum.MetaESDT && token?.svgUrl ? (
-                <Overlay title={displayIdentifier}>
+                <Overlay title={displayIdentifier} truncate>
                   <TokenInfo />
                 </Overlay>
               ) : (

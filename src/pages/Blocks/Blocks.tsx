@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams, Navigate } from 'react-router-dom';
 
-import { BlocksTable, Loader, Pager, ShardSpan } from 'components';
+import { BlocksTable, Loader, Pager, PageSize, ShardSpan } from 'components';
 import { FailedBlocks } from 'components/BlocksTable/components/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import {
@@ -10,7 +10,7 @@ import {
   useNetworkRoute,
   useGetTransactionFilters,
   useGetPage,
-  useIsMainnet
+  useHasGrowthWidgets
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { BlockType } from 'types';
@@ -26,9 +26,9 @@ interface StateType {
 export const Blocks = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const { shard } = useGetTransactionFilters();
-  const { page, firstPageRefreshTrigger } = useGetPage();
+  const { page, size, firstPageRefreshTrigger } = useGetPage();
   const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
 
   const networkRoute = useNetworkRoute();
@@ -48,7 +48,7 @@ export const Blocks = () => {
   }, [shard]);
 
   useEffect(() => {
-    getBlocks({ page, shard, withProposerIdentity: true }).then(
+    getBlocks({ page, size, shard, withProposerIdentity: true }).then(
       ({ success, data }) => {
         if (ref.current !== null) {
           if (success && data) {
@@ -78,7 +78,7 @@ export const Blocks = () => {
   ) : (
     <>
       {(dataReady === undefined ||
-        (isMainnet && Object.keys(pageHeadersBlocks).length === 0)) && (
+        (hasGrowthWidgets && Object.keys(pageHeadersBlocks).length === 0)) && (
         <Loader />
       )}
       {dataReady === false && <FailedBlocks />}
@@ -120,7 +120,8 @@ export const Blocks = () => {
                         />
                       </div>
 
-                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer table-footer'>
+                        <PageSize />
                         <Pager
                           total={totalBlocks}
                           show={state.blocks.length > 0}

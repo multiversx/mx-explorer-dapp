@@ -6,6 +6,7 @@ import {
   NetworkLink,
   AccountLink,
   Pager,
+  PageSize,
   CollectionBlock,
   NftBadge
 } from 'components';
@@ -101,8 +102,9 @@ export const Nfts = () => {
                                           {nft.assets && nft.assets.svgUrl && (
                                             <img
                                               src={nft.assets.svgUrl}
-                                              alt={nft.identifier}
                                               className='side-icon me-1'
+                                              alt=''
+                                              role='presentation'
                                             />
                                           )}
                                           <div>{nft.identifier}</div>
@@ -124,7 +126,10 @@ export const Nfts = () => {
                                   </td>
                                   <td>
                                     <div className='d-flex trim-size-xl'>
-                                      <AccountLink address={nft.creator} />
+                                      <AccountLink
+                                        address={nft.creator}
+                                        hasHighlight
+                                      />
                                     </div>
                                   </td>
                                 </tr>
@@ -134,7 +139,8 @@ export const Nfts = () => {
                         </div>
                       </div>
 
-                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer table-footer'>
+                        <PageSize />
                         <Pager total={totalNfts} show={nfts.length > 0} />
                       </div>
                     </>

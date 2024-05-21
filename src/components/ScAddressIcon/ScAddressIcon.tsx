@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { SC_INIT_CHARACTERS_LENGTH } from 'appConstants';
-import { faFileAlt } from 'icons/regular';
+import { Overlay } from 'components';
+import { faCommand } from 'icons/regular';
 
 interface ScAddressIconType {
   initiator: string;
@@ -23,16 +23,12 @@ export const ScAddressIcon = ({
     isContract(secondInitiator, SC_INIT_CHARACTERS_LENGTH);
 
   return showIcon ? (
-    <OverlayTrigger
-      placement='top'
-      delay={{ show: 0, hide: 400 }}
-      overlay={(props: any) => (
-        <Tooltip {...props} show={props.show.toString()}>
-          Smart Contract
-        </Tooltip>
-      )}
-    >
-      <FontAwesomeIcon icon={faFileAlt} className='me-1 text-primary' />
-    </OverlayTrigger>
+    <Overlay title='Smart Contract'>
+      <FontAwesomeIcon
+        icon={faCommand}
+        className='me-1 text-primary'
+        size='sm'
+      />
+    </Overlay>
   ) : null;
 };

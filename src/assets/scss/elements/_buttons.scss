@@ -1,0 +1,41 @@
+.btn-tab {
+  --#{$prefix}btn-font-family: var(--#{$prefix}font-headings-regular);
+  --#{$prefix}btn-font-size: 1rem;
+  --#{$prefix}btn-font-weight: 400;
+  --#{$prefix}btn-line-height: 1;
+  --#{$prefix}btn-border-width: 1px;
+  --#{$prefix}btn-border-radius: 0.5rem;
+  --#{$prefix}btn-padding-x: 0.75rem;
+  --#{$prefix}btn-padding-y: 0.75rem;
+
+  --#{$prefix}btn-focus-box-shadow: none;
+
+  --#{$prefix}btn-color: var(--#{$prefix}neutral-400);
+  --#{$prefix}btn-bg: rgba(var(--#{$prefix}neutral-400-rgb), 0.1);
+  --#{$prefix}btn-border-color: rgba(var(--#{$prefix}neutral-400-rgb), 0.15);
+
+  --#{$prefix}btn-hover-color: var(--#{$prefix}neutral-300);
+  --#{$prefix}btn-hover-bg: rgba(var(--#{$prefix}neutral-400-rgb), 0.3);
+  --#{$prefix}btn-hover-border-color: transparent;
+
+  --#{$prefix}btn-active-color: var(--#{$prefix}neutral-300);
+  --#{$prefix}btn-active-bg: rgba(var(--#{$prefix}neutral-400-rgb), 0.3);
+  --#{$prefix}btn-active-border-color: transparent;
+
+  &.active {
+    --#{$prefix}btn-color: var(--#{$prefix}btn-active-color);
+    --#{$prefix}btn-bg: var(--#{$prefix}btn-active-bg);
+    --#{$prefix}btn-border-color: var(--#{$prefix}btn-active-border-color);
+  }
+
+  &:hover,
+  &:hover,
+  &:focus-visible,
+  &.active {
+    --#{$prefix}badge-bg: var(--#{$prefix}neutral-500-rgb);
+  }
+
+  .badge.badge-sm {
+    top: 0;
+  }
+}

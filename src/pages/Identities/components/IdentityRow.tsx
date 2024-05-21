@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
 
 import { ReactComponent as CarretDown } from 'assets/img/carret-down.svg';
 import {
@@ -8,8 +9,10 @@ import {
   PageState,
   NodesTable,
   SharedIdentity,
-  Denominate,
-  PercentageBar
+  FormatAmount,
+  PercentageBar,
+  Overlay,
+  LockedStakeTooltip
 } from 'components';
 import { formatStakePercentLabel } from 'components/SharedIdentity/helpers';
 import { urlBuilder } from 'helpers';
@@ -19,9 +22,10 @@ import { IdentityType, NodeType } from 'types';
 
 export interface IdentityRowType {
   identity: IdentityType;
+  index?: number;
 }
 
-export const IdentityRow = ({ identity }: IdentityRowType) => {
+export const IdentityRow = ({ identity, index }: IdentityRowType) => {
   const ref = useRef(null);
   const [collapsed, setCollapsed] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
@@ -66,35 +70,47 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
         className={`identity-row ${collapsed ? 'collapsed' : ''}`}
         ref={ref}
       >
-        <td>{identity.rank}</td>
+        <td>{index ?? identity.rank}</td>
         <td>
           <div className='d-flex align-items-center'>
-            <div className='me-3'>
-              <NetworkLink to={link}>
-                <SharedIdentity.Avatar identity={identity} />
-              </NetworkLink>
-            </div>
+            <NetworkLink to={link}>
+              <SharedIdentity.Avatar identity={identity} className='me-2' />
+            </NetworkLink>
             {identity.name && identity.name.length > 70 ? (
               <NetworkLink to={link} className='trim-wrapper trim-size-xl'>
                 <Trim text={identity.name} />
               </NetworkLink>
             ) : (
               <NetworkLink to={link} className='trim-wrapper trim-size-xl'>
-                {identity.name ? identity.name : 'N/A'}
+                {identity.name ?? 'N/A'}
               </NetworkLink>
             )}
           </div>
         </td>
 
         <td>
-          <Denominate value={identity.locked} />
+          <Overlay
+            title={
+              <LockedStakeTooltip
+                stake={identity.stake}
+                topUp={identity.topUp}
+              />
+            }
+            tooltipClassName='tooltip-text-start tooltip-lg'
+            truncate
+          >
+            <FormatAmount value={identity.locked} showTooltip={false} />
+          </Overlay>
         </td>
         <td>
           <div className='d-flex align-items-center'>
             <PercentageBar
               overallPercent={identity.overallStakePercent || 0}
+              overallPercentLabel={formatStakePercentLabel(
+                identity.overallStakePercent
+              )}
               fillPercent={identity.stakePercent}
-              fillPercentLabel={formatStakePercentLabel(identity?.stakePercent)}
+              fillPercentLabel={formatStakePercentLabel(identity.stakePercent)}
             />
 
             <div className='ms-3'>
@@ -102,8 +118,9 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
             </div>
           </div>
         </td>
-        <td className='text-end'>{identity.validators.toLocaleString('en')}</td>
-        {/* <td className="text-end">{Math.round(identity.score).toLocaleString('en')}</td> */}
+        <td className='text-end'>
+          {new BigNumber(identity.validators).toFormat()}
+        </td>
         <td className='text-end'>
           <CarretDown className='details-arrow' height='8' />
         </td>
@@ -121,8 +138,7 @@ export const IdentityRow = ({ identity }: IdentityRowType) => {
                 <PageState
                   icon={faCogs}
                   title='Unable to load validators'
-                  className='py-spacer my-auto'
-                  dataTestId='errorScreen'
+                  isError
                 />
               )}
               {dataReady === true && (

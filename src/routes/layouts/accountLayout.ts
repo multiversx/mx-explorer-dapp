@@ -3,6 +3,7 @@ import { AccountAnalytics } from 'pages/AccountDetails/AccountAnalytics';
 import { AccountContractCode } from 'pages/AccountDetails/AccountContractCode';
 import { AccountContracts } from 'pages/AccountDetails/AccountContracts';
 import { AccountNfts } from 'pages/AccountDetails/AccountNfts';
+import { AccountNodes } from 'pages/AccountDetails/AccountNodes';
 import { AccountCollectionRoles } from 'pages/AccountDetails/AccountRoles/AccountCollectionRoles';
 import { AccountTokenRoles } from 'pages/AccountDetails/AccountRoles/AccountTokenRoles';
 import { AccountStaking } from 'pages/AccountDetails/AccountStaking';
@@ -11,6 +12,7 @@ import { AccountTransactions } from 'pages/AccountDetails/AccountTransactions';
 import { AccountUpgrades } from 'pages/AccountDetails/AccountUpgrades';
 import { OldRouteRedirect } from 'pages/AccountDetails/OldRouteRedirect';
 import { Accounts } from 'pages/Accounts';
+import { Applications } from 'pages/Applications';
 
 import { TitledRouteObject } from '../routes';
 
@@ -34,7 +36,12 @@ export const accountsRoutes = {
   accountCodeTypes: '/accounts/:hash/code/types',
   accountRolesTokens: '/accounts/:hash/roles/tokens',
   accountRolesCollections: '/accounts/:hash/roles/collections',
+  accountNodes: '/accounts/:hash/nodes',
   oldAccountDetails: '/address/:hash'
+};
+
+export const applicationsRoutes = {
+  applications: '/applications'
 };
 
 export const accountLayout: TitledRouteObject[] = [
@@ -47,6 +54,11 @@ export const accountLayout: TitledRouteObject[] = [
     path: accountsRoutes.accounts,
     title: 'Accounts',
     Component: Accounts
+  },
+  {
+    path: applicationsRoutes.applications,
+    title: 'Applications',
+    Component: Applications
   },
   {
     path: accountsRoutes.accountDetails,
@@ -100,6 +112,12 @@ export const accountLayout: TitledRouteObject[] = [
         title: 'Smart Contracts',
         preventScroll: true,
         Component: AccountContracts
+      },
+      {
+        path: accountsRoutes.accountNodes,
+        title: 'Nodes',
+        preventScroll: true,
+        Component: AccountNodes
       },
       {
         path: accountsRoutes.accountRolesTokens,

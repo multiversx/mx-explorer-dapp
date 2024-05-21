@@ -3,16 +3,31 @@ import { useSearchParams } from 'react-router-dom';
 
 export const useGetNodeFilters = () => {
   const [searchParams] = useSearchParams();
-  const { online, status, type, issues, fullHistory, shard, identity } =
-    Object.fromEntries(searchParams);
+  const {
+    online,
+    status,
+    type,
+    issues,
+    fullHistory,
+    shard,
+    identity,
+    isQualified,
+    isAuctioned,
+    isAuctionDangerZone
+  } = Object.fromEntries(searchParams);
 
   return {
-    ...(online ? { online: online === 'true' } : {}),
     ...(status ? { status } : {}),
     ...(type ? { type } : {}),
     ...(identity ? { identity } : {}),
+    ...(shard && stringIsInteger(shard) ? { shard } : {}),
+    ...(online ? { online: online === 'true' } : {}),
     ...(issues ? { issues: 'true' } : {}),
     ...(fullHistory ? { fullHistory: 'true' } : {}),
-    ...(shard && stringIsInteger(shard) ? { shard } : {})
+    ...(isQualified ? { isQualified: isQualified === 'true' } : {}),
+    ...(isAuctioned ? { isAuctioned: isAuctioned === 'true' } : {}),
+    ...(isAuctionDangerZone
+      ? { isAuctionDangerZone: isAuctionDangerZone === 'true' }
+      : {})
   };
 };

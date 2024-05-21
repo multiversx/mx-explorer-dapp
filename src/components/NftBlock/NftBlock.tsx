@@ -1,4 +1,4 @@
-import { NetworkLink, Denominate } from 'components';
+import { NetworkLink, FormatAmount } from 'components';
 import { urlBuilder } from 'helpers';
 import { NftType, NftTypeEnum } from 'types';
 
@@ -14,10 +14,11 @@ export const NftBlock = ({ value, operationToken }: NftBlockType) => (
         {value && operationToken.type !== NftTypeEnum.NonFungibleESDT && (
           <div className='me-1'>
             {operationToken.decimals !== undefined ? (
-              <Denominate
+              <FormatAmount
                 value={value}
                 showLabel={false}
-                denomination={operationToken.decimals}
+                showSymbol={false}
+                decimals={operationToken.decimals}
                 showLastNonZeroDecimal={true}
               />
             ) : (
@@ -41,8 +42,9 @@ export const NftBlock = ({ value, operationToken }: NftBlockType) => (
                 {operationToken.assets.svgUrl && (
                   <img
                     src={operationToken.assets.svgUrl}
-                    alt={operationToken.name}
                     className='side-icon me-1'
+                    alt=''
+                    role='presentation'
                   />
                 )}
                 <div className='text-truncate'>

@@ -1,0 +1,34 @@
+.stats-card {
+  font-family: var(--headings-font-family);
+  flex-grow: 1;
+  .stats-card-body {
+    justify-content: start;
+  }
+  .fam {
+    .sym {
+      height: 0.4em;
+    }
+  }
+  .stats-card-value {
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.small-stats-card {
+  font-family: var(--headings-font-family);
+  .stats-card-body {
+    --card-spacer-x: 1rem;
+    --card-spacer-y: 0.75rem;
+    column-gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .stats-card-value {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+}

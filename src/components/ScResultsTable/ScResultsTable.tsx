@@ -1,5 +1,5 @@
 import { ELLIPSIS } from 'appConstants';
-import { Pager } from 'components';
+import { Pager, PageSize } from 'components';
 import { TransactionSCResultType } from 'types';
 
 import { ScResultRow } from './components/ScResultRow';
@@ -64,7 +64,8 @@ export const ScResultsTable = ({
           </div>
         </div>
 
-        <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+        <div className='card-footer table-footer'>
+          <PageSize />
           <Pager total={totalScResults} show={scResults.length > 0} />
         </div>
       </div>

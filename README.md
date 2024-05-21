@@ -12,7 +12,7 @@ This project was bootstrapped with [Vite](https://vitejs.dev/guide/).
 ## Requirements
 
 - a `git` client installed
-- `nodejs` (v18.17.0 LTS), `npm` and `yarn` installed
+- `nodejs` (v18.19.0 LTS), `npm` and `yarn` installed
 - optional, but useful: an IDE (Visual Code for example)
 
 ## Quick start
@@ -56,7 +56,7 @@ Prepare the Pro version of the Fontawesome Icons ( a paid plan for Fontawesome i
 If you already have a fontawesome accessToken, you will either have to either:
 
 - set a `.npmrc` file with only the `_authToken`, without the `registry` ( the `.npmrc` file is already added in the `.gitignore` file)
-- run `npm config set "//npm.fontawesome.com/:_authToken" FONT-AWESOME-PACKAGE-FONT-AWESOME-PACKAGE-TOKEN`
+- run `npm config set "//npm.fontawesome.com/:_authToken" FONT-AWESOME-PACKAGE-TOKEN`
 
 See more on Fontawesome's [Using A Package Manager](https://fontawesome.com/docs/web/setup/packages) page.
 

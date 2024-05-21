@@ -1,5 +1,6 @@
 import { RolesType, ScamInfoType, SliceType } from './general.types';
 import { NftTypeEnum } from './nft.types';
+import { TokenAssetType } from './token.types';
 
 export interface CollectionType {
   collection: string;
@@ -9,14 +10,7 @@ export interface CollectionType {
   timestamp: number;
   owner: string;
   decimals?: number;
-  assets?: {
-    website?: string;
-    description?: string;
-    status?: string;
-    pngUrl?: string;
-    svgUrl?: string;
-    social?: any;
-  };
+  assets?: TokenAssetType;
   scamInfo?: ScamInfoType;
   roles?: CollectionRolesType[];
   canFreeze?: boolean;

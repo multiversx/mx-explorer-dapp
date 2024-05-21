@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, Denominate, AccountLink } from 'components';
-import { useAdapter, useGetPage, useIsMainnet } from 'hooks';
+import { Loader, Pager, PageSize, FormatAmount, AccountLink } from 'components';
+import { useAdapter, useGetPage, useHasGrowthWidgets } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { AccountType } from 'types';
@@ -14,7 +14,7 @@ import { NoAccounts } from './components/NoAccounts';
 export const Accounts = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const isMainnet = useIsMainnet();
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
 
@@ -37,7 +37,7 @@ export const Accounts = () => {
   };
 
   const fetchAccountsCount = () => {
-    getAccountsCount().then(({ data: count, success }) => {
+    getAccountsCount({}).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalAccounts(count);
       }
@@ -52,9 +52,8 @@ export const Accounts = () => {
   return (
     <>
       {(dataReady === undefined ||
-        (isMainnet && Object.keys(pageHeadersAccounts).length === 0)) && (
-        <Loader />
-      )}
+        (hasGrowthWidgets &&
+          Object.keys(pageHeadersAccounts).length === 0)) && <Loader />}
       {dataReady === false && <FailedAccounts />}
 
       <div ref={ref}>
@@ -91,7 +90,7 @@ export const Accounts = () => {
                               </tr>
                             </thead>
                             <tbody data-testid='accountsTable'>
-                              {accounts.map((account, i) => (
+                              {accounts.map((account) => (
                                 <tr key={account.address}>
                                   <td>
                                     <AccountLink
@@ -101,8 +100,8 @@ export const Accounts = () => {
                                       linkClassName='trim-only-sm'
                                     />
                                   </td>
-                                  <td>
-                                    <Denominate value={account.balance} />
+                                  <td className='text-neutral-100'>
+                                    <FormatAmount value={account.balance} />
                                   </td>
                                 </tr>
                               ))}
@@ -111,7 +110,8 @@ export const Accounts = () => {
                         </div>
                       </div>
 
-                      <div className='card-footer d-flex justify-content-center justify-content-sm-end'>
+                      <div className='card-footer table-footer'>
+                        <PageSize />
                         <Pager
                           total={totalAccounts}
                           show={accounts.length > 0}

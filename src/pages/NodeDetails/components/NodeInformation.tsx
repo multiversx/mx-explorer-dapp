@@ -4,12 +4,11 @@ import {
   Trim,
   CopyButton,
   CardItem,
-  Denominate,
+  FormatAmount,
   LockedAmountTooltip,
   AccountLink
 } from 'components';
-import { getIcon } from 'components/NodesTable/components/RowIcon';
-import { urlBuilder } from 'helpers';
+import { urlBuilder, getNodeIcon } from 'helpers';
 import { faFlagAlt } from 'icons/regular';
 import {
   faCogs,
@@ -22,7 +21,7 @@ import {
   faCode,
   faUser
 } from 'icons/solid';
-import { NodeType } from 'types';
+import { NodeType, NodeTypeEnum } from 'types';
 
 import { Alert } from './Alert';
 
@@ -43,7 +42,9 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     issues,
     position,
     fullHistory,
-    owner
+    owner,
+    auctionQualified,
+    auctionTopUp
   } = nodeData;
 
   const versionOudated =
@@ -59,7 +60,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         </div>
         <div className='card-header-item compact card card-sm bg-table-header p-3 d-flex flex-row align-items-center mt-3'>
           <span className='flex-shrink-0 text-neutral-400 me-2'>
-            Public key:
+            Public Key:
           </span>
 
           <div className='d-flex flex-column min-w-0'>
@@ -96,12 +97,12 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         <CardItem title='Name' icon={faServer}>
           {name ? name : <>N/A</>}
         </CardItem>
-        <CardItem title='Type' icon={getIcon(nodeData) || faCogs}>
+        <CardItem title='Type' icon={getNodeIcon(nodeData) || faCogs}>
           <>
-            {type === 'observer' && (
+            {type === NodeTypeEnum.observer && (
               <>Observer {Boolean(fullHistory) ? ' - Full History' : ''}</>
             )}
-            {type !== 'observer' && (
+            {type !== NodeTypeEnum.observer && (
               <>
                 Validator{' '}
                 <span className='text-neutral-400 ms-1'>({status})</span>
@@ -112,21 +113,25 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         <CardItem title='Nonce' icon={faStream}>
           {nonce ? nonce : <>N/A</>}
         </CardItem>
-        {type !== 'observer' && locked !== undefined && (
+        {type !== NodeTypeEnum.observer && locked !== undefined && (
           <CardItem title='Locked' icon={faLock}>
             <div className='d-flex align-items-center'>
-              <span className='me-2'>
-                <Denominate value={locked} />
-              </span>
-
+              <FormatAmount value={locked} />
               <LockedAmountTooltip
-                small
                 lockedDetails={[
-                  { label: 'Stake', value: <Denominate value={stake} /> },
+                  { label: 'Stake', value: <FormatAmount value={stake} /> },
                   {
-                    label: 'Topup',
-                    value: <Denominate value={topUp} />
-                  }
+                    label: 'Top Up',
+                    value: <FormatAmount value={topUp} />
+                  },
+                  ...(auctionQualified && auctionTopUp
+                    ? [
+                        {
+                          label: 'Qualified Top Up',
+                          value: <FormatAmount value={auctionTopUp} />
+                        }
+                      ]
+                    : [])
                 ]}
               />
             </div>
