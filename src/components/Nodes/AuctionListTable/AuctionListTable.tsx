@@ -117,7 +117,7 @@ export const AuctionListTable = ({
 
         if (
           isQualified === false &&
-          new BigNumber(validator.qualifiedAuctionValidators ?? 0).isZero()
+          new BigNumber(validator.droppedValidators ?? 0).isGreaterThan(0)
         ) {
           return true;
         }
