@@ -44,8 +44,8 @@ const getValidatorDetails = ({
     (filteredValidator) =>
       validator.identity && validator.identity === filteredValidator.identity
   ).length;
-  if (multipleIdentityEntries > 1) {
-    return `+${multipleIdentityEntries} more`;
+  if (multipleIdentityEntries >= 2) {
+    return `+${multipleIdentityEntries - 1} more`;
   }
 
   return '';
