@@ -7,6 +7,7 @@ import { UITransactionType } from 'types';
 const sovereignBridgeAddresses = [
   'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u'
 ];
+const mainChainShardIds = [4294967293];
 
 export const getTransactionBridgeDetails = (transaction: UITransactionType) => {
   // From Main Chain to Sovereign
@@ -27,6 +28,7 @@ export const getTransactionBridgeDetails = (transaction: UITransactionType) => {
 
   if (
     sovereignBridgeAddresses.includes(transaction.sender) &&
+    mainChainShardIds.includes(transaction.senderShard) &&
     transaction.function === 'MultiESDTNFTTransfer'
   ) {
     return { text: 'Receive', icon: faLinkHorizontal };
