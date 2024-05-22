@@ -244,7 +244,7 @@ export const useAdapter = () => {
     getAccounts: ({
       page = 1,
       size = PAGE_SIZE,
-      isSmartContract = false,
+      isSmartContract,
       withOwnerAssets = false,
       withDeployInfo = false,
       withTxCount = false,
@@ -257,7 +257,7 @@ export const useAdapter = () => {
         params: {
           from: (page - 1) * size,
           size,
-          isSmartContract,
+          ...(isSmartContract !== undefined ? { isSmartContract } : {}),
           ...(withOwnerAssets ? { withOwnerAssets } : {}),
           ...(withDeployInfo ? { withDeployInfo } : {}),
           ...(withTxCount ? { withTxCount } : {}),
