@@ -49,7 +49,7 @@ export const TransactionSovereignBridgeIcon = ({
   if (transactionBridgeDetails?.icon && transactionBridgeDetails?.text) {
     return (
       <Overlay
-        title={`Sovereign Shard ${transactionBridgeDetails.text}`}
+        title={`Sovereign Chain ${transactionBridgeDetails.text}`}
         className='sovereign-bridge-icon'
       >
         <FontAwesomeIcon
