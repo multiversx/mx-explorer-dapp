@@ -1,25 +1,65 @@
 import { Fragment } from 'react';
+import { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
-import { InfoTooltip, Loader, PageState } from 'components';
-import { useFetchNodesIdentities } from 'hooks';
+import { InfoTooltip, Loader, PageState, Sort } from 'components';
+import { processNodesIdentities } from 'helpers';
+import { useFetchNodesIdentities, useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import {
   activeNetworkSelector,
-  nodesIdentitiesSelector
+  nodesIdentitiesSelector,
+  stakeSelector
 } from 'redux/selectors';
+import { IdentityType, SortOrderEnum } from 'types';
 
 import { IdentityRow, ResiliencyRow } from './components';
+import { sortIdentities, SortIdentitesFieldEnum } from './helpers';
 
 export const Identities = () => {
+  const { sort, order } = useGetSort();
   const { egldLabel } = useSelector(activeNetworkSelector);
+  const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
   const { nodesIdentities, isFetched } = useSelector(nodesIdentitiesSelector);
 
-  let coefficientShown = false;
+  const [displayNodesIdentities, setDisplayNodesIdentities] = useState<
+    IdentityType[]
+  >([]);
 
-  useFetchNodesIdentities();
+  useFetchNodesIdentities({
+    sort: SortIdentitesFieldEnum.validators,
+    order: SortOrderEnum.desc
+  });
+
+  let coefficientShown = false;
+  const resiliencyCoefficient = unprocessed?.nakamotoCoefficient ?? 0;
+  const isValidatorsSorting =
+    !(sort && order) ||
+    (sort === SortIdentitesFieldEnum.validators &&
+      order === SortOrderEnum.desc);
+  const showResiliencyCoefficient =
+    isStakeFetched && resiliencyCoefficient && isValidatorsSorting;
+
+  useEffect(() => {
+    if (isFetched && nodesIdentities.length > 0) {
+      if (sort && order) {
+        const sortedIdentities = sortIdentities({
+          field: sort as SortIdentitesFieldEnum,
+          order,
+          sortArray: [...nodesIdentities]
+        });
+        const processedCummulativeStake =
+          processNodesIdentities(sortedIdentities);
+        setDisplayNodesIdentities(processedCummulativeStake);
+
+        return;
+      }
+
+      setDisplayNodesIdentities(nodesIdentities);
+    }
+  }, [sort, order, nodesIdentities, isFetched]);
 
   return (
     <div className='card identities'>
@@ -38,47 +78,58 @@ export const Identities = () => {
               <thead>
                 <tr>
                   <th className='th-rank'>#</th>
-                  <th className='th-name'>Name</th>
-                  <th>Stake</th>
+                  <th className='th-name'>
+                    <Sort text='Name' id={SortIdentitesFieldEnum.name} />
+                  </th>
+                  <th>
+                    <Sort text='Stake' id={SortIdentitesFieldEnum.locked} />
+                  </th>
                   <th className='th-stake-percent'>
                     Cumulative Stake
                     <InfoTooltip
                       title={
                         <>
-                          <p>
+                          <p className='mb-0'>
                             The Cumulative Stake represents the total share of
                             staked {egldLabel} that this and all previous
                             validators add up to.
                           </p>
-                          <p className='mb-0'>
+                          <p className='mt-1 mb-0'>
                             To improve the decentralization of the network,
                             please consider staking your tokens with smaller,
-                            independent validator operators who control a
-                            smaller proportion of stake.
+                            independent validator operators who control fewer
+                            nodes.
                           </p>
                         </>
                       }
                       tooltipClassName='tooltip-xl'
                     />
                   </th>
-                  <th className='w-10 text-end'>Nodes</th>
+                  <th className='w-10 text-end'>
+                    <Sort text='Nodes' id={SortIdentitesFieldEnum.validators} />
+                  </th>
                   <th className='th-details'>&nbsp;</th>
                 </tr>
               </thead>
               <tbody>
-                {nodesIdentities.map((identity, i) => {
-                  // TODO temporary - will be fetched from /stake
+                {displayNodesIdentities.map((identity, i) => {
                   const isOverCoefficient =
-                    new BigNumber(
-                      identity?.overallStakePercent ?? 0
-                    ).isGreaterThan(33.33) && !coefficientShown;
-                  if (isOverCoefficient) {
+                    new BigNumber(i).isGreaterThanOrEqualTo(
+                      resiliencyCoefficient
+                    ) && !coefficientShown;
+                  if (
+                    new BigNumber(i).isGreaterThanOrEqualTo(
+                      resiliencyCoefficient
+                    )
+                  ) {
                     coefficientShown = true;
                   }
                   return (
                     <Fragment key={i}>
-                      {isOverCoefficient && <ResiliencyRow coefficient={i} />}
-                      <IdentityRow key={i} identity={identity} />
+                      {showResiliencyCoefficient && isOverCoefficient && (
+                        <ResiliencyRow coefficient={resiliencyCoefficient} />
+                      )}
+                      <IdentityRow key={i} identity={identity} index={i + 1} />
                     </Fragment>
                   );
                 })}

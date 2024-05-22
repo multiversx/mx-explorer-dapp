@@ -1,16 +1,18 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { IDENTITIES_FIELDS } from 'appConstants';
 import { processNodesIdentities } from 'helpers';
 import { useAdapter } from 'hooks';
 import { setNodesIdentities } from 'redux/slices/nodesIdentities';
+import { SortableApiType } from 'types';
 
 let currentRequest: any = null;
 
-export const useFetchNodesIdentities = () => {
+export const useFetchNodesIdentities = (sortParams?: SortableApiType) => {
   const dispatch = useDispatch();
   const { getIdentities } = useAdapter();
+  const { sort, order } = sortParams ?? {};
 
   const getNodesIdentitiesOnce = () => {
     if (currentRequest) {
@@ -20,7 +22,9 @@ export const useFetchNodesIdentities = () => {
     const requestPromise = new Promise(async (resolve, reject) => {
       try {
         const response = await getIdentities({
-          fields: IDENTITIES_FIELDS.join(',')
+          fields: IDENTITIES_FIELDS.join(','),
+          sort,
+          order
         });
         resolve(response);
       } catch (error) {
