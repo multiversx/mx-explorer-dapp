@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';
-import { faPersonFromPortal, faPersonToPortal } from 'icons/solid';
+import { faLinkHorizontal } from 'icons/duotone';
 import { UITransactionType } from 'types';
 
 const sovereignBridgeAddresses = [
@@ -11,25 +11,25 @@ const sovereignBridgeAddresses = [
 export const getTransactionBridgeDetails = (transaction: UITransactionType) => {
   // From Main Chain to Sovereign
   if (transaction.function === 'deposit') {
-    return { text: 'Send', icon: faPersonToPortal };
+    return { text: 'Send', icon: faLinkHorizontal };
   }
   if (transaction.function === 'registerBridgeOps') {
-    return { text: 'Validate', icon: faPersonToPortal };
+    return { text: 'Validate', icon: faLinkHorizontal };
   }
   if (transaction.function === 'executeBridgeOps') {
-    return { text: 'Receive', icon: faPersonToPortal };
+    return { text: 'Receive', icon: faLinkHorizontal };
   }
 
   // From Sovereign to Main Chain
   if (transaction.function === 'deposit') {
-    return { text: 'Send', icon: faPersonFromPortal };
+    return { text: 'Send', icon: faLinkHorizontal };
   }
 
   if (
     sovereignBridgeAddresses.includes(transaction.sender) &&
     transaction.function === 'MultiESDTNFTTransfer'
   ) {
-    return { text: 'Receive', icon: faPersonFromPortal };
+    return { text: 'Receive', icon: faLinkHorizontal };
   }
 
   return {};
@@ -49,7 +49,7 @@ export const TransactionSovereignBridgeIcon = ({
   if (transactionBridgeDetails?.icon && transactionBridgeDetails?.text) {
     return (
       <Overlay
-        title={`Sovereign Bridge ${transactionBridgeDetails.text}`}
+        title={`Sovereign Shard ${transactionBridgeDetails.text}`}
         className='sovereign-bridge-icon'
       >
         <FontAwesomeIcon
