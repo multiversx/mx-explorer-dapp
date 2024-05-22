@@ -2,11 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';
 import { faPersonFromPortal, faPersonToPortal } from 'icons/solid';
-import {
-  UITransactionType,
-  TransactionActionCategoryEnum,
-  TransactionActionEnum
-} from 'types';
+import { UITransactionType } from 'types';
 
 const sovereignBridgeAddresses = [
   'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u'
@@ -31,8 +27,7 @@ export const getTransactionBridgeDetails = (transaction: UITransactionType) => {
 
   if (
     sovereignBridgeAddresses.includes(transaction.sender) &&
-    transaction.action?.category === TransactionActionCategoryEnum.esdtNft &&
-    transaction.action?.name === TransactionActionEnum.transfer
+    transaction.function === 'MultiESDTNFTTransfer'
   ) {
     return { text: 'Receive', icon: faPersonFromPortal };
   }
