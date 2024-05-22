@@ -11,6 +11,7 @@ import {
   PulsatingLed,
   TransactionIcon,
   TransactionGuardianIcon,
+  TransactionSovereignBridgeIcon,
   AccountLink
 } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
@@ -215,6 +216,9 @@ export const LatestTransactions = () => {
                               </span>
 
                               <TransactionGuardianIcon
+                                transaction={transaction}
+                              />
+                              <TransactionSovereignBridgeIcon
                                 transaction={transaction}
                               />
 

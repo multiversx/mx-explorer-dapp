@@ -18,6 +18,7 @@ import {
   LoadingDots,
   FormatUSD,
   TransactionGuardianIcon,
+  TransactionSovereignBridgeIcon,
   AccountLink
 } from 'components';
 import {
@@ -210,6 +211,7 @@ export const TransactionInfo = ({
               <DetailItem title='Hash'>
                 <div className='d-flex align-items-center text-break-all text-neutral-100'>
                   <TransactionGuardianIcon transaction={transaction} />
+                  <TransactionSovereignBridgeIcon transaction={transaction} />
                   {transaction.txHash}
                   <CopyButton text={transaction.txHash} />
                 </div>
