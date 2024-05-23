@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';
+import { useIsSovereign } from 'hooks';
 import { faLinkHorizontal } from 'icons/duotone';
 import { UITransactionType } from 'types';
 
@@ -9,7 +10,25 @@ const sovereignBridgeAddresses = [
 ];
 const mainChainShardIds = [4294967293];
 
-export const getTransactionBridgeDetails = (transaction: UITransactionType) => {
+export const getTransactionBridgeDetails = (
+  transaction: UITransactionType,
+  isSovereign: boolean
+) => {
+  // From Sovereign to Main Chain
+  if (isSovereign) {
+    if (transaction.function === 'deposit') {
+      return { text: 'Send', icon: faLinkHorizontal };
+    }
+
+    if (
+      sovereignBridgeAddresses.includes(transaction.sender) &&
+      mainChainShardIds.includes(transaction.senderShard) &&
+      transaction.function === 'MultiESDTNFTTransfer'
+    ) {
+      return { text: 'Receive', icon: faLinkHorizontal };
+    }
+  }
+
   // From Main Chain to Sovereign
   if (transaction.function === 'deposit') {
     return { text: 'Send', icon: faLinkHorizontal };
@@ -21,19 +40,6 @@ export const getTransactionBridgeDetails = (transaction: UITransactionType) => {
     return { text: 'Receive', icon: faLinkHorizontal };
   }
 
-  // From Sovereign to Main Chain
-  if (transaction.function === 'deposit') {
-    return { text: 'Send', icon: faLinkHorizontal };
-  }
-
-  if (
-    sovereignBridgeAddresses.includes(transaction.sender) &&
-    mainChainShardIds.includes(transaction.senderShard) &&
-    transaction.function === 'MultiESDTNFTTransfer'
-  ) {
-    return { text: 'Receive', icon: faLinkHorizontal };
-  }
-
   return {};
 };
 
@@ -42,11 +48,15 @@ export const TransactionSovereignBridgeIcon = ({
 }: {
   transaction: UITransactionType;
 }) => {
+  const isSovereign = useIsSovereign();
   if (!transaction?.function) {
     return null;
   }
 
-  const transactionBridgeDetails = getTransactionBridgeDetails(transaction);
+  const transactionBridgeDetails = getTransactionBridgeDetails(
+    transaction,
+    isSovereign
+  );
 
   if (transactionBridgeDetails?.icon && transactionBridgeDetails?.text) {
     return (
