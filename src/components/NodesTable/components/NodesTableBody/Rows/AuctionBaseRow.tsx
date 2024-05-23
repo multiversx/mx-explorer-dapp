@@ -14,8 +14,8 @@ import {
   NodeThreshold,
   SharedIdentity,
   NodeChangingShardIcon,
-  ShardSpan,
-  NodeOnlineIcon
+  NodeOnlineIcon,
+  ShardLink
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { stakeSelector } from 'redux/selectors';
@@ -83,16 +83,7 @@ export const AuctionBaseRow = ({
       </td>
       <td>
         <div className='d-flex'>
-          {nodeData.shard !== undefined ? (
-            <NetworkLink
-              to={urlBuilder.shard(nodeData.shard)}
-              data-testid={`shardLink${index}`}
-            >
-              <ShardSpan shard={nodeData.shard} />
-            </NetworkLink>
-          ) : (
-            <span className='text-neutral-400'>N/A</span>
-          )}
+          <ShardLink shard={nodeData.shard} data-testid={`shardLink${index}`} />
         </div>
       </td>
       <td>

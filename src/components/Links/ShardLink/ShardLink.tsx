@@ -3,58 +3,102 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { NetworkLink, ShardSpan } from 'components';
 import { urlBuilder } from 'helpers';
-import { interfaceSelector } from 'redux/selectors';
+import { useFetchShards } from 'hooks';
+import { interfaceSelector, shardsSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices/interface';
 import { WithClassnameType } from 'types';
 
 export interface ShardLinkUIType extends WithClassnameType {
   shard?: string | number;
-  receiverShard?: boolean;
-  senderShard?: boolean;
+  transactionReceiverShard?: boolean;
+  transactionSenderShard?: boolean;
   hasHighlight?: boolean;
+  hasParanthesis?: boolean;
 }
 
 export const ShardLink = ({
   shard,
-  receiverShard,
-  senderShard,
+  transactionReceiverShard,
+  transactionSenderShard,
   hasHighlight,
+  hasParanthesis,
   className,
   'data-testid': dataTestId
 }: ShardLinkUIType) => {
   const dispatch = useDispatch();
+  const shards = useSelector(shardsSelector);
   const { highlightedText } = useSelector(interfaceSelector);
 
+  useFetchShards();
+
   if (shard === undefined) {
-    return null;
+    return <span className='text-neutral-400'>N/A</span>;
   }
 
-  const shardText = `shard${shard}`;
+  const isLinkableShard = shards.find(
+    (searchShard) => searchShard.shard === shard
+  );
+  const shardHighlightKey = `shard${shard}`;
   let link = urlBuilder.shard(shard);
-  if (senderShard) {
+  if (transactionSenderShard) {
     link = urlBuilder.senderShard(shard);
   }
-  if (receiverShard) {
+  if (transactionReceiverShard) {
     link = urlBuilder.receiverShard(shard);
   }
 
-  return (
-    <NetworkLink
-      to={link}
-      data-testid={dataTestId}
-      className={classNames(className, {
-        'text-highlighted': hasHighlight && highlightedText === shardText
-      })}
-      {...(hasHighlight
-        ? {
-            onMouseEnter: () => {
-              dispatch(setHighlightedText(shardText));
-            },
-            onMouseLeave: () => dispatch(setHighlightedText(''))
-          }
-        : {})}
-    >
-      <ShardSpan shard={shard} />
-    </NetworkLink>
-  );
+  const ShardDisplay = ({ className }: WithClassnameType) => {
+    if (!isLinkableShard) {
+      return (
+        <span
+          data-testid={dataTestId}
+          className={classNames(className, {
+            'text-highlighted':
+              hasHighlight && highlightedText === shardHighlightKey
+          })}
+          {...(hasHighlight
+            ? {
+                onMouseEnter: () => {
+                  dispatch(setHighlightedText(shardHighlightKey));
+                },
+                onMouseLeave: () => dispatch(setHighlightedText(''))
+              }
+            : {})}
+        >
+          <ShardSpan shard={shard} />
+        </span>
+      );
+    }
+
+    return (
+      <NetworkLink
+        to={link}
+        data-testid={dataTestId}
+        className={classNames(className, {
+          'text-highlighted':
+            hasHighlight && highlightedText === shardHighlightKey
+        })}
+        {...(hasHighlight
+          ? {
+              onMouseEnter: () => {
+                dispatch(setHighlightedText(shardHighlightKey));
+              },
+              onMouseLeave: () => dispatch(setHighlightedText(''))
+            }
+          : {})}
+      >
+        <ShardSpan shard={shard} />
+      </NetworkLink>
+    );
+  };
+
+  if (hasParanthesis) {
+    return (
+      <span className={classNames('text-neutral-400', className)}>
+        (<ShardDisplay className='' />)
+      </span>
+    );
+  }
+
+  return <ShardDisplay className={classNames(className)} />;
 };

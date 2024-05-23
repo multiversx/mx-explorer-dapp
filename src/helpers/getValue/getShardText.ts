@@ -1,4 +1,8 @@
-import { METACHAIN_SHARD_ID, ALL_SHARDS_SHARD_ID } from 'appConstants';
+import {
+  METACHAIN_SHARD_ID,
+  MAIN_SHARD_ID,
+  ALL_SHARDS_SHARD_ID
+} from 'appConstants';
 
 export const getShardText = (
   shard: number | string | undefined,
@@ -15,12 +19,18 @@ export const getShardText = (
   const isMetachain =
     METACHAIN_SHARD_ID.toString() === String(shard).toString() ||
     String(shard) === 'metachain';
+
   const isAllShards =
     ALL_SHARDS_SHARD_ID.toString() === String(shard).toString();
 
+  const isMainShard = MAIN_SHARD_ID.toString() === String(shard).toString();
+
+  if (isMainShard) {
+    return 'MultiversX';
+  }
   if (isMetachain) {
     if (isSovereign) {
-      return 'Main Chain';
+      return '';
     }
 
     return 'Metachain';

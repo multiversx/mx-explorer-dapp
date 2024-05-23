@@ -16,7 +16,8 @@ import {
   NetworkLink,
   ShardSpan,
   TimeAgo,
-  InfoTooltip
+  InfoTooltip,
+  ShardLink
 } from 'components';
 import {
   urlBuilder,
@@ -24,7 +25,7 @@ import {
   formatBigNumber,
   getTotalTokenUsdValue
 } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAdapter, useIsSovereign } from 'hooks';
 import { faClock, faExclamationTriangle } from 'icons/regular';
 import {
   faUser,
@@ -47,6 +48,7 @@ import { LockedAmountCardItem } from './components/LockedAmountCardItem';
 export const AccountDetailsCard = () => {
   const ref = useRef(null);
   const dispatch = useDispatch();
+  const isSovereign = useIsSovereign();
   const { account } = useSelector(accountSelector);
   const { accountExtra } = useSelector(accountExtraSelector);
   const {
@@ -259,16 +261,7 @@ export const AccountDetailsCard = () => {
               {accountNftsCount}
             </CardItem>
             <CardItem title='Shard' icon={faLayerGroup}>
-              {shard !== undefined ? (
-                <NetworkLink
-                  to={urlBuilder.shard(shard)}
-                  data-testid='shardLink'
-                >
-                  <ShardSpan shard={shard} />
-                </NetworkLink>
-              ) : (
-                <>N/A</>
-              )}
+              <ShardLink shard={shard} data-testid='shardLink' />
             </CardItem>
             {firstTransactionDate && (
               <CardItem title='Active Since' icon={faClock}>

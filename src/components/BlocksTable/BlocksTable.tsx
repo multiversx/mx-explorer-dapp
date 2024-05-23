@@ -57,17 +57,11 @@ export const BlocksTable = ({
               </td>
               <td>{block.txCount}</td>
               <td>
-                <div className='d-flex'>
-                  {shard !== undefined ? (
-                    <ShardSpan shard={block.shard} />
-                  ) : (
-                    <ShardLink
-                      shard={block.shard}
-                      data-testid={`blockShardLink${i}`}
-                      hasHighlight
-                    />
-                  )}
-                </div>
+                <ShardLink
+                  shard={block.shard}
+                  data-testid={`blockShardLink${i}`}
+                  hasHighlight
+                />
               </td>
               <td className='text-end'>
                 {block.sizeTxs !== undefined

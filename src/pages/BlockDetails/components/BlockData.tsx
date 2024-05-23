@@ -5,7 +5,6 @@ import { Collapse } from 'react-bootstrap';
 
 import { METACHAIN_SHARD_ID } from 'appConstants';
 import {
-  ShardSpan,
   NetworkLink,
   TimeAgo,
   Trim,
@@ -13,7 +12,8 @@ import {
   CopyButton,
   IdentityBlock,
   BlockGasUsed,
-  Overlay
+  Overlay,
+  ShardLink
 } from 'components';
 import { formatDate, formatSize, urlBuilder } from 'helpers';
 import { faChevronLeft, faChevronRight, faClock } from 'icons/regular';
@@ -121,9 +121,7 @@ export const BlockData = (props: BlockDataType) => {
         </DetailItem>
         <DetailItem title='Shard'>
           <div className='d-flex'>
-            <NetworkLink to={urlBuilder.shard(block.shard)}>
-              <ShardSpan shard={block.shard} />
-            </NetworkLink>
+            <ShardLink shard={block.shard} />
           </div>
         </DetailItem>
         <DetailItem title='Size'>

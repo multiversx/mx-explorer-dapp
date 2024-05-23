@@ -4,10 +4,9 @@ import {
   Trim,
   NetworkLink,
   DetailItem,
-  ShardSpan,
-  CopyButton
+  CopyButton,
+  ShardLink
 } from 'components';
-import { urlBuilder } from 'helpers';
 import { miniBlockSelector } from 'redux/selectors';
 
 export const MiniBlockDetailsCard = () => {
@@ -43,17 +42,13 @@ export const MiniBlockDetailsCard = () => {
             </DetailItem>
             <DetailItem title='Sender Shard'>
               <div className='d-flex'>
-                <NetworkLink to={urlBuilder.shard(senderShard)}>
-                  <ShardSpan shard={senderShard} />
-                </NetworkLink>
+                <ShardLink shard={senderShard} />
               </div>
             </DetailItem>
 
             <DetailItem title='Receiver Shard'>
               <div className='d-flex'>
-                <NetworkLink to={urlBuilder.shard(receiverShard)}>
-                  <ShardSpan shard={receiverShard} />
-                </NetworkLink>
+                <ShardLink shard={receiverShard} />
               </div>
             </DetailItem>
 

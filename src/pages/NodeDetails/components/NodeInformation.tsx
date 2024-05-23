@@ -1,12 +1,12 @@
 import {
-  ShardSpan,
   NetworkLink,
   Trim,
   CopyButton,
   CardItem,
   FormatAmount,
   LockedAmountTooltip,
-  AccountLink
+  AccountLink,
+  ShardLink
 } from 'components';
 import { urlBuilder, getNodeIcon } from 'helpers';
 import { faFlagAlt } from 'icons/regular';
@@ -74,13 +74,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
       </div>
       <div className='card-body card-item-container my-n2 mx-spacing'>
         <CardItem title='Shard' icon={faLayerGroup}>
-          {shard !== undefined ? (
-            <NetworkLink to={urlBuilder.shard(shard)} data-testid='shardLink'>
-              <ShardSpan shard={shard} />
-            </NetworkLink>
-          ) : (
-            <>N/A</>
-          )}
+          <ShardLink shard={shard} data-testid='shardLink' />
         </CardItem>
         <CardItem
           title='Version'
