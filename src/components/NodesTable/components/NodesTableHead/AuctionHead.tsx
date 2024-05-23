@@ -4,10 +4,12 @@ import {
   Sort,
   ShardFilter
 } from 'components';
+import { useIsSovereign } from 'hooks';
 
 import { NodesTableFilterHead } from '../NodesTableFilterHead';
 
 export const AuctionHead = () => {
+  const isSovereign = useIsSovereign();
   return (
     <thead>
       <tr>
@@ -18,7 +20,7 @@ export const AuctionHead = () => {
           <Sort id='name' text='Name' />
         </th>
         <th scope='col' data-testid='shard'>
-          <ShardFilter text='Shard' />
+          <ShardFilter text={isSovereign ? 'Chain' : 'Shard'} />
         </th>
         <th scope='col' data-testid='version'>
           <Sort id='version' text='Version' />

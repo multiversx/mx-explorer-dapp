@@ -7,6 +7,7 @@ import {
   CopyButton,
   ShardLink
 } from 'components';
+import { useIsSovereign } from 'hooks';
 import { miniBlockSelector } from 'redux/selectors';
 
 export const MiniBlockDetailsCard = () => {
@@ -18,6 +19,7 @@ export const MiniBlockDetailsCard = () => {
     type,
     miniBlockHash
   } = useSelector(miniBlockSelector);
+  const isSovereign = useIsSovereign();
 
   return miniBlockHash ? (
     <div className='miniblock-details-card row mb-3'>
@@ -40,13 +42,13 @@ export const MiniBlockDetailsCard = () => {
                 <CopyButton text={miniBlockHash} />
               </div>
             </DetailItem>
-            <DetailItem title='Sender Shard'>
+            <DetailItem title={`Sender ${isSovereign ? 'Chain' : 'Shard'}`}>
               <div className='d-flex'>
                 <ShardLink shard={senderShard} />
               </div>
             </DetailItem>
 
-            <DetailItem title='Receiver Shard'>
+            <DetailItem title={`Receiver ${isSovereign ? 'Chain' : 'Shard'}`}>
               <div className='d-flex'>
                 <ShardLink shard={receiverShard} />
               </div>

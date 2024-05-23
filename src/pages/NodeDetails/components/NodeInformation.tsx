@@ -9,6 +9,7 @@ import {
   ShardLink
 } from 'components';
 import { urlBuilder, getNodeIcon } from 'helpers';
+import { useIsSovereign } from 'hooks';
 import { faFlagAlt } from 'icons/regular';
 import {
   faCogs,
@@ -21,8 +22,8 @@ import {
   faCode,
   faUser
 } from 'icons/solid';
-import { NodeType, NodeTypeEnum } from 'types';
 
+import { NodeType, NodeTypeEnum } from 'types';
 import { Alert } from './Alert';
 
 export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
@@ -46,6 +47,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     auctionQualified,
     auctionTopUp
   } = nodeData;
+  const isSovereign = useIsSovereign();
 
   const versionOudated =
     version === undefined || (issues && issues.includes('versionMismatch'));
@@ -73,7 +75,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         </div>
       </div>
       <div className='card-body card-item-container my-n2 mx-spacing'>
-        <CardItem title='Shard' icon={faLayerGroup}>
+        <CardItem title={isSovereign ? 'Chain' : 'Shard'} icon={faLayerGroup}>
           <ShardLink shard={shard} data-testid='shardLink' />
         </CardItem>
         <CardItem

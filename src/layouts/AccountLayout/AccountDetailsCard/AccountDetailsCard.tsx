@@ -260,7 +260,10 @@ export const AccountDetailsCard = () => {
             <CardItem title='NFTs' icon={faHexagonVerticalNft}>
               {accountNftsCount}
             </CardItem>
-            <CardItem title='Shard' icon={faLayerGroup}>
+            <CardItem
+              title={isSovereign ? 'Chain' : 'Shard'}
+              icon={faLayerGroup}
+            >
               <ShardLink shard={shard} data-testid='shardLink' />
             </CardItem>
             {firstTransactionDate && (

@@ -53,7 +53,9 @@ export const ShardColumnFilters = ({
                   TransactionFiltersEnum.senderShard
                 ) && (
                   <div className='filter-block'>
-                    <div className='mb-1'>Sender Shard</div>
+                    <div className='mb-1'>
+                      Sender {isSovereign ? 'Chain' : 'Shard'}
+                    </div>
                     <SelectFilter
                       name='senderShard-filter'
                       options={selectShards}

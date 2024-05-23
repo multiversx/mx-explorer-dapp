@@ -44,6 +44,9 @@ export const ShardLink = ({
   const isLinkableShard = shards.find(
     (searchShard) => searchShard.shard === shard
   );
+  const isSovereignShard = isSovereign && shard === 0;
+  const hasLink = isLinkableShard && !isSovereignShard;
+
   const shardHighlightKey = `shard${shard}`;
   let link = urlBuilder.shard(shard);
   if (transactionSenderShard) {
@@ -54,13 +57,14 @@ export const ShardLink = ({
   }
 
   const ShardDisplay = ({ className }: WithClassnameType) => {
-    if (!isLinkableShard) {
+    if (!hasLink) {
       return (
         <span
           data-testid={dataTestId}
           className={classNames(className, {
             'text-highlighted':
-              hasHighlight && highlightedText === shardHighlightKey
+              hasHighlight && highlightedText === shardHighlightKey,
+            'text-neutral-400': isSovereignShard
           })}
           {...(hasHighlight
             ? {

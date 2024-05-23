@@ -38,5 +38,8 @@ export const getShardText = (
   if (isAllShards) {
     return 'All Shards';
   }
+  if (Number(shard) === 0 && isSovereign) {
+    return process.env.VITE_APP_BRAND_NAME ?? 'Sovereign Chain';
+  }
   return `Shard ${shard}`;
 };
