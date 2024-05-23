@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';
-import { useIsSovereign } from 'hooks';
+import { useIsSovereign, useIsTestnet } from 'hooks';
 import { faLinkHorizontal } from 'icons/duotone';
 import { UITransactionType } from 'types';
 
@@ -49,7 +49,9 @@ export const TransactionSovereignBridgeIcon = ({
   transaction: UITransactionType;
 }) => {
   const isSovereign = useIsSovereign();
-  if (!transaction?.function) {
+  const isTestnet = useIsTestnet();
+
+  if (!transaction?.function || !(isSovereign || isTestnet)) {
     return null;
   }
 
