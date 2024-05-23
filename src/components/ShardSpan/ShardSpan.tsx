@@ -1,9 +1,12 @@
 import { getShardText } from 'helpers';
+import { useIsSovereign } from 'hooks';
 
 interface ShardSpanType {
   shard: number | string;
 }
 
 export const ShardSpan = ({ shard }: ShardSpanType) => {
-  return <span>{getShardText(shard)}</span>;
+  const isSovereign = useIsSovereign();
+
+  return <span>{getShardText(shard, isSovereign)}</span>;
 };

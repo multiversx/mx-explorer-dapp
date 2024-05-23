@@ -1,6 +1,9 @@
 import { METACHAIN_SHARD_ID, ALL_SHARDS_SHARD_ID } from 'appConstants';
 
-export const getShardText = (shard: number | string | undefined) => {
+export const getShardText = (
+  shard: number | string | undefined,
+  hasNoMetachain?: boolean
+) => {
   if (shard === undefined) {
     return '';
   }
@@ -15,7 +18,7 @@ export const getShardText = (shard: number | string | undefined) => {
   const isAllShards =
     ALL_SHARDS_SHARD_ID.toString() === String(shard).toString();
 
-  if (isMetachain) {
+  if (isMetachain && !hasNoMetachain) {
     return 'Metachain';
   }
   if (isAllShards) {

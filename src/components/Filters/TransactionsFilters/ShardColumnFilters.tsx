@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { SelectFilter } from 'components';
 import { getShardText } from 'helpers';
-import { useFetchShards } from 'hooks';
+import { useFetchShards, useIsSovereign } from 'hooks';
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
 import { shardsSelector } from 'redux/selectors';
@@ -16,17 +16,17 @@ export const ShardColumnFilters = ({
 }: {
   inactiveFilters?: TransactionFiltersEnum[];
 }) => {
-  const [searchParams] = useSearchParams();
-  const { senderShard, receiverShard } = Object.fromEntries(searchParams);
-
   const stateShards = useSelector(shardsSelector);
+  const [searchParams] = useSearchParams();
+  const isSovereign = useIsSovereign();
+  const { senderShard, receiverShard } = Object.fromEntries(searchParams);
 
   useFetchShards();
 
   const selectShards = stateShards.map((shard) => {
     return {
       value: shard.shard.toString(),
-      label: getShardText(shard.shard.toString())
+      label: getShardText(shard.shard.toString(), isSovereign)
     };
   });
 
