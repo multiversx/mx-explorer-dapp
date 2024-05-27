@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { MAIN_SHARD_ID } from 'appConstants';
 import { Overlay } from 'components';
 import { useIsSovereign, useIsTestnet } from 'hooks';
 import { faLinkHorizontal } from 'icons/duotone';
@@ -8,7 +9,7 @@ import { UITransactionType } from 'types';
 const sovereignBridgeAddresses = [
   'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u'
 ];
-const mainChainShardIds = [4294967293];
+const mainChainShardIds = [MAIN_SHARD_ID];
 
 export const getTransactionBridgeDetails = (
   transaction: UITransactionType,
