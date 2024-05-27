@@ -26,7 +26,7 @@ export const ResiliencyRow = ({
             <p className='mb-0 text-primary-300'>Resiliency Coefficient</p>
             <p className='mb-0 text-neutral-500'>
               The top {new BigNumber(coefficient).toFormat(0)} node operators
-              above control more than 33% of the total nodes.
+              above have more than 33% of the total nodes.
             </p>
           </div>
           <hr className='d-flex flex-fill text-neutral-800' />

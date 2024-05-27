@@ -8,11 +8,10 @@ import {
   SharedIdentity,
   Trim
 } from 'components';
-import { urlBuilder } from 'helpers';
+import { formatPercentLabel, urlBuilder } from 'helpers';
 import { faAngleRight, faCity } from 'icons/regular';
 import { faBadgeCheck } from 'icons/solid';
 import { IdentityType } from 'types';
-import { formatStakePercentLabel } from '../helpers';
 
 export const IdentitySummary = ({
   identity,
@@ -88,7 +87,7 @@ export const IdentitySummary = ({
                   <div className='d-flex align-items-center card p-3 flex-grow-1 detail-card'>
                     <span className='text-neutral-500'>Stake percent</span>
                     <h5 className='mb-0'>
-                      {formatStakePercentLabel(identity?.stakePercent)}
+                      {formatPercentLabel(identity?.stakePercent)}
                     </h5>
                   </div>
                   <div className='d-flex align-items-center card p-3 flex-grow-1 detail-card'>

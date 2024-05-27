@@ -14,11 +14,12 @@ import {
   Overlay,
   LockedStakeTooltip
 } from 'components';
-import { formatStakePercentLabel } from 'components/SharedIdentity/helpers';
-import { urlBuilder } from 'helpers';
-import { useAdapter } from 'hooks';
+import { formatPercentLabel, urlBuilder } from 'helpers';
+import { useAdapter, useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { IdentityType, NodeType } from 'types';
+
+import { SortIdentitesFieldEnum } from '../helpers';
 
 export interface IdentityRowType {
   identity: IdentityType;
@@ -27,11 +28,12 @@ export interface IdentityRowType {
 
 export const IdentityRow = ({ identity, index }: IdentityRowType) => {
   const ref = useRef(null);
+  const { getNodes, getNode } = useAdapter();
+  const { sort } = useGetSort();
   const [collapsed, setCollapsed] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [identityNodes, setIdentityNodes] = useState<NodeType[]>([]);
-  const { getNodes, getNode } = useAdapter();
 
   const expand = (identityRow: IdentityType) => () => {
     if (dataReady === undefined) {
@@ -58,6 +60,8 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
     setShowDetails(true);
     setCollapsed(!collapsed);
   };
+
+  const isStakeSorting = sort === SortIdentitesFieldEnum.locked;
 
   const link = identity.identity
     ? urlBuilder.identityDetails(identity.identity)
@@ -104,18 +108,37 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
         </td>
         <td>
           <div className='d-flex align-items-center'>
-            <PercentageBar
-              overallPercent={identity.overallStakePercent || 0}
-              overallPercentLabel={formatStakePercentLabel(
-                identity.overallStakePercent
-              )}
-              fillPercent={identity.stakePercent}
-              fillPercentLabel={formatStakePercentLabel(identity.stakePercent)}
-            />
-
-            <div className='ms-3'>
-              {formatStakePercentLabel(identity?.stakePercent)}
-            </div>
+            {isStakeSorting ? (
+              <>
+                <PercentageBar
+                  overallPercent={identity.overallStakePercent || 0}
+                  overallPercentLabel={formatPercentLabel(
+                    identity.overallStakePercent
+                  )}
+                  fillPercent={identity.stakePercent}
+                  fillPercentLabel={formatPercentLabel(identity.stakePercent)}
+                />
+                <div className='ms-3'>
+                  {formatPercentLabel(identity?.stakePercent)}
+                </div>
+              </>
+            ) : (
+              <>
+                <PercentageBar
+                  overallPercent={identity.overallValidatorsPercent || 0}
+                  overallPercentLabel={formatPercentLabel(
+                    identity.overallValidatorsPercent
+                  )}
+                  fillPercent={identity.validatorsPercent}
+                  fillPercentLabel={formatPercentLabel(
+                    identity.validatorsPercent
+                  )}
+                />
+                <div className='ms-3'>
+                  {formatPercentLabel(identity?.validatorsPercent)}
+                </div>
+              </>
+            )}
           </div>
         </td>
         <td className='text-end'>
