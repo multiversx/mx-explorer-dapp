@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js';
 import {
   NodeRating,
   NodeStatus,
-  ShardSpan,
   NetworkLink,
   Trim,
   Overlay,
@@ -13,7 +12,8 @@ import {
   NodeLockedStakeTooltip,
   NodeQualification,
   NodeOnlineIcon,
-  SharedIdentity
+  SharedIdentity,
+  ShardLink
 } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
 import { NodeStatusEnum, NodeType, NodeTypeEnum } from 'types';
@@ -84,16 +84,7 @@ export const StandardRow = ({
       </td>
       <td>
         <div className='d-flex'>
-          {nodeData.shard !== undefined ? (
-            <NetworkLink
-              to={urlBuilder.shard(nodeData.shard)}
-              data-testid={`shardLink${index}`}
-            >
-              <ShardSpan shard={nodeData.shard} />
-            </NetworkLink>
-          ) : (
-            <span className='text-neutral-400'>N/A</span>
-          )}
+          <ShardLink data-testid={`shardLink${index}`} shard={nodeData.shard} />
         </div>
       </td>
       <td>

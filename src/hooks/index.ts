@@ -13,6 +13,7 @@ export * from './useGetURLNetwork';
 export * from './useHasGrowthWidgets';
 export * from './useIsDevnet';
 export * from './useIsMainnet';
+export * from './useIsSovereign';
 export * from './useIsTestnet';
 export * from './useLoopManager';
 export * from './useMatchPath';

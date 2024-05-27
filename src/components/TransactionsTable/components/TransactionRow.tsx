@@ -11,6 +11,7 @@ import {
   ShardLink
 } from 'components';
 import { urlBuilder, getDisplayReceiver } from 'helpers';
+import { useIsSovereign } from 'hooks';
 import { faArrowRight } from 'icons/regular';
 import { UITransactionType, TransferTypeEnum } from 'types';
 
@@ -32,6 +33,7 @@ export const TransactionRow = ({
   showDirectionCol,
   showLockedAccounts
 }: TransactionRowType) => {
+  const isSovereign = useIsSovereign();
   const { receiver, receiverAssets } = getDisplayReceiver(transaction);
   const directionOut = address === transaction.sender;
   const directionIn = address === receiver;
@@ -77,22 +79,29 @@ export const TransactionRow = ({
       </td>
       <td>
         <div className='d-flex align-items-center'>
-          <ShardLink
-            shard={transaction.senderShard}
-            data-testid='shardFromLink'
-            senderShard
-            hasHighlight
-          />
-          <FontAwesomeIcon
-            icon={faArrowRight}
-            className='text-neutral-500 mx-2'
-          />
-          <ShardLink
-            shard={transaction.receiverShard}
-            data-testid='shardToLink'
-            receiverShard
-            hasHighlight
-          />
+          {isSovereign &&
+          transaction.senderShard === transaction.receiverShard ? (
+            <>Local Transaction</>
+          ) : (
+            <>
+              <ShardLink
+                shard={transaction.senderShard}
+                data-testid='shardFromLink'
+                transactionSenderShard
+                hasHighlight
+              />
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                className='text-neutral-500 mx-2'
+              />
+              <ShardLink
+                shard={transaction.receiverShard}
+                data-testid='shardToLink'
+                transactionReceiverShard
+                hasHighlight
+              />
+            </>
+          )}
         </div>
       </td>
       <td className='sender text-truncate'>

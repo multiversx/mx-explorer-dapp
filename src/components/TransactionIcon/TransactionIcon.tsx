@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { TransactionGuardianIcon } from 'components';
+import {
+  TransactionGuardianIcon,
+  TransactionSovereignBridgeIcon
+} from 'components';
 import {
   capitalizeFirstLetter,
   getTransactionMessages,
@@ -147,6 +150,7 @@ export const TransactionIcon = ({
     <>
       <StatusIcon />
       {showGuardian && <TransactionGuardianIcon transaction={transaction} />}
+      <TransactionSovereignBridgeIcon transaction={transaction} />
     </>
   );
 };

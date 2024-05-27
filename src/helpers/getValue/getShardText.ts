@@ -1,6 +1,13 @@
-import { METACHAIN_SHARD_ID, ALL_SHARDS_SHARD_ID } from 'appConstants';
+import {
+  METACHAIN_SHARD_ID,
+  MAIN_SHARD_ID,
+  ALL_SHARDS_SHARD_ID
+} from 'appConstants';
 
-export const getShardText = (shard: number | string | undefined) => {
+export const getShardText = (
+  shard: number | string | undefined,
+  isSovereign?: boolean
+) => {
   if (shard === undefined) {
     return '';
   }
@@ -12,14 +19,27 @@ export const getShardText = (shard: number | string | undefined) => {
   const isMetachain =
     METACHAIN_SHARD_ID.toString() === String(shard).toString() ||
     String(shard) === 'metachain';
+
   const isAllShards =
     ALL_SHARDS_SHARD_ID.toString() === String(shard).toString();
 
+  const isMainShard = MAIN_SHARD_ID.toString() === String(shard).toString();
+
+  if (isMainShard) {
+    return 'MultiversX';
+  }
   if (isMetachain) {
+    if (isSovereign) {
+      return '';
+    }
+
     return 'Metachain';
   }
   if (isAllShards) {
     return 'All Shards';
+  }
+  if (Number(shard) === 0 && isSovereign) {
+    return process.env.VITE_APP_BRAND_NAME ?? 'Sovereign Chain';
   }
   return `Shard ${shard}`;
 };

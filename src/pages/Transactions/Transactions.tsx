@@ -9,13 +9,15 @@ import {
   useAdapter,
   useGetPage,
   useGetTransactionFilters,
-  useFetchTransactions
+  useFetchTransactions,
+  useIsSovereign
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const Transactions = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
+  const isSovereign = useIsSovereign();
   const urlParams = useGetTransactionFilters();
   const { senderShard, receiverShard } = urlParams;
 
@@ -67,13 +69,13 @@ export const Transactions = () => {
                   {senderShard !== undefined && (
                     <>
                       <span>&nbsp;from&nbsp;</span>
-                      {getShardText(senderShard)}
+                      {getShardText(senderShard, isSovereign)}
                     </>
                   )}
                   {receiverShard !== undefined && (
                     <>
                       <span>&nbsp;to&nbsp;</span>
-                      {getShardText(receiverShard)}
+                      {getShardText(receiverShard, isSovereign)}
                     </>
                   )}
                   <MethodList />
