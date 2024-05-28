@@ -11,5 +11,44 @@
       white-space: nowrap;
       vertical-align: middle;
     }
+
+    .auction-list-row {
+      position: relative;
+      background-color: var(--neutral-900);
+      &:hover {
+        td {
+          background-color: var(--neutral-900);
+        }
+      }
+      &.collapsed {
+        background-color: transparent;
+      }
+    }
+    .auction-list-expand-row {
+      background-color: var(--neutral-900);
+      .table-wrapper {
+        th {
+          color: var(--body-color);
+          background: none;
+          text-transform: uppercase;
+          font-size: 0.785rem;
+          border-bottom: 0;
+        }
+        tr {
+          background-color: var(--neutral-900);
+          color: var(--neutral-400);
+        }
+      }
+
+      &.collapsed {
+        td {
+          border: 0;
+          .content {
+            max-height: 0;
+            overflow: hidden;
+          }
+        }
+      }
+    }
   }
 }
