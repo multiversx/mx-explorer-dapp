@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 
+import { MAX_RESULTS } from 'appConstants';
 import { ReactComponent as CarretDown } from 'assets/img/carret-down.svg';
 import {
   Loader,
@@ -40,8 +41,7 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
       if (identityRow.identity) {
         getNodes({
           identity: identityRow.identity,
-          size: 1500,
-          pagination: false
+          size: MAX_RESULTS
         }).then((nodes) => {
           if (ref.current !== null) {
             setDataReady(nodes.success);

@@ -74,7 +74,6 @@ export interface GetNodesType extends SortableApiType {
   status?: string;
   count?: boolean;
   identity?: string;
-  pagination?: boolean;
   provider?: string;
   fullHistory?: string;
   from?: number;

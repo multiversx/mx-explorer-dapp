@@ -43,7 +43,7 @@ export default class NodesTable extends React.Component<NodesTableUIType> {
         })}
       >
         <table className='table mb-0'>
-          {auctionList && <AuctionHead />}
+          {auctionList && <AuctionHead hideFilters={hideFilters} />}
           {statistics && <StatisticsHead />}
           {queue && <QueueHead hideFilters={hideFilters} />}
           {!statistics && !queue && !auctionList && (
