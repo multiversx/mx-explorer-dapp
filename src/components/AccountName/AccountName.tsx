@@ -27,21 +27,18 @@ export const AccountName = ({
 
   const fetchAccountAssets = () => {
     getAccountAssets({ address }).then(({ success, data }) => {
-      if (success) {
-        if (data?.assets) {
-          setFetchedAssets(data.assets);
-          return;
-        }
-        if (data?.username) {
-          setFetchedAssets({ name: data.username });
-          return;
-        }
+      if (data && success) {
+        setFetchedAssets({
+          ...data.assets,
+          ...(!data.name && data.username ? { name: data.username } : {})
+        });
       }
     });
   };
 
   useEffect(() => {
     if (address && fetchAssets && !assets) {
+      setFetchedAssets(undefined);
       fetchAccountAssets();
     }
   }, [address, fetchAssets, assets]);
