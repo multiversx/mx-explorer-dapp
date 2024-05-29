@@ -50,7 +50,7 @@ export const pagerHelper = ({ total, itemsPerPage, page }: PagerHelperType) => {
     (total < itemsPerPage ? total : itemsPerPage);
   const last = Math.min(end, total);
   const correction = processedPage >= 2 ? 0 : 1;
-  const lastPage = Math.ceil(total / (end - start + correction));
+  const lastPage = Math.floor(total / (end - start + correction));
 
   const paginationArray = generatePaginationArray({
     currentPage: processedPage,

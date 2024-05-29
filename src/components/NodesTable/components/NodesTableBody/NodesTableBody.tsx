@@ -20,6 +20,7 @@ export interface NodesTableBodyUIType {
   status?: NodeType['status'];
   auctionList?: boolean;
   showPosition?: boolean;
+  showTresholdRow?: boolean;
 }
 
 const findThresholdNode = (
@@ -50,7 +51,8 @@ export const NodesTableBody = ({
   type,
   status,
   auctionList,
-  showPosition
+  showPosition,
+  showTresholdRow = true
 }: NodesTableBodyUIType) => {
   const {
     unprocessed: { minimumAuctionQualifiedStake }
@@ -90,8 +92,11 @@ export const NodesTableBody = ({
   return (
     <tbody>
       {nodes.map((nodeData, index) => {
-        const showThresholdRow = Boolean(
-          thresholdIndex && index === thresholdIndex && hasNoFilters
+        const hasTresholdRow = Boolean(
+          showTresholdRow &&
+            thresholdIndex &&
+            index === thresholdIndex &&
+            hasNoFilters
         );
 
         if (statistics) {
@@ -105,7 +110,7 @@ export const NodesTableBody = ({
             <AuctionRow
               nodeData={nodeData}
               key={nodeData.bls}
-              showThresholdRow={showThresholdRow}
+              showThresholdRow={hasTresholdRow}
               index={index + 1}
               showPosition={showPosition}
             />
@@ -119,7 +124,7 @@ export const NodesTableBody = ({
             type={type}
             status={status}
             key={nodeData.bls}
-            showThresholdRow={showThresholdRow}
+            showThresholdRow={hasTresholdRow}
             showPosition={showPosition}
           />
         );

@@ -4,17 +4,17 @@ import { Overlay } from 'components';
 import { WithClassnameType } from 'types';
 
 export interface PercentageBarUIType extends WithClassnameType {
-  overallPercent: number;
+  overallPercent?: number;
   overallPercentLabel?: string;
-  fillPercent: number;
+  fillPercent?: number;
   fillPercentLabel?: string;
   type?: string;
 }
 
 export const PercentageBar = ({
-  overallPercent,
+  overallPercent = 0,
   overallPercentLabel = '',
-  fillPercent,
+  fillPercent = 0,
   fillPercentLabel = '',
   type,
   className

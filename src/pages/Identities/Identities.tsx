@@ -35,6 +35,7 @@ export const Identities = () => {
 
   let coefficientShown = false;
   const resiliencyCoefficient = unprocessed?.nakamotoCoefficient ?? 0;
+  const isStakeSorting = sort === SortIdentitesFieldEnum.locked;
   const isValidatorsSorting =
     !(sort && order) ||
     (sort === SortIdentitesFieldEnum.validators &&
@@ -50,9 +51,9 @@ export const Identities = () => {
           order,
           sortArray: [...nodesIdentities]
         });
-        const processedCummulativeStake =
+        const processedCumulativeStake =
           processNodesIdentities(sortedIdentities);
-        setDisplayNodesIdentities(processedCummulativeStake);
+        setDisplayNodesIdentities(processedCumulativeStake);
 
         return;
       }
@@ -85,14 +86,24 @@ export const Identities = () => {
                     <Sort text='Stake' id={SortIdentitesFieldEnum.locked} />
                   </th>
                   <th className='th-stake-percent'>
-                    Cumulative Stake
+                    {isStakeSorting ? 'Cumulative Stake' : 'Cumulative Nodes'}
                     <InfoTooltip
                       title={
                         <>
                           <p className='mb-0'>
-                            The Cumulative Stake represents the total share of
-                            staked {egldLabel} that this and all previous
-                            validators add up to.
+                            {isStakeSorting ? (
+                              <>
+                                The Cumulative Stake represents the total share
+                                of staked {egldLabel} that this and all previous
+                                validators add up to.
+                              </>
+                            ) : (
+                              <>
+                                The Cumulative Nodes represents the total share
+                                of nodes that this and all previous validators
+                                add up to.
+                              </>
+                            )}
                           </p>
                           <p className='mt-1 mb-0'>
                             To improve the decentralization of the network,

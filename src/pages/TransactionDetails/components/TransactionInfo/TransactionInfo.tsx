@@ -18,7 +18,9 @@ import {
   LoadingDots,
   FormatUSD,
   TransactionGuardianIcon,
-  AccountLink
+  TransactionSovereignBridgeIcon,
+  AccountLink,
+  ShardLink
 } from 'components';
 import {
   addressIsBech32,
@@ -210,6 +212,7 @@ export const TransactionInfo = ({
               <DetailItem title='Hash'>
                 <div className='d-flex align-items-center text-break-all text-neutral-100'>
                   <TransactionGuardianIcon transaction={transaction} />
+                  <TransactionSovereignBridgeIcon transaction={transaction} />
                   {transaction.txHash}
                   <CopyButton text={transaction.txHash} />
                 </div>
@@ -273,12 +276,12 @@ export const TransactionInfo = ({
                         hasHighlight
                       />
                       <CopyButton className='me-2' text={transaction.sender} />
-                      <NetworkLink
-                        to={urlBuilder.senderShard(transaction.senderShard)}
+                      <ShardLink
+                        shard={transaction.senderShard}
                         className='flex-shrink-0'
-                      >
-                        (<ShardSpan shard={transaction.senderShard} />)
-                      </NetworkLink>
+                        transactionSenderShard
+                        hasParanthesis
+                      />
                     </>
                   ) : (
                     <ShardSpan shard={transaction.sender} />
@@ -301,12 +304,12 @@ export const TransactionInfo = ({
                     />
                     <CopyButton className='me-2' text={transaction.receiver} />
                     {!isNaN(transaction.receiverShard) && (
-                      <NetworkLink
-                        to={urlBuilder.receiverShard(transaction.receiverShard)}
+                      <ShardLink
+                        shard={transaction.receiverShard}
                         className='flex-shrink-0'
-                      >
-                        (<ShardSpan shard={transaction.receiverShard} />)
-                      </NetworkLink>
+                        transactionReceiverShard
+                        hasParanthesis
+                      />
                     )}
                   </div>
                   <div className='d-flex flex-column gap-1'>

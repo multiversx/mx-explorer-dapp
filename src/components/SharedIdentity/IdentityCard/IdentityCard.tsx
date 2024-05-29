@@ -8,12 +8,11 @@ import {
   SharedIdentity,
   Trim
 } from 'components';
-import { getValidLink } from 'helpers';
+import { formatPercentLabel, getValidLink } from 'helpers';
 import { faLink, faMapMarkerAlt } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { IdentityType, MultilayerPercentageStepType } from 'types';
 import { StatsCard } from 'widgets';
-import { formatStakePercentLabel } from '../helpers';
 
 const prepareStakeDistribution = (identity: IdentityType) => {
   const distribution: MultilayerPercentageStepType[] = [];
@@ -149,7 +148,7 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
 
               <StatsCard
                 title='Stake Percentage'
-                value={formatStakePercentLabel(identity?.stakePercent)}
+                value={formatPercentLabel(identity?.stakePercent)}
                 className='detail-card'
               />
 

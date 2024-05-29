@@ -9,7 +9,6 @@ import {
   CopyButton,
   FormatAmount,
   NetworkLink,
-  ShardSpan,
   ScAddressIcon,
   Trim,
   TimeAgo,
@@ -19,7 +18,8 @@ import {
   SocialIcons,
   SocialWebsite,
   HeroDetailsCard,
-  InfoTooltip
+  InfoTooltip,
+  ShardLink
 } from 'components';
 
 import { DECIMALS } from 'config';
@@ -151,18 +151,12 @@ export const ApplicationDetailsCard = () => {
               <ScAddressIcon initiator={address} />
               <Trim text={address} className='text-neutral-400' />
               <CopyButton text={address} />{' '}
-              {shard !== undefined && (
-                <span className='ms-2 text-nowrap text-neutral-400'>
-                  (
-                  <NetworkLink
-                    to={urlBuilder.shard(shard)}
-                    data-testid='shardLink'
-                  >
-                    <ShardSpan shard={shard} />
-                  </NetworkLink>
-                  )
-                </span>
-              )}
+              <ShardLink
+                shard={shard}
+                data-testid='shardLink'
+                className='ms-2 text-nowrap'
+                hasParanthesis
+              />
             </>
           )
         },

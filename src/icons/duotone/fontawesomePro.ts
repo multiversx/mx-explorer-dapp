@@ -1,5 +1,6 @@
 /* eslint-disable import/order */
 import {
+  faLinkHorizontal,
   faSort,
   faSortDown,
   faSortUp
@@ -7,4 +8,4 @@ import {
   // @ts-ignore
 } from '@fortawesome/pro-duotone-svg-icons';
 
-export { faSort, faSortDown, faSortUp };
+export { faLinkHorizontal, faSort, faSortDown, faSortUp };
