@@ -22,6 +22,9 @@ export const getAccountParams = (address?: string) =>
 export function getTransactionsParams({
   page = 1,
   size = PAGE_SIZE,
+  order,
+  fields = TRANSACTIONS_TABLE_FIELDS.join(','),
+
   senderShard,
   receiverShard,
   sender,
@@ -35,15 +38,16 @@ export function getTransactionsParams({
   search,
   token,
   hashes,
-  order,
-  fields = TRANSACTIONS_TABLE_FIELDS.join(','),
+  isRelayed = false,
+
+  // include data
   withScResults = false,
   withOperations = false,
   withLogs = false,
   withScamInfo = false,
   withUsername = true,
   withBlockInfo = false,
-  isRelayed = false,
+
   // not on api
   isCount = false
 }: GetTransactionsType) {
@@ -53,15 +57,14 @@ export function getTransactionsParams({
       : {
           from: (page - 1) * size,
           size,
-          fields,
+          ...(fields ? { fields } : {}),
           ...(order ? { order } : {}),
           ...(withScResults ? { withScResults } : {}),
           ...(withOperations ? { withOperations } : {}),
           ...(withLogs ? { withLogs } : {}),
           ...(withScamInfo ? { withScamInfo } : {}),
           ...(withUsername ? { withUsername } : {}),
-          ...(withBlockInfo ? { withBlockInfo } : {}),
-          ...(isRelayed ? { isRelayed } : {})
+          ...(withBlockInfo ? { withBlockInfo } : {})
         }),
     ...(senderShard !== undefined ? { senderShard } : {}),
     ...(receiverShard !== undefined ? { receiverShard } : {}),
@@ -75,7 +78,8 @@ export function getTransactionsParams({
     ...(miniBlockHash ? { miniBlockHash } : {}),
     ...(search ? { search } : {}),
     ...(token ? { token } : {}),
-    ...(hashes ? { hashes } : {})
+    ...(hashes ? { hashes } : {}),
+    ...(isRelayed ? { isRelayed } : {})
   };
 
   return params;
@@ -84,9 +88,11 @@ export function getTransactionsParams({
 export function getTransactionsInPoolParams({
   page = 1,
   size = PAGE_SIZE,
+
   sender,
   receiver,
   type,
+
   // not on api
   isCount = false
 }: GetTransactionsInPoolType) {
@@ -106,25 +112,28 @@ export function getTransactionsInPoolParams({
 }
 
 export function getNodeParams({
+  page = 1,
+  size = PAGE_SIZE,
+  sort,
+  order,
+
   type,
   status,
   issues,
   search,
   shard,
   online,
-  page,
-  from,
-  size = PAGE_SIZE,
   identity,
-  sort,
-  order,
   provider,
   fullHistory,
+  owner,
   isQualified,
   isAuctioned,
   isAuctionDangerZone,
-  owner,
+
+  // include data
   withIdentityInfo,
+
   // not on api
   isCount = false
 }: GetNodesType) {
@@ -132,11 +141,8 @@ export function getNodeParams({
     ...(isCount
       ? {}
       : {
-          ...(page !== undefined && from === undefined
-            ? { from: (page - 1) * size }
-            : {}),
-          ...(from !== undefined ? { from } : {}),
-          ...(size !== undefined ? { size } : {}),
+          from: (page - 1) * size,
+          size,
           ...(sort !== undefined ? { sort } : {}),
           ...(order !== undefined ? { order } : {}),
           ...(withIdentityInfo !== undefined ? { withIdentityInfo } : {})
@@ -149,11 +155,11 @@ export function getNodeParams({
     ...(online !== undefined ? { online } : {}),
     ...(identity !== undefined ? { identity } : {}),
     ...(provider !== undefined ? { provider } : {}),
+    ...(owner !== undefined ? { owner } : {}),
     ...(fullHistory !== undefined ? { fullHistory } : {}),
     ...(isQualified !== undefined ? { isQualified } : {}),
     ...(isAuctioned !== undefined ? { isAuctioned } : {}),
-    ...(isAuctionDangerZone !== undefined ? { isAuctionDangerZone } : {}),
-    ...(owner !== undefined ? { owner } : {})
+    ...(isAuctionDangerZone !== undefined ? { isAuctionDangerZone } : {})
   };
 
   return params;
@@ -173,64 +179,90 @@ export function getProviderParams({
 }
 
 export function getTokensParams({
-  fields,
-  page,
+  page = 1,
   size = PAGE_SIZE,
+  sort,
+  order,
+  fields,
+
   type,
   search,
   name,
   identifier,
-  sort,
-  order,
+  includeMetaESDT,
+
+  // include data
   withUsername = true,
-  includeMetaESDT
+
+  // not on api
+  isCount = false
 }: GetTokensType) {
   const params: AdapterProviderPropsType['params'] = {
-    withUsername,
-    ...(fields !== undefined ? { fields } : {}),
+    ...(isCount
+      ? {}
+      : {
+          from: (page - 1) * size,
+          size,
+          ...(sort !== undefined ? { sort } : {}),
+          ...(order !== undefined ? { order } : {}),
+          ...(fields !== undefined ? { fields } : {}),
+          ...(withUsername ? { withUsername } : {})
+        }),
     ...(type !== undefined ? { type } : {}),
     ...(search !== undefined ? { search } : {}),
     ...(name !== undefined ? { name } : {}),
     ...(identifier !== undefined ? { identifier } : {}),
-    ...(sort !== undefined ? { sort } : {}),
-    ...(order !== undefined ? { order } : {}),
-    ...(includeMetaESDT !== undefined ? { includeMetaESDT } : {}),
-    ...(page !== undefined ? { from: (page - 1) * size } : {}),
-    ...(size !== undefined ? { size } : {})
+    ...(includeMetaESDT !== undefined ? { includeMetaESDT } : {})
   };
 
   return params;
 }
 
 export function getCollectionsParams({
-  fields,
-  page,
+  page = 1,
   size = PAGE_SIZE,
+  sort,
+  order,
+  fields,
+
   search,
   identifiers,
   type,
-  sort,
   excludeMetaESDT,
-  withOwner
+
+  // include data
+  withOwner,
+
+  // not on api
+  isCount = false
 }: GetCollectionsType) {
   const params: AdapterProviderPropsType['params'] = {
-    ...(fields !== undefined ? { fields } : {}),
+    ...(isCount
+      ? {}
+      : {
+          from: (page - 1) * size,
+          size,
+          ...(sort !== undefined ? { sort } : {}),
+          ...(order !== undefined ? { order } : {}),
+          ...(fields !== undefined ? { fields } : {}),
+          ...(withOwner ? { withOwner } : {})
+        }),
     ...(search !== undefined ? { search } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
     ...(type !== undefined ? { type } : {}),
-    ...(sort !== undefined ? { sort } : {}),
-    ...(excludeMetaESDT !== undefined ? { excludeMetaESDT } : {}),
-    ...(page !== undefined ? { from: (page - 1) * size } : {}),
-    ...(size !== undefined ? { size } : {}),
-    ...(withOwner !== undefined ? { withOwner } : {})
+    ...(excludeMetaESDT !== undefined ? { excludeMetaESDT } : {})
   };
 
   return params;
 }
 
 export function getNftsParams({
-  page,
+  page = 1,
   size = PAGE_SIZE,
+  sort,
+  order,
+  fields,
+
   search,
   identifiers,
   type,
@@ -239,13 +271,31 @@ export function getNftsParams({
   tags,
   creator,
   hasUris,
-  includeFlagged,
+  includeFlagged = true,
+  excludeMetaESDT,
+  source,
+
+  // include data
+  withOwner = true,
   withSupply,
   withScamInfo,
-  excludeMetaESDT,
-  source
+
+  // not on api
+  isCount = false
 }: GetNftsType) {
   const params: AdapterProviderPropsType['params'] = {
+    ...(isCount
+      ? {}
+      : {
+          from: (page - 1) * size,
+          size,
+          ...(sort !== undefined ? { sort } : {}),
+          ...(order !== undefined ? { order } : {}),
+          ...(fields !== undefined ? { fields } : {}),
+          ...(withOwner !== undefined ? { withOwner } : {}),
+          ...(withSupply !== undefined ? { withSupply } : {}),
+          ...(withScamInfo !== undefined ? { withScamInfo } : {})
+        }),
     ...(search !== undefined ? { search } : {}),
     ...(identifiers !== undefined ? { identifiers } : {}),
     ...(type !== undefined ? { type } : {}),
@@ -256,11 +306,7 @@ export function getNftsParams({
     ...(source !== undefined ? { source } : {}),
     ...(hasUris !== undefined ? { hasUris } : {}),
     ...(includeFlagged !== undefined ? { includeFlagged } : {}),
-    ...(withSupply !== undefined ? { withSupply } : {}),
-    ...(withScamInfo !== undefined ? { withScamInfo } : {}),
-    ...(excludeMetaESDT !== undefined ? { excludeMetaESDT } : {}),
-    ...(page !== undefined ? { from: (page - 1) * size } : {}),
-    ...(size !== undefined ? { size } : {})
+    ...(excludeMetaESDT !== undefined ? { excludeMetaESDT } : {})
   };
 
   return params;
