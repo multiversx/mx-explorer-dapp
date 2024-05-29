@@ -1,5 +1,11 @@
-import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
+import BigNumber from 'bignumber.js';
 import {
+  MAX_RESULTS,
+  PAGE_SIZE,
+  TRANSACTIONS_TABLE_FIELDS
+} from 'appConstants';
+import {
+  BaseApiType,
   AdapterProviderPropsType,
   GetTransactionsType,
   GetNodesType,
@@ -20,8 +26,8 @@ export const getAccountParams = (address?: string) =>
     : {};
 
 export function getTransactionsParams({
-  page = 1,
-  size = PAGE_SIZE,
+  page,
+  size,
   order,
   fields = TRANSACTIONS_TABLE_FIELDS.join(','),
 
@@ -55,8 +61,7 @@ export function getTransactionsParams({
     ...(isCount
       ? {}
       : {
-          from: (page - 1) * size,
-          size,
+          ...getPageParams({ page, size }),
           ...(fields ? { fields } : {}),
           ...(order ? { order } : {}),
           ...(withScResults ? { withScResults } : {}),
@@ -86,8 +91,8 @@ export function getTransactionsParams({
 }
 
 export function getTransactionsInPoolParams({
-  page = 1,
-  size = PAGE_SIZE,
+  page,
+  size,
 
   sender,
   receiver,
@@ -97,12 +102,7 @@ export function getTransactionsInPoolParams({
   isCount = false
 }: GetTransactionsInPoolType) {
   const params: AdapterProviderPropsType['params'] = {
-    ...(isCount
-      ? {}
-      : {
-          from: (page - 1) * size,
-          size
-        }),
+    ...(isCount ? {} : getPageParams({ page, size })),
     ...(sender ? { sender } : {}),
     ...(receiver ? { receiver } : {}),
     ...(type ? { type } : {})
@@ -112,8 +112,8 @@ export function getTransactionsInPoolParams({
 }
 
 export function getNodeParams({
-  page = 1,
-  size = PAGE_SIZE,
+  page,
+  size,
   sort,
   order,
 
@@ -141,8 +141,7 @@ export function getNodeParams({
     ...(isCount
       ? {}
       : {
-          from: (page - 1) * size,
-          size,
+          ...getPageParams({ page, size }),
           ...(sort !== undefined ? { sort } : {}),
           ...(order !== undefined ? { order } : {}),
           ...(withIdentityInfo !== undefined ? { withIdentityInfo } : {})
@@ -179,8 +178,8 @@ export function getProviderParams({
 }
 
 export function getTokensParams({
-  page = 1,
-  size = PAGE_SIZE,
+  page,
+  size,
   sort,
   order,
   fields,
@@ -201,8 +200,7 @@ export function getTokensParams({
     ...(isCount
       ? {}
       : {
-          from: (page - 1) * size,
-          size,
+          ...getPageParams({ page, size }),
           ...(sort !== undefined ? { sort } : {}),
           ...(order !== undefined ? { order } : {}),
           ...(fields !== undefined ? { fields } : {}),
@@ -219,8 +217,8 @@ export function getTokensParams({
 }
 
 export function getCollectionsParams({
-  page = 1,
-  size = PAGE_SIZE,
+  page,
+  size,
   sort,
   order,
   fields,
@@ -240,8 +238,7 @@ export function getCollectionsParams({
     ...(isCount
       ? {}
       : {
-          from: (page - 1) * size,
-          size,
+          ...getPageParams({ page, size }),
           ...(sort !== undefined ? { sort } : {}),
           ...(order !== undefined ? { order } : {}),
           ...(fields !== undefined ? { fields } : {}),
@@ -257,8 +254,8 @@ export function getCollectionsParams({
 }
 
 export function getNftsParams({
-  page = 1,
-  size = PAGE_SIZE,
+  page,
+  size,
   sort,
   order,
   fields,
@@ -287,8 +284,7 @@ export function getNftsParams({
     ...(isCount
       ? {}
       : {
-          from: (page - 1) * size,
-          size,
+          ...getPageParams({ page, size }),
           ...(sort !== undefined ? { sort } : {}),
           ...(order !== undefined ? { order } : {}),
           ...(fields !== undefined ? { fields } : {}),
@@ -352,3 +348,20 @@ export function processBlocks(blocks: any[]) {
     endBlockNr
   };
 }
+
+export const getPageParams = ({ page = 1, size = PAGE_SIZE }: BaseApiType) => {
+  const from = new BigNumber(page).minus(1).times(size);
+  const isMoreThanMax = from.plus(size).isGreaterThan(MAX_RESULTS);
+
+  if (isMoreThanMax) {
+    return {
+      from: from.toNumber(),
+      size: new BigNumber(MAX_RESULTS).minus(from).toNumber()
+    };
+  }
+
+  return {
+    from: from.toNumber(),
+    size
+  };
+};
