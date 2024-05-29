@@ -51,9 +51,9 @@ export const Identities = () => {
           order,
           sortArray: [...nodesIdentities]
         });
-        const processedCummulativeStake =
+        const processedCumulativeStake =
           processNodesIdentities(sortedIdentities);
-        setDisplayNodesIdentities(processedCummulativeStake);
+        setDisplayNodesIdentities(processedCumulativeStake);
 
         return;
       }
