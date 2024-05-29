@@ -6,7 +6,13 @@ import { Loader } from 'components';
 import { addressIsBech32, isContract } from 'helpers';
 import { useAdapter, useGetPage, useFetchAccountStakingDetails } from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
-import { setAccount } from 'redux/slices';
+import {
+  setAccount,
+  setAccountStaking,
+  setAccountExtra,
+  getInitialAccountStakingState,
+  getInitialAccountExtraState
+} from 'redux/slices';
 
 import { AccountDetailsCard } from './AccountDetailsCard';
 import { ApplicationDetailsCard } from './ApplicationDetailsCard';
@@ -39,6 +45,8 @@ export const AccountLayout = () => {
 
   useEffect(() => {
     setIsDataReady(undefined);
+    dispatch(setAccountExtra(getInitialAccountExtraState()));
+    dispatch(setAccountStaking(getInitialAccountStakingState()));
     if (address && !isContract(address)) {
       fetchAccountStakingDetails({ address });
     }

@@ -23,7 +23,6 @@ export const TokenLayout = () => {
   const fetchTokenDetails = () => {
     if (tokenId) {
       getToken(tokenId).then(({ success, data }) => {
-        console.log('----data', data);
         if (success && data) {
           dispatch(setToken({ isFetched: true, token: data }));
         }
@@ -36,8 +35,6 @@ export const TokenLayout = () => {
   useEffect(() => {
     fetchTokenDetails();
   }, [firstPageRefreshTrigger, activeNetworkId, tokenId]);
-
-  console.log('---isDataReady', isDataReady, token, isFetched);
 
   const loading =
     isDataReady === undefined || (tokenId && tokenId !== token.identifier);

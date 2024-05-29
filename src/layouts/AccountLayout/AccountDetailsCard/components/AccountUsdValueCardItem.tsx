@@ -19,14 +19,19 @@ export const AccountUsdValueCardItem = ({
 }: {
   cardItemClass?: string;
 }) => {
+  const { account } = useSelector(accountSelector);
   const { isFetched: isEconomicsFetched, unprocessed } =
     useSelector(economicsSelector);
-  const { account } = useSelector(accountSelector);
   const { accountExtra, isFetched: isAccountExtraFetched } =
     useSelector(accountExtraSelector);
-  const { balance } = account;
-  const { tokenBalance } = accountExtra;
-  const { stakingDataReady, totalLocked } = useSelector(accountStakingSelector);
+  const {
+    stakingDataReady,
+    totalLocked,
+    address: lockedAddress
+  } = useSelector(accountStakingSelector);
+
+  const { address, balance } = account;
+  const { tokenBalance, address: extraAddress } = accountExtra;
 
   let totalWorth = balance ? new BigNumber(balance) : new BigNumber(0);
   if (stakingDataReady) {
@@ -45,8 +50,14 @@ export const AccountUsdValueCardItem = ({
     totalUsdValue = totalUsdValue.plus(new BigNumber(tokenBalance));
   }
 
+  const isCorrectData =
+    address && address === lockedAddress && address === extraAddress;
+
   const isDataReady =
-    isAccountExtraFetched && stakingDataReady && isEconomicsFetched;
+    isAccountExtraFetched &&
+    stakingDataReady &&
+    isEconomicsFetched &&
+    isCorrectData;
 
   return (
     <CardItem

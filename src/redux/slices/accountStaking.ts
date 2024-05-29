@@ -3,7 +3,7 @@ import { AccountStakingSliceType } from 'types/account.types';
 
 export const getInitialAccountStakingState = (): AccountStakingSliceType => {
   return {
-    address: undefined,
+    address: '',
     showDelegation: false,
     showDelegationLegacy: false,
     showStake: false,
