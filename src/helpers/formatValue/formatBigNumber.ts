@@ -5,7 +5,7 @@ import { DIGITS } from 'config';
 import { stringIsFloat } from 'helpers';
 
 export interface FormatBigNumberType {
-  value: string | number | BigNumber;
+  value: string | number | BigNumber | undefined | typeof ELLIPSIS;
   digits?: number;
   maxDigits?: number;
 }
@@ -15,6 +15,9 @@ export const formatBigNumber = ({
   digits = DIGITS,
   maxDigits
 }: FormatBigNumberType) => {
+  if (value === ELLIPSIS || value === undefined) {
+    return ELLIPSIS;
+  }
   const bNvalue = BigNumber.isBigNumber(value) ? value : new BigNumber(value);
   const formattedAmount = bNvalue.toFormat({
     groupSeparator: '',
@@ -23,7 +26,6 @@ export const formatBigNumber = ({
   if (!stringIsFloat(formattedAmount)) {
     return ELLIPSIS;
   }
-
   if (bNvalue.isZero()) {
     return ZERO;
   }

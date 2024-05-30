@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Outlet, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
-import { useAdapter, useGetPage, useFetchAccountStakingDetails } from 'hooks';
+import { useFetchAccountStakingDetails } from 'hooks';
 import { faChartPie } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 

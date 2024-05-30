@@ -39,7 +39,7 @@ export interface GetTokensType extends SortableApiType {
   withUsername?: boolean;
 }
 
-export interface GetNftsType extends BaseApiType {
+export interface GetNftsType extends SortableApiType {
   search?: string;
   identifiers?: string;
   type?: string;
@@ -49,6 +49,7 @@ export interface GetNftsType extends BaseApiType {
   creator?: string;
   hasUris?: string;
   includeFlagged?: boolean;
+  withOwner?: boolean;
   withSupply?: boolean;
   withScamInfo?: boolean;
   excludeMetaESDT?: boolean;

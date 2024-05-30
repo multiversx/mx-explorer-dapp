@@ -23,9 +23,10 @@ export const accountSlice = createSlice({
       state: AccountSliceType,
       action: PayloadAction<AccountSliceType>
     ) => {
+      state.isFetched = action.payload.isFetched;
       state.account = {
         ...getInitialAccountState().account,
-        ...action.payload
+        ...action.payload.account
       };
     }
   }

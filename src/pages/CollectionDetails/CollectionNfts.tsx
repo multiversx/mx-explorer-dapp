@@ -11,7 +11,7 @@ import {
   PageState,
   NftBadge
 } from 'components';
-import { urlBuilder, getNftText } from 'helpers';
+import { urlBuilder, getNftText, formatBigNumber } from 'helpers';
 import { useAdapter, useGetPage, useGetSearch } from 'hooks';
 import { faUser } from 'icons/regular';
 import { CollectionTabs } from 'layouts/CollectionLayout/CollectionTabs';
@@ -42,7 +42,8 @@ export const CollectionNfts = () => {
           page,
           size,
           collection,
-          ...(type === NftTypeEnum.NonFungibleESDT ? { withOwner: true } : {})
+          ...(type === NftTypeEnum.NonFungibleESDT ? { withOwner: true } : {}),
+          ...(type === NftTypeEnum.SemiFungibleESDT ? { withSupply: true } : {})
         }),
         getCollectionNftsCount({ search, collection })
       ]).then(([nftsData, count]) => {
@@ -84,7 +85,10 @@ export const CollectionNfts = () => {
                       <th>Identifier</th>
                       <th>Name</th>
                       <th>Creator</th>
-                      {type === NftTypeEnum.NonFungibleESDT && <th>Owner</th>}
+                      <th>
+                        {type === NftTypeEnum.NonFungibleESDT && <>Owner</>}
+                        {type === NftTypeEnum.SemiFungibleESDT && <>Supply</>}
+                      </th>
                     </tr>
                   </thead>
                   <tbody data-testid='nftsTable'>
@@ -111,7 +115,7 @@ export const CollectionNfts = () => {
                                 <div>{nft.identifier}</div>
                               </div>
                             </NetworkLink>
-                            {type !== 'MetaESDT' && (
+                            {type !== NftTypeEnum.MetaESDT && (
                               <NftBadge type={nft.type} className='ms-2' />
                             )}
                           </div>
@@ -132,6 +136,10 @@ export const CollectionNfts = () => {
                               <div className='d-flex trim-size-xl'>
                                 <AccountLink address={nft.owner} />
                               </div>
+                            )}
+                          {type === NftTypeEnum.SemiFungibleESDT &&
+                            nft?.supply && (
+                              <>{formatBigNumber({ value: nft.supply })}</>
                             )}
                         </td>
                       </tr>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +14,6 @@ import {
   CopyButton,
   FormatAmount,
   NetworkLink,
-  ShardSpan,
   TimeAgo,
   InfoTooltip,
   ShardLink
@@ -39,14 +38,13 @@ import {
   accountSelector,
   accountExtraSelector
 } from 'redux/selectors';
-import { setAccountExtra } from 'redux/slices';
+import { setAccountExtra, getInitialAccountExtraState } from 'redux/slices';
 import { SortOrderEnum, TokenType } from 'types';
 
 import { AccountUsdValueCardItem } from './components/AccountUsdValueCardItem';
 import { LockedAmountCardItem } from './components/LockedAmountCardItem';
 
 export const AccountDetailsCard = () => {
-  const ref = useRef(null);
   const dispatch = useDispatch();
   const isSovereign = useIsSovereign();
   const { account } = useSelector(accountSelector);
@@ -64,6 +62,7 @@ export const AccountDetailsCard = () => {
     activeGuardianAddress,
     activeGuardianServiceUid
   } = account;
+
   const { firstTransactionDate } = accountExtra;
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const {
@@ -103,6 +102,10 @@ export const AccountDetailsCard = () => {
         accountTokensCountData,
         accountNftsCountData
       ]) => {
+        const isFetched =
+          accountTransfersData.success || accountTokensValueData.success;
+        const accountExtraDetails = getInitialAccountExtraState().accountExtra;
+
         if (accountTransfersData.success) {
           if (
             accountTransfersData?.data &&
@@ -110,14 +113,7 @@ export const AccountDetailsCard = () => {
           ) {
             const firstTransactionDate =
               accountTransfersData.data[0]?.['timestamp'];
-            dispatch(
-              setAccountExtra({
-                accountExtra: {
-                  firstTransactionDate
-                },
-                isFetched: true
-              })
-            );
+            accountExtraDetails.firstTransactionDate = firstTransactionDate;
           }
         }
         if (accountTokensValueData.success) {
@@ -130,15 +126,14 @@ export const AccountDetailsCard = () => {
                 ))
           );
           const tokenBalance = getTotalTokenUsdValue(validTokenValues);
-          dispatch(
-            setAccountExtra({
-              accountExtra: {
-                tokenBalance
-              },
-              isFetched: true
-            })
-          );
+          accountExtraDetails.tokenBalance = tokenBalance;
         }
+        dispatch(
+          setAccountExtra({
+            accountExtra: { ...accountExtraDetails, address },
+            isFetched
+          })
+        );
         if (accountTokensCountData.success) {
           setAccountTokensCount(accountTokensCountData.data);
         }
@@ -153,8 +148,8 @@ export const AccountDetailsCard = () => {
     fetchAccountDetails();
   }, [txCount, activeNetworkId, address]);
 
-  return address !== '' ? (
-    <div ref={ref} className='row account-details-card mb-3'>
+  return (
+    <div className='row account-details-card mb-3'>
       <div className='col'>
         <div className='card'>
           <div
@@ -250,15 +245,13 @@ export const AccountDetailsCard = () => {
               </CardItem>
             )}
             <CardItem title='Nonce' icon={faUser}>
-              {nonce !== undefined
-                ? formatBigNumber({ value: nonce })
-                : ELLIPSIS}
+              {formatBigNumber({ value: nonce })}
             </CardItem>
             <CardItem title='Tokens' icon={faCoins}>
-              {accountTokensCount}
+              {formatBigNumber({ value: accountTokensCount })}
             </CardItem>
             <CardItem title='NFTs' icon={faHexagonVerticalNft}>
-              {accountNftsCount}
+              {formatBigNumber({ value: accountNftsCount })}
             </CardItem>
             <CardItem
               title={isSovereign ? 'Chain' : 'Shard'}
@@ -266,14 +259,16 @@ export const AccountDetailsCard = () => {
             >
               <ShardLink shard={shard} data-testid='shardLink' />
             </CardItem>
-            {firstTransactionDate && (
-              <CardItem title='Active Since' icon={faClock}>
+            <CardItem title='Active Since' icon={faClock}>
+              {firstTransactionDate ? (
                 <TimeAgo value={firstTransactionDate} tooltip showAgo />
-              </CardItem>
-            )}
+              ) : (
+                ELLIPSIS
+              )}
+            </CardItem>
           </div>
         </div>
       </div>
     </div>
-  ) : null;
+  );
 };

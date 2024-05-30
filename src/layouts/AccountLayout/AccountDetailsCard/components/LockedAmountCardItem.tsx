@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 import { CardItem, FormatAmount, LockedAmountTooltip } from 'components';
 import { faLock } from 'icons/solid';
-import { accountStakingSelector } from 'redux/selectors';
+import { accountStakingSelector, accountSelector } from 'redux/selectors';
 
 export const LockedAmountCardItem = ({
   cardItemClass
@@ -13,6 +13,7 @@ export const LockedAmountCardItem = ({
   cardItemClass?: string;
 }) => {
   const {
+    address: lockedAddress,
     stakingDataReady,
     totalStaked,
     totalLegacyDelegation,
@@ -21,6 +22,7 @@ export const LockedAmountCardItem = ({
     totalActiveStake,
     totalUnstakedValue
   } = useSelector(accountStakingSelector);
+  const { account } = useSelector(accountSelector);
 
   const bNtotalStaked = new BigNumber(totalStaked);
   const bNtotalActiveStake = new BigNumber(totalActiveStake);
@@ -55,17 +57,18 @@ export const LockedAmountCardItem = ({
     });
   }
 
+  const isDataReady =
+    stakingDataReady && account.address && account.address === lockedAddress;
+
   return (
     <CardItem className={classNames(cardItemClass)} title='Stake' icon={faLock}>
       <div className='d-flex align-items-center'>
-        {stakingDataReady ? (
+        {isDataReady ? (
           <FormatAmount value={bNtotalLocked.toString(10)} />
         ) : (
           ELLIPSIS
         )}
-        {stakingDataReady && (
-          <LockedAmountTooltip lockedDetails={lockedDetails} />
-        )}
+        {isDataReady && <LockedAmountTooltip lockedDetails={lockedDetails} />}
       </div>
     </CardItem>
   );

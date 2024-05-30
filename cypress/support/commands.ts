@@ -50,11 +50,11 @@ Cypress.Commands.add('paginationHandler', (route) => {
   cy.get('header').invoke('css', {
     display: 'none'
   });
-  cy.contains('button', '2').click();
+  cy.get('[aria-label="2nd Page"]').first().click();
   cy.checkUrl('page=2');
-  cy.contains('button', '3').click();
+  cy.get('[aria-label="3rd Page"]').first().click();
   cy.checkUrl('page=3');
-  cy.contains('button', '1').click();
+  cy.get('[aria-label="1st Page"]').first().click();
   cy.contains('button', 'Next').last().click();
   cy.checkUrl('page=2');
   cy.contains('button', 'Prev').click();

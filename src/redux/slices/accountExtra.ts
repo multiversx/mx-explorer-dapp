@@ -4,6 +4,7 @@ import { AccountExtraSliceType } from 'types/account.types';
 export const getInitialAccountExtraState = (): AccountExtraSliceType => {
   return {
     accountExtra: {
+      address: '',
       firstTransactionDate: undefined,
       tokenBalance: undefined
     },
@@ -19,6 +20,7 @@ export const accountExtraSlice = createSlice({
       state: AccountExtraSliceType,
       action: PayloadAction<AccountExtraSliceType>
     ) => {
+      state.accountExtra.address = action.payload.accountExtra.address;
       state.accountExtra.firstTransactionDate =
         action.payload.accountExtra.firstTransactionDate;
       state.accountExtra.tokenBalance =

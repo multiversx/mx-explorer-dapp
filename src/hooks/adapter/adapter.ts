@@ -1,6 +1,7 @@
 import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
 import { AccountRolesTypeEnum } from 'types';
 import {
+  BaseApiType,
   GetBlocksType,
   GetTransactionsType,
   GetNodesType,
@@ -22,7 +23,8 @@ import {
   getTokensParams,
   getCollectionsParams,
   getNftsParams,
-  getTransactionsInPoolParams
+  getTransactionsInPoolParams,
+  getPageParams
 } from './helpers';
 import { useAdapterConfig } from './useAdapterConfig';
 
@@ -105,8 +107,8 @@ export const useAdapter = () => {
     },
 
     getBlocks: async ({
-      page = 1,
-      size = PAGE_SIZE,
+      page,
+      size,
       shard,
       epoch,
       proposer,
@@ -116,8 +118,7 @@ export const useAdapter = () => {
         const { data: blocks, success } = await provider({
           url: '/blocks',
           params: {
-            from: (page - 1) * size,
-            size,
+            ...getPageParams({ page, size }),
             ...(proposer ? { proposer } : {}),
             ...(withProposerIdentity ? { withProposerIdentity } : {}),
             ...getShardAndEpochParams(shard, epoch),
@@ -197,19 +198,10 @@ export const useAdapter = () => {
 
     getScResult: (hash: string) => provider({ url: `/results/${hash}` }),
 
-    getScResults: ({
-      page = 1,
-      size = PAGE_SIZE
-    }: {
-      page?: number;
-      size?: number;
-    }) =>
+    getScResults: ({ page, size }: BaseApiType) =>
       provider({
         url: '/results',
-        params: {
-          from: (page - 1) * size,
-          size
-        }
+        params: getPageParams({ page, size })
       }),
 
     getScResultsCount: () => provider({ url: '/results/c' }),
@@ -242,8 +234,8 @@ export const useAdapter = () => {
     }) => provider({ url: `/accounts/${address}`, params: rest }),
 
     getAccounts: ({
-      page = 1,
-      size = PAGE_SIZE,
+      page,
+      size,
       isSmartContract,
       withOwnerAssets = false,
       withDeployInfo = false,
@@ -255,8 +247,7 @@ export const useAdapter = () => {
         url: '/accounts',
         timeout: 15000,
         params: {
-          from: (page - 1) * size,
-          size,
+          ...getPageParams({ page, size }),
           ...(isSmartContract !== undefined ? { isSmartContract } : {}),
           ...(withOwnerAssets ? { withOwnerAssets } : {}),
           ...(withDeployInfo ? { withDeployInfo } : {}),
@@ -301,7 +292,7 @@ export const useAdapter = () => {
     }: GetTokensType & { address: string }) =>
       provider({
         url: `/accounts/${address}/tokens/c`,
-        params: getTokensParams({ ...rest })
+        params: getTokensParams({ isCount: true, ...rest })
       }),
 
     getAccountNfts: ({ address, ...rest }: GetNftsType & { address: string }) =>
@@ -316,24 +307,17 @@ export const useAdapter = () => {
     }: GetNftsType & { address: string }) =>
       provider({
         url: `/accounts/${address}/nfts/c`,
-        params: getNftsParams({ ...rest, includeFlagged: true })
+        params: getNftsParams({ isCount: true, ...rest })
       }),
 
     getAccountContracts: ({
       address,
-      page = 1,
-      size = PAGE_SIZE
-    }: {
-      address: string;
-      page: number;
-      size?: number;
-    }) =>
+      page,
+      size
+    }: BaseApiType & { address: string }) =>
       provider({
         url: `/accounts/${address}/contracts`,
-        params: {
-          from: (page - 1) * size,
-          size
-        }
+        params: getPageParams({ page, size })
       }),
 
     getAccountContractsCount: (address: string) =>
@@ -396,20 +380,12 @@ export const useAdapter = () => {
     getAccountRoles: ({
       address,
       type,
-      page = 1,
-      size = PAGE_SIZE
-    }: {
-      address: string;
-      type: AccountRolesTypeEnum;
-      page?: number;
-      size?: number;
-    }) =>
+      page,
+      size
+    }: GetNftsType & { address: string; type: AccountRolesTypeEnum }) =>
       provider({
         url: `/accounts/${address}/roles/${type}`,
-        params: {
-          from: (page - 1) * size,
-          size
-        }
+        params: getPageParams({ page, size })
       }),
 
     getAccountRolesCount: ({
@@ -500,7 +476,7 @@ export const useAdapter = () => {
     getTokensCount: (params: GetTokensType) =>
       provider({
         url: '/tokens/c',
-        params: getTokensParams(params)
+        params: getTokensParams({ isCount: true, ...params })
       }),
 
     getTokenTransactions: ({
@@ -582,7 +558,7 @@ export const useAdapter = () => {
     getCollectionsCount: (params: GetCollectionsType) =>
       provider({
         url: '/collections/c',
-        params: getCollectionsParams(params)
+        params: getCollectionsParams({ isCount: true, ...params })
       }),
 
     getCollectionNfts: ({
@@ -591,7 +567,7 @@ export const useAdapter = () => {
     }: GetCollectionsType & { collection: string }) =>
       provider({
         url: `/collections/${collection}/nfts`,
-        params: getCollectionsParams({ ...rest })
+        params: getNftsParams({ ...rest })
       }),
 
     getCollectionNftsCount: ({
@@ -600,7 +576,7 @@ export const useAdapter = () => {
     }: GetCollectionsType & { collection: string }) =>
       provider({
         url: `/collections/${collection}/nfts/count`,
-        params: getCollectionsParams({ ...rest })
+        params: getNftsParams({ isCount: true, ...rest })
       }),
 
     getCollectionTransactions: ({
@@ -662,7 +638,10 @@ export const useAdapter = () => {
     getNftsCount: (params: GetNftsType) =>
       provider({
         url: '/nfts/c',
-        params: getNftsParams({ ...params, includeFlagged: true })
+        params: getNftsParams({
+          ...params,
+          isCount: true
+        })
       }),
 
     getNftAccounts: ({
@@ -680,7 +659,7 @@ export const useAdapter = () => {
     }: GetNftsType & { identifier: string }) =>
       provider({
         url: `/nfts/${identifier}/accounts/count`,
-        params: getNftsParams({ ...rest, includeFlagged: true })
+        params: getNftsParams({ isCount: true, ...rest })
       }),
 
     getNftTransactions: ({
