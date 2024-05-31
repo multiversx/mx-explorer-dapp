@@ -28,7 +28,7 @@ export const NodesStatusPreview = ({
   return (
     <div
       className={classNames(
-        'nodes-status-preview font-headings-regular',
+        'nodes-status-preview d-flex flex-column gap-2 font-headings-regular',
         className
       )}
     >

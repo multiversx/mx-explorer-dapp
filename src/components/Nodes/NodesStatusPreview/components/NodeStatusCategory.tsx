@@ -48,11 +48,11 @@ export const NodeStatusCategory = ({
       )}
     >
       <div className='category-info d-flex align-items-center justify-content-between gap-3'>
-        <div className='d-flex align-items-center flex-nowrap'>
+        <div className='d-flex align-items-center flex-nowrap category-title text-neutral-400'>
           {title ?? (status ? capitalize(String(status)) : 'Nodes')}
           {tooltip && <InfoTooltip title={tooltip} />}
         </div>
-        <div className='text-neutral-100 text-headings-semibold text-align-end'>
+        <div className='text-neutral-100 font-headings-semibold text-align-end category-count'>
           {filteredNodes.length}
         </div>
       </div>

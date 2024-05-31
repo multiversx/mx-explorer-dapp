@@ -1,4 +1,5 @@
 export * from './AuctionListTable';
+export * from './NodesAuctionOverviewCards';
 export * from './NodeDangerZoneTooltip';
 export * from './NodeQualification';
 export * from './NodeIcons';
@@ -6,6 +7,6 @@ export * from './NodeOnlineState';
 export * from './NodeThreshold';
 export * from './NodeLockedStakeTooltip';
 export * from './NodesFilters';
-export * from './AuctionListCards';
+export * from './NodesEpochStatusCards';
 export * from './NodesStatusPreview';
 export * from './NodeStatus';

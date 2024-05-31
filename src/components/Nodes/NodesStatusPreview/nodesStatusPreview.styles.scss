@@ -1,4 +1,10 @@
 .nodes-status-preview {
+  .node-status-category {
+    .category-info {
+      flex-basis: max(8%, 8rem);
+    }
+  }
+
   .node-cell {
     width: 0.75rem;
     height: 0.75rem;
