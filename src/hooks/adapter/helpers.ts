@@ -99,6 +99,7 @@ export function getNodeParams({
   isAuctioned,
   isAuctionDangerZone,
   owner,
+  fields,
   // not on api
   isCount = false
 }: GetNodesType) {
@@ -112,7 +113,8 @@ export function getNodeParams({
           ...(from !== undefined ? { from } : {}),
           ...(size !== undefined ? { size } : {}),
           ...(sort !== undefined ? { sort } : {}),
-          ...(order !== undefined ? { order } : {})
+          ...(order !== undefined ? { order } : {}),
+          ...(fields !== undefined ? { fields } : {})
         }),
     ...(search !== undefined ? { search } : {}),
     ...(type !== undefined ? { type } : {}),

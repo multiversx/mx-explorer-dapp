@@ -157,3 +157,14 @@ export interface NodesIdentitiesSliceType extends SliceType {
   unprocessed: IdentityType[];
   nodesIdentities: IdentityType[];
 }
+
+export interface NodeStatusPreviewType {
+  bls: NodeType['bls'];
+  status: NodeApiStatusEnum;
+  auctionQualified?: NodeType['auctionQualified'];
+  isInDangerZone?: NodeType['isInDangerZone'];
+}
+
+export interface IndexedNodeStatusPreviewType extends NodeStatusPreviewType {
+  index: number;
+}

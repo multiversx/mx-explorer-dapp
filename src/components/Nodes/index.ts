@@ -7,4 +7,5 @@ export * from './NodeThreshold';
 export * from './NodeLockedStakeTooltip';
 export * from './NodesFilters';
 export * from './AuctionListCards';
+export * from './NodesStatusPreview';
 export * from './NodeStatus';
