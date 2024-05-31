@@ -66,6 +66,7 @@ export * from './TokenBlock';
 export * from './Tooltips';
 export * from './TransactionAction';
 export * from './TransactionGuardianIcon';
+export * from './TransactionSovereignBridgeIcon';
 export * from './TransactionIcon';
 export * from './TransactionsTable';
 export * from './TransactionStatus';

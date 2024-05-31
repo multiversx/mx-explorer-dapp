@@ -4,10 +4,10 @@ import {
   Trim,
   NetworkLink,
   DetailItem,
-  ShardSpan,
-  CopyButton
+  CopyButton,
+  ShardLink
 } from 'components';
-import { urlBuilder } from 'helpers';
+import { useIsSovereign } from 'hooks';
 import { miniBlockSelector } from 'redux/selectors';
 
 export const MiniBlockDetailsCard = () => {
@@ -19,6 +19,7 @@ export const MiniBlockDetailsCard = () => {
     type,
     miniBlockHash
   } = useSelector(miniBlockSelector);
+  const isSovereign = useIsSovereign();
 
   return miniBlockHash ? (
     <div className='miniblock-details-card row mb-3'>
@@ -41,19 +42,15 @@ export const MiniBlockDetailsCard = () => {
                 <CopyButton text={miniBlockHash} />
               </div>
             </DetailItem>
-            <DetailItem title='Sender Shard'>
+            <DetailItem title={`Sender ${isSovereign ? 'Chain' : 'Shard'}`}>
               <div className='d-flex'>
-                <NetworkLink to={urlBuilder.shard(senderShard)}>
-                  <ShardSpan shard={senderShard} />
-                </NetworkLink>
+                <ShardLink shard={senderShard} />
               </div>
             </DetailItem>
 
-            <DetailItem title='Receiver Shard'>
+            <DetailItem title={`Receiver ${isSovereign ? 'Chain' : 'Shard'}`}>
               <div className='d-flex'>
-                <NetworkLink to={urlBuilder.shard(receiverShard)}>
-                  <ShardSpan shard={receiverShard} />
-                </NetworkLink>
+                <ShardLink shard={receiverShard} />
               </div>
             </DetailItem>
 

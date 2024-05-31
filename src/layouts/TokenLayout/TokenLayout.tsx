@@ -1,41 +1,33 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Outlet } from 'react-router-dom';
 
 import { Loader } from 'components';
 import { useAdapter, useGetPage } from 'hooks';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { setToken } from 'redux/slices';
 
 import { FailedTokenDetails } from './FailedTokenDetails';
 import { TokenDetailsCard } from './TokenDetailsCard';
 
 export const TokenLayout = () => {
-  const ref = useRef(null);
-  const { firstPageRefreshTrigger } = useGetPage();
-
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-
   const dispatch = useDispatch();
   const { getToken } = useAdapter();
-
   const { hash: tokenId } = useParams();
+  const { firstPageRefreshTrigger } = useGetPage();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { token, isFetched } = useSelector(tokenSelector);
 
-  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
   const fetchTokenDetails = () => {
     if (tokenId) {
-      getToken(tokenId).then((tokenDetailsData) => {
-        if (ref.current !== null) {
-          if (tokenDetailsData.success && tokenDetailsData?.data) {
-            dispatch(setToken(tokenDetailsData.data));
-            setDataReady(true);
-          }
-
-          if (dataReady === undefined) {
-            setDataReady(tokenDetailsData.success);
-          }
+      getToken(tokenId).then(({ success, data }) => {
+        if (success && data) {
+          dispatch(setToken({ isFetched: true, token: data }));
         }
+
+        setIsDataReady(success);
       });
     }
   };
@@ -44,22 +36,22 @@ export const TokenLayout = () => {
     fetchTokenDetails();
   }, [firstPageRefreshTrigger, activeNetworkId, tokenId]);
 
-  const loading = dataReady === undefined;
-  const failed = dataReady === false;
+  const loading =
+    isDataReady === undefined || (tokenId && tokenId !== token.identifier);
+  const failed = isDataReady === false;
+
+  if (failed) {
+    return <FailedTokenDetails tokenId={tokenId} />;
+  }
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
-    <>
-      {loading && <Loader />}
-      {!loading && failed && <FailedTokenDetails tokenId={tokenId} />}
-
-      <div ref={ref}>
-        {!loading && !failed && (
-          <div className='container page-content'>
-            <TokenDetailsCard />
-            <Outlet />
-          </div>
-        )}
-      </div>
-    </>
+    <div className='container page-content'>
+      <TokenDetailsCard />
+      <Outlet />
+    </div>
   );
 };

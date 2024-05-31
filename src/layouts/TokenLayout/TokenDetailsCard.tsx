@@ -66,6 +66,7 @@ export const TokenDetailsCard = () => {
           value: <SocialIcons assets={assets.social} excludeWebsite />
         }
       : {},
+    !assets && ticker !== name ? { title: 'Name', value: name } : {},
     { title: 'Identifier', value: identifier },
     { title: 'Decimals', value: decimals },
     { title: 'Owner', value: <AccountLink address={owner} fetchAssets /> },

@@ -55,7 +55,7 @@ export const SelectFilter = ({
   }
 
   const defaultValues = options.filter(
-    (option) => existingValues && existingValues.includes(option.value)
+    (option) => existingValues && existingValues.includes(String(option.value))
   );
 
   const updateSelectValue = (selectValue: string) => {

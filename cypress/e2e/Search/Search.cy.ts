@@ -31,7 +31,7 @@ describe('Search', () => {
       const amount = xhr?.response.body.balance;
       balance = new BigNumber(amount)
         .dividedBy('1000000000000000000')
-        .toFixed(4);
+        .toFixed(0);
     }).then(() => {
       cy.getSelector('balance').first().should('contain', balance, 'xEGLD');
     });
@@ -49,7 +49,7 @@ describe('Search', () => {
   it('should return the collection details page ', () => {
     searchHandler(SearchDataEnums.collectionName);
     cy.checkUrl(RoutesEnum.collections);
-    cy.contains('Collection Details');
+    cy.contains('HLSR-7039de Collection');
     cy.verifyApiResponse(ApiEndpointsEnum.collections, (xhr) => {
       expect(xhr?.response.body.collection).to.eq(
         SearchDataEnums.collectionName

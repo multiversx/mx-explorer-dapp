@@ -19,7 +19,7 @@ export const TokenTabs = () => {
       activationRoutes: [tokensRoutes.tokenDetails]
     },
     {
-      tabLabel: 'Accounts',
+      tabLabel: 'Holders',
       tabTo: urlBuilder.tokenDetailsAccounts(identifier),
       activationRoutes: [tokensRoutes.tokenDetailsAccounts]
     },

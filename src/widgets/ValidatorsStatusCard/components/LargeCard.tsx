@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 
+import { ELLIPSIS } from 'appConstants';
 import { ValidatorMap, ShardList, MultilayerPercentageRing } from 'components';
 import { useIsMainnet } from 'hooks';
 import { nodesVersionsSelector } from 'redux/selectors';
@@ -21,7 +22,9 @@ export const LargeCard = ({
     <div className={`card-body overflow-hidden ${className ?? ''}`}>
       <div className='card-title validator-card-title'>
         <p className='text-neutral-500 font-headings mb-0'>Validators</p>
-        <h2 className='card-value text-primary'>{totalValidators}</h2>
+        <h2 className='card-value text-primary'>
+          {totalValidators ?? ELLIPSIS}
+        </h2>
       </div>
       <div className='row flex-wrap-reverse'>
         <ShardList className='col-md-5' />

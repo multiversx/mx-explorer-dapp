@@ -82,7 +82,6 @@ export interface IdentityType {
   stakePercent: number;
   validators: number;
   rank?: number;
-  overallStakePercent?: number;
   twitter?: string;
   website?: string;
   location?: string;
@@ -93,6 +92,11 @@ export interface IdentityType {
   distribution?: any;
   apr?: number;
   url?: string;
+
+  // not on API
+  overallStakePercent?: number;
+  validatorsPercent?: number;
+  overallValidatorsPercent?: number;
 }
 export interface ProviderType {
   provider: string;

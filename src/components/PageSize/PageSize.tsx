@@ -9,20 +9,24 @@ import { WithClassnameType } from 'types';
 
 export interface PageSizeUIType extends WithClassnameType {
   maxSize?: number;
+  defaultSize?: number;
 }
 
 export const PageSize = ({
+  defaultSize = PAGE_SIZE,
   maxSize = MAX_RESULTS,
   className
 }: PageSizeUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const { page, size, ...rest } = params;
-  const paramSize = stringIsInteger(String(size)) ? parseInt(size) : PAGE_SIZE;
+  const paramSize = stringIsInteger(String(size))
+    ? parseInt(size)
+    : defaultSize;
 
   const currentSize = Math.min(paramSize, maxSize);
   const sizeArray = [
-    ...new Set([PAGE_SIZE, 10, 50, 75, 100, currentSize])
+    ...new Set([PAGE_SIZE, 10, 50, 75, 100, currentSize, defaultSize])
   ].sort(function (a, b) {
     return a - b;
   });

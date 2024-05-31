@@ -47,7 +47,7 @@ export interface AccountSliceType extends SliceType {
 export interface AccountStakingSliceType {
   accountStakingFetched: boolean;
 
-  address: string | undefined;
+  address: string;
   totalStaked: string;
   totalDelegation: string;
   totalLegacyDelegation: string;
@@ -69,6 +69,7 @@ export interface AccountStakingSliceType {
 
 export interface AccountExtraSliceType extends SliceType {
   accountExtra: {
+    address: string;
     firstTransactionDate?: number;
     tokenBalance?: string;
   };

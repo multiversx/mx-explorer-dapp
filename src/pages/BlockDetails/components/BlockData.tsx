@@ -5,7 +5,6 @@ import { Collapse } from 'react-bootstrap';
 
 import { METACHAIN_SHARD_ID } from 'appConstants';
 import {
-  ShardSpan,
   NetworkLink,
   TimeAgo,
   Trim,
@@ -13,9 +12,11 @@ import {
   CopyButton,
   IdentityBlock,
   BlockGasUsed,
-  Overlay
+  Overlay,
+  ShardLink
 } from 'components';
 import { formatDate, formatSize, urlBuilder } from 'helpers';
+import { useIsSovereign } from 'hooks';
 import { faChevronLeft, faChevronRight, faClock } from 'icons/regular';
 import { BlockType } from 'types';
 
@@ -41,6 +42,7 @@ export const BlockData = (props: BlockDataType) => {
   const { block, nextHash } = props;
   const isFirstBlock = block.prevHash && block.prevHash.length > 64;
   const [expanded, setExpanded] = useState(false);
+  const isSovereign = useIsSovereign();
 
   const toggleCollapseClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -119,11 +121,9 @@ export const BlockData = (props: BlockDataType) => {
         <DetailItem title='Transactions'>
           {block.txCount + ' transactions in this block'}
         </DetailItem>
-        <DetailItem title='Shard'>
+        <DetailItem title={isSovereign ? 'Chain' : 'Shard'}>
           <div className='d-flex'>
-            <NetworkLink to={urlBuilder.shard(block.shard)}>
-              <ShardSpan shard={block.shard} />
-            </NetworkLink>
+            <ShardLink shard={block.shard} />
           </div>
         </DetailItem>
         <DetailItem title='Size'>

@@ -119,159 +119,138 @@ export const NftDetailsCard = () => {
         </Overlay>
       }
       detailItems={[
-        {
-          ...(description
-            ? {
-                title: 'Description',
-                value: (
-                  <div className='description line-clamp-2' title={description}>
-                    {description}
-                  </div>
-                )
-              }
-            : {})
-        },
-        {
-          ...(hasExtraDescription
-            ? {
-                title: 'Collection',
-                value: (
-                  <div
-                    className='description line-clamp-2'
-                    title={assets.description}
-                  >
-                    {assets.description}
-                  </div>
-                )
-              }
-            : {})
-        },
-        {
-          ...(assets?.website
-            ? {
-                title: 'Website',
-                value: <SocialWebsite link={assets.website} />
-              }
-            : {})
-        },
-        {
-          ...(assets?.social && Object.keys(assets.social).length > 0
-            ? {
-                title: 'Other Links',
-                value: <SocialIcons assets={assets.social} excludeWebsite />
-              }
-            : {})
-        },
+        description
+          ? {
+              title: 'Description',
+              value: (
+                <div className='description line-clamp-2' title={description}>
+                  {description}
+                </div>
+              )
+            }
+          : {},
+        hasExtraDescription
+          ? {
+              title: 'Collection',
+              value: (
+                <div
+                  className='description line-clamp-2'
+                  title={assets.description}
+                >
+                  {assets.description}
+                </div>
+              )
+            }
+          : {},
+        assets?.website
+          ? {
+              title: 'Website',
+              value: <SocialWebsite link={assets.website} />
+            }
+          : {},
+        assets?.social && Object.keys(assets.social).length > 0
+          ? {
+              title: 'Other Links',
+              value: <SocialIcons assets={assets.social} excludeWebsite />
+            }
+          : {},
         { title: 'Type', value: <NftBadge type={type} /> },
+        !assets && ticker !== name ? { title: 'Name', value: name } : {},
         { title: 'Collection', value: <CollectionBlock nft={nftState} /> },
         { title: 'Identifier', value: identifier },
-        {
-          ...(decimals !== undefined
-            ? {
-                title: 'Decimals',
-                value: decimals
-              }
-            : {})
-        },
-        {
-          ...(owner !== undefined
-            ? {
-                title: 'Owner',
-                value: <AccountLink address={owner} fetchAssets />
-              }
-            : {})
-        },
+        decimals !== undefined
+          ? {
+              title: 'Decimals',
+              value: decimals
+            }
+          : {},
+        owner !== undefined
+          ? {
+              title: 'Owner',
+              value: <AccountLink address={owner} fetchAssets />
+            }
+          : {},
         {
           title: 'Creator',
           value: <AccountLink address={creator} fetchAssets />
         },
-        {
-          ...(timestamp !== undefined
-            ? {
-                title: 'Minted',
-                value: (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faClock}
-                      className='me-2 text-neutral-400'
-                    />
-                    <TimeAgo value={timestamp} showAgo />
-                    &nbsp;
-                    <span className='text-neutral-400'>
-                      ({formatDate(timestamp, false, true)})
-                    </span>
-                  </>
-                )
-              }
-            : {})
-        },
-        {
-          ...(uris !== undefined && uris[0]
-            ? {
-                title: 'Assets',
-                value: (
-                  <>
-                    {scamInfo ? (
-                      showData ? (
-                        <NftPreview token={nftState} />
-                      ) : (
-                        `[Hidden - ${scamInfo.info}]`
-                      )
-                    ) : (
+        timestamp !== undefined
+          ? {
+              title: 'Minted',
+              value: (
+                <>
+                  <FontAwesomeIcon
+                    icon={faClock}
+                    className='me-2 text-neutral-400'
+                  />
+                  <TimeAgo value={timestamp} showAgo />
+                  &nbsp;
+                  <span className='text-neutral-400'>
+                    ({formatDate(timestamp, false, true)})
+                  </span>
+                </>
+              )
+            }
+          : {},
+        uris !== undefined && uris[0]
+          ? {
+              title: 'Assets',
+              value: (
+                <>
+                  {scamInfo ? (
+                    showData ? (
                       <NftPreview token={nftState} />
-                    )}
-                  </>
-                )
-              }
-            : {})
-        },
-        {
-          ...(scamInfo
-            ? {
-                title: '',
-                value: (
-                  <a
-                    href='/#'
-                    onClick={show}
-                    className='small-font text-neutral-400'
-                  >
-                    {!showData ? 'Show' : 'Hide'} original content
-                  </a>
-                )
-              }
-            : {})
-        }
+                    ) : (
+                      `[Hidden - ${scamInfo.info}]`
+                    )
+                  ) : (
+                    <NftPreview token={nftState} />
+                  )}
+                </>
+              )
+            }
+          : {},
+        scamInfo
+          ? {
+              title: '',
+              value: (
+                <a
+                  href='/#'
+                  onClick={show}
+                  className='small-font text-neutral-400'
+                >
+                  {!showData ? 'Show' : 'Hide'} original content
+                </a>
+              )
+            }
+          : {}
       ]}
       statsCards={[
-        {
-          ...(royalties !== undefined && royalties !== null
-            ? {
-                title: 'Royalties',
-                value: <>{royalties}%</>
-              }
-            : {})
-        },
-        {
-          ...(supply !== undefined && type !== NftTypeEnum.NonFungibleESDT
-            ? {
-                title: 'Supply',
-                value: (
-                  <>
-                    {decimals ? (
-                      <FormatAmount
-                        value={supply}
-                        showLabel={false}
-                        showSymbol={false}
-                        decimals={decimals}
-                      />
-                    ) : (
-                      Number(supply).toLocaleString('en')
-                    )}
-                  </>
-                )
-              }
-            : {})
-        },
+        royalties !== undefined && royalties !== null
+          ? {
+              title: 'Royalties',
+              value: <>{royalties}%</>
+            }
+          : {},
+        supply !== undefined && type !== NftTypeEnum.NonFungibleESDT
+          ? {
+              title: 'Supply',
+              value: (
+                <>
+                  {decimals ? (
+                    <FormatAmount
+                      value={supply}
+                      showLabel={false}
+                      showSymbol={false}
+                      decimals={decimals}
+                    />
+                  ) : (
+                    Number(supply).toLocaleString('en')
+                  )}
+                </>
+              )
+            }
+          : {},
         { title: 'Nonce', value: nonce }
       ]}
     />

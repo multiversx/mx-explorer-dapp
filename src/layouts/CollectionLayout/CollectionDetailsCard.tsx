@@ -93,87 +93,74 @@ export const CollectionDetailsCard = () => {
         </Overlay>
       }
       detailItems={[
-        {
-          ...(assets?.description
-            ? {
-                title: 'Description',
-                value: (
-                  <div
-                    className='description line-clamp-2'
-                    title={assets.description}
-                  >
-                    {assets.description}
-                  </div>
-                )
-              }
-            : {})
-        },
-        {
-          ...(assets?.website
-            ? {
-                title: 'Website',
-                value: <SocialWebsite link={assets.website} />
-              }
-            : {})
-        },
-        {
-          ...(assets?.social && Object.keys(assets.social).length > 0
-            ? {
-                title: 'Other Links',
-                value: <SocialIcons assets={assets.social} excludeWebsite />
-              }
-            : {})
-        },
+        assets?.description
+          ? {
+              title: 'Description',
+              value: (
+                <div
+                  className='description line-clamp-2'
+                  title={assets.description}
+                >
+                  {assets.description}
+                </div>
+              )
+            }
+          : {},
+        assets?.website
+          ? {
+              title: 'Website',
+              value: <SocialWebsite link={assets.website} />
+            }
+          : {},
+        assets?.social && Object.keys(assets.social).length > 0
+          ? {
+              title: 'Other Links',
+              value: <SocialIcons assets={assets.social} excludeWebsite />
+            }
+          : {},
         { title: 'Type', value: <NftBadge type={type} /> },
+        !assets && ticker !== name ? { title: 'Name', value: name } : {},
         { title: 'Collection', value: collection },
-        {
-          ...(decimals !== undefined
-            ? {
-                title: 'Decimals',
-                value: decimals
-              }
-            : {})
-        },
-        {
-          ...(timestamp !== undefined
-            ? {
-                title: 'Created',
-                value: (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faClock}
-                      className='me-2 text-neutral-400'
-                    />
-                    <TimeAgo value={timestamp} showAgo />
-                    &nbsp;
-                    <span className='text-neutral-400'>
-                      ({formatDate(timestamp, false, true)})
-                    </span>
-                  </>
-                )
-              }
-            : {})
-        },
+        decimals !== undefined
+          ? {
+              title: 'Decimals',
+              value: decimals
+            }
+          : {},
+        timestamp !== undefined
+          ? {
+              title: 'Created',
+              value: (
+                <>
+                  <FontAwesomeIcon
+                    icon={faClock}
+                    className='me-2 text-neutral-400'
+                  />
+                  <TimeAgo value={timestamp} showAgo />
+                  &nbsp;
+                  <span className='text-neutral-400'>
+                    ({formatDate(timestamp, false, true)})
+                  </span>
+                </>
+              )
+            }
+          : {},
         { title: 'Owner', value: <AccountLink address={owner} fetchAssets /> },
         { title: 'Properties', value: <RolesBadges {...collectionState} /> }
       ]}
       statsCards={[
-        {
-          ...(holderCount !== undefined
-            ? {
-                title: 'Holders',
-                value: new BigNumber(holderCount).toFormat()
-              }
-            : {})
-        },
-        {
-          ...(nftCount !== undefined
-            ? {
-                title: 'Items',
-                value: new BigNumber(nftCount).toFormat()
-              }
-            : {})
-        }
+        holderCount !== undefined
+          ? {
+              title: 'Holders',
+              value: new BigNumber(holderCount).toFormat()
+            }
+          : {},
+        nftCount !== undefined
+          ? {
+              title: 'Items',
+              value: new BigNumber(nftCount).toFormat()
+            }
+          : {}
       ]}
     />
   );

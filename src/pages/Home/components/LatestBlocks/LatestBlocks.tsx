@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
-  ShardSpan,
   NetworkLink,
   TimeAgo,
   Trim,
   Loader,
   LatestItem,
-  PulsatingLed
+  PulsatingLed,
+  ShardLink
 } from 'components';
 import { FailedBlocks } from 'components/BlocksTable/components/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
@@ -119,12 +119,10 @@ export const LatestBlocks = () => {
                         </span>{' '}
                         {block.txCount}
                         <span className='text-muted mx-2'>•</span>
-                        <NetworkLink
-                          to={urlBuilder.shard(block.shard)}
+                        <ShardLink
+                          shard={block.shard}
                           className='flex-shrink-0'
-                        >
-                          <ShardSpan shard={block.shard} />
-                        </NetworkLink>
+                        />
                       </div>
                       <div className='d-flex flex-row mt-1'>
                         <span className='me-2 text-neutral-400'>Hash:</span>

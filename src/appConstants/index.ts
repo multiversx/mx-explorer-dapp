@@ -1,6 +1,7 @@
 export * from './apiFields';
 
 export const METACHAIN_SHARD_ID = 4294967295;
+export const MAIN_SHARD_ID = 4294967293;
 export const ALL_SHARDS_SHARD_ID = 4294967280;
 
 export const TIMEOUT = 10000;

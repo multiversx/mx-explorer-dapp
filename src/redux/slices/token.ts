@@ -28,9 +28,10 @@ export const tokenSlice = createSlice({
       state: TokenSliceType,
       action: PayloadAction<TokenSliceType>
     ) => {
+      state.isFetched = action.payload.isFetched;
       state.token = {
         ...getInitialTokenState().token,
-        ...action.payload
+        ...action.payload.token
       };
     }
   }

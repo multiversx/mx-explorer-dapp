@@ -50,17 +50,15 @@ Cypress.Commands.add('paginationHandler', (route) => {
   cy.get('header').invoke('css', {
     display: 'none'
   });
-  cy.contains('button', '2').click();
-  cy.checkUrl('?page=2');
-  cy.contains('button', '1').click();
-  cy.checkUrl('?page=1');
+  cy.get('[aria-label="2nd Page"]').first().click();
+  cy.checkUrl('page=2');
+  cy.get('[aria-label="3rd Page"]').first().click();
+  cy.checkUrl('page=3');
+  cy.get('[aria-label="1st Page"]').first().click();
   cy.contains('button', 'Next').last().click();
-  cy.checkUrl('?page=2');
+  cy.checkUrl('page=2');
   cy.contains('button', 'Prev').click();
   cy.checkUrl(route);
-  cy.apiIntercept(ApiMethodsEnum.GET, `${route}/`);
-  cy.get('[aria-label="Last Page"]').first().click();
-  cy.verifyApiResponse(`${route}/`);
 });
 
 Cypress.Commands.add('checkTableHead', (payload: string[]) => {
@@ -81,6 +79,6 @@ Cypress.Commands.add('checkHeaderElements', (payload: string) => {
 
 Cypress.Commands.add('accesPage', (page: string) => {
   cy.visit('/');
-  cy.get(`.links > [href="${page}"]`).click();
+  cy.get(`.links .link[href="${page}"]`).click();
   cy.checkUrl(page);
 });

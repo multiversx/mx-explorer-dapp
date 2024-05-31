@@ -4,3 +4,4 @@ export * from './SelectFilter';
 export * from './ShardFilter';
 export * from './TableSearch';
 export * from './TokenSelectFilter';
+export * from './TransactionsFilters';

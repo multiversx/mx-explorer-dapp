@@ -1,4 +1,4 @@
-import { SortOrderEnum } from 'types';
+import { SortOrderEnum, TransactionInPoolTypeEnum } from 'types';
 
 export interface BaseApiType {
   page?: number;
@@ -39,7 +39,7 @@ export interface GetTokensType extends SortableApiType {
   withUsername?: boolean;
 }
 
-export interface GetNftsType extends BaseApiType {
+export interface GetNftsType extends SortableApiType {
   search?: string;
   identifiers?: string;
   type?: string;
@@ -49,6 +49,7 @@ export interface GetNftsType extends BaseApiType {
   creator?: string;
   hasUris?: string;
   includeFlagged?: boolean;
+  withOwner?: boolean;
   withSupply?: boolean;
   withScamInfo?: boolean;
   excludeMetaESDT?: boolean;
@@ -74,7 +75,6 @@ export interface GetNodesType extends SortableApiType {
   status?: string;
   count?: boolean;
   identity?: string;
-  pagination?: boolean;
   provider?: string;
   fullHistory?: string;
   from?: number;
@@ -111,6 +111,12 @@ export interface GetTransactionsType extends SortableApiType {
   withUsername?: boolean;
   withBlockInfo?: boolean;
   isRelayed?: boolean;
+}
+
+export interface GetTransactionsInPoolType extends SortableApiType {
+  sender?: string;
+  receiver?: string;
+  type?: TransactionInPoolTypeEnum;
 }
 
 export interface GetProvidersType extends BaseApiType {

@@ -37,11 +37,9 @@
 
   .identity-details-row {
     background-color: var(--neutral-900);
-
     &:hover {
       background-color: var(--neutral-900);
     }
-
     .table-wrapper {
       th {
         color: var(--body-color);
@@ -50,7 +48,6 @@
         font-size: 0.785rem;
         border-bottom: 0;
       }
-
       tr {
         background-color: var(--neutral-900);
         color: var(--neutral-400);
@@ -59,13 +56,11 @@
 
     &.collapsed {
       td {
-        border-top: 0;
-
+        border: 0;
         .content {
           max-height: 0;
           overflow: hidden;
         }
-
         .details-arrow {
           transform: rotateZ(-90deg);
         }

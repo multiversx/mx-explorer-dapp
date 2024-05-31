@@ -1,70 +1,58 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSearchParams, useParams, Outlet } from 'react-router-dom';
+import { useParams, Outlet } from 'react-router-dom';
 
 import { Loader } from 'components';
 import { useAdapter, useGetPage } from 'hooks';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { setCollection } from 'redux/slices';
 
 import { CollectionDetailsCard } from './CollectionDetailsCard';
 import { FailedCollectionDetails } from './FailedCollectionDetails';
 
 export const CollectionLayout = () => {
-  const ref = useRef(null);
-  const { firstPageRefreshTrigger } = useGetPage();
-  const [searchParams] = useSearchParams();
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const dispatch = useDispatch();
   const { getCollection } = useAdapter();
-
   const { hash: collection } = useParams();
+  const { firstPageRefreshTrigger } = useGetPage();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { collectionState } = useSelector(collectionSelector);
 
-  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
   const fetchCollectionDetails = () => {
     if (collection) {
-      getCollection(collection).then((collectionDetailsData) => {
-        if (ref.current !== null) {
-          if (collectionDetailsData.success && collectionDetailsData?.data) {
-            dispatch(setCollection(collectionDetailsData.data));
-            setDataReady(true);
-          }
-
-          if (dataReady === undefined) {
-            setDataReady(collectionDetailsData.success);
-          }
+      getCollection(collection).then(({ success, data }) => {
+        if (success && data) {
+          dispatch(setCollection({ isFetched: true, collectionState: data }));
         }
+
+        setIsDataReady(success);
       });
     }
   };
 
   useEffect(() => {
     fetchCollectionDetails();
-  }, [firstPageRefreshTrigger, activeNetworkId, collection, searchParams]);
+  }, [firstPageRefreshTrigger, activeNetworkId, collection]);
 
-  useEffect(() => {
-    setDataReady(undefined);
-  }, [collection, activeNetworkId, searchParams]);
+  const loading =
+    isDataReady === undefined ||
+    (collection && collection !== collectionState.collection);
+  const failed = isDataReady === false;
 
-  const loading = dataReady === undefined;
-  const failed = dataReady === false;
+  if (failed) {
+    return <FailedCollectionDetails collection={collection} />;
+  }
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
-    <>
-      {loading && <Loader />}
-      {!loading && failed && (
-        <FailedCollectionDetails collection={collection} />
-      )}
-
-      <div ref={ref}>
-        {!loading && !failed && (
-          <div className='container page-content'>
-            <CollectionDetailsCard />
-            <Outlet />
-          </div>
-        )}
-      </div>
-    </>
+    <div className='container page-content'>
+      <CollectionDetailsCard />
+      <Outlet />
+    </div>
   );
 };

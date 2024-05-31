@@ -13,8 +13,7 @@ export const CollectionTransactions = () => {
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { getCollectionTransactions, getCollectionTransactionsCount } =
-    useAdapter();
+  const { getCollectionTransfers, getCollectionTransfersCount } = useAdapter();
   const { hash: identifier } = useParams();
 
   const {
@@ -24,8 +23,8 @@ export const CollectionTransactions = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions(
-    getCollectionTransactions,
-    getCollectionTransactionsCount,
+    getCollectionTransfers,
+    getCollectionTransfersCount,
     {
       identifier
     }

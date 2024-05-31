@@ -23,9 +23,9 @@ export interface PagerUIType {
 
 export const Pager = ({
   total = ELLIPSIS,
-  show = false,
+  show,
   itemsPerPage = PAGE_SIZE,
-  showFirstAndLast = true,
+  showFirstAndLast,
   className = '',
   hasTestId = true
 }: PagerUIType) => {

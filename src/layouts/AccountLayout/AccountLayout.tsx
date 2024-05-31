@@ -1,44 +1,52 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 
 import { Loader } from 'components';
 import { addressIsBech32, isContract } from 'helpers';
 import { useAdapter, useGetPage, useFetchAccountStakingDetails } from 'hooks';
-import { activeNetworkSelector } from 'redux/selectors';
-import { setAccount } from 'redux/slices';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+import {
+  setAccount,
+  setAccountStaking,
+  setAccountExtra,
+  getInitialAccountStakingState,
+  getInitialAccountExtraState
+} from 'redux/slices';
 
 import { AccountDetailsCard } from './AccountDetailsCard';
 import { ApplicationDetailsCard } from './ApplicationDetailsCard';
 import { FailedAccount } from './FailedAccount';
 
 export const AccountLayout = () => {
-  const ref = useRef(null);
-
-  const { firstPageRefreshTrigger } = useGetPage();
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const dispatch = useDispatch();
-  const { hash: address } = useParams();
-
   const { getAccount } = useAdapter();
   const { fetchAccountStakingDetails } = useFetchAccountStakingDetails();
+  const { hash: address } = useParams();
+  const { firstPageRefreshTrigger } = useGetPage();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { account } = useSelector(accountSelector);
 
-  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
   const fetchBalanceAndCount = () => {
     if (address) {
       getAccount({ address, withGuardianInfo: true }).then(
         ({ success, data }) => {
           if (success && data) {
-            dispatch(setAccount({ ...data }));
+            dispatch(setAccount({ isFetched: true, account: data }));
           }
-          setDataReady(success);
+
+          setIsDataReady(success);
         }
       );
     }
   };
 
   useEffect(() => {
+    setIsDataReady(undefined);
+    dispatch(setAccountExtra(getInitialAccountExtraState()));
+    dispatch(setAccountStaking(getInitialAccountStakingState()));
     if (address && !isContract(address)) {
       fetchAccountStakingDetails({ address });
     }
@@ -48,30 +56,26 @@ export const AccountLayout = () => {
     fetchBalanceAndCount();
   }, [firstPageRefreshTrigger, activeNetworkId, address]);
 
-  useEffect(() => {
-    setDataReady(undefined);
-  }, [address, activeNetworkId]);
+  const loading =
+    isDataReady === undefined || (address && account.address !== address);
+  const failed = !address || isDataReady === false || !addressIsBech32(address);
 
-  const loading = dataReady === undefined;
-  const failed = dataReady === false || !addressIsBech32(address);
+  if (failed) {
+    return <FailedAccount address={address} />;
+  }
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
-    <>
-      {loading && <Loader />}
-      {!loading && failed && <FailedAccount address={address} />}
-
-      <div ref={ref}>
-        {!loading && !failed && (
-          <div className='container page-content'>
-            {address && isContract(address) ? (
-              <ApplicationDetailsCard />
-            ) : (
-              <AccountDetailsCard />
-            )}
-            <Outlet />
-          </div>
-        )}
-      </div>
-    </>
+    <div className='container page-content'>
+      {isContract(address) ? (
+        <ApplicationDetailsCard />
+      ) : (
+        <AccountDetailsCard />
+      )}
+      <Outlet />
+    </div>
   );
 };

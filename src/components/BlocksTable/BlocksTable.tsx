@@ -1,5 +1,4 @@
 import {
-  ShardSpan,
   NetworkLink,
   TimeAgo,
   Trim,
@@ -8,17 +7,18 @@ import {
   ShardLink
 } from 'components';
 import { formatSize } from 'helpers';
+import { useIsSovereign } from 'hooks';
 import { BlockType } from 'types';
 
 export const BlocksTable = ({
   blocks,
-  shard,
   showProposerIdentity
 }: {
   blocks: BlockType[];
   shard: number | undefined;
   showProposerIdentity?: boolean;
 }) => {
+  const isSovereign = useIsSovereign();
   return (
     <div className='blocks-table table-wrapper animated-list'>
       <table className='table mb-0'>
@@ -27,7 +27,7 @@ export const BlocksTable = ({
             <th>Block</th>
             <th>Age</th>
             <th>Txns</th>
-            <th>Shard</th>
+            <th>{isSovereign ? 'Chain' : 'Shard'}</th>
             <th className='text-end'>Size</th>
             <th className='text-end'>Gas Used</th>
             <th className={showProposerIdentity ? '' : 'text-end'}>
@@ -57,17 +57,11 @@ export const BlocksTable = ({
               </td>
               <td>{block.txCount}</td>
               <td>
-                <div className='d-flex'>
-                  {shard !== undefined ? (
-                    <ShardSpan shard={block.shard} />
-                  ) : (
-                    <ShardLink
-                      shard={block.shard}
-                      data-testid={`blockShardLink${i}`}
-                      hasHighlight
-                    />
-                  )}
-                </div>
+                <ShardLink
+                  shard={block.shard}
+                  data-testid={`blockShardLink${i}`}
+                  hasHighlight
+                />
               </td>
               <td className='text-end'>
                 {block.sizeTxs !== undefined

@@ -1,41 +1,33 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Outlet } from 'react-router-dom';
 
 import { Loader } from 'components';
 import { useAdapter, useGetPage } from 'hooks';
-import { activeNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector, nftSelector } from 'redux/selectors';
 import { setNft } from 'redux/slices';
 
 import { FailedNftDetails } from './FailedNftDetails';
 import { NftDetailsCard } from './NftDetailsCard';
 
 export const NftLayout = () => {
-  const ref = useRef(null);
-  const { firstPageRefreshTrigger } = useGetPage();
-
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-
   const dispatch = useDispatch();
   const { getNft } = useAdapter();
-
   const { hash: identifier } = useParams();
+  const { firstPageRefreshTrigger } = useGetPage();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { nftState } = useSelector(nftSelector);
 
-  const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
   const fetchNftDetails = () => {
     if (identifier) {
-      getNft(identifier).then((nftDetailsData) => {
-        if (ref.current !== null) {
-          if (nftDetailsData.success && nftDetailsData?.data) {
-            dispatch(setNft(nftDetailsData.data));
-            setDataReady(true);
-          }
-
-          if (dataReady === undefined) {
-            setDataReady(nftDetailsData.success);
-          }
+      getNft(identifier).then(({ success, data }) => {
+        if (success && data) {
+          dispatch(setNft({ isFetched: true, nftState: data }));
         }
+
+        setIsDataReady(success);
       });
     }
   };
@@ -44,22 +36,23 @@ export const NftLayout = () => {
     fetchNftDetails();
   }, [firstPageRefreshTrigger, activeNetworkId, identifier]);
 
-  const loading = dataReady === undefined;
-  const failed = dataReady === false;
+  const loading =
+    isDataReady === undefined ||
+    (identifier && identifier !== nftState.identifier);
+  const failed = isDataReady === false;
+
+  if (failed) {
+    return <FailedNftDetails identifier={identifier} />;
+  }
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
-    <>
-      {loading && <Loader />}
-      {!loading && failed && <FailedNftDetails identifier={identifier} />}
-
-      <div ref={ref}>
-        {!loading && !failed && (
-          <div className='container page-content'>
-            <NftDetailsCard />
-            <Outlet />
-          </div>
-        )}
-      </div>
-    </>
+    <div className='container page-content'>
+      <NftDetailsCard />
+      <Outlet />
+    </div>
   );
 };

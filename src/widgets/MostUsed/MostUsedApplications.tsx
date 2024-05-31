@@ -1,10 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { Loader, Overlay, ShowcaseCard, Trim, NetworkLink } from 'components';
-import { urlBuilder, addressIsBech32 } from 'helpers';
+import { urlBuilder, addressIsBech32, formatBigNumber } from 'helpers';
 import {
   useHasGrowthWidgets,
   useFetchGrowthMostUsed,
@@ -144,9 +143,9 @@ export const MostUsedApplications = ({
                             contract.extraInfo?.assets?.pngUrl
                           }
                           detailsTitle='Txn'
-                          detailsValue={new BigNumber(
-                            contract.value
-                          ).toFormat()}
+                          detailsValue={formatBigNumber({
+                            value: contract.value
+                          })}
                           detailsRank={contract.rank}
                         />
                       </NetworkLink>
