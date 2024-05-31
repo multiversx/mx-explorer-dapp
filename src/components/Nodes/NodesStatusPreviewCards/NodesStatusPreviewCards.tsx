@@ -10,16 +10,16 @@ import {
 } from 'types';
 import { NodeStatusCategory } from './components';
 
-export interface NodesPreviewUIType extends WithClassnameType {
+export interface NodesStatusPreviewCardsUIType extends WithClassnameType {
   nodes: NodeStatusPreviewType[];
   title?: string;
 }
 
-export const NodesStatusPreview = ({
+export const NodesStatusPreviewCards = ({
   nodes,
   title = 'Nodes Validation Status',
   className
-}: NodesPreviewUIType) => {
+}: NodesStatusPreviewCardsUIType) => {
   const { queueSize, auctionValidators } = useSelector(stakeSelector);
   const indexedNodes = nodes.map((node, index) => {
     return { index: index + 1, ...node };
@@ -28,7 +28,7 @@ export const NodesStatusPreview = ({
   return (
     <div
       className={classNames(
-        'nodes-status-preview d-flex flex-column gap-2 font-headings-regular',
+        'nodes-status-preview-cards d-flex flex-column gap-3 font-headings-regular',
         className
       )}
     >

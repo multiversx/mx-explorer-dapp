@@ -41,18 +41,13 @@ export const NodeStatusCategory = ({
   }
 
   return (
-    <div
-      className={classNames(
-        'node-status-category d-flex flex-wrap gap-3',
-        className
-      )}
-    >
-      <div className='category-info d-flex align-items-center justify-content-between gap-3'>
-        <div className='d-flex align-items-center flex-nowrap category-title text-neutral-400'>
+    <div className={classNames('node-status-category d-flex gap-3', className)}>
+      <div className='category-info d-flex align-items-start justify-content-between gap-3'>
+        <div className='category-title d-flex align-items-center flex-nowrap text-neutral-400 lh-1'>
           {title ?? (status ? capitalize(String(status)) : 'Nodes')}
           {tooltip && <InfoTooltip title={tooltip} />}
         </div>
-        <div className='text-neutral-100 font-headings-semibold text-align-end category-count'>
+        <div className='text-neutral-100 font-headings-semibold text-align-end category-count lh-1'>
           {filteredNodes.length}
         </div>
       </div>

@@ -2,13 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams, Outlet } from 'react-router-dom';
 
 import { NODE_STATUS_PREVIEW_FIELDS, MAX_RESULTS } from 'appConstants';
-import {
-  Loader,
-  PageState,
-  SharedIdentity,
-  NodesStatusPreview
-} from 'components';
-import { useAdapter, useIsMainnet } from 'hooks';
+import { Loader, PageState, SharedIdentity, NodesOverview } from 'components';
+import { useAdapter, useIsMainnet, useFetchStake } from 'hooks';
 import { faCode } from 'icons/regular';
 import {
   IdentityType,
@@ -30,6 +25,8 @@ export const ProviderLayout = () => {
     []
   );
   const [dataReady, setDataReady] = useState<boolean | undefined>();
+
+  useFetchStake();
 
   const fetchProvider = async () => {
     if (address) {
@@ -85,7 +82,7 @@ export const ProviderLayout = () => {
       </div>
       <div className='row'>
         <div className='col-12 mb-3'>
-          <NodesStatusPreview nodes={providerNodes} />
+          <NodesOverview nodes={providerNodes} />
         </div>
       </div>
       <div className='row'>

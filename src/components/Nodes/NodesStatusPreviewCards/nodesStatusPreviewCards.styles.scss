@@ -1,7 +1,7 @@
-.nodes-status-preview {
+.nodes-status-preview-cards {
   .node-status-category {
     .category-info {
-      flex-basis: max(8%, 8rem);
+      min-width: 8rem;
     }
   }
 
