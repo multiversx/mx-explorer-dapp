@@ -173,3 +173,8 @@ export interface NodeStatusPreviewType {
 export interface IndexedNodeStatusPreviewType extends NodeStatusPreviewType {
   index: number;
 }
+
+export interface NodesOverviewSliceType extends SliceType {
+  nodes: IndexedNodeStatusPreviewType[];
+  nodeDetails?: { [key: string]: NodeType };
+}

@@ -1,17 +1,14 @@
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
 import { InfoTooltip } from 'components';
 import { capitalize } from 'helpers';
-import {
-  IndexedNodeStatusPreviewType,
-  NodeApiStatusEnum,
-  WithClassnameType
-} from 'types';
+import { nodesOverviewSelector } from 'redux/selectors';
+import { NodeApiStatusEnum, WithClassnameType } from 'types';
 
 import { NodeCell } from './NodeCell';
 
 export interface NodeStatusCategoryUIType extends WithClassnameType {
-  nodes: IndexedNodeStatusPreviewType[];
   status?: NodeApiStatusEnum;
   excludedStatuses?: NodeApiStatusEnum[];
   title?: string;
@@ -19,13 +16,13 @@ export interface NodeStatusCategoryUIType extends WithClassnameType {
 }
 
 export const NodeStatusCategory = ({
-  nodes,
   status,
   excludedStatuses = [],
   title,
   tooltip,
   className
 }: NodeStatusCategoryUIType) => {
+  const { nodes } = useSelector(nodesOverviewSelector);
   const filteredNodes = nodes.filter((node) => {
     const isNotExcluded = Boolean(
       excludedStatuses &&

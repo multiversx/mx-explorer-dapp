@@ -3,27 +3,18 @@ import { useSelector } from 'react-redux';
 
 import { stakeSelector } from 'redux/selectors';
 
-import {
-  NodeStatusEnum,
-  NodeStatusPreviewType,
-  WithClassnameType
-} from 'types';
+import { NodeStatusEnum, WithClassnameType } from 'types';
 import { NodeStatusCategory } from './components';
 
 export interface NodesStatusPreviewCardsUIType extends WithClassnameType {
-  nodes: NodeStatusPreviewType[];
   title?: string;
 }
 
 export const NodesStatusPreviewCards = ({
-  nodes,
-  title = 'Nodes Validation Status',
+  title = 'Nodes Status',
   className
 }: NodesStatusPreviewCardsUIType) => {
   const { queueSize, auctionValidators } = useSelector(stakeSelector);
-  const indexedNodes = nodes.map((node, index) => {
-    return { index: index + 1, ...node };
-  });
 
   return (
     <div
@@ -32,30 +23,15 @@ export const NodesStatusPreviewCards = ({
         className
       )}
     >
-      <h2 className='h5'>{title}</h2>
-      <NodeStatusCategory
-        nodes={indexedNodes}
-        status={NodeStatusEnum.eligible}
-      />
-      <NodeStatusCategory
-        nodes={indexedNodes}
-        status={NodeStatusEnum.waiting}
-      />
-      {queueSize && (
-        <NodeStatusCategory
-          nodes={indexedNodes}
-          status={NodeStatusEnum.queued}
-        />
-      )}
+      <h2 className='h5 mb-2'>{title}</h2>
+      <NodeStatusCategory status={NodeStatusEnum.eligible} />
+      <NodeStatusCategory status={NodeStatusEnum.waiting} />
+      {queueSize && <NodeStatusCategory status={NodeStatusEnum.queued} />}
       {auctionValidators && (
-        <NodeStatusCategory
-          nodes={indexedNodes}
-          status={NodeStatusEnum.auction}
-        />
+        <NodeStatusCategory status={NodeStatusEnum.auction} />
       )}
       <NodeStatusCategory
         title='Others'
-        nodes={indexedNodes}
         excludedStatuses={[
           NodeStatusEnum.eligible,
           NodeStatusEnum.waiting,

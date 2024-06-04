@@ -7,5 +7,6 @@ export * from './processGrowthSearch';
 export * from './processGrowthStaking';
 export * from './processGrowthTransactions';
 export * from './processNodesIdentities';
+export * from './processNodesOverview';
 export * from './processNodesVersions';
 export * from './processStats';
