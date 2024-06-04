@@ -6,7 +6,7 @@ export * from './NodeIcons';
 export * from './NodeOnlineState';
 export * from './NodesOverview';
 export * from './NodeThreshold';
-export * from './NodeLockedStakeTooltip';
+export * from './NodeLockedStake';
 export * from './NodesFilters';
 export * from './NodesEpochStatusCards';
 export * from './NodesStatusPreviewCards';
