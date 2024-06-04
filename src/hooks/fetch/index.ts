@@ -1,5 +1,6 @@
 export * from './useFetchAccountStakingDetails';
 export * from './useFetchEconomics';
+export * from './useFetchEpochProgress';
 export * from './useFetchStake';
 export * from './useFetchMarkers';
 export * from './useFetchNodesIdentities';
