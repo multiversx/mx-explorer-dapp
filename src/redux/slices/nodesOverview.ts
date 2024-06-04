@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { processNodesOverview } from 'helpers';
-import { NodesOverviewSliceType } from 'types/node.types';
+import {
+  NodesOverviewSliceType,
+  NodesOverviewAddSliceType
+} from 'types/node.types';
 
 export const getInitialNodesOverviewState = (): NodesOverviewSliceType => {
   return {
@@ -24,11 +27,11 @@ export const nodesOverviewSlice = createSlice({
     },
     addNodeDetails: (
       state: NodesOverviewSliceType,
-      action: PayloadAction<NodesOverviewSliceType>
+      action: PayloadAction<NodesOverviewAddSliceType>
     ) => {
       state.nodeDetails = {
         ...state.nodeDetails,
-        ...action.payload.nodeDetails
+        [action.payload.nodeDetails.bls]: action.payload.nodeDetails
       };
     }
   }

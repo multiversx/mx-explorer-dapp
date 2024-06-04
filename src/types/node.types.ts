@@ -178,3 +178,7 @@ export interface NodesOverviewSliceType extends SliceType {
   nodes: IndexedNodeStatusPreviewType[];
   nodeDetails?: { [key: string]: NodeType };
 }
+
+export interface NodesOverviewAddSliceType {
+  nodeDetails: NodeType;
+}

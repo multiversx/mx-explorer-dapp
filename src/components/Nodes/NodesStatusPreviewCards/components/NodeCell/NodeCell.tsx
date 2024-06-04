@@ -1,9 +1,13 @@
 import { useRef, useState } from 'react';
 import classNames from 'classnames';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Loader } from 'components';
 import { useAdapter } from 'hooks';
+
+import { nodesOverviewSelector } from 'redux/selectors';
+import { addNodeDetails } from 'redux/slices';
 import {
   IndexedNodeStatusPreviewType,
   WithClassnameType,
@@ -18,7 +22,9 @@ export interface NodeCellUIType extends WithClassnameType {
 
 export const NodeCell = ({ node, className }: NodeCellUIType) => {
   const ref = useRef(null);
+  const dispatch = useDispatch();
   const { bls, status, isInDangerZone, auctionQualified } = node;
+  const { nodeDetails: stateNodeSetails } = useSelector(nodesOverviewSelector);
   const { getNode } = useAdapter();
 
   const [show, setShow] = useState(false);
@@ -27,8 +33,14 @@ export const NodeCell = ({ node, className }: NodeCellUIType) => {
 
   const fetchNodeDetails = (bls: string) => {
     if (bls) {
+      if (stateNodeSetails?.[bls]) {
+        setNodeDetails(stateNodeSetails[bls]);
+        return;
+      }
+
       getNode(bls).then(({ data, success }) => {
         setNodeDetails(data);
+        dispatch(addNodeDetails({ nodeDetails: data }));
         setDataReady(data && success);
       });
     }
@@ -46,9 +58,12 @@ export const NodeCell = ({ node, className }: NodeCellUIType) => {
       key='popover'
       trigger={['click', 'hover']}
       placement='top'
+      delay={{ show: 0, hide: 400 }}
       rootClose
-      onToggle={() => {
-        fetchNodeDetails(bls);
+      onToggle={(show) => {
+        if (show) {
+          fetchNodeDetails(bls);
+        }
       }}
       show={show}
       overlay={

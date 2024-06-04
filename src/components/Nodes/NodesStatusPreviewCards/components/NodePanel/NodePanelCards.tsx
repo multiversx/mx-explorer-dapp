@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
 import {
@@ -10,6 +11,7 @@ import {
 } from 'components';
 import { formatBigNumber } from 'helpers';
 import { useGetEpochRemainingTime, useIsSovereign } from 'hooks';
+import { nodesOverviewSelector } from 'redux/selectors';
 import { NodeType, NodeStatusEnum, WithClassnameType } from 'types';
 
 export interface PanelCardUIType extends WithClassnameType {
@@ -85,6 +87,7 @@ export const NodePanelCards = ({
   index?: number;
 }) => {
   const isSovereign = useIsSovereign();
+  const { nodes } = useSelector(nodesOverviewSelector);
 
   return (
     <dl className='node-panel-cards'>
@@ -123,7 +126,8 @@ export const NodePanelCards = ({
         <>
           {index !== undefined && (
             <PanelCard title='List Index' featured>
-              <span className='text-neutral-200'>{index}</span> of 320
+              <span className='text-neutral-200'>{index}</span> of{' '}
+              {nodes.length}
             </PanelCard>
           )}
         </>
