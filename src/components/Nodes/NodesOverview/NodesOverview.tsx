@@ -22,10 +22,10 @@ export const NodesOverview = ({
     >
       <div className='nodes-table-hero font-headings-regular w-100'>
         <div className='row mb-4 gy-3'>
-          <div className='col-xl-6'>
+          <div className='col-lg-6'>
             <NodesStatusPreviewCards nodes={nodes} title={title} />
           </div>
-          <div className='col-xl-6'>
+          <div className='col-lg-6'>
             <NodesEpochStatusCards />
           </div>
         </div>

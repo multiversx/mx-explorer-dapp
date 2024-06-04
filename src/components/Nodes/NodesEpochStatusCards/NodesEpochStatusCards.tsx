@@ -27,10 +27,10 @@ export const NodesEpochStatusCards = ({ className }: WithClassnameType) => {
         className
       )}
     >
-      <div className='card bg-neutral-800-opacity-60 flex-fill'>
-        <div className='card-body py-3 d-flex align-items-center'>
+      <div className='card bg-neutral-800-opacity-60 flex-fill epoch-status'>
+        <div className='card-body d-flex align-items-center'>
           <div className='d-flex w-100 flex-wrap gap-1 gap-sm-3 align-items-start justify-content-between'>
-            <div className='text-primary-100'>
+            <div className='text-primary-100 status-title'>
               <FontAwesomeIcon icon={faClock} className='me-2' />
               {epoch !== undefined ? (
                 <>Epoch {new BigNumber(epoch).toFormat(0)}</>
@@ -39,7 +39,7 @@ export const NodesEpochStatusCards = ({ className }: WithClassnameType) => {
               )}{' '}
               ends in
             </div>
-            <h3 className='mb-0 text-primary text-lh-24'>
+            <h3 className='mb-0 text-primary text-lh-24 status-value'>
               {isStatsFetched ? (
                 <>
                   {days.time && days.time !== '00' && (
@@ -58,13 +58,13 @@ export const NodesEpochStatusCards = ({ className }: WithClassnameType) => {
         </div>
       </div>
       {unprocessed.minimumAuctionQualifiedStake && (
-        <div className='card bg-neutral-800-opacity-60 flex-fill'>
-          <div className='card-body py-3 d-flex align-items-center'>
+        <div className='card bg-neutral-800-opacity-60 flex-fill auction-status'>
+          <div className='card-body d-flex align-items-center'>
             <div className='d-flex w-100 flex-wrap gap-1 gap-sm-3 align-items-start justify-content-between'>
-              <div className='text-neutral-500'>
+              <div className='text-neutral-500 status-title'>
                 Node Qualification Threshold
               </div>
-              <h3 className='mb-0 text-lh-24'>
+              <h3 className='mb-0 text-lh-24 status-value'>
                 <FormatAmount
                   value={unprocessed.minimumAuctionQualifiedStake}
                   digits={4}
