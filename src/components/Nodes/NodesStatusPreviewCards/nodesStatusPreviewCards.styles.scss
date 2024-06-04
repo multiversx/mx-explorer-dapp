@@ -1,71 +1,16 @@
+@import './components/NodeCell/nodeCell.styles.scss';
 @import './components/NodePanel/nodePanel.styles.scss';
 
 .nodes-status-preview-cards {
   .node-status-category {
+    @include media-breakpoint-down(sm) {
+      flex-wrap: wrap;
+    }
     .category-info {
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+      }
       min-width: 8rem;
-    }
-  }
-
-  .node-cell {
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 0.125rem;
-    border-width: 0.125rem;
-    border-style: solid;
-    &.eligible {
-      border-color: var(--green-400);
-      background-color: var(--green-400);
-    }
-    &.new {
-      border-color: var(--primary);
-      background-color: var(--primary);
-    }
-    &.waiting {
-      border-color: var(--cyan-400);
-      background-color: var(--cyan-400);
-    }
-    &.auction {
-      border-color: var(--red-400);
-      background-color: var(--blue-400);
-      &.auctionQualified {
-        border-color: var(--green-400);
-      }
-      &.isInDangerZone {
-        border-color: var(--orange-400);
-      }
-    }
-    &.queued {
-      border-color: var(--blue-400);
-      background-color: var(--blue-400);
-    }
-    &.leaving {
-      border-color: var(--orange-500);
-      background-color: var(--orange-500);
-    }
-    &.jailed {
-      border-color: var(--red-600);
-      background-color: var(--red-600);
-    }
-    &.inactive {
-      border-color: var(--neutral-500);
-      background-color: var(--neutral-500);
-    }
-    &.unknown {
-      border-color: var(--neutral-600);
-      background-color: var(--neutral-600);
-    }
-    &.notStaked {
-      border-color: var(--neutral-400);
-      background-color: var(--neutral-400);
-    }
-    &.unStaked {
-      border-color: var(--amber-400);
-      background-color: var(--amber-400);
-    }
-    &.staked {
-      border-color: var(--primary-700);
-      background-color: var(--primary-700);
     }
   }
 }

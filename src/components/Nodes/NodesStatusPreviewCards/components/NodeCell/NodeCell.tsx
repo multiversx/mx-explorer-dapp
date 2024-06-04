@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import classNames from 'classnames';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
@@ -10,16 +10,18 @@ import {
   NodeType
 } from 'types';
 
-import { NodePanel } from './NodePanel';
+import { NodePanel } from '../NodePanel';
 
 export interface NodeCellUIType extends WithClassnameType {
   node: IndexedNodeStatusPreviewType;
 }
 
 export const NodeCell = ({ node, className }: NodeCellUIType) => {
+  const ref = useRef(null);
   const { bls, status, isInDangerZone, auctionQualified } = node;
   const { getNode } = useAdapter();
 
+  const [show, setShow] = useState(false);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [nodeDetails, setNodeDetails] = useState<NodeType | undefined>();
 
@@ -32,17 +34,30 @@ export const NodeCell = ({ node, className }: NodeCellUIType) => {
     }
   };
 
+  const handleOnMouseEnter = () => {
+    setShow(true);
+  };
+  const handleOnMouseLeave = () => {
+    setShow(false);
+  };
+
   return (
     <OverlayTrigger
       key='popover'
-      trigger='click'
+      trigger={['click', 'hover']}
       placement='top'
       rootClose
       onToggle={() => {
         fetchNodeDetails(bls);
       }}
+      show={show}
       overlay={
-        <Popover id='popover-positioned-bottom' className='node-panel-wrapper'>
+        <Popover
+          id='popover-positioned-bottom'
+          className='node-panel-wrapper'
+          onMouseEnter={handleOnMouseEnter}
+          onMouseLeave={handleOnMouseLeave}
+        >
           {dataReady && nodeDetails ? (
             <NodePanel node={nodeDetails} index={node.index} />
           ) : (
@@ -52,6 +67,9 @@ export const NodeCell = ({ node, className }: NodeCellUIType) => {
       }
     >
       <div
+        ref={ref}
+        onMouseEnter={handleOnMouseEnter}
+        onMouseLeave={handleOnMouseLeave}
         className={classNames(
           'node-cell cursor-context',
           status,
