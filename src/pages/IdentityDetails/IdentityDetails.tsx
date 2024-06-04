@@ -1,25 +1,39 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
+import { NODE_STATUS_PREVIEW_FIELDS, MAX_RESULTS } from 'appConstants';
 import { Loader, Pager, PageSize, PageState, ProvidersTable } from 'components';
 import {
   NodesFilters,
   NodesTable,
   SharedIdentity,
-  NodesHeader
+  NodesHeader,
+  NodesOverview
 } from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
   useGetPage,
   useGetSearch,
-  useGetSort
+  useGetSort,
+  useFetchNodesOverview
 } from 'hooks';
 import { faCity, faCode } from 'icons/regular';
-import { IdentityType, NodeStatusEnum, NodeType, ProviderType } from 'types';
+import { nodesOverviewSelector } from 'redux/selectors';
+import {
+  IdentityType,
+  NodeStatusEnum,
+  NodeType,
+  ProviderType,
+  NodeTypeEnum
+} from 'types';
 
 export const IdentityDetails = () => {
   const { hash: id } = useParams() as any;
+  const { isFetched: isNodesOverviewFetched } = useSelector(
+    nodesOverviewSelector
+  );
   const { getIdentity, getNodes, getNodesCount, getProviders } = useAdapter();
 
   const [searchParams] = useSearchParams();
@@ -37,6 +51,13 @@ export const IdentityDetails = () => {
   );
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
+
+  useFetchNodesOverview({
+    identity: id,
+    type: NodeTypeEnum.validator,
+    fields: NODE_STATUS_PREVIEW_FIELDS.join(','),
+    size: MAX_RESULTS
+  });
 
   const fetchData = () => {
     Promise.all([getIdentity(id), getProviders({ identity: id })]).then(
@@ -74,7 +95,7 @@ export const IdentityDetails = () => {
     providersFetched === false ||
     (providersFetched && providers !== undefined && providers.length > 0);
 
-  if (dataReady === undefined) {
+  if (dataReady === undefined || !isNodesOverviewFetched) {
     return <Loader />;
   }
 
@@ -133,6 +154,16 @@ export const IdentityDetails = () => {
               </div>
             </div>
           )}
+
+          <div className='row'>
+            <div className='col-12 mb-3'>
+              <div className='card'>
+                <div className='card-body'>
+                  <NodesOverview />
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className='row'>
             <div className='col-12'>
