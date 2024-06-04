@@ -35,6 +35,7 @@ export const NodeCell = ({ node, className }: NodeCellUIType) => {
     if (bls) {
       if (stateNodeSetails?.[bls]) {
         setNodeDetails(stateNodeSetails[bls]);
+        setDataReady(true);
         return;
       }
 
@@ -58,7 +59,7 @@ export const NodeCell = ({ node, className }: NodeCellUIType) => {
       key='popover'
       trigger={['click', 'hover']}
       placement='top'
-      delay={{ show: 0, hide: 400 }}
+      delay={{ show: 100, hide: 400 }}
       rootClose
       onToggle={(show) => {
         if (show) {
