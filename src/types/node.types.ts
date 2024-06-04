@@ -38,6 +38,7 @@ export interface NodeType {
   qualifiedStake?: string;
   auctionQualified?: boolean;
   isInDangerZone?: boolean;
+  auctioned?: boolean;
 
   // TODO check if used
   receivedShardID?: number;

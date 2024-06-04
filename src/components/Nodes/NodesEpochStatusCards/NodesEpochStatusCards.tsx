@@ -1,42 +1,20 @@
-import { useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
-import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 
 import { FormatAmount } from 'components';
-import { useGetRemainingTime } from 'hooks';
+import { useGetEpochRemainingTime } from 'hooks';
 import { faClock } from 'icons/solid';
-import { stakeSelector, statsSelector } from 'redux/selectors';
+import { stakeSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
 export const NodesEpochStatusCards = ({ className }: WithClassnameType) => {
   const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
-  const {
-    isFetched: isStatsFetched,
-    unprocessed: { epochTimeRemaining: unprocessedEpochTimeRemaining },
-    epoch
-  } = useSelector(statsSelector);
+  const { epoch, remainingTime, isStatsFetched } = useGetEpochRemainingTime();
 
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
-
-  const currentTimestamp = useMemo(
-    () => moment().unix() + unprocessedEpochTimeRemaining / 1000,
-    [refreshTrigger]
-  );
-  const remainingTime = useGetRemainingTime({
-    timeData: currentTimestamp,
-    onCountdownEnd: () => {
-      setTimeout(() => {
-        setRefreshTrigger(moment().unix());
-        return;
-      }, 500);
-    }
-  });
-
-  const [_omit, hours, minutes, seconds] = remainingTime;
+  const [days, hours, minutes, seconds] = remainingTime;
 
   if (!isStakeFetched) {
     return null;
@@ -64,6 +42,9 @@ export const NodesEpochStatusCards = ({ className }: WithClassnameType) => {
             <h3 className='mb-0 text-primary text-lh-24'>
               {isStatsFetched ? (
                 <>
+                  {days.time && days.time !== '00' && (
+                    <span className='time-container'>{days.time}</span>
+                  )}
                   <span className='time-container'>{hours.time}</span>h{' '}
                   <span className='time-container'>{minutes.time}</span>
                   min <span className='time-container'>{seconds.time}</span>

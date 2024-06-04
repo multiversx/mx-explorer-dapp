@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 
 import { PageState } from 'components';
 import { faSpinnerThird } from 'icons/regular';
@@ -12,6 +13,7 @@ export interface LoaderUIType extends WithClassnameType {
 export const Loader = ({
   small = false,
   noText = false,
+  className,
   'data-testid': dataTestId = 'loader'
 }: LoaderUIType) => {
   return (
@@ -26,9 +28,12 @@ export const Loader = ({
       }
       data-testid={dataTestId}
       titleClassName={noText ? 'mt-0' : ''}
-      className={`loader d-flex h-100 align-items-center justify-content-center ${
-        small ? 'page-state-sm' : 'py-spacer my-auto'
-      }`}
+      className={classNames(
+        'loader d-flex h-100 align-items-center justify-content-center',
+        { 'page-state-sm': small },
+        { 'py-spacer my-auto': !small },
+        className
+      )}
     />
   );
 };

@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
+import { Loader } from 'components';
 import { useAdapter } from 'hooks';
-import { faSpinnerThird } from 'icons/regular';
-import { NodeStatusPreviewType, WithClassnameType, NodeType } from 'types';
+import {
+  IndexedNodeStatusPreviewType,
+  WithClassnameType,
+  NodeType
+} from 'types';
+
+import { NodePanel } from './NodePanel';
 
 export interface NodeCellUIType extends WithClassnameType {
-  node: NodeStatusPreviewType;
+  node: IndexedNodeStatusPreviewType;
 }
 
 export const NodeCell = ({ node, className }: NodeCellUIType) => {
@@ -29,31 +34,22 @@ export const NodeCell = ({ node, className }: NodeCellUIType) => {
 
   return (
     <OverlayTrigger
+      key='popover'
+      trigger='click'
       placement='top'
-      delay={{ show: 0, hide: 400 }}
+      rootClose
       onToggle={() => {
         fetchNodeDetails(bls);
       }}
-      overlay={(props: any) => (
-        <Tooltip {...props} show={props.show.toString()}>
-          <>
-            {dataReady ? (
-              <>
-                {nodeDetails?.bls}
-                {node.status}
-              </>
-            ) : (
-              <>
-                <FontAwesomeIcon
-                  icon={faSpinnerThird}
-                  size={'sm'}
-                  className='ms-2 fa-spin fast-spin'
-                />
-              </>
-            )}
-          </>
-        </Tooltip>
-      )}
+      overlay={
+        <Popover id='popover-positioned-bottom' className='node-panel-wrapper'>
+          {dataReady && nodeDetails ? (
+            <NodePanel node={nodeDetails} index={node.index} />
+          ) : (
+            <Loader className='px-5' />
+          )}
+        </Popover>
+      }
     >
       <div
         className={classNames(
