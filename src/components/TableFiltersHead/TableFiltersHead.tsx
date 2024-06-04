@@ -67,12 +67,12 @@ export const TableFiltersHead = ({
       case 'shard':
         return getShardText(String(value), isSovereign);
       case 'status':
-        const { textColor, text, icon } = getNodeStatusDisplay({
+        const { text, textColor, icon, iconColor } = getNodeStatusDisplay({
           status: String(value) as NodeApiStatusEnum
         });
         return (
           <div className='d-flex align-items-center gap-1'>
-            {icon && <FontAwesomeIcon icon={icon} className={textColor} />}
+            {icon && <FontAwesomeIcon icon={icon} className={iconColor} />}
             <span className={textColor}>{text}</span>
           </div>
         );
