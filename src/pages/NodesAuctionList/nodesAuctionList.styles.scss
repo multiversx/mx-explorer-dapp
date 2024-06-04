@@ -1,4 +1,10 @@
 .nodes-auction-list {
+  .epoch-status-cards {
+    .epoch-status,
+    .auction-status {
+      --card-spacer-y: 1rem;
+    }
+  }
   .auction-list-table {
     .th-eligibility {
       width: 12%;

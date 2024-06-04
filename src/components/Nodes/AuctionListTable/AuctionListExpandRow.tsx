@@ -89,6 +89,7 @@ export const AuctionListExpandRow = ({
 
   const isNotQualifiedHidden =
     hasNotQualifiedExpand &&
+    index > (qualifiedExpandClosePosition || 0) &&
     index >= notQualifiedExpandPosition &&
     index < notQualifiedExpandClosePosition;
 

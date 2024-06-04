@@ -16,7 +16,7 @@ export const TokenLayout = () => {
   const { hash: tokenId } = useParams();
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { token, isFetched } = useSelector(tokenSelector);
+  const { token } = useSelector(tokenSelector);
 
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 

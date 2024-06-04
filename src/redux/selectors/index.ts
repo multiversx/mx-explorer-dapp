@@ -18,6 +18,7 @@ export * from './metaTags';
 export * from './networks';
 export * from './nft';
 export * from './nodesIdentities';
+export * from './nodesOverview';
 export * from './nodesVersions';
 export * from './refresh';
 export * from './stake';

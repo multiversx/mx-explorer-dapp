@@ -1,7 +1,6 @@
 import {
   NetworkLink,
   Trim,
-  NodeOnlineState,
   NodeIssueIcon,
   SharedIdentity,
   NodeOnlineIcon
