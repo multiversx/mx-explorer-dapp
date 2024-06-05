@@ -5,7 +5,7 @@ export * from './NodeQualification';
 export * from './NodeIcons';
 export * from './NodeOnlineState';
 export * from './NodesOverview';
-export * from './NodeThreshold';
+export * from './AuctionThreshold';
 export * from './NodeLockedStake';
 export * from './NodesFilters';
 export * from './NodesEpochStatusCards';

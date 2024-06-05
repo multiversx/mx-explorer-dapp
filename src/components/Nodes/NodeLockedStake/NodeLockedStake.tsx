@@ -1,8 +1,7 @@
 import BigNumber from 'bignumber.js';
-import { useSelector } from 'react-redux';
 
 import { Overlay, FormatAmount, NodeLockedStakeTooltip } from 'components';
-import { stakeSelector } from 'redux/selectors';
+import { useIsAuctionNodeDropped } from 'hooks';
 import { NodeStatusEnum, NodeType } from 'types';
 
 export interface StandardRowUIType {
@@ -14,11 +13,7 @@ export const NodeLockedStake = ({
   node,
   showLabel = true
 }: StandardRowUIType) => {
-  const {
-    isFetched: isStakeFetched,
-    unprocessed: { minimumAuctionQualifiedStake }
-  } = useSelector(stakeSelector);
-
+  const isDropped = useIsAuctionNodeDropped(node);
   const bNAuctionTopup = new BigNumber(node.auctionTopUp ?? 0);
   const bNqualifiedStake =
     node.qualifiedStake !== undefined
@@ -26,13 +21,6 @@ export const NodeLockedStake = ({
       : new BigNumber(node.stake).plus(
           node.auctionQualified ? bNAuctionTopup : 0
         );
-
-  const isDropped =
-    isStakeFetched &&
-    node.auctioned &&
-    !node.auctionQualified &&
-    bNqualifiedStake.isGreaterThan(minimumAuctionQualifiedStake ?? 0) &&
-    bNAuctionTopup.isGreaterThan(0);
 
   if (isDropped) {
     return (

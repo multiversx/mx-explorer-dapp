@@ -12,6 +12,7 @@ export * from './useGetEpochRemainingTime';
 export * from './useGetRemainingTime';
 export * from './useGetURLNetwork';
 export * from './useHasGrowthWidgets';
+export * from './useIsAuctionNodeDropped';
 export * from './useIsDevnet';
 export * from './useIsMainnet';
 export * from './useIsSovereign';
