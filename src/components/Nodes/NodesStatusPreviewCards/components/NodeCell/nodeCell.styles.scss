@@ -17,13 +17,13 @@
     background-color: var(--cyan-400);
   }
   &.auction {
-    border-color: var(--red-400);
+    border-color: var(--red-500);
     background-color: var(--blue-400);
     &.auctionQualified {
       border-color: var(--green-400);
     }
     &.isInDangerZone {
-      border-color: var(--orange-400);
+      border-color: var(--orange-300);
     }
   }
   &.queued {
