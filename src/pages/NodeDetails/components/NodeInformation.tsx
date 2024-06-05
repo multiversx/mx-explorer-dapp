@@ -7,7 +7,8 @@ import {
   LockedAmountTooltip,
   AccountLink,
   ShardLink,
-  NodeStatus
+  NodeStatus,
+  NodeQualification
 } from 'components';
 import { urlBuilder, getNodeIcon } from 'helpers';
 import { useIsSovereign } from 'hooks';
@@ -21,16 +22,18 @@ import {
   faServer,
   faCheck,
   faCode,
-  faUser
+  faUser,
+  faGavel
 } from 'icons/solid';
 
-import { NodeType, NodeTypeEnum } from 'types';
+import { NodeStatusEnum, NodeType, NodeTypeEnum } from 'types';
 import { Alert } from './Alert';
 
 export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
   const {
     bls,
     type,
+    status,
     shard,
     version,
     name,
@@ -108,6 +111,11 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             )}
           </>
         </CardItem>
+        {status === NodeStatusEnum.auction && (
+          <CardItem title='Auction Status' icon={faGavel}>
+            <NodeQualification node={nodeData} showLed={false} />
+          </CardItem>
+        )}
         <CardItem title='Nonce' icon={faStream}>
           {nonce ? nonce : <>N/A</>}
         </CardItem>
