@@ -27,7 +27,7 @@ export const IdentitySummary = ({
           <div className='row'>
             <div className='col'>
               <div className='d-flex flex-column flex-xxl-row align-items-xxl-center'>
-                <div className='d-flex align-items-center min-w-0 mb-3 mb-xxl-0'>
+                <div className='d-flex align-items-center flex-wrap min-w-0 mb-3 mb-xxl-0 gy-3'>
                   <SharedIdentity.Avatar identity={identity} className='me-2' />
 
                   <h5 className='mb-0 mx-2 d-flex'>
