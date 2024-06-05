@@ -45,6 +45,13 @@ export interface NodeType {
   computedShardID?: number;
 }
 
+export interface NodeStatusUIType {
+  type?: NodeTypeEnum;
+  status?: NodeApiStatusEnum;
+  receivedShardID?: NodeType['receivedShardID'];
+  computedShardID?: NodeType['computedShardID'];
+}
+
 export enum NodeTypeEnum {
   observer = 'observer',
   validator = 'validator'

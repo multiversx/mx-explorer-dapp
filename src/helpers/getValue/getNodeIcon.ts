@@ -1,41 +1,78 @@
 import {
-  faClock,
+  faArrowRightFromArc,
+  faChartPieSimple,
   faEye,
   faFlagAlt,
   faLeaf,
-  faSnooze,
   faSync,
-  faLock,
-  faGavel
+  faLock
 } from 'icons/regular';
+import {
+  faCircleBolt,
+  faCircleMinus,
+  faCirclePause,
+  faCircleQuestion,
+  faCircleS,
+  faCircleX,
+  faClock,
+  faGavel
+} from 'icons/solid';
 import { faExclamationTriangle } from 'icons/solid';
-import { NodeType, NodeStatusEnum, NodeTypeEnum } from 'types';
+import {
+  NodeType,
+  NodeStatusEnum,
+  NodeStatusRawEnum,
+  NodeTypeEnum,
+  NodeStatusUIType
+} from 'types';
 
-export const getNodeIcon = (node: NodeType) => {
-  switch (true) {
-    case node.type === NodeTypeEnum.observer:
-      return faEye;
+export const getNodeIcon = (node: NodeStatusUIType) => {
+  const { type, status } = node;
+  if (node.receivedShardID !== node.computedShardID) {
+    return faSync;
+  }
+  if (type === NodeTypeEnum.observer) {
+    return faEye;
+  }
+  switch (status) {
+    case NodeStatusEnum.eligible:
+      return faCircleBolt;
 
-    case node.status === NodeStatusEnum.new:
+    case NodeStatusEnum.new:
       return faLeaf;
 
-    case node.status === NodeStatusEnum.inactive:
-      return faSnooze;
-
-    case node.receivedShardID !== node.computedShardID:
-      return faSync;
-
-    case node.status === NodeStatusEnum.waiting:
+    case NodeStatusEnum.waiting:
       return faClock;
 
-    case node.status === NodeStatusEnum.queued:
-      return faFlagAlt;
-
-    case node.status === NodeStatusEnum.auction:
+    case NodeStatusEnum.auction:
       return faGavel;
 
+    case NodeStatusEnum.queued:
+      return faFlagAlt;
+
+    case NodeStatusEnum.leaving:
+      return faArrowRightFromArc;
+
+    case NodeStatusEnum.jailed:
+      return faCircleX;
+
+    case NodeStatusEnum.inactive:
+      return faCirclePause;
+
+    case NodeStatusEnum.unknown:
+      return faCircleQuestion;
+
+    case NodeStatusRawEnum.notStaked:
+      return faCircleMinus;
+
+    case NodeStatusRawEnum.unStaked:
+      return faChartPieSimple;
+
+    case NodeStatusRawEnum.staked:
+      return faCircleS;
+
     default:
-      return null;
+      return undefined;
   }
 };
 

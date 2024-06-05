@@ -6,7 +6,8 @@ import {
   FormatAmount,
   LockedAmountTooltip,
   AccountLink,
-  ShardLink
+  ShardLink,
+  NodeStatus
 } from 'components';
 import { urlBuilder, getNodeIcon } from 'helpers';
 import { useIsSovereign } from 'hooks';
@@ -36,7 +37,6 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     nonce,
     instances,
     provider,
-    status,
     locked,
     topUp,
     stake,
@@ -101,7 +101,9 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             {type !== NodeTypeEnum.observer && (
               <>
                 Validator{' '}
-                <span className='text-neutral-400 ms-1'>({status})</span>
+                <span className='ms-1 d-flex'>
+                  (<NodeStatus node={nodeData} showIcon={false} />)
+                </span>
               </>
             )}
           </>
