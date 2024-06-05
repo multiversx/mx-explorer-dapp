@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { ELLIPSIS, ZERO, MAX_RESULTS } from 'appConstants';
 import {
   FormatAmount,
-  NodeThreshold,
+  AuctionThreshold,
   LockedStakeTooltip,
   Overlay,
   Led,
@@ -222,7 +222,7 @@ export const AuctionListBaseRow = ({
           )}
         </td>
         <td>
-          <NodeThreshold qualifiedStake={qualifiedStake} showPercentage />
+          <AuctionThreshold qualifiedStake={qualifiedStake} showPercentage />
         </td>
       </tr>
       {showDetails && (

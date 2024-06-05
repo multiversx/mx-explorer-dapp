@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { ELLIPSIS } from 'appConstants';
 import { FormatAmountUIType } from 'components';
-import { stringIsFloat, formatBigNumber } from 'helpers';
+import { formatBigNumber } from 'helpers';
 
 import { FormatDisplayValue } from '../FormatDisplayValue';
 
