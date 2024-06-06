@@ -1,15 +1,12 @@
-import BigNumber from 'bignumber.js';
 import {
   NodeRating,
   NodeStatus,
   NetworkLink,
   Trim,
-  Overlay,
-  FormatAmount,
   NodeChangingShardIcon,
   NodeIssueIcon,
   NodeFullHistoryIcon,
-  NodeLockedStakeTooltip,
+  NodeLockedStake,
   NodeQualification,
   NodeOnlineIcon,
   SharedIdentity,
@@ -33,14 +30,6 @@ export const StandardRow = ({
   type,
   status
 }: StandardRowUIType) => {
-  const bNAuctionTopup = new BigNumber(nodeData.auctionTopUp ?? 0);
-  const bNqualifiedStake =
-    nodeData.qualifiedStake !== undefined
-      ? new BigNumber(nodeData.qualifiedStake)
-      : new BigNumber(nodeData.stake).plus(
-          nodeData.auctionQualified ? bNAuctionTopup : 0
-        );
-
   return (
     <tr>
       <td>
@@ -107,39 +96,7 @@ export const StandardRow = ({
       {(type === NodeTypeEnum.validator ||
         status === NodeStatusEnum.auction) && (
         <td>
-          {status !== NodeStatusEnum.auction || nodeData.auctionQualified ? (
-            <Overlay
-              title={
-                <NodeLockedStakeTooltip
-                  node={nodeData}
-                  showAuctionTopup={
-                    status === NodeStatusEnum.auction ||
-                    nodeData.auctionQualified
-                  }
-                />
-              }
-              className='text-neutral-100'
-              tooltipClassName='tooltip-text-start tooltip-lg'
-              truncate
-            >
-              <FormatAmount
-                value={
-                  nodeData.auctionQualified
-                    ? bNqualifiedStake.toString(10)
-                    : nodeData.locked
-                }
-                showTooltip={false}
-              />
-            </Overlay>
-          ) : (
-            <FormatAmount
-              value={
-                nodeData.auctionQualified
-                  ? bNqualifiedStake.toString(10)
-                  : nodeData.locked
-              }
-            />
-          )}
+          <NodeLockedStake node={nodeData} />
         </td>
       )}
       {type !== NodeTypeEnum.observer && (

@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 
 import { ELLIPSIS } from 'appConstants';
 import { ProgressRing } from 'components';
-import { useFetchEpochProgress } from 'hooks/useFetchEpochProgress';
+import { useFetchEpochProgress } from 'hooks';
 import { WithClassnameType } from 'types';
 
 export const EpochHeroPill = ({ className }: WithClassnameType) => {

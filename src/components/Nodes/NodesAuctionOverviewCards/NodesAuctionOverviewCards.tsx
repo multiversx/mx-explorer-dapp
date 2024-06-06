@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { InfoTooltip, Led } from 'components';
 import { stakeSelector } from 'redux/selectors';
 
-export const NodesOverviewCards = () => {
+export const NodesAuctionOverviewCards = () => {
   const {
     auctionValidators,
     qualifiedAuctionValidators,
@@ -12,7 +12,7 @@ export const NodesOverviewCards = () => {
   } = useSelector(stakeSelector);
 
   return (
-    <>
+    <div className='d-flex flex-wrap gap-3'>
       <div className='card bg-neutral-800-opacity-60 h-100 flex-fill flex-sm-grow-0'>
         <div className='card-body d-flex flex-column gap-1 text-neutral-400'>
           <span className='text-neutral-500'>Qualified Nodes</span>
@@ -52,6 +52,6 @@ export const NodesOverviewCards = () => {
           </span>
         </div>
       </div>
-    </>
+    </div>
   );
 };

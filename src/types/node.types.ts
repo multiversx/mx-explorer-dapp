@@ -38,10 +38,18 @@ export interface NodeType {
   qualifiedStake?: string;
   auctionQualified?: boolean;
   isInDangerZone?: boolean;
+  auctioned?: boolean;
 
   // TODO check if used
   receivedShardID?: number;
   computedShardID?: number;
+}
+
+export interface NodeStatusUIType {
+  type?: NodeTypeEnum;
+  status?: NodeApiStatusEnum;
+  receivedShardID?: NodeType['receivedShardID'];
+  computedShardID?: NodeType['computedShardID'];
 }
 
 export enum NodeTypeEnum {
@@ -160,4 +168,24 @@ export enum NodeQualificationStatusEnum {
 export interface NodesIdentitiesSliceType extends SliceType {
   unprocessed: IdentityType[];
   nodesIdentities: IdentityType[];
+}
+
+export interface NodeStatusPreviewType {
+  bls: NodeType['bls'];
+  status: NodeApiStatusEnum;
+  auctionQualified?: NodeType['auctionQualified'];
+  isInDangerZone?: NodeType['isInDangerZone'];
+}
+
+export interface IndexedNodeStatusPreviewType extends NodeStatusPreviewType {
+  index: number;
+}
+
+export interface NodesOverviewSliceType extends SliceType {
+  nodes: IndexedNodeStatusPreviewType[];
+  nodeDetails?: { [key: string]: NodeType };
+}
+
+export interface NodesOverviewAddSliceType {
+  nodeDetails: NodeType;
 }

@@ -1,5 +1,5 @@
 import { LockedStakeTooltip } from 'components';
-import { NodeType } from 'types';
+import { NodeType, NodeTypeEnum } from 'types';
 
 export interface NodeLockedStakeTooltipUIType {
   node: NodeType;
@@ -14,10 +14,15 @@ export const NodeLockedStakeTooltip = ({
     return null;
   }
 
+  const hasLockedAndStake =
+    node.type === NodeTypeEnum.validator &&
+    node.locked !== undefined &&
+    node.stake !== undefined;
+
   if (
-    (node.type === 'validator' && node.locked && node.stake) ||
-    node.topUp ||
-    node.auctionTopUp
+    hasLockedAndStake ||
+    node.topUp !== undefined ||
+    node.auctionTopUp !== undefined
   ) {
     return (
       <LockedStakeTooltip

@@ -116,6 +116,7 @@ export function getNodeParams({
   size,
   sort,
   order,
+  fields,
 
   type,
   status,
@@ -144,6 +145,7 @@ export function getNodeParams({
           ...getPageParams({ page, size }),
           ...(sort !== undefined ? { sort } : {}),
           ...(order !== undefined ? { order } : {}),
+          ...(fields !== undefined ? { fields } : {}),
           ...(withIdentityInfo !== undefined ? { withIdentityInfo } : {})
         }),
     ...(search !== undefined ? { search } : {}),

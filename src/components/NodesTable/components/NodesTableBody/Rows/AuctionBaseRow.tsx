@@ -1,4 +1,3 @@
-import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
@@ -6,11 +5,9 @@ import {
   NodeQualification,
   NetworkLink,
   Trim,
-  Overlay,
-  FormatAmount,
   NodeFullHistoryIcon,
   NodeIssueIcon,
-  NodeLockedStakeTooltip,
+  NodeLockedStake,
   NodeThreshold,
   SharedIdentity,
   NodeChangingShardIcon,
@@ -41,14 +38,6 @@ export const AuctionBaseRow = ({
   if (!isStakeFetched || !minimumAuctionQualifiedStake) {
     return null;
   }
-
-  const bNAuctionTopup = new BigNumber(nodeData.auctionTopUp ?? 0);
-  const bNqualifiedStake =
-    nodeData.qualifiedStake !== undefined
-      ? new BigNumber(nodeData.qualifiedStake)
-      : new BigNumber(nodeData.stake).plus(
-          nodeData.auctionQualified ? bNAuctionTopup : 0
-        );
 
   return (
     <tr className={classNames(className)}>
@@ -94,24 +83,10 @@ export const AuctionBaseRow = ({
         )}
       </td>
       <td className='text-neutral-100'>
-        {nodeData.auctionQualified ? (
-          <Overlay
-            title={<NodeLockedStakeTooltip node={nodeData} showAuctionTopup />}
-            tooltipClassName='tooltip-text-start tooltip-lg'
-            persistent
-            truncate
-          >
-            <FormatAmount
-              value={bNqualifiedStake.toString(10)}
-              showTooltip={false}
-            />
-          </Overlay>
-        ) : (
-          <FormatAmount value={bNqualifiedStake.toString(10)} />
-        )}
+        <NodeLockedStake node={nodeData} />
       </td>
       <td>
-        <NodeThreshold qualifiedStake={bNqualifiedStake.toString(10)} />
+        <NodeThreshold node={nodeData} />
       </td>
       <td>
         <NodeQualification node={nodeData} />

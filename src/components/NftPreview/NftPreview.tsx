@@ -101,6 +101,7 @@ export const NftPreview = ({ token }: { token: NftType }) => {
                     href={found ? stringWithLinks : link}
                     target='_blank'
                     rel='noreferrer nofollow noopener'
+                    className='text-break-all'
                   >
                     <Thumbnail link={found ? '' : link} token={token} index={i}>
                       {found ? stringWithLinks : link}

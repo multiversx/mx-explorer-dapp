@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import {
@@ -14,7 +13,6 @@ import {
 import { DecodeMethodType } from 'components/DataDecode';
 import { urlBuilder } from 'helpers';
 import { faExchange, faSearch } from 'icons/regular';
-import { activeNetworkSelector } from 'redux/selectors';
 import { transactionsRoutes } from 'routes';
 import { TransactionSCResultType } from 'types';
 
@@ -26,7 +24,6 @@ export const ScResultsList = ({
   results: TransactionSCResultType[];
 }) => {
   const { hash } = useLocation();
-  const { egldLabel } = useSelector(activeNetworkSelector);
 
   const ref = useRef<HTMLDivElement>(null);
   const formattedHash = hash

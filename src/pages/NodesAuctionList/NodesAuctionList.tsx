@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import {
   Loader,
   PageState,
-  AuctionListCards,
   AuctionListFilters,
-  AuctionListTable
+  AuctionListTable,
+  NodesEpochStatusCards,
+  NodesAuctionOverviewCards
 } from 'components';
 
 import { useAdapter, useGetNodeFilters } from 'hooks';
@@ -53,8 +54,17 @@ export const NodesAuctionList = () => {
       <div className='card-header'>
         <NodesTabs />
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-          <AuctionListCards />
-          <AuctionListFilters />
+          <div className='nodes-table-hero font-headings-regular w-100'>
+            <div className='row mb-4 gy-3'>
+              <div className='col-xl-6'>
+                <NodesAuctionOverviewCards />
+              </div>
+              <div className='col-xl-6'>
+                <NodesEpochStatusCards />
+              </div>
+            </div>
+            <AuctionListFilters />
+          </div>
         </div>
       </div>
 

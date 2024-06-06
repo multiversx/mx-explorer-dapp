@@ -7,16 +7,16 @@ import { FormatAmount, FormatNumber } from 'components';
 import { stakeSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
-export interface NodeThresholdUIType extends WithClassnameType {
+export interface AuctionThresholdUIType extends WithClassnameType {
   qualifiedStake?: string;
   showPercentage?: boolean;
 }
 
-export const NodeThreshold = ({
+export const AuctionThreshold = ({
   qualifiedStake,
   showPercentage,
   className
-}: NodeThresholdUIType) => {
+}: AuctionThresholdUIType) => {
   const {
     isFetched: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake }

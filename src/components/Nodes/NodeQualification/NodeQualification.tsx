@@ -15,10 +15,12 @@ import {
 
 export interface NodeQualificationUIType extends WithClassnameType {
   node: NodeType;
+  showLed?: boolean;
 }
 
 export const NodeQualification = ({
   node,
+  showLed = true,
   className
 }: NodeQualificationUIType) => {
   const {
@@ -52,7 +54,7 @@ export const NodeQualification = ({
     if (auctionQualified) {
       return (
         <>
-          <Led color='bg-success' />
+          {showLed && <Led color='bg-success' />}
           <span className='text-success'>
             {NodeQualificationStatusEnum.qualified}
           </span>
@@ -69,13 +71,16 @@ export const NodeQualification = ({
 
     return (
       <>
-        <Led color='bg-red-400' />
+        {showLed && <Led color='bg-red-400' />}
         <span className='text-red-400'>
           {NodeQualificationStatusEnum.notQualified}
         </span>
         {isStakeFetched && minimumAuctionQualifiedStake && isDropped && (
           <Overlay title='Dropped'>
-            <FontAwesomeIcon icon={faScissors} className='text-red-400' />
+            <FontAwesomeIcon
+              icon={faScissors}
+              className='text-red-400 icon-dropped'
+            />
           </Overlay>
         )}
       </>
