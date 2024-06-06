@@ -4,7 +4,7 @@ import { Overlay, FormatAmount, NodeLockedStakeTooltip } from 'components';
 import { useIsAuctionNodeDropped } from 'hooks';
 import { NodeStatusEnum, NodeType } from 'types';
 
-export interface StandardRowUIType {
+interface NodeLockedStakeUIType {
   node: NodeType;
   showLabel?: boolean;
 }
@@ -12,7 +12,7 @@ export interface StandardRowUIType {
 export const NodeLockedStake = ({
   node,
   showLabel = true
-}: StandardRowUIType) => {
+}: NodeLockedStakeUIType) => {
   const isDropped = useIsAuctionNodeDropped(node);
   const bNAuctionTopup = new BigNumber(node.auctionTopUp ?? 0);
   const bNqualifiedStake =
