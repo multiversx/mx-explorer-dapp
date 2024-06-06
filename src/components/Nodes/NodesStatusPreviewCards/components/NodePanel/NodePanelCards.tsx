@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { ELLIPSIS } from 'appConstants';
 import {
   NodeLockedStake,
   NodeQualification,
@@ -9,75 +8,12 @@ import {
   NodeStatus,
   ShardLink
 } from 'components';
-import { formatBigNumber } from 'helpers';
-import { useGetEpochRemainingTime, useIsSovereign } from 'hooks';
+import { useIsSovereign } from 'hooks';
 import { nodesOverviewSelector } from 'redux/selectors';
-import { NodeType, NodeStatusEnum, WithClassnameType } from 'types';
+import { NodeType, NodeStatusEnum } from 'types';
 
-export interface PanelCardUIType extends WithClassnameType {
-  title?: React.ReactNode;
-  children?: React.ReactNode;
-  featured?: boolean;
-}
-
-export const PanelCard = ({
-  title,
-  children,
-  featured,
-  className
-}: PanelCardUIType) => {
-  if (!(title || children)) {
-    return null;
-  }
-
-  return (
-    <div
-      className={classNames('panel-card', className, { featured: featured })}
-    >
-      {title && <dt>{title}</dt>}
-      {children && <dd>{children}</dd>}
-    </div>
-  );
-};
-
-const TimeRemainingPanelCard = ({ node }: { node: NodeType }) => {
-  const { epoch, remainingTime, isStatsFetched } = useGetEpochRemainingTime();
-  const [days, hours, minutes, seconds] = remainingTime;
-
-  const getRemainingTimeTitle = () => {
-    if (node.status === NodeStatusEnum.auction) {
-      return 'Auction ends in';
-    }
-    if (node.status === NodeStatusEnum.eligible) {
-      return 'Next Rewards';
-    }
-
-    return <>Epoch {formatBigNumber({ value: epoch })} end</>;
-  };
-
-  return (
-    <PanelCard
-      title={getRemainingTimeTitle()}
-      className='text-primary'
-      featured
-    >
-      {isStatsFetched ? (
-        <>
-          {days.time && days.time !== '00' && (
-            <>
-              <span className='time-container'>{days.time}</span>d{' '}
-            </>
-          )}
-          <span className='time-container'>{hours.time}</span>h{' '}
-          <span className='time-container'>{minutes.time}</span>m{' '}
-          <span className='time-container'>{seconds.time}</span>s
-        </>
-      ) : (
-        ELLIPSIS
-      )}
-    </PanelCard>
-  );
-};
+import { PanelCard } from './PanelCard';
+import { TimeRemainingPanelCard } from './TimeRemainingPanelCard';
 
 export const NodePanelCards = ({
   node,
