@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 
+import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import {
   FormatAmount,
   CopyButton,
@@ -11,12 +12,10 @@ import {
   AccountLink
 } from 'components';
 import { DecodeMethodType } from 'components/DataDecode';
-import { urlBuilder } from 'helpers';
+import { urlBuilder, truncate } from 'helpers';
 import { faExchange, faSearch } from 'icons/regular';
 import { transactionsRoutes } from 'routes';
 import { TransactionSCResultType } from 'types';
-
-import { decodePart } from './helpers/decodePart';
 
 export const ScResultsList = ({
   results
@@ -42,20 +41,6 @@ export const ScResultsList = ({
       : DecodeMethodType.raw
   );
 
-  const decodeData = (data: string) => {
-    const parts = Buffer.from(data, 'base64').toString().split('@');
-
-    if (parts.length >= 2) {
-      if (parts[0].length > 0) {
-        parts[0] = decodePart(parts[0]);
-      } else {
-        parts[1] = decodePart(parts[1]);
-      }
-    }
-
-    return parts.join('@');
-  };
-
   useEffect(() => {
     setTimeout(() => {
       if (formattedHash && ref.current && ref.current !== null) {
@@ -71,6 +56,13 @@ export const ScResultsList = ({
     <div className='sc-results-list detailed-list d-flex flex-column mt-1'>
       {results.map((result: TransactionSCResultType, i) => {
         const highlightTx = formattedHash === result.hash;
+        const decodedData = result.data
+          ? truncate(
+              Buffer.from(result.data, 'base64').toString(),
+              MAX_DISPLAY_TX_DATA_LENGTH
+            )
+          : 'N/A';
+
         return (
           <div
             key={i}
@@ -170,10 +162,9 @@ export const ScResultsList = ({
                   <div className='col-sm-2 col-left'>Data</div>
                   <div className='col-sm-10'>
                     <DataDecode
-                      value={result.data ? decodeData(result.data) : 'N/A'}
-                      {...(highlightTx
-                        ? { initialDecodeMethod, setDecodeMethod }
-                        : {})}
+                      value={decodedData}
+                      initialDecodeMethod={initialDecodeMethod}
+                      setDecodeMethod={setDecodeMethod}
                     />
                   </div>
                 </div>
