@@ -207,8 +207,9 @@ export enum TransactionMethodsEnum {
 export interface EventType {
   address: string;
   identifier: string;
-  topics: string[];
   order: number;
+  topics: string[];
+  additionalData?: string[];
   data?: string;
 }
 
