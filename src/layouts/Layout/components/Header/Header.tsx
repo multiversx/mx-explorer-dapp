@@ -70,7 +70,7 @@ export const Header = (props: HeaderPropsType) => {
   return (
     <header className='header'>
       <div className='logo-wrapper'>
-        <NetworkLink to='/' className='logo' aria-label='MultiversX Explorer'>
+        <NetworkLink to='/' className='logo' aria-label='CyberNetwork Explorer'>
           {isMainnet ? (
             <MultiversXLogo />
           ) : (

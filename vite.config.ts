@@ -13,8 +13,8 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
-  const shouldUseTSL =
-    process.env.VITE_APP_USE_HTTPS?.toLowerCase() !== 'false';
+  const shouldUseTLS =
+    process.env.VITE_APP_USE_HTTPS?.toLowerCase() === 'true';
 
   return defineConfig({
     plugins: [
@@ -25,7 +25,7 @@ export default ({ mode }) => {
       nodePolyfills({
         globals: { Buffer: true, global: true, process: true }
       }),
-      ...(shouldUseTSL ? [mkcert()] : [])
+      ...(shouldUseTLS ? [mkcert()] : [])
     ],
     resolve: {
       alias: {
@@ -43,8 +43,8 @@ export default ({ mode }) => {
     server: {
       port: 3002,
       strictPort: true,
-      https: shouldUseTSL,
-      host: 'localhost',
+      https: shouldUseTLS,
+      host: '0.0.0.0',
       hmr: {
         overlay: false
       },
@@ -56,8 +56,8 @@ export default ({ mode }) => {
     preview: {
       port: 3002,
       strictPort: true,
-      https: shouldUseTSL,
-      host: 'localhost'
+      https: shouldUseTLS,
+      host: '0.0.0.0'
     }
   });
 };

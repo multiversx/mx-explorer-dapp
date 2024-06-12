@@ -9,7 +9,7 @@ export const useGetExplorerTitle = () => {
   const explorerTitle =
     id !== 'mainnet' && SHARE_PREFIX
       ? `${capitalize(SHARE_PREFIX)} Explorer`
-      : 'Explorer';
+      : 'Testnet Explorer';
 
   return explorerTitle;
 };

@@ -7,14 +7,14 @@ export const networks: NetworkType[] = [
     default: true,
     id: 'devnet',
     name: 'Devnet',
-    chainId: 'D',
+    chainId: 'local-testnet',
     adapter: 'api',
     theme: 'testnet',
-    egldLabel: 'xEGLD',
+    egldLabel: 'CNET',
     walletAddress: 'https://devnet-wallet.multiversx.com',
     explorerAddress: 'https://devnet-explorer.multiversx.com',
     nftExplorerAddress: 'https://devnet.xspotlight.com',
-    apiAddress: 'https://devnet-api.multiversx.com'
+    apiAddress: 'http://178.128.199.234:3001'
   }
 ];
 

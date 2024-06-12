@@ -21,7 +21,7 @@ export const useFetchEpochProgress = () => {
   const pageHidden = document.hidden;
 
   const refreshInterval = refreshRate ? refreshRate : REFRESH_RATE;
-  const refreshIntervalSec = refreshInterval / 1000;
+  const refreshIntervalSec = refreshInterval / 6000;
 
   const [oldTestnetId, setOldTestnetId] = useState(activeNetworkId);
   const [roundTimeProgress, setRoundTimeProgress] = useState(1);
