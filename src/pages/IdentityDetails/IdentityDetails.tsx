@@ -145,6 +145,7 @@ export const IdentityDetails = () => {
                           <ProvidersTable
                             providers={providers}
                             showIdentity={false}
+                            hideFilters
                           />
                         )}
                       </div>

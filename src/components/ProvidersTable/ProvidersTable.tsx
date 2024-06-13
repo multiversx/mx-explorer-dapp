@@ -24,10 +24,12 @@ import { sortProviders, SortProviderFieldEnum } from './helpers';
 
 export const ProvidersTable = ({
   providers,
-  showIdentity = true
+  showIdentity = true,
+  hideFilters
 }: {
   providers: ProviderType[];
   showIdentity?: boolean;
+  hideFilters?: boolean;
 }) => {
   const [displayProviders, setDisplayProviders] =
     useState<ProviderType[]>(providers);
@@ -54,28 +56,40 @@ export const ProvidersTable = ({
           <tr>
             {showIdentity ? (
               <th>
-                <Sort text='Name' id='name' />
+                <Sort text='Name' id='name' hideFilters={hideFilters} />
               </th>
             ) : (
               <th>Address</th>
             )}
             <th>
-              <Sort text='Stake' id='locked' />
+              <Sort text='Stake' id='locked' hideFilters={hideFilters} />
             </th>
             <th>
-              <Sort text='Nodes' id='numNodes' />
+              <Sort text='Nodes' id='numNodes' hideFilters={hideFilters} />
             </th>
             <th>
-              <Sort text='Computed Net APR' id='apr' />
+              <Sort
+                text='Computed Net APR'
+                id='apr'
+                hideFilters={hideFilters}
+              />
             </th>
             <th>
-              <Sort text='Service fee' id='serviceFee' />
+              <Sort
+                text='Service fee'
+                id='serviceFee'
+                hideFilters={hideFilters}
+              />
             </th>
             <th>
-              <Sort text='Delegation cap' id='delegationCap' />
+              <Sort
+                text='Delegation cap'
+                id='delegationCap'
+                hideFilters={hideFilters}
+              />
             </th>
             <th>
-              <Sort text='Filled' id='filled' />
+              <Sort text='Filled' id='filled' hideFilters={hideFilters} />
             </th>
           </tr>
         </thead>
