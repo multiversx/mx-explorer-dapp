@@ -61,6 +61,10 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
     setCollapsed(!collapsed);
   };
 
+  const currentValidatorsTotalPercent = new BigNumber(
+    identity.validatorsPercent || 0
+  ).plus(identity.overallValidatorsPercent || 0);
+
   const isStakeSorting = sort === SortIdentitesFieldEnum.locked;
 
   const link = identity.identity
@@ -92,20 +96,10 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
           </div>
         </td>
 
-        <td>
-          <Overlay
-            title={
-              <LockedStakeTooltip
-                stake={identity.stake}
-                topUp={identity.topUp}
-              />
-            }
-            tooltipClassName='tooltip-text-start tooltip-lg'
-            truncate
-          >
-            <FormatAmount value={identity.locked} showTooltip={false} />
-          </Overlay>
+        <td className='text-end'>
+          {new BigNumber(identity.validators).toFormat()}
         </td>
+        <td>{formatPercentLabel(identity.validatorsPercent)}</td>
         <td>
           <div className='d-flex align-items-center'>
             {isStakeSorting ? (
@@ -135,14 +129,25 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
                   )}
                 />
                 <div className='ms-3'>
-                  {formatPercentLabel(identity?.validatorsPercent)}
+                  {formatPercentLabel(currentValidatorsTotalPercent.toNumber())}
                 </div>
               </>
             )}
           </div>
         </td>
-        <td className='text-end'>
-          {new BigNumber(identity.validators).toFormat()}
+        <td>
+          <Overlay
+            title={
+              <LockedStakeTooltip
+                stake={identity.stake}
+                topUp={identity.topUp}
+              />
+            }
+            tooltipClassName='tooltip-text-start tooltip-lg'
+            truncate
+          >
+            <FormatAmount value={identity.locked} showTooltip={false} />
+          </Overlay>
         </td>
         <td className='text-end'>
           <CarretDown className='details-arrow' height='8' />
@@ -150,7 +155,7 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
       </tr>
       {showDetails && (
         <tr className={`identity-details-row ${collapsed ? 'collapsed' : ''}`}>
-          <td colSpan={6} className='p-0'>
+          <td colSpan={7} className='p-0'>
             <div className='content'>
               {dataReady === undefined && (
                 <div className='py-4'>

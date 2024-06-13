@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
-import { InfoTooltip, Loader, PageState, Sort } from 'components';
+import { InfoTooltip, Loader, Overlay, PageState, Sort } from 'components';
 import { processNodesIdentities } from 'helpers';
 import { useFetchNodesIdentities, useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
@@ -82,8 +82,11 @@ export const Identities = () => {
                   <th className='th-name'>
                     <Sort text='Name' id={SortIdentitesFieldEnum.name} />
                   </th>
-                  <th>
-                    <Sort text='Stake' id={SortIdentitesFieldEnum.locked} />
+                  <th className='w-10 text-end'>
+                    <Sort text='Nodes' id={SortIdentitesFieldEnum.validators} />
+                  </th>
+                  <th className='text-neutral-400 w-10 text-center'>
+                    <Overlay title='Percent of Total Nodes'>% of Total</Overlay>
                   </th>
                   <th className='th-stake-percent'>
                     {isStakeSorting ? 'Cumulative Stake' : 'Cumulative Nodes'}
@@ -116,8 +119,8 @@ export const Identities = () => {
                       tooltipClassName='tooltip-xl'
                     />
                   </th>
-                  <th className='w-10 text-end'>
-                    <Sort text='Nodes' id={SortIdentitesFieldEnum.validators} />
+                  <th>
+                    <Sort text='Stake' id={SortIdentitesFieldEnum.locked} />
                   </th>
                   <th className='th-details'>&nbsp;</th>
                 </tr>
