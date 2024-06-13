@@ -83,7 +83,12 @@ export const Identities = () => {
                     <Sort text='Name' id={SortIdentitesFieldEnum.name} />
                   </th>
                   <th className='w-10 text-end'>
-                    <Sort text='Nodes' id={SortIdentitesFieldEnum.validators} />
+                    <Sort
+                      text='Nodes'
+                      id={SortIdentitesFieldEnum.validators}
+                      defaultOrder={SortOrderEnum.desc}
+                      defaultActive
+                    />
                   </th>
                   <th className='text-neutral-400 w-10 text-center'>
                     <Overlay title='Percent of Total Nodes'>% of Total</Overlay>
