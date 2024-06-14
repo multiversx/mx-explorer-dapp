@@ -23,7 +23,8 @@ export const ProgressRing = ({
     center - (trackWidth > indicatorWidth ? trackWidth : indicatorWidth);
 
   const dashArray = 2 * Math.PI * radius;
-  const dashOffset = dashArray * ((100 - progress) / 100);
+  const adjustedProgress = progress / 6;
+  const dashOffset = dashArray * ((100 - adjustedProgress) / 100);
 
   const showLabel = size > 80 && children;
 
@@ -35,7 +36,7 @@ export const ProgressRing = ({
       style={{ width: size, height: size }}
     >
       <svg
-        className={`progress-ring progress-${String(progress).replace(
+        className={`progress-ring progress-${String(adjustedProgress).replace(
           '.',
           ''
         )}`}

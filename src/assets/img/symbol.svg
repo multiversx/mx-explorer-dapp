@@ -1,3 +1,27 @@
-<svg width="33" height="24" viewBox="0 0 33 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17.8956 12.0018L32.0458 4.52327L29.6668 0L16.7098 5.18441C16.3761 5.31809 16.0062 5.31809 15.6726 5.18441L2.71192 0L0.333008 4.52327L14.4832 12.0018L0.333008 19.4767L2.71192 24L15.669 18.8156C16.0027 18.6819 16.3725 18.6819 16.7061 18.8156L29.6632 24L32.0421 19.4767L17.8919 11.9982L17.8956 12.0018Z" fill="#23F7DD"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 33 24" width="33" height="24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient-2);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="-1704.2" y1="-1491.3" x2="-1727.7" y2="-1511.1" gradientTransform="translate(-1705.4 1509.9) rotate(-180) scale(1 -1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00e6be"/>
+      <stop offset="0" stop-color="#00e7bc"/>
+      <stop offset=".6" stop-color="#00f8a3"/>
+      <stop offset="1" stop-color="#00ff9b"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="-6885.3" y1="1557.1" x2="-6908.9" y2="1537.3" gradientTransform="translate(6919.5 1562.5) scale(1 -1)" xlink:href="#linear-gradient"/>
+  </defs>
+  <path id="left" class="cls-1" d="M.6,11.8L8,1.8c1.5-2,4.8-2,6.3,0l5.7,7.8c.3.4-.2.9-.7.7-4.6-2.2-8.2,1.3-8.2,1.3l-5.2,4.5c-.6.5-1.3.8-2.1.8-3,0-4.8-2.8-3.2-5Z"/>
+  <path id="right" class="cls-2" d="M32.4,12.2l-7.4,10c-1.5,2-4.8,2-6.3,0l-5.7-7.8c-.3-.4.2-.9.7-.7,4.6,2.2,8.2-1.3,8.2-1.3l5.2-4.5c.6-.5,1.3-.8,2.1-.8,3,0,4.8,2.8,3.2,5Z"/>
 </svg>

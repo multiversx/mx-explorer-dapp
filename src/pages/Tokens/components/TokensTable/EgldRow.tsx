@@ -48,7 +48,7 @@ export const EgldRow = ({
   const { search } = useGetSearch();
   const { sort, order } = useGetSort();
 
-  const description = `The MultiversX eGold (${egldLabel}) Token is native to the MultiversX Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
+  const description = `The CyberNetwork (${egldLabel}) Token is native to the CyberNetwork and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
   const showOnSearch =
     search &&
@@ -160,7 +160,7 @@ export const EgldRow = ({
           </div>
         </div>
       </td>
-      <td>MultiversX {egldLabel}</td>
+      <td>CyberNetwork {egldLabel}</td>
       <td>{price}</td>
       <td>{circulatingSupply}</td>
       <td>{marketCap}</td>

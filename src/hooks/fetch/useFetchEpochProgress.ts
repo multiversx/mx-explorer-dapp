@@ -21,10 +21,10 @@ export const useFetchEpochProgress = () => {
   const pageHidden = document.hidden;
 
   const refreshInterval = refreshRate ? refreshRate : REFRESH_RATE;
-  const refreshIntervalSec = refreshInterval / 6000;
+  const refreshIntervalSec = refreshInterval / 6000; // 6000ms interval
 
   const [oldTestnetId, setOldTestnetId] = useState(activeNetworkId);
-  const [roundTimeProgress, setRoundTimeProgress] = useState(1);
+  const [roundTimeProgress, setRoundTimeProgress] = useState(0.2);
 
   const [isNewState, setIsNewState] = useState<boolean>(true);
   const [hasCallMade, setHasCallMade] = useState<boolean>(false);
@@ -35,7 +35,7 @@ export const useFetchEpochProgress = () => {
     if (isNewState) {
       startRoundTime();
     }
-    if (roundTimeProgress === refreshIntervalSec && !hasCallMade) {
+    if (roundTimeProgress >= 1 && !hasCallMade) {
       fetchStats().then(({ success }) => {
         if (success) {
           setHasCallMade(true);
@@ -57,11 +57,12 @@ export const useFetchEpochProgress = () => {
   const startRoundTime = () => {
     const intervalRoundTime = setInterval(() => {
       if (!pageHidden) {
-        setRoundTimeProgress((roundTimeProgress) =>
-          roundTimeProgress === refreshIntervalSec ? 1 : roundTimeProgress + 1
-        );
+        setRoundTimeProgress((prevProgress) => {
+          const newProgress = parseFloat((prevProgress + 0.2).toFixed(1)); // Ensure proper rounding
+          return newProgress > 1 ? 0.2 : newProgress;
+        });
       }
-    }, 1000);
+    }, 200); // 200ms interval for 5 steps in 1 second
     return () => clearInterval(intervalRoundTime);
   };
 
