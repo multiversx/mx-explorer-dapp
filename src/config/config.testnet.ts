@@ -10,11 +10,11 @@ export const networks: NetworkType[] = [
     chainId: 'local-testnet',
     adapter: 'api',
     theme: 'testnet',
-    egldLabel: 'CNET',
-    walletAddress: 'https://devnet-wallet.multiversx.com',
-    explorerAddress: 'https://devnet-explorer.multiversx.com',
-    nftExplorerAddress: 'https://devnet.xspotlight.com',
-    apiAddress: 'http://178.128.199.234:3001'
+    egldLabel: 'xCNET',
+    walletAddress: 'https://testnet-wallet.multiversx.com',
+    explorerAddress: 'https://testnet-explorer.multiversx.com',
+    nftExplorerAddress: 'https://testnet.xspotlight.com',
+    apiAddress: 'http://31.207.87.10:3001'
   }
 ];
 
