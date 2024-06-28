@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { REFRESH_RATE } from 'appConstants';
@@ -24,7 +25,7 @@ export const useFetchEpochProgress = () => {
   const refreshIntervalSec = refreshInterval / 1000;
 
   const [oldTestnetId, setOldTestnetId] = useState(activeNetworkId);
-  const [roundTimeProgress, setRoundTimeProgress] = useState(1);
+  const [roundTimeProgress, setRoundTimeProgress] = useState(new BigNumber(1));
 
   const [isNewState, setIsNewState] = useState<boolean>(true);
   const [hasCallMade, setHasCallMade] = useState<boolean>(false);
@@ -35,7 +36,7 @@ export const useFetchEpochProgress = () => {
     if (isNewState) {
       startRoundTime();
     }
-    if (roundTimeProgress === refreshIntervalSec && !hasCallMade) {
+    if (roundTimeProgress.isEqualTo(refreshIntervalSec) && !hasCallMade) {
       fetchStats().then(({ success }) => {
         if (success) {
           setHasCallMade(true);
@@ -58,7 +59,9 @@ export const useFetchEpochProgress = () => {
     const intervalRoundTime = setInterval(() => {
       if (!pageHidden) {
         setRoundTimeProgress((roundTimeProgress) =>
-          roundTimeProgress === refreshIntervalSec ? 1 : roundTimeProgress + 1
+          roundTimeProgress.isEqualTo(refreshIntervalSec)
+            ? new BigNumber(1)
+            : roundTimeProgress.plus(1)
         );
       }
     }, 1000);
@@ -71,7 +74,9 @@ export const useFetchEpochProgress = () => {
 
   useEffect(updateStats, [timestamp, roundTimeProgress]);
 
-  const roundProgress = (roundTimeProgress * 100) / refreshIntervalSec;
+  const roundProgress = roundTimeProgress
+    .times(100)
+    .dividedBy(refreshIntervalSec);
   const roundsLeft = epochRoundsLeft
     ? epochRoundsLeft
     : roundsPerEpoch - roundsPassed + 1; // add one in order to take into account the css animation and the api call sync on the first run
