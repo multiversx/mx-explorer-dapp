@@ -17,10 +17,10 @@ import {
 
 export const HeroHome = () => {
   const isMainnet = useIsMainnet();
-
   const { id, name } = useSelector(activeNetworkSelector);
   const explorerTitle =
-    id === NetworkIdEnum.mainnet && networks.length === 1
+    (id === NetworkIdEnum.mainnet && networks.length === 1) ||
+    name?.toLowerCase() === BRAND_NAME.toLowerCase()
       ? 'Explorer'
       : `${name} Explorer`;
 

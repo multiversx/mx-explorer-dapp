@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { NetworkLink, ShardSpan } from 'components';
-import { urlBuilder, getShardText } from 'helpers';
-import { useFetchShards, useIsSovereign } from 'hooks';
+import { urlBuilder } from 'helpers';
+import { useFetchShards, useIsSovereign, useGetShardText } from 'hooks';
 import { interfaceSelector, shardsSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices/interface';
 import { WithClassnameType } from 'types';
@@ -27,6 +27,7 @@ export const ShardLink = ({
 }: ShardLinkUIType) => {
   const dispatch = useDispatch();
   const isSovereign = useIsSovereign();
+  const getShardText = useGetShardText();
   const shards = useSelector(shardsSelector);
   const { highlightedText } = useSelector(interfaceSelector);
 
@@ -36,7 +37,7 @@ export const ShardLink = ({
     return <span className='text-neutral-400'>N/A</span>;
   }
 
-  const shardText = getShardText(shard, isSovereign);
+  const shardText = getShardText(shard);
   if (!shardText) {
     return null;
   }

@@ -33,12 +33,9 @@ export const TokenDetailsCard = () => {
     isLowLiquidity
   } = token;
 
-  const title = `${
-    assets ? `${name} ${ticker !== name ? `(${ticker})` : ''}` : ticker
-  } Token`;
-  const seoTitle = assets
-    ? `${name}${ticker !== name ? ` (${ticker})` : ''}`
-    : '';
+  const formattedName = `${name}${ticker !== name ? ` (${ticker})` : ''}`;
+  const title = `${assets ? formattedName : ticker} Token`;
+  const seoTitle = assets ? formattedName : '';
 
   const detailItems = [
     assets?.description

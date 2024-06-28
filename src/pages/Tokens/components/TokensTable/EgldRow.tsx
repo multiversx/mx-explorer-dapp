@@ -30,7 +30,7 @@ export const EgldRow = ({
   index: number;
   totalTokens: number;
 }) => {
-  const { egldLabel } = useSelector(activeNetworkSelector);
+  const { egldLabel, name } = useSelector(activeNetworkSelector);
   const {
     isFetched: isEconomicsFetched,
     price,
@@ -51,7 +51,7 @@ export const EgldRow = ({
   const isSovereign = useIsSovereign();
 
   const description = isSovereign
-    ? `${egldLabel} Token is native to ${BRAND_NAME}`
+    ? `${egldLabel} Token is native to ${name ?? BRAND_NAME}`
     : `The ${BRAND_NAME} eGold (${egldLabel}) Token is native to the ${BRAND_NAME} Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
   const showOnSearch =
@@ -172,7 +172,7 @@ export const EgldRow = ({
         </div>
       </td>
       <td>
-        {BRAND_NAME} {egldLabel}
+        {name ?? BRAND_NAME} {egldLabel}
       </td>
       <td>{price}</td>
       <td>{circulatingSupply}</td>
