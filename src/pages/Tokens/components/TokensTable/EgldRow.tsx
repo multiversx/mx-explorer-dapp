@@ -1,10 +1,11 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
+import { BRAND_NAME } from 'appConstants';
 import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
 import { pagerHelper } from 'components/Pager/helpers/pagerHelper';
 
-import { useGetPage, useGetSearch, useGetSort } from 'hooks';
+import { useGetPage, useGetSearch, useGetSort, useIsSovereign } from 'hooks';
 import {
   economicsSelector,
   statsSelector,
@@ -47,12 +48,21 @@ export const EgldRow = ({
   const { page, size } = useGetPage();
   const { search } = useGetSearch();
   const { sort, order } = useGetSort();
+  const isSovereign = useIsSovereign();
 
-  const description = `The MultiversX eGold (${egldLabel}) Token is native to the MultiversX Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
+  const description = isSovereign
+    ? `${egldLabel} Token is native to ${BRAND_NAME}`
+    : `The ${BRAND_NAME} eGold (${egldLabel}) Token is native to the ${BRAND_NAME} Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
   const showOnSearch =
     search &&
-    ['egld', 'elrond', 'multiversx', egldLabel].includes(search.toLowerCase());
+    [
+      'egld',
+      'elrond',
+      'multiversx',
+      BRAND_NAME.toLowerCase(),
+      (egldLabel ?? '').toLowerCase()
+    ].includes(search.toLowerCase());
   let showOnFilter = (!page || page === 1) && index === 0;
 
   const previousToken = tokens[index > 0 ? index - 1 : 0];
@@ -132,7 +142,8 @@ export const EgldRow = ({
     }
   }
 
-  const show = (!search || showOnSearch) && showOnFilter;
+  const show =
+    (!search || showOnSearch) && (showOnFilter || tokens.length === 0);
 
   if (!show) {
     return null;
@@ -160,7 +171,9 @@ export const EgldRow = ({
           </div>
         </div>
       </td>
-      <td>MultiversX {egldLabel}</td>
+      <td>
+        {BRAND_NAME} {egldLabel}
+      </td>
       <td>{price}</td>
       <td>{circulatingSupply}</td>
       <td>{marketCap}</td>
