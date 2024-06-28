@@ -51,6 +51,9 @@ export const TokensTable = ({
           </tr>
         </thead>
         <tbody data-testid='tokensTable'>
+          {tokens.length === 0 && (
+            <EgldRow tokens={tokens} index={1} totalTokens={1} />
+          )}
           {tokens.map((token, i) => (
             <Fragment key={token.identifier}>
               {typeof totalTokens === 'number' &&

@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import { ELLIPSIS } from 'appConstants';
 import { Loader, NetworkLink, Pager, PageSize } from 'components';
+import { getStringPlural } from 'helpers';
 import {
   useAdapter,
   useGetSearch,
@@ -40,6 +41,8 @@ export const Tokens = () => {
   const [tokens, setTokens] = useState<TokenType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [totalTokens, setTotalTokens] = useState<number | undefined>();
+
+  const displayTotalTokens = new BigNumber(totalTokens ?? 0).plus(1).toFormat();
 
   const fetchTokens = () => {
     Promise.all([
@@ -83,9 +86,13 @@ export const Tokens = () => {
                         </h5>
                         <span>
                           {totalTokens !== undefined
-                            ? new BigNumber(totalTokens).toFormat()
+                            ? displayTotalTokens
                             : ELLIPSIS}{' '}
-                          <span className='text-neutral-400'>Tokens</span>
+                          <span className='text-neutral-400'>
+                            {getStringPlural(displayTotalTokens ?? 0, {
+                              string: 'Token'
+                            })}
+                          </span>
                           {Boolean(
                             unprocessed.tokenMarketCap && unprocessed.marketCap
                           ) && (
@@ -139,7 +146,7 @@ export const Tokens = () => {
                     </div>
                   </div>
 
-                  {tokens && tokens.length > 0 ? (
+                  {tokens ? (
                     <>
                       <div className='card-body'>
                         <TokensTable

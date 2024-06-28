@@ -59,6 +59,10 @@ export const AccountUsdValueCardItem = ({
     isEconomicsFetched &&
     isCorrectData;
 
+  if (!isEconomicsFetched) {
+    return null;
+  }
+
   return (
     <CardItem
       className={classNames(cardItemClass)}

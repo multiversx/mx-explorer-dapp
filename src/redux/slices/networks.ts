@@ -23,9 +23,10 @@ type CurrentNetworkSliceType = {
 
 export const getInitialState = (): CurrentNetworkSliceType => {
   const { subdomainNetwork, isSubSubdomain } = getSubdomainNetwork();
-  const defaultNetworkInList = networks.find(({ default: active }) =>
+  const defaultActiveNetwork = networks.find(({ default: active }) =>
     Boolean(active)
   );
+  const defaultNetworkInList = defaultActiveNetwork ?? networks[0];
   const baseNetwork = isSubSubdomain ? subdomainNetwork : defaultNetworkInList;
   const defaultNetwork = baseNetwork ?? emptyNetwork;
 

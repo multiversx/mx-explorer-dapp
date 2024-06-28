@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+import { BRAND_NAME } from 'appConstants';
 import { FormatEGLD, Search } from 'components';
 import { getSubdomainNetwork } from 'helpers';
 import {
@@ -100,7 +101,7 @@ export const Hero = () => {
             <h2 className='title mb-0 text-capitalize'>
               {isAnalytics ? (
                 <>
-                  {`MultiversX Blockchain ${pageName}`}{' '}
+                  {`${BRAND_NAME} Blockchain ${pageName}`}{' '}
                   <span className='text-neutral-500'> (Beta)</span>
                 </>
               ) : (
