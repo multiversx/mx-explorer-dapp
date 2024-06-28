@@ -1,3 +1,4 @@
+export * from './getColors';
 export * from './getDisplayReceiver';
 export * from './getNftText';
 export * from './getNodeIcon';
@@ -5,6 +6,7 @@ export * from './getNodeIssue';
 export * from './getNodeStatusDisplay';
 export * from './getOperationDirection';
 export * from './getPercentage';
+export * from './getPrimaryColor';
 export * from './getShardText';
 export * from './getStringPlural';
 export * from './getSubdomainNetwork';

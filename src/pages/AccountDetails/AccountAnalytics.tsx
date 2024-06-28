@@ -10,6 +10,7 @@ import {
   getFrequency
 } from 'components/Chart/helpers/getChartBinnedData';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
+import { getPrimaryColor } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
@@ -27,9 +28,7 @@ export const AccountAnalytics = () => {
   const [startDate, setStartDate] = useState<string>(ELLIPSIS);
   const [endDate, setEndDate] = useState<string>(ELLIPSIS);
 
-  const primary = getComputedStyle(document.documentElement)
-    .getPropertyValue('--primary')
-    .trim();
+  const primary = getPrimaryColor();
 
   const getData = () => {
     getAccountHistory({ address, size: 100 }).then((accountsHistoryData) => {

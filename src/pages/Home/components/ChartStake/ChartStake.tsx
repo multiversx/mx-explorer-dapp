@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
 import { Select, SelectOptionType } from 'components';
+import { getPrimaryColor } from 'helpers';
 import { useFetchGrowthStaking } from 'hooks';
 import { growthStakingSelector, activeNetworkSelector } from 'redux/selectors';
 import {
@@ -77,9 +78,7 @@ export const ChartStake = ({ className }: WithClassnameType) => {
   ]);
 
   const initialFilter = 'totalStaked30d';
-  const primary = getComputedStyle(document.documentElement)
-    .getPropertyValue('--primary')
-    .trim();
+  const primary = getPrimaryColor();
 
   const defaultValue = filters.find((filter) => filter.value === initialFilter);
   const [data, setData] = useState(dataMap.get(initialFilter));

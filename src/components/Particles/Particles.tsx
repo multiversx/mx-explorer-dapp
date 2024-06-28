@@ -23,6 +23,7 @@ import { OrbitControls } from 'three-stdlib';
 import { UAParser } from 'ua-parser-js';
 
 import circleImg from 'assets/img/three/circle.png';
+import { getPrimaryColor } from 'helpers';
 
 extend({ OrbitControls });
 
@@ -85,6 +86,8 @@ function Points({
   separator: number;
 }) {
   const isExcludedOS = isExcluded();
+  const primary = getPrimaryColor();
+  const primaryColor = Number(primary.replace('#', '0x'));
 
   let t = 0;
   const f = 0.002;
@@ -153,7 +156,7 @@ function Points({
         attach='material'
         map={imgTex}
         depthWrite={false}
-        color={0x23f7dd}
+        color={primaryColor}
         size={0.5}
         sizeAttenuation
         transparent={false}
