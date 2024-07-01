@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
+import { NativeTokenSymbol } from 'components';
 import { FormatAmountUIType, FormatUSD } from 'components';
 import { DIGITS } from 'config';
 import { formatBigNumber, stringIsFloat } from 'helpers';
@@ -62,7 +62,7 @@ export const FormatEGLD = (props: FormatEGLDUIType) => {
         ? {
             symbol: (
               <>
-                <MultiversXSymbol className='sym' />{' '}
+                <NativeTokenSymbol className='sym' />{' '}
               </>
             )
           }

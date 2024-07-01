@@ -17,7 +17,7 @@ import { urlBuilder } from 'helpers';
 import { useGetSort } from 'hooks';
 import { faDiamond } from 'icons/regular';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'types';
-import { EgldRow } from './EgldRow';
+import { NativeTokenRow } from './NativeTokenRow';
 
 export const TokensTable = ({
   tokens,
@@ -52,13 +52,13 @@ export const TokensTable = ({
         </thead>
         <tbody data-testid='tokensTable'>
           {tokens.length === 0 && (
-            <EgldRow tokens={tokens} index={1} totalTokens={1} />
+            <NativeTokenRow tokens={tokens} index={1} totalTokens={1} />
           )}
           {tokens.map((token, i) => (
             <Fragment key={token.identifier}>
               {typeof totalTokens === 'number' &&
                 (order ? order === SortOrderEnum.desc : true) && (
-                  <EgldRow
+                  <NativeTokenRow
                     tokens={tokens}
                     index={i}
                     totalTokens={totalTokens}
@@ -160,7 +160,7 @@ export const TokensTable = ({
               {typeof totalTokens === 'number' &&
                 order === SortOrderEnum.asc &&
                 i !== 0 && (
-                  <EgldRow
+                  <NativeTokenRow
                     tokens={tokens}
                     index={i}
                     totalTokens={totalTokens}

@@ -2,9 +2,8 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { BRAND_NAME } from 'appConstants';
-import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
+import { NativeTokenLogo } from 'components';
 import { pagerHelper } from 'components/Pager/helpers/pagerHelper';
-
 import { useGetPage, useGetSearch, useGetSort, useIsSovereign } from 'hooks';
 import {
   economicsSelector,
@@ -21,7 +20,7 @@ interface DummyTokenType {
   transactions: number;
 }
 
-export const EgldRow = ({
+export const NativeTokenRow = ({
   tokens,
   index,
   totalTokens
@@ -156,7 +155,7 @@ export const EgldRow = ({
           <div className='d-flex align-items-center me-3'>
             <span className='side-link'>
               <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
-                <EgldSymbol />
+                <NativeTokenLogo />
               </div>
             </span>
           </div>
@@ -172,7 +171,7 @@ export const EgldRow = ({
         </div>
       </td>
       <td>
-        {name ?? BRAND_NAME} {egldLabel}
+        {isSovereign ? name : BRAND_NAME} {egldLabel}
       </td>
       <td>{price}</td>
       <td>{circulatingSupply}</td>

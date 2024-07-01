@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
+import { NativeTokenSymbol } from 'components';
 import { DECIMALS, DIGITS } from 'config';
 import { formatAmount } from 'helpers';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
@@ -90,7 +90,7 @@ export const FormatAmount = (props: FormatAmountUIType) => {
         ? {
             symbol: (
               <>
-                <MultiversXSymbol className='sym' />{' '}
+                <NativeTokenSymbol className='sym custom' />{' '}
               </>
             )
           }
