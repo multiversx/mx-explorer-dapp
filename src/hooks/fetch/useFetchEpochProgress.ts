@@ -51,12 +51,26 @@ export const useFetchEpochProgress = () => {
           setHasCallMade(true);
           const roundsLeft =
             roundsPerEpoch >= roundsPassed ? roundsPerEpoch - roundsPassed : 0;
-          setEpochRoundsLeft((existingEpochRoundsLeft) =>
-            existingEpochRoundsLeft === roundsLeft &&
-            existingEpochRoundsLeft > 1
-              ? existingEpochRoundsLeft - 1
-              : roundsLeft
-          );
+          setEpochRoundsLeft((existingRound) => {
+            if (roundsLeft && typeof roundsLeft === 'number') {
+              if (!existingRound) {
+                return roundsLeft;
+              }
+              if (existingRound) {
+                if (existingRound === roundsLeft && roundsLeft > 0) {
+                  return roundsLeft - 1;
+                }
+                if (roundsLeft < existingRound) {
+                  return roundsLeft;
+                }
+                if (existingRound - roundsLeft < -6) {
+                  return roundsLeft;
+                }
+              }
+            }
+
+            return existingRound;
+          });
         }
       });
     } else {

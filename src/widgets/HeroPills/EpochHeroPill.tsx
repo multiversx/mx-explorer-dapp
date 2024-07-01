@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 
 import { ELLIPSIS } from 'appConstants';
@@ -9,32 +8,6 @@ import { WithClassnameType } from 'types';
 export const EpochHeroPill = ({ className }: WithClassnameType) => {
   const { isReady, epoch, epochPercentage, epochTimeRemaining, roundsLeft } =
     useFetchEpochProgress();
-
-  const [displayRoundsLeft, setDisplayRoundsLeft] = useState<number>();
-  useEffect(() => {
-    if (isReady) {
-      setDisplayRoundsLeft((existingRound) => {
-        if (roundsLeft && typeof roundsLeft === 'number') {
-          if (!existingRound) {
-            return roundsLeft;
-          }
-          if (existingRound) {
-            if (existingRound === roundsLeft && roundsLeft > 0) {
-              return roundsLeft - 1;
-            }
-            if (roundsLeft < existingRound) {
-              return roundsLeft;
-            }
-            if (existingRound - roundsLeft < -4) {
-              return roundsLeft;
-            }
-          }
-        }
-
-        return existingRound;
-      });
-    }
-  }, [isReady, roundsLeft]);
 
   return (
     <div
@@ -51,8 +24,8 @@ export const EpochHeroPill = ({ className }: WithClassnameType) => {
           )}
         </div>
         <div className='description cursor-context' title={epochTimeRemaining}>
-          {displayRoundsLeft && displayRoundsLeft >= 0 ? (
-            <>{new BigNumber(displayRoundsLeft).toFormat(0)} Rounds Left</>
+          {roundsLeft && roundsLeft >= 0 ? (
+            <>{new BigNumber(roundsLeft).toFormat(0)} Rounds Left</>
           ) : (
             ELLIPSIS
           )}
