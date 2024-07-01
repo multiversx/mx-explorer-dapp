@@ -20,7 +20,6 @@ import { NoTransactions } from 'components/TransactionsTable/components/NoTransa
 import { TransactionValue } from 'components/TransactionsTable/components/TransactionValue';
 import {
   addressIsBech32,
-  urlBuilder,
   getDisplayReceiver,
   getTransactionStatusIconAndColor
 } from 'helpers';
@@ -138,9 +137,10 @@ export const LatestTransactions = () => {
                       >
                         <TransactionIcon
                           transaction={transaction}
+                          showGuardian={false}
+                          showSovereignBridge={false}
                           showSuccess
                           withBadge
-                          showGuardian={false}
                         />
 
                         <div className='d-flex flex-column overflow-hidden min-w-0'>
@@ -171,7 +171,7 @@ export const LatestTransactions = () => {
                               <span className='px-2 text-muted ms-auto'>•</span>
                               <ShardLink
                                 shard={transaction.receiverShard}
-                                receiverShard
+                                transactionReceiverShard
                                 className='flex-shrink-0'
                               />
                             </div>
@@ -192,7 +192,7 @@ export const LatestTransactions = () => {
                                   </span>
                                   <ShardLink
                                     shard={transaction.senderShard}
-                                    senderShard
+                                    transactionSenderShard
                                     className='flex-shrink-0'
                                   />
                                 </>
