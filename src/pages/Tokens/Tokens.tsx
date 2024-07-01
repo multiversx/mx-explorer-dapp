@@ -21,7 +21,6 @@ import { TokenType } from 'types';
 
 import { FailedTokens } from './components/FailedTokens';
 import { Filters } from './components/Filters';
-import { NoTokens } from './components/NoTokens';
 import { TokensTable } from './components/TokensTable';
 
 export const Tokens = () => {
@@ -138,7 +137,7 @@ export const Tokens = () => {
                         </menu>
                         <Filters />
                       </div>
-                      {tokens && tokens.length > 0 && (
+                      {tokens.length > 0 && (
                         <div className='d-none d-sm-flex'>
                           <Pager total={totalTokens} show={tokens.length > 0} />
                         </div>
@@ -146,23 +145,14 @@ export const Tokens = () => {
                     </div>
                   </div>
 
-                  {tokens ? (
-                    <>
-                      <div className='card-body'>
-                        <TokensTable
-                          tokens={tokens}
-                          totalTokens={totalTokens}
-                        />
-                      </div>
+                  <div className='card-body'>
+                    <TokensTable tokens={tokens} totalTokens={totalTokens} />
+                  </div>
 
-                      <div className='card-footer table-footer'>
-                        <PageSize />
-                        <Pager total={totalTokens} show={tokens.length > 0} />
-                      </div>
-                    </>
-                  ) : (
-                    <NoTokens />
-                  )}
+                  <div className='card-footer table-footer'>
+                    <PageSize />
+                    <Pager total={totalTokens} show={tokens.length > 0} />
+                  </div>
                 </div>
               </div>
             </div>

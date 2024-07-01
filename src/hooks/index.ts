@@ -16,6 +16,7 @@ export * from './useHasGrowthWidgets';
 export * from './useIsAuctionNodeDropped';
 export * from './useIsDevnet';
 export * from './useIsMainnet';
+export * from './useIsNativeTokenSearched';
 export * from './useIsSovereign';
 export * from './useIsTestnet';
 export * from './useLoopManager';

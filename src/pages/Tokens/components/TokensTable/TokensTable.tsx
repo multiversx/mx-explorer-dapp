@@ -14,10 +14,11 @@ import {
   FormatUSD
 } from 'components';
 import { urlBuilder } from 'helpers';
-import { useGetSort } from 'hooks';
+import { useGetSort, useGetSearch, useIsNativeTokenSearched } from 'hooks';
 import { faDiamond } from 'icons/regular';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'types';
 import { NativeTokenRow } from './NativeTokenRow';
+import { NoTokens } from '../NoTokens';
 
 export const TokensTable = ({
   tokens,
@@ -27,6 +28,8 @@ export const TokensTable = ({
   totalTokens?: typeof ELLIPSIS | number;
 }) => {
   const { order } = useGetSort();
+  const { search } = useGetSearch();
+  const isNativeTokenSearched = useIsNativeTokenSearched();
 
   return (
     <div className='table-wrapper tokens-table'>
@@ -52,7 +55,17 @@ export const TokensTable = ({
         </thead>
         <tbody data-testid='tokensTable'>
           {tokens.length === 0 && (
-            <NativeTokenRow tokens={tokens} index={1} totalTokens={1} />
+            <>
+              {search && !isNativeTokenSearched ? (
+                <tr>
+                  <td colSpan={7}>
+                    <NoTokens />
+                  </td>
+                </tr>
+              ) : (
+                <NativeTokenRow tokens={tokens} index={1} totalTokens={1} />
+              )}
+            </>
           )}
           {tokens.map((token, i) => (
             <Fragment key={token.identifier}>

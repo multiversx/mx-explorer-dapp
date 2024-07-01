@@ -4,7 +4,13 @@ import { useSelector } from 'react-redux';
 import { BRAND_NAME } from 'appConstants';
 import { NativeTokenLogo } from 'components';
 import { pagerHelper } from 'components/Pager/helpers/pagerHelper';
-import { useGetPage, useGetSearch, useGetSort, useIsSovereign } from 'hooks';
+import {
+  useGetPage,
+  useGetSearch,
+  useGetSort,
+  useIsSovereign,
+  useIsNativeTokenSearched
+} from 'hooks';
 import {
   economicsSelector,
   statsSelector,
@@ -53,15 +59,7 @@ export const NativeTokenRow = ({
     ? `${egldLabel} Token is native to ${name ?? BRAND_NAME}`
     : `The ${BRAND_NAME} eGold (${egldLabel}) Token is native to the ${BRAND_NAME} Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
-  const showOnSearch =
-    search &&
-    [
-      'egld',
-      'elrond',
-      'multiversx',
-      BRAND_NAME.toLowerCase(),
-      (egldLabel ?? '').toLowerCase()
-    ].includes(search.toLowerCase());
+  const showOnSearch = useIsNativeTokenSearched();
   let showOnFilter = (!page || page === 1) && index === 0;
 
   const previousToken = tokens[index > 0 ? index - 1 : 0];
