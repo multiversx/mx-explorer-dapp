@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { BRAND_NAME } from 'appConstants';
 import { SHARE_PREFIX } from 'config';
 import { capitalize } from 'helpers';
 import { MetaTagsType } from 'types/metaTags.types';
 
-const DEFAULT_TITLE = `MultiversX${
+const DEFAULT_TITLE = `${BRAND_NAME}${
   SHARE_PREFIX ? ` ${capitalize(SHARE_PREFIX)}` : ''
 } Explorer`;
 const DEFAULT_DESCRIPTION =

@@ -2,6 +2,7 @@ import { useState, MouseEvent, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import { BRAND_NAME } from 'appConstants';
 import { ReactComponent as MultiversXLogo } from 'assets/img/logo-full.svg';
 import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
 import { NetworkLink } from 'components';
@@ -70,7 +71,11 @@ export const Header = (props: HeaderPropsType) => {
   return (
     <header className='header'>
       <div className='logo-wrapper'>
-        <NetworkLink to='/' className='logo' aria-label='MultiversX Explorer'>
+        <NetworkLink
+          to='/'
+          className='logo'
+          aria-label={`${BRAND_NAME} Explorer`}
+        >
           {isMainnet ? (
             <MultiversXLogo />
           ) : (

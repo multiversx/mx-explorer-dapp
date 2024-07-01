@@ -29,6 +29,7 @@ export * from './Marquee';
 export * from './MetaTags';
 export * from './ModalLink';
 export * from './MultilayerPercentage';
+export * from './NativeToken';
 export * from './NetworkReady';
 export * from './NftBadge';
 export * from './NftBlock';

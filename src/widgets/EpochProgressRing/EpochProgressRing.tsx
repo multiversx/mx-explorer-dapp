@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
@@ -17,6 +18,32 @@ export const EpochProgressRing = ({
   const { isReady, epoch, epochPercentage, epochTimeRemaining, roundsLeft } =
     useFetchEpochProgress();
 
+  const [displayRoundsLeft, setDisplayRoundsLeft] = useState<number>();
+  useEffect(() => {
+    if (isReady) {
+      setDisplayRoundsLeft((existingRound) => {
+        if (roundsLeft && typeof roundsLeft === 'number') {
+          if (!existingRound) {
+            return roundsLeft;
+          }
+          if (existingRound) {
+            if (existingRound === roundsLeft && roundsLeft > 0) {
+              return roundsLeft - 1;
+            }
+            if (roundsLeft < existingRound) {
+              return roundsLeft;
+            }
+            if (existingRound - roundsLeft < -4) {
+              return roundsLeft;
+            }
+          }
+        }
+
+        return existingRound;
+      });
+    }
+  }, [isReady, roundsLeft]);
+
   return (
     <div className={`epoch-progress-ring ${className ?? ''}`}>
       <ProgressRing progress={epochPercentage} size={140} hasBg>
@@ -35,8 +62,8 @@ export const EpochProgressRing = ({
           className={classNames('description', { 'cursor-context': showTime })}
           {...(showTime ? { title: epochTimeRemaining } : {})}
         >
-          {roundsLeft && roundsLeft >= 0 ? (
-            <>{new BigNumber(roundsLeft).toFormat(0)} Rounds Left</>
+          {displayRoundsLeft && displayRoundsLeft >= 0 ? (
+            <>{new BigNumber(displayRoundsLeft).toFormat(0)} Rounds Left</>
           ) : (
             ELLIPSIS
           )}

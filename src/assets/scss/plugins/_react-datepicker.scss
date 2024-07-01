@@ -6,7 +6,7 @@ $datepicker__background-color: var(
 $datepicker__header-color: var(--body-color); // popup header text
 $datepicker__text-color: var(--body-color);
 $datepicker__muted-color: #a3a3a3;
-$datepicker__selected-color: #23f7dd;
+$datepicker__selected-color: $primary-400;
 
 @import './../../../../node_modules/react-datepicker/src/stylesheets/datepicker.scss';
 

@@ -1,8 +1,11 @@
 import { useSelector } from 'react-redux';
 
+import { BRAND_NAME } from 'appConstants';
 import { Search, Particles } from 'components';
+import { networks } from 'config';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
+import { NetworkIdEnum } from 'types';
 import {
   AccountsStatsCard,
   BlockHeightStatsCard,
@@ -14,9 +17,12 @@ import {
 
 export const HeroHome = () => {
   const isMainnet = useIsMainnet();
-
   const { id, name } = useSelector(activeNetworkSelector);
-  const explorerTitle = id !== 'mainnet' ? `${name} Explorer` : 'Explorer';
+  const explorerTitle =
+    (id === NetworkIdEnum.mainnet && networks.length === 1) ||
+    name?.toLowerCase() === BRAND_NAME.toLowerCase()
+      ? 'Explorer'
+      : `${name} Explorer`;
 
   return (
     <div className='hero-home card card-lg card-black'>
@@ -25,7 +31,7 @@ export const HeroHome = () => {
         <div className='row'>
           <div className='col-lg-6'>
             <h1 className='h2 mb-4 font-headings title'>
-              MultiversX Blockchain {explorerTitle}
+              {BRAND_NAME} Blockchain {explorerTitle}
             </h1>
             <Search />
           </div>

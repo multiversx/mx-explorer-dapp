@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LinkComponentProps } from 'react-anchorme';
 import { Modal } from 'react-bootstrap';
+
+import { BRAND_NAME } from 'appConstants';
 import { faExclamationTriangle } from 'icons/regular';
 
 export const ModalLink = (props: LinkComponentProps) => {
@@ -42,8 +44,8 @@ export const ModalLink = (props: LinkComponentProps) => {
             </p>
             <div className='mx-auto mb-spacer '>
               <p>
-                This link is not part of MultiversX. Do not enter your private
-                words, your keystore file or any of your MultiversX account
+                This link is not part of {BRAND_NAME}. Do not enter your private
+                words, your keystore file or any of your {BRAND_NAME} account
                 information.
               </p>
             </div>

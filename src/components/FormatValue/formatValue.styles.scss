@@ -20,8 +20,16 @@
     height: 0.438em;
     margin-bottom: 0.1em;
     vertical-align: middle;
-    path {
-      fill: currentColor;
+    &:not(.custom) {
+      path {
+        fill: currentColor;
+      }
+    }
+    &.custom {
+      border-radius: 50%;
+      height: 1.5em;
+      margin-bottom: 0;
+      margin-top: -0.175em;
     }
   }
 }
