@@ -22,10 +22,19 @@ export const useFetchEpochProgress = () => {
   const pageHidden = document.hidden;
 
   const refreshInterval = refreshRate ? refreshRate : REFRESH_RATE;
-  const refreshIntervalSec = refreshInterval / 1000;
+  const refreshIntervalSec = new BigNumber(refreshInterval).dividedBy(1000);
+
+  const stepInterval = new BigNumber(
+    new BigNumber(refreshInterval).isGreaterThan(1000)
+      ? new BigNumber(refreshInterval).minus(1000)
+      : refreshInterval
+  ).dividedBy(5);
+  const stepProgressSec = stepInterval.dividedBy(1000);
 
   const [oldTestnetId, setOldTestnetId] = useState(activeNetworkId);
-  const [roundTimeProgress, setRoundTimeProgress] = useState(new BigNumber(1));
+  const [roundTimeProgress, setRoundTimeProgress] = useState(
+    new BigNumber(stepProgressSec)
+  );
 
   const [isNewState, setIsNewState] = useState<boolean>(true);
   const [hasCallMade, setHasCallMade] = useState<boolean>(false);
@@ -60,11 +69,11 @@ export const useFetchEpochProgress = () => {
       if (!pageHidden) {
         setRoundTimeProgress((roundTimeProgress) =>
           roundTimeProgress.isEqualTo(refreshIntervalSec)
-            ? new BigNumber(1)
-            : roundTimeProgress.plus(1)
+            ? new BigNumber(stepProgressSec)
+            : roundTimeProgress.plus(stepProgressSec)
         );
       }
-    }, 1000);
+    }, stepInterval.toNumber());
     return () => clearInterval(intervalRoundTime);
   };
 
@@ -72,11 +81,16 @@ export const useFetchEpochProgress = () => {
     setOldTestnetId(activeNetworkId);
   }, [activeNetworkId]);
 
-  useEffect(updateStats, [timestamp, roundTimeProgress]);
+  useEffect(() => {
+    if (refreshRate && roundTimeProgress && timestamp) {
+      updateStats();
+    }
+  }, [timestamp, roundTimeProgress, refreshRate]);
 
   const roundProgress = roundTimeProgress
     .times(100)
     .dividedBy(refreshIntervalSec);
+
   const roundsLeft = epochRoundsLeft
     ? epochRoundsLeft
     : roundsPerEpoch - roundsPassed + 1; // add one in order to take into account the css animation and the api call sync on the first run
