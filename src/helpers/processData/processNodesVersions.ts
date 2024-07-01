@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 import { MultilayerPercentageStepType } from 'components/types';
+import { formatVersion } from 'helpers';
 import { NodesVersionsApiType } from 'types/nodesVersions.types';
 
 const prepareNodesVersions = (data: NodesVersionsApiType) => {
@@ -11,7 +12,7 @@ const prepareNodesVersions = (data: NodesVersionsApiType) => {
 
     if (percent > 0) {
       versions.push({
-        name: version,
+        name: formatVersion(version),
         value: new BigNumber(percent).times(100).toNumber()
       });
     }
