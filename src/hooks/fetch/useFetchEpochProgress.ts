@@ -10,6 +10,26 @@ import {
   statsSelector
 } from 'redux/selectors';
 
+const getStepInterval = (refreshInterval: number) => {
+  switch (refreshInterval) {
+    case 6000:
+      return new BigNumber(1000);
+    case 3000:
+      return new BigNumber(500);
+    case 2000:
+      return new BigNumber(500);
+    case 1000:
+      return new BigNumber(200);
+
+    default:
+      return new BigNumber(
+        new BigNumber(refreshInterval).isGreaterThan(1000)
+          ? new BigNumber(refreshInterval).minus(1000)
+          : refreshInterval
+      ).dividedBy(5);
+  }
+};
+
 export const useFetchEpochProgress = () => {
   const fetchStats = useFetchStats();
 
@@ -24,11 +44,8 @@ export const useFetchEpochProgress = () => {
   const refreshInterval = refreshRate ? refreshRate : REFRESH_RATE;
   const refreshIntervalSec = new BigNumber(refreshInterval).dividedBy(1000);
 
-  const stepInterval = new BigNumber(
-    new BigNumber(refreshInterval).isGreaterThan(1000)
-      ? new BigNumber(refreshInterval).minus(1000)
-      : refreshInterval
-  ).dividedBy(5);
+  const stepInterval = getStepInterval(refreshInterval);
+
   const stepProgressSec = stepInterval.dividedBy(1000);
 
   const [oldTestnetId, setOldTestnetId] = useState(activeNetworkId);
@@ -41,6 +58,9 @@ export const useFetchEpochProgress = () => {
   const [epochRoundsLeft, setEpochRoundsLeft] = useState<number>(0);
 
   const updateStats = () => {
+    if (!refreshRate) {
+      return;
+    }
     setIsNewState(oldTestnetId !== activeNetworkId);
     if (isNewState) {
       startRoundTime();
@@ -79,6 +99,9 @@ export const useFetchEpochProgress = () => {
   };
 
   const startRoundTime = () => {
+    if (!refreshRate) {
+      return;
+    }
     const intervalRoundTime = setInterval(() => {
       if (!pageHidden) {
         setRoundTimeProgress((roundTimeProgress) =>
