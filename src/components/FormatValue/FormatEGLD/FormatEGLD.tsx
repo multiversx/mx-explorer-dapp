@@ -6,7 +6,7 @@ import { ELLIPSIS } from 'appConstants';
 import { NativeTokenSymbol } from 'components';
 import { FormatAmountUIType, FormatUSD } from 'components';
 import { DIGITS } from 'config';
-import { formatBigNumber, stringIsFloat } from 'helpers';
+import { formatBigNumber, stringIsFloat, isEgldToken } from 'helpers';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
 
 import { FormatDisplayValue } from '../FormatDisplayValue';
@@ -29,6 +29,7 @@ export const FormatEGLD = (props: FormatEGLDUIType) => {
     className
   } = props;
   const numberValue = String(value).replace(/[^\d.-]/g, '');
+  const isCustomIcon = !isEgldToken(egldLabel);
 
   if (!stringIsFloat(numberValue)) {
     <span
@@ -62,7 +63,9 @@ export const FormatEGLD = (props: FormatEGLDUIType) => {
         ? {
             symbol: (
               <>
-                <NativeTokenSymbol className='sym' />{' '}
+                <NativeTokenSymbol
+                  className={classNames('sym', { custom: isCustomIcon })}
+                />{' '}
               </>
             )
           }
