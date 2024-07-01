@@ -1,6 +1,6 @@
 import { AccountAssetType, IdentityType } from 'types';
 
-export enum NetworkIdType {
+export enum NetworkIdEnum {
   mainnet = 'mainnet',
   testnet = 'testnet',
   devnet = 'devnet'

@@ -1,10 +1,16 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
-import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
+import { BRAND_NAME } from 'appConstants';
+import { NativeTokenLogo } from 'components';
 import { pagerHelper } from 'components/Pager/helpers/pagerHelper';
-
-import { useGetPage, useGetSearch, useGetSort } from 'hooks';
+import {
+  useGetPage,
+  useGetSearch,
+  useGetSort,
+  useIsSovereign,
+  useIsNativeTokenSearched
+} from 'hooks';
 import {
   economicsSelector,
   statsSelector,
@@ -20,7 +26,7 @@ interface DummyTokenType {
   transactions: number;
 }
 
-export const EgldRow = ({
+export const NativeTokenRow = ({
   tokens,
   index,
   totalTokens
@@ -29,7 +35,7 @@ export const EgldRow = ({
   index: number;
   totalTokens: number;
 }) => {
-  const { egldLabel } = useSelector(activeNetworkSelector);
+  const { egldLabel, name } = useSelector(activeNetworkSelector);
   const {
     isFetched: isEconomicsFetched,
     price,
@@ -47,12 +53,13 @@ export const EgldRow = ({
   const { page, size } = useGetPage();
   const { search } = useGetSearch();
   const { sort, order } = useGetSort();
+  const isSovereign = useIsSovereign();
 
-  const description = `The MultiversX eGold (${egldLabel}) Token is native to the MultiversX Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
+  const description = isSovereign
+    ? `${egldLabel} Token is native to ${name ?? BRAND_NAME}`
+    : `The ${BRAND_NAME} eGold (${egldLabel}) Token is native to the ${BRAND_NAME} Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
-  const showOnSearch =
-    search &&
-    ['egld', 'elrond', 'multiversx', egldLabel].includes(search.toLowerCase());
+  const showOnSearch = useIsNativeTokenSearched();
   let showOnFilter = (!page || page === 1) && index === 0;
 
   const previousToken = tokens[index > 0 ? index - 1 : 0];
@@ -132,7 +139,8 @@ export const EgldRow = ({
     }
   }
 
-  const show = (!search || showOnSearch) && showOnFilter;
+  const show =
+    (!search || showOnSearch) && (showOnFilter || tokens.length === 0);
 
   if (!show) {
     return null;
@@ -145,7 +153,7 @@ export const EgldRow = ({
           <div className='d-flex align-items-center me-3'>
             <span className='side-link'>
               <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
-                <EgldSymbol />
+                <NativeTokenLogo />
               </div>
             </span>
           </div>
@@ -160,7 +168,9 @@ export const EgldRow = ({
           </div>
         </div>
       </td>
-      <td>MultiversX {egldLabel}</td>
+      <td>
+        {isSovereign ? name : BRAND_NAME} {egldLabel}
+      </td>
       <td>{price}</td>
       <td>{circulatingSupply}</td>
       <td>{marketCap}</td>

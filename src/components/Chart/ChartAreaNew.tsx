@@ -8,6 +8,8 @@ import {
   Tooltip,
   CartesianGrid
 } from 'recharts';
+
+import { getColors } from 'helpers';
 import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { getChartMergedData } from './helpers/getChartMergedData';
@@ -31,12 +33,11 @@ export const ChartAreaNew = ({
     chartData[chartData.length - 1].timestamp
   ];
 
-  const [neutral800, muted, primary] = ['neutral-800', 'muted', 'primary'].map(
-    (color) =>
-      getComputedStyle(document.documentElement)
-        .getPropertyValue(`--${color}`)
-        .trim()
-  );
+  const [neutral800, muted, primary] = getColors([
+    'neutral-800',
+    'muted',
+    'primary'
+  ]);
 
   if (!seriesConfig) {
     return null;

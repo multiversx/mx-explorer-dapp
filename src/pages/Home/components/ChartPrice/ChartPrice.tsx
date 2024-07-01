@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
 import { Select, SelectOptionType } from 'components';
+import { getPrimaryColor } from 'helpers';
 import { useFetchGrowthPrice } from 'hooks';
 import { faCircleUp, faCircleDown, faCircleMinus } from 'icons/solid';
 import { growthPriceSelector } from 'redux/selectors';
@@ -66,9 +67,7 @@ export const ChartPrice = () => {
   ]);
 
   const initialFilter = 'price30d';
-  const primary = getComputedStyle(document.documentElement)
-    .getPropertyValue('--primary')
-    .trim();
+  const primary = getPrimaryColor();
 
   const defaultValue = filters.find((filter) => filter.value === initialFilter);
   const [data, setData] = useState(dataMap.get(initialFilter));
@@ -76,7 +75,7 @@ export const ChartPrice = () => {
   const onChange = useCallback(
     (option: SingleValue<SelectOptionType>) => {
       if (option && option.value && isFetched) {
-        setData(dataMap.get(option.value));
+        setData(dataMap.get(String(option.value)));
       }
     },
     [isFetched]

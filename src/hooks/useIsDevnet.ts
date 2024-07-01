@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 
 import { activeNetworkSelector } from 'redux/selectors';
-import { NetworkIdType } from 'types';
+import { NetworkIdEnum } from 'types';
 
 export const useIsDevnet = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  return activeNetworkId === NetworkIdType.devnet;
+  return activeNetworkId === NetworkIdEnum.devnet;
 };

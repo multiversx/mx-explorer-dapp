@@ -7,3 +7,4 @@ export * from './formatPercentLabel';
 export * from './formatTimeUntilTimestamp';
 export * from './formatSize';
 export * from './formatUSD';
+export * from './formatVersion';

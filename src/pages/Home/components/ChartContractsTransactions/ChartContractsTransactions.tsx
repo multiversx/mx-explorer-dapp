@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
 import { Select, SelectOptionType } from 'components';
+import { getColors } from 'helpers';
 import { useFetchGrowthTransactions } from 'hooks';
 import { growthTransactionsSelector } from 'redux/selectors';
 import {
@@ -67,15 +68,11 @@ export const ChartContractsTransactions = ({
     isFetched
   } = useSelector(growthTransactionsSelector);
 
-  const [success, primary, violet500] = [
+  const [success, primary, violet500] = getColors([
     'success',
     'primary',
     'violet-500'
-  ].map((color) =>
-    getComputedStyle(document.documentElement)
-      .getPropertyValue(`--${color}`)
-      .trim()
-  );
+  ]);
 
   const filters: SelectOptionType[] = [
     {
