@@ -24,23 +24,27 @@ export const TransactionDetails = () => {
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const fetchTransaction = async () => {
-    if (transactionId) {
+    if (transactionId && isHash(transactionId)) {
       const { data, success } = await getTransaction(transactionId);
-      if (!success && !data && isHash(transactionId)) {
+      let originalTxHash = data?.originalTxHash;
+
+      if (!success && !data) {
         const { data: scData, success: scSuccess } = await getScResult(
           transactionId
         );
-        if (scData?.originalTxHash && scData.hash && scSuccess) {
-          const options = {
-            pathname: networkRoute(
-              urlBuilder.transactionDetails(scData.originalTxHash)
-            ),
-            hash: scData.hash
-          };
-          navigate(options, { replace: true });
-
-          return;
+        if (scSuccess) {
+          originalTxHash = scData?.originalTxHash;
         }
+      }
+
+      if (originalTxHash) {
+        const options = {
+          pathname: networkRoute(urlBuilder.transactionDetails(originalTxHash)),
+          hash: transactionId
+        };
+        navigate(options, { replace: true });
+
+        return;
       }
 
       setTransaction(data);
