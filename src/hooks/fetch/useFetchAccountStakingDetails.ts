@@ -85,12 +85,20 @@ export const useFetchAccountStakingDetails = () => {
       const bNClaimableRewardsLegacy = new BigNumber(
         delegationLegacy.claimableRewards
       );
+
       bNtotalClaimable = bNtotalClaimable.plus(bNClaimableRewardsLegacy);
       bNtotalLegacyDelegation = new BigNumber(
         bNuserActiveStake
           .plus(bNuserWaitingStake)
           .plus(bNClaimableRewardsLegacy)
       );
+
+      if (delegationLegacy.userUnstakedStake) {
+        const bNunstakedStakeLegacy = new BigNumber(
+          delegationLegacy.userUnstakedStake
+        );
+        bNtotalUnstakedValue = bNtotalUnstakedValue.plus(bNunstakedStakeLegacy);
+      }
     }
 
     if (delegation && delegation.length > 0) {
@@ -114,7 +122,9 @@ export const useFetchAccountStakingDetails = () => {
         bNtotalUserUnStakedValue
       );
       bNtotalActiveStake = bNtotalUserActiveStake;
-      bNtotalUnstakedValue = bNtotalUserUnStakedValue;
+      bNtotalUnstakedValue = bNtotalUnstakedValue.plus(
+        bNtotalUserUnStakedValue
+      );
       bNtotalDelegation = bNtotalClaimableRewards.plus(activePlusUnStaked);
       bNtotalClaimable = bNtotalClaimable.plus(bNtotalClaimableRewards);
     }
@@ -138,7 +148,8 @@ export const useFetchAccountStakingDetails = () => {
       delegationLegacy &&
       (delegationLegacy.claimableRewards !== '0' ||
         delegationLegacy.userWaitingStake !== '0' ||
-        delegationLegacy.userActiveStake !== '0');
+        delegationLegacy.userActiveStake !== '0' ||
+        delegationLegacy.userUnstakedStake !== '0');
 
     const showStake = Boolean(
       stake &&
