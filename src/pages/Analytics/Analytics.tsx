@@ -73,40 +73,31 @@ export const Analytics = () => {
     return charts;
   }, [chartList]);
 
-  const newSmartContractsCreatedChart = useMemo(() => {
-    return chartList?.filter((sc) => sc.id.includes('new-smart-contracts'));
-  }, [chartList]);
-
   const newStuffCreatedChart = useMemo(() => {
-    let smartContractChartChart: ChartListType | null = null;
-
-    if (newSmartContractsCreatedChart.length > 0) {
-      smartContractChartChart = newSmartContractsCreatedChart[0];
-      smartContractChartChart.dappConfig = {
-        ...smartContractChartChart.dappConfig,
-        id: 'right-axis',
-        orientation: 'right'
-      };
-    }
-
     const charts = chartList?.filter(
       (sc) => sc.id.includes('new-nfts') || sc.id.includes('new-esdts')
     );
+    const smartContractChartCharts = chartList?.filter((sc) =>
+      sc.id.includes('new-smart-contracts')
+    );
+    const nftChartIndex = charts.findIndex((chart) =>
+      chart.id.includes('new-nfts')
+    );
 
-    if (charts.length === 2) {
-      charts[1].dappConfig = {
-        ...charts[1].dappConfig,
+    if (charts?.[nftChartIndex]) {
+      charts[nftChartIndex].dappConfig = {
+        ...charts[nftChartIndex].dappConfig,
         id: 'right-axis',
         orientation: 'right'
       };
     }
 
-    if (smartContractChartChart) {
-      return [...charts, smartContractChartChart];
+    if (smartContractChartCharts.length > 0) {
+      return [...charts, ...smartContractChartCharts];
     }
 
     return charts;
-  }, [chartList, newSmartContractsCreatedChart]);
+  }, [chartList]);
 
   const aprsChart = useMemo(() => {
     return chartList?.filter((sc) => sc.id.includes('-apr'));
