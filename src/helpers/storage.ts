@@ -4,6 +4,7 @@ import { TEMP_LOCAL_NOTIFICATION_DISMISSED } from 'appConstants';
 type KeyType =
   | 'theme'
   | 'accessToken'
+  | 'recaptchaToken'
   | typeof TEMP_LOCAL_NOTIFICATION_DISMISSED;
 
 export const storage = {

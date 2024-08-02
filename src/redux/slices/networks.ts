@@ -32,7 +32,7 @@ export const getInitialState = (): CurrentNetworkSliceType => {
 
   return {
     defaultNetwork,
-    activeNetwork: defaultNetwork
+    activeNetwork: emptyNetwork
   };
 };
 

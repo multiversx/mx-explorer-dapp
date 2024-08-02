@@ -571,3 +571,10 @@ img.loading {
 .gx-3 {
   column-gap: 1rem;
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
+.grecaptcha-footer-badge {
+  display: none;
+}
