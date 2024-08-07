@@ -12,6 +12,7 @@ export * from './CollectionBlock';
 export * from './CopyButton';
 export * from './DataDecode';
 export * from './DetailItem';
+export * from './ExpandRow';
 export * from './Filters';
 export * from './FormatValue';
 export * from './HeroDetailsCard';
