@@ -24,7 +24,11 @@ export const multiversxApps = allApps([
   },
   {
     id: 'explorer',
-    url: 'http://battlenet-explorer.multiversx.com'
+    url: 'https://battlenet-explorer.multiversx.com'
+  },
+  {
+    id: 'xexchange',
+    url: 'https://battlenet.xexchange.com'
   }
 ]);
 
