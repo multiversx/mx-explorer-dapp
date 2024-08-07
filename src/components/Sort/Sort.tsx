@@ -7,6 +7,7 @@ import { SortOrderEnum, TableFilterUIType } from 'types';
 
 export interface TableSortUIType extends TableFilterUIType {
   id: string;
+  hasNegativeMargin?: boolean;
 }
 
 export const Sort = ({
@@ -14,7 +15,9 @@ export const Sort = ({
   text,
   hideFilters,
   defaultActive,
-  defaultOrder
+  defaultOrder,
+  hasNegativeMargin = true,
+  className
 }: TableSortUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const {
@@ -58,8 +61,10 @@ export const Sort = ({
 
   return (
     <div
-      className={classNames('me-n1 cursor-pointer', {
-        'text-primary-100': isActive
+      className={classNames('cursor-pointer', {
+        'me-n1': hasNegativeMargin,
+        'text-primary-100': isActive,
+        className
       })}
       onClick={() => {
         updateSortValue();

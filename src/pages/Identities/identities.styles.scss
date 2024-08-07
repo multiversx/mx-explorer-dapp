@@ -27,9 +27,18 @@
       }
     }
     td {
+      &:nth-of-type(3),
       &:nth-of-type(4) {
         text-align: center;
+      }
+      &:nth-of-type(4) {
         width: 15%;
+      }
+    }
+    td {
+      &:nth-of-type(6),
+      &:nth-of-type(7) {
+        text-align: right;
       }
     }
 

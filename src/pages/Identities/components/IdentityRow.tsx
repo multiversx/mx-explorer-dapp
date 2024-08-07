@@ -96,9 +96,7 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
           </div>
         </td>
 
-        <td className='text-end'>
-          {new BigNumber(identity.validators).toFormat()}
-        </td>
+        <td>{new BigNumber(identity.validators).toFormat()}</td>
         <td>{formatPercentLabel(identity.validatorsPercent)}</td>
         <td>
           <div className='d-flex align-items-center'>
@@ -112,7 +110,7 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
                   fillPercent={identity.stakePercent}
                   fillPercentLabel={formatPercentLabel(identity.stakePercent)}
                 />
-                <div className='ms-3'>
+                <div className='ms-2'>
                   {formatPercentLabel(identity?.stakePercent)}
                 </div>
               </>
@@ -128,7 +126,7 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
                     identity.validatorsPercent
                   )}
                 />
-                <div className='ms-3'>
+                <div className='ms-2'>
                   {formatPercentLabel(currentValidatorsTotalPercent.toNumber())}
                 </div>
               </>
@@ -149,7 +147,7 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
             <FormatAmount value={identity.locked} showTooltip={false} />
           </Overlay>
         </td>
-        <td className='text-end'>
+        <td>
           <CarretDown className='details-arrow' height='8' />
         </td>
       </tr>

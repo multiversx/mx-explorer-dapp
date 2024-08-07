@@ -82,7 +82,7 @@ export const Identities = () => {
                   <th className='th-name'>
                     <Sort text='Name' id={SortIdentitesFieldEnum.name} />
                   </th>
-                  <th className='w-10 text-end'>
+                  <th className='w-10 text-center'>
                     <Sort
                       text='Nodes'
                       id={SortIdentitesFieldEnum.validators}
@@ -124,8 +124,12 @@ export const Identities = () => {
                       tooltipClassName='tooltip-xl'
                     />
                   </th>
-                  <th>
-                    <Sort text='Stake' id={SortIdentitesFieldEnum.locked} />
+                  <th className='text-end'>
+                    <Sort
+                      text='Stake'
+                      id={SortIdentitesFieldEnum.locked}
+                      hasNegativeMargin={false}
+                    />
                   </th>
                   <th className='th-details'>&nbsp;</th>
                 </tr>
