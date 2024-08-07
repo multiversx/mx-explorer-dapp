@@ -25,4 +25,10 @@
       text-overflow: ellipsis;
     }
   }
+  .expand-row {
+    .content-wrapper + .trapezoid {
+      border-top-width: 4px;
+      border-color: var(--neutral-800-opacity-60);
+    }
+  }
 }
