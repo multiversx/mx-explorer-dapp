@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { PageState, Chart, Loader } from 'components';
 import { ChartConfigType, ChartListType } from 'components/Chart/helpers/types';
+import { getColors } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -50,11 +51,7 @@ export const AnalyticsStackedChart = ({
     AnalyticsStackedChartDataType[]
   >([]);
 
-  const [primary, violet500] = ['primary', 'violet-500'].map((color) =>
-    getComputedStyle(document.documentElement)
-      .getPropertyValue(`--${color}`)
-      .trim()
-  );
+  const [primary, violet500] = getColors(['primary', 'violet-500']);
 
   const firstSeriesDefaultConfig = {
     gradient: 'firstSeriesGradientId',

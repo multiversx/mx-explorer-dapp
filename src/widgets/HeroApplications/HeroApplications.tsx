@@ -1,4 +1,3 @@
-import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { FormatEGLD } from 'components';

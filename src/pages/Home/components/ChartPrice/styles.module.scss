@@ -155,7 +155,11 @@
     top: 0;
     bottom: 0;
     position: absolute;
-    background: linear-gradient(to bottom, black 0%, rgba(#23f7dd, 0.15) 100%);
+    background: linear-gradient(
+      to bottom,
+      black 0%,
+      rgba(var(--primary-rgb), 0.15) 100%
+    );
     z-index: -1;
   }
 }

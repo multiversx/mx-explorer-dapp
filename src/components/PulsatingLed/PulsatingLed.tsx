@@ -13,12 +13,12 @@ export const PulsatingLed = ({ className }: WithClassnameType) => {
   const setLoopInterval = () => {
     setHasAnimation(true);
     intervalRef.current = setInterval(() => {
-      const withinInterval = moment().subtract(2000, 'ms').isBefore(timestamp);
+      const withinInterval = moment().subtract(800, 'ms').isBefore(timestamp);
 
       if (!document.hidden && !withinInterval) {
         setHasAnimation(false);
       }
-    }, 2000);
+    }, 800);
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);

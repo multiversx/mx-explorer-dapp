@@ -4,10 +4,12 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, Dot } from 'recharts';
 import { ChartSimpleTooltip } from 'components/Chart/ChartSimpleTooltip';
 import { ChartTooltip } from 'components/Chart/ChartTooltip';
 import { ChartConfigType } from 'components/Chart/helpers/types';
+import { getPrimaryColor } from 'helpers';
 
 import { ChartAreaPropsType } from './types';
 
 const CustomCursor = (props: any) => {
+  const primary = getPrimaryColor();
   const { points, activeDotPos } = props;
 
   const startingPoint = points[0];
@@ -27,7 +29,7 @@ const CustomCursor = (props: any) => {
           y2={y2}
           gradientUnits='userSpaceOnUse'
         >
-          <stop stopColor='#23F7DD' offset='0' />
+          <stop stopColor={primary} offset='0' />
           <stop stopColor='#A78BFA' offset='1' />
         </linearGradient>
       </defs>

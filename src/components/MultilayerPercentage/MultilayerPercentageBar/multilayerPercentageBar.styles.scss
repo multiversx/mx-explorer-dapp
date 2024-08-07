@@ -9,24 +9,24 @@
   }
 
   .step-2 {
-    background-color: shade-color(#23f7dd, 20%);
+    background-color: shade-color($primary, 20%);
   }
 
   &.two-items {
     .step-2 {
-      background-color: shade-color(#23f7dd, 30%);
+      background-color: shade-color($primary, 30%);
     }
   }
 
   .step-3 {
-    background-color: shade-color(#23f7dd, 30%);
+    background-color: shade-color($primary, 30%);
   }
 
   .step-4 {
-    background-color: shade-color(#23f7dd, 40%);
+    background-color: shade-color($primary, 40%);
   }
 
   .step-5 {
-    background-color: shade-color(#23f7dd, 50%);
+    background-color: shade-color($primary, 50%);
   }
 }

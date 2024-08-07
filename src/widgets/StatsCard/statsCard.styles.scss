@@ -7,6 +7,9 @@
   .fam {
     .sym {
       height: 0.4em;
+      &.custom {
+        height: 0.8em;
+      }
     }
   }
   .stats-card-value {

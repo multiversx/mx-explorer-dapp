@@ -4,20 +4,19 @@ import { useSearchParams } from 'react-router-dom';
 
 import { TransactionsTable, PulsatingLed } from 'components';
 import { MethodList } from 'components/TransactionsTable/components';
-import { getShardText } from 'helpers';
 import {
   useAdapter,
   useGetPage,
   useGetTransactionFilters,
   useFetchTransactions,
-  useIsSovereign
+  useGetShardText
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const Transactions = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const isSovereign = useIsSovereign();
+  const getShardText = useGetShardText();
   const urlParams = useGetTransactionFilters();
   const { senderShard, receiverShard } = urlParams;
 
@@ -69,13 +68,13 @@ export const Transactions = () => {
                   {senderShard !== undefined && (
                     <>
                       <span>&nbsp;from&nbsp;</span>
-                      {getShardText(senderShard, isSovereign)}
+                      {getShardText(senderShard)}
                     </>
                   )}
                   {receiverShard !== undefined && (
                     <>
                       <span>&nbsp;to&nbsp;</span>
-                      {getShardText(receiverShard, isSovereign)}
+                      {getShardText(receiverShard)}
                     </>
                   )}
                   <MethodList />

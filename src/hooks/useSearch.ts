@@ -126,7 +126,9 @@ export const useSearch = (searchHash: string) => {
                     networkRoute(urlBuilder.blockDetails(searchHash))
                   );
                   break;
-                case scResult.success && scResult?.data?.originalTxHash:
+                case Boolean(
+                  scResult.success && scResult?.data?.originalTxHash
+                ):
                   setSearchRoute(
                     networkRoute(
                       urlBuilder.transactionDetails(

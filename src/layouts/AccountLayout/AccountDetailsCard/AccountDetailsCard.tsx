@@ -8,7 +8,7 @@ import {
   MAX_ACOUNT_TOKENS_BALANCE,
   LOW_LIQUIDITY_DISPLAY_TRESHOLD
 } from 'appConstants';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
+import { NativeTokenSymbol } from 'components';
 import {
   CardItem,
   CopyButton,
@@ -207,7 +207,7 @@ export const AccountDetailsCard = () => {
             </div>
           </div>
           <div className='card-body card-item-container my-n2 mx-spacing'>
-            <CardItem title='Balance' customIcon={<MultiversXSymbol />}>
+            <CardItem title='Balance' customIcon={<NativeTokenSymbol />}>
               <div className='d-flex align-items-center'>
                 {balance !== ELLIPSIS ? (
                   <FormatAmount

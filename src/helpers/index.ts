@@ -10,6 +10,7 @@ export * from './downloadFile';
 export * from './formatValue';
 export * from './getValue';
 export * from './isContract';
+export * from './isEgldToken';
 export * from './isEllipsisActive';
 export * from './isHash';
 export * from './isUtf8';

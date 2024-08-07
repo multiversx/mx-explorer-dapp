@@ -25,6 +25,7 @@ interface TransactionIconType {
   transaction: UITransactionType;
   showSuccess?: boolean;
   showGuardian?: boolean;
+  showSovereignBridge?: boolean;
   withBadge?: boolean;
 }
 
@@ -32,6 +33,7 @@ export const TransactionIcon = ({
   transaction,
   showSuccess = false,
   showGuardian = true,
+  showSovereignBridge = true,
   withBadge = false
 }: TransactionIconType) => {
   const { getTransaction } = useAdapter();
@@ -150,7 +152,9 @@ export const TransactionIcon = ({
     <>
       <StatusIcon />
       {showGuardian && <TransactionGuardianIcon transaction={transaction} />}
-      <TransactionSovereignBridgeIcon transaction={transaction} />
+      {showSovereignBridge && (
+        <TransactionSovereignBridgeIcon transaction={transaction} />
+      )}
     </>
   );
 };

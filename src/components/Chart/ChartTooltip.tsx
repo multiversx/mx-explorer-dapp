@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { capitalize, formatAmount, usdValue } from 'helpers';
+import { capitalize, formatAmount, getColors, usdValue } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 import { ChartConfigType } from './helpers/types';
 
@@ -30,9 +30,7 @@ export const ChartTooltip = ({
 }) => {
   const { isFetched, unprocessed } = useSelector(economicsSelector);
 
-  const stackedLabelColor = getComputedStyle(document.documentElement)
-    .getPropertyValue('--white')
-    .trim();
+  const stackedLabelColor = getColors(['white']);
 
   const formattedTotalValueStacked = new BigNumber(
     totalValueStacked ?? '0'

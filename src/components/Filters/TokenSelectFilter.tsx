@@ -9,8 +9,7 @@ import {
   ComponentProps
 } from 'react-select-async-paginate';
 
-import { ReactComponent as EgldSymbol } from 'assets/img/egld-token-logo.svg';
-import { SelectOptionType } from 'components';
+import { SelectOptionType, NativeTokenLogo } from 'components';
 import { useAdapter, useGetHash, useActiveRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
@@ -79,7 +78,7 @@ const Option: typeof components.Option = (props) => {
           />
         )}
         {(props.data as TokenSelectOptionType).value === egldSearchLabel && (
-          <EgldSymbol className='side-icon me-1' role='presentation' />
+          <NativeTokenLogo className='side-icon me-1' role='presentation' />
         )}
         <span className='text-truncate'>{props.label}</span>
       </div>

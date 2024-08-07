@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
-import { capitalize, getShardText, getNodeStatusDisplay } from 'helpers';
-import { useIsSovereign } from 'hooks';
+import { capitalize, getNodeStatusDisplay } from 'helpers';
+import { useGetShardText } from 'hooks';
 import { faClose } from 'icons/regular';
 import { NodeApiStatusEnum } from 'types';
 
@@ -19,7 +19,7 @@ export const TableFiltersHead = ({
   ignoredFilters = [],
   colSpan = 12
 }: TableFiltersHeadType) => {
-  const isSovereign = useIsSovereign();
+  const getShardText = useGetShardText();
   const [searchParams, setSearchParams] = useSearchParams();
 
   if (!filters || hideFilters) {
@@ -65,7 +65,7 @@ export const TableFiltersHead = ({
   ) => {
     switch (key) {
       case 'shard':
-        return getShardText(String(value), isSovereign);
+        return getShardText(String(value));
       case 'status':
         const { text, textColor, icon, iconColor } = getNodeStatusDisplay({
           status: String(value) as NodeApiStatusEnum
