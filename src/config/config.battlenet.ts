@@ -10,7 +10,7 @@ export const networks: NetworkType[] = [
     chainId: 'B',
     adapter: 'api',
     theme: 'testnet',
-    egldLabel: 'EGLD',
+    egldLabel: 'xEGLD',
     walletAddress: 'https://battlenet-wallet.multiversx.com',
     explorerAddress: 'https://battlenet-explorer.multiversx.com',
     apiAddress: 'https://express-api-shadowfork-two.elrond.ro'
