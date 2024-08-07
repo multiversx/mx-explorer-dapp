@@ -59,6 +59,7 @@
     "build-staging": "yarn run copy-mainnet-config & cross-env VITE_APP_SHARE_PREFIX=staging- VITE_APP_GA_ID=G-EFN7QYSMQS VITE_APP_IS_STAGING=true yarn run build",
     "build-internal": "yarn run copy-multiple-config & cross-env VITE_APP_SHARE_PREFIX=internal- VITE_APP_GA_ID=G-EFN7QYSMQS yarn run build",
     "build-next": "yarn run copy-multiple-config & cross-env VITE_APP_SHARE_PREFIX=next- VITE_APP_GA_ID=G-EFN7QYSMQS yarn run build",
+    "build-battlenet": "yarn run copy-multiple-config & cross-env VITE_APP_SHARE_PREFIX=battlenet- VITE_APP_GA_ID=G-EFN7QYSMQS yarn run build",
     "build": "cross-env VITE_APP_CACHE_BUST=$(git rev-parse --short HEAD || echo 'local') vite build && yarn version:make",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
