@@ -13,8 +13,16 @@
       }
     }
   }
-  .table tr td:first-child {
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .table tr td {
+    &:nth-of-type(3) {
+      color: var(--neutral-200);
+    }
+    &:nth-of-type(5) {
+      text-align: center;
+    }
+    &:first-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }

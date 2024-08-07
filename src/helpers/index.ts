@@ -16,6 +16,7 @@ export * from './isHash';
 export * from './isUtf8';
 export * from './parseAmount';
 export * from './parseJwt';
+export * from './partitionBy';
 export * from './processData';
 export * from './storage';
 export * from './stringIsFloat';

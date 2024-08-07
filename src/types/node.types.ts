@@ -121,7 +121,9 @@ export interface ProviderType {
   identity?: string;
   cumulatedRewards?: string;
   identityInfo?: IdentityType;
+
   identityDetails?: IdentityType; // local field - TODO - remove
+  rank?: number; // local field
 
   // not used
   initialOwnerFunds?: string;
