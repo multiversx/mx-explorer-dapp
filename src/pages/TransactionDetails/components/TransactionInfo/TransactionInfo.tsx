@@ -135,8 +135,11 @@ export const TransactionInfo = ({
   });
 
   const visibleOperations = getVisibleOperations(transaction);
-  const showLogs =
-    transaction.logs || (transaction.results && transaction.results.length > 0);
+  const hasTxResultsLogs =
+    transaction.results &&
+    transaction.results.length > 0 &&
+    transaction.results.some((ressult) => ressult.logs);
+  const showLogs = transaction.logs || hasTxResultsLogs;
 
   const totalTxTokenUsdValue = getTotalTxTokenUsdValue(transaction);
   const showTotalTxTokenUsdValue =
