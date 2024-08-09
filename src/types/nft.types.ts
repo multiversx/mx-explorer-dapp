@@ -6,6 +6,14 @@ export enum NftTypeEnum {
   SemiFungibleESDT = 'SemiFungibleESDT',
   MetaESDT = 'MetaESDT'
 }
+
+export enum NftSubtypeEnum {
+  NonFungibleESDTv2 = 'NonFungibleESDTv2',
+  DynamicNonFungibleESDT = 'DynamicNonFungibleESDT',
+  DynamicSemiFungibleESDT = 'DynamicSemiFungibleESDT',
+  DynamicMetaESDT = 'DynamicMetaESDT'
+}
+
 export interface NftType {
   identifier: string;
   collection: string;
@@ -17,6 +25,7 @@ export interface NftType {
   creator: string;
   royalties: number;
   balance: string;
+  subType?: NftSubtypeEnum;
   ticker?: string;
   uris?: string[];
   url?: string;

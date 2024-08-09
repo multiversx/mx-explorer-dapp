@@ -1,44 +1,30 @@
-import { NftTypeEnum, TokenTypeEnum } from 'types';
+import { Overlay, NftTypeBadge, NftSubTypeBadge } from 'components';
+import {
+  NftSubtypeEnum,
+  NftTypeEnum,
+  TokenTypeEnum,
+  WithClassnameType
+} from 'types';
+
+export interface NftBadgeUIType extends WithClassnameType {
+  type: NftTypeEnum | TokenTypeEnum;
+  subType?: NftSubtypeEnum;
+  showTooltip?: boolean;
+}
 
 export const NftBadge = ({
   type,
+  subType,
+  showTooltip = true,
   className
-}: {
-  type: NftTypeEnum | TokenTypeEnum;
-  className?: string;
-}) => {
-  switch (type) {
-    case NftTypeEnum.SemiFungibleESDT:
-      return (
-        <div
-          className={`badge badge-outline badge-outline-orange ${
-            className ? className : ''
-          }`}
-        >
-          SFT
-        </div>
-      );
-    case NftTypeEnum.NonFungibleESDT:
-      return (
-        <div
-          className={`badge badge-outline badge-outline-yellow ${
-            className ? className : ''
-          }`}
-        >
-          NFT
-        </div>
-      );
-    case NftTypeEnum.MetaESDT:
-      return (
-        <div
-          className={`badge badge-outline badge-outline-green ${
-            className ? className : ''
-          }`}
-        >
-          Meta-ESDT
-        </div>
-      );
-    default:
-      return null;
+}: NftBadgeUIType) => {
+  if (showTooltip && subType) {
+    return (
+      <Overlay title={<NftSubTypeBadge subType={subType} />}>
+        <NftTypeBadge type={type} className={className}></NftTypeBadge>
+      </Overlay>
+    );
   }
+
+  return <NftTypeBadge type={type} className={className}></NftTypeBadge>;
 };
