@@ -38,6 +38,10 @@ export const CollectionLink = ({ collection, ...rest }: CollectionLinkType) => (
         />
       </Overlay>
     )}
-    <NftBadge type={collection.type} className='ms-2' />
+    <NftBadge
+      type={collection.type}
+      subType={collection.subType}
+      className='ms-2'
+    />
   </>
 );

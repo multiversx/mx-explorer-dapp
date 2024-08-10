@@ -99,6 +99,14 @@ export const useFetchAccountStakingDetails = () => {
         );
         bNtotalUnstakedValue = bNtotalUnstakedValue.plus(bNunstakedStakeLegacy);
       }
+      if (delegationLegacy.userDeferredPaymentStake) {
+        const bNdeferredPaymentLegacy = new BigNumber(
+          delegationLegacy.userDeferredPaymentStake
+        );
+        bNtotalUnstakedValue = bNtotalUnstakedValue.plus(
+          bNdeferredPaymentLegacy
+        );
+      }
     }
 
     if (delegation && delegation.length > 0) {
@@ -149,7 +157,8 @@ export const useFetchAccountStakingDetails = () => {
       (delegationLegacy.claimableRewards !== '0' ||
         delegationLegacy.userWaitingStake !== '0' ||
         delegationLegacy.userActiveStake !== '0' ||
-        delegationLegacy.userUnstakedStake !== '0');
+        delegationLegacy.userUnstakedStake !== '0' ||
+        delegationLegacy.userDeferredPaymentStake !== '0');
 
     const showStake = Boolean(
       stake &&

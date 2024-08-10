@@ -130,7 +130,11 @@ export const AccountNfts = () => {
                           </div>
                         </NetworkLink>
                       </div>
-                      <NftBadge type={nft.type} className='ms-2' />
+                      <NftBadge
+                        type={nft.type}
+                        subType={nft.subType}
+                        className='ms-2'
+                      />
                     </div>
                   </DetailItem>
                 );
