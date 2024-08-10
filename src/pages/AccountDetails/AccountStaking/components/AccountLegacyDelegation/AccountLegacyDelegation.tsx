@@ -29,7 +29,8 @@ export const AccountLegacyDelegation = ({
     userActiveStake,
     claimableRewards,
     userUnstakedStake,
-    userWaitingStake
+    userWaitingStake,
+    userDeferredPaymentStake
   } = delegationLegacy;
 
   const [legacyDelegationApr, setLegacyDelegationApr] =
@@ -91,6 +92,17 @@ export const AccountLegacyDelegation = ({
             />
           </strong>
           <small>Undelegated</small>
+        </DetailsBlock>
+      )}
+
+      {userDeferredPaymentStake && userDeferredPaymentStake !== '0' && (
+        <DetailsBlock>
+          <strong>
+            <FormatAmount
+              value={new BigNumber(userDeferredPaymentStake).toString(10)}
+            />
+          </strong>
+          <small>Unbonded</small>
         </DetailsBlock>
       )}
 
