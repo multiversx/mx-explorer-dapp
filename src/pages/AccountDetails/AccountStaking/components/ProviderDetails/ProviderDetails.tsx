@@ -27,7 +27,7 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
   }
 
   const websiteLink = getValidLink({
-    link: provider?.identityDetails?.website
+    link: provider?.identityInfo?.website
   });
 
   return provider ? (
@@ -35,8 +35,8 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
       <div className='d-flex flex-row align-items-center'>
         <ImageWithFallback
           className='provider-image rounded-circle d-flex me-3 '
-          src={provider?.identityDetails?.avatar ?? PLACEHOLDER_IMAGE_PATH}
-          alt={provider?.identityDetails?.name ?? provider.provider}
+          src={provider?.identityInfo?.avatar ?? PLACEHOLDER_IMAGE_PATH}
+          alt={provider?.identityInfo?.name ?? provider.provider}
           height='42'
         />
         <div className='d-flex flex-column w-100'>
@@ -45,9 +45,9 @@ export const ProviderDetails = ({ provider }: { provider: ProviderType }) => {
               to={urlBuilder.providerDetails(provider.provider)}
               className='provider-title'
             >
-              {provider?.identityDetails?.name ? (
+              {provider?.identityInfo?.name ? (
                 <div className='text-truncate'>
-                  {provider.identityDetails.name}
+                  {provider.identityInfo.name}
                 </div>
               ) : (
                 <Trim text={provider.provider} />

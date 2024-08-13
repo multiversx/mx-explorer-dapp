@@ -45,26 +45,37 @@ export interface AccountSliceType extends SliceType {
 }
 
 export interface AccountStakingSliceType {
-  accountStakingFetched: boolean;
-
   address: string;
-  totalStaked: string;
-  totalDelegation: string;
-  totalLegacyDelegation: string;
+
+  showDelegation: boolean;
+  showLegacyDelegation: boolean;
+  showValidatorStake: boolean;
+  showStakingDetails: boolean;
+
+  activeValidatorStake: string;
+  activeDelegation: string;
+  activeLegacyDelegation: string;
+
+  lockedValidatorStake: string;
+  lockedDelegation: string;
+  lockedLegacyDelegation: string;
+
+  totalActiveStake: string;
   totalLocked: string;
   totalClaimable: string;
-  totalActiveStake: string;
-  totalUnstakedValue: string;
+  totalUnstaked: string;
+
+  // details
   stake?: AccountStakeType;
-  showStake: boolean;
-  delegationLegacy?: AccountDelegationLegacyType;
-  showDelegationLegacy: boolean;
+  legacyDelegation?: AccountDelegationLegacyType;
   delegation?: AccountDelegationType[];
-  showDelegation: boolean;
+
+  // provider details
   providerDataReady: undefined | boolean;
-  stakingDataReady: undefined | boolean;
   delegationProviders: ProviderType[];
   delegationLegacyIdentity: IdentityType | undefined;
+
+  accountStakingFetched: boolean;
 }
 
 export interface AccountExtraSliceType extends SliceType {
