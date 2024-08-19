@@ -1,25 +1,16 @@
-import BigNumber from 'bignumber.js';
+import { useSelector } from 'react-redux';
 
 import { FormatAmount, FormatUSD, Chart } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 import { DECIMALS } from 'config';
-import { ProviderType } from 'types';
-import { AccountStakingSliceType } from 'types/account.types';
+import { accountStakingSelector } from 'redux/selectors';
 
 import { prepareChartData } from './helpers/prepareChartData';
 
-export const DonutChart = ({
-  stakingDetails,
-  providers
-}: {
-  stakingDetails: AccountStakingSliceType;
-  providers?: ProviderType[];
-}) => {
-  const chartData = providers
-    ? prepareChartData({ stakingDetails, providers })
-    : [];
-  const { totalLocked } = stakingDetails;
-  const bNtotalLocked = new BigNumber(totalLocked);
+export const DonutChart = () => {
+  const stakingDetails = useSelector(accountStakingSelector);
+  const chartData = prepareChartData({ stakingDetails });
+  const { totalLocked, showStakingDetails } = stakingDetails;
 
   const config: ChartConfigType[] = [
     {
@@ -29,25 +20,20 @@ export const DonutChart = ({
     }
   ];
 
-  const hasNoActiveStake = bNtotalLocked.isEqualTo(0);
-
   return (
     <>
       <div className='staking-details-center'>
         <h5 className='mb-1'>
-          {hasNoActiveStake ? 'No staking' : 'Total Staked'}
+          {showStakingDetails ? 'Total Locked' : 'No staking'}
         </h5>
-        {!hasNoActiveStake && (
+        {showStakingDetails && (
           <>
             <h6 className='mb-1'>
-              <FormatAmount
-                value={bNtotalLocked.toString(10)}
-                showUsdValue={false}
-              />
+              <FormatAmount value={totalLocked} showUsdValue={false} />
             </h6>
             <div className='text-neutral-400 small mb-0'>
               <FormatUSD
-                value={bNtotalLocked.toString(10)}
+                value={totalLocked}
                 decimals={DECIMALS}
                 showPrefix={false}
               />

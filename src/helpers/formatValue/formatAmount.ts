@@ -1,6 +1,6 @@
 import { FormatAmountType as SdkDappFormatAmountType } from '@multiversx/sdk-dapp/utils/operations/formatAmount';
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
-import { MAX_DISPLAY_ZERO_DECIMALS, ZERO } from 'appConstants';
+import { ELLIPSIS, MAX_DISPLAY_ZERO_DECIMALS, ZERO } from 'appConstants';
 import { DECIMALS, DIGITS } from 'config';
 
 interface FormatAmountType extends SdkDappFormatAmountType {
@@ -16,7 +16,8 @@ export function formatAmount({
   addCommas = false
 }: FormatAmountType) {
   if (!stringIsInteger(input, false)) {
-    throw new Error('Invalid input');
+    console.error('Invalid input', input);
+    return ELLIPSIS;
   }
 
   showLastNonZeroDecimal =
