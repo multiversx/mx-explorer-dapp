@@ -13,6 +13,7 @@ export * from './isContract';
 export * from './isEgldToken';
 export * from './isEllipsisActive';
 export * from './isHash';
+export * from './isMetachain';
 export * from './isUtf8';
 export * from './parseAmount';
 export * from './parseJwt';

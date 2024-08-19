@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
-import { isHash, addressIsBech32 } from 'helpers';
+import { METACHAIN_SHARD_ID } from 'appConstants';
+import { isHash, addressIsBech32, isMetachain } from 'helpers';
 import { faSearch } from 'icons/regular';
 import { TransactionFiltersEnum } from 'types';
 
@@ -11,7 +12,7 @@ export interface SearchFilterType {
   filter: TransactionFiltersEnum;
   placeholder?: string;
   className?: string;
-  validation?: 'address' | 'hash';
+  validation?: 'address' | 'hash' | 'address-or-metachain';
 }
 
 export const SearchFilter = ({
@@ -61,9 +62,26 @@ export const SearchFilter = ({
           updateUrl(searchValue);
         }
       }
-    } else {
-      updateUrl(searchValue);
+      if (validation === 'address-or-metachain') {
+        const isValid =
+          isMetachain(searchValue) || addressIsBech32(searchValue);
+
+        setErrorText(isValid ? '' : 'Invalid Address');
+        if (isValid) {
+          if (isMetachain(searchValue)) {
+            updateUrl(String(METACHAIN_SHARD_ID));
+
+            return;
+          }
+
+          updateUrl(searchValue);
+        }
+      }
+
+      return;
     }
+
+    updateUrl(searchValue);
   };
 
   return (

@@ -13,7 +13,8 @@ import {
   HeroDetailsCard,
   Overlay,
   SocialIcons,
-  SocialWebsite
+  SocialWebsite,
+  NftSubTypeBadge
 } from 'components';
 import { formatDate, getNftText } from 'helpers';
 import { faClock, faExclamationTriangle } from 'icons/regular';
@@ -29,6 +30,7 @@ export const NftDetailsCard = () => {
     timestamp,
     nonce,
     type,
+    subType,
     name,
     creator,
     royalties,
@@ -157,6 +159,12 @@ export const NftDetailsCard = () => {
             }
           : {},
         { title: 'Type', value: <NftBadge type={type} /> },
+        subType
+          ? {
+              title: 'Subtype',
+              value: <NftSubTypeBadge subType={subType} />
+            }
+          : {},
         !assets && ticker !== name && (!scamInfo || showData)
           ? { title: 'Name', value: name }
           : {},

@@ -1,48 +1,50 @@
+import { useEffect, useState } from 'react';
+import { VerifiedContractType } from '@multiversx/sdk-dapp-sc-explorer/types/verifiedContract.types';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import { CopyButton } from 'components';
-import { downloadFile, urlBuilder } from 'helpers';
-import { useNetworkRoute } from 'hooks';
+import { urlBuilder } from 'helpers';
+import { useNetworkRoute, useAdapter } from 'hooks';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { accountSelector } from 'redux/selectors';
 
-import { AccountVerifiedContract } from './AccountVerifiedContract';
-
-export const DownloadContractCode = ({
-  code,
-  fileName
-}: {
-  code: string;
-  fileName?: string;
-}) => {
-  const download = (e: React.MouseEvent) => {
-    const name = fileName ?? 'contract';
-
-    e.preventDefault();
-    if (code && name) {
-      const codeBuffer = Buffer.from(code, 'hex');
-      downloadFile({ data: codeBuffer, name, fileType: 'wasm' });
-    }
-  };
-
-  return (
-    <div className='mt-4'>
-      <button type='button' onClick={download} className='btn btn-primary'>
-        Download WASM File
-      </button>
-    </div>
-  );
-};
+import { DownloadABIFile } from './DownloadABIFile';
+import { DownloadContractCode } from './DownloadContractCode';
+import { AccountVerifiedContract } from '../AccountVerifiedContract';
 
 export const AccountContractCode = () => {
   const networkRoute = useNetworkRoute();
+  const { getAccountContractVerification } = useAdapter();
 
   const { account } = useSelector(accountSelector);
   const { codeHash, code, address, isVerified } = account;
 
+  const [contract, setContract] = useState<VerifiedContractType>();
+  const [isDataReady, setIsDataReady] = useState<undefined | boolean>();
+
   const codeHashBase64Buffer = Buffer.from(String(codeHash ?? ''), 'base64');
   const codeHashHexValue = codeHashBase64Buffer.toString('hex');
+
+  const fetchContractVerification = () => {
+    getAccountContractVerification({ address }).then(({ success, data }) => {
+      if (success && data) {
+        setContract(data);
+      }
+      setIsDataReady(success);
+    });
+  };
+
+  useEffect(() => {
+    if (address && isVerified) {
+      fetchContractVerification();
+    }
+  }, [address, isVerified]);
+
+  const contractSource = contract?.source as any; // temporary until types extendes in SC explorer
+  const contractName =
+    contractSource?.contract?.metadata?.contractName ||
+    contractSource?.abi?.name;
 
   return !code ? (
     <Navigate to={networkRoute(urlBuilder.accountDetails(address))} />
@@ -67,7 +69,12 @@ export const AccountContractCode = () => {
           </div>
         )}
       </div>
-      {isVerified && <AccountVerifiedContract />}
+      {isVerified && (
+        <AccountVerifiedContract
+          contract={contract}
+          isDataReady={isDataReady}
+        />
+      )}
       <div className='card-body'>
         <h5 className='mb-3'>Contract Code</h5>
         <div className='textarea-wrapper'>
@@ -79,7 +86,18 @@ export const AccountContractCode = () => {
           />
         </div>
 
-        <DownloadContractCode code={code} fileName={address} />
+        <div className='mt-4 d-flex flex-wrap gap-3 align-items-center'>
+          <DownloadContractCode
+            code={code}
+            fileName={contractName ?? address}
+          />
+          {contract?.source?.abi && (
+            <DownloadABIFile
+              abi={contract.source.abi}
+              fileName={contractName ?? address}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
