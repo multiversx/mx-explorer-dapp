@@ -25,7 +25,11 @@ export const multiversxApps = allApps([
   },
   {
     id: 'explorer',
-    url: 'http://testnet-explorer.multiversx.com'
+    url: 'https://testnet-explorer.multiversx.com'
+  },
+  {
+    id: 'xexchange',
+    url: 'https://testnet.xexchange.com'
   },
   {
     id: 'xspotlight',

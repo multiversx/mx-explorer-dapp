@@ -38,7 +38,7 @@ export const FromColumnFilters = ({
                   name='sender-filter'
                   filter={TransactionFiltersEnum.sender}
                   placeholder='Address'
-                  validation='address'
+                  validation='address-or-metachain'
                 />
               </div>
             </div>

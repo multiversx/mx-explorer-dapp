@@ -11,7 +11,8 @@ import {
   SocialWebsite,
   SpotlightButton,
   HeroDetailsCard,
-  Overlay
+  Overlay,
+  NftSubTypeBadge
 } from 'components';
 import { formatDate } from 'helpers';
 import { useActiveRoute } from 'hooks';
@@ -30,6 +31,7 @@ export const CollectionDetailsCard = () => {
     name,
     ticker,
     type,
+    subType,
     timestamp,
     decimals,
     owner,
@@ -115,6 +117,9 @@ export const CollectionDetailsCard = () => {
             }
           : {},
         !scamInfo ? { title: 'Type', value: <NftBadge type={type} /> } : {},
+        !scamInfo && subType
+          ? { title: 'Subtype', value: <NftSubTypeBadge subType={subType} /> }
+          : {},
         !assets && ticker !== name && !scamInfo
           ? { title: 'Name', value: name }
           : {},

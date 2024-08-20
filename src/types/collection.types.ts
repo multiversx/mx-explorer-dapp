@@ -1,5 +1,5 @@
 import { RolesType, ScamInfoType, SliceType } from './general.types';
-import { NftTypeEnum } from './nft.types';
+import { NftTypeEnum, NftSubtypeEnum } from './nft.types';
 import { TokenAssetType } from './token.types';
 
 export interface CollectionType {
@@ -9,6 +9,7 @@ export interface CollectionType {
   ticker: string;
   timestamp: number;
   owner: string;
+  subType?: NftSubtypeEnum;
   decimals?: number;
   assets?: TokenAssetType;
   scamInfo?: ScamInfoType;

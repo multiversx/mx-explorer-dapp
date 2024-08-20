@@ -116,7 +116,11 @@ export const CollectionNfts = () => {
                               </div>
                             </NetworkLink>
                             {type !== NftTypeEnum.MetaESDT && (
-                              <NftBadge type={nft.type} className='ms-2' />
+                              <NftBadge
+                                type={nft.type}
+                                subType={nft.subType}
+                                className='ms-2'
+                              />
                             )}
                           </div>
                         </td>
