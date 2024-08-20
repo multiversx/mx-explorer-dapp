@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { formatBigNumber } from 'helpers';
 import { faEye, faGavel } from 'icons/regular';
-import { stakeSelector } from 'redux/selectors';
+import { stakeSelector, stakeExtraSelector } from 'redux/selectors';
 import { SortOrderEnum, NodeStatusEnum, NodeTypeEnum } from 'types';
 
 export interface NodesFiltersUIType {
@@ -28,14 +28,11 @@ export const NodesFilters = ({
   queueCount
 }: NodesFiltersUIType) => {
   const {
-    unprocessed: {
-      queueSize,
-      auctionValidators,
-      totalObservers,
-      totalNodes,
-      totalValidatorNodes
-    }
+    unprocessed: { queueSize, auctionValidators, totalObservers }
   } = useSelector(stakeSelector);
+  const {
+    unprocessed: { totalNodes, totalValidatorNodes }
+  } = useSelector(stakeExtraSelector);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const {

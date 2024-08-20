@@ -406,7 +406,7 @@ export const useAdapter = () => {
         params: getNodeParams(params)
       }),
 
-    getNodesCount: (params: GetNodesType) =>
+    getNodesCount: (params?: GetNodesType) =>
       provider({
         url: '/nodes/c',
         params: getNodeParams({ isCount: true, ...params })

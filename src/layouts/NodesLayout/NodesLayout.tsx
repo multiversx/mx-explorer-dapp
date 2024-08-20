@@ -3,7 +3,12 @@ import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
-import { useFetchStake, useFetchNodesVersions, useFetchShards } from 'hooks';
+import {
+  useFetchStake,
+  useFetchNodesVersions,
+  useFetchNodesCount,
+  useFetchShards
+} from 'hooks';
 import { faCogs } from 'icons/regular';
 import {
   activeNetworkSelector,
@@ -23,6 +28,7 @@ export const NodesLayout = () => {
   useFetchStake();
   useFetchNodesVersions();
   useFetchShards();
+  useFetchNodesCount();
 
   useEffect(() => {
     if (!(isNodesVersionsFetched && shards.length > 0)) {
