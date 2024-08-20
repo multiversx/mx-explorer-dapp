@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { InfoTooltip, Loader, Overlay, PageState, Sort } from 'components';
 import { processNodesIdentities } from 'helpers';
@@ -11,17 +11,22 @@ import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import {
   activeNetworkSelector,
   nodesIdentitiesSelector,
-  stakeSelector
+  stakeSelector,
+  stakeExtraSelector
 } from 'redux/selectors';
+import { setStakeExtra } from 'redux/slices/stakeExtra';
 import { IdentityType, SortOrderEnum } from 'types';
 
 import { IdentityRow, ResiliencyRow } from './components';
 import { sortIdentities, SortIdentitesFieldEnum } from './helpers';
 
 export const Identities = () => {
+  const dispatch = useDispatch();
   const { sort, order } = useGetSort();
   const { egldLabel } = useSelector(activeNetworkSelector);
   const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
+  const { isNodesIdentityCountFetched, unprocessed: stakeExtraUnprocessed } =
+    useSelector(stakeExtraSelector);
   const { nodesIdentities, isFetched } = useSelector(nodesIdentitiesSelector);
 
   const [displayNodesIdentities, setDisplayNodesIdentities] = useState<
@@ -45,14 +50,34 @@ export const Identities = () => {
 
   useEffect(() => {
     if (isFetched && nodesIdentities.length > 0) {
+      // avoid an extra call on identity details page, save existing data in state
+      if (!isNodesIdentityCountFetched) {
+        const totalValidators = nodesIdentities
+          .map(({ validators }) => validators || 0)
+          .reduce((a, b) => new BigNumber(a).plus(b), new BigNumber(0));
+
+        dispatch(
+          setStakeExtra({
+            totalIdentityNodes: totalValidators.toFormat(0),
+            unprocessed: {
+              ...stakeExtraUnprocessed,
+              totalIdentityNodes: totalValidators.toNumber()
+            },
+            isNodesIdentityCountFetched: true
+          })
+        );
+      }
+
       if (sort && order) {
         const sortedIdentities = sortIdentities({
           field: sort as SortIdentitesFieldEnum,
           order,
           sortArray: [...nodesIdentities]
         });
+
         const processedCumulativeStake =
           processNodesIdentities(sortedIdentities);
+
         setDisplayNodesIdentities(processedCumulativeStake);
 
         return;

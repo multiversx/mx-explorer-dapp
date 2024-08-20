@@ -13,7 +13,8 @@ export const getInitialStakeExtraState = (): StakeExtraSliceType => {
       totalValidatorNodes: 0,
       totalIdentityNodes: 0
     },
-    isFetched: false
+    isNodeCountFetched: false,
+    isNodesIdentityCountFetched: false
   };
 };
 
@@ -25,12 +26,25 @@ export const stakeExtraSlice = createSlice({
       state: StakeExtraSliceType,
       action: PayloadAction<StakeExtraSliceType>
     ) => {
-      state.totalNodes = action.payload.totalNodes;
-      state.totalValidatorNodes = action.payload.totalValidatorNodes;
-      state.totalIdentityNodes = action.payload.totalIdentityNodes;
+      if (action.payload.totalNodes !== undefined) {
+        state.totalNodes = action.payload.totalNodes;
+      }
+      if (action.payload.totalValidatorNodes !== undefined) {
+        state.totalValidatorNodes = action.payload.totalValidatorNodes;
+      }
+      if (action.payload.totalIdentityNodes !== undefined) {
+        state.totalIdentityNodes = action.payload.totalIdentityNodes;
+      }
+
+      if (action.payload.isNodeCountFetched !== undefined) {
+        state.isNodeCountFetched = action.payload.isNodeCountFetched;
+      }
+      if (action.payload.isNodesIdentityCountFetched !== undefined) {
+        state.isNodesIdentityCountFetched =
+          action.payload.isNodesIdentityCountFetched;
+      }
 
       state.unprocessed = action.payload.unprocessed;
-      state.isFetched = action.payload.isFetched;
     }
   }
 });

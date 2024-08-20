@@ -50,10 +50,13 @@ export interface StakeExtraType {
   totalIdentityNodes?: number;
 }
 
-export interface StakeExtraSliceType extends SliceType {
+export interface StakeExtraSliceType {
   unprocessed: StakeExtraType;
 
   totalNodes?: string;
   totalValidatorNodes?: string;
   totalIdentityNodes?: string;
+
+  isNodeCountFetched?: boolean;
+  isNodesIdentityCountFetched?: boolean;
 }

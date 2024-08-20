@@ -16,7 +16,8 @@ import {
   useGetNodeFilters,
   useGetPage,
   useGetSearch,
-  useGetSort
+  useGetSort,
+  useFetchNodesCount
 } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
@@ -56,6 +57,7 @@ export const Nodes = () => {
       setDataReady(nodesData.success && count.success);
     });
   };
+  useFetchNodesCount();
 
   useEffect(fetchNodes, [searchParams]);
 

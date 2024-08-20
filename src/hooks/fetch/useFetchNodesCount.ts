@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import BigNumber from 'bignumber.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useAdapter } from 'hooks';
+import { stakeExtraSelector } from 'redux/selectors';
 import { setStakeExtra } from 'redux/slices/stakeExtra';
 
 let currentRequest: any = null;
@@ -11,6 +12,8 @@ let currentRequest: any = null;
 export const useFetchNodesCount = () => {
   const dispatch = useDispatch();
   const { getNodesCount } = useAdapter();
+  const { unprocessed: stakeExtraUnprocessed } =
+    useSelector(stakeExtraSelector);
 
   const getNodesCountOnce = () => {
     if (currentRequest) {
@@ -40,7 +43,7 @@ export const useFetchNodesCount = () => {
 
     if (
       totalNodes?.data &&
-      totalValidatorNodes?.success &&
+      totalNodes?.success &&
       totalValidatorNodes?.data &&
       totalValidatorNodes?.success
     ) {
@@ -49,9 +52,7 @@ export const useFetchNodesCount = () => {
         totalValidatorNodes: totalValidatorNodes.data
       };
 
-      const processedTotalNodes = new BigNumber(totalNodes.totalNodes).toFormat(
-        0
-      );
+      const processedTotalNodes = new BigNumber(totalNodes.data).toFormat(0);
       const processedTotalValidatorNodes = new BigNumber(
         totalValidatorNodes.data
       ).toFormat(0);
@@ -61,8 +62,8 @@ export const useFetchNodesCount = () => {
           totalNodes: processedTotalNodes,
           totalValidatorNodes: processedTotalValidatorNodes,
 
-          unprocessed: unprocessedData,
-          isFetched: true
+          unprocessed: { ...stakeExtraUnprocessed, ...unprocessedData },
+          isNodeCountFetched: true
         })
       );
     }
