@@ -14,60 +14,54 @@ export const LockedAmountCardItem = ({
 }) => {
   const {
     address: lockedAddress,
-    stakingDataReady,
-    totalStaked,
-    totalLegacyDelegation,
+    accountStakingFetched,
+
+    activeValidatorStake,
+    activeDelegation,
+    activeLegacyDelegation,
+
     totalLocked,
     totalClaimable,
-    totalActiveStake,
-    totalUnstakedValue
+    totalUnstaked
   } = useSelector(accountStakingSelector);
   const { account } = useSelector(accountSelector);
-
-  const bNtotalStaked = new BigNumber(totalStaked);
-  const bNtotalActiveStake = new BigNumber(totalActiveStake);
-  const bNtotalLegacyDelegation = new BigNumber(totalLegacyDelegation);
-  const bNtotalLocked = new BigNumber(totalLocked);
-  const bNtotalClaimable = new BigNumber(totalClaimable);
-  const bNUnstaked = new BigNumber(totalUnstakedValue);
+  const hasUnstaked = new BigNumber(totalUnstaked).isGreaterThan(0);
 
   const lockedDetails = [
     {
-      label: 'Stake',
-      value: <FormatAmount value={bNtotalStaked.toString(10)} />
+      label: 'Stake (Validation)',
+      value: <FormatAmount value={activeValidatorStake} />
     },
     {
       label: 'Delegation',
-      value: <FormatAmount value={bNtotalActiveStake.toString(10)} />
+      value: <FormatAmount value={activeDelegation} />
     },
     {
       label: 'Legacy Delegation',
-      value: <FormatAmount value={bNtotalLegacyDelegation.toString(10)} />
+      value: <FormatAmount value={activeLegacyDelegation} />
     },
     {
       label: 'Claimable Rewards',
-      value: <FormatAmount value={bNtotalClaimable.toString(10)} />
+      value: <FormatAmount value={totalClaimable} />
     }
   ];
 
-  if (bNUnstaked.isGreaterThan(0)) {
+  if (hasUnstaked) {
     lockedDetails.push({
       label: 'Unstaked',
-      value: <FormatAmount value={bNUnstaked.toString(10)} />
+      value: <FormatAmount value={totalUnstaked} />
     });
   }
 
   const isDataReady =
-    stakingDataReady && account.address && account.address === lockedAddress;
+    accountStakingFetched &&
+    account.address &&
+    account.address === lockedAddress;
 
   return (
     <CardItem className={classNames(cardItemClass)} title='Stake' icon={faLock}>
       <div className='d-flex align-items-center'>
-        {isDataReady ? (
-          <FormatAmount value={bNtotalLocked.toString(10)} />
-        ) : (
-          ELLIPSIS
-        )}
+        {isDataReady ? <FormatAmount value={totalLocked} /> : ELLIPSIS}
         {isDataReady && <LockedAmountTooltip lockedDetails={lockedDetails} />}
       </div>
     </CardItem>

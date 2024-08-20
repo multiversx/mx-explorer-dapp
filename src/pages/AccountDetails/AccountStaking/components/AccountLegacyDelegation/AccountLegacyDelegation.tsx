@@ -13,10 +13,10 @@ import { AccountDelegationLegacyType, IdentityType } from 'types';
 import { DetailsBlock } from '../DetailsBlock';
 
 export const AccountLegacyDelegation = ({
-  delegationLegacy,
+  legacyDelegation,
   identity
 }: {
-  delegationLegacy: AccountDelegationLegacyType;
+  legacyDelegation: AccountDelegationLegacyType;
   identity?: IdentityType;
 }) => {
   const {
@@ -31,7 +31,7 @@ export const AccountLegacyDelegation = ({
     userUnstakedStake,
     userWaitingStake,
     userDeferredPaymentStake
-  } = delegationLegacy;
+  } = legacyDelegation;
 
   const [legacyDelegationApr, setLegacyDelegationApr] =
     useState<string>(ELLIPSIS);
