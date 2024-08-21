@@ -73,7 +73,6 @@ export const AccountNodes = () => {
   useFetchStake();
   useFetchNodesOverview({
     owner: address,
-    type: NodeTypeEnum.validator,
     fields: NODE_STATUS_PREVIEW_FIELDS.join(','),
     size: MAX_RESULTS
   });
@@ -111,14 +110,14 @@ export const AccountNodes = () => {
         <>
           <div className='card-body'>
             <NodesTable
-              type={type as NodeType['type']}
+              type={(type as NodeType['type']) || NodeTypeEnum.validator}
               status={status as NodeType['status']}
               auctionList={Boolean(isAuctioned)}
               queue={status === NodeStatusEnum.queued}
             >
               <NodesTable.Body
                 nodes={accountNodes}
-                type={type as NodeType['type']}
+                type={(type as NodeType['type']) || NodeTypeEnum.validator}
                 status={status as NodeType['status']}
                 auctionList={Boolean(isAuctioned)}
                 queue={status === NodeStatusEnum.queued}

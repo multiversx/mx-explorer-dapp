@@ -4,37 +4,26 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { formatBigNumber } from 'helpers';
+import { useGetNodesCategoryCount } from 'hooks';
 import { faEye, faGavel } from 'icons/regular';
-import { stakeSelector, stakeExtraSelector } from 'redux/selectors';
+import { stakeSelector } from 'redux/selectors';
 import { SortOrderEnum, NodeStatusEnum, NodeTypeEnum } from 'types';
 
 export interface NodesFiltersUIType {
   showGlobalValues?: boolean;
   showObservers?: boolean;
   showValidatorNodes?: boolean;
-  allCount?: string | number;
-  validatorCount?: string | number;
-  observerCount?: string | number;
-  auctionListCount?: string | number;
-  queueCount?: string | number;
 }
 
 export const NodesFilters = ({
   showObservers,
   showValidatorNodes,
-  showGlobalValues,
-  allCount,
-  validatorCount,
-  observerCount,
-  auctionListCount,
-  queueCount
+  showGlobalValues
 }: NodesFiltersUIType) => {
   const {
-    unprocessed: { queueSize, auctionValidators, totalObservers }
+    unprocessed: { queueSize, auctionValidators }
   } = useSelector(stakeSelector);
-  const {
-    unprocessed: { totalNodes, totalValidatorNodes }
-  } = useSelector(stakeExtraSelector);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const {
@@ -51,6 +40,14 @@ export const NodesFilters = ({
     isQualified,
     ...rest
   } = Object.fromEntries(searchParams);
+
+  const {
+    totalNodes,
+    totalValidatorNodes,
+    queueSize: displayQueueSize,
+    auctionValidators: displayAuctionValidators,
+    totalObservers
+  } = useGetNodesCategoryCount({ showGlobalValues });
 
   const nodeStatusLink = (statusValue: string) => {
     const nextUrlParams: { [k: string]: string } = {
@@ -90,17 +87,6 @@ export const NodesFilters = ({
     setSearchParams(nextUrlParams);
   };
 
-  const allDisplayBadge =
-    allCount ?? (showGlobalValues ? totalNodes : undefined);
-  const validatorDisplayBadge =
-    validatorCount ?? (showGlobalValues ? totalValidatorNodes : undefined);
-  const observersDisplayBadge =
-    observerCount ?? (showGlobalValues ? totalObservers : undefined);
-  const queueDisplayBadge =
-    queueCount ?? (showGlobalValues ? queueSize : undefined);
-  const auctionDisplayBadge =
-    auctionListCount ?? (showGlobalValues ? auctionValidators : undefined);
-
   const isAllActive =
     [type, isAuctioned].every((el) => el === undefined) &&
     status !== NodeStatusEnum.queued;
@@ -122,9 +108,9 @@ export const NodesFilters = ({
             )}
           >
             All Nodes
-            {allDisplayBadge !== undefined && (
+            {totalNodes !== undefined && (
               <span className='badge badge-sm'>
-                {formatBigNumber({ value: allDisplayBadge })}
+                {formatBigNumber({ value: totalNodes })}
               </span>
             )}
           </button>
@@ -144,9 +130,9 @@ export const NodesFilters = ({
               )}
             >
               Validator Nodes
-              {validatorDisplayBadge !== undefined && (
+              {totalValidatorNodes !== undefined && (
                 <span className='badge badge-sm'>
-                  {formatBigNumber({ value: validatorDisplayBadge })}
+                  {formatBigNumber({ value: totalValidatorNodes })}
                 </span>
               )}
             </button>
@@ -167,9 +153,9 @@ export const NodesFilters = ({
             >
               <FontAwesomeIcon icon={faGavel} />
               Auction List
-              {auctionDisplayBadge !== undefined && (
+              {displayAuctionValidators !== undefined && (
                 <span className='badge badge-sm'>
-                  {formatBigNumber({ value: auctionDisplayBadge })}
+                  {formatBigNumber({ value: displayAuctionValidators })}
                 </span>
               )}
             </button>
@@ -194,9 +180,9 @@ export const NodesFilters = ({
               )}
             >
               Queued
-              {queueDisplayBadge !== undefined && (
+              {displayQueueSize !== undefined && (
                 <span className='badge badge-sm'>
-                  {formatBigNumber({ value: queueDisplayBadge })}
+                  {formatBigNumber({ value: displayQueueSize })}
                 </span>
               )}
             </button>
@@ -217,9 +203,9 @@ export const NodesFilters = ({
             >
               <FontAwesomeIcon icon={faEye} />
               Observers
-              {observersDisplayBadge !== undefined && (
+              {totalObservers !== undefined && (
                 <span className='badge badge-sm'>
-                  {formatBigNumber({ value: observersDisplayBadge })}
+                  {formatBigNumber({ value: totalObservers })}
                 </span>
               )}
             </button>

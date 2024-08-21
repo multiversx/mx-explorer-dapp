@@ -175,6 +175,7 @@ export interface NodesIdentitiesSliceType extends SliceType {
 export interface NodeStatusPreviewType {
   bls: NodeType['bls'];
   status: NodeApiStatusEnum;
+  type: NodeTypeEnum;
   auctionQualified?: NodeType['auctionQualified'];
   isInDangerZone?: NodeType['isInDangerZone'];
 }
