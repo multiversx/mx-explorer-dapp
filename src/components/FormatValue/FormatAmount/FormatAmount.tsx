@@ -17,6 +17,7 @@ export interface FormatAmountUIType extends SdkDappFormatAmountType {
   showSymbol?: boolean;
   superSuffix?: boolean;
   showUsdValue?: boolean;
+  decimalOpacity?: boolean;
   usd?: string | number;
 }
 
