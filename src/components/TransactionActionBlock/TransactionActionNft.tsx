@@ -82,12 +82,12 @@ export const TransactionActionNft = ({
               className={`d-flex text-truncate ${
                 token.svgUrl ? 'side-link' : ''
               }`}
-              {...(token.type === NftTypeEnum.MetaESDT && token?.identifier
+              {...(token.type === NftTypeEnum.MetaESDT
                 ? { 'aria-label': token.identifier }
                 : {})}
             >
               {token.type === NftTypeEnum.MetaESDT && token?.svgUrl ? (
-                <Overlay title={displayIdentifier} truncate>
+                <Overlay title={token.identifier} truncate>
                   <TokenInfo />
                 </Overlay>
               ) : (
