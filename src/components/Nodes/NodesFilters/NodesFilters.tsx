@@ -11,6 +11,7 @@ import { SortOrderEnum, NodeStatusEnum, NodeTypeEnum } from 'types';
 export interface NodesFiltersUIType {
   showGlobalValues?: boolean;
   showObservers?: boolean;
+  showValidatorNodes?: boolean;
   allCount?: string | number;
   validatorCount?: string | number;
   observerCount?: string | number;
@@ -20,6 +21,7 @@ export interface NodesFiltersUIType {
 
 export const NodesFilters = ({
   showObservers,
+  showValidatorNodes,
   showGlobalValues,
   allCount,
   validatorCount,
@@ -127,27 +129,29 @@ export const NodesFilters = ({
             )}
           </button>
         </li>
-        <li className='list-inline-item me-0'>
-          <button
-            type='button'
-            onClick={() => {
-              nodeTypeLink(NodeTypeEnum.validator);
-            }}
-            className={classNames(
-              'btn btn-tab d-flex align-items-center gap-1',
-              {
-                active: type === NodeTypeEnum.validator && !isAuctioned
-              }
-            )}
-          >
-            Validator Nodes
-            {validatorDisplayBadge !== undefined && (
-              <span className='badge badge-sm'>
-                {formatBigNumber({ value: validatorDisplayBadge })}
-              </span>
-            )}
-          </button>
-        </li>
+        {showValidatorNodes && (
+          <li className='list-inline-item me-0'>
+            <button
+              type='button'
+              onClick={() => {
+                nodeTypeLink(NodeTypeEnum.validator);
+              }}
+              className={classNames(
+                'btn btn-tab d-flex align-items-center gap-1',
+                {
+                  active: type === NodeTypeEnum.validator && !isAuctioned
+                }
+              )}
+            >
+              Validator Nodes
+              {validatorDisplayBadge !== undefined && (
+                <span className='badge badge-sm'>
+                  {formatBigNumber({ value: validatorDisplayBadge })}
+                </span>
+              )}
+            </button>
+          </li>
+        )}
         {auctionValidators !== undefined && (
           <li className='list-inline-item me-0'>
             <button

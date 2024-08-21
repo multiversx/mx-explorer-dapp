@@ -88,7 +88,7 @@ export const AccountNodes = () => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <AccountTabs />
           <NodesOverview title='Owned Nodes Status' className='mb-3' />
-          <NodesHeader searchValue={accountNodesCount} />
+          <NodesHeader searchValue={accountNodesCount} smallHeader />
           <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
             <NodesFilters />
             <Pager

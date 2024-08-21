@@ -68,7 +68,7 @@ export const Nodes = () => {
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <NodesHeader searchValue={totalNodes} />
           <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
-            <NodesFilters showGlobalValues showObservers />
+            <NodesFilters showGlobalValues showObservers showValidatorNodes />
             <Pager
               total={totalNodes}
               className='d-flex ms-auto me-auto me-sm-0'
