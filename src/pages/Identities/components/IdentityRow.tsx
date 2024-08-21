@@ -13,7 +13,8 @@ import {
   FormatAmount,
   PercentageBar,
   Overlay,
-  LockedStakeTooltip
+  LockedStakeTooltip,
+  FormatNumber
 } from 'components';
 import { formatPercentLabel, urlBuilder } from 'helpers';
 import { useAdapter, useGetSort } from 'hooks';
@@ -97,7 +98,18 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
         </td>
 
         <td>{new BigNumber(identity.validators).toFormat()}</td>
-        <td>{formatPercentLabel(identity.validatorsPercent)}</td>
+        <td>
+          {identity.validatorsPercent ? (
+            <FormatNumber
+              value={identity.validatorsPercent}
+              label='%'
+              decimalOpacity={false}
+              hideLessThanOne
+            />
+          ) : (
+            'N/A'
+          )}
+        </td>
         <td>
           <div className='d-flex align-items-center'>
             {isStakeSorting ? (
@@ -111,7 +123,13 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
                   fillPercentLabel={formatPercentLabel(identity.stakePercent)}
                 />
                 <div className='ms-2'>
-                  {formatPercentLabel(identity?.stakePercent)}
+                  <FormatNumber
+                    value={identity.stakePercent}
+                    label='%'
+                    maxDigits={2}
+                    decimalOpacity={false}
+                    hideLessThanOne
+                  />
                 </div>
               </>
             ) : (
@@ -127,7 +145,13 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
                   )}
                 />
                 <div className='ms-2'>
-                  {formatPercentLabel(currentValidatorsTotalPercent.toNumber())}
+                  <FormatNumber
+                    value={currentValidatorsTotalPercent}
+                    label='%'
+                    maxDigits={2}
+                    decimalOpacity={false}
+                    hideLessThanOne
+                  />
                 </div>
               </>
             )}

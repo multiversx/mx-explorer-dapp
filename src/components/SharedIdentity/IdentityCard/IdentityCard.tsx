@@ -4,15 +4,18 @@ import { useSelector } from 'react-redux';
 
 import {
   FormatAmount,
+  FormatNumber,
   MultilayerPercentageRing,
   SharedIdentity,
   Trim
 } from 'components';
-import { formatPercentLabel, getValidLink } from 'helpers';
+import { getValidLink } from 'helpers';
 import { faLink, faMapMarkerAlt } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { IdentityType, MultilayerPercentageStepType } from 'types';
 import { StatsCard } from 'widgets';
+
+import { useGetIdentityNodePercentage } from './useGetIdentityNodePercentage';
 
 const prepareStakeDistribution = (identity: IdentityType) => {
   const distribution: MultilayerPercentageStepType[] = [];
@@ -31,7 +34,9 @@ const prepareStakeDistribution = (identity: IdentityType) => {
 
 export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
   const { walletAddress } = useSelector(activeNetworkSelector);
+  const nodesPercentage = useGetIdentityNodePercentage({ identity });
   const distribution = prepareStakeDistribution(identity);
+
   const identityName = identity?.name ?? 'N/A';
 
   const twitterLink = getValidLink({
@@ -43,10 +48,12 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
     link: identity?.website
   });
 
-  return identity !== undefined ? (
-    <div
-      className={`identity-card card card-black ${identity?.identity ?? ''}`}
-    >
+  if (!identity) {
+    return null;
+  }
+
+  return (
+    <div className={`identity-card card card-black ${identity.identity ?? ''}`}>
       <div className='card-body'>
         <div className='row'>
           <div className='col-12 d-flex flex-row gap-3'>
@@ -77,9 +84,9 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 </div>
               )}
 
-              {(identity?.location || twitterLink || websiteLink) && (
+              {(identity.location || twitterLink || websiteLink) && (
                 <div className='d-flex align-items-center flex-wrap'>
-                  {identity?.location && (
+                  {identity.location && (
                     <div className='d-flex align-items-center me-3'>
                       <FontAwesomeIcon
                         icon={faMapMarkerAlt}
@@ -146,15 +153,37 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 className='detail-card'
               />
 
-              <StatsCard
-                title='Stake Percentage'
-                value={formatPercentLabel(identity?.stakePercent)}
-                className='detail-card'
-              />
+              {identity.stakePercent && (
+                <StatsCard
+                  title='% of Total Stake'
+                  value={
+                    <FormatNumber
+                      value={identity.stakePercent}
+                      label='%'
+                      maxDigits={2}
+                      decimalOpacity={false}
+                      hideLessThanOne
+                    />
+                  }
+                  className='detail-card'
+                />
+              )}
 
               <StatsCard
                 title='Computed Gross APR'
-                value={<>{identity.apr ? `${identity.apr}%` : 'N/A'}</>}
+                value={
+                  <>
+                    {identity.apr ? (
+                      <FormatNumber
+                        value={identity.apr}
+                        label='%'
+                        decimalOpacity={false}
+                      />
+                    ) : (
+                      'N/A'
+                    )}
+                  </>
+                }
                 className='detail-card'
               />
 
@@ -178,7 +207,11 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                   </div>
                   <div className='distribution-card-value'>
                     {distribution && distribution.length > 0 ? (
-                      <MultilayerPercentageRing steps={distribution} hasTrim />
+                      <MultilayerPercentageRing
+                        steps={distribution}
+                        hasChart={false}
+                        hasTrim
+                      />
                     ) : (
                       <span className='text-neutral-400'>N/A</span>
                     )}
@@ -194,10 +227,25 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                   </h2>
                 </div>
               </div>
+
+              <div className='card nodes-card'>
+                <div className='card-body d-flex flex-row flex-wrap align-items-center justify-content-between'>
+                  <div className='nodes-card-title'>% of Total Nodes</div>
+                  <h2 className='nodes-card-value mb-0'>
+                    <FormatNumber
+                      value={nodesPercentage}
+                      label='%'
+                      maxDigits={2}
+                      decimalOpacity={false}
+                      hideLessThanOne
+                    />
+                  </h2>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  ) : null;
+  );
 };

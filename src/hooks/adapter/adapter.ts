@@ -419,11 +419,12 @@ export const useAdapter = () => {
 
     getNodesVersions,
 
-    getIdentities: ({ identities, sort, order }: GetIdentitiesType) =>
+    getIdentities: ({ identities, fields, sort, order }: GetIdentitiesType) =>
       provider({
         url: '/identities',
         params: {
           identities,
+          ...(fields !== undefined ? { fields } : {}),
           ...(sort !== undefined ? { sort } : {}),
           ...(order !== undefined ? { order } : {})
         }
