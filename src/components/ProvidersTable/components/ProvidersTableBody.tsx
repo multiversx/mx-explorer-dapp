@@ -22,6 +22,7 @@ import { ProvidersTableUIType } from '../ProvidersTable';
 
 export const ProvidersTableBody = ({
   providers,
+  showIndex = true,
   showIdentity = true,
   hasExpand
 }: ProvidersTableUIType) => {
@@ -48,7 +49,7 @@ export const ProvidersTableBody = ({
     <tbody data-testid='providersTable'>
       {providers.map((provider, i) => (
         <tr key={provider.provider}>
-          <td>{provider.rank}</td>
+          {showIndex && <td>{provider.rank}</td>}
           <td>
             <div className='d-flex align-items-center hash hash-lg gap-2'>
               {showIdentity && (

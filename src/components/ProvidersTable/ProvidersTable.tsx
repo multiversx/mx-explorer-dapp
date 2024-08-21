@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 
 import { useGetSort } from 'hooks';
 import { ProviderType } from 'types';
@@ -8,12 +9,13 @@ import { sortProviders, SortProviderFieldEnum } from './helpers';
 export interface ProvidersTableUIType {
   providers: ProviderType[];
   showIdentity?: boolean;
+  showIndex?: boolean;
   hasExpand?: boolean;
   hideFilters?: boolean;
 }
 
 export const ProvidersTable = (props: ProvidersTableUIType) => {
-  const { providers } = props;
+  const { providers, showIndex = true, showIdentity = true } = props;
   const [displayProviders, setDisplayProviders] =
     useState<ProviderType[]>(providers);
   const sort = useGetSort();
@@ -33,7 +35,12 @@ export const ProvidersTable = (props: ProvidersTableUIType) => {
   }, [sort.sort, sort.order]);
 
   return (
-    <div className='providers-table table-wrapper'>
+    <div
+      className={classNames('providers-table table-wrapper', {
+        'show-index': showIndex,
+        'show-identity': showIdentity
+      })}
+    >
       <table className='table mb-0'>
         <ProvidersTableHead {...props} />
         <ProvidersTableBody {...props} providers={displayProviders} />

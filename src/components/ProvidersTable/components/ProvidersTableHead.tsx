@@ -6,12 +6,13 @@ import { ProvidersTableUIType } from '../ProvidersTable';
 
 export const ProvidersTableHead = ({
   showIdentity = true,
+  showIndex = true,
   hideFilters
 }: ProvidersTableUIType) => {
   return (
     <thead>
       <tr>
-        <th>#</th>
+        {showIndex && <th>#</th>}
         {showIdentity ? (
           <th>
             <Sort
