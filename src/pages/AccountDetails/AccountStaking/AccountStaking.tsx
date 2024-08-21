@@ -22,33 +22,28 @@ export const AccountStaking = () => {
   const stakingDetails = useSelector(accountStakingSelector);
   const {
     address: stateAddress,
-    providerDataReady,
-    stakingDataReady,
-    delegation,
-    delegationProviders,
-    stake,
-    delegationLegacy,
-    delegationLegacyIdentity,
+
     showDelegation,
-    showDelegationLegacy,
-    showStake
+    showLegacyDelegation,
+    showValidatorStake,
+    showStakingDetails,
+
+    delegation,
+    stake,
+    legacyDelegation,
+
+    providerDataReady,
+    delegationProviders,
+    delegationLegacyIdentity,
+
+    accountStakingFetched
   } = stakingDetails;
 
-  const displayDelegation = delegation
-    ? delegation.filter(
-        (delegation) =>
-          delegation.userActiveStake !== '0' ||
-          delegation.claimableRewards !== '0' ||
-          (delegation.userUndelegatedList &&
-            delegation.userUndelegatedList?.length > 0)
-      )
-    : [];
-
   const needsData = address && address !== stateAddress;
-  const hasStaking = showDelegation || showDelegationLegacy || showStake;
+
   const isReady =
     providerDataReady &&
-    stakingDataReady &&
+    accountStakingFetched &&
     ((needsData && dataReady) || !needsData);
 
   useEffect(() => {
@@ -75,27 +70,24 @@ export const AccountStaking = () => {
       <div className='account-staking card-body'>
         {isReady ? (
           <div className='row'>
-            {hasStaking ? (
+            {accountStakingFetched && showStakingDetails ? (
               <>
                 <div className='col-lg-5 ps-lg-0 d-flex flex-column'>
                   <div className='px-spacer py-3 staking-chart-title'>
                     Staking Chart
                   </div>
                   <div className='staking-chart-holder'>
-                    <DonutChart
-                      stakingDetails={stakingDetails}
-                      providers={delegationProviders}
-                    />
+                    <DonutChart />
                   </div>
                 </div>
                 <div className='col-lg-7 pe-lg-0 order-lg-first'>
-                  {displayDelegation.length > 0 && (
+                  {showDelegation && delegation && delegation.length > 0 && (
                     <div className='account-delegation stake-container'>
                       <div className='px-spacer py-3 delegation-title'>
                         Staking List
                       </div>
                       <div className='d-flex flex-column staking-list'>
-                        {displayDelegation.map((delegation, i) => {
+                        {delegation.map((delegation, i) => {
                           const provider = delegationProviders?.find(
                             ({ provider }) => delegation.contract === provider
                           );
@@ -110,19 +102,19 @@ export const AccountStaking = () => {
                       </div>
                     </div>
                   )}
-                  {delegationLegacy && showDelegationLegacy && (
+                  {showLegacyDelegation && legacyDelegation && (
                     <div className='account-legacy-delegation stake-container'>
                       <div className='px-spacer py-3 delegation-title'>
                         Legacy Delegation
                       </div>
 
                       <AccountLegacyDelegation
-                        delegationLegacy={delegationLegacy}
+                        legacyDelegation={legacyDelegation}
                         identity={delegationLegacyIdentity}
                       />
                     </div>
                   )}
-                  {stake && showStake && (
+                  {showValidatorStake && stake && (
                     <div className='account-stake stake-container'>
                       <div className='px-spacer py-3 delegation-title'>
                         Stake{' '}

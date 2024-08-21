@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js';
 
+import { ZERO } from 'appConstants';
 import { DECIMALS, DIGITS } from 'config';
 import { formatAmount, truncateMiddle } from 'helpers';
-import { ProviderType } from 'types';
 import { AccountStakingSliceType } from 'types/account.types';
 
 interface DonutChartDataType {
@@ -13,53 +13,58 @@ interface DonutChartDataType {
 }
 
 export const prepareChartData = ({
-  stakingDetails,
-  providers
+  stakingDetails
 }: {
   stakingDetails: AccountStakingSliceType;
-  providers: ProviderType[];
 }): DonutChartDataType[] => {
   const {
-    accountStakingFetched,
+    showDelegation,
+    showValidatorStake,
+    showLegacyDelegation,
+
+    lockedLegacyDelegation,
+    lockedValidatorStake,
+
     delegation,
-    stake,
-    delegationLegacy,
-    showStake,
-    showDelegationLegacy,
-    totalLegacyDelegation,
-    totalStaked
+    delegationProviders,
+
+    accountStakingFetched
   } = stakingDetails;
 
   const defaultData = [{ name: 'No Staking', value: 1, displayValue: 0 }];
 
   if (accountStakingFetched) {
-    const bNtotalLegacyDelegation = new BigNumber(totalLegacyDelegation);
-    const bNtotalStaked = new BigNumber(totalStaked);
-
     const chartData: DonutChartDataType[] = [];
-    const displayDelegations = delegation
-      ? delegation.filter(
-          (delegation) =>
-            delegation.userActiveStake !== '0' ||
-            delegation.claimableRewards !== '0' ||
-            (delegation.userUndelegatedList &&
-              delegation.userUndelegatedList.length > 0)
-        )
-      : [];
-    if (displayDelegations.length > 0) {
-      displayDelegations.forEach((delegation) => {
-        const provider = providers.find(
+
+    if (showDelegation && delegation && delegation.length > 0) {
+      delegation.forEach((delegation) => {
+        const provider = delegationProviders.find(
           ({ provider }) => delegation.contract === provider
         );
         if (provider) {
-          const { userActiveStake, claimableRewards, userUnBondable } =
-            delegation;
-          const bNtotalLocked = new BigNumber(userActiveStake)
+          const {
+            userActiveStake,
+            claimableRewards,
+            userUnBondable,
+            userUndelegatedList
+          } = delegation;
+
+          const undelegatedAmounts =
+            userUndelegatedList && userUndelegatedList.length > 0
+              ? userUndelegatedList.map(({ amount }) => amount)
+              : [];
+          const bNtotalUserUnStakedValue = undelegatedAmounts.reduce(
+            (a, b) => new BigNumber(a).plus(b),
+            new BigNumber(ZERO)
+          );
+
+          const bNLocked = new BigNumber(userActiveStake)
             .plus(claimableRewards)
-            .plus(userUnBondable);
+            .plus(userUnBondable)
+            .plus(bNtotalUserUnStakedValue);
 
           const amount = formatAmount({
-            input: bNtotalLocked.toString(10),
+            input: bNLocked.toString(10),
             decimals: DECIMALS,
             digits: DIGITS,
             showLastNonZeroDecimal: false
@@ -67,7 +72,7 @@ export const prepareChartData = ({
 
           chartData.push({
             name:
-              provider?.identityDetails?.name ??
+              provider?.identityInfo?.name ??
               truncateMiddle(provider.provider, 20),
             identifier: provider?.identity ?? provider.provider,
             value: Number(amount)
@@ -75,9 +80,9 @@ export const prepareChartData = ({
         }
       });
     }
-    if (showDelegationLegacy && delegationLegacy) {
+    if (showLegacyDelegation && lockedLegacyDelegation) {
       const amount = formatAmount({
-        input: bNtotalLegacyDelegation.toString(10),
+        input: lockedLegacyDelegation,
         decimals: DECIMALS,
         digits: DIGITS,
         showLastNonZeroDecimal: false
@@ -88,9 +93,9 @@ export const prepareChartData = ({
         value: Number(amount)
       });
     }
-    if (showStake && stake) {
+    if (showValidatorStake && lockedValidatorStake) {
       const amount = formatAmount({
-        input: bNtotalStaked.toString(10),
+        input: lockedValidatorStake,
         decimals: DECIMALS,
         digits: DIGITS,
         showLastNonZeroDecimal: false

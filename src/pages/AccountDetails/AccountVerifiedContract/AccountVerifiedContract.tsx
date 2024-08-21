@@ -6,11 +6,12 @@ import { TransactionsToastList } from '@multiversx/sdk-dapp/UI/TransactionsToast
 import { DappProvider } from '@multiversx/sdk-dapp/wrappers/DappProvider/DappProvider';
 import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/containers/ScExplorerContainer';
 import { VerifiedContractTabsEnum } from '@multiversx/sdk-dapp-sc-explorer/types/base.types';
+import { VerifiedContractType } from '@multiversx/sdk-dapp-sc-explorer/types/verifiedContract.types';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
-import { useAdapter, useNetworkRoute, useIsMainnet } from 'hooks';
+import { useNetworkRoute, useIsMainnet } from 'hooks';
 import { faClone } from 'icons/regular';
 import {
   faAngleDown,
@@ -33,23 +34,30 @@ import {
 } from 'icons/solid';
 import { getHeaders } from 'interceptors';
 import { accountSelector, activeNetworkSelector } from 'redux/selectors';
+import { WithClassnameType } from 'types';
+
 import { getVerifiedContractSectionUrl } from './helpers';
 import { useGetActiveSection, useGetEnvironment } from './hooks';
 
-export const AccountVerifiedContract = () => {
+export interface AccountVerifiedContractUIType extends WithClassnameType {
+  contract?: VerifiedContractType;
+  isDataReady?: boolean;
+}
+
+export const AccountVerifiedContract = ({
+  contract,
+  isDataReady
+}: AccountVerifiedContractUIType) => {
   const networkRoute = useNetworkRoute();
   const navigate = useNavigate();
   const pathActiveSection = useGetActiveSection();
   const isMainnet = useIsMainnet();
-  const { getAccountContractVerification } = useAdapter();
   const { account } = useSelector(accountSelector);
   const { address, isVerified } = account;
   const { apiAddress } = useSelector(activeNetworkSelector);
   const environment = useGetEnvironment();
   const extraRequestHeaders = getHeaders();
 
-  const [contract, setContract] = useState();
-  const [isDataReady, setIsDataReady] = useState<undefined | boolean>();
   const [activeSection, setActiveSection] =
     useState<VerifiedContractTabsEnum>(pathActiveSection);
 
@@ -62,21 +70,6 @@ export const AccountVerifiedContract = () => {
       navigate(options, { replace: true });
     }
   }, [activeSection]);
-
-  const fetchContractVerification = () => {
-    getAccountContractVerification({ address }).then(({ success, data }) => {
-      if (success && data) {
-        setContract(data);
-      }
-      setIsDataReady(success);
-    });
-  };
-
-  useEffect(() => {
-    if (address && isVerified) {
-      fetchContractVerification();
-    }
-  }, [address, isVerified]);
 
   if (!isVerified || !environment) {
     return null;

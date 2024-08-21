@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
+import { ZERO } from 'appConstants';
 import { FormatAmount } from 'components';
 import { activeNetworkSelector } from 'redux/selectors';
 import { AccountDelegationType, ProviderType } from 'types';
@@ -18,25 +19,22 @@ export const AccountDelegation = ({
   const { egldLabel } = useSelector(activeNetworkSelector);
 
   const { userActiveStake } = delegation;
-  const claimableRewards = delegation.claimableRewards || '0';
+  const claimableRewards = delegation.claimableRewards || ZERO;
 
   const undelegatedAmounts =
     delegation?.userUndelegatedList && delegation.userUndelegatedList.length > 0
       ? delegation.userUndelegatedList.map(({ amount }) => amount)
       : [];
-  const bNtotalUserUnStakedValue =
-    undelegatedAmounts.length > 0
-      ? undelegatedAmounts.reduce(
-          (a, b) => new BigNumber(a).plus(b),
-          new BigNumber('0')
-        )
-      : null;
+  const bNtotalUserUnStakedValue = undelegatedAmounts.reduce(
+    (a, b) => new BigNumber(a).plus(b),
+    new BigNumber(ZERO)
+  );
 
   return (
     <div className='delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4'>
       <ProviderDetails provider={provider} />
 
-      {userActiveStake !== '0' && (
+      {userActiveStake !== ZERO && (
         <DetailsBlock>
           <strong>
             <FormatAmount value={userActiveStake} />
@@ -45,7 +43,7 @@ export const AccountDelegation = ({
         </DetailsBlock>
       )}
 
-      {bNtotalUserUnStakedValue && (
+      {bNtotalUserUnStakedValue.isGreaterThan(ZERO) && (
         <DetailsBlock>
           <strong>
             <FormatAmount value={bNtotalUserUnStakedValue.toString(10)} />
