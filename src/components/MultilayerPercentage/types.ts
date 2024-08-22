@@ -3,6 +3,7 @@ import { WithClassnameType } from 'types';
 export interface MultilayerPercentageUIType extends WithClassnameType {
   steps: MultilayerPercentageStepType[];
   hasTrim?: boolean;
+  hasChart?: boolean;
   hasSeparator?: boolean;
   legendClassName?: string;
 }

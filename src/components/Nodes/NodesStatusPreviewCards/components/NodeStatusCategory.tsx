@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { InfoTooltip } from 'components';
 import { capitalize } from 'helpers';
 import { nodesOverviewSelector } from 'redux/selectors';
-import { NodeApiStatusEnum, WithClassnameType } from 'types';
+import { NodeApiStatusEnum, NodeTypeEnum, WithClassnameType } from 'types';
 
 import { NodeCell } from './NodeCell';
 
@@ -30,7 +30,11 @@ export const NodeStatusCategory = ({
         !excludedStatuses.includes(node.status)
     );
     const isRequiredStatus = status && status === node.status;
-    return isRequiredStatus || isNotExcluded;
+
+    return (
+      node.type === NodeTypeEnum.validator &&
+      (isRequiredStatus || isNotExcluded)
+    );
   });
 
   if (filteredNodes.length === 0) {

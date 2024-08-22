@@ -42,6 +42,7 @@ export const PROVIDERS_FIELDS = [
 export const NODE_STATUS_PREVIEW_FIELDS = [
   'bls',
   'status',
+  'type',
   'auctionQualified',
   'isInDangerZone'
 ];

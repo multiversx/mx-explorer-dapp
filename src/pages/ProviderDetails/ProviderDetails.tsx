@@ -20,7 +20,7 @@ import {
 } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { ProviderTabs } from 'layouts/ProviderLayout/ProviderTabs';
-import { NodeStatusEnum, NodeType } from 'types';
+import { NodeStatusEnum, NodeType, NodeTypeEnum } from 'types';
 
 export const ProviderDetails = () => {
   const { hash: address } = useParams() as any;
@@ -66,7 +66,7 @@ export const ProviderDetails = () => {
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <ProviderTabs />
-          <NodesHeader searchValue={totalNodes} />
+          <NodesHeader searchValue={totalNodes} smallHeader />
           <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
             <NodesFilters />
             <Pager
@@ -86,14 +86,14 @@ export const ProviderDetails = () => {
         <>
           <div className='card-body'>
             <NodesTable
-              type={type as NodeType['type']}
+              type={(type as NodeType['type']) || NodeTypeEnum.validator}
               status={status as NodeType['status']}
               auctionList={Boolean(isAuctioned)}
               queue={status === NodeStatusEnum.queued}
             >
               <NodesTable.Body
                 nodes={nodes}
-                type={type as NodeType['type']}
+                type={(type as NodeType['type']) || NodeTypeEnum.validator}
                 status={status as NodeType['status']}
                 auctionList={Boolean(isAuctioned)}
                 queue={status === NodeStatusEnum.queued}
