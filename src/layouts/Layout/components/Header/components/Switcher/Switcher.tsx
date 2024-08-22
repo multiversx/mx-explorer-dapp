@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { Anchor, Dropdown } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
+import { CustomNetworkMenu } from 'components';
 import { networks, links } from 'config';
 import { getSubdomainNetwork } from 'helpers';
 import { faAngleDown } from 'icons/solid';
@@ -52,59 +53,61 @@ export const Switcher = () => {
         role='menu'
         aria-labelledby='network-switch'
       >
-        {links.length > 0 ? (
-          <>
-            {links.map((link) => (
-              <a
-                key={link.id}
-                target='_blank'
-                rel='noreferrer nofollow noopener'
-                className={classNames('dropdown-item', {
-                  active: activeNetworkId === link.id
-                })}
-                href={link.url}
-                role='menuitem'
-              >
-                {link.name}
-              </a>
-            ))}
-          </>
-        ) : (
-          <>
-            {isSubSubdomain && window?.location?.hostname ? (
-              <>
-                {networkLinks.map((link) => (
-                  <a
-                    key={link.id}
-                    target='_blank'
-                    rel='noreferrer nofollow noopener'
-                    className={classNames('dropdown-item', {
-                      active: activeNetworkId === link.id
-                    })}
-                    href={link.url}
-                    role='menuitem'
-                  >
-                    {link.name}
-                  </a>
-                ))}
-              </>
-            ) : (
-              <>
-                {networkLinks.map((link) => (
-                  <Dropdown.Item
-                    as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
-                    href={link.url}
-                    key={link.url}
-                    active={activeNetworkId === link.id}
-                    role='menuitem'
-                  >
-                    {link.name}
-                  </Dropdown.Item>
-                ))}
-              </>
-            )}
-          </>
-        )}
+        <CustomNetworkMenu>
+          {links.length > 0 ? (
+            <>
+              {links.map((link) => (
+                <a
+                  key={link.id}
+                  target='_blank'
+                  rel='noreferrer nofollow noopener'
+                  className={classNames('dropdown-item', {
+                    active: activeNetworkId === link.id
+                  })}
+                  href={link.url}
+                  role='menuitem'
+                >
+                  {link.name}
+                </a>
+              ))}
+            </>
+          ) : (
+            <>
+              {isSubSubdomain && window?.location?.hostname ? (
+                <>
+                  {networkLinks.map((link) => (
+                    <a
+                      key={link.id}
+                      target='_blank'
+                      rel='noreferrer nofollow noopener'
+                      className={classNames('dropdown-item', {
+                        active: activeNetworkId === link.id
+                      })}
+                      href={link.url}
+                      role='menuitem'
+                    >
+                      {link.name}
+                    </a>
+                  ))}
+                </>
+              ) : (
+                <>
+                  {networkLinks.map((link) => (
+                    <Dropdown.Item
+                      as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
+                      href={link.url}
+                      key={link.url}
+                      active={activeNetworkId === link.id}
+                      role='menuitem'
+                    >
+                      {link.name}
+                    </Dropdown.Item>
+                  ))}
+                </>
+              )}
+            </>
+          )}
+        </CustomNetworkMenu>
       </Dropdown.Menu>
     </Dropdown>
   );

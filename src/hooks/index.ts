@@ -5,6 +5,7 @@ export * from './pageStats';
 export * from './urlFilters';
 export * from './useActiveRoute';
 export * from './useCheckVersion';
+export * from './useCustomNetwork';
 export * from './useDebounce';
 export * from './useGetExplorerTitle';
 export * from './useGetHash';

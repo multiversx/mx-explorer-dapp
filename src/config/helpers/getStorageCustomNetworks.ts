@@ -1,15 +1,17 @@
-import { NetworkType } from 'types/network.types';
+import { LOCAL_STORAGE_CUSTOM_NETWORK } from 'appConstants';
+import { storage } from 'helpers/storage';
+import { NetworkAdapterEnum, NetworkType } from 'types';
 
 export const getStorageCustomNetworks = (): NetworkType[] => {
   try {
-    const decodedNetworks = '';
+    const storageNetworks = storage.getFromLocal(LOCAL_STORAGE_CUSTOM_NETWORK);
+    const parsedNetworks = JSON.parse(storageNetworks);
 
-    const parsedNetworks = JSON.parse(decodedNetworks);
     if (parsedNetworks && parsedNetworks.length > 0) {
       return parsedNetworks.map((network: NetworkType) => {
         return {
           ...network,
-          ...(!network?.adapter ? { adapter: 'api' } : {}),
+          ...(!network?.adapter ? { adapter: NetworkAdapterEnum.api } : {}),
           ...(!network?.egldLabel ? { egldLabel: 'xEGLD' } : {}),
           ...(!network?.chainId ? { chainId: 'T' } : {})
         };

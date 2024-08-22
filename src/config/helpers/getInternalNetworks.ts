@@ -1,4 +1,4 @@
-import { NetworkType } from 'types/network.types';
+import { NetworkAdapterEnum, NetworkType } from 'types';
 
 export const getInternalNetworks = (): NetworkType[] => {
   if (process.env.VITE_APP_INTERNAL_NETWORKS) {
@@ -12,7 +12,7 @@ export const getInternalNetworks = (): NetworkType[] => {
         return parsedNetworks.map((network: NetworkType) => {
           return {
             ...network,
-            ...(!network?.adapter ? { adapter: 'api' } : {}),
+            ...(!network?.adapter ? { adapter: NetworkAdapterEnum.api } : {}),
             ...(!network?.egldLabel ? { egldLabel: 'xEGLD' } : {}),
             ...(!network?.chainId ? { chainId: 'T' } : {})
           };

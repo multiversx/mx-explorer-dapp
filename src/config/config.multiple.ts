@@ -1,10 +1,16 @@
 import { NetworkType } from 'types/network.types';
-import { getInternalNetworks, getInternalLinks } from './helpers';
+import {
+  getInternalNetworks,
+  getStorageCustomNetworks,
+  getInternalLinks
+} from './helpers';
 import { allApps, schema } from './sharedConfig';
 
 export * from './sharedConfig';
 
 export const networks: NetworkType[] = [
+  ...getStorageCustomNetworks(),
+
   {
     default: true,
     id: 'testnet',

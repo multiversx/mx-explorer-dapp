@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { useNavigate, useLocation } from 'react-router-dom';
 
+import { useCustomNetwork } from 'hooks';
 import { faCircleNotch, faCheck } from 'icons/regular';
 import { WithClassnameType } from 'types';
 
 export const CustomNetworkInput = ({ className }: WithClassnameType) => {
-  const [customNetworkHash, setcustomNetworkHash] = useState<string>('');
-  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [customNetworkUrl, setcustomNetworkUrl] = useState<string>('');
+  const [generalError, setGeneralError] = useState('');
+  const { setCustomNetwork, customNetworkConfig, isSaving, errors } =
+    useCustomNetwork(customNetworkUrl);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      //    customNetwork();
+      setCustomNetwork();
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setcustomNetworkHash(e.target.value);
+    setGeneralError('');
+    setcustomNetworkUrl(e.target.value);
   };
+
+  useEffect(() => {
+    if (errors?.apiAddress) {
+      setGeneralError(errors.apiAddress);
+    }
+  }, [errors]);
 
   return (
     <form
@@ -27,9 +36,8 @@ export const CustomNetworkInput = ({ className }: WithClassnameType) => {
         'custom-network-input input-group-black w-100 d-flex',
         className
       )}
-      //  noValidate={true}
     >
-      <div className='input-group input-group-sm input-group-seamless'>
+      <div className='input-group input-group-sm input-group-seamless has-validation'>
         <input
           type='text'
           className='form-control text-truncate'
@@ -37,7 +45,7 @@ export const CustomNetworkInput = ({ className }: WithClassnameType) => {
           name='requestType'
           data-testid='customNetwork'
           required
-          value={customNetworkHash}
+          value={customNetworkUrl}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           aria-label='API Address'
@@ -48,7 +56,7 @@ export const CustomNetworkInput = ({ className }: WithClassnameType) => {
           className='input-group-text'
           onClick={(e) => {
             e.preventDefault();
-            //   customNetwork();
+            setCustomNetwork();
           }}
           data-testid='customNetworkButton'
           aria-label='customNetwork'
@@ -60,9 +68,17 @@ export const CustomNetworkInput = ({ className }: WithClassnameType) => {
               className='me-1 text-primary'
             />
           ) : (
-            <FontAwesomeIcon icon={faCheck} className='me-1' />
+            <FontAwesomeIcon
+              icon={faCheck}
+              className={classNames('me-1', {
+                'text-primary': customNetworkConfig
+              })}
+            />
           )}
         </button>
+        {generalError && (
+          <div className='invalid-feedback d-block'>{generalError}</div>
+        )}
       </div>
     </form>
   );
