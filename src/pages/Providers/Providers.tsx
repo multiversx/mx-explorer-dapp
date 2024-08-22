@@ -2,12 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { PROVIDERS_FIELDS } from 'appConstants';
-import { ProvidersTable, Loader, PageState } from 'components';
+import { ProvidersTable, Loader, PageState, ExpandRow } from 'components';
+import {
+  sortProviders,
+  SortProviderFieldEnum
+} from 'components/ProvidersTable/helpers';
+import { partitionBy } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faCode } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { activeNetworkSelector } from 'redux/selectors';
-import { ProviderType } from 'types';
+import { ProviderType, SortOrderEnum } from 'types';
 
 export const Providers = () => {
   const ref = useRef(null);
@@ -15,7 +20,10 @@ export const Providers = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
-  const [providers, setProviders] = useState<ProviderType[]>([]);
+  const [displayProviders, setDisplayProviders] = useState<ProviderType[]>([]);
+  const [displayInactiveProviders, setDisplayInactiveProviders] = useState<
+    ProviderType[]
+  >([]);
 
   const fetchProviders = () => {
     setDataReady(undefined);
@@ -24,7 +32,31 @@ export const Providers = () => {
       withIdentityInfo: true
     }).then((providersData) => {
       if (providersData.success) {
-        setProviders(providersData.data);
+        if (providersData.data.length > 0) {
+          const [activeProviders, inactiveProviders] = partitionBy(
+            providersData.data,
+            (provider) => provider.numNodes > 0 && provider.locked > 0
+          );
+
+          const sortedProviders = sortProviders({
+            field: SortProviderFieldEnum.numNodes,
+            order: SortOrderEnum.desc,
+            sortArray: [...activeProviders]
+          });
+          const rankedProviders = sortedProviders.map((provider, index) => {
+            return { ...provider, rank: index + 1 };
+          });
+          const rankedInactiveProviders = (
+            inactiveProviders as ProviderType[]
+          ).map((provider, index) => {
+            return { ...provider, rank: index + 1 };
+          });
+
+          setDisplayProviders(rankedProviders);
+          setDisplayInactiveProviders(rankedInactiveProviders);
+        } else {
+          setDisplayProviders(providersData.data);
+        }
         setDataReady(providersData.success);
       } else {
         setDataReady(providersData.success);
@@ -53,7 +85,17 @@ export const Providers = () => {
 
       {dataReady === true && (
         <div className='card-body'>
-          <ProvidersTable providers={providers} />
+          <ProvidersTable providers={displayProviders} />
+          {displayInactiveProviders.length > 0 && (
+            <>
+              <h3 className='mt-5 mb-3'>Inactive Providers</h3>
+              <ProvidersTable
+                providers={displayInactiveProviders}
+                hideFilters
+                hasExpand
+              />
+            </>
+          )}
         </div>
       )}
     </div>

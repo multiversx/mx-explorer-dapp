@@ -13,7 +13,8 @@ import {
   HeroDetailsCard,
   Overlay,
   SocialIcons,
-  SocialWebsite
+  SocialWebsite,
+  NftSubTypeBadge
 } from 'components';
 import { formatDate, getNftText } from 'helpers';
 import { faClock, faExclamationTriangle } from 'icons/regular';
@@ -29,6 +30,7 @@ export const NftDetailsCard = () => {
     timestamp,
     nonce,
     type,
+    subType,
     name,
     creator,
     royalties,
@@ -119,7 +121,7 @@ export const NftDetailsCard = () => {
         </Overlay>
       }
       detailItems={[
-        description
+        Boolean(description && (!scamInfo || showData))
           ? {
               title: 'Description',
               value: (
@@ -129,7 +131,7 @@ export const NftDetailsCard = () => {
               )
             }
           : {},
-        hasExtraDescription
+        hasExtraDescription && (!scamInfo || showData)
           ? {
               title: 'Collection',
               value: (
@@ -142,20 +144,30 @@ export const NftDetailsCard = () => {
               )
             }
           : {},
-        assets?.website
+        assets?.website && (!scamInfo || showData)
           ? {
               title: 'Website',
               value: <SocialWebsite link={assets.website} />
             }
           : {},
-        assets?.social && Object.keys(assets.social).length > 0
+        assets?.social &&
+        Object.keys(assets.social).length > 0 &&
+        (!scamInfo || showData)
           ? {
               title: 'Other Links',
               value: <SocialIcons assets={assets.social} excludeWebsite />
             }
           : {},
         { title: 'Type', value: <NftBadge type={type} /> },
-        !assets && ticker !== name ? { title: 'Name', value: name } : {},
+        subType
+          ? {
+              title: 'Subtype',
+              value: <NftSubTypeBadge subType={subType} />
+            }
+          : {},
+        !assets && ticker !== name && (!scamInfo || showData)
+          ? { title: 'Name', value: name }
+          : {},
         { title: 'Collection', value: <CollectionBlock nft={nftState} /> },
         { title: 'Identifier', value: identifier },
         decimals !== undefined
@@ -167,12 +179,12 @@ export const NftDetailsCard = () => {
         owner !== undefined
           ? {
               title: 'Owner',
-              value: <AccountLink address={owner} fetchAssets />
+              value: <AccountLink address={owner} fetchAssets={!scamInfo} />
             }
           : {},
         {
           title: 'Creator',
-          value: <AccountLink address={creator} fetchAssets />
+          value: <AccountLink address={creator} fetchAssets={!scamInfo} />
         },
         timestamp !== undefined
           ? {

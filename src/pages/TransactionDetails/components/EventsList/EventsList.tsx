@@ -7,16 +7,16 @@ import { DecodeMethodType } from 'components/DataDecode';
 import { faExchange } from 'icons/regular';
 import { EventType } from 'types';
 
-const EventTopics = ({
-  topics,
+const EventExtraData = ({
+  data,
   identifier
 }: {
-  topics: EventType['topics'];
+  data: string[];
   identifier?: string;
 }) => {
-  const mergedTopics = topics.join('\n');
+  const mergedData = data.join('\n');
 
-  return <DataDecode value={mergedTopics} identifier={identifier} />;
+  return <DataDecode value={mergedData} identifier={identifier} />;
 };
 
 export const EventsList = ({
@@ -92,8 +92,8 @@ export const EventsList = ({
                 <div className='row mb-3 d-flex flex-column flex-sm-row'>
                   <div className='col-sm-2 col-left'>Topics</div>
                   <div className='col-sm-10 d-flex flex-column'>
-                    <EventTopics
-                      topics={event.topics}
+                    <EventExtraData
+                      data={event.topics}
                       identifier={event.identifier}
                     />
                   </div>
@@ -111,6 +111,19 @@ export const EventsList = ({
                   </div>
                 </div>
               )}
+
+              {event.additionalData !== undefined &&
+                event.additionalData.length > 0 && (
+                  <div className='row mb-3 d-flex flex-column flex-sm-row'>
+                    <div className='col-sm-2 col-left'>Additional Data</div>
+                    <div className='col-sm-10 d-flex flex-column'>
+                      <EventExtraData
+                        data={event.additionalData}
+                        identifier={event.identifier}
+                      />
+                    </div>
+                  </div>
+                )}
             </div>
           </div>
         );

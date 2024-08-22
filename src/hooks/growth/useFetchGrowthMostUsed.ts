@@ -13,7 +13,7 @@ export const useFetchGrowthMostUsed = () => {
 
   const fetchGrowthMostUsed = () => {
     if (!isFetched) {
-      getGrowthWidget('/most-used').then((growthMostUsed) => {
+      getGrowthWidget('/verified-most-used').then((growthMostUsed) => {
         if (growthMostUsed?.data && growthMostUsed.success) {
           dispatch(
             setGrowthMostUsed({

@@ -1,25 +1,34 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
+import { NODE_STATUS_PREVIEW_FIELDS, MAX_RESULTS } from 'appConstants';
 import { Loader, Pager, PageSize, PageState, ProvidersTable } from 'components';
 import {
   NodesFilters,
   NodesTable,
   SharedIdentity,
-  NodesHeader
+  NodesHeader,
+  NodesOverview
 } from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
   useGetPage,
   useGetSearch,
-  useGetSort
+  useGetSort,
+  useFetchNodesOverview
 } from 'hooks';
 import { faCity, faCode } from 'icons/regular';
+import { nodesOverviewSelector } from 'redux/selectors';
 import { IdentityType, NodeStatusEnum, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {
   const { hash: id } = useParams() as any;
+  const { isFetched: isNodesOverviewFetched } = useSelector(
+    nodesOverviewSelector
+  );
+
   const { getIdentity, getNodes, getNodesCount, getProviders } = useAdapter();
 
   const [searchParams] = useSearchParams();
@@ -37,6 +46,12 @@ export const IdentityDetails = () => {
   );
   const [nodes, setNodes] = useState<NodeType[]>([]);
   const [totalNodes, setTotalNodes] = useState<number | '...'>('...');
+
+  useFetchNodesOverview({
+    identity: id,
+    fields: NODE_STATUS_PREVIEW_FIELDS.join(','),
+    size: MAX_RESULTS
+  });
 
   const fetchData = () => {
     Promise.all([getIdentity(id), getProviders({ identity: id })]).then(
@@ -74,7 +89,7 @@ export const IdentityDetails = () => {
     providersFetched === false ||
     (providersFetched && providers !== undefined && providers.length > 0);
 
-  if (dataReady === undefined) {
+  if (dataReady === undefined || !isNodesOverviewFetched) {
     return <Loader />;
   }
 
@@ -124,6 +139,8 @@ export const IdentityDetails = () => {
                           <ProvidersTable
                             providers={providers}
                             showIdentity={false}
+                            showIndex={false}
+                            hideFilters
                           />
                         )}
                       </div>
@@ -135,13 +152,23 @@ export const IdentityDetails = () => {
           )}
 
           <div className='row'>
+            <div className='col-12 mb-3'>
+              <div className='card'>
+                <div className='card-body'>
+                  <NodesOverview />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className='row'>
             <div className='col-12'>
               <div className='card'>
                 <div className='card-header'>
                   <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-                    <NodesHeader searchValue={totalNodes} />
+                    <NodesHeader searchValue={totalNodes} smallHeader />
                     <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
-                      <NodesFilters />
+                      <NodesFilters showObservers showValidatorNodes />
                       <Pager
                         total={totalNodes}
                         className='d-flex ms-auto me-auto me-sm-0'

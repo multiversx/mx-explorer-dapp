@@ -43,7 +43,8 @@ $main-colors: map-merge-multiple(
   $violets,
   $purples,
   $primarys,
-  $cyans
+  $cyans,
+  $ambers
 );
 $main-colors-rgb: map-loop($main-colors, to-rgb, '$value');
 
@@ -55,7 +56,8 @@ $helper-colors: map-merge-multiple(
   $greens,
   $oranges,
   $blues,
-  $cyans
+  $cyans,
+  $ambers
 );
 $helper-colors-rgb: map-loop($theme-colors, to-rgb, '$value');
 

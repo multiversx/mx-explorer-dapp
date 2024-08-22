@@ -4,18 +4,19 @@ import { useSearchParams } from 'react-router-dom';
 
 import { TransactionsTable, PulsatingLed } from 'components';
 import { MethodList } from 'components/TransactionsTable/components';
-import { getShardText } from 'helpers';
 import {
   useAdapter,
   useGetPage,
   useGetTransactionFilters,
-  useFetchTransactions
+  useFetchTransactions,
+  useGetShardText
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const Transactions = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
+  const getShardText = useGetShardText();
   const urlParams = useGetTransactionFilters();
   const { senderShard, receiverShard } = urlParams;
 

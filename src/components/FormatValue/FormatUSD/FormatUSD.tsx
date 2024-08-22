@@ -26,7 +26,6 @@ export const FormatUSD = (props: FormatUSDUIType) => {
     showPrefix = true,
     className
   } = props;
-
   const amount = decimals
     ? formatAmount({
         input: String(unprocessedValue),

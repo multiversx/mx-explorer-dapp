@@ -38,3 +38,11 @@ export const PROVIDERS_FIELDS = [
   'serviceFee',
   'delegationCap'
 ];
+
+export const NODE_STATUS_PREVIEW_FIELDS = [
+  'bls',
+  'status',
+  'type',
+  'auctionQualified',
+  'isInDangerZone'
+];

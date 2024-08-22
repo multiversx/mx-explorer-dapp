@@ -1,0 +1,16 @@
+@import './components/NodeCell/nodeCell.styles.scss';
+@import './components/NodePanel/nodePanel.styles.scss';
+
+.nodes-status-preview-cards {
+  .node-status-category {
+    @include media-breakpoint-down(sm) {
+      flex-wrap: wrap;
+    }
+    .category-info {
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+      }
+      min-width: 8rem;
+    }
+  }
+}

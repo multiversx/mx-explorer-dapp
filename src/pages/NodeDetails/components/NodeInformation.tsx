@@ -1,14 +1,17 @@
 import {
-  ShardSpan,
   NetworkLink,
   Trim,
   CopyButton,
   CardItem,
   FormatAmount,
   LockedAmountTooltip,
-  AccountLink
+  AccountLink,
+  ShardLink,
+  NodeStatus,
+  NodeQualification
 } from 'components';
 import { urlBuilder, getNodeIcon } from 'helpers';
+import { useIsSovereign } from 'hooks';
 import { faFlagAlt } from 'icons/regular';
 import {
   faCogs,
@@ -19,23 +22,24 @@ import {
   faServer,
   faCheck,
   faCode,
-  faUser
+  faUser,
+  faGavel
 } from 'icons/solid';
-import { NodeType, NodeTypeEnum } from 'types';
 
+import { NodeStatusEnum, NodeType, NodeTypeEnum } from 'types';
 import { Alert } from './Alert';
 
 export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
   const {
     bls,
     type,
+    status,
     shard,
     version,
     name,
     nonce,
     instances,
     provider,
-    status,
     locked,
     topUp,
     stake,
@@ -46,6 +50,7 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
     auctionQualified,
     auctionTopUp
   } = nodeData;
+  const isSovereign = useIsSovereign();
 
   const versionOudated =
     version === undefined || (issues && issues.includes('versionMismatch'));
@@ -73,14 +78,8 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
         </div>
       </div>
       <div className='card-body card-item-container my-n2 mx-spacing'>
-        <CardItem title='Shard' icon={faLayerGroup}>
-          {shard !== undefined ? (
-            <NetworkLink to={urlBuilder.shard(shard)} data-testid='shardLink'>
-              <ShardSpan shard={shard} />
-            </NetworkLink>
-          ) : (
-            <>N/A</>
-          )}
+        <CardItem title={isSovereign ? 'Chain' : 'Shard'} icon={faLayerGroup}>
+          <ShardLink shard={shard} data-testid='shardLink' />
         </CardItem>
         <CardItem
           title='Version'
@@ -105,11 +104,18 @@ export const NodeInformation = ({ nodeData }: { nodeData: NodeType }) => {
             {type !== NodeTypeEnum.observer && (
               <>
                 Validator{' '}
-                <span className='text-neutral-400 ms-1'>({status})</span>
+                <span className='ms-1 d-flex'>
+                  (<NodeStatus node={nodeData} showIcon={false} />)
+                </span>
               </>
             )}
           </>
         </CardItem>
+        {status === NodeStatusEnum.auction && (
+          <CardItem title='Auction Status' icon={faGavel}>
+            <NodeQualification node={nodeData} showLed={false} />
+          </CardItem>
+        )}
         <CardItem title='Nonce' icon={faStream}>
           {nonce ? nonce : <>N/A</>}
         </CardItem>

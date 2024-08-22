@@ -1,16 +1,14 @@
+import { getColors } from 'helpers';
+
 export const getChartColorPalette = () => {
-  const colorPalette = [
-    'primary-500',
-    'violet-500',
+  const colorPalette = getColors([
     'primary',
-    'green-500',
-    'yellow-500',
-    'red'
-  ].map((color) =>
-    getComputedStyle(document.documentElement)
-      .getPropertyValue(`--${color}`)
-      .trim()
-  );
+    'violet-500',
+    'green-400',
+    'amber-400',
+    'orange-400',
+    'red-400'
+  ]);
 
   return colorPalette;
 };

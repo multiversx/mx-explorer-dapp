@@ -1,3 +1,8 @@
+export * from './getAccountDelegationDetails';
+export * from './getAccountLegacyDelegationDetails';
+export * from './getAccountStakingDetails';
+export * from './getAccountValidatorStakeDetails';
+export * from './getColors';
 export * from './getDisplayReceiver';
 export * from './getNftText';
 export * from './getNodeIcon';
@@ -5,7 +10,7 @@ export * from './getNodeIssue';
 export * from './getNodeStatusDisplay';
 export * from './getOperationDirection';
 export * from './getPercentage';
-export * from './getShardText';
+export * from './getPrimaryColor';
 export * from './getStringPlural';
 export * from './getSubdomainNetwork';
 export * from './getTotalTokenUsdValue';

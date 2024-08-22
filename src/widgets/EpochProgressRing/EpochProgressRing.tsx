@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { ELLIPSIS } from 'appConstants';
 import { ProgressRing } from 'components';
-import { useFetchEpochProgress } from 'hooks/useFetchEpochProgress';
+import { useFetchEpochProgress } from 'hooks';
 import { WithClassnameType } from 'types';
 
 export interface EpochRingType extends WithClassnameType {

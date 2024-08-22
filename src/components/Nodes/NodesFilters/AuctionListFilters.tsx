@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Led } from 'components';
-import { formatBigNumber } from 'helpers';
 import { faSearch, faTimes } from 'icons/regular';
 import { faDiamondExclamation } from 'icons/solid';
 
@@ -18,12 +17,7 @@ export interface AuctionListFiltersUIType {
 
 export const AuctionListFilters = ({ hasSearch }: AuctionListFiltersUIType) => {
   const {
-    unprocessed: {
-      qualifiedAuctionValidators,
-      notQualifiedAuctionValidators,
-      dangerZoneValidators,
-      auctionValidators
-    }
+    unprocessed: { notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -111,11 +105,6 @@ export const AuctionListFilters = ({ hasSearch }: AuctionListFiltersUIType) => {
               )}
             >
               All
-              {auctionValidators !== undefined && (
-                <span className='badge badge-sm'>
-                  {formatBigNumber({ value: auctionValidators })}
-                </span>
-              )}
             </button>
           </li>
           <li className='list-inline-item me-0'>
@@ -131,11 +120,6 @@ export const AuctionListFilters = ({ hasSearch }: AuctionListFiltersUIType) => {
             >
               <Led color='bg-green-400' />
               Qualified{' '}
-              {qualifiedAuctionValidators !== undefined && (
-                <span className='badge badge-sm'>
-                  {formatBigNumber({ value: qualifiedAuctionValidators })}
-                </span>
-              )}
             </button>
           </li>
           {Boolean(notQualifiedAuctionValidators) && (
@@ -156,11 +140,6 @@ export const AuctionListFilters = ({ hasSearch }: AuctionListFiltersUIType) => {
                   className='text-warning me-1'
                 />
                 Danger Zone
-                {dangerZoneValidators !== undefined && (
-                  <span className='badge badge-sm'>
-                    {formatBigNumber({ value: dangerZoneValidators })}
-                  </span>
-                )}
               </button>
             </li>
           )}
@@ -177,11 +156,6 @@ export const AuctionListFilters = ({ hasSearch }: AuctionListFiltersUIType) => {
             >
               <Led color='bg-red-400' />
               Not Qualified
-              {notQualifiedAuctionValidators !== undefined && (
-                <span className='badge badge-sm'>
-                  {formatBigNumber({ value: notQualifiedAuctionValidators })}
-                </span>
-              )}
             </button>
           </li>
         </ul>

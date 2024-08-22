@@ -15,7 +15,10 @@ const isQualified = (validator: AuctionValidatorType) => {
   );
 };
 const isNotQualified = (validator: AuctionValidatorType) => {
-  return new BigNumber(validator.qualifiedAuctionValidators ?? 0).isZero();
+  return (
+    new BigNumber(validator.droppedValidators ?? 0).isGreaterThan(0) &&
+    new BigNumber(validator.qualifiedAuctionValidators ?? 0).isZero()
+  );
 };
 
 export const getExpandRowDetails = (
@@ -44,8 +47,12 @@ export const getExpandRowDetails = (
   ) {
     const qualifiedFirst = validators.findIndex(isQualified);
     const qualifiedLast = validators.findLastIndex(isQualified);
+    const checkedIndex =
+      qualifiedLast <= qualifiedValidators.length
+        ? qualifiedLast
+        : qualifiedValidators.findLastIndex(isQualified);
     qualifiedExpandPosition = qualifiedFirst + QUALIFIED_DISPLAY_ROWS;
-    qualifiedExpandClosePosition = qualifiedLast - QUALIFIED_DISPLAY_ROWS;
+    qualifiedExpandClosePosition = checkedIndex - QUALIFIED_DISPLAY_ROWS;
 
     remainingQualifiedValidators =
       qualifiedValidators.length - AUCTION_LIST_QUALIFIED_MIN_DISPLAY_ROW_COUNT;

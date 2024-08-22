@@ -20,9 +20,11 @@ export const PageSize = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const { page, size, ...rest } = params;
-  const paramSize = stringIsInteger(String(size)) ? parseInt(size) : PAGE_SIZE;
+  const paramSize = stringIsInteger(String(size))
+    ? parseInt(size)
+    : defaultSize;
 
-  const currentSize = Math.min(paramSize, maxSize, defaultSize);
+  const currentSize = Math.min(paramSize, maxSize);
   const sizeArray = [
     ...new Set([PAGE_SIZE, 10, 50, 75, 100, currentSize, defaultSize])
   ].sort(function (a, b) {

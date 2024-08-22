@@ -20,6 +20,9 @@
     }
   }
   .main-search {
+    input::placeholder {
+      font-size: 0.781rem;
+    }
     .form-control,
     .input-group-text {
       background-color: var(--neutral-900);

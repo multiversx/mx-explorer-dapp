@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { ELLIPSIS } from 'appConstants';
+import {
+  ELLIPSIS,
+  NODE_STATUS_PREVIEW_FIELDS,
+  MAX_RESULTS
+} from 'appConstants';
 import {
   Loader,
   Pager,
@@ -10,22 +14,27 @@ import {
   PageState,
   NodesHeader,
   NodesFilters,
-  NodesTable
+  NodesTable,
+  NodesOverview
 } from 'components';
 import {
   useAdapter,
   useGetNodeFilters,
   useGetPage,
   useFetchStake,
-  useGetSearch
+  useGetSearch,
+  useFetchNodesOverview
 } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
-import { activeNetworkSelector } from 'redux/selectors';
-import { NodeType, NodeStatusEnum } from 'types';
+import { activeNetworkSelector, nodesOverviewSelector } from 'redux/selectors';
+import { NodeType, NodeStatusEnum, NodeTypeEnum } from 'types';
 
 export const AccountNodes = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { isFetched: isNodesOverviewFetched } = useSelector(
+    nodesOverviewSelector
+  );
   const [searchParams] = useSearchParams();
   const { page, size } = useGetPage();
   const { search } = useGetSearch();
@@ -49,8 +58,7 @@ export const AccountNodes = () => {
         search,
         page,
         size,
-        owner: address,
-        withIdentityInfo: true
+        owner: address
       }),
       getNodesCount({ ...nodeFilters, owner: address, withIdentityInfo: true })
     ]).then(([accountNodesData, accountNodesCountData]) => {
@@ -63,6 +71,11 @@ export const AccountNodes = () => {
   };
 
   useFetchStake();
+  useFetchNodesOverview({
+    owner: address,
+    fields: NODE_STATUS_PREVIEW_FIELDS.join(','),
+    size: MAX_RESULTS
+  });
 
   useEffect(() => {
     fetchAccountNodes();
@@ -73,7 +86,8 @@ export const AccountNodes = () => {
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <AccountTabs />
-          <NodesHeader searchValue={accountNodesCount} />
+          <NodesOverview title='Owned Nodes Status' className='mb-3' />
+          <NodesHeader searchValue={accountNodesCount} smallHeader />
           <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
             <NodesFilters />
             <Pager
@@ -86,22 +100,24 @@ export const AccountNodes = () => {
         </div>
       </div>
 
-      {dataReady === undefined && <Loader data-testid='nodesLoader' />}
+      {(dataReady === undefined || !isNodesOverviewFetched) && (
+        <Loader data-testid='nodesLoader' />
+      )}
       {dataReady === false && (
         <PageState icon={faCoins} title='Unable to load Nodes' isError />
       )}
-      {dataReady === true && (
+      {dataReady === true && isNodesOverviewFetched && (
         <>
           <div className='card-body'>
             <NodesTable
-              type={type as NodeType['type']}
+              type={(type as NodeType['type']) || NodeTypeEnum.validator}
               status={status as NodeType['status']}
               auctionList={Boolean(isAuctioned)}
               queue={status === NodeStatusEnum.queued}
             >
               <NodesTable.Body
                 nodes={accountNodes}
-                type={type as NodeType['type']}
+                type={(type as NodeType['type']) || NodeTypeEnum.validator}
                 status={status as NodeType['status']}
                 auctionList={Boolean(isAuctioned)}
                 queue={status === NodeStatusEnum.queued}

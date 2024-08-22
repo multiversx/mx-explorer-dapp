@@ -23,6 +23,7 @@ import { miniBlockReducer } from './slices/miniBlock';
 import { networkReducer } from './slices/networks';
 import { nftReducer } from './slices/nft';
 import { nodesIdentitiesReducer } from './slices/nodesIdentities';
+import { nodesOverviewReducer } from './slices/nodesOverview';
 import { nodesVersionsReducer } from './slices/nodesVersions';
 import { pageHeadersAccountsReducer } from './slices/pageHeadersAccountsStats';
 import { pageHeadersBlocksReducer } from './slices/pageHeadersBlocksStats';
@@ -30,6 +31,7 @@ import { pageHeadersCollectionsReducer } from './slices/pageHeadersCollectionsSt
 import { pageHeadersTokensReducer } from './slices/pageHeadersTokensStats';
 import { refreshReducer } from './slices/refresh';
 import { stakeReducer } from './slices/stake';
+import { stakeExtraReducer } from './slices/stakeExtra';
 import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
 
@@ -61,6 +63,7 @@ export const customIgnoredSlices = {
   economics: economicsReducer,
   general: generalReducer,
   stake: stakeReducer,
+  stakeExtra: stakeExtraReducer,
   growthHero: growthHeroReducer,
   growthMostUsed: growthMostUsedReducer,
   growthPrice: growthPriceReducer,
@@ -76,6 +79,7 @@ export const customIgnoredSlices = {
   miniBlock: miniBlockReducer,
   nft: nftReducer,
   nodesIdentities: nodesIdentitiesReducer,
+  nodesOverview: nodesOverviewReducer,
   nodesVersions: nodesVersionsReducer,
   pageHeadersBlocksStats: pageHeadersBlocksReducer,
   pageHeadersAccountsStats: pageHeadersAccountsReducer,

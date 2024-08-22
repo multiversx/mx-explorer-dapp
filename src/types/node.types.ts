@@ -38,10 +38,18 @@ export interface NodeType {
   qualifiedStake?: string;
   auctionQualified?: boolean;
   isInDangerZone?: boolean;
+  auctioned?: boolean;
 
   // TODO check if used
   receivedShardID?: number;
   computedShardID?: number;
+}
+
+export interface NodeStatusUIType {
+  type?: NodeTypeEnum;
+  status?: NodeApiStatusEnum;
+  receivedShardID?: NodeType['receivedShardID'];
+  computedShardID?: NodeType['computedShardID'];
 }
 
 export enum NodeTypeEnum {
@@ -82,7 +90,6 @@ export interface IdentityType {
   stakePercent: number;
   validators: number;
   rank?: number;
-  overallStakePercent?: number;
   twitter?: string;
   website?: string;
   location?: string;
@@ -93,6 +100,11 @@ export interface IdentityType {
   distribution?: any;
   apr?: number;
   url?: string;
+
+  // not on API
+  overallStakePercent?: number;
+  validatorsPercent?: number;
+  overallValidatorsPercent?: number;
 }
 export interface ProviderType {
   provider: string;
@@ -109,7 +121,9 @@ export interface ProviderType {
   identity?: string;
   cumulatedRewards?: string;
   identityInfo?: IdentityType;
+
   identityDetails?: IdentityType; // local field - TODO - remove
+  rank?: number; // local field
 
   // not used
   initialOwnerFunds?: string;
@@ -156,4 +170,25 @@ export enum NodeQualificationStatusEnum {
 export interface NodesIdentitiesSliceType extends SliceType {
   unprocessed: IdentityType[];
   nodesIdentities: IdentityType[];
+}
+
+export interface NodeStatusPreviewType {
+  bls: NodeType['bls'];
+  status: NodeApiStatusEnum;
+  type: NodeTypeEnum;
+  auctionQualified?: NodeType['auctionQualified'];
+  isInDangerZone?: NodeType['isInDangerZone'];
+}
+
+export interface IndexedNodeStatusPreviewType extends NodeStatusPreviewType {
+  index: number;
+}
+
+export interface NodesOverviewSliceType extends SliceType {
+  nodes: IndexedNodeStatusPreviewType[];
+  nodeDetails?: { [key: string]: NodeType };
+}
+
+export interface NodesOverviewAddSliceType {
+  nodeDetails: NodeType;
 }

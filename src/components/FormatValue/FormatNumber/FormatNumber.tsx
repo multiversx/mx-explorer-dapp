@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { ELLIPSIS } from 'appConstants';
 import { FormatAmountUIType } from 'components';
-import { stringIsFloat, formatBigNumber } from 'helpers';
+import { formatBigNumber } from 'helpers';
 
 import { FormatDisplayValue } from '../FormatDisplayValue';
 
@@ -11,10 +11,12 @@ export interface FormatNumberUIType extends Omit<FormatAmountUIType, 'value'> {
   value: string | number | BigNumber;
   label?: string;
   symbol?: React.ReactNode;
+  maxDigits?: number;
+  hideLessThanOne?: boolean;
 }
 
 export const FormatNumber = (props: FormatNumberUIType) => {
-  const { value, symbol, label, className } = props;
+  const { value, symbol, label, hideLessThanOne, maxDigits, className } = props;
   const bNamount = BigNumber.isBigNumber(value) ? value : new BigNumber(value);
   const completeValue = bNamount.toFormat();
 
@@ -31,9 +33,13 @@ export const FormatNumber = (props: FormatNumberUIType) => {
     );
   }
 
-  const formattedValue = bNamount.isInteger()
+  let formattedValue = bNamount.isInteger()
     ? completeValue
-    : formatBigNumber({ value: bNamount });
+    : formatBigNumber({ value: bNamount, maxDigits });
+
+  if (hideLessThanOne && bNamount.isLessThan(1)) {
+    formattedValue = '< 1';
+  }
 
   return (
     <FormatDisplayValue

@@ -201,14 +201,18 @@ export enum TransactionMethodsEnum {
   // guardian
   SetGuardian = 'SetGuardian',
   GuardAccount = 'GuardAccount',
-  UnGuardAccount = 'UnGuardAccount'
+  UnGuardAccount = 'UnGuardAccount',
+  // xportal
+  claim = 'claim',
+  openMysteryBox = 'openMysteryBox'
 }
 
 export interface EventType {
   address: string;
   identifier: string;
-  topics: string[];
   order: number;
+  topics: string[];
+  additionalData?: string[];
   data?: string;
 }
 

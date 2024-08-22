@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 
+import { MAX_RESULTS } from 'appConstants';
 import { ReactComponent as CarretDown } from 'assets/img/carret-down.svg';
 import {
   Loader,
@@ -12,13 +13,15 @@ import {
   FormatAmount,
   PercentageBar,
   Overlay,
-  LockedStakeTooltip
+  LockedStakeTooltip,
+  FormatNumber
 } from 'components';
-import { formatStakePercentLabel } from 'components/SharedIdentity/helpers';
-import { urlBuilder } from 'helpers';
-import { useAdapter } from 'hooks';
+import { formatPercentLabel, urlBuilder } from 'helpers';
+import { useAdapter, useGetSort } from 'hooks';
 import { faCogs } from 'icons/regular';
 import { IdentityType, NodeType } from 'types';
+
+import { SortIdentitesFieldEnum } from '../helpers';
 
 export interface IdentityRowType {
   identity: IdentityType;
@@ -27,19 +30,19 @@ export interface IdentityRowType {
 
 export const IdentityRow = ({ identity, index }: IdentityRowType) => {
   const ref = useRef(null);
+  const { getNodes, getNode } = useAdapter();
+  const { sort } = useGetSort();
   const [collapsed, setCollapsed] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [identityNodes, setIdentityNodes] = useState<NodeType[]>([]);
-  const { getNodes, getNode } = useAdapter();
 
   const expand = (identityRow: IdentityType) => () => {
     if (dataReady === undefined) {
       if (identityRow.identity) {
         getNodes({
           identity: identityRow.identity,
-          size: 1500,
-          pagination: false
+          size: MAX_RESULTS
         }).then((nodes) => {
           if (ref.current !== null) {
             setDataReady(nodes.success);
@@ -58,6 +61,12 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
     setShowDetails(true);
     setCollapsed(!collapsed);
   };
+
+  const currentValidatorsTotalPercent = new BigNumber(
+    identity.validatorsPercent || 0
+  ).plus(identity.overallValidatorsPercent || 0);
+
+  const isStakeSorting = sort === SortIdentitesFieldEnum.locked;
 
   const link = identity.identity
     ? urlBuilder.identityDetails(identity.identity)
@@ -88,6 +97,66 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
           </div>
         </td>
 
+        <td>{new BigNumber(identity.validators).toFormat()}</td>
+        <td>
+          {identity.validatorsPercent ? (
+            <FormatNumber
+              value={identity.validatorsPercent}
+              label='%'
+              decimalOpacity={false}
+              hideLessThanOne
+            />
+          ) : (
+            'N/A'
+          )}
+        </td>
+        <td>
+          <div className='d-flex align-items-center'>
+            {isStakeSorting ? (
+              <>
+                <PercentageBar
+                  overallPercent={identity.overallStakePercent || 0}
+                  overallPercentLabel={formatPercentLabel(
+                    identity.overallStakePercent
+                  )}
+                  fillPercent={identity.stakePercent}
+                  fillPercentLabel={formatPercentLabel(identity.stakePercent)}
+                />
+                <div className='ms-2'>
+                  <FormatNumber
+                    value={identity.stakePercent}
+                    label='%'
+                    maxDigits={2}
+                    decimalOpacity={false}
+                    hideLessThanOne
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <PercentageBar
+                  overallPercent={identity.overallValidatorsPercent || 0}
+                  overallPercentLabel={formatPercentLabel(
+                    identity.overallValidatorsPercent
+                  )}
+                  fillPercent={identity.validatorsPercent}
+                  fillPercentLabel={formatPercentLabel(
+                    identity.validatorsPercent
+                  )}
+                />
+                <div className='ms-2'>
+                  <FormatNumber
+                    value={currentValidatorsTotalPercent}
+                    label='%'
+                    maxDigits={2}
+                    decimalOpacity={false}
+                    hideLessThanOne
+                  />
+                </div>
+              </>
+            )}
+          </div>
+        </td>
         <td>
           <Overlay
             title={
@@ -103,31 +172,12 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
           </Overlay>
         </td>
         <td>
-          <div className='d-flex align-items-center'>
-            <PercentageBar
-              overallPercent={identity.overallStakePercent || 0}
-              overallPercentLabel={formatStakePercentLabel(
-                identity.overallStakePercent
-              )}
-              fillPercent={identity.stakePercent}
-              fillPercentLabel={formatStakePercentLabel(identity.stakePercent)}
-            />
-
-            <div className='ms-3'>
-              {formatStakePercentLabel(identity?.stakePercent)}
-            </div>
-          </div>
-        </td>
-        <td className='text-end'>
-          {new BigNumber(identity.validators).toFormat()}
-        </td>
-        <td className='text-end'>
           <CarretDown className='details-arrow' height='8' />
         </td>
       </tr>
       {showDetails && (
         <tr className={`identity-details-row ${collapsed ? 'collapsed' : ''}`}>
-          <td colSpan={6} className='p-0'>
+          <td colSpan={7} className='p-0'>
             <div className='content'>
               {dataReady === undefined && (
                 <div className='py-4'>

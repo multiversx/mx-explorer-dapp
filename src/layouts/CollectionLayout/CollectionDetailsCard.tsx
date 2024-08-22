@@ -11,7 +11,8 @@ import {
   SocialWebsite,
   SpotlightButton,
   HeroDetailsCard,
-  Overlay
+  Overlay,
+  NftSubTypeBadge
 } from 'components';
 import { formatDate } from 'helpers';
 import { useActiveRoute } from 'hooks';
@@ -30,6 +31,7 @@ export const CollectionDetailsCard = () => {
     name,
     ticker,
     type,
+    subType,
     timestamp,
     decimals,
     owner,
@@ -72,14 +74,10 @@ export const CollectionDetailsCard = () => {
       }
       descriptionContent={
         scamInfo ? (
-          <span className='text-warning d-flex align-items-center ms-2'>
-            <FontAwesomeIcon
-              icon={faExclamationTriangle}
-              size='sm'
-              className='text-warning me-2'
-            />
+          <div className='d-flex align-items-center flex-wrap gap-2 my-3 text-warning'>
+            <FontAwesomeIcon icon={faExclamationTriangle} size='sm' />
             {scamInfo.info}
-          </span>
+          </div>
         ) : null
       }
       isVerified={isVerified}
@@ -93,7 +91,7 @@ export const CollectionDetailsCard = () => {
         </Overlay>
       }
       detailItems={[
-        assets?.description
+        assets?.description && !scamInfo
           ? {
               title: 'Description',
               value: (
@@ -106,20 +104,25 @@ export const CollectionDetailsCard = () => {
               )
             }
           : {},
-        assets?.website
+        assets?.website && !scamInfo
           ? {
               title: 'Website',
               value: <SocialWebsite link={assets.website} />
             }
           : {},
-        assets?.social && Object.keys(assets.social).length > 0
+        assets?.social && Object.keys(assets.social).length > 0 && !scamInfo
           ? {
               title: 'Other Links',
               value: <SocialIcons assets={assets.social} excludeWebsite />
             }
           : {},
-        { title: 'Type', value: <NftBadge type={type} /> },
-        !assets && ticker !== name ? { title: 'Name', value: name } : {},
+        !scamInfo ? { title: 'Type', value: <NftBadge type={type} /> } : {},
+        !scamInfo && subType
+          ? { title: 'Subtype', value: <NftSubTypeBadge subType={subType} /> }
+          : {},
+        !assets && ticker !== name && !scamInfo
+          ? { title: 'Name', value: name }
+          : {},
         { title: 'Collection', value: collection },
         decimals !== undefined
           ? {

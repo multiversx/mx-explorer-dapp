@@ -1,19 +1,16 @@
-import BigNumber from 'bignumber.js';
 import {
   NodeRating,
   NodeStatus,
-  ShardSpan,
   NetworkLink,
   Trim,
-  Overlay,
-  FormatAmount,
   NodeChangingShardIcon,
   NodeIssueIcon,
   NodeFullHistoryIcon,
-  NodeLockedStakeTooltip,
+  NodeLockedStake,
   NodeQualification,
   NodeOnlineIcon,
-  SharedIdentity
+  SharedIdentity,
+  ShardLink
 } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
 import { NodeStatusEnum, NodeType, NodeTypeEnum } from 'types';
@@ -33,14 +30,6 @@ export const StandardRow = ({
   type,
   status
 }: StandardRowUIType) => {
-  const bNAuctionTopup = new BigNumber(nodeData.auctionTopUp ?? 0);
-  const bNqualifiedStake =
-    nodeData.qualifiedStake !== undefined
-      ? new BigNumber(nodeData.qualifiedStake)
-      : new BigNumber(nodeData.stake).plus(
-          nodeData.auctionQualified ? bNAuctionTopup : 0
-        );
-
   return (
     <tr>
       <td>
@@ -84,16 +73,7 @@ export const StandardRow = ({
       </td>
       <td>
         <div className='d-flex'>
-          {nodeData.shard !== undefined ? (
-            <NetworkLink
-              to={urlBuilder.shard(nodeData.shard)}
-              data-testid={`shardLink${index}`}
-            >
-              <ShardSpan shard={nodeData.shard} />
-            </NetworkLink>
-          ) : (
-            <span className='text-neutral-400'>N/A</span>
-          )}
+          <ShardLink data-testid={`shardLink${index}`} shard={nodeData.shard} />
         </div>
       </td>
       <td>
@@ -116,39 +96,7 @@ export const StandardRow = ({
       {(type === NodeTypeEnum.validator ||
         status === NodeStatusEnum.auction) && (
         <td>
-          {status !== NodeStatusEnum.auction || nodeData.auctionQualified ? (
-            <Overlay
-              title={
-                <NodeLockedStakeTooltip
-                  node={nodeData}
-                  showAuctionTopup={
-                    status === NodeStatusEnum.auction ||
-                    nodeData.auctionQualified
-                  }
-                />
-              }
-              className='text-neutral-100'
-              tooltipClassName='tooltip-text-start tooltip-lg'
-              truncate
-            >
-              <FormatAmount
-                value={
-                  nodeData.auctionQualified
-                    ? bNqualifiedStake.toString(10)
-                    : nodeData.locked
-                }
-                showTooltip={false}
-              />
-            </Overlay>
-          ) : (
-            <FormatAmount
-              value={
-                nodeData.auctionQualified
-                  ? bNqualifiedStake.toString(10)
-                  : nodeData.locked
-              }
-            />
-          )}
+          <NodeLockedStake node={nodeData} />
         </td>
       )}
       {type !== NodeTypeEnum.observer && (

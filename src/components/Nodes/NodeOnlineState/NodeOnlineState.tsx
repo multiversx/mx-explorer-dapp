@@ -44,7 +44,9 @@ export const NodeOnlineState = ({ node, className }: NodeOnlineStateType) => {
   const fillPercent = new BigNumber(syncProgress || 0).times(100);
 
   return (
-    <div className={classNames('d-flex flex-column', className)}>
+    <div
+      className={classNames('node-online-state d-flex flex-column', className)}
+    >
       <div className='d-flex align-items-center gap-2'>
         <Led color={ledColor} />
         <span className={textColor}>{status}</span>

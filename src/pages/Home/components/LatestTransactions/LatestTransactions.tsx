@@ -11,14 +11,15 @@ import {
   PulsatingLed,
   TransactionIcon,
   TransactionGuardianIcon,
-  AccountLink
+  TransactionSovereignBridgeIcon,
+  AccountLink,
+  ShardLink
 } from 'components';
 import { FailedTransactions } from 'components/TransactionsTable/components/FailedTransactions';
 import { NoTransactions } from 'components/TransactionsTable/components/NoTransactions';
 import { TransactionValue } from 'components/TransactionsTable/components/TransactionValue';
 import {
   addressIsBech32,
-  urlBuilder,
   getDisplayReceiver,
   getTransactionStatusIconAndColor
 } from 'helpers';
@@ -136,9 +137,10 @@ export const LatestTransactions = () => {
                       >
                         <TransactionIcon
                           transaction={transaction}
+                          showGuardian={false}
+                          showSovereignBridge={false}
                           showSuccess
                           withBadge
-                          showGuardian={false}
                         />
 
                         <div className='d-flex flex-column overflow-hidden min-w-0'>
@@ -167,14 +169,11 @@ export const LatestTransactions = () => {
                                 data-testid={`transactionLinkTo${i}`}
                               />
                               <span className='px-2 text-muted ms-auto'>•</span>
-                              <NetworkLink
-                                to={urlBuilder.receiverShard(
-                                  transaction.receiverShard
-                                )}
+                              <ShardLink
+                                shard={transaction.receiverShard}
+                                transactionReceiverShard
                                 className='flex-shrink-0'
-                              >
-                                <ShardSpan shard={transaction.receiverShard} />
-                              </NetworkLink>
+                              />
                             </div>
                           </div>
 
@@ -191,16 +190,11 @@ export const LatestTransactions = () => {
                                   <span className='px-2 text-muted ms-auto'>
                                     •
                                   </span>
-                                  <NetworkLink
-                                    to={urlBuilder.senderShard(
-                                      transaction.senderShard
-                                    )}
+                                  <ShardLink
+                                    shard={transaction.senderShard}
+                                    transactionSenderShard
                                     className='flex-shrink-0'
-                                  >
-                                    <ShardSpan
-                                      shard={transaction.senderShard}
-                                    />
-                                  </NetworkLink>
+                                  />
                                 </>
                               ) : (
                                 <ShardSpan shard={transaction.sender} />
@@ -215,6 +209,9 @@ export const LatestTransactions = () => {
                               </span>
 
                               <TransactionGuardianIcon
+                                transaction={transaction}
+                              />
+                              <TransactionSovereignBridgeIcon
                                 transaction={transaction}
                               />
 

@@ -19,6 +19,7 @@ import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
 import { ChartComposedProps, ChartConfigType } from './helpers/types';
 import { useChartComposedData } from './hooks/useChartComposedData';
+import { getColors } from 'helpers';
 
 export const ChartComposed = ({
   seriesConfig,
@@ -37,16 +38,12 @@ export const ChartComposed = ({
   const [hiddenSeries, setHiddenSeries] =
     useState<Record<string, string | undefined>>();
 
-  const [neutral800, muted, primary, secondary] = [
+  const [neutral800, muted, primary, secondary] = getColors([
     'neutral-800',
     'muted',
     'primary',
     'secondary'
-  ].map((color) =>
-    getComputedStyle(document.documentElement)
-      .getPropertyValue(`--${color}`)
-      .trim()
-  );
+  ]);
 
   const { getChartData } = useChartComposedData({
     seriesConfig

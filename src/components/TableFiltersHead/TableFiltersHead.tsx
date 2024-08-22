@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
-import { capitalize, getShardText, getNodeStatusDisplay } from 'helpers';
+import { capitalize, getNodeStatusDisplay } from 'helpers';
+import { useGetShardText } from 'hooks';
 import { faClose } from 'icons/regular';
 import { NodeApiStatusEnum } from 'types';
 
@@ -18,6 +19,7 @@ export const TableFiltersHead = ({
   ignoredFilters = [],
   colSpan = 12
 }: TableFiltersHeadType) => {
+  const getShardText = useGetShardText();
   const [searchParams, setSearchParams] = useSearchParams();
 
   if (!filters || hideFilters) {
@@ -65,12 +67,12 @@ export const TableFiltersHead = ({
       case 'shard':
         return getShardText(String(value));
       case 'status':
-        const { textColor, text, icon } = getNodeStatusDisplay({
+        const { text, textColor, icon, iconColor } = getNodeStatusDisplay({
           status: String(value) as NodeApiStatusEnum
         });
         return (
           <div className='d-flex align-items-center gap-1'>
-            {icon && <FontAwesomeIcon icon={icon} className={textColor} />}
+            {icon && <FontAwesomeIcon icon={icon} className={iconColor} />}
             <span className={textColor}>{text}</span>
           </div>
         );

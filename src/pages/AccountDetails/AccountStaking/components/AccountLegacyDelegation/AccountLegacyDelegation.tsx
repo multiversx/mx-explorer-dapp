@@ -13,10 +13,10 @@ import { AccountDelegationLegacyType, IdentityType } from 'types';
 import { DetailsBlock } from '../DetailsBlock';
 
 export const AccountLegacyDelegation = ({
-  delegationLegacy,
+  legacyDelegation,
   identity
 }: {
-  delegationLegacy: AccountDelegationLegacyType;
+  legacyDelegation: AccountDelegationLegacyType;
   identity?: IdentityType;
 }) => {
   const {
@@ -29,8 +29,9 @@ export const AccountLegacyDelegation = ({
     userActiveStake,
     claimableRewards,
     userUnstakedStake,
-    userWaitingStake
-  } = delegationLegacy;
+    userWaitingStake,
+    userDeferredPaymentStake
+  } = legacyDelegation;
 
   const [legacyDelegationApr, setLegacyDelegationApr] =
     useState<string>(ELLIPSIS);
@@ -91,6 +92,17 @@ export const AccountLegacyDelegation = ({
             />
           </strong>
           <small>Undelegated</small>
+        </DetailsBlock>
+      )}
+
+      {userDeferredPaymentStake && userDeferredPaymentStake !== '0' && (
+        <DetailsBlock>
+          <strong>
+            <FormatAmount
+              value={new BigNumber(userDeferredPaymentStake).toString(10)}
+            />
+          </strong>
+          <small>Unbonded</small>
         </DetailsBlock>
       )}
 

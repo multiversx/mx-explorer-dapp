@@ -114,7 +114,7 @@ export const networkBaseSchema = object({
   name: string().defined().required(),
   chainId: string().defined().required(),
   egldLabel: string().defined().required(),
-  theme: string().oneOf(['default', 'testnet']),
+  theme: string().oneOf(['default', 'testnet', 'sovereign']),
   walletAddress: string(),
   explorerAddress: string(),
   accessToken: boolean()

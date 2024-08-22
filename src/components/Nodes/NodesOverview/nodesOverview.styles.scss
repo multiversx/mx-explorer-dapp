@@ -1,0 +1,12 @@
+.nodes-overview {
+  width: 100%;
+  .epoch-status-cards {
+    .epoch-status,
+    .auction-status {
+      --card-spacer-y: 1.875rem;
+    }
+    .status-value {
+      font-size: 1.5rem;
+    }
+  }
+}

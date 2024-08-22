@@ -8,17 +8,24 @@ import { NodeType, WithClassnameType } from 'types';
 
 export interface NodeStatusType extends WithClassnameType {
   node: NodeType;
+  showIcon?: boolean;
 }
 
-export const NodeStatus = ({ node, className }: NodeStatusType) => {
+export const NodeStatus = ({
+  node,
+  showIcon = true,
+  className
+}: NodeStatusType) => {
   const { syncProgress } = node;
-  const { textColor, text, icon } = getNodeStatusDisplay(node);
+  const { text, textColor, icon, iconColor } = getNodeStatusDisplay(node);
   const fillPercent = new BigNumber(syncProgress || 0).times(100);
 
   return (
     <div className={classNames('d-flex flex-column', className)}>
       <div className='d-flex align-items-center gap-1'>
-        {icon && <FontAwesomeIcon icon={icon} className={textColor} />}
+        {icon && showIcon && (
+          <FontAwesomeIcon icon={icon} className={iconColor} />
+        )}
         <span className={textColor}>
           {text}
           {node?.syncProgress && (

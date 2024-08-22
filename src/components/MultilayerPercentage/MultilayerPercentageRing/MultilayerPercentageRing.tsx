@@ -21,6 +21,7 @@ export const prepareChartData = (steps: MultilayerPercentageStepType[]) => {
 export const MultilayerPercentageRing = ({
   steps,
   hasTrim,
+  hasChart = true,
   className,
   legendClassName
 }: MultilayerPercentageUIType) => {
@@ -36,20 +37,22 @@ export const MultilayerPercentageRing = ({
         className
       )}
     >
-      <PieChart width={40} height={40} className='composed-pie-chart'>
-        <Pie
-          data={hasTrim ? prepareChartData(steps) : steps}
-          dataKey='value'
-          nameKey='name'
-          cx='50%'
-          cy='50%'
-          innerRadius={10}
-          outerRadius={20}
-          stroke='none'
-          startAngle={90}
-          endAngle={-270}
-        />
-      </PieChart>
+      {hasChart && (
+        <PieChart width={40} height={40} className='composed-pie-chart'>
+          <Pie
+            data={hasTrim ? prepareChartData(steps) : steps}
+            dataKey='value'
+            nameKey='name'
+            cx='50%'
+            cy='50%'
+            innerRadius={10}
+            outerRadius={20}
+            stroke='none'
+            startAngle={90}
+            endAngle={-270}
+          />
+        </PieChart>
+      )}
 
       <div
         className={classNames(

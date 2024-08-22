@@ -1,21 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ELLIPSIS } from 'appConstants';
 import { AccountStakingSliceType } from 'types/account.types';
 
 export const getInitialAccountStakingState = (): AccountStakingSliceType => {
   return {
-    address: undefined,
+    address: '',
+
     showDelegation: false,
-    showDelegationLegacy: false,
-    showStake: false,
-    totalStaked: '0',
-    totalDelegation: '0',
-    totalLegacyDelegation: '0',
-    totalLocked: '0',
-    totalClaimable: '0',
-    totalActiveStake: '0',
-    totalUnstakedValue: '0',
+    showLegacyDelegation: false,
+    showValidatorStake: false,
+    showStakingDetails: false,
+
+    activeValidatorStake: ELLIPSIS,
+    activeDelegation: ELLIPSIS,
+    activeLegacyDelegation: ELLIPSIS,
+
+    lockedValidatorStake: ELLIPSIS,
+    lockedDelegation: ELLIPSIS,
+    lockedLegacyDelegation: ELLIPSIS,
+
+    totalActiveStake: ELLIPSIS,
+    totalLocked: ELLIPSIS,
+    totalClaimable: ELLIPSIS,
+    totalUnstaked: ELLIPSIS,
+
     providerDataReady: undefined,
-    stakingDataReady: undefined,
     delegationProviders: [],
     delegationLegacyIdentity: undefined,
 
@@ -32,21 +41,30 @@ export const accountStakingSlice = createSlice({
       action: PayloadAction<AccountStakingSliceType>
     ) => {
       state.address = action.payload.address;
-      state.totalStaked = action.payload.totalStaked;
-      state.totalDelegation = action.payload.totalDelegation;
-      state.totalLegacyDelegation = action.payload.totalLegacyDelegation;
+
+      state.showDelegation = action.payload.showDelegation;
+      state.showLegacyDelegation = action.payload.showLegacyDelegation;
+      state.showValidatorStake = action.payload.showValidatorStake;
+      state.showStakingDetails = action.payload.showStakingDetails;
+
+      state.activeValidatorStake = action.payload.activeValidatorStake;
+      state.activeDelegation = action.payload.activeDelegation;
+      state.activeLegacyDelegation = action.payload.activeLegacyDelegation;
+
+      state.lockedValidatorStake = action.payload.lockedValidatorStake;
+      state.lockedDelegation = action.payload.lockedDelegation;
+      state.lockedLegacyDelegation = action.payload.lockedLegacyDelegation;
+
+      state.totalActiveStake = action.payload.totalActiveStake;
       state.totalLocked = action.payload.totalLocked;
       state.totalClaimable = action.payload.totalClaimable;
-      state.totalActiveStake = action.payload.totalActiveStake;
-      state.totalUnstakedValue = action.payload.totalUnstakedValue;
+      state.totalUnstaked = action.payload.totalUnstaked;
+
       state.stake = action.payload.stake;
-      state.showStake = action.payload.showStake;
-      state.delegationLegacy = action.payload.delegationLegacy;
-      state.showDelegationLegacy = action.payload.showDelegationLegacy;
+      state.legacyDelegation = action.payload.legacyDelegation;
       state.delegation = action.payload.delegation;
-      state.showDelegation = action.payload.showDelegation;
+
       state.providerDataReady = action.payload.providerDataReady;
-      state.stakingDataReady = action.payload.stakingDataReady;
       state.delegationProviders = action.payload.delegationProviders;
       state.delegationLegacyIdentity = action.payload.delegationLegacyIdentity;
 

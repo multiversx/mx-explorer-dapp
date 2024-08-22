@@ -44,16 +44,8 @@ const getValidatorDetails = ({
     (filteredValidator) =>
       validator.identity && validator.identity === filteredValidator.identity
   ).length;
-  if (multipleIdentityEntries > 1) {
-    return `+${multipleIdentityEntries} more`;
-  }
-
-  const multipleOwnerEntries = validators.filter(
-    (filteredValidator) =>
-      validator.owner && validator.owner === filteredValidator.owner
-  ).length;
-  if (multipleOwnerEntries > 1) {
-    return `+${multipleIdentityEntries} more entries`;
+  if (multipleIdentityEntries >= 2) {
+    return `+${multipleIdentityEntries - 1} more`;
   }
 
   return '';
@@ -117,7 +109,7 @@ export const AuctionListTable = ({
 
         if (
           isQualified === false &&
-          new BigNumber(validator.qualifiedAuctionValidators ?? 0).isZero()
+          new BigNumber(validator.droppedValidators ?? 0).isGreaterThan(0)
         ) {
           return true;
         }

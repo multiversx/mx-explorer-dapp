@@ -48,7 +48,7 @@ export const Tabs = (props: TabsPropsType) => {
     extraTabs.filter((extraTab) => checkTabStatus(extraTab)).length > 0;
 
   return (
-    <menu className='navbar-nav flex-row flex-wrap tabs'>
+    <menu className='navbar-nav flex-row flex-wrap tabs mt-0'>
       {displayTabs.map((tab) => (
         <li key={tab.tabTo} className='d-flex'>
           <NetworkLink

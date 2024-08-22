@@ -28,9 +28,14 @@ const getDisplayMessages = ({
       const transactionActionTransfers =
         transaction?.action?.arguments?.transfers ?? [];
       if (transactionActionTransfers.length === 1) {
-        return `Not enough balance of ${getTokenDisplayType(
-          transactionActionTransfers[0].type
-        )} ${transactionActionTransfers[0].identifier}`;
+        const tokenIdentifier =
+          transactionActionTransfers[0]?.identifier ||
+          transactionActionTransfers[0]?.ticker;
+        if (tokenIdentifier) {
+          return `Not enough balance of ${getTokenDisplayType(
+            transactionActionTransfers[0].type
+          )} ${tokenIdentifier}`;
+        }
       }
       return 'Not enough balance of transferred token';
     case compareMessage?.includes(TransactionMessagesEnum.invalidLiquidity):

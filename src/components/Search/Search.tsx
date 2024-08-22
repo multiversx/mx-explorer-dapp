@@ -41,14 +41,14 @@ export const Search = ({ className }: WithClassnameType) => {
           <input
             type='text'
             className='form-control text-truncate'
-            placeholder='Search for an address, transaction/block hash, validator key or token id'
+            placeholder='Search for an address, @herotag, transaction/block hash, validator key or token id'
             name='requestType'
             data-testid='search'
             required
             value={searchHash}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            aria-label='Search for an address, transaction/block hash, validator key or token id'
+            aria-label='Search for an address, @herotag, transaction/block hash, validator key or token id'
             aria-describedby='search-addon'
           />
           <button

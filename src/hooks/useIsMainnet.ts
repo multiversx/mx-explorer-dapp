@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 
 import { activeNetworkSelector } from 'redux/selectors';
-import { NetworkIdType } from 'types';
+import { NetworkIdEnum } from 'types';
 
 export const useIsMainnet = () => {
   const { id: activeNetworkId, chainId } = useSelector(activeNetworkSelector);
 
-  return activeNetworkId === NetworkIdType.mainnet || chainId === '1';
+  return activeNetworkId === NetworkIdEnum.mainnet || chainId === '1';
 };

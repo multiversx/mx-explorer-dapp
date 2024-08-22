@@ -34,6 +34,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     showTooltipSymbol = false,
     showTooltipLabel = false,
     spacedLabel = false,
+    decimalOpacity = true,
     className
   } = props;
 
@@ -61,7 +62,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
         return (
           <>
             <span className='am'>{valueParts[0]}</span>
-            <span className='dec'>
+            <span className={classNames('dec', { opc: decimalOpacity })}>
               .0<sub>{firstNonZeroIndex - 2}</sub>0{nonZeroDecimals.join('')}
             </span>
           </>
@@ -73,7 +74,9 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
       <>
         <span className='am'>{valueParts[0]}</span>
         {valueParts[1] && !areAllDigitsZeroes && (
-          <span className='dec'>.{valueParts[1]}</span>
+          <span className={classNames('dec', { opc: decimalOpacity })}>
+            .{valueParts[1]}
+          </span>
         )}
       </>
     );
@@ -126,9 +129,11 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
       {showLabel && displayLabel && (
         <>
           {superSuffix ? (
-            <sup className='suf'>{displayLabel}</sup>
+            <sup className={classNames('suf', { opc: decimalOpacity })}>
+              {displayLabel}
+            </sup>
           ) : (
-            <span className='suf'>
+            <span className={classNames('suf', { opc: decimalOpacity })}>
               {spacedLabel && <>&nbsp;</>}
               {displayLabel}
             </span>

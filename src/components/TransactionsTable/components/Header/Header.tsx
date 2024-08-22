@@ -7,12 +7,14 @@ import {
   ToColumnFilters,
   ValueColumnFilters
 } from 'components';
+import { useIsSovereign } from 'hooks';
 import { TransactionTableType } from 'types';
 
 export const Header = ({
   showDirectionCol = false,
   inactiveFilters
 }: TransactionTableType) => {
+  const isSovereign = useIsSovereign();
   return (
     <thead>
       <tr>
@@ -23,7 +25,13 @@ export const Header = ({
           Age <AgeColumnFilters inactiveFilters={inactiveFilters} />
         </th>
         <th scope='col'>
-          Shard <ShardColumnFilters inactiveFilters={inactiveFilters} />
+          {isSovereign ? (
+            <>Chain</>
+          ) : (
+            <>
+              Shard <ShardColumnFilters inactiveFilters={inactiveFilters} />
+            </>
+          )}
         </th>
         <th scope='col'>
           From <FromColumnFilters inactiveFilters={inactiveFilters} />

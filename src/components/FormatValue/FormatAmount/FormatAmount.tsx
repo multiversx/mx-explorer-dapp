@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
+import { NativeTokenSymbol } from 'components';
 import { DECIMALS, DIGITS } from 'config';
-import { formatAmount } from 'helpers';
+import { formatAmount, isEgldToken } from 'helpers';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
 import { FormatDisplayValue } from '../FormatDisplayValue';
 import { FormatUSD } from '../FormatUSD';
@@ -17,6 +17,7 @@ export interface FormatAmountUIType extends SdkDappFormatAmountType {
   showSymbol?: boolean;
   superSuffix?: boolean;
   showUsdValue?: boolean;
+  decimalOpacity?: boolean;
   usd?: string | number;
 }
 
@@ -37,6 +38,7 @@ export const FormatAmount = (props: FormatAmountUIType) => {
     usd
   } = props;
   const dataTestId = props['data-testid'] ?? 'formatAmountComponent';
+  const isCustomIcon = !isEgldToken(egldLabel);
 
   if (!stringIsInteger(value)) {
     return (
@@ -90,7 +92,9 @@ export const FormatAmount = (props: FormatAmountUIType) => {
         ? {
             symbol: (
               <>
-                <MultiversXSymbol className='sym' />{' '}
+                <NativeTokenSymbol
+                  className={classNames('sym', { custom: isCustomIcon })}
+                />{' '}
               </>
             )
           }

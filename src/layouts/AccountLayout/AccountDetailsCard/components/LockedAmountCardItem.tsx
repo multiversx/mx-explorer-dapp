@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 import { CardItem, FormatAmount, LockedAmountTooltip } from 'components';
 import { faLock } from 'icons/solid';
-import { accountStakingSelector } from 'redux/selectors';
+import { accountStakingSelector, accountSelector } from 'redux/selectors';
 
 export const LockedAmountCardItem = ({
   cardItemClass
@@ -13,59 +13,56 @@ export const LockedAmountCardItem = ({
   cardItemClass?: string;
 }) => {
   const {
-    stakingDataReady,
-    totalStaked,
-    totalLegacyDelegation,
+    address: lockedAddress,
+    accountStakingFetched,
+
+    activeValidatorStake,
+    activeDelegation,
+    activeLegacyDelegation,
+
     totalLocked,
     totalClaimable,
-    totalActiveStake,
-    totalUnstakedValue
+    totalUnstaked
   } = useSelector(accountStakingSelector);
-
-  const bNtotalStaked = new BigNumber(totalStaked);
-  const bNtotalActiveStake = new BigNumber(totalActiveStake);
-  const bNtotalLegacyDelegation = new BigNumber(totalLegacyDelegation);
-  const bNtotalLocked = new BigNumber(totalLocked);
-  const bNtotalClaimable = new BigNumber(totalClaimable);
-  const bNUnstaked = new BigNumber(totalUnstakedValue);
+  const { account } = useSelector(accountSelector);
+  const hasUnstaked = new BigNumber(totalUnstaked).isGreaterThan(0);
 
   const lockedDetails = [
     {
-      label: 'Stake',
-      value: <FormatAmount value={bNtotalStaked.toString(10)} />
+      label: 'Stake (Validation)',
+      value: <FormatAmount value={activeValidatorStake} />
     },
     {
       label: 'Delegation',
-      value: <FormatAmount value={bNtotalActiveStake.toString(10)} />
+      value: <FormatAmount value={activeDelegation} />
     },
     {
       label: 'Legacy Delegation',
-      value: <FormatAmount value={bNtotalLegacyDelegation.toString(10)} />
+      value: <FormatAmount value={activeLegacyDelegation} />
     },
     {
       label: 'Claimable Rewards',
-      value: <FormatAmount value={bNtotalClaimable.toString(10)} />
+      value: <FormatAmount value={totalClaimable} />
     }
   ];
 
-  if (bNUnstaked.isGreaterThan(0)) {
+  if (hasUnstaked) {
     lockedDetails.push({
       label: 'Unstaked',
-      value: <FormatAmount value={bNUnstaked.toString(10)} />
+      value: <FormatAmount value={totalUnstaked} />
     });
   }
+
+  const isDataReady =
+    accountStakingFetched &&
+    account.address &&
+    account.address === lockedAddress;
 
   return (
     <CardItem className={classNames(cardItemClass)} title='Stake' icon={faLock}>
       <div className='d-flex align-items-center'>
-        {stakingDataReady ? (
-          <FormatAmount value={bNtotalLocked.toString(10)} />
-        ) : (
-          ELLIPSIS
-        )}
-        {stakingDataReady && (
-          <LockedAmountTooltip lockedDetails={lockedDetails} />
-        )}
+        {isDataReady ? <FormatAmount value={totalLocked} /> : ELLIPSIS}
+        {isDataReady && <LockedAmountTooltip lockedDetails={lockedDetails} />}
       </div>
     </CardItem>
   );

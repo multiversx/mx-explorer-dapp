@@ -1,4 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { BRAND_NAME } from 'appConstants';
 import { faHeart } from 'icons/solid';
 
 import { version } from '../../../../../package.json';
@@ -21,7 +23,7 @@ export const Footer = () => {
         >
           Made with{' '}
           <FontAwesomeIcon icon={faHeart} className='text-danger mx-1' />
-          by the MultiversX team
+          by the {BRAND_NAME} team
         </a>
       </div>
       {explorerVersion && (

@@ -25,9 +25,10 @@ export const nftSlice = createSlice({
   initialState: getInitialNftState(),
   reducers: {
     setNft: (state: NftSliceType, action: PayloadAction<NftSliceType>) => {
+      state.isFetched = action.payload.isFetched;
       state.nftState = {
         ...getInitialNftState().nftState,
-        ...action.payload
+        ...action.payload.nftState
       };
     }
   }
