@@ -7,14 +7,32 @@ import { SortOrderEnum, TableFilterUIType } from 'types';
 
 export interface TableSortUIType extends TableFilterUIType {
   id: string;
+  hasNegativeMargin?: boolean;
 }
 
-export const Sort = ({ id, text, hideFilters }: TableSortUIType) => {
+export const Sort = ({
+  id,
+  text,
+  hideFilters,
+  defaultActive,
+  defaultOrder,
+  hasNegativeMargin = true,
+  className
+}: TableSortUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { order, sort, ...rest } = Object.fromEntries(searchParams);
+  const {
+    order: searchOrder,
+    sort,
+    ...rest
+  } = Object.fromEntries(searchParams);
+
+  const order = searchOrder || defaultOrder;
+  const isActive = sort === id || (!sort && defaultActive);
+  const isValidSortOrder =
+    !order || Object.values(SortOrderEnum).includes(order as SortOrderEnum);
 
   const nextOrder = () => {
-    if (sort === id) {
+    if (isActive) {
       switch (order) {
         case SortOrderEnum.desc:
           return SortOrderEnum.asc;
@@ -43,28 +61,37 @@ export const Sort = ({ id, text, hideFilters }: TableSortUIType) => {
 
   return (
     <div
-      className={classNames('me-n1 cursor-pointer', {
-        'text-primary-100': sort === id
+      className={classNames('cursor-pointer', {
+        'me-n1': hasNegativeMargin,
+        'text-primary-100': isActive,
+        className
       })}
       onClick={() => {
         updateSortValue();
       }}
     >
       {text}
-      {sort !== id && (
+      {((sort !== id && !isActive) || !isValidSortOrder) && (
         <FontAwesomeIcon
           icon={faSort}
           className='side-action text-neutral-400'
         />
       )}
-      {order === SortOrderEnum.asc && sort === id && (
-        <FontAwesomeIcon icon={faSortUp} className='side-action text-primary' />
-      )}
-      {order === SortOrderEnum.desc && sort === id && (
-        <FontAwesomeIcon
-          icon={faSortDown}
-          className='side-action text-primary'
-        />
+      {isActive && isValidSortOrder && (
+        <>
+          {order === SortOrderEnum.asc && (
+            <FontAwesomeIcon
+              icon={faSortUp}
+              className='side-action text-primary'
+            />
+          )}
+          {order === SortOrderEnum.desc && (
+            <FontAwesomeIcon
+              icon={faSortDown}
+              className='side-action text-primary'
+            />
+          )}
+        </>
       )}
     </div>
   );

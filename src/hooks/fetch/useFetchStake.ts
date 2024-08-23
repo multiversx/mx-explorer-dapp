@@ -10,7 +10,7 @@ let currentRequest: any = null;
 
 export const useFetchStake = () => {
   const dispatch = useDispatch();
-  const { getStake, getNodesCount } = useAdapter();
+  const { getStake } = useAdapter();
 
   const getStakeOnce = () => {
     if (currentRequest) {
@@ -19,12 +19,7 @@ export const useFetchStake = () => {
 
     const requestPromise = new Promise(async (resolve, reject) => {
       try {
-        // TODO: temporary - not in API
-        const response = await Promise.all([
-          getStake(),
-          getNodesCount({}),
-          getNodesCount({ type: 'validator' })
-        ]);
+        const response = await getStake();
         resolve(response);
       } catch (error) {
         reject(error);
@@ -38,7 +33,7 @@ export const useFetchStake = () => {
   };
 
   const fetchStake = async () => {
-    const [stake, totalNodes, totalValidatorNodes] = await getStakeOnce();
+    const stake = await getStakeOnce();
 
     if (stake?.data && stake?.success) {
       const hasValidatorData =
@@ -54,9 +49,7 @@ export const useFetchStake = () => {
                 .minus(stake.data.qualifiedAuctionValidators)
                 .toNumber()
             }
-          : {}),
-        totalNodes: totalNodes.data,
-        totalValidatorNodes: totalValidatorNodes.data
+          : {})
       };
 
       const processedStake = processStake(processedData);
