@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
-import { LOCAL_STORAGE_CUSTOM_NETWORK } from 'appConstants';
+import { CUSTOM_NETWORK_ID } from 'appConstants';
+import { networks } from 'config';
 import { storage } from 'helpers';
 import { useAdapter } from 'hooks';
+import { activeNetworkSelector } from 'redux/selectors';
 import { DappNetworkConfigType, NetworkType, NetworkAdapterEnum } from 'types';
 
 export interface CustomNetworkErrorType {
@@ -28,13 +31,22 @@ const validateUrl = (url: string) => {
 };
 
 export const useCustomNetwork = (customUrl: string) => {
+  const activeNetwork = useSelector(activeNetworkSelector);
+  const { getNetworkConfig } = useAdapter();
+  const { isCustom: activeNetworkIsCustom } = activeNetwork;
+  const configCustomNetwork = networks.filter((network) => network.isCustom)[0];
+
+  const existingNetwork = activeNetworkIsCustom
+    ? activeNetwork
+    : configCustomNetwork;
+
   const [isSaving, setIsSaving] = useState<undefined | boolean>();
   const [errors, setErrors] = useState<CustomNetworkErrorType | undefined>();
   const [customNetworkConfig, setCustomNetworkConfig] = useState<
     NetworkType | undefined
-  >();
+  >(existingNetwork);
 
-  const { getNetworkConfig } = useAdapter();
+  console.log('------activeNetworkName', activeNetwork);
 
   const setCustomNetwork = async () => {
     setIsSaving(true);
@@ -57,10 +69,11 @@ export const useCustomNetwork = (customUrl: string) => {
 
       if (chainId && egldLabel && walletAddress && explorerAddress) {
         const customNetwork = {
-          id: 'custom-network',
+          id: CUSTOM_NETWORK_ID,
           name: `Custom ${name ?? 'Network'}`,
           adapter: NetworkAdapterEnum.api,
           theme: 'testnet',
+          isCustom: true,
           apiAddress,
           chainId,
           egldLabel,
@@ -71,7 +84,7 @@ export const useCustomNetwork = (customUrl: string) => {
         try {
           const in30Days = new Date(moment().add(30, 'days').toDate());
           storage.saveToLocal({
-            key: LOCAL_STORAGE_CUSTOM_NETWORK,
+            key: CUSTOM_NETWORK_ID,
             data: JSON.stringify([customNetwork]),
             expirationDate: in30Days
           });
@@ -86,6 +99,9 @@ export const useCustomNetwork = (customUrl: string) => {
 
         setCustomNetworkConfig(customNetwork);
         setIsSaving(false);
+
+        // we want to reset the whole state, react router's navigate might lead to unwanted innacuracies
+        window.location.href = `/${CUSTOM_NETWORK_ID}`;
 
         return;
       }

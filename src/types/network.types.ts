@@ -12,6 +12,7 @@ export interface NetworkType extends Partial<NetworkConfigType> {
   proxyUrl?: string;
   nftExplorerAddress?: string;
   isSovereign?: boolean;
+  isCustom?: boolean;
 }
 
 export interface NetworkUrlType {

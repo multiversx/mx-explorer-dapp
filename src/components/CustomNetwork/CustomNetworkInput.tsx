@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
+import { networks } from 'config';
 import { useCustomNetwork } from 'hooks';
 import { faCircleNotch, faCheck } from 'icons/regular';
+import { activeNetworkSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
 export const CustomNetworkInput = ({ className }: WithClassnameType) => {
-  const [customNetworkUrl, setcustomNetworkUrl] = useState<string>('');
+  const activeNetwork = useSelector(activeNetworkSelector);
+  const { isCustom: activeNetworkIsCustom } = activeNetwork;
+
+  const configCustomNetwork = networks.filter((network) => network.isCustom)[0];
+  const existingNetwork = activeNetworkIsCustom
+    ? activeNetwork
+    : configCustomNetwork;
+
+  const [customNetworkUrl, setcustomNetworkUrl] = useState<string>(
+    existingNetwork?.apiAddress ?? ''
+  );
   const [generalError, setGeneralError] = useState('');
   const { setCustomNetwork, customNetworkConfig, isSaving, errors } =
     useCustomNetwork(customNetworkUrl);
@@ -71,7 +84,7 @@ export const CustomNetworkInput = ({ className }: WithClassnameType) => {
             <FontAwesomeIcon
               icon={faCheck}
               className={classNames('me-1', {
-                'text-primary': customNetworkConfig
+                'text-primary': customNetworkConfig || activeNetworkIsCustom
               })}
             />
           )}
