@@ -5,6 +5,7 @@ import { allApps, schema } from './sharedConfig';
 export * from './sharedConfig';
 
 export const networks: NetworkType[] = [
+  // Saved Custom Network Configs
   ...getStorageCustomNetworks(),
 
   {

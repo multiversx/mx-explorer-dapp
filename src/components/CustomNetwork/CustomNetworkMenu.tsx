@@ -12,7 +12,7 @@ export const CustomNetworkMenu = forwardRef(
         className={classNames('custom-network-menu', className)}
         style={style}
       >
-        <div className='network-list'>{children}</div>
+        {children}
         <Dropdown.Divider />
         <div className='d-flex flex-column gap-2 px-3 pb-2'>
           Custom Network API Address

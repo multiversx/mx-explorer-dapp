@@ -1,8 +1,13 @@
 import { NetworkType } from 'types/network.types';
+
+import { getStorageCustomNetworks } from './helpers';
 import { allApps, schema } from './sharedConfig';
 export * from './sharedConfig';
 
 export const networks: NetworkType[] = [
+  // Saved Custom Network Configs
+  ...getStorageCustomNetworks(),
+
   {
     default: true,
     id: 'devnet',

@@ -31,6 +31,8 @@ export const SHARE_PREFIX = process.env.VITE_APP_SHARE_PREFIX
   ? process.env.VITE_APP_SHARE_PREFIX.replace('-', '')
   : '';
 
+export const hasExtraNetworks = false;
+
 export const links: NetworkUrlType[] = [
   {
     id: 'mainnet',

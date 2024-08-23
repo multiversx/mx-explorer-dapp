@@ -1,22 +1,9 @@
 .custom-network-menu {
   width: 15rem;
-  min-height: 20rem;
-  max-height: calc(100dvh - #{$header-navbar-height} - 6rem);
-  overflow-y: scroll;
-  @include media-breakpoint-up(lg) {
-    max-height: calc(100dvh - #{$header-navbar-height} - 1rem);
-  }
   --dropdown-divider-bg: var(--neutral-700);
   .input-group-seamless {
     .form-control {
       padding-right: 2.5rem;
-    }
-  }
-  .network-list {
-    @include media-breakpoint-up(lg) {
-      min-height: 14rem;
-      max-height: calc(100dvh - #{$header-navbar-height} - 8.25rem);
-      overflow-y: scroll;
     }
   }
 }

@@ -1,8 +1,13 @@
 import { CUSTOM_NETWORK_ID } from 'appConstants';
+import { hasExtraNetworks } from 'config';
 import { storage } from 'helpers/storage';
 import { NetworkAdapterEnum, NetworkType } from 'types';
 
 export const getStorageCustomNetworks = (): NetworkType[] => {
+  if (!hasExtraNetworks) {
+    return [];
+  }
+
   try {
     const storageNetworks = storage.getFromLocal(CUSTOM_NETWORK_ID);
     const parsedNetworks = JSON.parse(storageNetworks);
