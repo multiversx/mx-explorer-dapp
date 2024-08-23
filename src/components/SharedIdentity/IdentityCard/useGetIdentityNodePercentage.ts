@@ -47,7 +47,7 @@ export const useGetIdentityNodePercentage = ({
     if (identity.validators) {
       getData();
     }
-  }, [isNodesIdentityCountFetched, identity]);
+  }, [isNodesIdentityCountFetched, identity.validators]);
 
   return validatorsPercent;
 };
