@@ -3,6 +3,7 @@ export * from './useFetchEconomics';
 export * from './useFetchEpochProgress';
 export * from './useFetchStake';
 export * from './useFetchMarkers';
+export * from './useFetchNodesCount';
 export * from './useFetchNodesIdentities';
 export * from './useFetchNodesOverview';
 export * from './useFetchNodesVersions';

@@ -4,7 +4,9 @@
   text-overflow: ellipsis;
   .suf,
   .dec {
-    opacity: 0.75;
+    &.opc {
+      opacity: 0.75;
+    }
   }
   sup {
     margin-left: 0.125rem;

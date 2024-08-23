@@ -18,8 +18,6 @@ export interface StakeType {
   allStakedNodes?: number;
 
   // not in API
-  totalNodes?: string;
-  totalValidatorNodes?: string;
   notQualifiedAuctionValidators?: number;
 }
 
@@ -43,7 +41,22 @@ export interface StakeSliceType extends SliceType {
   allStakedNodes?: string;
 
   // not in API
+  notQualifiedAuctionValidators?: string;
+}
+
+export interface StakeExtraType {
+  totalNodes?: number;
+  totalValidatorNodes?: number;
+  totalIdentityNodes?: number;
+}
+
+export interface StakeExtraSliceType {
+  unprocessed: StakeExtraType;
+
   totalNodes?: string;
   totalValidatorNodes?: string;
-  notQualifiedAuctionValidators?: string;
+  totalIdentityNodes?: string;
+
+  isNodeCountFetched?: boolean;
+  isNodesIdentityCountFetched?: boolean;
 }

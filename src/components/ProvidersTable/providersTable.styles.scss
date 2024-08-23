@@ -13,8 +13,36 @@
       }
     }
   }
-  .table tr td:first-child {
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .table tr td {
+    &:first-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  .expand-row {
+    .content-wrapper + .trapezoid {
+      border-top-width: 4px;
+      border-color: var(--neutral-800-opacity-60);
+    }
+  }
+
+  .table tr td {
+    &:nth-of-type(2) {
+      color: var(--neutral-200);
+    }
+    &:nth-of-type(4) {
+      text-align: center;
+    }
+  }
+
+  &.show-index {
+    .table tr td {
+      &:nth-of-type(3) {
+        color: var(--neutral-200);
+      }
+      &:nth-of-type(5) {
+        text-align: center;
+      }
+    }
   }
 }

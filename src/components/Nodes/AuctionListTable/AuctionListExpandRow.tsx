@@ -1,8 +1,7 @@
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
-import { WithClassnameType } from 'types';
-
+import { ExpandRow } from 'components';
 import { AuctionListBaseRow } from './AuctionListBaseRow';
 import { ExpandRowConfigType, AuctionListBaseRowUIType } from './types';
 
@@ -11,44 +10,6 @@ export interface NodesAuctionListExpandRowUIType
   expandRowConfig: ExpandRowConfigType;
   colSpan?: number;
 }
-
-interface ExpandRowUIType extends WithClassnameType {
-  validatorCount: number;
-  validatorText: string;
-  onClick: () => void;
-  colSpan?: number;
-}
-
-const ExpandRow = ({
-  validatorCount,
-  validatorText,
-  onClick,
-  colSpan,
-  className
-}: ExpandRowUIType) => {
-  return (
-    <tr className={classNames('expand-row', className)}>
-      <td colSpan={colSpan}>
-        <div className='content-wrapper text-neutral-400 d-flex align-items-start font-headings-regular gap-3'>
-          <span>
-            .. {new BigNumber(validatorCount).toFormat()} more {validatorText}
-          </span>
-          <button
-            type='button'
-            className='btn btn-link-unstyled text-primary font-weight-600'
-            onClick={onClick}
-          >
-            View All
-          </button>
-        </div>
-        <div className='trapezoid'></div>
-        <div className='trapezoid reverse'></div>
-        <div className='trapezoid'></div>
-        <div className='trapezoid reverse'></div>
-      </td>
-    </tr>
-  );
-};
 
 export const AuctionListExpandRow = ({
   colSpan = 7,
@@ -121,8 +82,8 @@ export const AuctionListExpandRow = ({
   ) {
     return (
       <ExpandRow
-        validatorCount={remainingQualifiedValidators}
-        validatorText='Qualified validators'
+        count={remainingQualifiedValidators}
+        text='more Qualified validators'
         onClick={() => {
           setQualifiedExpanded(true);
           return;
@@ -139,8 +100,8 @@ export const AuctionListExpandRow = ({
   ) {
     return (
       <ExpandRow
-        validatorCount={remainingNotQualifiedValidators}
-        validatorText='Not Qualified validators'
+        count={remainingNotQualifiedValidators}
+        text='more Not Qualified validators'
         onClick={() => {
           setNotQualifiedExpanded(true);
           return;

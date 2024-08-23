@@ -1,0 +1,38 @@
+.expand-row {
+  td {
+    position: relative;
+    padding: 0 !important;
+    border-bottom-width: 0;
+  }
+  .trapezoid {
+    background-color: var(--table-bg);
+    transform: perspective(10rem) rotateX(-10deg);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--table-border-color);
+    height: 1rem;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-top-width: 0;
+    &.reverse {
+      margin-top: -1px;
+      transform: perspective(10rem) rotateX(10deg);
+    }
+  }
+  .content-wrapper {
+    position: absolute;
+    z-index: 1;
+    background-color: var(--neutral-950);
+    padding: 0.25rem 1rem;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    button {
+      line-height: 1.4;
+    }
+  }
+}
