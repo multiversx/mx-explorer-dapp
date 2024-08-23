@@ -46,8 +46,6 @@ export const useCustomNetwork = (customUrl: string) => {
     NetworkType | undefined
   >(existingNetwork);
 
-  console.log('------activeNetworkName', activeNetwork);
-
   const setCustomNetwork = async () => {
     setIsSaving(true);
     setErrors(undefined);

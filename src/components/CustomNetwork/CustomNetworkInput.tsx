@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 
 import { networks } from 'config';
 import { useCustomNetwork } from 'hooks';
-import { faCircleNotch, faCheck } from 'icons/regular';
+import { faCircleNotch } from 'icons/regular';
+import { faCheck } from 'icons/solid';
 import { activeNetworkSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
@@ -14,15 +15,15 @@ export const CustomNetworkInput = ({ className }: WithClassnameType) => {
   const { isCustom: activeNetworkIsCustom } = activeNetwork;
 
   const configCustomNetwork = networks.filter((network) => network.isCustom)[0];
-  const existingNetwork = activeNetworkIsCustom
+  const existingCustomNetwork = activeNetworkIsCustom
     ? activeNetwork
     : configCustomNetwork;
 
   const [customNetworkUrl, setcustomNetworkUrl] = useState<string>(
-    existingNetwork?.apiAddress ?? ''
+    existingCustomNetwork?.apiAddress ?? ''
   );
   const [generalError, setGeneralError] = useState('');
-  const { setCustomNetwork, customNetworkConfig, isSaving, errors } =
+  const { setCustomNetwork, isSaving, errors } =
     useCustomNetwork(customNetworkUrl);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -61,6 +62,7 @@ export const CustomNetworkInput = ({ className }: WithClassnameType) => {
           value={customNetworkUrl}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          disabled={isSaving}
           aria-label='API Address'
           aria-describedby='customNetwork-addon'
         />
@@ -84,7 +86,7 @@ export const CustomNetworkInput = ({ className }: WithClassnameType) => {
             <FontAwesomeIcon
               icon={faCheck}
               className={classNames('me-1', {
-                'text-primary': customNetworkConfig || activeNetworkIsCustom
+                'text-primary': activeNetworkIsCustom
               })}
             />
           )}

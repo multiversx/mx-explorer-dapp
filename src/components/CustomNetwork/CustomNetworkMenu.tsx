@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import classNames from 'classnames';
 import { Dropdown } from 'react-bootstrap';
 
-import { CustomNetworkInput } from 'components';
+import { CustomNetworkInput, CustomNetworkDetails } from 'components';
 
 export const CustomNetworkMenu = forwardRef(
   ({ children, className, style }: any, ref: any) => {
@@ -12,11 +12,12 @@ export const CustomNetworkMenu = forwardRef(
         className={classNames('custom-network-menu', className)}
         style={style}
       >
-        {children}
+        <div className='network-list'>{children}</div>
         <Dropdown.Divider />
         <div className='d-flex flex-column gap-2 px-3 pb-2'>
           Custom Network API Address
           <CustomNetworkInput />
+          <CustomNetworkDetails />
         </div>
       </div>
     );
