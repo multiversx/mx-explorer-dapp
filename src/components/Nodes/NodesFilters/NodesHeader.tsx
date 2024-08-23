@@ -6,9 +6,14 @@ import { WithClassnameType, NodeStatusEnum, NodeTypeEnum } from 'types';
 
 export interface NodesHeaderUIType extends WithClassnameType {
   searchValue?: string | number;
+  smallHeader?: boolean;
 }
 
-export const NodesHeader = ({ searchValue, className }: NodesHeaderUIType) => {
+export const NodesHeader = ({
+  searchValue,
+  smallHeader,
+  className
+}: NodesHeaderUIType) => {
   const nodeFilters = useGetNodeFilters();
   const { search } = useGetSearch();
   const { status, type, isAuctioned } = nodeFilters;
@@ -42,7 +47,10 @@ export const NodesHeader = ({ searchValue, className }: NodesHeaderUIType) => {
       )}
     >
       {filterTitle && (
-        <h3 className='mb-0' data-testid='title'>
+        <h3
+          className={classNames('mb-0', { h5: smallHeader })}
+          data-testid='title'
+        >
           {filterTitle}
         </h3>
       )}

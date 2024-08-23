@@ -85,18 +85,6 @@ export const processStake = (data: StakeType) => {
             data.notQualifiedAuctionValidators
           ).toFormat(0)
         }
-      : {}),
-    ...(data.totalNodes !== undefined
-      ? {
-          totalNodes: new BigNumber(data.totalNodes).toFormat(0)
-        }
-      : {}),
-    ...(data.totalValidatorNodes !== undefined
-      ? {
-          totalValidatorNodes: new BigNumber(data.totalValidatorNodes).toFormat(
-            0
-          )
-        }
       : {})
   };
 };

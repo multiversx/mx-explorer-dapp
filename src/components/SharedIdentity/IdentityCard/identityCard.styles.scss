@@ -63,7 +63,7 @@
       color: var(--neutral-300);
     }
     @include media-breakpoint-up(lg) {
-      flex-basis: 20%;
+      flex-basis: calc(23% - 1rem);
       width: auto;
     }
   }
@@ -77,7 +77,7 @@
     }
 
     @include media-breakpoint-up(lg) {
-      flex-basis: 65%;
+      flex-basis: calc(53% - 1rem);
       width: auto;
     }
   }

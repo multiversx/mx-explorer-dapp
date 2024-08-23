@@ -13,7 +13,8 @@ import {
   FormatAmount,
   PercentageBar,
   Overlay,
-  LockedStakeTooltip
+  LockedStakeTooltip,
+  FormatNumber
 } from 'components';
 import { formatPercentLabel, urlBuilder } from 'helpers';
 import { useAdapter, useGetSort } from 'hooks';
@@ -61,6 +62,10 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
     setCollapsed(!collapsed);
   };
 
+  const currentValidatorsTotalPercent = new BigNumber(
+    identity.validatorsPercent || 0
+  ).plus(identity.overallValidatorsPercent || 0);
+
   const isStakeSorting = sort === SortIdentitesFieldEnum.locked;
 
   const link = identity.identity
@@ -92,6 +97,66 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
           </div>
         </td>
 
+        <td>{new BigNumber(identity.validators).toFormat()}</td>
+        <td>
+          {identity.validatorsPercent ? (
+            <FormatNumber
+              value={identity.validatorsPercent}
+              label='%'
+              decimalOpacity={false}
+              hideLessThanOne
+            />
+          ) : (
+            'N/A'
+          )}
+        </td>
+        <td>
+          <div className='d-flex align-items-center'>
+            {isStakeSorting ? (
+              <>
+                <PercentageBar
+                  overallPercent={identity.overallStakePercent || 0}
+                  overallPercentLabel={formatPercentLabel(
+                    identity.overallStakePercent
+                  )}
+                  fillPercent={identity.stakePercent}
+                  fillPercentLabel={formatPercentLabel(identity.stakePercent)}
+                />
+                <div className='ms-2'>
+                  <FormatNumber
+                    value={identity.stakePercent}
+                    label='%'
+                    maxDigits={2}
+                    decimalOpacity={false}
+                    hideLessThanOne
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <PercentageBar
+                  overallPercent={identity.overallValidatorsPercent || 0}
+                  overallPercentLabel={formatPercentLabel(
+                    identity.overallValidatorsPercent
+                  )}
+                  fillPercent={identity.validatorsPercent}
+                  fillPercentLabel={formatPercentLabel(
+                    identity.validatorsPercent
+                  )}
+                />
+                <div className='ms-2'>
+                  <FormatNumber
+                    value={currentValidatorsTotalPercent}
+                    label='%'
+                    maxDigits={2}
+                    decimalOpacity={false}
+                    hideLessThanOne
+                  />
+                </div>
+              </>
+            )}
+          </div>
+        </td>
         <td>
           <Overlay
             title={
@@ -107,50 +172,12 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
           </Overlay>
         </td>
         <td>
-          <div className='d-flex align-items-center'>
-            {isStakeSorting ? (
-              <>
-                <PercentageBar
-                  overallPercent={identity.overallStakePercent || 0}
-                  overallPercentLabel={formatPercentLabel(
-                    identity.overallStakePercent
-                  )}
-                  fillPercent={identity.stakePercent}
-                  fillPercentLabel={formatPercentLabel(identity.stakePercent)}
-                />
-                <div className='ms-3'>
-                  {formatPercentLabel(identity?.stakePercent)}
-                </div>
-              </>
-            ) : (
-              <>
-                <PercentageBar
-                  overallPercent={identity.overallValidatorsPercent || 0}
-                  overallPercentLabel={formatPercentLabel(
-                    identity.overallValidatorsPercent
-                  )}
-                  fillPercent={identity.validatorsPercent}
-                  fillPercentLabel={formatPercentLabel(
-                    identity.validatorsPercent
-                  )}
-                />
-                <div className='ms-3'>
-                  {formatPercentLabel(identity?.validatorsPercent)}
-                </div>
-              </>
-            )}
-          </div>
-        </td>
-        <td className='text-end'>
-          {new BigNumber(identity.validators).toFormat()}
-        </td>
-        <td className='text-end'>
           <CarretDown className='details-arrow' height='8' />
         </td>
       </tr>
       {showDetails && (
         <tr className={`identity-details-row ${collapsed ? 'collapsed' : ''}`}>
-          <td colSpan={6} className='p-0'>
+          <td colSpan={7} className='p-0'>
             <div className='content'>
               {dataReady === undefined && (
                 <div className='py-4'>

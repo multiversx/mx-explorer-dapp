@@ -21,19 +21,14 @@ import {
 } from 'hooks';
 import { faCity, faCode } from 'icons/regular';
 import { nodesOverviewSelector } from 'redux/selectors';
-import {
-  IdentityType,
-  NodeStatusEnum,
-  NodeType,
-  ProviderType,
-  NodeTypeEnum
-} from 'types';
+import { IdentityType, NodeStatusEnum, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {
   const { hash: id } = useParams() as any;
   const { isFetched: isNodesOverviewFetched } = useSelector(
     nodesOverviewSelector
   );
+
   const { getIdentity, getNodes, getNodesCount, getProviders } = useAdapter();
 
   const [searchParams] = useSearchParams();
@@ -54,7 +49,6 @@ export const IdentityDetails = () => {
 
   useFetchNodesOverview({
     identity: id,
-    type: NodeTypeEnum.validator,
     fields: NODE_STATUS_PREVIEW_FIELDS.join(','),
     size: MAX_RESULTS
   });
@@ -145,6 +139,8 @@ export const IdentityDetails = () => {
                           <ProvidersTable
                             providers={providers}
                             showIdentity={false}
+                            showIndex={false}
+                            hideFilters
                           />
                         )}
                       </div>
@@ -170,9 +166,9 @@ export const IdentityDetails = () => {
               <div className='card'>
                 <div className='card-header'>
                   <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-                    <NodesHeader searchValue={totalNodes} />
+                    <NodesHeader searchValue={totalNodes} smallHeader />
                     <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
-                      <NodesFilters />
+                      <NodesFilters showObservers showValidatorNodes />
                       <Pager
                         total={totalNodes}
                         className='d-flex ms-auto me-auto me-sm-0'

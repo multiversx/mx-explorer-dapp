@@ -47,8 +47,6 @@ export const stakeSlice = createSlice({
       // not in API
       state.notQualifiedAuctionValidators =
         action.payload.notQualifiedAuctionValidators;
-      state.totalNodes = action.payload.totalNodes;
-      state.totalValidatorNodes = action.payload.totalValidatorNodes;
 
       state.unprocessed = action.payload.unprocessed;
       state.isFetched = action.payload.isFetched;
