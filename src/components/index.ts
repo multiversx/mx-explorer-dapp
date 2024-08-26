@@ -10,6 +10,7 @@ export * from './Cards';
 export * from './CollapsibleArrows';
 export * from './CollectionBlock';
 export * from './CopyButton';
+export * from './CustomNetwork';
 export * from './DataDecode';
 export * from './DetailItem';
 export * from './ExpandRow';

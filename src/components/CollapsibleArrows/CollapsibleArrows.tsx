@@ -15,7 +15,7 @@ export const CollapsibleArrows = ({
 }: CollapsibleArrowsPropsType) => {
   return (
     <FontAwesomeIcon
-      className={classNames('ms-auto', className)}
+      className={classNames(className)}
       size={size}
       icon={expanded ? faChevronUp : faChevronDown}
     />

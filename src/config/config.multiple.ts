@@ -1,8 +1,14 @@
 import { NetworkType } from 'types/network.types';
-import { getInternalNetworks, getInternalLinks } from './helpers';
+import {
+  getInternalNetworks,
+  getStorageCustomNetworks,
+  getInternalLinks
+} from './helpers';
 import { allApps, schema } from './sharedConfig';
 
 export * from './sharedConfig';
+
+export const hasExtraNetworks = true;
 
 export const networks: NetworkType[] = [
   {
@@ -32,7 +38,10 @@ export const networks: NetworkType[] = [
   },
 
   // Internal Testnets
-  ...getInternalNetworks()
+  ...getInternalNetworks(),
+
+  // Saved Custom Network Configs
+  ...getStorageCustomNetworks()
 ];
 
 export const links = getInternalLinks(networks);

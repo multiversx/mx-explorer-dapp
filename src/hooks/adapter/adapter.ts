@@ -739,6 +739,13 @@ export const useAdapter = () => {
       provider({ baseUrl: `${growthApi}/explorer/widgets`, url }),
 
     getGrowthHeaders: (url: string) =>
-      provider({ baseUrl: `${growthApi}/explorer/headers`, url })
+      provider({ baseUrl: `${growthApi}/explorer/headers`, url }),
+
+    // Network Config
+    getNetworkConfig: (baseUrl: string) =>
+      provider({
+        baseUrl,
+        url: '/dapp/config'
+      })
   };
 };

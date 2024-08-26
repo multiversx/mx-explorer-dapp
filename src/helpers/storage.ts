@@ -1,9 +1,13 @@
 import moment from 'moment';
-import { TEMP_LOCAL_NOTIFICATION_DISMISSED } from 'appConstants';
+import {
+  TEMP_LOCAL_NOTIFICATION_DISMISSED,
+  CUSTOM_NETWORK_ID
+} from 'appConstants';
 
 type KeyType =
   | 'theme'
   | 'accessToken'
+  | typeof CUSTOM_NETWORK_ID
   | typeof TEMP_LOCAL_NOTIFICATION_DISMISSED;
 
 export const storage = {
