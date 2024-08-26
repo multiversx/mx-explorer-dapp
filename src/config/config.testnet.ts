@@ -5,9 +5,6 @@ import { allApps, schema } from './sharedConfig';
 export * from './sharedConfig';
 
 export const networks: NetworkType[] = [
-  // Saved Custom Network Configs
-  ...getStorageCustomNetworks(),
-
   {
     default: true,
     id: 'testnet',
@@ -20,7 +17,10 @@ export const networks: NetworkType[] = [
     explorerAddress: 'https://testnet-explorer.multiversx.com',
     nftExplorerAddress: 'https://testnet.xspotlight.com',
     apiAddress: 'https://testnet-api.multiversx.com'
-  }
+  },
+
+  // Saved Custom Network Configs
+  ...getStorageCustomNetworks()
 ];
 
 export const multiversxApps = allApps([

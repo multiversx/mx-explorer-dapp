@@ -11,9 +11,6 @@ export * from './sharedConfig';
 export const hasExtraNetworks = true;
 
 export const networks: NetworkType[] = [
-  // Saved Custom Network Configs
-  ...getStorageCustomNetworks(),
-
   {
     default: true,
     id: 'testnet',
@@ -41,7 +38,10 @@ export const networks: NetworkType[] = [
   },
 
   // Internal Testnets
-  ...getInternalNetworks()
+  ...getInternalNetworks(),
+
+  // Saved Custom Network Configs
+  ...getStorageCustomNetworks()
 ];
 
 export const links = getInternalLinks(networks);
