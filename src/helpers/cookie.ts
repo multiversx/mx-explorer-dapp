@@ -1,8 +1,9 @@
 import { CUSTOM_NETWORK_ID } from 'appConstants';
+import { DEFAULT_HOSTNAME } from 'config';
 
 type KeyType = typeof CUSTOM_NETWORK_ID;
 
-const domain = `domain=.${process.env.VITE_APP_SHARE_PREFIX}explorer.multiversx.com`;
+const domain = `domain=.${process.env.VITE_APP_SHARE_PREFIX}${DEFAULT_HOSTNAME}`;
 
 export const cookie = {
   saveToCookies: ({
@@ -15,7 +16,7 @@ export const cookie = {
     expirationDate: Date;
   }) => {
     const expires = `expires=${expirationDate.toUTCString()}`;
-    document.cookie = `${key}=${data}; ${expires}; ${domain} path=/;`;
+    document.cookie = `${key}=${data}; ${expires}; ${domain}; path=/;`;
   },
   getFromCookies: (key: KeyType) => {
     const name = key + '=';
@@ -32,6 +33,6 @@ export const cookie = {
     return '';
   },
   removeFromCookies: (key: KeyType) => {
-    document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; ${domain} path=/;`;
+    document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; ${domain}; path=/;`;
   }
 };

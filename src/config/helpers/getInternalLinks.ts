@@ -1,3 +1,4 @@
+import { DEFAULT_HOSTNAME } from 'config';
 import { NetworkType, NetworkUrlType } from 'types/network.types';
 
 export const getInternalLinks = (networks: NetworkType[]): NetworkUrlType[] => {
@@ -11,7 +12,7 @@ export const getInternalLinks = (networks: NetworkType[]): NetworkUrlType[] => {
         return {
           id,
           name,
-          url: `https://${id}.${process.env.VITE_APP_SHARE_PREFIX}explorer.multiversx.com`
+          url: `https://${id}.${process.env.VITE_APP_SHARE_PREFIX}${DEFAULT_HOSTNAME}`
         };
       });
 

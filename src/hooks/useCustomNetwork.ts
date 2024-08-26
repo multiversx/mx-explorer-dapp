@@ -83,11 +83,12 @@ export const useCustomNetwork = (customUrl: string) => {
         };
 
         try {
+          const in2Minutes = new Date(moment().add(2, 'minutes').toDate());
           const in30Days = new Date(moment().add(30, 'days').toDate());
           const configData = {
             key: CUSTOM_NETWORK_ID as typeof CUSTOM_NETWORK_ID,
             data: JSON.stringify([customNetwork]),
-            expirationDate: in30Days
+            expirationDate: isSubSubdomain ? in2Minutes : in30Days
           };
           if (isSubSubdomain) {
             cookie.saveToCookies(configData);
