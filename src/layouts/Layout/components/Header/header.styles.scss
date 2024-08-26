@@ -239,6 +239,8 @@
 
     &.active {
       transform: translateX(0%);
+      overflow-y: auto;
+      overflow-x: hidden;
     }
   }
 
@@ -260,7 +262,6 @@
   }
 
   .ecosystem-menu-wrapper {
-    overflow: hidden;
     @include media-breakpoint-up(lg) {
       position: absolute;
       right: calc(((100vw - 960px) / 2) + 0.75rem);

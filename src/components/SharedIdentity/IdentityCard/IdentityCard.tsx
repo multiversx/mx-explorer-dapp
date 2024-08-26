@@ -187,16 +187,18 @@ export const IdentityCard = ({ identity }: { identity: IdentityType }) => {
                 className='detail-card'
               />
 
-              <div className='d-flex flex-fill align-items-end justify-content-end stake-card'>
-                <a
-                  className='btn btn-block btn-sm btn-primary'
-                  target='_blank'
-                  rel='noreferrer nofollow noopener'
-                  href={walletAddress}
-                >
-                  Stake now
-                </a>
-              </div>
+              {walletAddress && (
+                <div className='d-flex flex-fill align-items-end justify-content-end stake-card'>
+                  <a
+                    className='btn btn-block btn-sm btn-primary'
+                    target='_blank'
+                    rel='noreferrer nofollow noopener'
+                    href={walletAddress}
+                  >
+                    Stake now
+                  </a>
+                </div>
+              )}
             </div>
 
             <div className='d-flex flex-row flex-wrap gap-3 mt-3'>
