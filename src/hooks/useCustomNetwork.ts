@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { CUSTOM_NETWORK_ID } from 'appConstants';
 import { networks } from 'config';
-import { storage } from 'helpers';
+import { cookie, storage, getSubdomainNetwork } from 'helpers';
 import { useAdapter, useGetNetworkChangeLink } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { DappNetworkConfigType, NetworkType, NetworkAdapterEnum } from 'types';
@@ -33,6 +33,7 @@ const validateUrl = (url: string) => {
 export const useCustomNetwork = (customUrl: string) => {
   const { getNetworkConfig } = useAdapter();
   const getNetworkChangeLink = useGetNetworkChangeLink();
+  const { isSubSubdomain } = getSubdomainNetwork();
   const activeNetwork = useSelector(activeNetworkSelector);
 
   const { isCustom: activeNetworkIsCustom } = activeNetwork;
@@ -83,11 +84,16 @@ export const useCustomNetwork = (customUrl: string) => {
 
         try {
           const in30Days = new Date(moment().add(30, 'days').toDate());
-          storage.saveToLocal({
-            key: CUSTOM_NETWORK_ID,
+          const configData = {
+            key: CUSTOM_NETWORK_ID as typeof CUSTOM_NETWORK_ID,
             data: JSON.stringify([customNetwork]),
             expirationDate: in30Days
-          });
+          };
+          if (isSubSubdomain) {
+            cookie.saveToCookies(configData);
+          } else {
+            storage.saveToLocal(configData);
+          }
         } catch (error) {
           console.error('Unable to Save Custom Network: ', error);
           setErrors((errors) => {

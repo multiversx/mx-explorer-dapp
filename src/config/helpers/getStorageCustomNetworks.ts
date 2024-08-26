@@ -1,5 +1,8 @@
+import moment from 'moment';
+
 import { CUSTOM_NETWORK_ID } from 'appConstants';
 import { hasExtraNetworks } from 'config';
+import { cookie } from 'helpers/cookie';
 import { storage } from 'helpers/storage';
 import { NetworkAdapterEnum, NetworkType } from 'types';
 
@@ -9,6 +12,25 @@ export const getStorageCustomNetworks = (): NetworkType[] => {
   }
 
   try {
+    const cookieNetworks = cookie.getFromCookies(CUSTOM_NETWORK_ID);
+
+    // change custom network across sub-subdomains
+    if (cookieNetworks) {
+      try {
+        const parsedCookieNetworks = JSON.parse(cookieNetworks);
+        if (parsedCookieNetworks && parsedCookieNetworks.length > 0) {
+          const in30Days = new Date(moment().add(30, 'days').toDate());
+          storage.saveToLocal({
+            key: CUSTOM_NETWORK_ID,
+            data: JSON.stringify(parsedCookieNetworks),
+            expirationDate: in30Days
+          });
+
+          cookie.removeFromCookies(CUSTOM_NETWORK_ID);
+        }
+      } catch {}
+    }
+
     const storageNetworks = storage.getFromLocal(CUSTOM_NETWORK_ID);
     const parsedNetworks = JSON.parse(storageNetworks);
 
