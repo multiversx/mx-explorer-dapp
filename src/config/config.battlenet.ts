@@ -1,4 +1,6 @@
 import { NetworkType } from 'types/network.types';
+
+import { getStorageCustomNetworks } from './helpers';
 import { allApps, schema } from './sharedConfig';
 export * from './sharedConfig';
 
@@ -14,7 +16,10 @@ export const networks: NetworkType[] = [
     walletAddress: 'https://battlenet-wallet.multiversx.com',
     explorerAddress: 'https://battlenet-explorer.multiversx.com',
     apiAddress: 'https://express-api-shadowfork-two.elrond.ro'
-  }
+  },
+
+  // Saved Custom Network Configs
+  ...getStorageCustomNetworks()
 ];
 
 export const multiversxApps = allApps([
