@@ -6,7 +6,7 @@ export const getInternalLinks = (networks: NetworkType[]): NetworkUrlType[] => {
     process.env.VITE_APP_SHARE_PREFIX === 'internal-'
   ) {
     const internalLinks = networks
-      .filter(({ id, name }) => id && name)
+      .filter(({ id, name, isCustom }) => id && name && !isCustom)
       .map(({ id = '', name = '' }) => {
         return {
           id,
