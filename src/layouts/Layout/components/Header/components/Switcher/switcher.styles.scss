@@ -53,7 +53,7 @@
 
   .dropdown-menu {
     .network-switch-list {
-      min-height: 20rem;
+      min-height: 2rem;
       max-height: calc(100dvh - #{$header-navbar-height} - 6rem);
       overflow-y: scroll;
       @include media-breakpoint-up(lg) {
@@ -63,7 +63,7 @@
     .custom-network-menu {
       .network-list {
         @include media-breakpoint-up(lg) {
-          min-height: 14rem;
+          min-height: 2rem;
           max-height: calc(100dvh - #{$header-navbar-height} - 8.25rem);
           overflow-y: scroll;
         }
