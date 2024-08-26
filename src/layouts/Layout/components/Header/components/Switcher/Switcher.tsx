@@ -6,24 +6,21 @@ import { useSelector } from 'react-redux';
 import { CustomNetworkMenu } from 'components';
 import { networks, links, hasExtraNetworks } from 'config';
 import { getSubdomainNetwork } from 'helpers';
+import { useGetNetworkChangeLink } from 'hooks';
 import { faAngleDown } from 'icons/solid';
-import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const Switcher = () => {
   const { id: activeNetworkId, name: activeNetworkName } = useSelector(
     activeNetworkSelector
   );
-  const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
   const { isSubSubdomain } = getSubdomainNetwork();
+  const getNetworkChangeLink = useGetNetworkChangeLink();
 
   const networkLinks = networks
     .filter((network) => !network.isCustom)
     .map(({ name, id }) => {
-      let url = id === defaultNetworkId ? '/' : `/${id}`;
-      if (isSubSubdomain && window?.location?.hostname) {
-        const [_omit, ...rest] = window.location.hostname.split('.');
-        url = `https://${[id, ...rest].join('.')}`;
-      }
+      const url = getNetworkChangeLink({ networkId: id });
       return {
         name,
         url,

@@ -8,6 +8,7 @@ import { CUSTOM_NETWORK_ID } from 'appConstants';
 import { CollapsibleArrows, CopyButton } from 'components';
 import { networks } from 'config';
 import { storage, scrollToElement } from 'helpers';
+import { useGetNetworkChangeLink } from 'hooks';
 import { faTrash, faCheck } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
@@ -28,6 +29,7 @@ const NetworkDetail = ({
 };
 
 export const CustomNetworkDetails = ({ className }: WithClassnameType) => {
+  const getNetworkChangeLink = useGetNetworkChangeLink();
   const activeNetwork = useSelector(activeNetworkSelector);
   const { isCustom: activeNetworkIsCustom } = activeNetwork;
 
@@ -47,7 +49,9 @@ export const CustomNetworkDetails = ({ className }: WithClassnameType) => {
   };
 
   const applyNetwork = () => {
-    window.location.href = `/${CUSTOM_NETWORK_ID}`;
+    window.location.href = getNetworkChangeLink({
+      networkId: CUSTOM_NETWORK_ID
+    });
   };
 
   if (!existingCustomNetwork) {

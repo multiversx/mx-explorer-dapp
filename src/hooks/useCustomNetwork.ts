@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { CUSTOM_NETWORK_ID } from 'appConstants';
 import { networks } from 'config';
 import { storage } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAdapter, useGetNetworkChangeLink } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { DappNetworkConfigType, NetworkType, NetworkAdapterEnum } from 'types';
 
@@ -31,8 +31,10 @@ const validateUrl = (url: string) => {
 };
 
 export const useCustomNetwork = (customUrl: string) => {
-  const activeNetwork = useSelector(activeNetworkSelector);
   const { getNetworkConfig } = useAdapter();
+  const getNetworkChangeLink = useGetNetworkChangeLink();
+  const activeNetwork = useSelector(activeNetworkSelector);
+
   const { isCustom: activeNetworkIsCustom } = activeNetwork;
   const configCustomNetwork = networks.filter((network) => network.isCustom)[0];
 
@@ -99,7 +101,9 @@ export const useCustomNetwork = (customUrl: string) => {
         setIsSaving(false);
 
         // we want to reset the whole state, react router's navigate might lead to unwanted innacuracies
-        window.location.href = `/${CUSTOM_NETWORK_ID}`;
+        window.location.href = getNetworkChangeLink({
+          networkId: CUSTOM_NETWORK_ID
+        });
 
         return;
       }
