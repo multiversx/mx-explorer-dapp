@@ -7,7 +7,7 @@
 
   > .main-content-container {
     @include media-breakpoint-up(md) {
-      min-height: calc(100vh - #{$footer-height + $header-navbar-height});
+      min-height: calc(100dvh - #{$footer-height + $header-navbar-height});
     }
   }
 

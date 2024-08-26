@@ -3,55 +3,34 @@ import classNames from 'classnames';
 import { Anchor, Dropdown } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
-import { networks, links } from 'config';
+import { CustomNetworkMenu } from 'components';
+import { networks, links, hasExtraNetworks } from 'config';
 import { getSubdomainNetwork } from 'helpers';
+import { useGetNetworkChangeLink } from 'hooks';
 import { faAngleDown } from 'icons/solid';
-
-import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const Switcher = () => {
   const { id: activeNetworkId, name: activeNetworkName } = useSelector(
     activeNetworkSelector
   );
-  const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
   const { isSubSubdomain } = getSubdomainNetwork();
+  const getNetworkChangeLink = useGetNetworkChangeLink();
 
-  const networkLinks = networks.map(({ name, id }) => {
-    let url = id === defaultNetworkId ? '/' : `/${id}`;
-    if (isSubSubdomain && window?.location?.hostname) {
-      const [_omit, ...rest] = window.location.hostname.split('.');
-      url = `https://${[id, ...rest].join('.')}`;
-    }
-    return {
-      name,
-      url,
-      id
-    };
-  });
+  const networkLinks = networks
+    .filter((network) => !network.isCustom)
+    .map(({ name, id }) => {
+      const url = getNetworkChangeLink({ networkId: id });
+      return {
+        name,
+        url,
+        id
+      };
+    });
 
-  return (
-    <Dropdown className='switcher'>
-      <Dropdown.Toggle
-        id='network-switch'
-        variant='dark'
-        className='btn-unstyled control'
-        aria-haspopup='true'
-        aria-controls='network-switch-menu'
-        aria-label='Change Network'
-      >
-        <div className='value text-truncate'>{activeNetworkName}</div>
-        <FontAwesomeIcon
-          className='ms-auto indicator'
-          icon={faAngleDown}
-          size='lg'
-        />
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu
-        id='network-switch-menu'
-        role='menu'
-        aria-labelledby='network-switch'
-      >
+  const LinksList = () => {
+    return (
+      <div className='network-list'>
         {links.length > 0 ? (
           <>
             {links.map((link) => (
@@ -105,6 +84,41 @@ export const Switcher = () => {
             )}
           </>
         )}
+      </div>
+    );
+  };
+
+  return (
+    <Dropdown className='switcher'>
+      <Dropdown.Toggle
+        id='network-switch'
+        variant='dark'
+        className='btn-unstyled control'
+        aria-haspopup='true'
+        aria-controls='network-switch-menu'
+        aria-label='Change Network'
+      >
+        <div className='value text-truncate'>{activeNetworkName}</div>
+        <FontAwesomeIcon
+          className='ms-auto indicator'
+          icon={faAngleDown}
+          size='lg'
+        />
+      </Dropdown.Toggle>
+      <Dropdown.Menu
+        id='network-switch-menu'
+        role='menu'
+        aria-labelledby='network-switch'
+      >
+        <div className='network-switch-list'>
+          {hasExtraNetworks ? (
+            <CustomNetworkMenu>
+              <LinksList />
+            </CustomNetworkMenu>
+          ) : (
+            <LinksList />
+          )}
+        </div>
       </Dropdown.Menu>
     </Dropdown>
   );

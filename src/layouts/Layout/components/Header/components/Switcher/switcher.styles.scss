@@ -52,6 +52,24 @@
   }
 
   .dropdown-menu {
+    .network-switch-list {
+      min-height: 2rem;
+      max-height: calc(100dvh - #{$header-navbar-height} - 6rem);
+      overflow-y: scroll;
+      @include media-breakpoint-up(lg) {
+        max-height: calc(100dvh - #{$header-navbar-height} - 1rem);
+      }
+    }
+    .custom-network-menu {
+      .network-list {
+        @include media-breakpoint-up(lg) {
+          min-height: 2rem;
+          max-height: calc(100dvh - #{$header-navbar-height} - 8.25rem);
+          overflow-y: scroll;
+        }
+      }
+    }
+
     .dropdown-item {
       --dropdown-link-color: var(--body-color);
       --dropdown-link-hover-color: var(--primary);

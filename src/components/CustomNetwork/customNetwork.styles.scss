@@ -1,0 +1,9 @@
+.custom-network-menu {
+  width: 15rem;
+  --dropdown-divider-bg: var(--neutral-700);
+  .input-group-seamless {
+    .form-control {
+      padding-right: 2.5rem;
+    }
+  }
+}
