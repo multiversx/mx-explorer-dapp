@@ -13,13 +13,12 @@ import { faTrash, faCheck } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
-const NetworkDetail = ({
-  title,
-  description
-}: {
+export interface NetworkDetailUIType {
   title: string;
   description: React.ReactNode;
-}) => {
+}
+
+const NetworkDetail = ({ title, description }: NetworkDetailUIType) => {
   return (
     <div className='d-flex flex-wrap align-items-center gap-1'>
       <div>{title}:</div>
