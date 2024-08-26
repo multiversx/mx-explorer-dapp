@@ -10,7 +10,7 @@ import { networks } from 'config';
 import { storage, scrollToElement } from 'helpers';
 import { useGetNetworkChangeLink } from 'hooks';
 import { faTrash, faCheck } from 'icons/regular';
-import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
+import { activeNetworkSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
 const NetworkDetail = ({
@@ -31,7 +31,6 @@ const NetworkDetail = ({
 export const CustomNetworkDetails = ({ className }: WithClassnameType) => {
   const getNetworkChangeLink = useGetNetworkChangeLink();
   const activeNetwork = useSelector(activeNetworkSelector);
-  const defaultNetwork = useSelector(defaultNetworkSelector);
   const { isCustom: activeNetworkIsCustom } = activeNetwork;
 
   const configCustomNetwork = networks.filter((network) => network.isCustom)[0];
@@ -43,7 +42,8 @@ export const CustomNetworkDetails = ({ className }: WithClassnameType) => {
 
   const isSavedCustomNetworkActive =
     configCustomNetwork?.id === activeNetwork?.id;
-  const defaultNetworkId = defaultNetwork.id ?? networks[0]?.id;
+  const defaultNetwork = networks.find((network) => Boolean(network.default));
+  const defaultNetworkId = defaultNetwork?.id ?? networks[0]?.id;
 
   const removeNetwork = () => {
     storage.removeFromLocal(CUSTOM_NETWORK_ID);

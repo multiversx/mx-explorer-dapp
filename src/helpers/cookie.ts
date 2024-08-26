@@ -1,5 +1,5 @@
 import { CUSTOM_NETWORK_ID } from 'appConstants';
-import { DEFAULT_HOSTNAME } from 'config';
+import { DEFAULT_HOSTNAME } from 'config/sharedConfig';
 
 type KeyType = typeof CUSTOM_NETWORK_ID;
 
