@@ -1,0 +1,14 @@
+.account-tokens-table {
+  td {
+    width: 12.5%;
+    &:first-of-type {
+      width: 30%;
+    }
+    &:nth-child(2) {
+      width: 30%;
+    }
+    &:nth-child(4) {
+      width: 15%;
+    }
+  }
+}
