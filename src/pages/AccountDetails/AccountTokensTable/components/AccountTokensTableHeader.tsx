@@ -2,16 +2,14 @@ import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 
 import { Pager, TableSearch } from 'components';
-import { TokenType, TokenTypeEnum } from 'types';
+import { TokenTypeEnum } from 'types';
 
 export interface AccountTokensTableHeaderUIType {
-  accountTokensCount?: number;
-  accountTokens?: TokenType[];
+  tokenCount?: number;
 }
 
 export const AccountTokensTableHeader = ({
-  accountTokens = [],
-  accountTokensCount
+  tokenCount = 0
 }: AccountTokensTableHeaderUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { type } = Object.fromEntries(searchParams);
@@ -81,19 +79,17 @@ export const AccountTokensTableHeader = ({
         </menu>
         <div className='filters tokens-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
           <TableSearch
-            searchValue={accountTokensCount}
+            searchValue={tokenCount}
             placeholderText='token'
             className='input-group-sm'
           />
         </div>
       </div>
-      {accountTokens.length > 0 && (
-        <Pager
-          total={accountTokensCount}
-          show={accountTokens.length > 0}
-          className='d-flex ms-auto me-auto me-sm-0'
-        />
-      )}
+      <Pager
+        total={tokenCount}
+        className='d-flex ms-auto me-auto me-sm-0'
+        show
+      />
     </>
   );
 };
