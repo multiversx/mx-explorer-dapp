@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { ZERO, MAX_RESULTS } from 'appConstants';
+import { ZERO, MAX_RESULTS, ACCOUNT_TOKENS_FIELDS } from 'appConstants';
 import {
   Pager,
   PageSize,
@@ -48,7 +48,8 @@ export const AccountTokensTable = () => {
     const { data, success } = await getAccountTokens({
       address,
       includeMetaESDT: true,
-      size: MAX_RESULTS
+      size: MAX_RESULTS,
+      fields: ACCOUNT_TOKENS_FIELDS.join(',')
     });
     if (success && data) {
       setAccountTokens(data);

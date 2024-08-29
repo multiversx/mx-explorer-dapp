@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { FormatUSD, Overlay } from 'components';
 import { faSquareInfo } from 'icons/solid';
@@ -18,17 +19,23 @@ export const LowLiquidityTooltip = ({
     return null;
   }
 
-  const { totalLiquidity, isLowLiquidity } = token;
+  const { totalLiquidity, isLowLiquidity, lowLiquidityThresholdPercent } =
+    token;
+
   if (!isLowLiquidity) {
     return null;
   }
+
+  const displayTresholdPercent = new BigNumber(
+    lowLiquidityThresholdPercent ?? 0.5
+  ).toFormat();
 
   return (
     <Overlay
       title={
         <>
-          Less than 0.5% of total Token Supply captured in xExchange Liquidity
-          Pools.
+          Less than {displayTresholdPercent}% of total Token Supply captured in
+          xExchange Liquidity Pools.
           {showTotalLiquidity && totalLiquidity && (
             <>
               (<FormatUSD value={totalLiquidity} usd={1} />)

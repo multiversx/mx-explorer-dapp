@@ -46,3 +46,19 @@ export const NODE_STATUS_PREVIEW_FIELDS = [
   'auctionQualified',
   'isInDangerZone'
 ];
+
+export const ACCOUNT_TOKENS_FIELDS = [
+  'type',
+  'identifier',
+  'collection',
+  'name',
+  'ticker',
+  'decimals',
+  'assets',
+  'price',
+  'totalLiquidity',
+  'isLowLiquidity',
+  'lowLiquidityThresholdPercent',
+  'balance',
+  'valueUsd'
+];
