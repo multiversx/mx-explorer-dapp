@@ -63,6 +63,9 @@ export const AccountTokensTable = () => {
     });
   };
 
+  const hasValidValues = accountTokens.some((token) =>
+    isValidTokenValue(token)
+  );
   const processedAccountTokens = useProcessTokens(accountTokens);
   const pagedTokens = getItemsPage({
     items: processedAccountTokens,
@@ -95,7 +98,16 @@ export const AccountTokensTable = () => {
                 <thead>
                   <tr>
                     <th>
-                      <Sort id={SortTokenFieldEnum.name} text='Token' />
+                      <Sort
+                        id={SortTokenFieldEnum.name}
+                        text='Token'
+                        {...(!hasValidValues
+                          ? {
+                              defaultOrder: SortOrderEnum.asc,
+                              defaultActive: true
+                            }
+                          : {})}
+                      />
                     </th>
                     <th>
                       <Sort id={SortTokenFieldEnum.balance} text='Balance' />
@@ -107,8 +119,12 @@ export const AccountTokensTable = () => {
                       <Sort
                         id={SortTokenFieldEnum.value}
                         text='Value'
-                        defaultOrder={SortOrderEnum.desc}
-                        defaultActive
+                        {...(hasValidValues
+                          ? {
+                              defaultOrder: SortOrderEnum.desc,
+                              defaultActive: true
+                            }
+                          : {})}
                       />
                     </th>
                     <th>

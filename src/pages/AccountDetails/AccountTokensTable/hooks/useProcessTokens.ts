@@ -7,7 +7,7 @@ import { isValidTokenValue, getTotalTokenUsdValue } from 'helpers';
 import { useGetSearch, useGetSort } from 'hooks';
 import { accountExtraSelector } from 'redux/selectors';
 import { setAccountExtra, getInitialAccountExtraState } from 'redux/slices';
-import { TokenTypeEnum, TokenType } from 'types';
+import { TokenTypeEnum, TokenType, SortOrderEnum } from 'types';
 
 import {
   filterTokens,
@@ -52,10 +52,22 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
       search
     });
 
+    let currentSort = sort;
+    let currentOrder = order;
+    if (!(sort && order)) {
+      const hasValidValues = filteredTokens.some((token) =>
+        isValidTokenValue(token)
+      );
+      if (!hasValidValues) {
+        currentSort = SortTokenFieldEnum.name;
+        currentOrder = SortOrderEnum.asc;
+      }
+    }
+
     const sortedTokens = sortTokens({
       tokens: filteredTokens,
-      field: sort as SortTokenFieldEnum,
-      order,
+      field: currentSort as SortTokenFieldEnum,
+      order: currentOrder,
       tokenBalance
     });
 

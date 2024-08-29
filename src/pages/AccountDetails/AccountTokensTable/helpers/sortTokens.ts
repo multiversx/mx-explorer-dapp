@@ -110,12 +110,16 @@ export const sortTokens = ({
         });
         break;
 
-      default:
+      case field === SortTokenFieldEnum.price:
         tokens.sort((a, b) => {
           return new BigNumber(a.price ?? 0).isGreaterThan(b.price ?? 0)
             ? sortParams[0]
             : sortParams[1];
         });
+        break;
+
+      default:
+        return tokens;
         break;
     }
   }
