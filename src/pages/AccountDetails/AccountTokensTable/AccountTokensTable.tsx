@@ -16,8 +16,8 @@ import {
   Loader,
   Overlay
 } from 'components';
-import { getItemsPage, isValidTokenValue } from 'helpers';
-import { useAdapter, useGetPage } from 'hooks';
+import { isValidTokenValue } from 'helpers';
+import { useAdapter } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
@@ -25,7 +25,7 @@ import { TokenType, SortOrderEnum } from 'types';
 
 import { AccountTokensTableHeader } from './components';
 import { SortTokenFieldEnum } from './helpers';
-import { useProcessTokens } from './hooks';
+import { usePageTokens, useProcessTokens } from './hooks';
 
 const ColSpanWrapper = ({ children }: { children: React.ReactNode }) => (
   <tr>
@@ -38,7 +38,6 @@ export const AccountTokensTable = () => {
   const { account } = useSelector(accountSelector);
   const { txCount } = account;
   const { getAccountTokens } = useAdapter();
-  const { page, size } = useGetPage();
   const { hash: address } = useParams() as any;
 
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
@@ -61,11 +60,7 @@ export const AccountTokensTable = () => {
     isValidTokenValue(token)
   );
   const processedAccountTokens = useProcessTokens(accountTokens);
-  const pagedTokens = getItemsPage({
-    items: processedAccountTokens,
-    currentPage: page,
-    itemsPerPage: size
-  });
+  const pagedTokens = usePageTokens(processedAccountTokens);
 
   useEffect(() => {
     fetchAccountTokens();
