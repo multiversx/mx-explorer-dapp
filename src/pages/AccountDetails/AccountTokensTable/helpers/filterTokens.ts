@@ -1,6 +1,6 @@
 import { TokenTypeEnum } from 'types';
 
-import { ProcessedTokenType } from './processTokens';
+import { ProcessedTokenType } from '../helpers';
 
 export interface FilterTokensType {
   tokens: ProcessedTokenType[];
@@ -10,12 +10,17 @@ export interface FilterTokensType {
 
 export const filterTokens = ({ tokens, type, search }: FilterTokensType) => {
   const searchTerm = (term?: string) => {
-    if (!search || !term) {
+    if (!search) {
       return true;
+    }
+
+    if (!term) {
+      return false;
     }
 
     return term.toLowerCase().includes(search.toLowerCase());
   };
+
   return tokens
     .filter((token) => !type || token.type === type)
     .filter(({ name, identifier, assets }) => {
