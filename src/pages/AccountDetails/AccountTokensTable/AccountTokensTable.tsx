@@ -78,177 +78,166 @@ export const AccountTokensTable = () => {
   }, [txCount, activeNetworkId, address]);
 
   return (
-    <div className='container page-content'>
-      <div className='row'>
-        <div className='col-12'>
-          <div className='card'>
-            <div className='card-header'>
-              <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-                <AccountTabs />
-              </div>
-              <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4'>
-                <AccountTokensTableHeader
-                  tokenCount={processedAccountTokens.length}
-                />
-              </div>
-            </div>
-
-            <div className='card-body'>
-              <table className='table account-tokens-table mb-0'>
-                <thead>
-                  <tr>
-                    <th>
-                      <Sort
-                        id={SortTokenFieldEnum.name}
-                        text='Token'
-                        {...(!hasValidValues
-                          ? {
-                              defaultOrder: SortOrderEnum.asc,
-                              defaultActive: true
-                            }
-                          : {})}
-                      />
-                    </th>
-                    <th>
-                      <Sort id={SortTokenFieldEnum.balance} text='Balance' />
-                    </th>
-                    <th>
-                      <Sort id={SortTokenFieldEnum.price} text='Price' />
-                    </th>
-                    <th>
-                      <Sort
-                        id={SortTokenFieldEnum.value}
-                        text='Value'
-                        {...(hasValidValues
-                          ? {
-                              defaultOrder: SortOrderEnum.desc,
-                              defaultActive: true
-                            }
-                          : {})}
-                      />
-                    </th>
-                    <th>
-                      <Overlay title='USD Value'>
-                        <Sort
-                          id={SortTokenFieldEnum.portofolioPercent}
-                          text='Portofolio %'
-                        />
-                      </Overlay>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody data-testid='accountTokensTable'>
-                  {isDataReady === undefined && (
-                    <ColSpanWrapper>
-                      <Loader />
-                    </ColSpanWrapper>
-                  )}
-                  {isDataReady === false && (
-                    <ColSpanWrapper>
-                      <PageState
-                        icon={faCoins}
-                        title='Unable to load tokens'
-                        isError
-                      />
-                    </ColSpanWrapper>
-                  )}
-                  {isDataReady === true && (
-                    <>
-                      {pagedTokens.length > 0 ? (
-                        <>
-                          {pagedTokens.map((token) => {
-                            const isValidDisplayValue =
-                              isValidTokenValue(token);
-
-                            return (
-                              <tr key={token.identifier}>
-                                <td>
-                                  <div className='d-flex align-items-center flex-wrap gap-1'>
-                                    <TokenLink token={token} />
-                                    <span className='text-neutral-500'>
-                                      ({token.assets?.name ?? token.name})
-                                    </span>
-                                  </div>
-                                </td>
-                                <td className='text-neutral-100'>
-                                  <FormatAmount
-                                    showLabel={false}
-                                    showSymbol={false}
-                                    value={token.balance ?? ZERO}
-                                    decimals={token.decimals}
-                                    showUsdValue={false}
-                                    showLastNonZeroDecimal
-                                  />
-                                </td>
-                                <td>
-                                  {token.price ? (
-                                    <div className='d-flex align-items-center flex-wrap gap-1'>
-                                      <FormatUSD
-                                        value={token.price}
-                                        usd={1}
-                                        showPrefix={false}
-                                      />
-                                      <LowLiquidityTooltip token={token} />
-                                    </div>
-                                  ) : (
-                                    <span className='text-neutral-500'>-</span>
-                                  )}
-                                </td>
-                                <td>
-                                  {isValidDisplayValue ? (
-                                    <FormatUSD
-                                      value={token.valueUsd ?? ZERO}
-                                      usd={1}
-                                      showPrefix={false}
-                                      showLastNonZeroDecimal
-                                      className='text-neutral-400'
-                                    />
-                                  ) : (
-                                    <span className='text-neutral-500'>-</span>
-                                  )}
-                                </td>
-                                <td>
-                                  {token.portofolioPercentage &&
-                                  token.portofolioPercentage.isGreaterThan(
-                                    0
-                                  ) ? (
-                                    <FormatNumber
-                                      value={token.portofolioPercentage}
-                                      label='%'
-                                      decimalOpacity={false}
-                                      decimals={2}
-                                      hideLessThanOne
-                                    />
-                                  ) : (
-                                    <span className='text-neutral-500'>-</span>
-                                  )}
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </>
-                      ) : (
-                        <>
-                          <ColSpanWrapper>
-                            <PageState icon={faCoins} title='No tokens' />
-                          </ColSpanWrapper>
-                        </>
-                      )}
-                    </>
-                  )}
-                </tbody>
-              </table>
-            </div>
-
-            <div className='card-footer table-footer'>
-              <PageSize />
-              <Pager
-                total={processedAccountTokens.length}
-                show={processedAccountTokens.length > 0}
-              />
-            </div>
-          </div>
+    <div className='card'>
+      <div className='card-header'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
+          <AccountTabs />
         </div>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4'>
+          <AccountTokensTableHeader
+            tokenCount={processedAccountTokens.length}
+          />
+        </div>
+      </div>
+
+      <div className='card-body'>
+        <table className='table account-tokens-table mb-0'>
+          <thead>
+            <tr>
+              <th>
+                <Sort
+                  id={SortTokenFieldEnum.name}
+                  text='Token'
+                  {...(!hasValidValues
+                    ? {
+                        defaultOrder: SortOrderEnum.asc,
+                        defaultActive: true
+                      }
+                    : {})}
+                />
+              </th>
+              <th>
+                <Sort id={SortTokenFieldEnum.balance} text='Balance' />
+              </th>
+              <th>
+                <Sort id={SortTokenFieldEnum.price} text='Price' />
+              </th>
+              <th>
+                <Sort
+                  id={SortTokenFieldEnum.value}
+                  text='Value'
+                  {...(hasValidValues
+                    ? {
+                        defaultOrder: SortOrderEnum.desc,
+                        defaultActive: true
+                      }
+                    : {})}
+                />
+              </th>
+              <th>
+                <Sort
+                  id={SortTokenFieldEnum.portofolioPercent}
+                  text={<Overlay title='USD Value'>Portofolio %</Overlay>}
+                />
+              </th>
+            </tr>
+          </thead>
+          <tbody data-testid='accountTokensTable'>
+            {isDataReady === undefined && (
+              <ColSpanWrapper>
+                <Loader />
+              </ColSpanWrapper>
+            )}
+            {isDataReady === false && (
+              <ColSpanWrapper>
+                <PageState
+                  icon={faCoins}
+                  title='Unable to load tokens'
+                  isError
+                />
+              </ColSpanWrapper>
+            )}
+            {isDataReady === true && (
+              <>
+                {pagedTokens.length > 0 ? (
+                  <>
+                    {pagedTokens.map((token) => {
+                      const isValidDisplayValue = isValidTokenValue(token);
+
+                      return (
+                        <tr key={token.identifier}>
+                          <td>
+                            <div className='d-flex align-items-center flex-wrap gap-1'>
+                              <TokenLink token={token} />
+                              <span className='text-neutral-500'>
+                                ({token.assets?.name ?? token.name})
+                              </span>
+                            </div>
+                          </td>
+                          <td className='text-neutral-100'>
+                            <FormatAmount
+                              showLabel={false}
+                              showSymbol={false}
+                              value={token.balance ?? ZERO}
+                              decimals={token.decimals}
+                              showUsdValue={false}
+                              showLastNonZeroDecimal
+                            />
+                          </td>
+                          <td>
+                            {token.price ? (
+                              <div className='d-flex align-items-center flex-wrap gap-1'>
+                                <FormatUSD
+                                  value={token.price}
+                                  usd={1}
+                                  showPrefix={false}
+                                />
+                                <LowLiquidityTooltip token={token} />
+                              </div>
+                            ) : (
+                              <span className='text-neutral-500'>-</span>
+                            )}
+                          </td>
+                          <td>
+                            {isValidDisplayValue ? (
+                              <FormatUSD
+                                value={token.valueUsd ?? ZERO}
+                                usd={1}
+                                showPrefix={false}
+                                showLastNonZeroDecimal
+                                className='text-neutral-400'
+                              />
+                            ) : (
+                              <span className='text-neutral-500'>-</span>
+                            )}
+                          </td>
+                          <td>
+                            {token.portofolioPercentage &&
+                            token.portofolioPercentage.isGreaterThan(0) ? (
+                              <FormatNumber
+                                value={token.portofolioPercentage}
+                                label='%'
+                                decimalOpacity={false}
+                                decimals={2}
+                                hideLessThanOne
+                              />
+                            ) : (
+                              <span className='text-neutral-500'>-</span>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <>
+                    <ColSpanWrapper>
+                      <PageState icon={faCoins} title='No tokens' />
+                    </ColSpanWrapper>
+                  </>
+                )}
+              </>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <div className='card-footer table-footer'>
+        <PageSize />
+        <Pager
+          total={processedAccountTokens.length}
+          show={processedAccountTokens.length > 0}
+        />
       </div>
     </div>
   );
