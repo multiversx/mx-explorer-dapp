@@ -33,13 +33,9 @@ export const FormatNumber = (props: FormatNumberUIType) => {
     );
   }
 
-  let formattedValue = bNamount.isInteger()
+  const formattedValue = bNamount.isInteger()
     ? completeValue
     : formatBigNumber({ value: bNamount, maxDigits });
-
-  if (hideLessThanOne && bNamount.isLessThan(1)) {
-    formattedValue = '< 1';
-  }
 
   return (
     <FormatDisplayValue
@@ -48,6 +44,7 @@ export const FormatNumber = (props: FormatNumberUIType) => {
       completeValue={completeValue}
       symbol={symbol}
       egldLabel={label}
+      hideLessThanOne={hideLessThanOne && bNamount.isLessThan(1)}
       showSymbol={Boolean(symbol)}
       showLabel={Boolean(label)}
       showTooltipSymbol={Boolean(symbol)}

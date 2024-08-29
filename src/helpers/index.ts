@@ -16,6 +16,7 @@ export * from './isEllipsisActive';
 export * from './isHash';
 export * from './isMetachain';
 export * from './isUtf8';
+export * from './isValidTokenValue';
 export * from './parseAmount';
 export * from './parseJwt';
 export * from './partitionBy';

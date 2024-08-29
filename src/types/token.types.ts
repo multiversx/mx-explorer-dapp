@@ -28,6 +28,7 @@ export interface TokenType {
   assets?: TokenAssetType;
   totalLiquidity?: number;
   isLowLiquidity?: boolean;
+  lowLiquidityThresholdPercent?: number;
   transfersCount?: number;
   roles?: TokenRolesType[];
 }

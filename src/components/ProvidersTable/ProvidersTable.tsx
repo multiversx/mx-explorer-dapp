@@ -18,21 +18,21 @@ export const ProvidersTable = (props: ProvidersTableUIType) => {
   const { providers, showIndex = true, showIdentity = true } = props;
   const [displayProviders, setDisplayProviders] =
     useState<ProviderType[]>(providers);
-  const sort = useGetSort();
+  const { sort, order } = useGetSort();
 
   useEffect(() => {
-    if (sort.sort && sort.order) {
+    if (sort && order) {
       setDisplayProviders((existing) =>
         sortProviders({
-          field: sort.sort as SortProviderFieldEnum,
-          order: sort.order,
+          field: sort as SortProviderFieldEnum,
+          order: order,
           sortArray: [...existing]
         })
       );
     } else {
       setDisplayProviders(providers);
     }
-  }, [sort.sort, sort.order]);
+  }, [sort, order]);
 
   return (
     <div

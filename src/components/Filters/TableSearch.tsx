@@ -61,7 +61,8 @@ export const TableSearch = ({
     <div
       role='search'
       className={classNames(
-        'search-md input-group input-group-search input-group-seamless',
+        'input-group input-group-seamless',
+        { 'input-group-search search-sm': !className },
         className
       )}
     >
