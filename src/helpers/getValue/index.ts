@@ -4,6 +4,7 @@ export * from './getAccountStakingDetails';
 export * from './getAccountValidatorStakeDetails';
 export * from './getColors';
 export * from './getDisplayReceiver';
+export * from './getItemsPage';
 export * from './getNftText';
 export * from './getNodeIcon';
 export * from './getNodeIssue';

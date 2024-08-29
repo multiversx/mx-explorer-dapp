@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { ZERO, LOW_LIQUIDITY_DISPLAY_TRESHOLD } from 'appConstants';
+import { ZERO } from 'appConstants';
 import {
   DetailItem,
   Loader,
@@ -15,6 +14,7 @@ import {
   FormatUSD,
   LowLiquidityTooltip
 } from 'components';
+import { isValidTokenValue } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
@@ -90,6 +90,7 @@ export const AccountTokens = () => {
           {dataReady === true && accountTokens.length > 0 && (
             <>
               {accountTokens.map((token) => {
+                const isValidDisplayValue = isValidTokenValue(token);
                 return (
                   <DetailItem
                     title={token.name}
@@ -107,23 +108,19 @@ export const AccountTokens = () => {
                           showLastNonZeroDecimal
                         />
                       </div>
-                      {token.valueUsd &&
-                        (!token.isLowLiquidity ||
-                          new BigNumber(token.valueUsd).isLessThan(
-                            LOW_LIQUIDITY_DISPLAY_TRESHOLD
-                          )) && (
-                          <span>
-                            (
-                            <FormatUSD
-                              value={token.valueUsd}
-                              usd={1}
-                              showPrefix={false}
-                              showLastNonZeroDecimal
-                              className='text-neutral-400'
-                            />
-                            )
-                          </span>
-                        )}
+                      {isValidDisplayValue && (
+                        <span>
+                          (
+                          <FormatUSD
+                            value={token.valueUsd ?? ZERO}
+                            usd={1}
+                            showPrefix={false}
+                            showLastNonZeroDecimal
+                            className='text-neutral-400'
+                          />
+                          )
+                        </span>
+                      )}
                       <LowLiquidityTooltip token={token} />
                       <TokenLink token={token} />
                     </div>

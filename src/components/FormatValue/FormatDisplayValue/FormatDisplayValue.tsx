@@ -11,6 +11,7 @@ export interface FormatDisplayValueUIType
   symbol?: React.ReactNode;
   label?: React.ReactNode;
   details?: React.ReactNode;
+  hideLessThanOne?: boolean;
   showTooltipSymbol?: boolean;
   showTooltipLabel?: boolean;
   spacedLabel?: boolean;
@@ -26,14 +27,15 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     egldLabel,
     details,
     digits = DIGITS,
-    showLastNonZeroDecimal = false,
+    showLastNonZeroDecimal,
+    hideLessThanOne,
     showLabel = true,
     showTooltip = true,
-    showSymbol = false,
-    superSuffix = false,
-    showTooltipSymbol = false,
-    showTooltipLabel = false,
-    spacedLabel = false,
+    showSymbol,
+    superSuffix,
+    showTooltipSymbol,
+    showTooltipLabel,
+    spacedLabel,
     decimalOpacity = true,
     className
   } = props;
@@ -43,6 +45,9 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
   const displayLabel = label ?? (token ? token : egldLabel);
 
   const DisplayValue = () => {
+    if (hideLessThanOne) {
+      return <span className='am'>{'< 1'}</span>;
+    }
     const completeValueParts = String(completeValue).split('.');
     const decimalArray = completeValueParts?.[1]?.split('') ?? [];
     const areAllDigitsZeroes = decimalArray.every((digit) => digit === ZERO);
