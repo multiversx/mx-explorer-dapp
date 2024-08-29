@@ -14,7 +14,7 @@ export const AccountTokensTableHeader = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const { type } = Object.fromEntries(searchParams);
 
-  const updateTokenType = (typeValue?: TokenTypeEnum) => {
+  const updateTokenType = (typeValue?: TokenTypeEnum) => () => {
     const { type, page, size, ...rest } = Object.fromEntries(searchParams);
     const nextUrlParams = {
       ...rest,
@@ -31,9 +31,7 @@ export const AccountTokensTableHeader = ({
           <li className='list-inline-item me-0'>
             <button
               type='button'
-              onClick={() => {
-                updateTokenType();
-              }}
+              onClick={updateTokenType()}
               className={classNames(
                 'badge badge-outline badge-outline-grey py-2 px-3 br-lg',
                 {
@@ -47,9 +45,7 @@ export const AccountTokensTableHeader = ({
           <li className='list-inline-item me-0'>
             <button
               type='button'
-              onClick={() => {
-                updateTokenType(TokenTypeEnum.FungibleESDT);
-              }}
+              onClick={updateTokenType(TokenTypeEnum.FungibleESDT)}
               className={classNames(
                 'badge badge-outline badge-outline-grey py-2 px-3 br-lg',
                 {
@@ -63,9 +59,7 @@ export const AccountTokensTableHeader = ({
           <li className='list-inline-item me-0'>
             <button
               type='button'
-              onClick={() => {
-                updateTokenType(TokenTypeEnum.MetaESDT);
-              }}
+              onClick={updateTokenType(TokenTypeEnum.MetaESDT)}
               className={classNames(
                 'badge badge-outline badge-outline-grey py-2 px-3 br-lg',
                 {

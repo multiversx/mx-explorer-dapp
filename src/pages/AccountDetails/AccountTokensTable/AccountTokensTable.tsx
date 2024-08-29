@@ -20,11 +20,7 @@ import { getItemsPage, isValidTokenValue } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
-import {
-  activeNetworkSelector,
-  accountSelector,
-  accountExtraSelector
-} from 'redux/selectors';
+import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { TokenType, SortOrderEnum } from 'types';
 
 import { AccountTokensTableHeader } from './components';
@@ -40,8 +36,6 @@ const ColSpanWrapper = ({ children }: { children: React.ReactNode }) => (
 export const AccountTokensTable = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { account } = useSelector(accountSelector);
-  const { isFetched: isAccountExtraFetched } =
-    useSelector(accountExtraSelector);
   const { txCount } = account;
   const { getAccountTokens } = useAdapter();
   const { page, size } = useGetPage();
@@ -50,17 +44,16 @@ export const AccountTokensTable = () => {
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
   const [accountTokens, setAccountTokens] = useState<TokenType[]>([]);
 
-  const fetchAccountTokens = () => {
-    getAccountTokens({
+  const fetchAccountTokens = async () => {
+    const { data, success } = await getAccountTokens({
       address,
       includeMetaESDT: true,
       size: MAX_RESULTS
-    }).then((accountTokensData) => {
-      if (accountTokensData.success) {
-        setAccountTokens(accountTokensData.data);
-      }
-      setIsDataReady(accountTokensData.success);
     });
+    if (success && data) {
+      setAccountTokens(data);
+    }
+    setIsDataReady(success);
   };
 
   const hasValidValues = accountTokens.some((token) =>
