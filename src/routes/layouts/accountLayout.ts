@@ -7,7 +7,7 @@ import { AccountNodes } from 'pages/AccountDetails/AccountNodes';
 import { AccountCollectionRoles } from 'pages/AccountDetails/AccountRoles/AccountCollectionRoles';
 import { AccountTokenRoles } from 'pages/AccountDetails/AccountRoles/AccountTokenRoles';
 import { AccountStaking } from 'pages/AccountDetails/AccountStaking';
-import { AccountTokens } from 'pages/AccountDetails/AccountTokens';
+import { AccountTokensTable } from 'pages/AccountDetails/AccountTokensTable';
 import { AccountTransactions } from 'pages/AccountDetails/AccountTransactions';
 import { AccountUpgrades } from 'pages/AccountDetails/AccountUpgrades';
 import { OldRouteRedirect } from 'pages/AccountDetails/OldRouteRedirect';
@@ -87,7 +87,7 @@ export const accountLayout: TitledRouteObject[] = [
         path: accountsRoutes.accountTokens,
         title: 'Account Tokens',
         preventScroll: true,
-        Component: AccountTokens
+        Component: AccountTokensTable
       },
       {
         path: accountsRoutes.accountNfts,

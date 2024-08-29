@@ -6,6 +6,10 @@ export const SmallStatsCard = ({
   value,
   className
 }: StatsCardUIType) => {
+  if (!(title && value)) {
+    return null;
+  }
+
   return (
     <div
       className={classNames(
