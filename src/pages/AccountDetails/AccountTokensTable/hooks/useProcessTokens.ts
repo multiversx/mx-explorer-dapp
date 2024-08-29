@@ -23,18 +23,17 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
   const { hash: address } = useParams() as any;
   const { accountExtra, isFetched: isAccountExtraFetched } =
     useSelector(accountExtraSelector);
-
-  const { tokenBalance, address: extraAddress } = accountExtra;
-
+  const { address: extraAddress } = accountExtra;
   const { search } = useGetSearch();
   const { sort, order } = useGetSort();
   const { type } = Object.fromEntries(searchParams);
 
-  if (!isAccountExtraFetched) {
-    const validTokenValues = accountTokens.filter((token: TokenType) =>
-      isValidTokenValue(token)
-    );
-    const tokenBalance = getTotalTokenUsdValue(validTokenValues);
+  const validTokenValues = accountTokens.filter((token: TokenType) =>
+    isValidTokenValue(token)
+  );
+  const tokenBalance = getTotalTokenUsdValue(validTokenValues);
+
+  if (!isAccountExtraFetched && address === extraAddress) {
     const accountExtraDetails = getInitialAccountExtraState().accountExtra;
     accountExtraDetails.tokenBalance = tokenBalance;
     dispatch(
@@ -77,7 +76,7 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
   const processedAccountTokens = useMemo(() => {
     const processedSortArray = accountTokens.map((token) => {
       const portofolioPercentage =
-        token.valueUsd && tokenBalance && address === extraAddress
+        token.valueUsd && tokenBalance
           ? new BigNumber(token.valueUsd).dividedBy(tokenBalance).times(100)
           : new BigNumber(0);
       return { ...token, portofolioPercentage };
