@@ -55,7 +55,9 @@
     .network-switch-list {
       min-height: 2rem;
       max-height: calc(100dvh - #{$header-navbar-height} - 6rem);
-      overflow-y: scroll;
+      overflow-x: hidden;
+      overflow-y: auto;
+
       @include media-breakpoint-up(lg) {
         max-height: calc(100dvh - #{$header-navbar-height} - 1rem);
       }
@@ -65,7 +67,8 @@
         @include media-breakpoint-up(lg) {
           min-height: 2rem;
           max-height: calc(100dvh - #{$header-navbar-height} - 8.25rem);
-          overflow-y: scroll;
+          overflow-x: hidden;
+          overflow-y: auto;
         }
       }
     }
@@ -88,5 +91,16 @@
     .indicator {
       transform: rotateZ(180deg);
     }
+  }
+}
+
+.ubuntu,
+.windows,
+.blink:not(.ios),
+.webkit:not(.mac-os):not(.ios) {
+  .custom-network-menu .network-list,
+  .network-switch-list {
+    @include webkit-scrollbar;
+    scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
   }
 }
