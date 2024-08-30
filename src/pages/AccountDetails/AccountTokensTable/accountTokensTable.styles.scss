@@ -3,6 +3,7 @@
     width: 12.5%;
     &:first-of-type {
       width: 30%;
+      min-width: 12rem;
     }
     &:nth-child(2) {
       width: 30%;
