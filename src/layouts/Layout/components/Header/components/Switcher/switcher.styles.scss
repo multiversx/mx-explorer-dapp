@@ -53,11 +53,10 @@
 
   .dropdown-menu {
     .network-switch-list {
-      @include webkit-scrollbar;
       min-height: 2rem;
       max-height: calc(100dvh - #{$header-navbar-height} - 6rem);
       overflow-x: hidden;
-      overflow-y: scroll;
+      overflow-y: auto;
 
       @include media-breakpoint-up(lg) {
         max-height: calc(100dvh - #{$header-navbar-height} - 1rem);
@@ -65,12 +64,11 @@
     }
     .custom-network-menu {
       .network-list {
-        @include webkit-scrollbar;
         @include media-breakpoint-up(lg) {
           min-height: 2rem;
           max-height: calc(100dvh - #{$header-navbar-height} - 8.25rem);
           overflow-x: hidden;
-          overflow-y: scroll;
+          overflow-y: auto;
         }
       }
     }
@@ -102,6 +100,7 @@
 .webkit:not(.mac-os):not(.ios) {
   .custom-network-menu .network-list,
   .network-switch-list {
-    margin-right: -1rem;
+    @include webkit-scrollbar;
+    scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
   }
 }
