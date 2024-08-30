@@ -118,6 +118,8 @@ export const AccountTokensTable = () => {
                   <Sort
                     id={SortTokenFieldEnum.portofolioPercent}
                     text={<Overlay title='USD Value'>Portofolio %</Overlay>}
+                    className='d-flex align-items-center flex-nowrap'
+                    hasNegativeMargin={false}
                   />
                 </th>
               </tr>

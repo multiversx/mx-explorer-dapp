@@ -58,6 +58,7 @@
       max-height: calc(100dvh - #{$header-navbar-height} - 6rem);
       overflow-x: hidden;
       overflow-y: scroll;
+
       @include media-breakpoint-up(lg) {
         max-height: calc(100dvh - #{$header-navbar-height} - 1rem);
       }
@@ -92,5 +93,15 @@
     .indicator {
       transform: rotateZ(180deg);
     }
+  }
+}
+
+.ubuntu,
+.windows,
+.blink:not(.ios),
+.webkit:not(.mac-os):not(.ios) {
+  .custom-network-menu .network-list,
+  .network-switch-list {
+    margin-right: -1rem;
   }
 }
