@@ -109,13 +109,14 @@ export const TokenDetailsCard = () => {
   ];
 
   const smallStatsCards = [
-    supply
+    supply && new BigNumber(supply).isGreaterThanOrEqualTo(0)
       ? {
           title: 'Supply',
           value: new BigNumber(supply).toFormat(0)
         }
       : {},
-    circulatingSupply
+    circulatingSupply &&
+    new BigNumber(circulatingSupply).isGreaterThanOrEqualTo(0)
       ? {
           title: 'Circulating',
           value: new BigNumber(circulatingSupply).toFormat(0)

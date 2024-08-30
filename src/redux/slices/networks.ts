@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { networks } from 'config';
 import { getSubdomainNetwork } from 'helpers';
-import { NetworkType } from 'types/network.types';
+import { NetworkAdapterEnum, NetworkType } from 'types';
 
 export const emptyNetwork: NetworkType = {
   default: false,
   id: 'not-configured',
   name: 'NOT CONFIGURED',
-  adapter: 'api',
+  adapter: NetworkAdapterEnum.api,
   theme: '',
   egldLabel: '',
   walletAddress: '',

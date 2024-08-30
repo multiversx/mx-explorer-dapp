@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { METACHAIN_SHARD_ID, TIMEOUT } from 'appConstants';
 import { activeNetworkSelector } from 'redux/selectors';
 import {
+  NetworkAdapterEnum,
   AdapterProviderPropsType,
   ApiAdapterResponseType
 } from 'types/adapter.types';
@@ -56,7 +57,7 @@ export const useAdapterConfig = () => {
     }
   };
 
-  const adapter: 'api' | 'elastic' = networkAdapter as any;
+  const adapter = networkAdapter as NetworkAdapterEnum;
 
   const {
     provider,

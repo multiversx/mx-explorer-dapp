@@ -144,6 +144,12 @@ button.badge {
         rgba(215, 221, 232, 0.3)
       );
     }
+    &.active {
+      @extend .badge-grey;
+      &:before {
+        display: none;
+      }
+    }
   }
   &-primary {
     color: var(--primary);

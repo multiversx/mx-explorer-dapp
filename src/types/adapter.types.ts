@@ -1,5 +1,10 @@
 import { SortOrderEnum, TransactionInPoolTypeEnum } from 'types';
 
+export enum NetworkAdapterEnum {
+  api = 'api',
+  elastic = 'elastic'
+}
+
 export interface BaseApiType {
   page?: number;
   size?: number;

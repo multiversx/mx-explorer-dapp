@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  ELLIPSIS,
-  MAX_ACOUNT_TOKENS_BALANCE,
-  LOW_LIQUIDITY_DISPLAY_TRESHOLD
-} from 'appConstants';
+import { ELLIPSIS, MAX_ACOUNT_TOKENS_BALANCE } from 'appConstants';
 import { NativeTokenSymbol } from 'components';
 import {
   CardItem,
@@ -22,7 +17,8 @@ import {
   urlBuilder,
   formatHerotag,
   formatBigNumber,
-  getTotalTokenUsdValue
+  getTotalTokenUsdValue,
+  isValidTokenValue
 } from 'helpers';
 import { useAdapter, useIsSovereign } from 'hooks';
 import { faClock, faExclamationTriangle } from 'icons/regular';
@@ -118,12 +114,7 @@ export const AccountDetailsCard = () => {
         }
         if (accountTokensValueData.success) {
           const validTokenValues = accountTokensValueData.data.filter(
-            (token: TokenType) =>
-              token.valueUsd &&
-              (!token.isLowLiquidity ||
-                new BigNumber(token.valueUsd).isLessThan(
-                  LOW_LIQUIDITY_DISPLAY_TRESHOLD
-                ))
+            (token: TokenType) => isValidTokenValue(token)
           );
           const tokenBalance = getTotalTokenUsdValue(validTokenValues);
           accountExtraDetails.tokenBalance = tokenBalance;

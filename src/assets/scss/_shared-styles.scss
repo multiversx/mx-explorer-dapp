@@ -32,6 +32,7 @@
       border-bottom-right-radius: $input-border-radius-lg !important;
     }
   }
+
   &.input-group-search {
     width: auto;
     .form-control {
@@ -54,6 +55,11 @@
     .form-control {
       border-top-right-radius: $input-border-radius-sm !important;
       border-bottom-right-radius: $input-border-radius-sm !important;
+    }
+    &.has-validation {
+      .input-group-text {
+        height: 2.063rem;
+      }
     }
   }
   &.has-validation {
