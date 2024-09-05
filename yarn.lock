@@ -809,10 +809,10 @@
     keccak "3.0.2"
     protobufjs "7.2.4"
 
-"@multiversx/sdk-dapp-form@0.10.3":
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-form/-/sdk-dapp-form-0.10.3.tgz#dbcddfd5b71ee9bc3ae9b0fd7939987bd607aeb8"
-  integrity sha512-XWo4EObDCebcQIDHewF0tdhsIF6rZQ1BMswpeg1Kvux3F68KqXb8KXgIwFy1j2H9QpjGKz0SFOpOtYLkKUop8w==
+"@multiversx/sdk-dapp-form@0.10.11":
+  version "0.10.11"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-form/-/sdk-dapp-form-0.10.11.tgz#9fd164ea4630dd93a8718aff585de8e262176f1d"
+  integrity sha512-hi4A0GPNeThzupKHb7WYSToCTIyBdFcK+8VYRwecunmpjVhWiliBnxITTEyAqTgkO71V8j0/BwSVl0WSU/FzyQ==
   dependencies:
     anchorme "2.1.2"
     axios "1.6.5"
@@ -831,13 +831,13 @@
     classnames "2.3.2"
     react-select "5.4.0"
 
-"@multiversx/sdk-dapp-sc-explorer@0.0.1-beta.8":
-  version "0.0.1-beta.8"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-sc-explorer/-/sdk-dapp-sc-explorer-0.0.1-beta.8.tgz#fa82fd521aca63fad51544b111a3e345e03968e2"
-  integrity sha512-++/rDxiJ1MuqyrbRTNhyCzz1CzXCZnt2X3szduwNINm96OUpk57XECXgYq2IjmMUeFnSPogLx0JTznVRpIfk/w==
+"@multiversx/sdk-dapp-sc-explorer@0.0.1-beta.9":
+  version "0.0.1-beta.9"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-sc-explorer/-/sdk-dapp-sc-explorer-0.0.1-beta.9.tgz#67bac2a0b0e29999b53be26f33faea7a89cae1cb"
+  integrity sha512-b6DVhCs4lGF5DF37gdiYlVmML0yHzFla+9nVB+9z7SD4eEYS+nAm+Ae78uJMiIUjYl+IoDtbI5iSTcWUo7dAUQ==
   dependencies:
-    "@multiversx/sdk-dapp-form" "0.10.3"
-    "@multiversx/sdk-network-providers" "2.4.3"
+    "@multiversx/sdk-dapp-form" "0.10.11"
+    "@multiversx/sdk-network-providers" "2.7.1"
     bignumber.js "9.x"
     formik "2.4.4"
     react-bootstrap "2.8.0"
@@ -936,12 +936,11 @@
   dependencies:
     axios "^1.6.5"
 
-"@multiversx/sdk-network-providers@2.4.3":
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-network-providers/-/sdk-network-providers-2.4.3.tgz#67613191231630ba31ea3e65a6e44d2f00870729"
-  integrity sha512-tJmJuxU+BjtC2q29PuzQOM4Qr6aiXujKwQXgIAPHTiuNbMc3Yi6Q4B0DC1PfI3iG+M4DONwfXknvM1uwqnY2zA==
+"@multiversx/sdk-network-providers@2.7.1":
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-network-providers/-/sdk-network-providers-2.7.1.tgz#ff344d9bd54382629f15c93de49d9c3ac923cf9d"
+  integrity sha512-pjKD16aadMP2APhLs5cfqYhh5D5tzhHSnFfm2eAhA3g8b13ML5Vjh1amWx0w2L+1lYc8QjRsMysa5ocputvHEg==
   dependencies:
-    axios "1.6.8"
     bech32 "1.1.4"
     bignumber.js "9.0.1"
     buffer "6.0.3"
@@ -1966,9 +1965,9 @@
     form-data "^4.0.0"
 
 "@types/node@*", "@types/node@>=13.7.0":
-  version "22.5.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.5.3.tgz#91a374e42c6e7ccb5893a87f1775f36ce1671d65"
-  integrity sha512-njripolh85IA9SQGTAqbmnNZTdxv7X/4OYGPz8tgy5JDr8MP+uDBa921GpYEoDDnwm0Hmn5ZPeJgiiSTPoOzkQ==
+  version "22.5.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.5.4.tgz#83f7d1f65bc2ed223bdbf57c7884f1d5a4fa84e8"
+  integrity sha512-FDuKUJQm/ju9fT/SeX/6+gBzoPzlVCzfzmGkwKvRHQVxi4BntVbyIwf6a4Xn62mrvndLiml6z/UBXIdEVjQLXg==
   dependencies:
     undici-types "~6.19.2"
 
@@ -1978,9 +1977,9 @@
   integrity sha512-Exw4yUWMBXM3X+8oqzJNRqZSwUAaS4+7NdvHqQuFi/d+synz++xmX3QIf+BFqneW8N31R8Ky+sikfZUXq07ggQ==
 
 "@types/node@^16.18.39":
-  version "16.18.107"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.107.tgz#9185eaebaf7d002a67976d61ae8a9a808fc84829"
-  integrity sha512-VSha8UIBpCpETub8FZ1nXkODXm+k+YRwpuVQsF3zOuD6QyPQeuIdPRm6IBVa2E5en58CUFJfaw6GmYHP2q/vkQ==
+  version "16.18.108"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.108.tgz#b794e2b2a85b4c12935ea7d0f18641be68b352f9"
+  integrity sha512-fj42LD82fSv6yN9C6Q4dzS+hujHj+pTv0IpRR3kI20fnYeS0ytBpjFO9OjmDowSPPt4lNKN46JLaKbCyP+BW2A==
 
 "@types/numeral@2.0.5":
   version "2.0.5"
@@ -2739,15 +2738,6 @@ axios@1.6.5:
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
-axios@1.6.8:
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.8.tgz#66d294951f5d988a00e87a0ffb955316a619ea66"
-  integrity sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==
-  dependencies:
-    follow-redirects "^1.15.6"
-    form-data "^4.0.0"
-    proxy-from-env "^1.1.0"
-
 axios@1.7.5:
   version "1.7.5"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.5.tgz#21eed340eb5daf47d29b6e002424b3e88c8c54b1"
@@ -3039,9 +3029,9 @@ camelcase@^6.2.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001646:
-  version "1.0.30001655"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001655.tgz#0ce881f5a19a2dcfda2ecd927df4d5c1684b982f"
-  integrity sha512-jRGVy3iSGO5Uutn2owlb5gR6qsGngTw9ZTb4ali9f3glshcNmJ2noam4Mo9zia5P9Dk3jNNydy7vQjuE5dQmfg==
+  version "1.0.30001657"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001657.tgz#29fd504bffca719d1c6b63a1f6f840be1973a660"
+  integrity sha512-DPbJAlP8/BAXy3IgiWmZKItubb3TYGP0WscQQlVGIfT4s/YlFYVuJgyOsQNP7rJRChx/qdMeLJQJP0Sgg2yjNA==
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -3875,9 +3865,9 @@ ed2curve@0.3.0:
     tweetnacl "1.x.x"
 
 electron-to-chromium@^1.5.4:
-  version "1.5.13"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.13.tgz#1abf0410c5344b2b829b7247e031f02810d442e6"
-  integrity sha512-lbBcvtIJ4J6sS4tb5TLp1b4LyfCdMkwStzXPyAgVgTRAsep4bvrAGaBOP7ZJtQMNJpSQ9SqG4brWOroNaQtm7Q==
+  version "1.5.14"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.14.tgz#8de5fd941f4deede999f90503c4b5923fbe1962b"
+  integrity sha512-bEfPECb3fJ15eaDnu9LEJ2vPGD6W1vt7vZleSVyFhYuMIKm3vz/g9lt7IvEzgdwj58RjbPKUF2rXTCN/UW47tQ==
 
 elliptic@^6.5.3, elliptic@^6.5.5:
   version "6.5.7"
@@ -8159,9 +8149,9 @@ universalify@^2.0.0:
   integrity sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==
 
 unstorage@^1.9.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/unstorage/-/unstorage-1.11.0.tgz#4d5b48aef4180131669ac8cf95a26a33fd7051d0"
-  integrity sha512-d7ggFP/5h0AUIMbeQit8M3VuyIBFVMk2Ew5NOaCrKEsNzJRHym+0EhGD074ItIPuAEq8Q1EX3+NrizlJH700+g==
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/unstorage/-/unstorage-1.11.1.tgz#6635ddb07ade7a34d42f9193a2d314cae2137841"
+  integrity sha512-3NVszU4MGlO21WWnkSq0xnPVMHnMyB5DdJQyGRAg/DUZVeQjWRinLOia89iw5KGpllRtoA5+N+xnq75MAsPAOA==
   dependencies:
     anymatch "^3.1.3"
     chokidar "^3.6.0"
