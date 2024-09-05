@@ -8,8 +8,6 @@ import { allApps, schema } from './sharedConfig';
 
 export * from './sharedConfig';
 
-export const hasExtraNetworks = true;
-
 export const networks: NetworkType[] = [
   {
     default: true,
