@@ -34,7 +34,7 @@ export const SHARE_PREFIX = process.env.VITE_APP_SHARE_PREFIX
 export const DEFAULT_HOSTNAME =
   process.env.VITE_APP_DEFAULT_HOSTNAME ?? 'explorer.multiversx.com';
 
-export const hasExtraNetworks = false;
+export const hasExtraNetworks = true;
 
 export const links: NetworkUrlType[] = [
   {
