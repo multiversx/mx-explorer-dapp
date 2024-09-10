@@ -10,7 +10,7 @@ import {
   LowLiquidityTooltip,
   FormatUSD
 } from 'components';
-import { isValidTokenValue, urlBuilder } from 'helpers';
+import { urlBuilder } from 'helpers';
 import { useGetSort, useGetSearch, useIsNativeTokenSearched } from 'hooks';
 import { faDiamond } from 'icons/regular';
 import { TokenType, TokenSortEnum, SortOrderEnum } from 'types';
@@ -141,7 +141,7 @@ export const TokensTable = ({
                   )}
                 </td>
                 <td>
-                  {isValidTokenValue(token) && token.marketCap && (
+                  {token.price && token.marketCap && !token.isLowLiquidity && (
                     <FormatUSD
                       value={token.marketCap}
                       usd={1}
