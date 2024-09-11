@@ -4,9 +4,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import { DetailItem, ModalLink, DataDecode } from 'components';
-import { DecodeMethodType } from 'components/DataDecode';
+import { DecodeMethodEnum } from 'components/DataDecode';
 import { truncate } from 'helpers';
-import { useScamFlag, useNetworkRoute } from 'hooks';
+import {
+  useScamFlag,
+  useNetworkRoute,
+  useActiveRoute,
+  useGetTransactionUrlHashParams
+} from 'hooks';
+import { transactionsRoutes } from 'routes';
 import { ScamInfoType } from 'types';
 
 export const DataField = ({
@@ -18,16 +24,14 @@ export const DataField = ({
 }) => {
   const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
-  const { hash, pathname } = useLocation();
-
-  const hashDecodeMethod = hash.replace('#', '');
-  const initialDecodeMethod =
-    hashDecodeMethod &&
-    Object.values<string>(DecodeMethodType).includes(hashDecodeMethod)
-      ? hashDecodeMethod
-      : DecodeMethodType.raw;
-  const [decodeMethod, setDecodeMethod] = useState<string>(hashDecodeMethod);
+  const activeRoute = useActiveRoute();
   const scamFlag = useScamFlag();
+  const { pathname } = useLocation();
+
+  const { hashId, hashDecodeMethod } = useGetTransactionUrlHashParams();
+
+  const [decodeMethod, setDecodeMethod] =
+    useState<DecodeMethodEnum>(hashDecodeMethod);
   const [showData, setShowData] = useState(false);
 
   const show = (e: React.MouseEvent) => {
@@ -39,11 +43,18 @@ export const DataField = ({
   const { stringWithLinks, output, found } = scamFlag(dataString, scamInfo);
 
   useEffect(() => {
-    if (decodeMethod && decodeMethod !== DecodeMethodType.raw) {
+    const isDataFieldDecode =
+      decodeMethod &&
+      decodeMethod !== DecodeMethodEnum.raw &&
+      !hashId &&
+      !activeRoute(transactionsRoutes.transactionDetailsLogs);
+
+    if (isDataFieldDecode) {
       const options = {
         pathname: networkRoute(location.pathname),
         hash: decodeMethod
       };
+
       navigate(options, { replace: true });
     }
   }, [decodeMethod, pathname]);
@@ -63,7 +74,9 @@ export const DataField = ({
       ) : (
         <DataDecode
           value={truncate(output, MAX_DISPLAY_TX_DATA_LENGTH)}
-          initialDecodeMethod={initialDecodeMethod}
+          initialDecodeMethod={
+            !hashId ? hashDecodeMethod : DecodeMethodEnum.raw
+          }
           setDecodeMethod={setDecodeMethod}
         />
       )}
