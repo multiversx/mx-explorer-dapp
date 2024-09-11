@@ -1,10 +1,12 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { DataDecode, DecodeMethodEnum } from 'components';
 
 interface EventExtraDataType {
   data: string[];
   identifier?: string;
-  initialDecodeMethod?: DecodeMethodEnum | string;
-  setDecodeMethod?: React.Dispatch<React.SetStateAction<string>>;
+  initialDecodeMethod?: DecodeMethodEnum;
+  setDecodeMethod?: Dispatch<SetStateAction<DecodeMethodEnum>>;
 }
 
 export const EventExtraData = ({

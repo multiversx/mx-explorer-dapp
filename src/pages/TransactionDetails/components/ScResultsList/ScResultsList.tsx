@@ -8,6 +8,7 @@ import {
   Trim,
   NetworkLink,
   DataDecode,
+  DecodeMethodEnum,
   AccountLink
 } from 'components';
 import { urlBuilder, truncate } from 'helpers';
@@ -28,17 +29,18 @@ export const ScResultsList = ({
   const ref = useRef<HTMLDivElement>(null);
   const activeRoute = useActiveRoute();
   const { hashId, hashDecodeMethod } = useGetTransactionUrlHashParams();
-  const [decodeMethod, setDecodeMethod] = useState<string>(hashDecodeMethod);
+  const [decodeMethod, setDecodeMethod] =
+    useState<DecodeMethodEnum>(hashDecodeMethod);
 
   useScrollToTransactionSection(ref);
 
   return (
     <div className='sc-results-list item-list d-flex flex-column mt-1'>
       {results.map((result: TransactionSCResultType, i) => {
-        const highlightTx =
+        const isResultHighlighted =
           hashId === result.hash &&
-          activeRoute(transactionsRoutes.transactionDetails);
-        !activeRoute(transactionsRoutes.transactionDetailsLogs);
+          activeRoute(transactionsRoutes.transactionDetails) &&
+          !activeRoute(transactionsRoutes.transactionDetailsLogs);
 
         const resultLink = `${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`;
 
@@ -54,9 +56,9 @@ export const ScResultsList = ({
             key={i}
             id={result.hash}
             className={`detailed-item d-flex border-start border-bottom ms-3 py-3 ${
-              highlightTx ? 'highlighted' : ''
+              isResultHighlighted ? 'highlighted' : ''
             }`}
-            {...(highlightTx ? { ref: ref } : {})}
+            {...(isResultHighlighted ? { ref: ref } : {})}
           >
             <NetworkLink to={resultLink} className='detailed-item-icon'>
               <FontAwesomeIcon icon={faSearch} className='hover-icon' />
@@ -148,7 +150,7 @@ export const ScResultsList = ({
                     <DataDecode
                       value={decodedData}
                       setDecodeMethod={setDecodeMethod}
-                      {...(highlightTx
+                      {...(isResultHighlighted
                         ? { initialDecodeMethod: hashDecodeMethod }
                         : {})}
                     />

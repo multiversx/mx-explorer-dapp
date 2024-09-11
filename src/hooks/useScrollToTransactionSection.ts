@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 
 import { useGetTransactionUrlHashParams } from 'hooks';
 
 export const useScrollToTransactionSection = (
-  ref?: React.RefObject<HTMLDivElement>
+  ref?: RefObject<HTMLDivElement>
 ) => {
   const { hashId } = useGetTransactionUrlHashParams();
 

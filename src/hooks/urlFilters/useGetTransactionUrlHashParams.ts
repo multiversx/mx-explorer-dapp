@@ -18,7 +18,7 @@ export const useGetTransactionUrlHashParams = () => {
     return {
       hashId: '',
       hashIndex: 0,
-      hashDecodeMethod: firstParam,
+      hashDecodeMethod: firstParam as DecodeMethodEnum,
       secondHashDecodeMethod: DecodeMethodEnum.raw,
       thirdHashDecodeMethod: DecodeMethodEnum.raw
     };
@@ -31,7 +31,7 @@ export const useGetTransactionUrlHashParams = () => {
     return {
       hashId: firstParam,
       hashIndex: 0,
-      hashDecodeMethod: secondParam,
+      hashDecodeMethod: secondParam as DecodeMethodEnum,
       secondHashDecodeMethod: DecodeMethodEnum.raw,
       thirdHashDecodeMethod: DecodeMethodEnum.raw
     };
@@ -40,19 +40,19 @@ export const useGetTransactionUrlHashParams = () => {
   const hashDecodeMethod = Object.values<string>(DecodeMethodEnum).includes(
     thirdParam
   )
-    ? thirdParam
+    ? (thirdParam as DecodeMethodEnum)
     : DecodeMethodEnum.raw;
 
   const secondHashDecodeMethod = Object.values<string>(
     DecodeMethodEnum
   ).includes(fourthParam)
-    ? fourthParam
+    ? (fourthParam as DecodeMethodEnum)
     : DecodeMethodEnum.raw;
 
   const thirdHashDecodeMethod = Object.values<string>(
     DecodeMethodEnum
   ).includes(fifthParam)
-    ? fifthParam
+    ? (fifthParam as DecodeMethodEnum)
     : DecodeMethodEnum.raw;
 
   return {

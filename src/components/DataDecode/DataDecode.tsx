@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Anchor, Dropdown } from 'react-bootstrap';
@@ -17,7 +17,7 @@ export enum DecodeMethodEnum {
 
 export const decode = (
   part: string,
-  decodeMethod: DecodeMethodEnum | string,
+  decodeMethod: DecodeMethodEnum,
   transactionTokens?: TransactionTokensType
 ) => {
   switch (decodeMethod) {
@@ -198,8 +198,8 @@ export const DataDecode = ({
 }: {
   value: string;
   className?: string;
-  initialDecodeMethod?: DecodeMethodEnum | string;
-  setDecodeMethod?: React.Dispatch<React.SetStateAction<string>>;
+  initialDecodeMethod?: DecodeMethodEnum;
+  setDecodeMethod?: Dispatch<SetStateAction<DecodeMethodEnum>>;
   identifier?: string;
 }) => {
   const defaultDecodeMethod =
@@ -212,6 +212,14 @@ export const DataDecode = ({
   const [displayValue, setDisplayValue] = useState('');
   const [validationWarnings, setValidationWarnings] = useState<any>([]);
   const [hasOverflow, setHasOverflow] = useState<boolean>(false);
+
+  const onSelect = (eventKey: any) => {
+    if (!eventKey) {
+      return DecodeMethodEnum.raw;
+    }
+
+    setActiveKey(eventKey);
+  };
 
   useEffect(() => {
     const { displayValue, validationWarnings } = decodeForDisplay({
@@ -243,9 +251,7 @@ export const DataDecode = ({
           <CopyButton text={displayValue} className='copy-button' />
           <Dropdown
             className='position-absolute'
-            onSelect={(eventKey: any) => {
-              return eventKey ? setActiveKey(eventKey) : DecodeMethodEnum.raw;
-            }}
+            onSelect={onSelect}
             onToggle={(e) => {
               setHasOverflow(e);
             }}
@@ -266,18 +272,14 @@ export const DataDecode = ({
               <Dropdown.Item
                 as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
                 eventKey={DecodeMethodEnum.raw}
-                className={`${
-                  activeKey === DecodeMethodEnum.raw ? 'active' : ''
-                }`}
+                className={activeKey === DecodeMethodEnum.raw ? 'active' : ''}
               >
                 Raw
               </Dropdown.Item>
               <Dropdown.Item
                 as={Anchor}
                 eventKey={DecodeMethodEnum.text}
-                className={`${
-                  activeKey === DecodeMethodEnum.text ? 'active' : ''
-                }`}
+                className={activeKey === DecodeMethodEnum.text ? 'active' : ''}
               >
                 Text
               </Dropdown.Item>
@@ -286,18 +288,18 @@ export const DataDecode = ({
                   <Dropdown.Item
                     as={Anchor}
                     eventKey={DecodeMethodEnum.decimal}
-                    className={`${
+                    className={
                       activeKey === DecodeMethodEnum.decimal ? 'active' : ''
-                    }`}
+                    }
                   >
                     Decimal
                   </Dropdown.Item>
                   <Dropdown.Item
                     as={Anchor}
                     eventKey={DecodeMethodEnum.smart}
-                    className={`${
+                    className={
                       activeKey === DecodeMethodEnum.smart ? 'active' : ''
-                    }`}
+                    }
                   >
                     Smart
                   </Dropdown.Item>

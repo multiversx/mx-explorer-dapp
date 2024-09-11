@@ -37,20 +37,21 @@ export const EventItem = ({ event, txHash, id }: EventItemUIType) => {
     thirdHashDecodeMethod
   } = useGetTransactionUrlHashParams();
 
-  const highlightEvent =
+  const isEventHighlighted =
     hashId === id &&
     event.order === Number(hashIndex) &&
     activeRoute(transactionsRoutes.transactionDetailsLogs);
 
-  const [topicsDecodeMethod, setTopicsDecodeMethod] = useState<string>(
-    highlightEvent ? hashDecodeMethod : DecodeMethodEnum.raw
-  );
-  const [dataDecodeMethod, setDataDecodeMethod] = useState<string>(
-    highlightEvent ? secondHashDecodeMethod : DecodeMethodEnum.raw
+  const [topicsDecodeMethod, setTopicsDecodeMethod] =
+    useState<DecodeMethodEnum>(
+      isEventHighlighted ? hashDecodeMethod : DecodeMethodEnum.raw
+    );
+  const [dataDecodeMethod, setDataDecodeMethod] = useState<DecodeMethodEnum>(
+    isEventHighlighted ? secondHashDecodeMethod : DecodeMethodEnum.raw
   );
   const [additionalDataDecodeMethod, setAdditionalDataDecodeMethod] =
-    useState<string>(
-      highlightEvent ? thirdHashDecodeMethod : DecodeMethodEnum.raw
+    useState<DecodeMethodEnum>(
+      isEventHighlighted ? thirdHashDecodeMethod : DecodeMethodEnum.raw
     );
 
   const dataBase64Buffer = Buffer.from(String(event?.data), 'base64');
@@ -69,9 +70,9 @@ export const EventItem = ({ event, txHash, id }: EventItemUIType) => {
   return (
     <div
       className={`detailed-item d-flex border-start border-bottom ms-3 py-3 ${
-        highlightEvent ? 'highlighted' : ''
+        isEventHighlighted ? 'highlighted' : ''
       }`}
-      {...(highlightEvent ? { ref: ref } : {})}
+      {...(isEventHighlighted ? { ref: ref } : {})}
     >
       <NetworkLink to={eventLink} className='detailed-item-icon'>
         <FontAwesomeIcon icon={faSearch} className='hover-icon' />
