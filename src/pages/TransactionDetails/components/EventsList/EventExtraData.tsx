@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { DataDecode, DecodeMethodEnum } from 'components';
 
-interface EventExtraDataType {
+interface EventExtraDataUIType {
   data: string[];
   identifier?: string;
   initialDecodeMethod?: DecodeMethodEnum;
@@ -14,7 +14,7 @@ export const EventExtraData = ({
   identifier,
   initialDecodeMethod,
   setDecodeMethod
-}: EventExtraDataType) => {
+}: EventExtraDataUIType) => {
   const mergedData = data.join('\n');
 
   return (

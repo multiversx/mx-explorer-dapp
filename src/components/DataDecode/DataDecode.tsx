@@ -213,7 +213,7 @@ export const DataDecode = ({
   const [validationWarnings, setValidationWarnings] = useState<any>([]);
   const [hasOverflow, setHasOverflow] = useState<boolean>(false);
 
-  const onSelect = (eventKey: any) => {
+  const handleSelect = (eventKey: any) => {
     if (!eventKey) {
       return DecodeMethodEnum.raw;
     }
@@ -251,7 +251,7 @@ export const DataDecode = ({
           <CopyButton text={displayValue} className='copy-button' />
           <Dropdown
             className='position-absolute'
-            onSelect={onSelect}
+            onSelect={handleSelect}
             onToggle={(e) => {
               setHasOverflow(e);
             }}
