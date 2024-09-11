@@ -8,7 +8,7 @@ import { addressIsBech32, bech32, isUtf8 } from 'helpers';
 import { faExclamationTriangle } from 'icons/regular';
 import { TransactionTokensType } from 'types';
 
-export enum DecodeMethodType {
+export enum DecodeMethodEnum {
   raw = 'raw',
   text = 'text',
   decimal = 'decimal',
@@ -17,18 +17,18 @@ export enum DecodeMethodType {
 
 export const decode = (
   part: string,
-  decodeMethod: DecodeMethodType | string,
+  decodeMethod: DecodeMethodEnum | string,
   transactionTokens?: TransactionTokensType
 ) => {
   switch (decodeMethod) {
-    case DecodeMethodType.text:
+    case DecodeMethodEnum.text:
       try {
         return Buffer.from(String(part), 'hex').toString('utf8');
       } catch {}
       return part;
-    case DecodeMethodType.decimal:
+    case DecodeMethodEnum.decimal:
       return part !== '' ? new BigNumber(part, 16).toString(10) : '';
-    case DecodeMethodType.smart:
+    case DecodeMethodEnum.smart:
       try {
         const bech32Encoded = bech32.encode(part);
         if (addressIsBech32(bech32Encoded)) {
@@ -54,7 +54,7 @@ export const decode = (
         }
       } catch {}
       return part;
-    case DecodeMethodType.raw:
+    case DecodeMethodEnum.raw:
     default:
       return part;
   }
@@ -88,7 +88,7 @@ export const decodeForDisplay = ({
   identifier
 }: {
   input: string;
-  decodeMethod: DecodeMethodType;
+  decodeMethod: DecodeMethodEnum;
   identifier?: string;
 }) => {
   const display: {
@@ -145,7 +145,7 @@ export const decodeForDisplay = ({
       const parts = input.split('\n');
       const initialDecodedParts = parts.map((part) => {
         const base64Buffer = Buffer.from(String(part), 'base64');
-        if (decodeMethod === DecodeMethodType.raw) {
+        if (decodeMethod === DecodeMethodEnum.raw) {
           return part;
         } else {
           return decode(base64Buffer.toString('hex'), decodeMethod);
@@ -198,16 +198,17 @@ export const DataDecode = ({
 }: {
   value: string;
   className?: string;
-  initialDecodeMethod?: DecodeMethodType | string;
+  initialDecodeMethod?: DecodeMethodEnum | string;
   setDecodeMethod?: React.Dispatch<React.SetStateAction<string>>;
   identifier?: string;
 }) => {
-  const [activeKey, setActiveKey] = useState(
+  const defaultDecodeMethod =
     initialDecodeMethod &&
-      Object.values<string>(DecodeMethodType).includes(initialDecodeMethod)
+    Object.values<string>(DecodeMethodEnum).includes(initialDecodeMethod)
       ? initialDecodeMethod
-      : DecodeMethodType.raw
-  );
+      : DecodeMethodEnum.raw;
+
+  const [activeKey, setActiveKey] = useState(defaultDecodeMethod);
   const [displayValue, setDisplayValue] = useState('');
   const [validationWarnings, setValidationWarnings] = useState<any>([]);
   const [hasOverflow, setHasOverflow] = useState<boolean>(false);
@@ -215,7 +216,7 @@ export const DataDecode = ({
   useEffect(() => {
     const { displayValue, validationWarnings } = decodeForDisplay({
       input: value,
-      decodeMethod: activeKey as DecodeMethodType,
+      decodeMethod: activeKey as DecodeMethodEnum,
       identifier
     });
     setDisplayValue(displayValue);
@@ -243,7 +244,7 @@ export const DataDecode = ({
           <Dropdown
             className='position-absolute'
             onSelect={(eventKey: any) => {
-              return eventKey ? setActiveKey(eventKey) : DecodeMethodType.raw;
+              return eventKey ? setActiveKey(eventKey) : DecodeMethodEnum.raw;
             }}
             onToggle={(e) => {
               setHasOverflow(e);
@@ -264,18 +265,18 @@ export const DataDecode = ({
             >
               <Dropdown.Item
                 as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
-                eventKey={DecodeMethodType.raw}
+                eventKey={DecodeMethodEnum.raw}
                 className={`${
-                  activeKey === DecodeMethodType.raw ? 'active' : ''
+                  activeKey === DecodeMethodEnum.raw ? 'active' : ''
                 }`}
               >
                 Raw
               </Dropdown.Item>
               <Dropdown.Item
                 as={Anchor}
-                eventKey={DecodeMethodType.text}
+                eventKey={DecodeMethodEnum.text}
                 className={`${
-                  activeKey === DecodeMethodType.text ? 'active' : ''
+                  activeKey === DecodeMethodEnum.text ? 'active' : ''
                 }`}
               >
                 Text
@@ -284,18 +285,18 @@ export const DataDecode = ({
                 <>
                   <Dropdown.Item
                     as={Anchor}
-                    eventKey={DecodeMethodType.decimal}
+                    eventKey={DecodeMethodEnum.decimal}
                     className={`${
-                      activeKey === DecodeMethodType.decimal ? 'active' : ''
+                      activeKey === DecodeMethodEnum.decimal ? 'active' : ''
                     }`}
                   >
                     Decimal
                   </Dropdown.Item>
                   <Dropdown.Item
                     as={Anchor}
-                    eventKey={DecodeMethodType.smart}
+                    eventKey={DecodeMethodEnum.smart}
                     className={`${
-                      activeKey === DecodeMethodType.smart ? 'active' : ''
+                      activeKey === DecodeMethodEnum.smart ? 'active' : ''
                     }`}
                   >
                     Smart

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { InfoTooltip, NetworkLink } from 'components';
-import { decodeForDisplay, DecodeMethodType } from 'components/DataDecode';
+import { decodeForDisplay, DecodeMethodEnum } from 'components/DataDecode';
 import { getTransactionMessages, capitalizeFirstLetter } from 'helpers';
 import { faAngleDown } from 'icons/regular';
 import { transactionsRoutes } from 'routes';
@@ -18,7 +18,7 @@ export const InternalErrorDisplay = ({ data }: { data: string }) => {
     const dataHexValue = dataBase64Buffer.toString('hex');
     const decodedDisplay = decodeForDisplay({
       input: dataHexValue,
-      decodeMethod: DecodeMethodType.smart
+      decodeMethod: DecodeMethodEnum.smart
     });
     if (decodedDisplay.displayValue) {
       return <p className='text-start'>{decodedDisplay.displayValue}</p>;
