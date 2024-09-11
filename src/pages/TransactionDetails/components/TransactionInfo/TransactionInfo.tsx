@@ -30,7 +30,8 @@ import {
   isContract,
   getTransactionMethod,
   getTransactionStatusIconAndColor,
-  getTotalTxTokenUsdValue
+  getTotalTxTokenUsdValue,
+  getDisplayReceiver
 } from 'helpers';
 import { useNetworkRoute } from 'hooks';
 import { faClock, faSearch, faSpinner } from 'icons/regular';
@@ -115,6 +116,8 @@ export const TransactionInfo = ({
 
   const activeSection = match ? 'logs' : 'details';
   const [activeKey, setActiveKey] = useState(activeSection);
+
+  const { receiver, receiverAssets } = getDisplayReceiver(transaction);
 
   const isTxPending =
     (transaction?.status &&
@@ -320,6 +323,26 @@ export const TransactionInfo = ({
                   </div>
                 </div>
               </DetailItem>
+
+              {receiver !== transaction.receiver && (
+                <DetailItem title='Destination'>
+                  <div className='d-flex flex-column'>
+                    <div className='d-flex align-items-center'>
+                      {isContract(receiver) ? (
+                        <span className='me-2 text-neutral-400'>Contract</span>
+                      ) : (
+                        ''
+                      )}
+                      <AccountLink
+                        address={receiver}
+                        assets={receiverAssets}
+                        hasHighlight
+                      />
+                      <CopyButton className='me-2' text={receiver} />
+                    </div>
+                  </div>
+                </DetailItem>
+              )}
 
               <DetailItem title='Value' className='text-neutral-100'>
                 <FormatAmount
