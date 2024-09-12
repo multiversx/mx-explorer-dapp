@@ -1,9 +1,10 @@
+import { ReactNode } from 'react';
 import classNames from 'classnames';
 import { WithClassnameType } from 'types';
 
 export interface DetailItemUIType extends WithClassnameType {
-  children?: React.ReactNode;
-  title?: string | React.ReactNode;
+  children?: ReactNode;
+  title?: ReactNode;
   colWidth?: string;
   noBorder?: boolean;
   verticalCenter?: boolean;

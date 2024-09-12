@@ -298,10 +298,8 @@ export const TransactionInfo = ({
               <DetailItem title='To'>
                 <div className='d-flex flex-column'>
                   <div className='d-flex align-items-center'>
-                    {isContract(transaction.receiver) ? (
+                    {isContract(transaction.receiver) && (
                       <span className='me-2 text-neutral-400'>Contract</span>
-                    ) : (
-                      ''
                     )}
                     <AccountLink
                       address={transaction.receiver}
@@ -328,10 +326,8 @@ export const TransactionInfo = ({
                 <DetailItem title='Destination'>
                   <div className='d-flex flex-column'>
                     <div className='d-flex align-items-center'>
-                      {isContract(receiver) ? (
+                      {isContract(receiver) && (
                         <span className='me-2 text-neutral-400'>Contract</span>
-                      ) : (
-                        ''
                       )}
                       <AccountLink
                         address={receiver}
