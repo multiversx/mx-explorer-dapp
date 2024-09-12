@@ -1,7 +1,10 @@
-export interface DetailItemType {
-  children?: React.ReactNode;
-  title?: string | React.ReactNode;
-  className?: string;
+import { ReactNode } from 'react';
+import classNames from 'classnames';
+import { WithClassnameType } from 'types';
+
+export interface DetailItemUIType extends WithClassnameType {
+  children?: ReactNode;
+  title?: ReactNode;
   colWidth?: string;
   noBorder?: boolean;
   verticalCenter?: boolean;
@@ -14,23 +17,29 @@ export const DetailItem = ({
   colWidth = '2',
   noBorder = false,
   verticalCenter = false
-}: DetailItemType) => {
+}: DetailItemUIType) => {
   if (!title && !children) {
     return null;
   }
 
   return (
     <div
-      className={`row detail-item ${className} ${
-        noBorder ? 'pt-3 pb-1' : 'border-bottom py-3'
-      }`}
+      className={classNames(
+        'row detail-item',
+        {
+          'pt-3 pb-1': noBorder
+        },
+        { 'border-bottom py-3': !noBorder },
+        className
+      )}
     >
       <div
-        className={`col-lg-${colWidth} ${
-          verticalCenter
-            ? 'd-flex align-items-center justify-content-lg-end'
-            : ''
-        } text-lg-end text-neutral-400`}
+        className={classNames(
+          `col-lg-${colWidth} text-lg-end text-neutral-400`,
+          {
+            'd-flex align-items-center justify-content-lg-end': verticalCenter
+          }
+        )}
       >
         {title}
       </div>

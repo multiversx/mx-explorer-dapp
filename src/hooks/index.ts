@@ -29,5 +29,6 @@ export * from './useNetworkRouter';
 export * from './useNotifications';
 export * from './useScamFlag';
 export * from './useScollInView';
+export * from './useScrollToTransactionSection';
 export * from './useSearch';
 export * from './useTempStorageNotification';

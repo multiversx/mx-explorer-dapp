@@ -142,6 +142,9 @@ export const AccountVerifiedContract = ({
               walletConnectV2ProjectId,
               apiAddress
             }}
+            dappConfig={{
+              shouldUseWebViewProvider: true
+            }}
           >
             <TransactionsToastList />
             <NotificationModal />

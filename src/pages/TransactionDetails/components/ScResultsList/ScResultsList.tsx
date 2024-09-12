@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useLocation } from 'react-router-dom';
+import classNames from 'classnames';
 
 import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import {
@@ -9,10 +9,15 @@ import {
   Trim,
   NetworkLink,
   DataDecode,
+  DecodeMethodEnum,
   AccountLink
 } from 'components';
-import { DecodeMethodType } from 'components/DataDecode';
 import { urlBuilder, truncate } from 'helpers';
+import {
+  useActiveRoute,
+  useScrollToTransactionSection,
+  useGetTransactionUrlHashParams
+} from 'hooks';
 import { faExchange, faSearch } from 'icons/regular';
 import { transactionsRoutes } from 'routes';
 import { TransactionSCResultType } from 'types';
@@ -22,40 +27,24 @@ export const ScResultsList = ({
 }: {
   results: TransactionSCResultType[];
 }) => {
-  const { hash } = useLocation();
-
   const ref = useRef<HTMLDivElement>(null);
-  const formattedHash = hash
-    .substring(0, hash.indexOf('/') > 0 ? hash.indexOf('/') : hash.length)
-    .replace('#', '');
+  const activeRoute = useActiveRoute();
+  const { hashId, hashDecodeMethod } = useGetTransactionUrlHashParams();
+  const [decodeMethod, setDecodeMethod] =
+    useState<DecodeMethodEnum>(hashDecodeMethod);
 
-  const initialDecodeMethod =
-    hash.indexOf('/') > 0
-      ? hash.substring(hash.indexOf('/') + 1)
-      : DecodeMethodType.raw;
-
-  const [decodeMethod, setDecodeMethod] = useState<string>(
-    initialDecodeMethod &&
-      Object.values<string>(DecodeMethodType).includes(initialDecodeMethod)
-      ? initialDecodeMethod
-      : DecodeMethodType.raw
-  );
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (formattedHash && ref.current && ref.current !== null) {
-        window.scrollTo({
-          top: ref.current.getBoundingClientRect().top - 86,
-          behavior: 'smooth'
-        });
-      }
-    }, 600);
-  }, [formattedHash]);
+  useScrollToTransactionSection(ref);
 
   return (
-    <div className='sc-results-list detailed-list d-flex flex-column mt-1'>
+    <div className='sc-results-list item-list d-flex flex-column mt-1'>
       {results.map((result: TransactionSCResultType, i) => {
-        const highlightTx = formattedHash === result.hash;
+        const isResultHighlighted =
+          hashId === result.hash &&
+          activeRoute(transactionsRoutes.transactionDetails) &&
+          !activeRoute(transactionsRoutes.transactionDetailsLogs);
+
+        const resultLink = `${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`;
+
         const decodedData = result.data
           ? truncate(
               Buffer.from(result.data, 'base64').toString(),
@@ -67,14 +56,16 @@ export const ScResultsList = ({
           <div
             key={i}
             id={result.hash}
-            className={`detailed-item d-flex border-start border-bottom ms-3 py-3 ${
-              highlightTx ? 'highlighted' : ''
-            }`}
-            {...(highlightTx ? { ref: ref } : {})}
+            className={classNames(
+              'detailed-item d-flex border-start border-bottom ms-3 py-3',
+              { highlighted: isResultHighlighted }
+            )}
+            {...(isResultHighlighted ? { ref: ref } : {})}
           >
-            <div className='transaction-icon'>
-              <FontAwesomeIcon icon={faExchange} />
-            </div>
+            <NetworkLink to={resultLink} className='detailed-item-icon'>
+              <FontAwesomeIcon icon={faSearch} className='hover-icon' />
+              <FontAwesomeIcon icon={faExchange} className='default-icon' />
+            </NetworkLink>
 
             <div className='detailed-item-content'>
               {result.hash && (
@@ -86,10 +77,7 @@ export const ScResultsList = ({
                       text={result.hash}
                       className='side-action ms-2'
                     />
-                    <NetworkLink
-                      to={`${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`}
-                      className='side-action'
-                    >
+                    <NetworkLink to={resultLink} className='side-action'>
                       <FontAwesomeIcon icon={faSearch} />
                     </NetworkLink>
                   </div>
@@ -163,8 +151,10 @@ export const ScResultsList = ({
                   <div className='col-sm-10'>
                     <DataDecode
                       value={decodedData}
-                      initialDecodeMethod={initialDecodeMethod}
                       setDecodeMethod={setDecodeMethod}
+                      {...(isResultHighlighted
+                        ? { initialDecodeMethod: hashDecodeMethod }
+                        : {})}
                     />
                   </div>
                 </div>

@@ -30,7 +30,8 @@ import {
   isContract,
   getTransactionMethod,
   getTransactionStatusIconAndColor,
-  getTotalTxTokenUsdValue
+  getTotalTxTokenUsdValue,
+  getDisplayReceiver
 } from 'helpers';
 import { useNetworkRoute } from 'hooks';
 import { faClock, faSearch, faSpinner } from 'icons/regular';
@@ -115,6 +116,8 @@ export const TransactionInfo = ({
 
   const activeSection = match ? 'logs' : 'details';
   const [activeKey, setActiveKey] = useState(activeSection);
+
+  const { receiver, receiverAssets } = getDisplayReceiver(transaction);
 
   const isTxPending =
     (transaction?.status &&
@@ -295,10 +298,8 @@ export const TransactionInfo = ({
               <DetailItem title='To'>
                 <div className='d-flex flex-column'>
                   <div className='d-flex align-items-center'>
-                    {isContract(transaction.receiver) ? (
+                    {isContract(transaction.receiver) && (
                       <span className='me-2 text-neutral-400'>Contract</span>
-                    ) : (
-                      ''
                     )}
                     <AccountLink
                       address={transaction.receiver}
@@ -320,6 +321,24 @@ export const TransactionInfo = ({
                   </div>
                 </div>
               </DetailItem>
+
+              {receiver !== transaction.receiver && (
+                <DetailItem title='Destination'>
+                  <div className='d-flex flex-column'>
+                    <div className='d-flex align-items-center'>
+                      {isContract(receiver) && (
+                        <span className='me-2 text-neutral-400'>Contract</span>
+                      )}
+                      <AccountLink
+                        address={receiver}
+                        assets={receiverAssets}
+                        hasHighlight
+                      />
+                      <CopyButton className='me-2' text={receiver} />
+                    </div>
+                  </div>
+                </DetailItem>
+              )}
 
               <DetailItem title='Value' className='text-neutral-100'>
                 <FormatAmount
@@ -465,7 +484,11 @@ export const TransactionInfo = ({
               />
 
               {transaction.results && transaction.results?.length > 0 && (
-                <DetailItem title='Smart&nbsp;Contract Results'>
+                <DetailItem
+                  title={
+                    <div className='item-title'>Smart Contract Results</div>
+                  }
+                >
                   <ScResultsList results={transaction.results} />
                 </DetailItem>
               )}
@@ -475,16 +498,18 @@ export const TransactionInfo = ({
               <Tab.Pane eventKey='logs'>
                 {transaction.logs && (
                   <>
-                    {' '}
                     {transaction.logs.address !== undefined && (
                       <AddressDetailItem address={transaction.logs.address} />
                     )}
                     {transaction.logs.events &&
-                      transaction.logs.events?.length > 0 && (
-                        <DetailItem title='Events'>
+                      transaction.logs.events.length > 0 && (
+                        <DetailItem
+                          title={<div className='item-title'>Events</div>}
+                        >
                           <EventsList
                             events={transaction.logs.events}
-                            id={transaction.logs?.id}
+                            txHash={transaction.txHash}
+                            id={transaction.logs?.id ?? 'events'}
                           />
                         </DetailItem>
                       )}
@@ -492,8 +517,12 @@ export const TransactionInfo = ({
                 )}
                 {transaction.results && transaction.results.length > 0 && (
                   <div className='row'>
-                    {transaction.results.map((result, resultIndex) =>
-                      result.logs ? (
+                    {transaction.results.map((result, resultIndex) => {
+                      if (!result.logs) {
+                        return null;
+                      }
+
+                      return (
                         <div
                           key={`tx-result-log-${resultIndex}`}
                           className='col-12 border-bottom'
@@ -504,16 +533,19 @@ export const TransactionInfo = ({
                           )}
                           {result.logs.events &&
                             result.logs.events?.length > 0 && (
-                              <DetailItem title='Events'>
+                              <DetailItem
+                                title={<div className='item-title'>Events</div>}
+                              >
                                 <EventsList
                                   events={result.logs.events}
-                                  id={result.logs?.id}
+                                  txHash={transaction.txHash}
+                                  id={result.logs?.id ?? 'result-events'}
                                 />
                               </DetailItem>
                             )}
                         </div>
-                      ) : null
-                    )}
+                      );
+                    })}
                   </div>
                 )}
               </Tab.Pane>
