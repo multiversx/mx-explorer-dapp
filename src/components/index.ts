@@ -4,6 +4,7 @@ import SharedIdentity from './SharedIdentity';
 import TransactionActionBlock from './TransactionActionBlock';
 
 export * from './AccountName';
+export * from './AccountsTable';
 export * from './BlockGasUsed';
 export * from './BlocksTable';
 export * from './Cards';
