@@ -1,9 +1,12 @@
 import { useHasGrowthWidgets } from 'hooks';
-import { ChartContractsTransactions, MostUsed } from 'widgets';
+import {
+  MostUsed,
+  ChartContractsTransactions,
+  ChartPrice,
+  ChartStake,
+  EconomicsCard
+} from 'widgets';
 
-import { ChartPrice } from './components/ChartPrice';
-import { ChartStake } from './components/ChartStake';
-import { EconomicsCard } from './components/EconomicsCard';
 import { LatestBlocks } from './components/LatestBlocks';
 import { LatestTransactions } from './components/LatestTransactions';
 

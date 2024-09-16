@@ -4,9 +4,8 @@ import { Outlet } from 'react-router-dom';
 import { Loader, PageState } from 'components';
 import { useHasGrowthWidgets } from 'hooks';
 import { faCoins } from 'icons/regular';
-import { ChartPrice } from 'pages/Home/components/ChartPrice';
-import { ChartStake } from 'pages/Home/components/ChartStake';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
+import { ChartPrice, ChartStake } from 'widgets';
 
 import { NativeTokenDetailsCard } from './NativeTokenDetailsCard';
 
