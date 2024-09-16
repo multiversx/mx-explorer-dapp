@@ -10,6 +10,7 @@ export const getInitialStatsState = (): StatsSliceType => {
       blocks: 0,
       accounts: 0,
       transactions: 0,
+      scResults: 0,
       refreshRate: 0,
       epoch: 0,
       roundsPassed: 0,
@@ -25,6 +26,7 @@ export const getInitialStatsState = (): StatsSliceType => {
     blocks: ELLIPSIS,
     accounts: ELLIPSIS,
     transactions: ELLIPSIS,
+    scResults: ELLIPSIS,
     refreshRate: 0,
     epoch: 0,
     roundsPassed: 0,
@@ -52,6 +54,7 @@ export const statsSlice = createSlice({
       state.blocks = action.payload.blocks;
       state.accounts = action.payload.accounts;
       state.transactions = action.payload.transactions;
+      state.scResults = action.payload.scResults;
       state.refreshRate = action.payload.refreshRate;
       state.epoch = action.payload.epoch;
       state.roundsPassed = action.payload.roundsPassed;
