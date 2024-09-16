@@ -24,6 +24,7 @@ export interface HeroDetailsCardUIType extends WithClassnameType {
   title?: React.ReactNode;
   titleContent?: React.ReactNode;
   icon?: string;
+  iconComponent?: React.ReactNode;
   iconPlaceholder?: React.ReactNode;
   isVerified?: boolean;
   verifiedComponent?: React.ReactNode;
@@ -40,6 +41,7 @@ export const HeroDetailsCard = ({
   title,
   titleContent,
   icon,
+  iconComponent,
   iconPlaceholder,
   isVerified,
   verifiedComponent,
@@ -55,7 +57,7 @@ export const HeroDetailsCard = ({
   const dispatch = useDispatch();
   const isMainnet = useIsMainnet();
   const hasStatCards = statsCards.length > 0 || smallStatsCards.length > 0;
-  const hasIcon = Boolean(icon || iconPlaceholder);
+  const hasIcon = Boolean(icon || iconPlaceholder || iconComponent);
 
   useEffect(() => {
     if (seoDetails?.completeDetails && isMainnet) {
@@ -70,6 +72,18 @@ export const HeroDetailsCard = ({
     }
   }, [seoDetails, isMainnet]);
 
+  const Icon = ({ className }: WithClassnameType) => (
+    <span
+      className={classNames('hero-details-card-logo', className, {
+        'default-image': !icon && !iconComponent,
+        'has-placeholder': !icon && iconPlaceholder,
+        'icon-component': !icon && !iconPlaceholder && iconComponent
+      })}
+    >
+      {hasIcon && <>{iconComponent}</>}
+    </span>
+  );
+
   return (
     <div
       className={classNames(
@@ -83,31 +97,8 @@ export const HeroDetailsCard = ({
             'mb-3': !hasStatCards
           })}
         >
-          <span
-            className={classNames(
-              'hero-details-card-logo d-none d-md-flex col-md-3',
-              {
-                'default-image': !icon,
-                'has-placeholder': !icon && iconPlaceholder
-              }
-            )}
-          >
-            {hasIcon && (
-              <>
-                {icon ? (
-                  <ImageWithFallback
-                    src={icon}
-                    className='logo-img'
-                    alt={
-                      seoDetails?.title ? `${seoDetails.title} Logo` : 'Logo'
-                    }
-                  />
-                ) : (
-                  iconPlaceholder
-                )}
-              </>
-            )}
-          </span>
+          <Icon className='d-none d-md-flex col-md-3' />
+
           <div className='hero-details-card-overview d-flex flex-column flex-fill col-9'>
             {title && (
               <div
@@ -118,30 +109,7 @@ export const HeroDetailsCard = ({
                 })}
               >
                 <div className='d-flex align-items-center'>
-                  <span
-                    className={classNames('hero-details-card-logo d-md-none', {
-                      'default-image': !icon,
-                      'has-placeholder': !icon && iconPlaceholder
-                    })}
-                  >
-                    {hasIcon && (
-                      <>
-                        {icon ? (
-                          <ImageWithFallback
-                            src={icon}
-                            className='logo-img'
-                            alt={
-                              seoDetails?.title
-                                ? `${seoDetails.title} Logo`
-                                : 'Logo'
-                            }
-                          />
-                        ) : (
-                          iconPlaceholder
-                        )}
-                      </>
-                    )}
-                  </span>
+                  <Icon className='d-md-none' />
                   <h1
                     className={classNames('mb-0', {
                       'has-content': Boolean(titleContent || isVerified)

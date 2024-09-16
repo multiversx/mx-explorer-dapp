@@ -9,6 +9,7 @@ export * from './useCustomNetwork';
 export * from './useDebounce';
 export * from './useGetExplorerTitle';
 export * from './useGetHash';
+export * from './useGetNativeTokenDetails';
 export * from './useGetNetworkChangeLink';
 export * from './useGetNodesCategoryCount';
 export * from './useGetShardText';
