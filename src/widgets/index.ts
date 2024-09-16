@@ -1,6 +1,7 @@
 export * from './AccountsStatsCard';
 export * from './BlockHeightStatsCard';
 export * from './BlockProgressRing';
+export * from './ChartContractsTransactions';
 export * from './EpochProgressRing';
 export * from './HeroApplications';
 export * from './HeroHome';
