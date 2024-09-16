@@ -1,15 +1,15 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
-import { BRAND_NAME } from 'appConstants';
 import { NativeTokenLogo } from 'components';
 import { pagerHelper } from 'components/Pager/helpers/pagerHelper';
+import { formatBigNumber } from 'helpers';
 import {
   useGetPage,
   useGetSearch,
   useGetSort,
-  useIsSovereign,
-  useIsNativeTokenSearched
+  useIsNativeTokenSearched,
+  useGetNativeTokenDetails
 } from 'hooks';
 import {
   economicsSelector,
@@ -35,7 +35,7 @@ export const NativeTokenRow = ({
   index: number;
   totalTokens: number;
 }) => {
-  const { egldLabel, name } = useSelector(activeNetworkSelector);
+  const { egldLabel } = useSelector(activeNetworkSelector);
   const {
     isFetched: isEconomicsFetched,
     price,
@@ -43,21 +43,13 @@ export const NativeTokenRow = ({
     circulatingSupply,
     unprocessed: unProcessedEconomics
   } = useSelector(economicsSelector);
-  const {
-    isFetched: isStatsFetched,
-    accounts,
-    transactions,
-    unprocessed: unProcessedStats
-  } = useSelector(statsSelector);
+  const { isFetched: isStatsFetched } = useSelector(statsSelector);
+
+  const { assets, accounts, transactions } = useGetNativeTokenDetails();
 
   const { page, size } = useGetPage();
   const { search } = useGetSearch();
   const { sort, order } = useGetSort();
-  const isSovereign = useIsSovereign();
-
-  const description = isSovereign
-    ? `${egldLabel} Token is native to ${name ?? BRAND_NAME}`
-    : `The ${BRAND_NAME} eGold (${egldLabel}) Token is native to the ${BRAND_NAME} Network and will be used for everything from staking, governance, transactions, smart contracts and validator rewards.`;
 
   const showOnSearch = useIsNativeTokenSearched();
   let showOnFilter = (!page || page === 1) && index === 0;
@@ -85,8 +77,8 @@ export const NativeTokenRow = ({
       price: unProcessedEconomics.price,
       marketCap: unProcessedEconomics.marketCap,
       circulatingSupply: unProcessedEconomics.circulatingSupply,
-      accounts: unProcessedStats.accounts,
-      transactions: unProcessedStats.transactions
+      accounts,
+      transactions
     };
 
     const tokenValue = currentToken[sort as keyof TokenType];
@@ -159,23 +151,23 @@ export const NativeTokenRow = ({
           </div>
           <div className='d-flex flex-column justify-content-center'>
             <span className='d-block token-ticker'>{egldLabel}</span>
-            <div
-              className='token-description text-wrap text-neutral-400 small d-none d-md-block'
-              title={description}
-            >
-              {description}
-            </div>
+            {assets?.description && (
+              <div
+                className='token-description text-wrap text-neutral-400 small d-none d-md-block'
+                title={assets.description}
+              >
+                {assets.description}
+              </div>
+            )}
           </div>
         </div>
       </td>
-      <td>
-        {isSovereign ? name : BRAND_NAME} {egldLabel}
-      </td>
+      <td>{assets?.name ?? egldLabel}</td>
       <td>{price}</td>
       <td>{circulatingSupply}</td>
       <td>{marketCap}</td>
-      <td>{accounts}</td>
-      <td>{transactions}</td>
+      <td>{formatBigNumber({ value: accounts })}</td>
+      <td>{formatBigNumber({ value: transactions })}</td>
     </tr>
   );
 };
