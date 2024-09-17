@@ -26,7 +26,7 @@ export const TokenDetailsLockedAccounts = () => {
       if (success && data?.lockedAccounts) {
         setTokenLockedAccounts(data.lockedAccounts);
       }
-      setIsDataReady(success && data?.lockedAccounts);
+      setIsDataReady(Boolean(success && data?.lockedAccounts));
     });
   };
 
