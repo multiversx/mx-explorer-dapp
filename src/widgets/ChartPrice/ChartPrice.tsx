@@ -4,16 +4,14 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
-import { Select, SelectOptionType } from 'components';
+import { SelectOptionType } from 'components';
 import { getPrimaryColor } from 'helpers';
 import { useFetchGrowthPrice } from 'hooks';
 import { faCircleUp, faCircleDown, faCircleMinus } from 'icons/solid';
 import { growthPriceSelector } from 'redux/selectors';
 import { PriceStatisticsLabelEnum, StatisticType, TrendEnum } from 'types';
 
-import styles from './styles.module.scss';
-
-import { ChartRoot } from '../ChartRoot';
+import { ChartCard, ChartRoot } from '../ChartCard';
 
 export const ChartPrice = () => {
   const {
@@ -72,7 +70,7 @@ export const ChartPrice = () => {
   const defaultValue = filters.find((filter) => filter.value === initialFilter);
   const [data, setData] = useState(dataMap.get(initialFilter));
 
-  const onChange = useCallback(
+  const handleChange = useCallback(
     (option: SingleValue<SelectOptionType>) => {
       if (option && option.value && isFetched) {
         setData(dataMap.get(String(option.value)));
@@ -91,56 +89,39 @@ export const ChartPrice = () => {
   useEffect(onInitialLoad, [onInitialLoad]);
 
   return (
-    <div className={styles.chart}>
-      <div className={styles.wrapper}>
-        <div className={styles.left}>
-          <div className={styles.label}>Current Price</div>
-          <div className={styles.price}>{currentPrice}</div>
-
-          <span className={classNames(styles.change, styles[priceChangeTrend])}>
-            <FontAwesomeIcon
-              icon={trendIcon.get(priceChangeTrend) || faCircleMinus}
-              className={styles.icon}
-            />
-
-            <span className={styles.percentage}>{priceChange24h} today</span>
-          </span>
-        </div>
-
-        <div className={styles.right}>
-          <Select
-            options={filters}
-            onChange={onChange}
-            defaultValue={defaultValue}
+    <ChartCard
+      title='Current Price'
+      value={currentPrice}
+      filters={filters}
+      defaultFilterValue={defaultValue}
+      onChange={handleChange}
+      className='chart-price'
+      statistics={statistics}
+      subtitle={
+        <span className={classNames('chart-card-change', priceChangeTrend)}>
+          <FontAwesomeIcon
+            icon={trendIcon.get(priceChangeTrend) || faCircleMinus}
+            className='icon'
           />
-        </div>
-      </div>
 
-      <div className={styles.root}>
-        <ChartRoot
-          data={data}
-          height={75}
-          color={primary}
-          identifier='priceGradient'
-          tooltipFormatter={(option: any) =>
-            new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD',
-              maximumFractionDigits: 2,
-              minimumFractionDigits: 2
-            }).format(option.value)
-          }
-        />
-      </div>
-
-      <div className={styles.statistics}>
-        {statistics.map((statistic) => (
-          <div className={styles.statistic} key={statistic.label}>
-            <div className={styles.label}>{statistic.label}</div>
-            <div className={styles.value}>{statistic.value}</div>
-          </div>
-        ))}
-      </div>
-    </div>
+          <span className='percentage'>{priceChange24h} today</span>
+        </span>
+      }
+    >
+      <ChartRoot
+        data={data}
+        height={75}
+        color={primary}
+        identifier='priceGradient'
+        tooltipFormatter={(option: any) =>
+          new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 2,
+            minimumFractionDigits: 2
+          }).format(option.value)
+        }
+      />
+    </ChartCard>
   );
 };

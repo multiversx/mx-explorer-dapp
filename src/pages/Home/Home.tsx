@@ -17,9 +17,9 @@ export const Home = () => {
     <div className='home page-content container'>
       {hasGrowthWidgets && (
         <>
-          <div className='d-xl-flex mt-3'>
+          <div className='d-flex flex-column flex-xl-row gap-3 my-3'>
             <ChartPrice />
-            <ChartStake className='pt-md-spacer' />
+            <ChartStake />
             <EconomicsCard />
           </div>
 

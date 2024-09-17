@@ -1,0 +1,10 @@
+.home {
+  @include media-breakpoint-up(xl) {
+    .chart-price {
+      width: 37.5%;
+    }
+    .chart-stake {
+      width: 41.85%;
+    }
+  }
+}
