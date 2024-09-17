@@ -9,10 +9,9 @@ import { useAdapter, useHasGrowthWidgets, useNetworkRoute } from 'hooks';
 import { AnalyticsChart } from 'pages/AnalyticsCompare/AnalyticsChart';
 import { FailedAnalytics } from 'pages/AnalyticsCompare/components/FailedAnalytics';
 import { NoAnalytics } from 'pages/AnalyticsCompare/components/NoAnalytics';
-import { ChartContractsTransactions } from 'pages/Home/components/ChartContractsTransactions';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
-import { MostUsed } from 'widgets';
+import { ChartContractsTransactions, MostUsed } from 'widgets';
 
 import { ChartWrapper } from './components/ChartWrapper';
 

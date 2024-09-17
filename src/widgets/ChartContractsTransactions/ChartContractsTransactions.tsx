@@ -14,9 +14,9 @@ import {
   TransactionsStatisticsLabelEnum
 } from 'types';
 
+import { ChartArea } from './ChartArea';
+import { PayloadType } from './ChartArea/types';
 import { ChartContractsTransactionsUIType } from './types';
-import { ChartArea } from '../ChartArea';
-import { PayloadType } from '../ChartArea/types';
 
 const getSum = (
   first: GrowthChartDataType[],

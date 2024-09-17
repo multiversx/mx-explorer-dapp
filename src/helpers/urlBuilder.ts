@@ -67,6 +67,9 @@ export const urlBuilder = {
   tokenDetailsLockedAccounts: (tokenId: string) =>
     `/tokens/${tokenId}/locked-accounts`,
   tokenDetailsRoles: (tokenId: string) => `/tokens/${tokenId}/roles`,
+  nativeTokenDetails: (egldLabel: string) => `/${egldLabel.toLowerCase()}`,
+  nativeTokenDetailsAccounts: (egldLabel: string) =>
+    `/${egldLabel.toLowerCase()}/accounts`,
   collections: (params?: GetCollectionsType) => {
     const urlSearch = params
       ? new URLSearchParams(params as Record<string, string>).toString()

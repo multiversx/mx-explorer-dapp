@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 
 import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import {
@@ -55,9 +56,10 @@ export const ScResultsList = ({
           <div
             key={i}
             id={result.hash}
-            className={`detailed-item d-flex border-start border-bottom ms-3 py-3 ${
-              isResultHighlighted ? 'highlighted' : ''
-            }`}
+            className={classNames(
+              'detailed-item d-flex border-start border-bottom ms-3 py-3',
+              { highlighted: isResultHighlighted }
+            )}
             {...(isResultHighlighted ? { ref: ref } : {})}
           >
             <NetworkLink to={resultLink} className='detailed-item-icon'>
