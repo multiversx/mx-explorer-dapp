@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
+import { useSelector } from 'react-redux';
 
 import {
   SocialIcons,
@@ -8,23 +9,39 @@ import {
   FormatUSD,
   NativeTokenLogo
 } from 'components';
-import { useGetNativeTokenDetails } from 'hooks';
+import { useGetNativeTokenDetails, useHasGrowthWidgets } from 'hooks';
+import { growthPriceSelector } from 'redux/selectors';
 
 export const NativeTokenDetailsCard = () => {
+  const hasGrowthWidgets = useHasGrowthWidgets();
   const {
     name,
     ticker,
     decimals,
     assets,
-    price,
-    marketCap,
+    price: economicsPrice,
+    marketCap: economicsMarketCap,
     accounts,
     transactions,
     supply,
     circulatingSupply
   } = useGetNativeTokenDetails();
 
+  const { unprocessed: unprocessedGrowth, isFetched: isGrowthFetched } =
+    useSelector(growthPriceSelector);
+
   const title = assets?.name ?? name;
+
+  // avoid differences between cached api calls
+  const price =
+    hasGrowthWidgets && isGrowthFetched
+      ? unprocessedGrowth.currentPrice
+      : economicsPrice;
+
+  const marketCap =
+    hasGrowthWidgets && isGrowthFetched
+      ? unprocessedGrowth.marketCap
+      : economicsMarketCap;
 
   const detailItems = useMemo(
     () => [
@@ -126,7 +143,7 @@ export const NativeTokenDetailsCard = () => {
         description: assets?.description,
         completeDetails: Boolean(assets)
       }}
-      className='token-details'
+      className='native-token-details'
       detailItems={detailItems}
       statsCards={statsCards}
       smallStatsCards={smallStatsCards}
