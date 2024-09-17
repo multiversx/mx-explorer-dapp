@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
@@ -16,6 +17,12 @@ export const NativeTokenLayout = () => {
 
   const loading = isFetched === undefined;
   const failed = isFetched === false;
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    });
+  }, []);
 
   if (loading) {
     return <Loader />;

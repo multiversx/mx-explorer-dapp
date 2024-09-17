@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
-import { NativeTokenLogo } from 'components';
+import { NativeTokenLogo, NetworkLink } from 'components';
 import { pagerHelper } from 'components/Pager/helpers/pagerHelper';
 import { formatBigNumber } from 'helpers';
 import {
@@ -44,16 +44,15 @@ export const NativeTokenRow = ({
     unprocessed: unProcessedEconomics
   } = useSelector(economicsSelector);
   const { isFetched: isStatsFetched } = useSelector(statsSelector);
-
   const { assets, accounts, transactions } = useGetNativeTokenDetails();
-
   const { page, size } = useGetPage();
   const { search } = useGetSearch();
   const { sort, order } = useGetSort();
-
   const showOnSearch = useIsNativeTokenSearched();
-  let showOnFilter = (!page || page === 1) && index === 0;
 
+  const nativeTokenLink = `/${egldLabel?.toLowerCase()}`;
+
+  let showOnFilter = (!page || page === 1) && index === 0;
   const previousToken = tokens[index > 0 ? index - 1 : 0];
   const currentToken = tokens[index];
   const nextToken = tokens[index < tokens.length - 1 ? index + 1 : index];
@@ -143,14 +142,16 @@ export const NativeTokenRow = ({
       <td>
         <div className='token-identity d-flex flex-row'>
           <div className='d-flex align-items-center me-3'>
-            <span className='side-link'>
+            <NetworkLink to={nativeTokenLink} className='side-link'>
               <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
                 <NativeTokenLogo />
               </div>
-            </span>
+            </NetworkLink>
           </div>
           <div className='d-flex flex-column justify-content-center'>
-            <span className='d-block token-ticker'>{egldLabel}</span>
+            <NetworkLink to={nativeTokenLink} className='d-block token-ticker'>
+              {egldLabel}
+            </NetworkLink>
             {assets?.description && (
               <div
                 className='token-description text-wrap text-neutral-400 small d-none d-md-block'
