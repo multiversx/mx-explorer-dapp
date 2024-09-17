@@ -37,12 +37,12 @@ export const NativeTokenLayout = () => {
   }
 
   return (
-    <div className='container page-content'>
+    <div className='container page-content native-token'>
       <NativeTokenDetailsCard />
       {hasGrowthWidgets && (
-        <div className='d-xl-flex mt-3'>
+        <div className='d-flex flex-column flex-xl-row gap-3 my-3'>
           <ChartPrice />
-          <ChartStake className='pt-md-spacer' />
+          <ChartStake />
         </div>
       )}
       <Outlet />
