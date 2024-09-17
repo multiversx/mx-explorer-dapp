@@ -80,7 +80,22 @@ export const HeroDetailsCard = ({
         'icon-component': !icon && !iconPlaceholder && iconComponent
       })}
     >
-      {hasIcon && <>{iconComponent}</>}
+      {hasIcon &&
+        (iconComponent ? (
+          <>{iconComponent}</>
+        ) : (
+          <>
+            {icon ? (
+              <ImageWithFallback
+                src={icon}
+                className='logo-img'
+                alt={seoDetails?.title ? `${seoDetails.title} Logo` : 'Logo'}
+              />
+            ) : (
+              iconPlaceholder
+            )}
+          </>
+        ))}
     </span>
   );
 
