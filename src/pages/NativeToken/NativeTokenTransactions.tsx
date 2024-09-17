@@ -14,6 +14,9 @@ export const NativeTokenTransactions = () => {
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { getTransfers, getTransfersCount } = useAdapter();
 
+  const isEgldLabel =
+    egldLabel && ['egld', 'xegld'].includes(egldLabel?.toLowerCase());
+
   const {
     fetchTransactions,
     transactions,
@@ -21,7 +24,7 @@ export const NativeTokenTransactions = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions(getTransfers, getTransfersCount, {
-    token: egldLabel
+    token: isEgldLabel ? 'EGLD' : egldLabel
   });
 
   useEffect(() => {
