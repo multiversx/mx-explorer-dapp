@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 
 import {
   CopyButton,
@@ -69,9 +70,10 @@ export const EventItem = ({ event, txHash, id }: EventItemUIType) => {
 
   return (
     <div
-      className={`detailed-item d-flex border-start border-bottom ms-3 py-3 ${
-        isEventHighlighted ? 'highlighted' : ''
-      }`}
+      className={classNames(
+        'detailed-item d-flex border-start border-bottom ms-3 py-3',
+        { highlighted: isEventHighlighted }
+      )}
       {...(isEventHighlighted ? { ref: ref } : {})}
     >
       <NetworkLink to={eventLink} className='detailed-item-icon'>
