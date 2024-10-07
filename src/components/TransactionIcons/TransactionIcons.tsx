@@ -1,37 +1,44 @@
 import {
   TransactionGuardianIcon,
-  TransactionSovereignBridgeIcon
+  TransactionSovereignBridgeIcon,
+  TransactionStatusIcon,
+  TransactionRelayedIcon
 } from 'components';
 import { UITransactionType } from 'types';
 
-import { TransactionStatusIcon } from './TransactionStatusIcon';
-
-interface TransactionIconUIType {
+interface TransactionIconsUIType {
   transaction: UITransactionType;
   showSuccess?: boolean;
   showGuardian?: boolean;
+  showRelayed?: boolean;
+  showStatus?: boolean;
   showSovereignBridge?: boolean;
   withBadge?: boolean;
 }
 
-export const TransactionIcon = ({
+export const TransactionIcons = ({
   transaction,
   showSuccess = false,
   showGuardian = true,
+  showRelayed = true,
+  showStatus = true,
   showSovereignBridge = true,
   withBadge = false
-}: TransactionIconUIType) => {
+}: TransactionIconsUIType) => {
   return (
     <>
-      <TransactionStatusIcon
-        transaction={transaction}
-        showSuccess={showSuccess}
-        withBadge={withBadge}
-      />
+      {showStatus && (
+        <TransactionStatusIcon
+          transaction={transaction}
+          showSuccess={showSuccess}
+          withBadge={withBadge}
+        />
+      )}
       {showGuardian && <TransactionGuardianIcon transaction={transaction} />}
       {showSovereignBridge && (
         <TransactionSovereignBridgeIcon transaction={transaction} />
       )}
+      {showRelayed && <TransactionRelayedIcon transaction={transaction} />}
     </>
   );
 };

@@ -17,10 +17,9 @@ import {
   TransactionAction,
   LoadingDots,
   FormatUSD,
-  TransactionGuardianIcon,
-  TransactionSovereignBridgeIcon,
   AccountLink,
-  ShardLink
+  ShardLink,
+  TransactionIcons
 } from 'components';
 import {
   addressIsBech32,
@@ -217,8 +216,10 @@ export const TransactionInfo = ({
             <Tab.Pane eventKey='details'>
               <DetailItem title='Hash'>
                 <div className='d-flex align-items-center text-break-all text-neutral-100'>
-                  <TransactionGuardianIcon transaction={transaction} />
-                  <TransactionSovereignBridgeIcon transaction={transaction} />
+                  <TransactionIcons
+                    transaction={transaction}
+                    showStatus={false}
+                  />
                   {transaction.txHash}
                   <CopyButton text={transaction.txHash} />
                 </div>
