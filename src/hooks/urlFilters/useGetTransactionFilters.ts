@@ -41,6 +41,9 @@ export const useGetTransactionFilters = () => {
   const token = searchParams.get('token')
     ? String(searchParams.get('token'))
     : '';
+  const isRelayed = searchParams.get('isRelayed')
+    ? Boolean(searchParams.get('isRelayed'))
+    : '';
 
   let senderShard = searchParams.get('senderShard')
     ? String(searchParams.get('senderShard'))
@@ -66,6 +69,7 @@ export const useGetTransactionFilters = () => {
     status: checkStatus(status),
     miniBlockHash,
     method,
-    token
+    token,
+    isRelayed
   };
 };

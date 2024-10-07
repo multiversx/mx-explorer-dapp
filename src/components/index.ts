@@ -68,7 +68,7 @@ export * from './TimeAgo';
 export * from './TokenBlock';
 export * from './Tooltips';
 export * from './TransactionAction';
-export * from './TransactionIcon';
+export * from './TransactionIcons';
 export * from './TransactionsTable';
 export * from './TransactionStatus';
 export * from './Trim';
