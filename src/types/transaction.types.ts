@@ -24,15 +24,8 @@ export interface TransactionType {
   timestamp: number;
   value: string;
   price: number;
-  results?: TransactionSCResultType[];
-  operations?: TransactionOperationType[];
   action?: TransactionActionType;
   function?: string;
-  logs?: {
-    id: string;
-    address: string;
-    events: EventType[];
-  };
   scamInfo?: ScamInfoType;
   pendingResults?: boolean;
   receipt?: TransactionReceiptType;
@@ -40,6 +33,12 @@ export interface TransactionType {
   receiverAssets?: AccountAssetType;
   guardianAddress?: string;
   guardianSignature?: string;
+  isRelayed?: boolean;
+  relayedVersion?: boolean;
+  logs?: TransactionSCResultLogType;
+  results?: TransactionSCResultType[];
+  operations?: TransactionOperationType[];
+  innerTransactions?: TransactionInnerType[];
 }
 
 // TRANSACTION SC RESULTS
@@ -400,6 +399,26 @@ export interface TransactionOperationType {
   senderAssets?: AccountAssetType;
   receiverAssets?: AccountAssetType;
   valueUSD?: number;
+}
+
+// INNER TRANSACTIONS ( RELAYED TX )
+
+export interface TransactionInnerType {
+  nonce: number;
+  value: string;
+  receiver: string;
+  sender: string;
+  gasPrice: number;
+  gasLimit: number;
+  data: string;
+  signature: string;
+  chainID: string;
+  version: number;
+  relayer: string;
+  options?: number;
+  guardianSignature?: string;
+  senderUsername?: string;
+  receiverUsername?: string;
 }
 
 export enum TransactionOperationActionEnum {
