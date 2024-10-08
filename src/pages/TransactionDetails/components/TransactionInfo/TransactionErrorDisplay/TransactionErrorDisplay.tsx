@@ -2,9 +2,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { InfoTooltip, NetworkLink } from 'components';
 import { decodeForDisplay, DecodeMethodEnum } from 'components/DataDecode';
-import { getTransactionMessages, capitalizeFirstLetter } from 'helpers';
+import {
+  getTransactionMessages,
+  capitalizeFirstLetter,
+  urlBuilder
+} from 'helpers';
 import { faAngleDown } from 'icons/regular';
-import { transactionsRoutes } from 'routes';
 import {
   TransactionType,
   TransactionApiStatusEnum,
@@ -41,7 +44,13 @@ export const TransactionErrorDisplay = ({
     )[0] ?? null;
 
   const logsLink = internalVMErrorEvent
-    ? `${transactionsRoutes.transactions}/${transaction.txHash}/logs#${transaction?.logs?.id}/${internalVMErrorEvent.order}/text`
+    ? urlBuilder.transactionDetailsLogs(transaction.txHash, {
+        id: transaction?.logs?.id ?? '',
+        order: internalVMErrorEvent.order,
+        dataDecode: DecodeMethodEnum.text,
+        topicsDecode: DecodeMethodEnum.raw,
+        additionalDataDecode: DecodeMethodEnum.raw
+      })
     : '';
 
   const messageColor =
