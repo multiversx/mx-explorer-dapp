@@ -14,7 +14,8 @@ export const StatusColumnFilters = ({
   inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
-  const { status, miniBlockHash, relayer } = Object.fromEntries(searchParams);
+  const { status, miniBlockHash, relayer, isRelayed } =
+    Object.fromEntries(searchParams);
 
   const searchStatuses = (
     Object.keys(
@@ -27,18 +28,24 @@ export const StatusColumnFilters = ({
     };
   });
 
-  if (
-    inactiveFilters &&
-    inactiveFilters.includes(TransactionFiltersEnum.status) &&
-    inactiveFilters.includes(TransactionFiltersEnum.miniBlockHash)
-  ) {
-    return null;
-  }
+  const relayedOptions = [{ value: 'true', label: 'Relayed' }];
+
+  const allInactive = [
+    TransactionFiltersEnum.status,
+    TransactionFiltersEnum.miniBlockHash,
+    TransactionFiltersEnum.relayer,
+    TransactionFiltersEnum.isRelayed
+  ].every((filter) => inactiveFilters.includes(filter));
 
   const isActive =
     status !== undefined ||
     miniBlockHash !== undefined ||
-    relayer !== undefined;
+    relayer !== undefined ||
+    isRelayed !== undefined;
+
+  if (allInactive) {
+    return null;
+  }
 
   return (
     <OverlayTrigger
@@ -75,6 +82,17 @@ export const StatusColumnFilters = ({
                     filter={TransactionFiltersEnum.miniBlockHash}
                     placeholder='Hash'
                     validation='hash'
+                  />
+                </div>
+              )}
+
+              {!inactiveFilters.includes(TransactionFiltersEnum.isRelayed) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Relayed</div>
+                  <SelectFilter
+                    name='is-relayed-filter'
+                    options={relayedOptions}
+                    filter={TransactionFiltersEnum.isRelayed}
                   />
                 </div>
               )}
