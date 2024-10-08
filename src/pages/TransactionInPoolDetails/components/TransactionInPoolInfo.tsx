@@ -9,8 +9,10 @@ import {
   AccountLink
 } from 'components';
 import { addressIsBech32, isContract } from 'helpers';
-import { DataField } from 'pages/TransactionDetails/components/TransactionInfo/DataField';
-import { TransactionWarningMessage } from 'pages/TransactionDetails/components/TransactionInfo/TransactionWarningMessage';
+import {
+  DataField,
+  TransactionWarningMessage
+} from 'pages/TransactionDetails/components';
 import { TransactionInPoolType } from 'types';
 
 export const TransactionInPoolInfo = ({

@@ -46,6 +46,8 @@ export const TransactionInfo = ({
     transaction.results.length > 0 &&
     transaction.results.some((ressult) => ressult.logs);
   const showLogs = transaction.logs || hasTxResultsLogs;
+  const showInnerTransactions =
+    transaction.innerTransactions && transaction.innerTransactions.length > 0;
 
   useEffect(() => {
     setActiveKey(activeSection);
@@ -108,6 +110,28 @@ export const TransactionInfo = ({
                     Logs
                   </Nav.Link>
                 )}
+                {showInnerTransactions && (
+                  <Nav.Link
+                    eventKey={TransactionInfoTabsEnum.innerTransactions}
+                    className={`tab ${
+                      activeKey === TransactionInfoTabsEnum.innerTransactions
+                        ? 'active'
+                        : ''
+                    }`}
+                    onClick={() => {
+                      const options = {
+                        pathname: networkRoute(
+                          urlBuilder.transactionDetailsInnerTransactions(
+                            transaction.txHash
+                          )
+                        )
+                      };
+                      navigate(options, { replace: true });
+                    }}
+                  >
+                    Inner Transactions
+                  </Nav.Link>
+                )}
               </div>
             </div>
 
@@ -124,6 +148,12 @@ export const TransactionInfo = ({
             <Tab.Pane eventKey={TransactionInfoTabsEnum.details}>
               <TransactionDetailsPanel transaction={transaction} />
             </Tab.Pane>
+
+            {showInnerTransactions && (
+              <Tab.Pane eventKey={TransactionInfoTabsEnum.innerTransactions}>
+                <TransactionLogsPanel transaction={transaction} />
+              </Tab.Pane>
+            )}
 
             {showLogs && (
               <Tab.Pane eventKey={TransactionInfoTabsEnum.logs}>

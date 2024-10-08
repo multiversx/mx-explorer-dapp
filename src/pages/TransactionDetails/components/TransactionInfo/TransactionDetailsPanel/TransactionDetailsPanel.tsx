@@ -30,7 +30,10 @@ import {
 import { faClock, faSpinner } from 'icons/regular';
 import {
   OperationsList,
-  ScResultsList
+  ScResultsList,
+  DataField,
+  TransactionErrorDisplay,
+  TransactionWarningMessage
 } from 'pages/TransactionDetails/components';
 import { activeNetworkSelector } from 'redux/selectors';
 import {
@@ -38,10 +41,6 @@ import {
   TransactionActionCategoryEnum,
   TransactionApiStatusEnum
 } from 'types';
-
-import { DataField } from '../DataField';
-import { TransactionErrorDisplay } from '../TransactionErrorDisplay';
-import { TransactionWarningMessage } from '../TransactionWarningMessage';
 
 export const getFee = (transaction: TransactionType) => {
   const bNgasPrice = new BigNumber(transaction.gasPrice);

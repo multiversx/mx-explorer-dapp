@@ -22,6 +22,8 @@ export const urlBuilder = {
 
     return `/transactions/${hash}/logs${urlSearch ? `?${urlSearch}` : ''}`;
   },
+  transactionDetailsInnerTransactions: (hash: string) =>
+    `/transactions/${hash}/inner-transactions`,
   transactionInPoolDetails: (hash: string) => `/transactions/pool/${hash}`,
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accountDetails: (address: string) => `/accounts/${address}`,
