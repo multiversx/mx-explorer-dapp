@@ -14,7 +14,7 @@ export const StatusColumnFilters = ({
   inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
-  const { status, miniBlockHash } = Object.fromEntries(searchParams);
+  const { status, miniBlockHash, relayer } = Object.fromEntries(searchParams);
 
   const searchStatuses = (
     Object.keys(
@@ -34,6 +34,11 @@ export const StatusColumnFilters = ({
   ) {
     return null;
   }
+
+  const isActive =
+    status !== undefined ||
+    miniBlockHash !== undefined ||
+    relayer !== undefined;
 
   return (
     <OverlayTrigger
@@ -73,6 +78,18 @@ export const StatusColumnFilters = ({
                   />
                 </div>
               )}
+
+              {!inactiveFilters.includes(TransactionFiltersEnum.relayer) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Relayer</div>
+                  <SearchFilter
+                    name='relayer-filter'
+                    filter={TransactionFiltersEnum.relayer}
+                    placeholder='Relayer'
+                    validation='address'
+                  />
+                </div>
+              )}
             </div>
           </Popover.Body>
         </Popover>
@@ -83,16 +100,8 @@ export const StatusColumnFilters = ({
         data-testid='transactionStatusColumnFilter'
       >
         <FontAwesomeIcon
-          icon={
-            status !== undefined || miniBlockHash !== undefined
-              ? faFilterSolid
-              : faFilter
-          }
-          className={
-            status !== undefined || miniBlockHash !== undefined
-              ? 'text-primary'
-              : ''
-          }
+          icon={isActive ? faFilterSolid : faFilter}
+          className={isActive ? 'text-primary' : ''}
         />
       </div>
     </OverlayTrigger>

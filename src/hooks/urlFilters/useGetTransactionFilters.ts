@@ -41,6 +41,9 @@ export const useGetTransactionFilters = () => {
   const token = searchParams.get('token')
     ? String(searchParams.get('token'))
     : '';
+  const relayer = searchParams.get('relayer')
+    ? String(searchParams.get('relayer'))
+    : '';
   const isRelayed = searchParams.get('isRelayed')
     ? Boolean(searchParams.get('isRelayed'))
     : '';
@@ -70,6 +73,7 @@ export const useGetTransactionFilters = () => {
     miniBlockHash,
     method,
     token,
+    relayer,
     isRelayed
   };
 };

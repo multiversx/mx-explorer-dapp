@@ -122,7 +122,9 @@ export enum TransactionFiltersEnum {
   status = 'status',
   search = 'search',
   token = 'token',
-  transactionsInPoolType = 'type'
+  transactionsInPoolType = 'type',
+  relayer = 'relayer',
+  isRelayed = 'isRelayed'
 }
 
 // Avoid issues with differences between methods and actions
