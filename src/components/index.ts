@@ -65,7 +65,6 @@ export * from './TableFiltersHead';
 export * from './TableWrapper';
 export * from './Tabs';
 export * from './TimeAgo';
-export * from './TokenBlock';
 export * from './Tooltips';
 export * from './TransactionAction';
 export * from './TransactionIcons';
