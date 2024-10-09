@@ -76,6 +76,7 @@ export const TransactionDetailsPanel = ({
     showLastNonZeroDecimal: true
   });
 
+  const transactionActionCategory = transaction?.action?.category;
   const visibleOperations = getTransactionVisibleOperations(transaction);
   const totalTxTokenUsdValue = getTotalTxTokenUsdValue(transaction);
   const showTotalTxTokenUsdValue =
@@ -100,7 +101,7 @@ export const TransactionDetailsPanel = ({
       )}
 
       <DetailItem title='Age' className='text-neutral-400'>
-        {transaction.timestamp !== undefined ? (
+        {transaction.timestamp ? (
           <div className='d-flex flex-wrap align-items-center'>
             {isTxPending ? (
               <FontAwesomeIcon
@@ -211,7 +212,7 @@ export const TransactionDetailsPanel = ({
           showUsdValue={false}
           showLastNonZeroDecimal
         />
-        {transaction.price !== undefined && (
+        {transaction.price && (
           <>
             {' '}
             <FormatUSD
@@ -229,13 +230,11 @@ export const TransactionDetailsPanel = ({
         </div>
       </DetailItem>
 
-      {transaction?.action?.category &&
-        transaction.action.category !==
-          TransactionActionCategoryEnum.scCall && (
-          <DetailItem title='Transaction Action' className='text-lh-24'>
-            <TransactionAction transaction={transaction} />
-          </DetailItem>
-        )}
+      {transactionActionCategory !== TransactionActionCategoryEnum.scCall && (
+        <DetailItem title='Transaction Action' className='text-lh-24'>
+          <TransactionAction transaction={transaction} />
+        </DetailItem>
+      )}
 
       {Boolean(visibleOperations.length) && (
         <DetailItem

@@ -52,24 +52,26 @@ export const TransactionStatusIcon = ({
     statusIs(TransactionExtraStatusEnum.notExecuted);
 
   const fetchTransactionMessages = () => {
-    if (transaction.txHash && (statusFailed || statusInvalid)) {
-      if (transaction.txHash !== transactionDetails?.txHash) {
-        getTransaction(transaction.txHash).then(({ data, success }) => {
-          setDataReady(success);
-          setTransactionDetails(data);
+    const isInvalidTransaction = statusFailed || statusInvalid;
 
-          const transactionMessages = getTransactionMessages(data);
-          setTransactionMessages(transactionMessages);
-        });
-      }
+    if (
+      isInvalidTransaction &&
+      transaction.txHash !== transactionDetails?.txHash
+    ) {
+      getTransaction(transaction.txHash).then(({ data, success }) => {
+        setDataReady(success);
+        setTransactionDetails(data);
+
+        const transactionMessages = getTransactionMessages(data);
+        setTransactionMessages(transactionMessages);
+      });
     }
   };
 
-  if (statusIs(TransactionApiStatusEnum.success) && !showSuccess) {
-    return null;
-  }
-
-  if (!statusIcon) {
+  if (
+    (statusIs(TransactionApiStatusEnum.success) && !showSuccess) ||
+    !statusIcon
+  ) {
     return null;
   }
 
@@ -100,13 +102,11 @@ export const TransactionStatusIcon = ({
                   )}
                 </>
               ) : (
-                <>
-                  <FontAwesomeIcon
-                    icon={faSpinnerThird}
-                    size={'sm'}
-                    className='ms-2 fa-spin fast-spin'
-                  />
-                </>
+                <FontAwesomeIcon
+                  icon={faSpinnerThird}
+                  size={'sm'}
+                  className='ms-2 fa-spin fast-spin'
+                />
               )}
             </>
           )}

@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import { NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
 import { FormatAmount, FormatUSD, NetworkLink } from 'components';
 import { DECIMALS } from 'config';
@@ -47,7 +49,9 @@ export const TransactionActionToken = ({
       )}
       <NetworkLink
         to={urlBuilder.tokenDetails(token.token)}
-        className={`d-flex text-truncate ${token.svgUrl ? 'side-link' : ''}`}
+        className={classNames('d-flex text-truncate', {
+          'side-link': token.svgUrl
+        })}
       >
         <div className='d-flex align-items-center symbol text-truncate'>
           {token.svgUrl && (
