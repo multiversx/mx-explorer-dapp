@@ -1,6 +1,7 @@
 export * from './AddressDetailItem';
 export * from './DataField';
 export * from './EventsList';
+export * from './InnerTransactionsList';
 export * from './OperationsList';
 export * from './ScResultsList';
 export * from './ScrDetailItem';

@@ -22,8 +22,20 @@ export const urlBuilder = {
 
     return `/transactions/${hash}/logs${urlSearch ? `?${urlSearch}` : ''}`;
   },
-  transactionDetailsInnerTransactions: (hash: string) =>
-    `/transactions/${hash}/inner-transactions`,
+  transactionDetailsInnerTransactions: (
+    hash: string,
+    params?: TransactionDecodeParamasType
+  ) => {
+    const urlSearch = params
+      ? new URLSearchParams(
+          params as unknown as Record<string, string>
+        ).toString()
+      : '';
+
+    return `/transactions/${hash}/inner-transactions${
+      urlSearch ? `?${urlSearch}` : ''
+    }`;
+  },
   transactionInPoolDetails: (hash: string) => `/transactions/pool/${hash}`,
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accountDetails: (address: string) => `/accounts/${address}`,

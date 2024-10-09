@@ -1,21 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { Tab, Nav } from 'react-bootstrap';
-import { useMatch, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { LoadingDots } from 'components';
 import { urlBuilder, getTransactionStatusIconAndColor } from 'helpers';
 import { useNetworkRoute } from 'hooks';
-import { transactionsRoutes } from 'routes';
-import { TransactionType, TransactionApiStatusEnum } from 'types';
+import { useGetActiveTransactionSection } from 'pages/TransactionDetails/hooks';
+import {
+  TransactionType,
+  TransactionApiStatusEnum,
+  TransactionInfoTabsEnum
+} from 'types';
 
+import { InnerTransactionsPanel } from './InnerTransactionsPanel';
 import { TransactionDetailsPanel } from './TransactionDetailsPanel';
 import { TransactionLogsPanel } from './TransactionLogsPanel';
-
-export enum TransactionInfoTabsEnum {
-  details = 'details',
-  logs = 'logs',
-  innerTransactions = 'innerTransactions'
-}
 
 export const TransactionInfo = ({
   transaction
@@ -26,13 +25,7 @@ export const TransactionInfo = ({
 
   const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
-  const match: any = useMatch(
-    networkRoute(transactionsRoutes.transactionDetailsLogs)
-  );
-
-  const activeSection = match
-    ? TransactionInfoTabsEnum.logs
-    : TransactionInfoTabsEnum.details;
+  const activeSection = useGetActiveTransactionSection();
   const [activeKey, setActiveKey] =
     useState<TransactionInfoTabsEnum>(activeSection);
 
@@ -149,15 +142,15 @@ export const TransactionInfo = ({
               <TransactionDetailsPanel transaction={transaction} />
             </Tab.Pane>
 
-            {showInnerTransactions && (
-              <Tab.Pane eventKey={TransactionInfoTabsEnum.innerTransactions}>
+            {showLogs && (
+              <Tab.Pane eventKey={TransactionInfoTabsEnum.logs}>
                 <TransactionLogsPanel transaction={transaction} />
               </Tab.Pane>
             )}
 
-            {showLogs && (
-              <Tab.Pane eventKey={TransactionInfoTabsEnum.logs}>
-                <TransactionLogsPanel transaction={transaction} />
+            {showInnerTransactions && (
+              <Tab.Pane eventKey={TransactionInfoTabsEnum.innerTransactions}>
+                <InnerTransactionsPanel transaction={transaction} />
               </Tab.Pane>
             )}
           </Tab.Content>

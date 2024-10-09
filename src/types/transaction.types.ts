@@ -423,6 +423,12 @@ export interface TransactionInnerType {
   receiverUsername?: string;
 }
 
+export enum TransactionInfoTabsEnum {
+  details = 'details',
+  logs = 'logs',
+  innerTransactions = 'innerTransactions'
+}
+
 export enum TransactionOperationActionEnum {
   none = 'none',
   transfer = 'transfer',

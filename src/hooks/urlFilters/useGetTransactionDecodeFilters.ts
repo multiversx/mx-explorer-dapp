@@ -20,15 +20,16 @@ export const useGetTransactionDecodeFilters = () => {
   const additionalDataDecode = searchParams.get('additionalDataDecode')
     ? String(searchParams.get('additionalDataDecode'))
     : '';
-  const urlOrder = searchParams.get('order')
-    ? String(searchParams.get('order'))
-    : '';
+  const urlOrder =
+    searchParams.get('order') !== undefined
+      ? String(searchParams.get('order'))
+      : '';
 
   const order = stringIsInteger(urlOrder) ? parseInt(urlOrder) : 0;
 
   return {
     id: searchParams.get('id'),
-    order: order,
+    order,
     topicsDecode: checkType(topicsDecode),
     dataDecode: checkType(dataDecode),
     additionalDataDecode: checkType(additionalDataDecode)
