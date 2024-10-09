@@ -31,36 +31,40 @@ export const EventItem = ({ event, txHash, id }: EventItemUIType) => {
   const ref = useRef<HTMLDivElement>(null);
   const activeRoute = useActiveRoute();
   const {
-    hashId,
-    hashIndex,
-    hashDecodeMethod,
-    secondHashDecodeMethod,
-    thirdHashDecodeMethod
+    id: paramId,
+    order,
+    dataDecode,
+    topicsDecode,
+    additionalDataDecode
   } = useGetTransactionUrlHashParams();
 
   const isEventHighlighted =
-    hashId === id &&
-    event.order === Number(hashIndex) &&
+    paramId === id &&
+    event.order === Number(order) &&
     activeRoute(transactionsRoutes.transactionDetailsLogs);
 
   const [topicsDecodeMethod, setTopicsDecodeMethod] =
     useState<DecodeMethodEnum>(
-      isEventHighlighted ? hashDecodeMethod : DecodeMethodEnum.raw
+      isEventHighlighted ? topicsDecode : DecodeMethodEnum.raw
     );
   const [dataDecodeMethod, setDataDecodeMethod] = useState<DecodeMethodEnum>(
-    isEventHighlighted ? secondHashDecodeMethod : DecodeMethodEnum.raw
+    isEventHighlighted ? dataDecode : DecodeMethodEnum.raw
   );
   const [additionalDataDecodeMethod, setAdditionalDataDecodeMethod] =
     useState<DecodeMethodEnum>(
-      isEventHighlighted ? thirdHashDecodeMethod : DecodeMethodEnum.raw
+      isEventHighlighted ? additionalDataDecode : DecodeMethodEnum.raw
     );
 
   const dataBase64Buffer = Buffer.from(String(event?.data), 'base64');
   const dataHexValue = dataBase64Buffer.toString('hex');
 
-  const eventLink = `${urlBuilder.transactionDetailsLogs(txHash)}#${id}/${
-    event.order
-  }/${topicsDecodeMethod}/${dataDecodeMethod}/${additionalDataDecodeMethod}`;
+  const eventLink = urlBuilder.transactionDetailsLogs(txHash, {
+    id,
+    order: event.order,
+    dataDecode: dataDecodeMethod,
+    topicsDecode: topicsDecodeMethod,
+    additionalDataDecode: additionalDataDecodeMethod
+  });
 
   useScrollToTransactionSection(ref);
 

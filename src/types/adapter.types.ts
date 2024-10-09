@@ -115,6 +115,7 @@ export interface GetTransactionsType extends SortableApiType {
   withScamInfo?: boolean;
   withUsername?: boolean;
   withBlockInfo?: boolean;
+  relayer?: boolean;
   isRelayed?: boolean;
 }
 

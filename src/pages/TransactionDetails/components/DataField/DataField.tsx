@@ -28,10 +28,10 @@ export const DataField = ({
   const scamFlag = useScamFlag();
   const { pathname } = useLocation();
 
-  const { hashId, hashDecodeMethod } = useGetTransactionUrlHashParams();
+  const { id, dataDecode } = useGetTransactionUrlHashParams();
 
   const [decodeMethod, setDecodeMethod] =
-    useState<DecodeMethodEnum>(hashDecodeMethod);
+    useState<DecodeMethodEnum>(dataDecode);
   const [showData, setShowData] = useState(false);
 
   const show = (e: React.MouseEvent) => {
@@ -46,7 +46,7 @@ export const DataField = ({
     const isDataFieldDecode =
       decodeMethod &&
       decodeMethod !== DecodeMethodEnum.raw &&
-      !hashId &&
+      !id &&
       !activeRoute(transactionsRoutes.transactionDetailsLogs);
 
     if (isDataFieldDecode) {
@@ -74,9 +74,7 @@ export const DataField = ({
       ) : (
         <DataDecode
           value={truncate(output, MAX_DISPLAY_TX_DATA_LENGTH)}
-          initialDecodeMethod={
-            !hashId ? hashDecodeMethod : DecodeMethodEnum.raw
-          }
+          initialDecodeMethod={!id ? dataDecode : DecodeMethodEnum.raw}
           setDecodeMethod={setDecodeMethod}
         />
       )}

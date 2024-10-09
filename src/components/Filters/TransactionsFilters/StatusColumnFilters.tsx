@@ -14,7 +14,8 @@ export const StatusColumnFilters = ({
   inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
-  const { status, miniBlockHash } = Object.fromEntries(searchParams);
+  const { status, miniBlockHash, relayer, isRelayed } =
+    Object.fromEntries(searchParams);
 
   const searchStatuses = (
     Object.keys(
@@ -27,11 +28,22 @@ export const StatusColumnFilters = ({
     };
   });
 
-  if (
-    inactiveFilters &&
-    inactiveFilters.includes(TransactionFiltersEnum.status) &&
-    inactiveFilters.includes(TransactionFiltersEnum.miniBlockHash)
-  ) {
+  const relayedOptions = [{ value: 'true', label: 'Relayed' }];
+
+  const allInactive = [
+    TransactionFiltersEnum.status,
+    TransactionFiltersEnum.miniBlockHash,
+    TransactionFiltersEnum.relayer,
+    TransactionFiltersEnum.isRelayed
+  ].every((filter) => inactiveFilters.includes(filter));
+
+  const isActive =
+    status !== undefined ||
+    miniBlockHash !== undefined ||
+    relayer !== undefined ||
+    isRelayed !== undefined;
+
+  if (allInactive) {
     return null;
   }
 
@@ -73,6 +85,29 @@ export const StatusColumnFilters = ({
                   />
                 </div>
               )}
+
+              {!inactiveFilters.includes(TransactionFiltersEnum.isRelayed) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Relayed</div>
+                  <SelectFilter
+                    name='is-relayed-filter'
+                    options={relayedOptions}
+                    filter={TransactionFiltersEnum.isRelayed}
+                  />
+                </div>
+              )}
+
+              {!inactiveFilters.includes(TransactionFiltersEnum.relayer) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Relayer</div>
+                  <SearchFilter
+                    name='relayer-filter'
+                    filter={TransactionFiltersEnum.relayer}
+                    placeholder='Relayer'
+                    validation='address'
+                  />
+                </div>
+              )}
             </div>
           </Popover.Body>
         </Popover>
@@ -83,16 +118,8 @@ export const StatusColumnFilters = ({
         data-testid='transactionStatusColumnFilter'
       >
         <FontAwesomeIcon
-          icon={
-            status !== undefined || miniBlockHash !== undefined
-              ? faFilterSolid
-              : faFilter
-          }
-          className={
-            status !== undefined || miniBlockHash !== undefined
-              ? 'text-primary'
-              : ''
-          }
+          icon={isActive ? faFilterSolid : faFilter}
+          className={isActive ? 'text-primary' : ''}
         />
       </div>
     </OverlayTrigger>

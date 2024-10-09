@@ -5,11 +5,11 @@ import { useGetTransactionUrlHashParams } from 'hooks';
 export const useScrollToTransactionSection = (
   ref?: RefObject<HTMLDivElement>
 ) => {
-  const { hashId } = useGetTransactionUrlHashParams();
+  const { id } = useGetTransactionUrlHashParams();
 
   useEffect(() => {
     setTimeout(() => {
-      if (hashId && ref?.current && ref.current !== null) {
+      if (id && ref?.current && ref.current !== null) {
         ref.current.scrollIntoView({
           behavior: 'smooth',
           block: 'start',
@@ -17,5 +17,5 @@ export const useScrollToTransactionSection = (
         });
       }
     }, 200);
-  }, [hashId]);
+  }, [id]);
 };

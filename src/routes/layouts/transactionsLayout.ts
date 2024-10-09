@@ -10,7 +10,8 @@ export const transactionsRoutes = {
   transactionsInPool: '/transactions/pool',
   transactionsInPoolDetails: '/transactions/pool/:hash',
   transactionDetails: '/transactions/:hash/*',
-  transactionDetailsLogs: '/transactions/:hash/logs'
+  transactionDetailsLogs: '/transactions/:hash/logs',
+  transactionDetailsInnerTransactions: '/transactions/:hash/inner-transactions'
 };
 
 export const transactionsLayout: TitledRouteObject[] = [

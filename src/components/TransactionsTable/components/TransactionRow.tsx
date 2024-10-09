@@ -7,7 +7,7 @@ import {
   Trim,
   LockedTokenAddressIcon,
   AccountName,
-  TransactionIcon,
+  TransactionIcons,
   ShardLink
 } from 'components';
 import { urlBuilder, getDisplayReceiver } from 'helpers';
@@ -60,7 +60,7 @@ export const TransactionRow = ({
     <tr className={`animated-row ${transaction.isNew ? 'new' : ''}`}>
       <td>
         <div className='d-flex align-items-center hash'>
-          <TransactionIcon transaction={transaction} />
+          <TransactionIcons transaction={transaction} />
           <NetworkLink
             to={urlBuilder.transactionDetails(
               transaction.originalTxHash
