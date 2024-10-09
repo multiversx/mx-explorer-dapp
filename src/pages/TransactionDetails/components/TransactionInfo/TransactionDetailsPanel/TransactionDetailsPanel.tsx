@@ -25,7 +25,8 @@ import {
   getTransactionMethod,
   getTotalTxTokenUsdValue,
   getDisplayReceiver,
-  getTransactionVisibleOperations
+  getTransactionVisibleOperations,
+  getTransactionFee
 } from 'helpers';
 import { faClock, faSpinner } from 'icons/regular';
 import {
@@ -42,14 +43,6 @@ import {
   TransactionApiStatusEnum
 } from 'types';
 
-export const getFee = (transaction: TransactionType) => {
-  const bNgasPrice = new BigNumber(transaction.gasPrice);
-  const bNgasUsed = new BigNumber(transaction.gasUsed);
-  const output = bNgasPrice.times(bNgasUsed).toString();
-
-  return output;
-};
-
 export const TransactionDetailsPanel = ({
   transaction
 }: {
@@ -62,14 +55,6 @@ export const TransactionDetailsPanel = ({
     (transaction?.status &&
       transaction.status.toLowerCase() === TransactionApiStatusEnum.pending) ||
     transaction.pendingResults;
-
-  const transactionFee =
-    transaction.fee === undefined && transaction.gasUsed === undefined
-      ? 'N/A'
-      : formatAmount({
-          input: transaction.fee ? transaction.fee : getFee(transaction),
-          showLastNonZeroDecimal: true
-        });
 
   const txValue = formatAmount({
     input: transaction.value,
@@ -267,7 +252,7 @@ export const TransactionDetailsPanel = ({
         {transaction.fee !== undefined && transaction.gasUsed !== undefined ? (
           <>
             <FormatAmount
-              value={transaction.fee ?? getFee(transaction)}
+              value={transaction.fee ?? getTransactionFee(transaction)}
               showUsdValue={false}
               showLastNonZeroDecimal
             />
@@ -275,7 +260,10 @@ export const TransactionDetailsPanel = ({
               <>
                 {' '}
                 <FormatUSD
-                  value={transactionFee}
+                  value={formatAmount({
+                    input: transaction.fee ?? getTransactionFee(transaction),
+                    showLastNonZeroDecimal: true
+                  })}
                   usd={transaction.price}
                   className='text-neutral-400'
                 />

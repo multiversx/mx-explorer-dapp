@@ -16,6 +16,7 @@ export * from './getStringPlural';
 export * from './getSubdomainNetwork';
 export * from './getTotalTokenUsdValue';
 export * from './getTotalTxTokenUsdValue';
+export * from './getTransactionFee';
 export * from './getTransactionMessages';
 export * from './getTransactionMethod';
 export * from './getTransactionStatusIconAndColor';
