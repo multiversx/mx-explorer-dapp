@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { DecodeMethodEnum } from 'components/DataDecode';
 import { useGetTransactionDecodeFilters } from 'hooks';
 
-export interface TransactionDecodeParamasType {
+export interface TransactionDecodeParamsType {
   id?: string;
   order?: number;
   dataDecode?: DecodeMethodEnum;

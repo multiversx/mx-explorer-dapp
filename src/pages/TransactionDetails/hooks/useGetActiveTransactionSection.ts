@@ -5,17 +5,17 @@ import { TransactionInfoTabsEnum } from 'types';
 
 export const useGetActiveTransactionSection = () => {
   const networkRoute = useNetworkRoute();
-  const isLogsRoute: any = useMatch(
+  const isLogsRoute = useMatch(
     networkRoute(transactionsRoutes.transactionDetailsLogs)
   );
-  const isInnerTransactionRoute: any = useMatch(
+  const isInnerTransactionRoute = useMatch(
     networkRoute(transactionsRoutes.transactionDetailsInnerTransactions)
   );
 
-  if (isLogsRoute) {
+  if (Boolean(isLogsRoute)) {
     return TransactionInfoTabsEnum.logs;
   }
-  if (isInnerTransactionRoute) {
+  if (Boolean(isInnerTransactionRoute)) {
     return TransactionInfoTabsEnum.innerTransactions;
   }
 

@@ -7,21 +7,19 @@ export const InnerTransactionsPanel = ({
 }: {
   transaction: TransactionType;
 }) => {
+  const innerTransactions = transaction.innerTransactions;
+  if (!innerTransactions || innerTransactions.length === 0) {
+    return null;
+  }
+
   return (
-    <>
-      {transaction.innerTransactions &&
-        transaction.innerTransactions.length > 0 && (
-          <div className='row'>
-            <DetailItem
-              title={<div className='item-title'>Inner Transactions</div>}
-            >
-              <InnerTransactionsList
-                innerTransactions={transaction.innerTransactions}
-                txHash={transaction.txHash}
-              />
-            </DetailItem>
-          </div>
-        )}
-    </>
+    <div className='row'>
+      <DetailItem title={<div className='item-title'>Inner Transactions</div>}>
+        <InnerTransactionsList
+          innerTransactions={innerTransactions}
+          txHash={transaction.txHash}
+        />
+      </DetailItem>
+    </div>
   );
 };

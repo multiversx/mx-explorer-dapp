@@ -1,4 +1,4 @@
-import { TransactionDecodeParamasType } from 'hooks';
+import { TransactionDecodeParamsType } from 'hooks';
 import { GetTokensType, GetCollectionsType } from 'types';
 
 export const urlBuilder = {
@@ -12,7 +12,7 @@ export const urlBuilder = {
     `/transactions/${hash}/results`,
   transactionDetailsLogs: (
     hash: string,
-    params?: TransactionDecodeParamasType
+    params?: TransactionDecodeParamsType
   ) => {
     const urlSearch = params
       ? new URLSearchParams(
@@ -24,7 +24,7 @@ export const urlBuilder = {
   },
   transactionDetailsInnerTransactions: (
     hash: string,
-    params?: TransactionDecodeParamasType
+    params?: TransactionDecodeParamsType
   ) => {
     const urlSearch = params
       ? new URLSearchParams(

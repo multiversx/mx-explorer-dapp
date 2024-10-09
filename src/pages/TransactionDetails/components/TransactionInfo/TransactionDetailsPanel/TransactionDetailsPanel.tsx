@@ -331,10 +331,8 @@ export const TransactionDetailsPanel = ({
       </DetailItem>
 
       <DetailItem title='Nonce'>
-        <>
-          <span className='text-neutral-100'>{transaction.nonce}</span>
-          <TransactionWarningMessage transaction={transaction} />
-        </>
+        <span className='text-neutral-100'>{transaction.nonce}</span>
+        <TransactionWarningMessage transaction={transaction} />
       </DetailItem>
 
       <DataField data={transaction.data} scamInfo={transaction.scamInfo} />

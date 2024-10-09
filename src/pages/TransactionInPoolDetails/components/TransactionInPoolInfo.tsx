@@ -111,13 +111,11 @@ export const TransactionInPoolInfo = ({
         </DetailItem>
 
         <DetailItem title='Nonce'>
-          <>
-            <span className='text-neutral-100'>{transaction.nonce}</span>
-            <TransactionWarningMessage
-              transaction={transaction}
-              isPoolTransaction
-            />
-          </>
+          <span className='text-neutral-100'>{transaction.nonce}</span>
+          <TransactionWarningMessage
+            transaction={transaction}
+            isPoolTransaction
+          />
         </DetailItem>
 
         <DataField data={transaction.data} />

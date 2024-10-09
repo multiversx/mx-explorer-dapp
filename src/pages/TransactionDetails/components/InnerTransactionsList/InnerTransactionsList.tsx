@@ -1,6 +1,6 @@
 import { TransactionInnerType } from 'types';
 
-import { InnerTransaction } from './InnerTransaction';
+import { InnerTransaction } from './components';
 
 interface InnerTransactionsListUIType {
   innerTransactions: TransactionInnerType[];

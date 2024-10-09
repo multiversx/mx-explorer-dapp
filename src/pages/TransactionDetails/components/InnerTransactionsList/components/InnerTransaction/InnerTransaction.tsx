@@ -128,9 +128,7 @@ export const InnerTransaction = ({
           />
         </DetailItem>
         <DetailItem title='Nonce' noBorder>
-          <>
-            <span className='text-neutral-100'>{innerTransaction.nonce}</span>
-          </>
+          <span className='text-neutral-100'>{innerTransaction.nonce}</span>
         </DetailItem>
 
         {innerTransaction.data !== undefined && (
