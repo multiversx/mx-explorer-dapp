@@ -215,11 +215,12 @@ export const TransactionDetailsPanel = ({
         </div>
       </DetailItem>
 
-      {transactionActionCategory !== TransactionActionCategoryEnum.scCall && (
-        <DetailItem title='Transaction Action' className='text-lh-24'>
-          <TransactionAction transaction={transaction} />
-        </DetailItem>
-      )}
+      {transactionActionCategory &&
+        transactionActionCategory !== TransactionActionCategoryEnum.scCall && (
+          <DetailItem title='Transaction Action' className='text-lh-24'>
+            <TransactionAction transaction={transaction} />
+          </DetailItem>
+        )}
 
       {Boolean(visibleOperations.length) && (
         <DetailItem
