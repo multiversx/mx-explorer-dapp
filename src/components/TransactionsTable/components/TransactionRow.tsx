@@ -39,9 +39,14 @@ export const TransactionRow = ({
   const directionIn = address === receiver;
   const directionSelf = directionOut && directionIn;
   const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
+  const isInnerTransaction =
+    transaction?.type === TransferTypeEnum.InnerTransaction;
 
   let direction = 'Out';
   switch (true) {
+    case isInnerTransaction:
+      direction = 'Inner Tx';
+      break;
     case isScResult:
       direction = 'Internal';
       break;
@@ -131,7 +136,9 @@ export const TransactionRow = ({
         <td>
           <div className='d-flex'>
             <span
-              className={`badge badge-outline badge-rounded badge-direction ${direction.toLowerCase()}`}
+              className={`badge badge-outline badge-rounded badge-direction ${direction
+                .replace(' ', '-')
+                .toLowerCase()}`}
             >
               {direction.toLowerCase().replace('internal', 'int').toUpperCase()}
             </span>

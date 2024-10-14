@@ -234,7 +234,9 @@ export interface TransactionTokensType {
 
 export enum TransferTypeEnum {
   Transaction = 'Transaction',
-  SmartContractResult = 'SmartContractResult'
+  SmartContractResult = 'SmartContractResult',
+  InnerTransaction = 'InnerTransaction',
+  Reward = 'Reward'
 }
 
 export interface TransferType extends TransactionType {
@@ -406,6 +408,7 @@ export interface TransactionOperationType {
 // INNER TRANSACTIONS ( RELAYED TX )
 
 export interface TransactionInnerType {
+  hash: string;
   nonce: number;
   value: string;
   receiver: string;
@@ -442,6 +445,7 @@ export enum TransactionOperationActionEnum {
   freeze = 'freeze',
   writeLog = 'writeLog',
   signalError = 'signalError',
+  innerTransaction = 'innerTransaction',
 
   // to be deprecated ?
   ESDTLocalMint = 'ESDTLocalMint',
