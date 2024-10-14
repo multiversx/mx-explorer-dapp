@@ -11,7 +11,8 @@ import {
   AccountLink,
   NetworkLink,
   DetailItem,
-  FormatAmount
+  FormatAmount,
+  Trim
 } from 'components';
 import { addressIsBech32, truncate, urlBuilder, isContract } from 'helpers';
 import {
@@ -85,6 +86,20 @@ export const InnerTransaction = ({
       </NetworkLink>
 
       <div className='detailed-item-content'>
+        {innerTransaction.hash && (
+          <DetailItem title='Hash' noBorder>
+            <div className='d-flex align-items-center'>
+              <Trim text={innerTransaction.hash} />
+              <CopyButton
+                text={innerTransaction.hash}
+                className='side-action ms-2'
+              />
+              <NetworkLink to={innerTransactionLink} className='side-action'>
+                <FontAwesomeIcon icon={faSearch} />
+              </NetworkLink>
+            </div>
+          </DetailItem>
+        )}
         {innerTransaction.relayer && (
           <DetailItem title='Relayer' noBorder>
             <div className='d-flex align-items-center'>
