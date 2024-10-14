@@ -124,6 +124,7 @@ export enum TransactionFiltersEnum {
   token = 'token',
   transactionsInPoolType = 'type',
   relayer = 'relayer',
+  hashes = 'hashes',
   isRelayed = 'isRelayed'
 }
 
