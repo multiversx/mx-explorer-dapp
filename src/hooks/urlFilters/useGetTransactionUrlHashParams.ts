@@ -5,6 +5,7 @@ import { useGetTransactionDecodeFilters } from 'hooks';
 
 export interface TransactionDecodeParamsType {
   id?: string;
+  hash?: string;
   order?: number;
   dataDecode?: DecodeMethodEnum;
   topicsDecode?: DecodeMethodEnum;
@@ -21,7 +22,7 @@ export const useGetTransactionUrlHashParams = () => {
     additionalDataDecode: paramsAdditionalDataDecode
   } = useGetTransactionDecodeFilters();
 
-  if (id || order !== undefined) {
+  if (id && order !== undefined) {
     return {
       id,
       order,

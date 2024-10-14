@@ -61,6 +61,7 @@ export const InnerTransaction = ({
   const innerTransactionLink = urlBuilder.transactionDetailsInnerTransactions(
     txHash,
     {
+      hash: innerTransaction.hash,
       order: index,
       dataDecode: dataDecodeMethod
     }
