@@ -240,6 +240,12 @@ export const DataDecode = ({
     }
   }, [activeKey]);
 
+  useEffect(() => {
+    if (defaultDecodeMethod !== activeKey) {
+      setActiveKey(defaultDecodeMethod);
+    }
+  }, [defaultDecodeMethod]);
+
   return (
     <div
       className={`position-relative data-decode mt-1 ${
