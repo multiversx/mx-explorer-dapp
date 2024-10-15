@@ -1,6 +1,7 @@
 import { Overlay } from 'components';
 import { formatDate } from 'helpers';
 import { WithClassnameType } from 'types';
+
 import { timeAgo } from './helpers/timeAgo';
 
 export interface TimeAgoUIType extends WithClassnameType {
@@ -16,6 +17,10 @@ export const TimeAgo = ({
   tooltip = false,
   showAgo = false
 }: TimeAgoUIType) => {
+  if (!value) {
+    return 'N/A';
+  }
+
   const ms = value * 1000;
   let result = timeAgo(ms);
 
