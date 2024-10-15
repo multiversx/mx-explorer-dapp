@@ -17,7 +17,8 @@ import {
   useGetSearch,
   useGetPage,
   useActiveRoute,
-  useHasGrowthWidgets
+  useHasGrowthWidgets,
+  useIsMainnet
 } from 'hooks';
 import { pageHeadersCollectionsStatsSelector } from 'redux/selectors/pageHeadersCollectionsStats';
 import { collectionRoutes } from 'routes';
@@ -30,6 +31,7 @@ import { NoCollections } from './components/NoCollections';
 export const Collections = () => {
   const ref = useRef(null);
   const hasGrowthWidgets = useHasGrowthWidgets();
+  const isMainnet = useIsMainnet();
   const activeRoute = useActiveRoute();
   const { page, size } = useGetPage();
   const { search } = useGetSearch();
@@ -65,7 +67,7 @@ export const Collections = () => {
         page,
         size,
         type,
-        sort: 'verifiedAndHolderCount'
+        ...(isMainnet ? { sort: 'verifiedAndHolderCount' } : {})
       }),
       getCollectionsCount({ search, type })
     ]).then(([collectionsData, count]) => {
