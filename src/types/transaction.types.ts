@@ -237,6 +237,7 @@ export enum TransferTypeEnum {
   Transaction = 'Transaction',
   SmartContractResult = 'SmartContractResult',
   InnerTransaction = 'InnerTransaction',
+  innerTx = 'innerTx', // temporary
   Reward = 'Reward'
 }
 

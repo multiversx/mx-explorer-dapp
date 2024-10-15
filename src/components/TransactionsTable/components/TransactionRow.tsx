@@ -40,7 +40,8 @@ export const TransactionRow = ({
   const directionSelf = directionOut && directionIn;
   const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
   const isInnerTransaction =
-    transaction?.type === TransferTypeEnum.InnerTransaction;
+    transaction?.type === TransferTypeEnum.InnerTransaction ||
+    transaction?.type === TransferTypeEnum.innerTx;
 
   let direction = 'Out';
   switch (true) {
