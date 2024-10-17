@@ -42,13 +42,13 @@ export const SelectFilter = ({
   if (hasCustomSearch && existingValues.length > 0) {
     const searchedOptions = existingValues.map((value) => {
       return {
-        value: value,
+        value,
         label: capitalize(value)
       };
     });
 
     searchedOptions.forEach((value) => {
-      if (options.some((option) => option.label !== value.label)) {
+      if (options.every((option) => option.value !== value.value)) {
         options.push(value);
       }
     });

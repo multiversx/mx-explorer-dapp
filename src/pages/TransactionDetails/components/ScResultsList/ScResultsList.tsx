@@ -43,7 +43,13 @@ export const ScResultsList = ({
           activeRoute(transactionsRoutes.transactionDetails) &&
           !activeRoute(transactionsRoutes.transactionDetailsLogs);
 
-        const resultLink = `${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`;
+        const resultLink = urlBuilder.transactionDetails(
+          result.originalTxHash,
+          {
+            hash: result.hash,
+            dataDecode: decodeMethod
+          }
+        );
 
         const decodedData = result.data
           ? truncate(

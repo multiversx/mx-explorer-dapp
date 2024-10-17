@@ -44,16 +44,12 @@ export const EventItem = ({ event, txHash, id }: EventItemUIType) => {
     activeRoute(transactionsRoutes.transactionDetailsLogs);
 
   const [topicsDecodeMethod, setTopicsDecodeMethod] =
-    useState<DecodeMethodEnum>(
-      isEventHighlighted ? topicsDecode : DecodeMethodEnum.raw
-    );
+    useState<DecodeMethodEnum>(DecodeMethodEnum.raw);
   const [dataDecodeMethod, setDataDecodeMethod] = useState<DecodeMethodEnum>(
-    isEventHighlighted ? dataDecode : DecodeMethodEnum.raw
+    DecodeMethodEnum.raw
   );
   const [additionalDataDecodeMethod, setAdditionalDataDecodeMethod] =
-    useState<DecodeMethodEnum>(
-      isEventHighlighted ? additionalDataDecode : DecodeMethodEnum.raw
-    );
+    useState<DecodeMethodEnum>(DecodeMethodEnum.raw);
 
   const dataBase64Buffer = Buffer.from(String(event?.data), 'base64');
   const dataHexValue = dataBase64Buffer.toString('hex');
@@ -113,7 +109,9 @@ export const EventItem = ({ event, txHash, id }: EventItemUIType) => {
                 data={event.topics}
                 identifier={event.identifier}
                 setDecodeMethod={setTopicsDecodeMethod}
-                initialDecodeMethod={topicsDecodeMethod}
+                initialDecodeMethod={
+                  isEventHighlighted ? topicsDecode : DecodeMethodEnum.raw
+                }
               />
             </div>
           </div>
@@ -126,7 +124,9 @@ export const EventItem = ({ event, txHash, id }: EventItemUIType) => {
               <DataDecode
                 value={dataHexValue}
                 setDecodeMethod={setDataDecodeMethod}
-                initialDecodeMethod={dataDecodeMethod}
+                initialDecodeMethod={
+                  isEventHighlighted ? dataDecode : DecodeMethodEnum.raw
+                }
               />
             </div>
           </div>
@@ -140,7 +140,11 @@ export const EventItem = ({ event, txHash, id }: EventItemUIType) => {
                 data={event.additionalData}
                 identifier={event.identifier}
                 setDecodeMethod={setAdditionalDataDecodeMethod}
-                initialDecodeMethod={additionalDataDecodeMethod}
+                initialDecodeMethod={
+                  isEventHighlighted
+                    ? additionalDataDecode
+                    : DecodeMethodEnum.raw
+                }
               />
             </div>
           </div>

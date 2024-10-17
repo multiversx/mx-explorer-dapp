@@ -7,7 +7,18 @@ export const urlBuilder = {
   receiverShard: (shard: number | string) =>
     `/transactions?receiverShard=${shard}`,
   senderShard: (shard: number | string) => `/transactions?senderShard=${shard}`,
-  transactionDetails: (hash: number | string) => `/transactions/${hash}`,
+  transactionDetails: (
+    hash: number | string,
+    params?: TransactionDecodeParamsType
+  ) => {
+    const urlSearch = params
+      ? new URLSearchParams(
+          params as unknown as Record<string, string>
+        ).toString()
+      : '';
+
+    return `/transactions/${hash}${urlSearch ? `?${urlSearch}` : ''}`;
+  },
   transactionDetailsScResults: (hash: string) =>
     `/transactions/${hash}/results`,
   transactionDetailsLogs: (

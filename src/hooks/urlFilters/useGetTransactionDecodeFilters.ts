@@ -28,7 +28,7 @@ export const useGetTransactionDecodeFilters = () => {
   const order = stringIsInteger(urlOrder) ? parseInt(urlOrder) : 0;
 
   return {
-    id: searchParams.get('id'),
+    id: searchParams.get('id') || searchParams.get('hash'),
     order,
     topicsDecode: checkType(topicsDecode),
     dataDecode: checkType(dataDecode),

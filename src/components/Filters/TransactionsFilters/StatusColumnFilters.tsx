@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
-import { SelectFilter, SearchFilter } from 'components';
-import { capitalize } from 'helpers';
+import { SelectFilter, SelectFilterType, SearchFilter } from 'components';
+import { capitalize, truncateMiddle } from 'helpers';
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
 import { TransactionApiStatusEnum, TransactionFiltersEnum } from 'types';
@@ -14,8 +14,13 @@ export const StatusColumnFilters = ({
   inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
-  const { status, miniBlockHash, relayer, isRelayed } =
+  const { status, hashes, miniBlockHash, relayer, isRelayed } =
     Object.fromEntries(searchParams);
+
+  const existingHashesValues: SelectFilterType['options'] =
+    hashes?.split(',').map((hash) => {
+      return { value: hash, label: truncateMiddle(hash, 9) };
+    }) ?? [];
 
   const searchStatuses = (
     Object.keys(
@@ -34,14 +39,16 @@ export const StatusColumnFilters = ({
     TransactionFiltersEnum.status,
     TransactionFiltersEnum.miniBlockHash,
     TransactionFiltersEnum.relayer,
-    TransactionFiltersEnum.isRelayed
+    TransactionFiltersEnum.isRelayed,
+    TransactionFiltersEnum.hashes
   ].every((filter) => inactiveFilters.includes(filter));
 
   const isActive =
     status !== undefined ||
     miniBlockHash !== undefined ||
     relayer !== undefined ||
-    isRelayed !== undefined;
+    isRelayed !== undefined ||
+    hashes !== undefined;
 
   if (allInactive) {
     return null;
@@ -72,20 +79,6 @@ export const StatusColumnFilters = ({
                 </>
               )}
 
-              {!inactiveFilters.includes(
-                TransactionFiltersEnum.miniBlockHash
-              ) && (
-                <div className='filter-block'>
-                  <div className='mb-1'>Miniblock Hash</div>
-                  <SearchFilter
-                    name='miniBlockHash-filter'
-                    filter={TransactionFiltersEnum.miniBlockHash}
-                    placeholder='Hash'
-                    validation='hash'
-                  />
-                </div>
-              )}
-
               {!inactiveFilters.includes(TransactionFiltersEnum.isRelayed) && (
                 <div className='filter-block'>
                   <div className='mb-1'>Relayed</div>
@@ -105,6 +98,36 @@ export const StatusColumnFilters = ({
                     filter={TransactionFiltersEnum.relayer}
                     placeholder='Relayer'
                     validation='address'
+                  />
+                </div>
+              )}
+
+              {!inactiveFilters.includes(TransactionFiltersEnum.hashes) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Txn Hash</div>
+                  <SelectFilter
+                    name='hashes-filter'
+                    options={existingHashesValues}
+                    filter={TransactionFiltersEnum.hashes}
+                    placeholder='Transaction Hashes'
+                    validation='hash'
+                    noOptionsMessage='Invalid Hash'
+                    hasCustomSearch
+                    isMulti
+                  />
+                </div>
+              )}
+
+              {!inactiveFilters.includes(
+                TransactionFiltersEnum.miniBlockHash
+              ) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Miniblock Hash</div>
+                  <SearchFilter
+                    name='miniBlockHash-filter'
+                    filter={TransactionFiltersEnum.miniBlockHash}
+                    placeholder='Hash'
+                    validation='hash'
                   />
                 </div>
               )}
