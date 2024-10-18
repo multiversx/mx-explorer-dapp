@@ -23,20 +23,15 @@ export const getAccountDelegationDetails = (
       (a, b) => new BigNumber(a).plus(b),
       new BigNumber(ZERO)
     );
-    const bNunbondable = delegation
-      .map(({ userUnBondable }) => userUnBondable)
-      .reduce((a, b) => new BigNumber(a).plus(b), new BigNumber(ZERO));
 
     const activePlusUnStaked = bNactive.plus(bNunstaked);
-    const bNlocked = activePlusUnStaked
-      .plus(bNclaimableRewards)
-      .plus(bNunbondable);
+    const bNlocked = activePlusUnStaked.plus(bNclaimableRewards);
 
     const show = bNlocked.isGreaterThan(0);
 
     return {
       active: bNactive,
-      unstaked: bNunstaked.plus(bNunbondable),
+      unstaked: bNunstaked,
       claimable: bNclaimableRewards,
       locked: bNlocked,
       show

@@ -42,12 +42,8 @@ export const prepareChartData = ({
           ({ provider }) => delegation.contract === provider
         );
         if (provider) {
-          const {
-            userActiveStake,
-            claimableRewards,
-            userUnBondable,
-            userUndelegatedList
-          } = delegation;
+          const { userActiveStake, claimableRewards, userUndelegatedList } =
+            delegation;
 
           const undelegatedAmounts =
             userUndelegatedList && userUndelegatedList.length > 0
@@ -60,7 +56,6 @@ export const prepareChartData = ({
 
           const bNLocked = new BigNumber(userActiveStake)
             .plus(claimableRewards)
-            .plus(userUnBondable)
             .plus(bNtotalUserUnStakedValue);
 
           const amount = formatAmount({
