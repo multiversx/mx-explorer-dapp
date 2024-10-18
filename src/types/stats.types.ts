@@ -5,6 +5,7 @@ export interface StatsType {
   blocks: number;
   accounts: number;
   transactions: number;
+  scResults: number;
   refreshRate: number;
   epoch: number;
   roundsPassed: number;
@@ -25,6 +26,7 @@ export interface StatsSliceType extends SliceType {
   blocks: string;
   accounts: string;
   transactions: string;
+  scResults: string;
   refreshRate: number;
   epoch: number;
   roundsPassed: number;

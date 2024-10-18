@@ -25,10 +25,18 @@
       height: 100%;
       color: transparent;
     }
-    svg {
-      width: auto;
-      height: 50%;
-      color: var(--neutral-700);
+    &.icon-component {
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    &:not(.icon-component) {
+      svg {
+        width: auto;
+        height: 50%;
+        color: var(--neutral-700);
+      }
     }
     &.has-placeholder {
       border-radius: unset;

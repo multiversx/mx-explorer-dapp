@@ -1,0 +1,10 @@
+.native-token {
+  @include media-breakpoint-up(xl) {
+    .chart-price {
+      width: 50%;
+    }
+    .chart-stake {
+      width: 50%;
+    }
+  }
+}

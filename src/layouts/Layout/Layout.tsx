@@ -79,7 +79,7 @@ export const Layout = () => {
             ) : (
               <>
                 <Hero />
-                <div className='page-container' data-testid='mainPageContent'>
+                <div className='page-container' data-testid='layoutContainer'>
                   <Outlet />
                 </div>
               </>

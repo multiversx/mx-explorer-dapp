@@ -1,16 +1,11 @@
-.economics {
+.economics-card {
   background: black;
-  margin-bottom: 1rem;
   border-radius: 1rem;
   padding: 1rem;
   flex: 1;
 
-  @media (min-width: 768px) {
-    padding: 2rem;
-  }
-
-  @media (min-width: 1200px) {
-    margin-left: 1rem;
+  @include media-breakpoint-up(md) {
+    padding: 1.5rem 2rem;
   }
 
   .economic {
@@ -22,11 +17,11 @@
     font-family: var(--headings-font-family);
     font-weight: 500;
 
-    @media (min-width: 768px) {
+    @include media-breakpoint-up(md) {
       margin-bottom: 2rem;
     }
 
-    @media (min-width: 1200px) {
+    @include media-breakpoint-up(xl) {
       display: block;
     }
 
@@ -39,11 +34,11 @@
       font-size: 0.875rem;
       line-height: 1.25;
 
-      @media (min-width: 1200px) {
+      @include media-breakpoint-up(xl) {
         margin-bottom: 0.5rem;
       }
 
-      @media (min-width: 1440px) {
+      @include media-breakpoint-up(xxl) {
         line-height: 1;
       }
     }
@@ -51,7 +46,7 @@
     .value {
       font-size: 1.25rem;
 
-      @media (min-width: 1440px) {
+      @include media-breakpoint-up(xxl) {
         font-size: 1.5rem;
       }
     }

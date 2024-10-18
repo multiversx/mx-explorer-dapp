@@ -28,7 +28,7 @@ export const getInitialEconomicsState = (): EconomicsSliceType => {
       baseApr: 0,
       tokenMarketCap: 0
     },
-    isFetched: false
+    isFetched: undefined
   };
 };
 

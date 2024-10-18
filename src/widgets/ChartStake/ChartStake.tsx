@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
-import { Select, SelectOptionType } from 'components';
+import { SelectOptionType } from 'components';
 import { getPrimaryColor } from 'helpers';
 import { useFetchGrowthStaking } from 'hooks';
 import { growthStakingSelector, activeNetworkSelector } from 'redux/selectors';
@@ -14,8 +14,7 @@ import {
   WithClassnameType
 } from 'types';
 
-import styles from './styles.module.scss';
-import { ChartRoot } from '../ChartRoot';
+import { ChartCard, ChartRoot } from '../ChartCard';
 
 export const ChartStake = ({ className }: WithClassnameType) => {
   const {
@@ -83,7 +82,7 @@ export const ChartStake = ({ className }: WithClassnameType) => {
   const defaultValue = filters.find((filter) => filter.value === initialFilter);
   const [data, setData] = useState(dataMap.get(initialFilter));
 
-  const onChange = useCallback(
+  const handleChange = useCallback(
     (option: SingleValue<SelectOptionType>) => {
       if (option && option.value && isFetched) {
         setData(dataMap.get(String(option.value)));
@@ -102,45 +101,28 @@ export const ChartStake = ({ className }: WithClassnameType) => {
   useEffect(onInitialLoad, [onInitialLoad]);
 
   return (
-    <div className={classNames(styles.chart, className)}>
-      <div className={styles.wrapper}>
-        <div className={styles.left}>
-          <div className={styles.label}>Total Staked</div>
-          <div className={styles.price}>
-            {totalStaked} EGLD <span>({stakingPercentage})</span>
-          </div>
-        </div>
-
-        <div className={styles.right}>
-          <Select
-            options={filters}
-            onChange={onChange}
-            defaultValue={defaultValue}
-          />
-        </div>
-      </div>
-
-      <div className={styles.root}>
-        <ChartRoot
-          className={styles.container}
-          data={data}
-          height={75}
-          color={primary}
-          identifier='delegationGradient'
-          tooltipFormatter={(option: any) =>
-            `${new BigNumber(option.value).toFormat(0)} ${egldLabel}`
-          }
-        />
-      </div>
-
-      <div className={styles.statistics}>
-        {statistics.map((statistic) => (
-          <div className={styles.statistic} key={statistic.label}>
-            <div className={styles.label}>{statistic.label}</div>
-            <div className={styles.value}>{statistic.value}</div>
-          </div>
-        ))}
-      </div>
-    </div>
+    <ChartCard
+      title='Total Staked'
+      value={
+        <>
+          {totalStaked} {egldLabel} <span>({stakingPercentage})</span>
+        </>
+      }
+      filters={filters}
+      defaultFilterValue={defaultValue}
+      onChange={handleChange}
+      className={classNames('chart-stake', className)}
+      statistics={statistics}
+    >
+      <ChartRoot
+        data={data}
+        height={75}
+        color={primary}
+        identifier='delegationGradient'
+        tooltipFormatter={(option: any) =>
+          `${new BigNumber(option.value).toFormat(0)} ${egldLabel}`
+        }
+      />
+    </ChartCard>
   );
 };

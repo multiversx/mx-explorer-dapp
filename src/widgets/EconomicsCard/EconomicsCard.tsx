@@ -7,8 +7,6 @@ import {
 } from 'redux/selectors';
 import { EconomicsLabelsEnum, StatisticType } from 'types';
 
-import styles from './styles.module.scss';
-
 export const EconomicsCard = () => {
   const { developerRewards, applicationsDeployed, feesCaptured } = useSelector(
     growthEconomicsSelector
@@ -33,11 +31,11 @@ export const EconomicsCard = () => {
   useFetchGrowthEconomics();
 
   return (
-    <div className={styles.economics}>
+    <div className='economics-card'>
       {economics.map((economic) => (
-        <div key={economic.label} className={styles.economic}>
-          <div className={styles.label}>{economic.label}</div>
-          <div className={styles.value}>{economic.value}</div>
+        <div key={economic.label} className='economic'>
+          <div className='label'>{economic.label}</div>
+          <div className='value'>{economic.value}</div>
         </div>
       ))}
     </div>
