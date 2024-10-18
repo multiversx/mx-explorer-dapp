@@ -13,7 +13,7 @@ export const useGetTransactionFilters = () => {
   const getParam = getUrlParam(searchParams);
 
   const status = searchParams.get(TransactionFiltersEnum.status)
-    ? String(TransactionFiltersEnum.status)
+    ? String(searchParams.get(TransactionFiltersEnum.status))
     : '';
 
   const senderShard =
