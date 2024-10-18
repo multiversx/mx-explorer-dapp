@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 
 import { FormatEGLD } from 'components';
 import { useFetchGrowthEconomics } from 'hooks';
-import { ChartContractsTransactions } from 'pages/Home/components/ChartContractsTransactions';
 import { growthEconomicsSelector } from 'redux/selectors';
+import { ChartContractsTransactions } from 'widgets';
 
 export const HeroApplications = () => {
   const { applicationsDeployed, unprocessed } = useSelector(

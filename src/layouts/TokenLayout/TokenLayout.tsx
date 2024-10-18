@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useParams } from 'react-router-dom';
 
 import { Loader } from 'components';
 import { useAdapter, useGetPage } from 'hooks';
@@ -15,8 +15,11 @@ export const TokenLayout = () => {
   const { getToken } = useAdapter();
   const { hash: tokenId } = useParams();
   const { firstPageRefreshTrigger } = useGetPage();
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { token } = useSelector(tokenSelector);
+
+  const isNativeToken =
+    tokenId && tokenId?.toLowerCase() === egldLabel?.toLowerCase();
 
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
@@ -33,12 +36,18 @@ export const TokenLayout = () => {
   };
 
   useEffect(() => {
-    fetchTokenDetails();
-  }, [firstPageRefreshTrigger, activeNetworkId, tokenId]);
+    if (!isNativeToken) {
+      fetchTokenDetails();
+    }
+  }, [firstPageRefreshTrigger, activeNetworkId, tokenId, isNativeToken]);
 
   const loading =
     isDataReady === undefined || (tokenId && tokenId !== token.identifier);
   const failed = isDataReady === false;
+
+  if (isNativeToken) {
+    return <Navigate replace to={`/${egldLabel?.toLowerCase()}`} />;
+  }
 
   if (failed) {
     return <FailedTokenDetails tokenId={tokenId} />;

@@ -2,9 +2,8 @@ import { useSelector } from 'react-redux';
 
 import { MultilayerPercentageRing } from 'components';
 import { useHasGrowthWidgets } from 'hooks';
-import { ChartStake } from 'pages/Home/components/ChartStake';
 import { nodesVersionsSelector } from 'redux/selectors';
-import { ValidatorsStatusCard } from 'widgets';
+import { ChartStake, ValidatorsStatusCard } from 'widgets';
 
 export const HeroNodes = () => {
   const { nodesVersions } = useSelector(nodesVersionsSelector);

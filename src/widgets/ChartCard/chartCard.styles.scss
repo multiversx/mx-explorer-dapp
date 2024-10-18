@@ -1,25 +1,18 @@
-.chart {
+.chart-card {
   background-color: black;
   border-radius: 1rem;
-  margin: 1rem 0;
+
   padding: 1rem 0;
   display: flex;
   flex-direction: column;
   min-height: 18.75rem;
   position: relative;
 
-  @media (min-width: 768px) {
-    padding: 2rem 0;
-    margin: 2rem 0;
+  @include media-breakpoint-up(md) {
+    padding: 1.5rem 0;
   }
 
-  @media (min-width: 1200px) {
-    width: 37.5%;
-    margin: 0;
-    margin-bottom: 1rem;
-  }
-
-  .root {
+  &-root {
     position: absolute;
     left: 0;
     top: 0;
@@ -30,7 +23,7 @@
     display: flex;
   }
 
-  .wrapper {
+  &-wrapper {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -40,33 +33,36 @@
     z-index: 2;
     pointer-events: none;
 
-    @media (min-width: 768px) {
+    @include media-breakpoint-up(md) {
       padding: 0 2rem 2rem;
     }
 
-    .right {
+    .chart-card-right {
       pointer-events: all;
     }
   }
 
-  .label {
+  &-title {
     color: var(--neutral-500);
     font-family: var(--headings-font-family);
   }
 
-  .price {
+  &-value {
     font-weight: 500;
     font-family: var(--headings-font-family);
     font-size: 1.5rem;
     line-height: 1.25;
-    margin-bottom: 0.5rem;
-
-    @media (min-width: 992px) {
+    margin-bottom: 0.25rem;
+    span {
+      color: var(--primary-100);
+      font-size: 1.5rem;
+    }
+    @include media-breakpoint-up(lg) {
       font-size: 2rem;
     }
   }
 
-  .change {
+  &-change {
     display: flex;
     align-items: center;
 
@@ -88,7 +84,7 @@
     }
   }
 
-  .statistics {
+  &-statistics {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -96,7 +92,7 @@
     flex-wrap: wrap;
     margin-top: auto;
 
-    @media (min-width: 768px) {
+    @include media-breakpoint-up(md) {
       padding: 2rem 2rem 0;
     }
 
@@ -108,6 +104,10 @@
         margin-right: 0;
       }
 
+      .label {
+        color: var(--neutral-500);
+        font-family: var(--headings-font-family);
+      }
       .value {
         font-size: 1.25rem;
         font-family: var(--headings-font-family);
@@ -115,51 +115,10 @@
         color: var(--neutral-300);
         line-height: 1;
 
-        @media (min-width: 768px) {
+        @include media-breakpoint-up(md) {
           font-size: 1.5rem;
         }
       }
     }
-  }
-}
-
-.tooltip {
-  border: 2px solid #24f7dd33;
-  border-radius: 1rem;
-  padding: 0.625rem;
-  padding-left: 1.75rem;
-  line-height: 1;
-  color: var(--primary);
-  font-family: 'Roobert SemiBold';
-  font-weight: 600;
-  position: relative;
-  overflow: hidden;
-
-  &:before {
-    content: '';
-    left: 0.625rem;
-    width: 0.625rem;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    position: absolute;
-    border-radius: 50%;
-    background-color: var(--primary);
-    height: 0.625rem;
-  }
-
-  &:after {
-    content: '';
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    position: absolute;
-    background: linear-gradient(
-      to bottom,
-      black 0%,
-      rgba(var(--primary-rgb), 0.15) 100%
-    );
-    z-index: -1;
   }
 }

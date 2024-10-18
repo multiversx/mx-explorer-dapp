@@ -10,12 +10,12 @@ import {
   useHasGrowthWidgets,
   usePageStats
 } from 'hooks';
-import { ChartContractsTransactions } from 'pages/Home/components/ChartContractsTransactions';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
 import {
   AccountsStatsCard,
   BlockHeightStatsCard,
+  ChartContractsTransactions,
   TransactionsStatsCard,
   ValidatorsStatusCard,
   HeroPills,
