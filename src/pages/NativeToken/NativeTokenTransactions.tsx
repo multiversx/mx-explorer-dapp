@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { TransactionsTable } from 'components';
+import { isEgldToken } from 'helpers';
 import { useAdapter, useFetchTransactions } from 'hooks';
 import { NativeTokenTabs } from 'layouts/NativeTokenLayout/NativeTokenTabs';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -21,7 +22,7 @@ export const NativeTokenTransactions = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions(getTransfers, getTransfersCount, {
-    token: egldLabel
+    token: isEgldToken(egldLabel) ? 'EGLD' : egldLabel
   });
 
   useEffect(() => {
