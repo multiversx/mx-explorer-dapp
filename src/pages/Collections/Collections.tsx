@@ -22,7 +22,7 @@ import {
 } from 'hooks';
 import { pageHeadersCollectionsStatsSelector } from 'redux/selectors/pageHeadersCollectionsStats';
 import { collectionRoutes } from 'routes';
-import { NftTypeEnum, CollectionType } from 'types';
+import { NftTypeEnum, CollectionType, CollectionSortEnum } from 'types';
 
 import { FailedCollections } from './components/FailedCollections';
 import { Filters } from './components/Filters';
@@ -67,7 +67,9 @@ export const Collections = () => {
         page,
         size,
         type,
-        ...(isMainnet ? { sort: 'verifiedAndHolderCount' } : {})
+        ...(isMainnet
+          ? { sort: CollectionSortEnum.verifiedAndHolderCount }
+          : {})
       }),
       getCollectionsCount({ search, type })
     ]).then(([collectionsData, count]) => {

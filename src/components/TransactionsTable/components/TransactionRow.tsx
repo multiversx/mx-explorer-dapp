@@ -1,4 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+
 import {
   AccountLink,
   ScAddressIcon,
@@ -61,6 +63,8 @@ export const TransactionRow = ({
       direction = 'In';
       break;
   }
+
+  const directionClassName = direction.replace(' ', '-').toLowerCase();
 
   return (
     <tr className={`animated-row ${transaction.isNew ? 'new' : ''}`}>
@@ -137,9 +141,10 @@ export const TransactionRow = ({
         <td>
           <div className='d-flex'>
             <span
-              className={`badge badge-outline badge-rounded badge-direction ${direction
-                .replace(' ', '-')
-                .toLowerCase()}`}
+              className={classNames(
+                'badge badge-outline badge-rounded badge-direction',
+                directionClassName
+              )}
             >
               {direction.toLowerCase().replace('internal', 'int').toUpperCase()}
             </span>
