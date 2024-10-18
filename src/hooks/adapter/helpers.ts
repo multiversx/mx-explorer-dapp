@@ -313,8 +313,8 @@ export function getNftsParams({
 }
 
 export const getShardAndEpochParams = (
-  shard: number | undefined,
-  epoch: number | undefined
+  shard: string | number | undefined,
+  epoch: string | number | undefined
 ) => {
   let result = {};
 
