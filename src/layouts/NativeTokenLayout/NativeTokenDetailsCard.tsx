@@ -73,7 +73,7 @@ export const NativeTokenDetailsCard = () => {
       !assets && ticker !== name ? { title: 'Name', value: name } : {},
       { title: 'Decimals', value: decimals }
     ],
-    [assets]
+    [assets, ticker, name]
   );
 
   const statsCards = useMemo(
