@@ -18,7 +18,7 @@ export const NftBadge = ({
   showTooltip = true,
   className
 }: NftBadgeUIType) => {
-  if (showTooltip && subType) {
+  if (showTooltip && subType && (subType as string) !== type) {
     return (
       <Overlay title={<NftSubTypeBadge subType={subType} />}>
         <NftTypeBadge type={type} className={className}></NftTypeBadge>

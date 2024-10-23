@@ -24,15 +24,8 @@ export interface TransactionType {
   timestamp: number;
   value: string;
   price: number;
-  results?: TransactionSCResultType[];
-  operations?: TransactionOperationType[];
   action?: TransactionActionType;
   function?: string;
-  logs?: {
-    id: string;
-    address: string;
-    events: EventType[];
-  };
   scamInfo?: ScamInfoType;
   pendingResults?: boolean;
   receipt?: TransactionReceiptType;
@@ -40,6 +33,12 @@ export interface TransactionType {
   receiverAssets?: AccountAssetType;
   guardianAddress?: string;
   guardianSignature?: string;
+  isRelayed?: boolean;
+  relayedVersion?: boolean;
+  logs?: TransactionSCResultLogType;
+  results?: TransactionSCResultType[];
+  operations?: TransactionOperationType[];
+  innerTransactions?: TransactionInnerType[];
 }
 
 // TRANSACTION SC RESULTS
@@ -123,7 +122,10 @@ export enum TransactionFiltersEnum {
   status = 'status',
   search = 'search',
   token = 'token',
-  transactionsInPoolType = 'type'
+  transactionsInPoolType = 'type',
+  relayer = 'relayer',
+  hashes = 'hashes',
+  isRelayed = 'isRelayed'
 }
 
 // Avoid issues with differences between methods and actions
@@ -233,7 +235,10 @@ export interface TransactionTokensType {
 
 export enum TransferTypeEnum {
   Transaction = 'Transaction',
-  SmartContractResult = 'SmartContractResult'
+  SmartContractResult = 'SmartContractResult',
+  InnerTransaction = 'InnerTransaction',
+  innerTx = 'innerTx', // temporary
+  Reward = 'Reward'
 }
 
 export interface TransferType extends TransactionType {
@@ -402,6 +407,33 @@ export interface TransactionOperationType {
   valueUSD?: number;
 }
 
+// INNER TRANSACTIONS ( RELAYED TX )
+
+export interface TransactionInnerType {
+  hash: string;
+  nonce: number;
+  value: string;
+  receiver: string;
+  sender: string;
+  gasPrice: number;
+  gasLimit: number;
+  data: string;
+  signature: string;
+  chainID: string;
+  version: number;
+  relayer: string;
+  options?: number;
+  guardianSignature?: string;
+  senderUsername?: string;
+  receiverUsername?: string;
+}
+
+export enum TransactionInfoTabsEnum {
+  details = 'details',
+  logs = 'logs',
+  innerTransactions = 'innerTransactions'
+}
+
 export enum TransactionOperationActionEnum {
   none = 'none',
   transfer = 'transfer',
@@ -415,6 +447,7 @@ export enum TransactionOperationActionEnum {
   freeze = 'freeze',
   writeLog = 'writeLog',
   signalError = 'signalError',
+  innerTransaction = 'innerTransaction',
 
   // to be deprecated ?
   ESDTLocalMint = 'ESDTLocalMint',

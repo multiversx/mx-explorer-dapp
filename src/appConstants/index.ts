@@ -1,6 +1,6 @@
 export * from './apiFields';
 
-export const BRAND_NAME = process.env.VITE_APP_BRAND_NAME ?? 'MultiversX';
+export const BRAND_NAME = import.meta.env.VITE_APP_BRAND_NAME ?? 'MultiversX';
 
 export const METACHAIN_SHARD_ID = 4294967295;
 export const MAIN_SHARD_ID = 4294967293;
@@ -24,6 +24,7 @@ export const AUCTION_LIST_MAX_NODES = 3000;
 export const AUCTION_LIST_QUALIFIED_MIN_DISPLAY_ROW_COUNT = 10;
 export const AUCTION_LIST_MIN_DISPLAY_ROW_COUNT = 6;
 
+export const NATIVE_TOKEN_IDENTIFIER = 'EGLD-000000';
 export const LEGACY_DELEGATION_NODES_IDENTITY = 'multiversx';
 export const HEROTAG_SUFFIX = '.elrond';
 export const TEMP_LOCAL_NOTIFICATION_DISMISSED = 'tempNotificationDismissed2';

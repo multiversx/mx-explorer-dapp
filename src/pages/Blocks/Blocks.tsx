@@ -8,7 +8,7 @@ import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import {
   useAdapter,
   useNetworkRoute,
-  useGetTransactionFilters,
+  useGetBlockFilters,
   useGetPage,
   useHasGrowthWidgets
 } from 'hooks';
@@ -27,7 +27,7 @@ export const Blocks = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const hasGrowthWidgets = useHasGrowthWidgets();
-  const { shard } = useGetTransactionFilters();
+  const { shard } = useGetBlockFilters();
   const { page, size, firstPageRefreshTrigger } = useGetPage();
   const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
 

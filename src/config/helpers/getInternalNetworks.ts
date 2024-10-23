@@ -1,11 +1,11 @@
 import { NetworkAdapterEnum, NetworkType } from 'types';
 
 export const getInternalNetworks = (): NetworkType[] => {
-  if (process.env.VITE_APP_INTERNAL_NETWORKS) {
+  const internalNetworks = import.meta.env.VITE_APP_INTERNAL_NETWORKS;
+
+  if (internalNetworks) {
     try {
-      const decodedNetworks = atob(
-        String(process.env.VITE_APP_INTERNAL_NETWORKS)
-      );
+      const decodedNetworks = atob(String(internalNetworks));
 
       const parsedNetworks = JSON.parse(decodedNetworks);
       if (parsedNetworks && parsedNetworks.length > 0) {

@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 
 import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import {
@@ -28,9 +29,9 @@ export const ScResultsList = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const activeRoute = useActiveRoute();
-  const { hashId, hashDecodeMethod } = useGetTransactionUrlHashParams();
+  const { id: paramId, dataDecode } = useGetTransactionUrlHashParams();
   const [decodeMethod, setDecodeMethod] =
-    useState<DecodeMethodEnum>(hashDecodeMethod);
+    useState<DecodeMethodEnum>(dataDecode);
 
   useScrollToTransactionSection(ref);
 
@@ -38,11 +39,17 @@ export const ScResultsList = ({
     <div className='sc-results-list item-list d-flex flex-column mt-1'>
       {results.map((result: TransactionSCResultType, i) => {
         const isResultHighlighted =
-          hashId === result.hash &&
+          paramId === result.hash &&
           activeRoute(transactionsRoutes.transactionDetails) &&
           !activeRoute(transactionsRoutes.transactionDetailsLogs);
 
-        const resultLink = `${transactionsRoutes.transactions}/${result.originalTxHash}#${result.hash}/${decodeMethod}`;
+        const resultLink = urlBuilder.transactionDetails(
+          result.originalTxHash,
+          {
+            hash: result.hash,
+            dataDecode: decodeMethod
+          }
+        );
 
         const decodedData = result.data
           ? truncate(
@@ -55,9 +62,10 @@ export const ScResultsList = ({
           <div
             key={i}
             id={result.hash}
-            className={`detailed-item d-flex border-start border-bottom ms-3 py-3 ${
-              isResultHighlighted ? 'highlighted' : ''
-            }`}
+            className={classNames(
+              'detailed-item d-flex border-start border-bottom ms-3 py-3',
+              { highlighted: isResultHighlighted }
+            )}
             {...(isResultHighlighted ? { ref: ref } : {})}
           >
             <NetworkLink to={resultLink} className='detailed-item-icon'>
@@ -151,7 +159,7 @@ export const ScResultsList = ({
                       value={decodedData}
                       setDecodeMethod={setDecodeMethod}
                       {...(isResultHighlighted
-                        ? { initialDecodeMethod: hashDecodeMethod }
+                        ? { initialDecodeMethod: dataDecode }
                         : {})}
                     />
                   </div>

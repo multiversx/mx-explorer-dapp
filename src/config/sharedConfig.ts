@@ -27,12 +27,12 @@ export {
   GAS_PRICE
 };
 
-export const SHARE_PREFIX = process.env.VITE_APP_SHARE_PREFIX
-  ? process.env.VITE_APP_SHARE_PREFIX.replace('-', '')
-  : '';
+const ENV_PREFIX = import.meta.env.VITE_APP_SHARE_PREFIX;
+
+export const SHARE_PREFIX = ENV_PREFIX ? ENV_PREFIX.replace('-', '') : '';
 
 export const DEFAULT_HOSTNAME =
-  process.env.VITE_APP_DEFAULT_HOSTNAME ?? 'explorer.multiversx.com';
+  import.meta.env.VITE_APP_DEFAULT_HOSTNAME ?? 'explorer.multiversx.com';
 
 export const hasExtraNetworks = true;
 

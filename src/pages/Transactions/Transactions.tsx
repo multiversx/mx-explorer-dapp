@@ -12,6 +12,7 @@ import {
   useGetShardText
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
+import { TransactionFiltersEnum } from 'types';
 
 export const Transactions = () => {
   const ref = useRef(null);
@@ -57,6 +58,7 @@ export const Transactions = () => {
             <TransactionsTable
               transactions={transactions}
               totalTransactions={totalTransactions}
+              inactiveFilters={[TransactionFiltersEnum.relayer]}
               dataChanged={dataChanged}
               isDataReady={isDataReady}
               title={

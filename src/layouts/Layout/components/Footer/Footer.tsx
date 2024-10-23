@@ -8,7 +8,7 @@ import { activeNetworkSelector } from 'redux/selectors';
 import { version } from '../../../../../package.json';
 
 export const Footer = () => {
-  const explorerVersion = process.env.VITE_APP_CACHE_BUST;
+  const explorerVersion = import.meta.env.VITE_APP_CACHE_BUST;
   const { accessToken: hasAccessToken } = useSelector(activeNetworkSelector);
 
   return (

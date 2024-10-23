@@ -15,7 +15,10 @@ export const TRANSACTIONS_TABLE_FIELDS = [
   'tokenIdentifier',
   'function',
   'action',
-  'guardianSignature'
+  'type',
+  'guardianSignature',
+  'isRelayed',
+  'relayedVersion'
 ];
 
 export const IDENTITIES_FIELDS = [

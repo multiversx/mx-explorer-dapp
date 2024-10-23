@@ -235,7 +235,8 @@ button.badge {
     @extend .badge-outline-grey;
   }
   &.internal,
-  &.int {
+  &.int,
+  &.inner-tx {
     @extend .badge-outline-grey;
   }
 }

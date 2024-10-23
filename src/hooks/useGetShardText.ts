@@ -38,7 +38,7 @@ export const useGetShardText = () => {
       return 'All Shards';
     }
     if (Number(shard) === 0 && isSovereign) {
-      return name ?? process.env.VITE_APP_BRAND_NAME ?? 'Sovereign Chain';
+      return name ?? import.meta.env.VITE_APP_BRAND_NAME ?? 'Sovereign Chain';
     }
     return `Shard ${shard}`;
   };

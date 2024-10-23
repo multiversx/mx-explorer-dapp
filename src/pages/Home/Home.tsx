@@ -1,10 +1,12 @@
 import { useHasGrowthWidgets } from 'hooks';
-import { MostUsed } from 'widgets';
+import {
+  MostUsed,
+  ChartContractsTransactions,
+  ChartPrice,
+  ChartStake,
+  EconomicsCard
+} from 'widgets';
 
-import { ChartContractsTransactions } from './components/ChartContractsTransactions';
-import { ChartPrice } from './components/ChartPrice';
-import { ChartStake } from './components/ChartStake';
-import { EconomicsCard } from './components/EconomicsCard';
 import { LatestBlocks } from './components/LatestBlocks';
 import { LatestTransactions } from './components/LatestTransactions';
 
@@ -15,9 +17,9 @@ export const Home = () => {
     <div className='home page-content container'>
       {hasGrowthWidgets && (
         <>
-          <div className='d-xl-flex mt-3'>
+          <div className='d-flex flex-column flex-xl-row gap-3 my-3'>
             <ChartPrice />
-            <ChartStake className='pt-md-spacer' />
+            <ChartStake />
             <EconomicsCard />
           </div>
 
