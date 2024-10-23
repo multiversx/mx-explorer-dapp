@@ -117,7 +117,7 @@ export const CollectionDetailsCard = () => {
             }
           : {},
         !scamInfo ? { title: 'Type', value: <NftBadge type={type} /> } : {},
-        !scamInfo && subType
+        !scamInfo && subType && (subType as string) !== type
           ? { title: 'Subtype', value: <NftSubTypeBadge subType={subType} /> }
           : {},
         !assets && ticker !== name && !scamInfo

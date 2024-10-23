@@ -159,7 +159,7 @@ export const NftDetailsCard = () => {
             }
           : {},
         { title: 'Type', value: <NftBadge type={type} /> },
-        subType
+        subType && (subType as string) !== type
           ? {
               title: 'Subtype',
               value: <NftSubTypeBadge subType={subType} />
