@@ -3,7 +3,9 @@ import { DEFAULT_HOSTNAME } from 'config/sharedConfig';
 
 type KeyType = typeof CUSTOM_NETWORK_ID;
 
-const domain = `domain=.${process.env.VITE_APP_SHARE_PREFIX}${DEFAULT_HOSTNAME}`;
+const domain = `domain=.${
+  import.meta.env.VITE_APP_SHARE_PREFIX
+}${DEFAULT_HOSTNAME}`;
 
 export const cookie = {
   saveToCookies: ({

@@ -75,7 +75,7 @@ export const AccountVerifiedContract = ({
     return null;
   }
 
-  const walletConnectV2ProjectId = process.env.VITE_APP_WALLETCONNECT_ID;
+  const walletConnectV2ProjectId = import.meta.env.VITE_APP_WALLETCONNECT_ID;
 
   const customClassNames = {
     cardClassName: 'card card-black',
