@@ -1,5 +1,10 @@
 export * as bech32 from './bech32';
 
+export * from './formatValue';
+export * from './getValue';
+export * from './hasCondition';
+export * from './processData';
+
 export * from './addressIsBech32';
 export * from './amountWithoutRounding';
 export * from './analytics';
@@ -8,8 +13,6 @@ export * from './capitalizeFirstLetter';
 export * from './cookie';
 export * from './copyToClipboard';
 export * from './downloadFile';
-export * from './formatValue';
-export * from './getValue';
 export * from './isContract';
 export * from './isEgldToken';
 export * from './isEllipsisActive';
@@ -21,7 +24,6 @@ export * from './parseAmount';
 export * from './parseJwt';
 export * from './partitionBy';
 export * from './scrollToElement';
-export * from './processData';
 export * from './storage';
 export * from './stringIsFloat';
 export * from './stringIsInteger';

@@ -16,7 +16,7 @@ import {
   SocialWebsite,
   NftSubTypeBadge
 } from 'components';
-import { formatDate, getNftText } from 'helpers';
+import { formatDate, getNftText, hasNftOverview } from 'helpers';
 import { faClock, faExclamationTriangle } from 'icons/regular';
 import { faHexagonCheck } from 'icons/solid';
 import { nftSelector } from 'redux/selectors';
@@ -43,10 +43,16 @@ export const NftDetailsCard = () => {
     media,
     assets,
     metadata,
-    isVerified
+    isVerified,
+    tags
   } = nftState;
   const [showData, setShowData] = useState(!Boolean(scamInfo));
 
+  const showTags =
+    !hasNftOverview(nftState) &&
+    tags !== undefined &&
+    tags.length > 0 &&
+    (!scamInfo || showData);
   const showPreviewDetails = (!scamInfo || showData) && assets;
   const titleTickerText =
     ticker !== undefined &&
@@ -219,6 +225,23 @@ export const NftDetailsCard = () => {
                     <NftPreview token={nftState} />
                   )}
                 </>
+              )
+            }
+          : {},
+        showTags
+          ? {
+              title: 'Tags',
+              value: (
+                <div className='d-flex flex-wrap gap-2'>
+                  {tags.map((tag) => (
+                    <div
+                      key={tag}
+                      className='badge badge-outline badge-outline-grey gap-2'
+                    >
+                      #{tag}
+                    </div>
+                  ))}
+                </div>
               )
             }
           : {},
