@@ -28,15 +28,17 @@ export const LargeCard = ({
       </div>
       <div className='row flex-wrap-reverse'>
         <ShardList className='col-md-5' />
-        {process.env.NODE_ENV !== 'test' && markers.length > 0 && isMainnet && (
-          <>
-            <ValidatorMap
-              markers={markers}
-              className='col-md-7 position-relative'
-            />
-            <ContinentsRank continentsRank={continentsRank} />
-          </>
-        )}
+        {import.meta.env.NODE_ENV !== 'test' &&
+          markers.length > 0 &&
+          isMainnet && (
+            <>
+              <ValidatorMap
+                markers={markers}
+                className='col-md-7 position-relative'
+              />
+              <ContinentsRank continentsRank={continentsRank} />
+            </>
+          )}
         <div
           className={
             isMainnet

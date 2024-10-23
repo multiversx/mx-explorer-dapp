@@ -19,7 +19,7 @@ export const SmallCard = ({
             {totalValidators ?? ELLIPSIS}
           </h2>
         </div>
-        {process.env.NODE_ENV !== 'test' && markers.length > 0 && (
+        {import.meta.env.NODE_ENV !== 'test' && markers.length > 0 && (
           <ValidatorMap markers={markers} />
         )}
       </div>

@@ -10,7 +10,9 @@ const DEFAULT_TITLE = `${BRAND_NAME}${
 } Explorer`;
 const DEFAULT_DESCRIPTION =
   'A highly scalable, fast and secure blockchain platform for distributed apps, enterprise use cases and the new internet economy.';
-const DEFAULT_PREVIEW = `https://${process.env.VITE_APP_SHARE_PREFIX}${DEFAULT_HOSTNAME}/${process.env.VITE_APP_SHARE_PREFIX}share.jpg`;
+const DEFAULT_PREVIEW = `https://${
+  import.meta.env.VITE_APP_SHARE_PREFIX
+}${DEFAULT_HOSTNAME}/${import.meta.env.VITE_APP_SHARE_PREFIX}share.jpg`;
 
 export const getInitialMetaTagsState = (): MetaTagsType => {
   return {
