@@ -20,7 +20,7 @@ export const getFileMetadata = (type: DownloadFileType['fileType']) => {
 };
 
 export const downloadFile = ({ data, name, fileType }: DownloadFileType) => {
-  if (data && name && import.meta.env.NODE_ENV !== 'test') {
+  if (data && name) {
     const type = getFileMetadata(fileType);
     const blob = new Blob([data], { type });
 
