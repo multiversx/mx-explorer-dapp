@@ -17,7 +17,7 @@ export function getInitialInterfaceState(): InterfaceSliceType {
   // const media = window.matchMedia('(prefers-color-scheme: dark)')?.matches;
   // const systemTheme = media ? ThemesEnum.default : ThemesEnum.default;
 
-  // const defaultTheme = Boolean(process.env.VITE_APP_TESTNET)
+  // const defaultTheme = Boolean(import.meta.env.VITE_APP_TESTNET)
   //   ? ThemesEnum.testnet
   //   : systemTheme;
 
