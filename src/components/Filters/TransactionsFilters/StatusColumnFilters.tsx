@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 
-import { SelectFilter, SearchFilter } from 'components';
-import { capitalize } from 'helpers';
+import { SelectFilter, SelectFilterType, SearchFilter } from 'components';
+import { capitalize, truncateMiddle } from 'helpers';
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';
 import { TransactionApiStatusEnum, TransactionFiltersEnum } from 'types';
@@ -14,7 +14,13 @@ export const StatusColumnFilters = ({
   inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
-  const { status, miniBlockHash } = Object.fromEntries(searchParams);
+  const { status, hashes, miniBlockHash, relayer, isRelayed } =
+    Object.fromEntries(searchParams);
+
+  const existingHashesValues: SelectFilterType['options'] =
+    hashes?.split(',').map((hash) => {
+      return { value: hash, label: truncateMiddle(hash, 9) };
+    }) ?? [];
 
   const searchStatuses = (
     Object.keys(
@@ -27,11 +33,24 @@ export const StatusColumnFilters = ({
     };
   });
 
-  if (
-    inactiveFilters &&
-    inactiveFilters.includes(TransactionFiltersEnum.status) &&
-    inactiveFilters.includes(TransactionFiltersEnum.miniBlockHash)
-  ) {
+  const relayedOptions = [{ value: 'true', label: 'Relayed' }];
+
+  const allInactive = [
+    TransactionFiltersEnum.status,
+    TransactionFiltersEnum.miniBlockHash,
+    TransactionFiltersEnum.relayer,
+    TransactionFiltersEnum.isRelayed,
+    TransactionFiltersEnum.hashes
+  ].every((filter) => inactiveFilters.includes(filter));
+
+  const isActive =
+    status !== undefined ||
+    miniBlockHash !== undefined ||
+    relayer !== undefined ||
+    isRelayed !== undefined ||
+    hashes !== undefined;
+
+  if (allInactive) {
     return null;
   }
 
@@ -60,6 +79,45 @@ export const StatusColumnFilters = ({
                 </>
               )}
 
+              {!inactiveFilters.includes(TransactionFiltersEnum.isRelayed) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Relayed</div>
+                  <SelectFilter
+                    name='is-relayed-filter'
+                    options={relayedOptions}
+                    filter={TransactionFiltersEnum.isRelayed}
+                  />
+                </div>
+              )}
+
+              {!inactiveFilters.includes(TransactionFiltersEnum.relayer) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Relayer</div>
+                  <SearchFilter
+                    name='relayer-filter'
+                    filter={TransactionFiltersEnum.relayer}
+                    placeholder='Relayer'
+                    validation='address'
+                  />
+                </div>
+              )}
+
+              {!inactiveFilters.includes(TransactionFiltersEnum.hashes) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Txn Hash</div>
+                  <SelectFilter
+                    name='hashes-filter'
+                    options={existingHashesValues}
+                    filter={TransactionFiltersEnum.hashes}
+                    placeholder='Transaction Hashes'
+                    validation='hash'
+                    noOptionsMessage='Invalid Hash'
+                    hasCustomSearch
+                    isMulti
+                  />
+                </div>
+              )}
+
               {!inactiveFilters.includes(
                 TransactionFiltersEnum.miniBlockHash
               ) && (
@@ -83,16 +141,8 @@ export const StatusColumnFilters = ({
         data-testid='transactionStatusColumnFilter'
       >
         <FontAwesomeIcon
-          icon={
-            status !== undefined || miniBlockHash !== undefined
-              ? faFilterSolid
-              : faFilter
-          }
-          className={
-            status !== undefined || miniBlockHash !== undefined
-              ? 'text-primary'
-              : ''
-          }
+          icon={isActive ? faFilterSolid : faFilter}
+          className={isActive ? 'text-primary' : ''}
         />
       </div>
     </OverlayTrigger>

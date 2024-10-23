@@ -5,7 +5,7 @@ import { faTimes } from 'icons/regular';
 
 export const PageNotFound = () => {
   const { pathname } = useLocation();
-  const explorerVersion = process.env.VITE_APP_CACHE_BUST;
+  const explorerVersion = import.meta.env.VITE_APP_CACHE_BUST;
 
   if (explorerVersion !== undefined) {
     analytics.sendEvent({

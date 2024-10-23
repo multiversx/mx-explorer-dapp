@@ -2,7 +2,7 @@ import { MAX_TRANSACTIONS_PAGE_SIZE } from 'appConstants';
 import { Pager, PageSize, TableWrapper, Loader } from 'components';
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
-import { TransactionTableType } from 'types';
+import { TransactionFiltersEnum, TransactionTableType } from 'types';
 
 import {
   Header,
@@ -39,7 +39,7 @@ export const TransactionsTable = ({
   dataChanged = false,
   isScResultsTable = false,
   isDataReady,
-  inactiveFilters
+  inactiveFilters = [TransactionFiltersEnum.isRelayed]
 }: TransactionTableType) => {
   return (
     <div

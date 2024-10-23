@@ -9,8 +9,10 @@ import {
   AccountLink
 } from 'components';
 import { addressIsBech32, isContract } from 'helpers';
-import { DataField } from 'pages/TransactionDetails/components/TransactionInfo/DataField';
-import { TransactionWarningMessage } from 'pages/TransactionDetails/components/TransactionInfo/TransactionWarningMessage';
+import {
+  DataField,
+  TransactionWarningMessage
+} from 'pages/TransactionDetails/components';
 import { TransactionInPoolType } from 'types';
 
 export const TransactionInPoolInfo = ({
@@ -109,13 +111,11 @@ export const TransactionInPoolInfo = ({
         </DetailItem>
 
         <DetailItem title='Nonce'>
-          <>
-            <span className='text-neutral-100'>{transaction.nonce}</span>
-            <TransactionWarningMessage
-              transaction={transaction}
-              isPoolTransaction
-            />
-          </>
+          <span className='text-neutral-100'>{transaction.nonce}</span>
+          <TransactionWarningMessage
+            transaction={transaction}
+            isPoolTransaction
+          />
         </DetailItem>
 
         <DataField data={transaction.data} />

@@ -10,12 +10,12 @@ import {
   useHasGrowthWidgets,
   usePageStats
 } from 'hooks';
-import { ChartContractsTransactions } from 'pages/Home/components/ChartContractsTransactions';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
 import {
   AccountsStatsCard,
   BlockHeightStatsCard,
+  ChartContractsTransactions,
   TransactionsStatsCard,
   ValidatorsStatusCard,
   HeroPills,
@@ -149,7 +149,7 @@ export const Hero = () => {
                   <TransactionsStatsCard />
                   <AccountsStatsCard />
                   <BlockHeightStatsCard />
-                  {isMainnet && process.env.VITE_APP_MARKERS_API_URL && (
+                  {isMainnet && import.meta.env.VITE_APP_MARKERS_API_URL && (
                     <ValidatorsStatusCard isSmall />
                   )}
                 </div>

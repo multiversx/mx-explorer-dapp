@@ -1,3 +1,4 @@
+import { TransactionDecodeParamsType } from 'hooks';
 import { GetTokensType, GetCollectionsType } from 'types';
 
 export const urlBuilder = {
@@ -6,10 +7,46 @@ export const urlBuilder = {
   receiverShard: (shard: number | string) =>
     `/transactions?receiverShard=${shard}`,
   senderShard: (shard: number | string) => `/transactions?senderShard=${shard}`,
-  transactionDetails: (hash: number | string) => `/transactions/${hash}`,
+  transactionDetails: (
+    hash: number | string,
+    params?: TransactionDecodeParamsType
+  ) => {
+    const urlSearch = params
+      ? new URLSearchParams(
+          params as unknown as Record<string, string>
+        ).toString()
+      : '';
+
+    return `/transactions/${hash}${urlSearch ? `?${urlSearch}` : ''}`;
+  },
   transactionDetailsScResults: (hash: string) =>
     `/transactions/${hash}/results`,
-  transactionDetailsLogs: (hash: string) => `/transactions/${hash}/logs`,
+  transactionDetailsLogs: (
+    hash: string,
+    params?: TransactionDecodeParamsType
+  ) => {
+    const urlSearch = params
+      ? new URLSearchParams(
+          params as unknown as Record<string, string>
+        ).toString()
+      : '';
+
+    return `/transactions/${hash}/logs${urlSearch ? `?${urlSearch}` : ''}`;
+  },
+  transactionDetailsInnerTransactions: (
+    hash: string,
+    params?: TransactionDecodeParamsType
+  ) => {
+    const urlSearch = params
+      ? new URLSearchParams(
+          params as unknown as Record<string, string>
+        ).toString()
+      : '';
+
+    return `/transactions/${hash}/inner-transactions${
+      urlSearch ? `?${urlSearch}` : ''
+    }`;
+  },
   transactionInPoolDetails: (hash: string) => `/transactions/pool/${hash}`,
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accountDetails: (address: string) => `/accounts/${address}`,
@@ -67,6 +104,9 @@ export const urlBuilder = {
   tokenDetailsLockedAccounts: (tokenId: string) =>
     `/tokens/${tokenId}/locked-accounts`,
   tokenDetailsRoles: (tokenId: string) => `/tokens/${tokenId}/roles`,
+  nativeTokenDetails: (egldLabel: string) => `/${egldLabel.toLowerCase()}`,
+  nativeTokenDetailsAccounts: (egldLabel: string) =>
+    `/${egldLabel.toLowerCase()}/accounts`,
   collections: (params?: GetCollectionsType) => {
     const urlSearch = params
       ? new URLSearchParams(params as Record<string, string>).toString()

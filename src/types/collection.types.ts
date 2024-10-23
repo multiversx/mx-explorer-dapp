@@ -44,3 +44,7 @@ export interface CollectionRolesType extends RolesType {
   canAddUri: boolean;
   canTransfer: boolean;
 }
+
+export enum CollectionSortEnum {
+  verifiedAndHolderCount = 'verifiedAndHolderCount'
+}

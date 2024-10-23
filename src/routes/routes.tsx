@@ -20,6 +20,7 @@ import {
   blocksRoutes,
   collectionLayout,
   collectionRoutes,
+  nativeTokenLayout,
   nftLayout,
   nftRoutes,
   tokenLayout,
@@ -107,7 +108,8 @@ const mainRoutes: TitledRouteObject[] = [
       ...nftLayout,
       ...tokenLayout,
       ...transactionsLayout,
-      ...validatorLayout
+      ...validatorLayout,
+      ...nativeTokenLayout
     ]
   }
 ];

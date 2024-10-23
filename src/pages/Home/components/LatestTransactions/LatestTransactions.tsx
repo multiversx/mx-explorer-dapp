@@ -9,9 +9,8 @@ import {
   Loader,
   LatestItem,
   PulsatingLed,
-  TransactionIcon,
-  TransactionGuardianIcon,
-  TransactionSovereignBridgeIcon,
+  TransactionIcons,
+  TransactionStatusIcon,
   AccountLink,
   ShardLink
 } from 'components';
@@ -135,10 +134,8 @@ export const LatestTransactions = () => {
                             .color
                         }`}
                       >
-                        <TransactionIcon
+                        <TransactionStatusIcon
                           transaction={transaction}
-                          showGuardian={false}
-                          showSovereignBridge={false}
                           showSuccess
                           withBadge
                         />
@@ -207,14 +204,10 @@ export const LatestTransactions = () => {
                               <span className='text-neutral-400 me-2'>
                                 Hash:
                               </span>
-
-                              <TransactionGuardianIcon
+                              <TransactionIcons
                                 transaction={transaction}
+                                showStatus={false}
                               />
-                              <TransactionSovereignBridgeIcon
-                                transaction={transaction}
-                              />
-
                               <NetworkLink
                                 to={`/transactions/${transaction.txHash}`}
                                 data-testid={`transactionLink${i}`}

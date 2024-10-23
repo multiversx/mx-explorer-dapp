@@ -547,7 +547,7 @@ a .dapp-core-component__trim-styles__ellipsis {
   }
 }
 
-@media (min-width: 768px) {
+@include media-breakpoint-up(md) {
   .dapp-core-component__signWithDeviceModalStyles__modal-layout-content.dapp-core-component__signWithDeviceModalStyles__spaced {
     padding: 2rem 0.75rem 1.5rem 0.75rem !important;
   }

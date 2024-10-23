@@ -44,6 +44,7 @@ export function getTransactionsParams({
   search,
   token,
   hashes,
+  relayer,
   isRelayed = false,
 
   // include data
@@ -84,6 +85,7 @@ export function getTransactionsParams({
     ...(search ? { search } : {}),
     ...(token ? { token } : {}),
     ...(hashes ? { hashes } : {}),
+    ...(relayer ? { relayer } : {}),
     ...(isRelayed ? { isRelayed } : {})
   };
 
@@ -311,8 +313,8 @@ export function getNftsParams({
 }
 
 export const getShardAndEpochParams = (
-  shard: number | undefined,
-  epoch: number | undefined
+  shard: string | number | undefined,
+  epoch: string | number | undefined
 ) => {
   let result = {};
 
