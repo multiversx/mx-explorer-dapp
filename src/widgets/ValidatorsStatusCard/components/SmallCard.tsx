@@ -19,9 +19,7 @@ export const SmallCard = ({
             {totalValidators ?? ELLIPSIS}
           </h2>
         </div>
-        {import.meta.env.NODE_ENV !== 'test' && markers.length > 0 && (
-          <ValidatorMap markers={markers} />
-        )}
+        {markers.length > 0 && <ValidatorMap markers={markers} />}
       </div>
       {continentsRank && continentsRank.length > 0 && (
         <ContinentsRank continentsRank={continentsRank} />
