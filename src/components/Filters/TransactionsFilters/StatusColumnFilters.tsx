@@ -40,8 +40,6 @@ export const StatusColumnFilters = ({
 
   const relayedOptions = [{ value: 'true', label: 'Relayed' }];
 
-  console.log('0----', inactiveFilters);
-
   const allInactive = [
     TransactionFiltersEnum.status,
     TransactionFiltersEnum.miniBlockHash,
