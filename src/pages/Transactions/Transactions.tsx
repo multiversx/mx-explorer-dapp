@@ -9,8 +9,7 @@ import {
   useGetPage,
   useGetTransactionFilters,
   useFetchTransactions,
-  useGetShardText,
-  useIsMainnet
+  useGetShardText
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { transactionsRoutes } from 'routes';
@@ -21,7 +20,6 @@ export const Transactions = () => {
   const [searchParams] = useSearchParams();
   const getShardText = useGetShardText();
   const urlParams = useGetTransactionFilters();
-  const isMainnet = useIsMainnet();
   const { senderShard, receiverShard } = urlParams;
 
   const { firstPageRefreshTrigger } = useGetPage();
@@ -83,18 +81,16 @@ export const Transactions = () => {
                       {getShardText(receiverShard)}
                     </>
                   )}
-                  <PulsatingLed className='mx-2' />
-                  {isMainnet && (
-                    <div className='d-flex align-items-center flex-wrap gap-2'>
-                      <NetworkLink
-                        to={transactionsRoutes.transactionsInPool}
-                        className='btn btn-sm btn-dark-gradient'
-                      >
-                        Transaction Pool
-                      </NetworkLink>
-                      <MethodList />
-                    </div>
-                  )}
+                  <PulsatingLed className='mx-2 mt-1' />
+                  <div className='d-flex align-items-center flex-wrap gap-2'>
+                    {/* <NetworkLink
+                      to={transactionsRoutes.transactionsInPool}
+                      className='btn btn-sm btn-dark-gradient'
+                    >
+                      Transaction Pool
+                    </NetworkLink> */}
+                    <MethodList />
+                  </div>
                 </h5>
               }
             />
