@@ -15,7 +15,7 @@ export const StatusColumnFilters = ({
   inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
-  const { status, hashes, miniBlockHash, relayer, isRelayed } =
+  const { status, hashes, miniBlockHash, isRelayed } =
     Object.fromEntries(searchParams);
 
   const existingHashesValues: SelectFilterType['options'] = useMemo(() => {
@@ -40,10 +40,11 @@ export const StatusColumnFilters = ({
 
   const relayedOptions = [{ value: 'true', label: 'Relayed' }];
 
+  console.log('0----', inactiveFilters);
+
   const allInactive = [
     TransactionFiltersEnum.status,
     TransactionFiltersEnum.miniBlockHash,
-    TransactionFiltersEnum.relayer,
     TransactionFiltersEnum.isRelayed,
     TransactionFiltersEnum.hashes
   ].every((filter) => inactiveFilters.includes(filter));
@@ -51,7 +52,6 @@ export const StatusColumnFilters = ({
   const isActive =
     status !== undefined ||
     miniBlockHash !== undefined ||
-    relayer !== undefined ||
     isRelayed !== undefined ||
     hashes !== undefined;
 
@@ -91,18 +91,6 @@ export const StatusColumnFilters = ({
                     name='is-relayed-filter'
                     options={relayedOptions}
                     filter={TransactionFiltersEnum.isRelayed}
-                  />
-                </div>
-              )}
-
-              {!inactiveFilters.includes(TransactionFiltersEnum.relayer) && (
-                <div className='filter-block'>
-                  <div className='mb-1'>Relayer</div>
-                  <SearchFilter
-                    name='relayer-filter'
-                    filter={TransactionFiltersEnum.relayer}
-                    placeholder='Relayer'
-                    validation='address'
                   />
                 </div>
               )}
