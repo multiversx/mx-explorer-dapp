@@ -1,10 +1,7 @@
-import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import { useSearchParams } from 'react-router-dom';
 
-import { TransactionApiStatusEnum } from 'types';
-
-const checkValue = (value: string) =>
-  stringIsInteger(value) ? parseInt(value) : undefined;
+import { getUrlParam } from 'helpers';
+import { TransactionApiStatusEnum, TransactionFiltersEnum } from 'types';
 
 const checkStatus = (status: string) =>
   status && Object.keys(TransactionApiStatusEnum).includes(status.toLowerCase())
@@ -13,59 +10,32 @@ const checkStatus = (status: string) =>
 
 export const useGetTransactionFilters = () => {
   const [searchParams] = useSearchParams();
+  const getParam = getUrlParam(searchParams);
 
-  const shard = searchParams.get('shard')
-    ? String(searchParams.get('shard'))
-    : '';
-  const method = searchParams.get('function')
-    ? String(searchParams.get('function'))
-    : '';
-  const before = searchParams.get('before')
-    ? String(searchParams.get('before'))
-    : '';
-  const after = searchParams.get('after')
-    ? String(searchParams.get('after'))
-    : '';
-  const status = searchParams.get('status')
-    ? String(searchParams.get('status'))
-    : '';
-  const miniBlockHash = searchParams.get('miniBlockHash')
-    ? String(searchParams.get('miniBlockHash'))
-    : '';
-  const sender = searchParams.get('sender')
-    ? String(searchParams.get('sender'))
-    : '';
-  const receiver = searchParams.get('receiver')
-    ? String(searchParams.get('receiver'))
-    : '';
-  const token = searchParams.get('token')
-    ? String(searchParams.get('token'))
+  const status = searchParams.get(TransactionFiltersEnum.status)
+    ? String(searchParams.get(TransactionFiltersEnum.status))
     : '';
 
-  let senderShard = searchParams.get('senderShard')
-    ? String(searchParams.get('senderShard'))
-    : '';
-  senderShard = searchParams.get('sendershard')
-    ? String(searchParams.get('sendershard'))
-    : senderShard;
-  let receiverShard = searchParams.get('receiverShard')
-    ? String(searchParams.get('receiverShard'))
-    : '';
-  receiverShard = searchParams.get('receivershard')
-    ? String(searchParams.get('receivershard'))
-    : receiverShard;
+  const senderShard =
+    getParam(TransactionFiltersEnum.senderShard, true) ??
+    getParam('sendershard', true);
+
+  const receiverShard =
+    getParam(TransactionFiltersEnum.receiverShard, true) ??
+    getParam('receivershard', true);
 
   return {
-    shard: checkValue(shard),
-    senderShard: checkValue(senderShard),
-    receiverShard: checkValue(receiverShard),
-    sender,
-    receiver,
-    before: checkValue(before),
-    after: checkValue(after),
+    senderShard,
+    receiverShard,
+    sender: getParam(TransactionFiltersEnum.sender),
+    receiver: getParam(TransactionFiltersEnum.receiver),
+    before: getParam(TransactionFiltersEnum.before, true),
+    after: getParam(TransactionFiltersEnum.after, true),
     status: checkStatus(status),
-    miniBlockHash,
-    method,
-    token
+    miniBlockHash: getParam(TransactionFiltersEnum.miniBlockHash),
+    method: getParam(TransactionFiltersEnum.method),
+    hashes: getParam(TransactionFiltersEnum.hashes),
+    token: getParam(TransactionFiltersEnum.token),
+    isRelayed: getParam(TransactionFiltersEnum.isRelayed)
   };
 };

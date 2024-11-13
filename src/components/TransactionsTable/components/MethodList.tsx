@@ -26,7 +26,7 @@ export const MethodList = () => {
     <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
       <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
         {method && (
-          <li className='list-inline-item ms-2'>
+          <li className='list-inline-item'>
             <div className='badge badge-outline badge-outline-green text-capitalize d-flex align-items-center justify-content-center pe-0'>
               {method}
               <div

@@ -9,7 +9,7 @@ import { faExchangeAlt } from 'icons/regular';
 import { refreshSelector } from 'redux/selectors/refresh';
 import { TransactionType, TransactionApiStatusEnum } from 'types';
 
-import { TransactionInfo } from './components/TransactionInfo';
+import { TransactionInfo } from './components';
 
 export const TransactionDetails = () => {
   const params: any = useParams();

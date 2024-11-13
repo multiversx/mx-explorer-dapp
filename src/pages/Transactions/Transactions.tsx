@@ -57,6 +57,7 @@ export const Transactions = () => {
             <TransactionsTable
               transactions={transactions}
               totalTransactions={totalTransactions}
+              inactiveFilters={[]}
               dataChanged={dataChanged}
               isDataReady={isDataReady}
               title={
@@ -64,6 +65,7 @@ export const Transactions = () => {
                   data-testid='title'
                   className='table-title d-flex align-items-center flex-wrap'
                 >
+                  <div className='d-flex align-items-center flex-wrap'></div>
                   Live Transactions
                   {senderShard !== undefined && (
                     <>
@@ -77,8 +79,16 @@ export const Transactions = () => {
                       {getShardText(receiverShard)}
                     </>
                   )}
-                  <MethodList />
-                  <PulsatingLed className='ms-2 mt-1' />
+                  <PulsatingLed className='mx-2 mt-1' />
+                  <div className='d-flex align-items-center flex-wrap gap-2'>
+                    {/* <NetworkLink
+                      to={transactionsRoutes.transactionsInPool}
+                      className='btn btn-sm btn-dark-gradient'
+                    >
+                      Transaction Pool
+                    </NetworkLink> */}
+                    <MethodList />
+                  </div>
                 </h5>
               }
             />

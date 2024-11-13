@@ -72,11 +72,14 @@ const treatSmartDecodingCases = ({
   const updatedParts = [...decodedParts];
 
   if (parts[0] === 'ESDTNFTTransfer' && parts[2]) {
-    updatedParts[2] = decode(parts[2], 'decimal');
+    updatedParts[2] = decode(parts[2], DecodeMethodEnum.decimal);
   }
   if (identifier === 'ESDTNFTTransfer' && parts[1]) {
     const base64Buffer = Buffer.from(String(parts[1]), 'base64');
-    updatedParts[1] = decode(base64Buffer.toString('hex'), 'decimal');
+    updatedParts[1] = decode(
+      base64Buffer.toString('hex'),
+      DecodeMethodEnum.decimal
+    );
   }
 
   return updatedParts;
@@ -236,6 +239,12 @@ export const DataDecode = ({
       setDecodeMethod(activeKey);
     }
   }, [activeKey]);
+
+  useEffect(() => {
+    if (defaultDecodeMethod !== activeKey) {
+      setActiveKey(defaultDecodeMethod);
+    }
+  }, [defaultDecodeMethod]);
 
   return (
     <div

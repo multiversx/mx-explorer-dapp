@@ -2,23 +2,18 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import { CardItem, Loader } from 'components';
-import { urlBuilder } from 'helpers';
+import { urlBuilder, hasNftOverview } from 'helpers';
 import { useNetworkRoute } from 'hooks';
 import { faTrophy } from 'icons/regular';
 import { NftTabs } from 'layouts/NftLayout/NftTabs';
 import { nftSelector } from 'redux/selectors';
-import { NftTypeEnum } from 'types';
 
 export const NftDetails = () => {
   const networkRoute = useNetworkRoute();
   const { nftState } = useSelector(nftSelector);
-  const { type, rarities, tags, metadata, identifier } = nftState;
+  const { rarities, tags, metadata, identifier } = nftState;
 
-  const showOverview = Boolean(
-    type &&
-      type !== NftTypeEnum.MetaESDT &&
-      (metadata?.attributes || (rarities && Object.keys(rarities).length > 0))
-  );
+  const showOverview = hasNftOverview(nftState);
 
   if (!showOverview) {
     return (
