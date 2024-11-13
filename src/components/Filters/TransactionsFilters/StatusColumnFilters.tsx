@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
@@ -17,10 +18,14 @@ export const StatusColumnFilters = ({
   const { status, hashes, miniBlockHash, relayer, isRelayed } =
     Object.fromEntries(searchParams);
 
-  const existingHashesValues: SelectFilterType['options'] =
-    hashes?.split(',').map((hash) => {
+  const existingHashesValues: SelectFilterType['options'] = useMemo(() => {
+    if (!hashes) {
+      return [];
+    }
+    return hashes.split(',').map((hash) => {
       return { value: hash, label: truncateMiddle(hash, 9) };
-    }) ?? [];
+    });
+  }, [hashes]);
 
   const searchStatuses = (
     Object.keys(
