@@ -2,110 +2,146 @@
 
 .card {
   &.card-black {
-    --#{$prefix}card-bg: var(--#{$prefix}#{$prefix}black);
+    --card-bg: var(--black);
   }
 }
 
 .btn-primary {
-  --#{$prefix}btn-color: var(--#{$prefix}neutral-900);
-  --#{$prefix}btn-bg: var(--#{$prefix}primary);
-  --#{$prefix}btn-border-color: transparent;
-  --#{$prefix}btn-hover-border-color: transparent;
-  --#{$prefix}btn-focus-box-shadow: 0 0 0 #{$btn-focus-width} rgba(var(--#{$prefix}btn-focus-shadow-rgb), 0.5);
+  --btn-color: var(--neutral-900);
+  --btn-bg: var(--primary);
+  --btn-border-color: transparent;
+  --btn-hover-border-color: transparent;
+  --btn-focus-box-shadow: 0 0 0 #{$btn-focus-width} rgba(var(--btn-focus-shadow-rgb), 0.5);
 
-  --#{$prefix}btn-hover-color: var(--#{$prefix}neutral-900);
-  --#{$prefix}btn-hover-bg: var(--#{$prefix}primary-200);
+  --btn-hover-color: var(--neutral-900);
+  --btn-hover-bg: var(--primary-200);
 }
 
 .btn {
-  --#{$prefix}btn-active-bg: var(--#{$prefix}primary);
-  --#{$prefix}btn-active-border-color: var(--#{$prefix}primary);
-  --#{$prefix}btn-active-color: var(--#{$prefix}neutral-900);
+  --btn-active-bg: var(--primary);
+  --btn-active-border-color: var(--primary);
+  --btn-active-color: var(--neutral-900);
 }
 
 .btn-outline-primary {
   border-width: 1px;
-  --#{$prefix}btn-color: var(--#{$prefix}primary);
-  --#{$prefix}btn-border-color: var(--#{$prefix}primary);
-  --#{$prefix}btn-hover-border-color: var(--#{$prefix}primary-200);
-  --#{$prefix}btn-focus-box-shadow: 0 0 0 #{$btn-focus-width} rgba(var(--#{$prefix}btn-focus-shadow-rgb), 0.5);
-  --#{$prefix}btn-hover-color: var(--#{$prefix}neutral-900);
-  --#{$prefix}btn-hover-bg: var(--#{$prefix}primary);
+  --btn-color: var(--primary);
+  --btn-border-color: var(--primary);
+  --btn-hover-border-color: var(--primary-200);
+  --btn-focus-box-shadow: 0 0 0 #{$btn-focus-width} rgba(var(--btn-focus-shadow-rgb), 0.5);
+  --btn-hover-color: var(--neutral-900);
+  --btn-hover-bg: var(--primary);
 }
 
 .btn-dark {
-  --#{$prefix}btn-color: var(--#{$prefix}body-color);
-  --#{$prefix}btn-bg: var(--#{$prefix}neutral-800);
-  --#{$prefix}btn-border-color: transparent;
-  --#{$prefix}btn-hover-border-color: transparent;
-  --#{$prefix}btn-focus-box-shadow: none;
+  --btn-color: var(--body-color);
+  --btn-bg: var(--neutral-800);
+  --btn-border-color: transparent;
+  --btn-hover-border-color: transparent;
+  --btn-focus-box-shadow: none;
 
-  --#{$prefix}btn-hover-color: var(--#{$prefix}body-color);
-  --#{$prefix}btn-hover-bg: var(--#{$prefix}neutral-900);
+  --btn-hover-color: var(--body-color);
+  --btn-hover-bg: var(--neutral-900);
 
-  --#{$prefix}btn-active-color: var(--#{$prefix}body-color);
-  --#{$prefix}btn-active-bg: var(--#{$prefix}neutral-900);
-  --#{$prefix}btn-active-border-color: var(--#{$prefix}primary);
+  --btn-active-color: var(--body-color);
+  --btn-active-bg: var(--neutral-900);
+  --btn-active-border-color: var(--primary);
 }
 
 .btn-dark-alt {
-  --#{$prefix}btn-bg: var(--#{$prefix}neutral-900);
-  --#{$prefix}btn-hover-bg: var(--#{$prefix}black);
-  --#{$prefix}btn-active-bg: var(--#{$prefix}black);
+  --btn-bg: var(--neutral-900);
+  --btn-hover-bg: var(--black);
+  --btn-active-bg: var(--black);
 }
 
 .btn-dark-980 {
-  --#{$prefix}btn-color: var(--#{$prefix}neutral-600);
-  --#{$prefix}btn-bg: var(--#{$prefix}neutral-980);
-  --#{$prefix}btn-border-color: transparent;
-  --#{$prefix}btn-hover-border-color: transparent;
-  --#{$prefix}btn-focus-box-shadow: none;
+  --btn-color: var(--neutral-600);
+  --btn-bg: var(--neutral-980);
+  --btn-border-color: transparent;
+  --btn-hover-border-color: transparent;
+  --btn-focus-box-shadow: none;
 
-  --#{$prefix}btn-hover-color: var(--#{$prefix}primary);
-  --#{$prefix}btn-hover-bg: var(--#{$prefix}black);
+  --btn-hover-color: var(--primary);
+  --btn-hover-bg: var(--black);
 
-  --#{$prefix}btn-active-color: var(--#{$prefix}primary);
-  --#{$prefix}btn-active-bg: var(--#{$prefix}black);
-  --#{$prefix}btn-active-border-color: transparent;
+  --btn-active-color: var(--primary);
+  --btn-active-bg: var(--black);
+  --btn-active-border-color: transparent;
+}
+.btn-dark-gradient {
+  --btn-font-weight: 500;
+  --btn-font-family: var(--font-headings-regular);
+  --btn-color: var(--neutral-400);
+  --btn-bg: linear-gradient(
+    90deg,
+    rgba(117, 127, 154, 0.3),
+    rgba(215, 221, 232, 0.3)
+  );
+  --btn-border-color: transparent;
+  --btn-focus-box-shadow: none;
+
+  --btn-hover-color: var(--neutral-400);
+  --btn-hover-bg: linear-gradient(
+    90deg,
+    rgba(117, 127, 154, 0.4),
+    rgba(215, 221, 232, 0.4)
+  );
+  --btn-hover-border-color: var(--border-color);
+
+  --btn-active-color: var(--btn-hover-color);
+  --btn-active-bg: var(--btn-hover-bg);
+  --btn-active-border-color: var(--border-color);
+
+  --btn-disabled-opacity: 0.65;
+  --btn-disabled-color: var(--neutral-400);
+  --btn-disabled-bg: var(--neutral-800);
+  --btn-disabled-border-color: var(--border-color);
+
+  color: var(--neutral-400);
+  background: linear-gradient(
+    90deg,
+    rgba(117, 127, 154, 0.3),
+    rgba(215, 221, 232, 0.3)
+  );
 }
 .form-select,
 .form-control {
-  background-color: var(--#{$prefix}neutral-800);
-  color: var(--#{$prefix}neutral-500);
+  background-color: var(--neutral-800);
+  color: var(--neutral-500);
   &::placeholder {
-    color: var(--#{$prefix}neutral-500);
+    color: var(--neutral-500);
   }
   &:focus {
-    color: var(--#{$prefix}neutral-400);
-    background-color: var(--#{$prefix}neutral-800);
-    box-shadow: 0 0 0 1px rgba(var(--#{$prefix}primary-rgb), 0.5);
+    color: var(--neutral-400);
+    background-color: var(--neutral-800);
+    box-shadow: 0 0 0 1px rgba(var(--primary-rgb), 0.5);
   }
   &:focus-visible {
     border: 0;
     outline: 0;
   }
   &.form-control-dark {
-    background-color: var(--#{$prefix}black);
+    background-color: var(--black);
   }
 }
 
 .input-group-text {
-  background-color: var(--#{$prefix}neutral-800);
-  color: var(--#{$prefix}neutral-500);
+  background-color: var(--neutral-800);
+  color: var(--neutral-500);
   &:hover {
-    color: var(--#{$prefix}primary);
+    color: var(--primary);
   }
 }
 
 .input-group-black {
   .form-control {
-    background-color: var(--#{$prefix}black);
+    background-color: var(--black);
     &:focus {
-      background-color: var(--#{$prefix}black);
+      background-color: var(--black);
     }
   }
   .input-group-text {
-    background-color: var(--#{$prefix}black);
+    background-color: var(--black);
   }
 }
 
