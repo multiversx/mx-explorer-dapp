@@ -7,6 +7,7 @@ import {
   PageState,
   PulsatingLed
 } from 'components';
+import { formatBigNumber } from 'helpers';
 import { useGetTransactionInPoolFilters } from 'hooks';
 import { faCode, faExchangeAlt } from 'icons/regular';
 import { TransactionInPoolType, TransactionFiltersEnum } from 'types';
@@ -33,7 +34,7 @@ export const TransactionsInPoolTable = ({
   totalTransactionsInPool,
   title = (
     <h5 data-testid='title' className='table-title d-flex align-items-center'>
-      {totalTransactionsInPool} Transactions In Pool{' '}
+      {formatBigNumber({ value: totalTransactionsInPool })} Transactions In Pool{' '}
       <PulsatingLed className='ms-2 mt-1' />
     </h5>
   ),
