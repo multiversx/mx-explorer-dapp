@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { TransactionsTable, PulsatingLed, NetworkLink } from 'components';
+import { TransactionsTable, PulsatingLed } from 'components';
 import { MethodList } from 'components/TransactionsTable/components';
 import {
   useAdapter,
@@ -12,8 +12,6 @@ import {
   useGetShardText
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { transactionsRoutes } from 'routes';
-import { TransactionFiltersEnum } from 'types';
 
 export const Transactions = () => {
   const ref = useRef(null);
@@ -59,7 +57,7 @@ export const Transactions = () => {
             <TransactionsTable
               transactions={transactions}
               totalTransactions={totalTransactions}
-              inactiveFilters={[TransactionFiltersEnum.relayer]}
+              inactiveFilters={[]}
               dataChanged={dataChanged}
               isDataReady={isDataReady}
               title={
