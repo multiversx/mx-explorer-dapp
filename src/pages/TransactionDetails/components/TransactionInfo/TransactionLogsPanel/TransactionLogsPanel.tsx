@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { DetailItem } from 'components';
 import {
   AddressDetailItem,
@@ -11,6 +12,11 @@ export const TransactionLogsPanel = ({
 }: {
   transaction: TransactionType;
 }) => {
+  const transactionResults = useMemo(
+    () => (transaction.results ?? []).filter((result) => result.logs),
+    [transaction.results]
+  );
+
   return (
     <>
       {transaction.logs && (
@@ -29,9 +35,9 @@ export const TransactionLogsPanel = ({
           )}
         </>
       )}
-      {transaction.results && transaction.results.length > 0 && (
+      {transactionResults.length > 0 && (
         <div className='row'>
-          {transaction.results.map((result, resultIndex) => {
+          {transactionResults.map((result, resultIndex) => {
             if (!result.logs) {
               return null;
             }
@@ -45,12 +51,12 @@ export const TransactionLogsPanel = ({
                 {result.logs.address !== undefined && (
                   <AddressDetailItem address={result.logs.address} />
                 )}
-                {result.logs.events && result.logs.events?.length > 0 && (
+                {result.logs.events.length > 0 && (
                   <DetailItem title={<div className='item-title'>Events</div>}>
                     <EventsList
                       events={result.logs.events}
                       txHash={transaction.txHash}
-                      id={result.logs?.id ?? 'result-events'}
+                      id={result.logs.id ?? 'result-events'}
                     />
                   </DetailItem>
                 )}
