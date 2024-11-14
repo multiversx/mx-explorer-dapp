@@ -821,10 +821,10 @@
     classnames "2.3.2"
     react-select "5.4.0"
 
-"@multiversx/sdk-dapp-sc-explorer@0.0.2-alpha.4":
-  version "0.0.2-alpha.4"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-sc-explorer/-/sdk-dapp-sc-explorer-0.0.2-alpha.4.tgz#6d51c6b809526b2099421400f5dc1711ce63ebce"
-  integrity sha512-HzS7BcgJOWq+G9/CPr+rcY106LyNV1FX5jKIHEfYaNDugsT6mNREbrpyXXjKzusZrA8Bt5iL3p0XVQvKwFg9jA==
+"@multiversx/sdk-dapp-sc-explorer@0.0.2-beta.0":
+  version "0.0.2-beta.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-sc-explorer/-/sdk-dapp-sc-explorer-0.0.2-beta.0.tgz#0be6646a03de74b5c79254f588814d89240dc17e"
+  integrity sha512-nNbKLGUhqugOmzKN0upbtEZyeXmgublg3NKzF5hoGaq2SZsCtp6C5cgGVgtdXdc0+lltJPcodQ8/bfiXx64CQw==
   dependencies:
     "@multiversx/sdk-dapp-form" "1.1.2"
     "@multiversx/sdk-network-providers" "2.9.3"
