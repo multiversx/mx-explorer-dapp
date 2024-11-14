@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState
+} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { Anchor, Dropdown } from 'react-bootstrap';
@@ -197,13 +203,15 @@ export const DataDecode = ({
   className,
   initialDecodeMethod,
   setDecodeMethod,
-  identifier
+  identifier,
+  children
 }: {
   value: string;
   className?: string;
   initialDecodeMethod?: DecodeMethodEnum;
   setDecodeMethod?: Dispatch<SetStateAction<DecodeMethodEnum>>;
   identifier?: string;
+  children?: ReactNode;
 }) => {
   const defaultDecodeMethod =
     initialDecodeMethod &&
@@ -253,7 +261,7 @@ export const DataDecode = ({
       }`}
     >
       <div className={`form-control textarea ${className ? className : ''}`}>
-        {displayValue}
+        {children ? children : displayValue}
       </div>
       {value && value !== 'N/A' && (
         <div className='d-flex button-holder'>

@@ -40,6 +40,7 @@ import { activeNetworkSelector } from 'redux/selectors';
 import {
   TransactionType,
   TransactionActionCategoryEnum,
+  TransactionActionEnum,
   TransactionApiStatusEnum
 } from 'types';
 
@@ -66,6 +67,11 @@ export const TransactionDetailsPanel = ({
   const totalTxTokenUsdValue = getTotalTxTokenUsdValue(transaction);
   const showTotalTxTokenUsdValue =
     totalTxTokenUsdValue !== new BigNumber(0).toString();
+
+  const skipDataScamCheck =
+    transaction.sender === receiver &&
+    transaction.function === TransactionActionEnum.transfer &&
+    (!transaction.scamInfo || transaction.scamInfo?.type === 'potentialScam');
 
   return (
     <>
@@ -324,7 +330,11 @@ export const TransactionDetailsPanel = ({
         <TransactionWarningMessage transaction={transaction} />
       </DetailItem>
 
-      <DataField data={transaction.data} scamInfo={transaction.scamInfo} />
+      <DataField
+        data={transaction.data}
+        scamInfo={transaction.scamInfo}
+        skipDataScamCheck={skipDataScamCheck}
+      />
 
       {transaction.results && transaction.results?.length > 0 && (
         <DetailItem
