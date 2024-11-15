@@ -7,6 +7,7 @@ import {
   PageState,
   PulsatingLed
 } from 'components';
+import { formatBigNumber } from 'helpers';
 import { useGetTransactionInPoolFilters } from 'hooks';
 import { faCode, faExchangeAlt } from 'icons/regular';
 import { TransactionInPoolType, TransactionFiltersEnum } from 'types';
@@ -33,7 +34,8 @@ export const TransactionsInPoolTable = ({
   totalTransactionsInPool,
   title = (
     <h5 data-testid='title' className='table-title d-flex align-items-center'>
-      Live Transactions In Pool <PulsatingLed className='ms-2 mt-1' />
+      {formatBigNumber({ value: totalTransactionsInPool })} Transactions In Pool{' '}
+      <PulsatingLed className='ms-2 mt-1' />
     </h5>
   ),
   dataChanged = false,
@@ -42,7 +44,7 @@ export const TransactionsInPoolTable = ({
 }: TransactionsInPoolTableUIType) => {
   const { type } = useGetTransactionInPoolFilters();
   return (
-    <div className='transactions-table  transactions-in-pool-table'>
+    <div className='transactions-table transactions-in-pool-table'>
       <div className='card'>
         <div className='card-header'>
           <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>

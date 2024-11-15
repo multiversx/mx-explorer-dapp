@@ -123,7 +123,6 @@ export enum TransactionFiltersEnum {
   search = 'search',
   token = 'token',
   transactionsInPoolType = 'type',
-  relayer = 'relayer',
   hashes = 'hashes',
   isRelayed = 'isRelayed'
 }

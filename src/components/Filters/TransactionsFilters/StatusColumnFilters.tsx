@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
@@ -14,13 +15,17 @@ export const StatusColumnFilters = ({
   inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
-  const { status, hashes, miniBlockHash, relayer, isRelayed } =
+  const { status, hashes, miniBlockHash, isRelayed } =
     Object.fromEntries(searchParams);
 
-  const existingHashesValues: SelectFilterType['options'] =
-    hashes?.split(',').map((hash) => {
+  const existingHashesValues: SelectFilterType['options'] = useMemo(() => {
+    if (!hashes) {
+      return [];
+    }
+    return hashes.split(',').map((hash) => {
       return { value: hash, label: truncateMiddle(hash, 9) };
-    }) ?? [];
+    });
+  }, [hashes]);
 
   const searchStatuses = (
     Object.keys(
@@ -38,7 +43,6 @@ export const StatusColumnFilters = ({
   const allInactive = [
     TransactionFiltersEnum.status,
     TransactionFiltersEnum.miniBlockHash,
-    TransactionFiltersEnum.relayer,
     TransactionFiltersEnum.isRelayed,
     TransactionFiltersEnum.hashes
   ].every((filter) => inactiveFilters.includes(filter));
@@ -46,7 +50,6 @@ export const StatusColumnFilters = ({
   const isActive =
     status !== undefined ||
     miniBlockHash !== undefined ||
-    relayer !== undefined ||
     isRelayed !== undefined ||
     hashes !== undefined;
 
@@ -86,18 +89,6 @@ export const StatusColumnFilters = ({
                     name='is-relayed-filter'
                     options={relayedOptions}
                     filter={TransactionFiltersEnum.isRelayed}
-                  />
-                </div>
-              )}
-
-              {!inactiveFilters.includes(TransactionFiltersEnum.relayer) && (
-                <div className='filter-block'>
-                  <div className='mb-1'>Relayer</div>
-                  <SearchFilter
-                    name='relayer-filter'
-                    filter={TransactionFiltersEnum.relayer}
-                    placeholder='Relayer'
-                    validation='address'
                   />
                 </div>
               )}

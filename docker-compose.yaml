@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  test:
+    ports: 
+      - 127.0.0.1:80:80
+    container_name: explorer
+    build:
+      context: .  
+      dockerfile: Dockerfile 
+    environment:
+      START_NAME_STOP: testnet
+      START_CHAIN_ID_STOP: D
+      START_EGLD_LABEL_STOP: xEGLD
+      START_WALLET_ADDRESS_STOP: https://testnet-wallet.multiversx.com
+      START_EXPLORER_ADDRESS_STOP: https://testnet-explorer.multiversx.com
+      START_NFT_EXPLORER_ADDRESS_STOP: https://testnet.xspotlight.com
+      START_API_ADDRESS_STOP: https://testnet-api.multiversx.com

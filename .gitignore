@@ -46,6 +46,7 @@ dist-ssr
 /src/config/*
 !/src/config/helpers
 !/src/config.devnet.ts
+!/src/config.placeholder.ts
 !/src/config.devnet-old.ts
 !/src/config.testnet.ts
 !/src/config.mainnet.ts
@@ -58,6 +59,7 @@ dist-ssr
 *.sh
 !prepare-free-icons.sh
 !prepare-pro-icons.sh
+!entrypoint.sh
 
 # Editor directories and files
 .vscode/*

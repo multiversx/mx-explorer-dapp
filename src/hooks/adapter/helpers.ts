@@ -44,7 +44,6 @@ export function getTransactionsParams({
   search,
   token,
   hashes,
-  relayer,
   isRelayed = false,
 
   // include data
@@ -85,7 +84,6 @@ export function getTransactionsParams({
     ...(search ? { search } : {}),
     ...(token ? { token } : {}),
     ...(hashes ? { hashes } : {}),
-    ...(relayer ? { relayer } : {}),
     ...(isRelayed ? { isRelayed } : {})
   };
 
