@@ -13,15 +13,19 @@ import {
   useGetTransactionUrlHashParams
 } from 'hooks';
 import { transactionsRoutes } from 'routes';
-import { ScamInfoType } from 'types';
+import { ScamInfoType, WithClassnameType } from 'types';
+
+export interface DataFieldUIType extends WithClassnameType {
+  data?: string;
+  scamInfo?: ScamInfoType;
+  skipDataScamCheck?: boolean;
+}
 
 export const DataField = ({
   data,
-  scamInfo
-}: {
-  data?: string;
-  scamInfo?: ScamInfoType;
-}) => {
+  scamInfo,
+  skipDataScamCheck
+}: DataFieldUIType) => {
   const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
   const activeRoute = useActiveRoute();
@@ -59,10 +63,21 @@ export const DataField = ({
     }
   }, [decodeMethod, pathname]);
 
+  const showRawLinks =
+    decodeMethod === DecodeMethodEnum.raw && (showData || skipDataScamCheck);
+  const value = truncate(
+    skipDataScamCheck ? dataString : output,
+    MAX_DISPLAY_TX_DATA_LENGTH
+  );
+
   return (
     <DetailItem title='Input Data' className='data-field'>
-      {showData ? (
-        <div className='textarea form-control col cursor-text mt-1'>
+      <DataDecode
+        value={value}
+        initialDecodeMethod={!id ? dataDecode : DecodeMethodEnum.raw}
+        setDecodeMethod={setDecodeMethod}
+      >
+        {showRawLinks && (
           <Anchorme
             linkComponent={ModalLink}
             target='_blank'
@@ -70,15 +85,9 @@ export const DataField = ({
           >
             {stringWithLinks}
           </Anchorme>
-        </div>
-      ) : (
-        <DataDecode
-          value={truncate(output, MAX_DISPLAY_TX_DATA_LENGTH)}
-          initialDecodeMethod={!id ? dataDecode : DecodeMethodEnum.raw}
-          setDecodeMethod={setDecodeMethod}
-        />
-      )}
-      {found && (
+        )}
+      </DataDecode>
+      {found && !skipDataScamCheck && (
         <a href='/#' onClick={show} className='small-font text-muted'>
           {!showData ? 'Show' : 'Hide'} original message
         </a>
