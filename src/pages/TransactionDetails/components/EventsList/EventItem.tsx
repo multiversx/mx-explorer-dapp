@@ -1,14 +1,9 @@
 import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DecodeMethodEnum } from '@multiversx/sdk-dapp/types';
 import classNames from 'classnames';
 
-import {
-  CopyButton,
-  DataDecode,
-  DecodeMethodEnum,
-  AccountLink,
-  NetworkLink
-} from 'components';
+import { CopyButton, DataDecode, AccountLink, NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
 import {
   useActiveRoute,
