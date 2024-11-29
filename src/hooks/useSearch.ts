@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { HEROTAG_SUFFIX } from 'appConstants';
+import { useSelector } from 'react-redux';
+
+import { HEROTAG_SUFFIX, NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
 import {
   urlBuilder,
   isHash,
@@ -9,6 +11,7 @@ import {
   formatHerotag
 } from 'helpers';
 import { useAdapter, useNetworkRoute } from 'hooks';
+import { activeNetworkSelector } from 'redux/selectors';
 import { TokenTypeEnum } from 'types';
 
 export const useSearch = (searchHash: string) => {
@@ -31,6 +34,7 @@ export const useSearch = (searchHash: string) => {
   const [searchRoute, setSearchRoute] = useState('');
   const [isSearching, setIsSearching] = useState<undefined | boolean>();
 
+  const { egldLabel } = useSelector(activeNetworkSelector);
   const notFoundRoute = networkRoute(`/search/${searchHash}`);
 
   const search = async () => {
@@ -48,6 +52,7 @@ export const useSearch = (searchHash: string) => {
         validHashChars.test(searchHash.split('-')[1]) === true;
       const isUsername =
         searchHash.startsWith('@') || searchHash.endsWith(HEROTAG_SUFFIX);
+      const isNativeToken = NATIVE_TOKEN_IDENTIFIER === searchHash;
 
       let isPubKeyAccount = false;
       try {
@@ -56,6 +61,13 @@ export const useSearch = (searchHash: string) => {
       } catch {}
 
       switch (true) {
+        case isNativeToken:
+          const newRoute = networkRoute(
+            urlBuilder.nativeTokenDetails(egldLabel ?? 'EGLD')
+          );
+          setSearchRoute(newRoute);
+
+          break;
         case isUsername:
           getUsername(formatHerotag(searchHash)).then((account) => {
             const newRoute = account?.data?.address
