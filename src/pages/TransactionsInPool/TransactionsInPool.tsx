@@ -1,78 +1,58 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { ELLIPSIS } from 'appConstants';
 import { TransactionsInPoolTable } from 'components/TransactionsInPoolTable';
-import { useAdapter, useGetPage, useGetTransactionInPoolFilters } from 'hooks';
+import {
+  useAdapter,
+  useFetchTransactions,
+  useGetPage,
+  useGetTransactionInPoolFilters
+} from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { TransactionInPoolType } from 'types';
+import { TransactionInPoolTypeEnum, UITransactionInPoolType } from 'types';
 
 export const TransactionsInPool = () => {
+  const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const { page, size } = useGetPage();
-  const urlParams = useGetTransactionInPoolFilters();
-  const { sender, receiver, type } = urlParams;
+  const { type = TransactionInPoolTypeEnum.Transaction, ...rest } =
+    useGetTransactionInPoolFilters();
+
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
-  const [dataChanged, setDataChanged] = useState<boolean>(false);
-  const [transactionsInPool, setTransactionsInPool] = useState<
-    TransactionInPoolType[]
-  >([]);
-  const [totalTransactionsInPool, setTotalTransactionsInPool] = useState<
-    number | typeof ELLIPSIS
-  >(ELLIPSIS);
-
   const { getTransactionsInPool, getTransactionsInPoolCount } = useAdapter();
 
-  const fetchTransactionsInPool = (paramsChange = false) => {
-    if (searchParams.toString() && paramsChange) {
-      setDataChanged(true);
-    }
-    Promise.all([
-      getTransactionsInPool({
-        page,
-        size,
-        sender,
-        receiver,
-        type
-      }),
-      getTransactionsInPoolCount({ sender, receiver, type })
-    ])
-      .then(([transactionsInPoolData, transactionsInPoolCountData]) => {
-        if (
-          transactionsInPoolData.success &&
-          transactionsInPoolCountData.success
-        ) {
-          setTransactionsInPool(transactionsInPoolData.data);
-          setTotalTransactionsInPool(transactionsInPoolCountData.data);
-        }
-        setIsDataReady(
-          transactionsInPoolData.success && transactionsInPoolCountData.success
-        );
-      })
-      .finally(() => {
-        setDataChanged(false);
-      });
-  };
+  const {
+    fetchTransactions,
+    transactions: transactionsInPool,
+    totalTransactions: totalTransactionsInPool,
+    isDataReady,
+    dataChanged
+  } = useFetchTransactions(getTransactionsInPool, getTransactionsInPoolCount, {
+    ...rest,
+    type
+  });
 
   useEffect(() => {
-    fetchTransactionsInPool();
+    if (ref.current !== null) {
+      fetchTransactions();
+    }
   }, [activeNetworkId, firstPageRefreshTrigger]);
 
   useEffect(() => {
-    fetchTransactionsInPool(Boolean(searchParams.toString()));
+    fetchTransactions(Boolean(searchParams.toString()));
   }, [searchParams]);
 
   return (
-    <div className='container page-content'>
+    <div ref={ref} className='container page-content'>
       <div className='card p-0'>
         <div className='row'>
           <div className='col-12'>
             <TransactionsInPoolTable
-              transactionsInPool={transactionsInPool}
+              transactionsInPool={
+                transactionsInPool as unknown as UITransactionInPoolType[]
+              }
               totalTransactionsInPool={totalTransactionsInPool}
               dataChanged={dataChanged}
               isDataReady={isDataReady}

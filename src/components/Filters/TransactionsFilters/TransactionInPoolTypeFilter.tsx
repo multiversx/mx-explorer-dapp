@@ -15,7 +15,12 @@ export const TransactionInPoolTypeFilter = ({
   hideFilters?: boolean;
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { type, page, size, ...rest } = Object.fromEntries(searchParams);
+  const {
+    type = TransactionInPoolTypeEnum.Transaction,
+    page,
+    size,
+    ...rest
+  } = Object.fromEntries(searchParams);
 
   const typeLink = (type: TransactionInPoolTypeEnum) => {
     const nextUrlParams = {
@@ -53,16 +58,13 @@ export const TransactionInPoolTypeFilter = ({
           />
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item as={Anchor} className='text-neutral-400' eventKey=''>
-            All
-          </Dropdown.Item>
           {Object.keys(TransactionInPoolTypeEnum).map(
             (transactionType, key) => {
               return (
                 <Dropdown.Item
                   as={Anchor}
                   eventKey={transactionType}
-                  className={`dropdown-item text-cyan-400 ${
+                  className={`dropdown-item ${
                     type === transactionType ? 'active' : ''
                   }`}
                   key={key}
