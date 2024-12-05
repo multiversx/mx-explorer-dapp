@@ -82,7 +82,6 @@ export const DataDecode = ({
         <div className='d-flex button-holder'>
           <CopyButton text={displayValue} className='copy-button' />
           <Dropdown
-            id='dataDecodeTypeDropdown'
             className='position-absolute'
             onSelect={handleSelect}
             onToggle={(e) => {
