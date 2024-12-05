@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, Outlet, useParams } from 'react-router-dom';
 
+import { NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
 import { Loader } from 'components';
 import { useAdapter, useGetPage } from 'hooks';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
@@ -19,7 +20,9 @@ export const TokenLayout = () => {
   const { token } = useSelector(tokenSelector);
 
   const isNativeToken =
-    tokenId && tokenId?.toLowerCase() === egldLabel?.toLowerCase();
+    tokenId &&
+    (tokenId.toLowerCase() === egldLabel?.toLowerCase() ||
+      tokenId.toLowerCase() === NATIVE_TOKEN_IDENTIFIER.toLowerCase());
 
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 

@@ -23,6 +23,7 @@ export * from './useIsMainnet';
 export * from './useIsNativeTokenSearched';
 export * from './useIsSovereign';
 export * from './useIsTestnet';
+export * from './useInitDatadog';
 export * from './useLoopManager';
 export * from './useMatchPath';
 export * from './useNetworkRoute';

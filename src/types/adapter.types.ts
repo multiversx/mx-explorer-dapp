@@ -121,6 +121,8 @@ export interface GetTransactionsType extends SortableApiType {
 export interface GetTransactionsInPoolType extends SortableApiType {
   sender?: string;
   receiver?: string;
+  senderShard?: number;
+  receiverShard?: number;
   type?: TransactionInPoolTypeEnum;
 }
 
