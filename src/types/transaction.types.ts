@@ -80,11 +80,16 @@ export interface TransactionInPoolType {
   gasPrice: number;
   gasLimit: number;
   type: TransactionInPoolTypeEnum;
+  senderShard: number;
+  receiverShard: number;
   receiverUsername?: string;
   data?: string;
 }
 
 export enum TransactionInPoolTypeEnum {
+  // UI only
+  All = 'All',
+
   Transaction = 'Transaction',
   SmartContractResult = 'SmartContractResult',
   Reward = 'Reward'
@@ -249,6 +254,10 @@ export interface UITransactionType extends TransferType {
   isNew?: boolean; // UI flag
   tokenValue?: string;
   tokenIdentifier?: string;
+}
+
+export interface UITransactionInPoolType extends TransactionInPoolType {
+  isNew?: boolean; // UI flag
 }
 
 export interface TransactionTableType {
