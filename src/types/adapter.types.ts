@@ -109,6 +109,7 @@ export interface GetTransactionsType extends SortableApiType {
   search?: string;
   token?: string;
   hashes?: string;
+  relayer?: string;
   withScResults?: boolean;
   withOperations?: boolean;
   withLogs?: boolean;

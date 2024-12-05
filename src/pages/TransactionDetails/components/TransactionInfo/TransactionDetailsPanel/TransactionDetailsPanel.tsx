@@ -197,6 +197,20 @@ export const TransactionDetailsPanel = ({
         </DetailItem>
       )}
 
+      {transaction.relayer && (
+        <DetailItem title='Relayer'>
+          <div className='d-flex flex-column'>
+            <div className='d-flex align-items-center'>
+              {isContract(transaction.relayer) && (
+                <span className='me-2 text-neutral-400'>Contract</span>
+              )}
+              <AccountLink address={transaction.relayer} hasHighlight />
+              <CopyButton className='me-2' text={transaction.relayer} />
+            </div>
+          </div>
+        </DetailItem>
+      )}
+
       <DetailItem title='Value' className='text-neutral-100'>
         <FormatAmount
           value={transaction.value.toString()}

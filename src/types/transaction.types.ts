@@ -35,6 +35,7 @@ export interface TransactionType {
   guardianSignature?: string;
   isRelayed?: boolean;
   relayedVersion?: boolean;
+  relayer?: string;
   logs?: TransactionSCResultLogType;
   results?: TransactionSCResultType[];
   operations?: TransactionOperationType[];
@@ -124,7 +125,8 @@ export enum TransactionFiltersEnum {
   token = 'token',
   transactionsInPoolType = 'type',
   hashes = 'hashes',
-  isRelayed = 'isRelayed'
+  isRelayed = 'isRelayed',
+  relayer = 'relayer'
 }
 
 // Avoid issues with differences between methods and actions

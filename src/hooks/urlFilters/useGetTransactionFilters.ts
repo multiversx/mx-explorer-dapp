@@ -36,6 +36,7 @@ export const useGetTransactionFilters = () => {
     method: getParam(TransactionFiltersEnum.method),
     hashes: getParam(TransactionFiltersEnum.hashes),
     token: getParam(TransactionFiltersEnum.token),
+    relayer: getParam(TransactionFiltersEnum.relayer),
     isRelayed: getParam(TransactionFiltersEnum.isRelayed)
   };
 };
