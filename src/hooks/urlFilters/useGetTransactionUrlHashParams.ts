@@ -1,5 +1,6 @@
-import { useLocation } from 'react-router-dom';
 import { DecodeMethodEnum } from '@multiversx/sdk-dapp/types';
+import { useLocation } from 'react-router-dom';
+
 import { useGetTransactionDecodeFilters } from 'hooks';
 
 export interface TransactionDecodeParamsType {
