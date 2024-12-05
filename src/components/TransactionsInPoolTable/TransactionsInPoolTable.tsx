@@ -7,7 +7,7 @@ import {
   PageState,
   PulsatingLed
 } from 'components';
-import { formatBigNumber } from 'helpers';
+import { formatBigNumber, getStringPlural } from 'helpers';
 import { useGetTransactionInPoolFilters } from 'hooks';
 import { faCode, faExchangeAlt } from 'icons/regular';
 import {
@@ -38,8 +38,11 @@ export const TransactionsInPoolTable = ({
   totalTransactionsInPool,
   title = (
     <h5 data-testid='title' className='table-title d-flex align-items-center'>
-      {formatBigNumber({ value: totalTransactionsInPool })} Transactions In Pool{' '}
-      <PulsatingLed className='ms-2 mt-1' />
+      {formatBigNumber({ value: totalTransactionsInPool })}{' '}
+      {getStringPlural(totalTransactionsInPool, {
+        string: 'Transaction'
+      })}{' '}
+      In Pool <PulsatingLed className='ms-2 mt-1' />
     </h5>
   ),
   dataChanged = false,
