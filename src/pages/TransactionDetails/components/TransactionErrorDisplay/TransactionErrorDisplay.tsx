@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { DecodeMethodEnum } from '@multiversx/sdk-dapp/types';
+import { decodeForDisplay } from '@multiversx/sdk-dapp/utils/transactions/transactionInfoHelpers/decodeForDisplay';
 import { InfoTooltip, NetworkLink } from 'components';
-import { decodeForDisplay, DecodeMethodEnum } from 'components/DataDecode';
 import {
   getTransactionMessages,
   capitalizeFirstLetter,

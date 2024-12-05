@@ -4,6 +4,7 @@ import {
   PAGE_SIZE,
   TRANSACTIONS_TABLE_FIELDS
 } from 'appConstants';
+import { TransactionInPoolTypeEnum } from 'types';
 import {
   BaseApiType,
   AdapterProviderPropsType,
@@ -98,6 +99,8 @@ export function getTransactionsInPoolParams({
 
   sender,
   receiver,
+  senderShard,
+  receiverShard,
   type,
 
   // not on api
@@ -105,9 +108,11 @@ export function getTransactionsInPoolParams({
 }: GetTransactionsInPoolType) {
   const params: AdapterProviderPropsType['params'] = {
     ...(isCount ? {} : getPageParams({ page, size })),
+    ...(senderShard !== undefined ? { senderShard } : {}),
+    ...(receiverShard !== undefined ? { receiverShard } : {}),
     ...(sender ? { sender } : {}),
     ...(receiver ? { receiver } : {}),
-    ...(type ? { type } : {})
+    ...(type && type !== TransactionInPoolTypeEnum.All ? { type } : {})
   };
 
   return params;
