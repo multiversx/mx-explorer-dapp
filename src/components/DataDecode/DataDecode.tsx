@@ -12,6 +12,16 @@ import { Anchor, Dropdown } from 'react-bootstrap';
 import { MAX_DECODE_TX_DATA_LENGTH } from 'appConstants';
 import { CopyButton } from 'components';
 import { faExclamationTriangle } from 'icons/regular';
+import { WithClassnameType } from 'types';
+
+export interface DataDecodeUIType extends WithClassnameType {
+  value: string;
+  className?: string;
+  initialDecodeMethod?: DecodeMethodEnum;
+  setDecodeMethod?: Dispatch<SetStateAction<DecodeMethodEnum>>;
+  identifier?: string;
+  anchoredContent?: ReactNode;
+}
 
 export const DataDecode = ({
   value,
@@ -19,15 +29,8 @@ export const DataDecode = ({
   initialDecodeMethod,
   setDecodeMethod,
   identifier,
-  children
-}: {
-  value: string;
-  className?: string;
-  initialDecodeMethod?: DecodeMethodEnum;
-  setDecodeMethod?: Dispatch<SetStateAction<DecodeMethodEnum>>;
-  identifier?: string;
-  children?: ReactNode;
-}) => {
+  anchoredContent
+}: DataDecodeUIType) => {
   const defaultDecodeMethod =
     initialDecodeMethod &&
     Object.values<string>(DecodeMethodEnum).includes(initialDecodeMethod)
@@ -76,7 +79,7 @@ export const DataDecode = ({
       }`}
     >
       <div className={`form-control textarea ${className ? className : ''}`}>
-        {children ? children : displayValue}
+        {anchoredContent ? anchoredContent : displayValue}
       </div>
       {value && value !== 'N/A' && (
         <div className='d-flex button-holder'>
