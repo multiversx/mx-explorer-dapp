@@ -1,7 +1,6 @@
+import { DecodeMethodEnum } from '@multiversx/sdk-dapp/types';
 import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import { useSearchParams } from 'react-router-dom';
-
-import { DecodeMethodEnum } from 'components/DataDecode';
 
 const checkType = (type: string) =>
   type && Object.keys(DecodeMethodEnum).includes(type)

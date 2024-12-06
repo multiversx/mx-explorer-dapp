@@ -7,15 +7,19 @@ import {
   PageState,
   PulsatingLed
 } from 'components';
-import { formatBigNumber } from 'helpers';
+import { formatBigNumber, getStringPlural } from 'helpers';
 import { useGetTransactionInPoolFilters } from 'hooks';
 import { faCode, faExchangeAlt } from 'icons/regular';
-import { TransactionInPoolType, TransactionFiltersEnum } from 'types';
+import {
+  UITransactionInPoolType,
+  TransactionFiltersEnum,
+  TransactionInPoolTypeEnum
+} from 'types';
 
 import { TransactionsInPoolHeader, TransactionInPoolRow } from './components';
 
 export interface TransactionsInPoolTableUIType {
-  transactionsInPool: TransactionInPoolType[];
+  transactionsInPool: UITransactionInPoolType[];
   totalTransactionsInPool: number | typeof ELLIPSIS;
   title?: React.ReactNode;
   dataChanged?: boolean;
@@ -34,8 +38,11 @@ export const TransactionsInPoolTable = ({
   totalTransactionsInPool,
   title = (
     <h5 data-testid='title' className='table-title d-flex align-items-center'>
-      {formatBigNumber({ value: totalTransactionsInPool })} Transactions In Pool{' '}
-      <PulsatingLed className='ms-2 mt-1' />
+      {formatBigNumber({ value: totalTransactionsInPool })}{' '}
+      {getStringPlural(totalTransactionsInPool, {
+        string: 'Transaction'
+      })}{' '}
+      In Pool <PulsatingLed className='ms-2 mt-1' />
     </h5>
   ),
   dataChanged = false,
@@ -97,7 +104,9 @@ export const TransactionsInPoolTable = ({
                           <PageState
                             icon={faCode}
                             title={`No  ${
-                              type ? `${type} ` : ''
+                              type && type !== TransactionInPoolTypeEnum.All
+                                ? `${type} `
+                                : ''
                             }Transactions in Pool`}
                             className='py-spacer my-auto'
                           />

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { TransactionsTable, PulsatingLed } from 'components';
+import { TransactionsTable, PulsatingLed, NetworkLink } from 'components';
 import { MethodList } from 'components/TransactionsTable/components';
 import {
   useAdapter,
@@ -12,6 +12,7 @@ import {
   useGetShardText
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
+import { transactionsRoutes } from 'routes';
 
 export const Transactions = () => {
   const ref = useRef(null);
@@ -81,12 +82,12 @@ export const Transactions = () => {
                   )}
                   <PulsatingLed className='mx-2 mt-1' />
                   <div className='d-flex align-items-center flex-wrap gap-2'>
-                    {/* <NetworkLink
+                    <NetworkLink
                       to={transactionsRoutes.transactionsInPool}
                       className='btn btn-sm btn-dark-gradient'
                     >
                       Transaction Pool
-                    </NetworkLink> */}
+                    </NetworkLink>
                     <MethodList />
                   </div>
                 </h5>
