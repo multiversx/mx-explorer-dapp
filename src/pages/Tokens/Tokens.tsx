@@ -41,12 +41,14 @@ export const Tokens = () => {
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [totalTokens, setTotalTokens] = useState<number | undefined>();
 
-  const displayTotalTokens = new BigNumber(totalTokens ?? 0).plus(1).toFormat();
+  const { totalTokens: growthTotalTokens } = pageHeadersTokens;
+  const displayTotalTokens =
+    growthTotalTokens ?? new BigNumber(totalTokens || 1).toFormat();
 
   const fetchTokens = () => {
     Promise.all([
-      getTokens({ search, page, size, sort, order }),
-      getTokensCount({ search })
+      getTokens({ search, page, size, sort, order, includeMetaESDT: false }),
+      getTokensCount({ search, includeMetaESDT: false })
     ]).then(([tokensData, count]) => {
       if (ref.current !== null) {
         if (tokensData.success) {
