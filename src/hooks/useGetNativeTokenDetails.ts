@@ -25,7 +25,7 @@ export interface NativeTokenType {
   marketCap?: number;
   valueUsd?: number;
   assets?: TokenAssetType;
-  transfersCount?: number;
+  transfers?: number;
 }
 
 export const useGetNativeTokenDetails = () => {

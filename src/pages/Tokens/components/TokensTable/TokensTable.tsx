@@ -157,7 +157,7 @@ export const TokensTable = ({
                 </td>
                 <td>
                   {new BigNumber(
-                    token.transfersCount || token.transactions || 0
+                    token.transfers || token.transactions || 0
                   ).toFormat()}
                 </td>
               </tr>
