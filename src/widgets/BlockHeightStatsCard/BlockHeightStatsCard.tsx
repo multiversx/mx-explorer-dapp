@@ -16,7 +16,9 @@ export const BlockHeightStatsCard = () => {
       ? bNBlocks.toFormat(0)
       : undefined;
   const displayGrowthHeight =
-    blockHeight && !isNaN(Number(blockHeight)) ? blockHeight : undefined;
+    blockHeight && !isNaN(Number(blockHeight)) && Number(blockHeight) > 0
+      ? blockHeight
+      : undefined;
 
   const displayValue = displayStatsHeight || displayGrowthHeight || ELLIPSIS;
 
