@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 
-import { ELLIPSIS } from 'appConstants';
+import { ELLIPSIS, NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
 import {
   NetworkLink,
   FormatAmount,
@@ -74,93 +74,101 @@ export const TokensTable = ({
                     totalTokens={totalTokens}
                   />
                 )}
-              <tr>
-                <td>
-                  <div className='token-identity d-flex flex-row'>
-                    <div className='d-flex align-items-center me-3'>
-                      <NetworkLink
-                        to={urlBuilder.tokenDetails(token.identifier)}
-                        data-testid={`tokensLink${i}`}
-                        className='side-link'
-                      >
-                        {token.assets && token.assets.svgUrl ? (
-                          <img
-                            src={token.assets.svgUrl}
-                            alt={token.name}
-                            className='side-icon side-icon-md-large'
-                          />
-                        ) : (
-                          <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
-                            <FontAwesomeIcon icon={faDiamond} />
-                          </div>
-                        )}
-                      </NetworkLink>
-                    </div>
-                    <div className='d-flex flex-column justify-content-center'>
-                      <span className='d-flex align-items-center gap-2'>
+              {token.identifier !== NATIVE_TOKEN_IDENTIFIER && (
+                <tr>
+                  <td>
+                    <div className='token-identity d-flex flex-row'>
+                      <div className='d-flex align-items-center me-3'>
                         <NetworkLink
                           to={urlBuilder.tokenDetails(token.identifier)}
                           data-testid={`tokensLink${i}`}
-                          className='d-block token-ticker'
+                          className='side-link'
                         >
-                          {token.ticker}
+                          {token.assets && token.assets.svgUrl ? (
+                            <img
+                              src={token.assets.svgUrl}
+                              alt={token.name}
+                              className='side-icon side-icon-md-large'
+                            />
+                          ) : (
+                            <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
+                              <FontAwesomeIcon icon={faDiamond} />
+                            </div>
+                          )}
                         </NetworkLink>
-                        <LowLiquidityTooltip token={token} />
-                      </span>
-                      {token.assets && token.assets.description && (
-                        <div
-                          className='token-description text-wrap text-neutral-400 small d-none d-md-block'
-                          title={token.assets.description}
-                        >
-                          {token.assets.description}
-                        </div>
-                      )}
+                      </div>
+                      <div className='d-flex flex-column justify-content-center'>
+                        <span className='d-flex align-items-center gap-2'>
+                          <NetworkLink
+                            to={urlBuilder.tokenDetails(token.identifier)}
+                            data-testid={`tokensLink${i}`}
+                            className='d-block token-ticker'
+                          >
+                            {token.ticker}
+                          </NetworkLink>
+                          <LowLiquidityTooltip token={token} />
+                        </span>
+                        {token.assets && token.assets.description && (
+                          <div
+                            className='token-description text-wrap text-neutral-400 small d-none d-md-block'
+                            title={token.assets.description}
+                          >
+                            {token.assets.description}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>{token.name}</td>
-                <td>
-                  {token.price && (
-                    <FormatUSD value={token.price} usd={1} showPrefix={false} />
-                  )}
-                </td>
-                <td>
-                  {token.circulatingSupply && (
-                    <FormatAmount
-                      showLabel={false}
-                      showSymbol={false}
-                      value={
-                        token.circulatingSupply
-                          ? String(token.circulatingSupply)
-                          : '0'
-                      }
-                      decimals={token.decimals}
-                      showUsdValue={false}
-                      digits={0}
-                    />
-                  )}
-                </td>
-                <td>
-                  {token.price && token.marketCap && !token.isLowLiquidity && (
-                    <FormatUSD
-                      value={token.marketCap}
-                      usd={1}
-                      digits={0}
-                      showPrefix={false}
-                    />
-                  )}
-                </td>
-                <td>
-                  {token.accounts
-                    ? new BigNumber(token.accounts).toFormat()
-                    : 0}
-                </td>
-                <td>
-                  {new BigNumber(
-                    token.transfers || token.transactions || 0
-                  ).toFormat()}
-                </td>
-              </tr>
+                  </td>
+                  <td>{token.name}</td>
+                  <td>
+                    {token.price && (
+                      <FormatUSD
+                        value={token.price}
+                        usd={1}
+                        showPrefix={false}
+                      />
+                    )}
+                  </td>
+                  <td>
+                    {token.circulatingSupply && (
+                      <FormatAmount
+                        showLabel={false}
+                        showSymbol={false}
+                        value={
+                          token.circulatingSupply
+                            ? String(token.circulatingSupply)
+                            : '0'
+                        }
+                        decimals={token.decimals}
+                        showUsdValue={false}
+                        digits={0}
+                      />
+                    )}
+                  </td>
+                  <td>
+                    {token.price &&
+                      token.marketCap &&
+                      !token.isLowLiquidity && (
+                        <FormatUSD
+                          value={token.marketCap}
+                          usd={1}
+                          digits={0}
+                          showPrefix={false}
+                        />
+                      )}
+                  </td>
+                  <td>
+                    {token.accounts
+                      ? new BigNumber(token.accounts).toFormat()
+                      : 0}
+                  </td>
+                  <td>
+                    {new BigNumber(
+                      token.transfers || token.transactions || 0
+                    ).toFormat()}
+                  </td>
+                </tr>
+              )}
               {typeof totalTokens === 'number' &&
                 order === SortOrderEnum.asc &&
                 i !== 0 && (
