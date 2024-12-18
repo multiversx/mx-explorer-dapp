@@ -4,7 +4,8 @@ import {
   Trim,
   BlockGasUsed,
   IdentityBlock,
-  ShardLink
+  ShardLink,
+  ShardFilter
 } from 'components';
 import { formatSize } from 'helpers';
 import { useIsSovereign } from 'hooks';
@@ -27,7 +28,9 @@ export const BlocksTable = ({
             <th>Block</th>
             <th>Age</th>
             <th>Txns</th>
-            <th>{isSovereign ? 'Chain' : 'Shard'}</th>
+            <th>
+              <ShardFilter text={isSovereign ? 'Chain' : 'Shard'} />
+            </th>
             <th className='text-end'>Size</th>
             <th className='text-end'>Gas Used</th>
             <th className={showProposerIdentity ? '' : 'text-end'}>

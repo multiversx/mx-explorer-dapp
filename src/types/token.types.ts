@@ -1,7 +1,8 @@
-import { RolesType, SliceType, AccountAssetType } from 'types';
+import { RolesType, SliceType, AccountAssetType, NftSubtypeEnum } from 'types';
 
 export interface TokenType {
   type: TokenTypeEnum;
+  subType?: NftSubtypeEnum;
   identifier: string;
   ticker?: string;
   name: string;
@@ -22,6 +23,7 @@ export interface TokenType {
   isPaused?: boolean;
   transactions: number;
   accounts: number;
+  transfers?: number;
   price?: number;
   marketCap?: number;
   valueUsd?: number;
@@ -29,7 +31,6 @@ export interface TokenType {
   totalLiquidity?: number;
   isLowLiquidity?: boolean;
   lowLiquidityThresholdPercent?: number;
-  transfersCount?: number;
   roles?: TokenRolesType[];
 }
 

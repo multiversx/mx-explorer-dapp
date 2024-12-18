@@ -26,20 +26,20 @@ interface StateType {
 export const Blocks = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const hasGrowthWidgets = useHasGrowthWidgets();
-  const { shard } = useGetBlockFilters();
-  const { page, size, firstPageRefreshTrigger } = useGetPage();
-  const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
 
   const networkRoute = useNetworkRoute();
+  const hasGrowthWidgets = useHasGrowthWidgets();
+  const { shard: filterShard } = useGetBlockFilters();
+  const { page, size, firstPageRefreshTrigger } = useGetPage();
+  const { getBlocks, getBlocksCount } = useAdapter();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
 
   const [state, setState] = useState<StateType>();
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [totalBlocks, setTotalBlocks] = useState<number | '...'>('...');
 
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-
-  const { getBlocks, getBlocksCount } = useAdapter();
+  const shard = filterShard !== undefined ? Number(filterShard) : undefined;
 
   useEffect(() => {
     if (shard !== undefined) {
