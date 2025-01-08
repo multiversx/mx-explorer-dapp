@@ -25,8 +25,6 @@ export * from './Led';
 export * from './Links';
 export * from './Loader';
 export * from './LoadingDots';
-export * from './LockedAmountTooltip';
-export * from './LowLiquidityTooltip';
 export * from './LockedTokenAddressIcon';
 export * from './Marquee';
 export * from './MetaTags';

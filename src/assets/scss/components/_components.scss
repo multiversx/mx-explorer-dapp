@@ -11,7 +11,6 @@
 @import '../../../components/LatestItem/latestItem.styles.scss';
 @import '../../../components/Led/led.styles.scss';
 @import '../../../components/LoadingDots/loadingDots.styles.scss';
-@import '../../../components/LockedAmountTooltip/lockedAmountTooltip.styles.scss';
 @import '../../../components/Marquee/marquee.styles.scss';
 @import '../../../components/MultilayerPercentage/multilayerPercentage.styles.scss';
 @import '../../../components/NftPreview/nftPreview.styles.scss';
@@ -39,3 +38,5 @@
 @import '../../../components/TransactionsTable/transactionsTable.styles.scss';
 @import '../../../components/Trim/trim.styles.scss';
 @import '../../../components/ValidatorMap/validatorMap.styles.scss';
+
+@import '../../../components/tooltips/LockedAmountTooltip/lockedAmountTooltip.styles.scss';
