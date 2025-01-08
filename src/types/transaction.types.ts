@@ -36,6 +36,7 @@ export interface TransactionType {
   isRelayed?: boolean;
   relayedVersion?: boolean;
   relayer?: string;
+  relayerSignature?: string;
   logs?: TransactionSCResultLogType;
   results?: TransactionSCResultType[];
   operations?: TransactionOperationType[];

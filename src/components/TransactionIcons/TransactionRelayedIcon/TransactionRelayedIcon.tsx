@@ -9,7 +9,11 @@ export const TransactionRelayedIcon = ({
 }: {
   transaction: UITransactionType;
 }) => {
-  if (transaction?.isRelayed) {
+  if (
+    transaction?.isRelayed ||
+    transaction?.relayerSignature ||
+    transaction?.relayer
+  ) {
     const relayedText = transaction?.relayedVersion
       ? `Relayed Version: ${transaction.relayedVersion}`
       : 'Relayed';
