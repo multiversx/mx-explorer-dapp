@@ -71,6 +71,17 @@ export interface TokenSupplyType {
   lockedAccounts?: TokenLockedAccountType[];
 }
 
+export enum TokenAssetsPriceSourceTypeEnum {
+  dataApi = 'dataApi',
+  customUrl = 'customUrl'
+}
+
+export interface TokenAssetPriceSourceType {
+  type?: TokenAssetsPriceSourceTypeEnum;
+  url?: string;
+  path?: string;
+}
+
 export interface TokenAssetType {
   name?: string;
   website?: string;
@@ -81,4 +92,5 @@ export interface TokenAssetType {
   social?: { [key: string]: string };
   extraTokens?: string[];
   lockedAccounts?: { [key: string]: string };
+  priceSource?: TokenAssetPriceSourceType;
 }
