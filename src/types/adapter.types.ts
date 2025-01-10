@@ -19,6 +19,14 @@ export interface SortableApiType extends BaseApiType {
   order?: SortOrderEnum;
 }
 
+export interface GetAccountType {
+  address: string;
+  withGuardianInfo?: boolean;
+  withTxCount?: boolean;
+  withScrCount?: boolean;
+  withAssets?: boolean;
+}
+
 export interface GetAccountsType extends SortableApiType {
   ownerAddress?: string;
   isSmartContract?: boolean;
@@ -26,6 +34,7 @@ export interface GetAccountsType extends SortableApiType {
   withDeployInfo?: boolean;
   withTxCount?: boolean;
   withScrCount?: boolean;
+  withAssets?: boolean;
 }
 export interface GetBlocksType extends BaseApiType {
   shard?: number;

@@ -31,15 +31,18 @@ export const AccountLayout = () => {
 
   const fetchBalanceAndCount = () => {
     if (address) {
-      getAccount({ address, withGuardianInfo: true }).then(
-        ({ success, data }) => {
-          if (success && data) {
-            dispatch(setAccount({ isFetched: true, account: data }));
-          }
-
-          setIsDataReady(success);
+      getAccount({
+        address,
+        withGuardianInfo: true,
+        withAssets: true,
+        withTxCount: true
+      }).then(({ success, data }) => {
+        if (success && data) {
+          dispatch(setAccount({ isFetched: true, account: data }));
         }
-      );
+
+        setIsDataReady(success);
+      });
     }
   };
 
