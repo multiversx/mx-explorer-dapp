@@ -17,6 +17,7 @@ export const TRANSACTIONS_TABLE_FIELDS = [
   'action',
   'type',
   'guardianSignature',
+  'relayer',
   'isRelayed',
   'relayedVersion'
 ];

@@ -15,11 +15,11 @@ export const TransactionRelayedIcon = ({
     transaction?.relayer
   ) {
     const relayedText = transaction?.relayedVersion
-      ? `Relayed Version: ${transaction.relayedVersion}`
-      : 'Relayed';
+      ? `Relayed Tx Version: ${transaction.relayedVersion}`
+      : 'Relayed Transaction';
 
     return (
-      <Overlay title={relayedText} className='relayed-icon'>
+      <Overlay title={relayedText} className='relayed-icon' persistent>
         <FontAwesomeIcon icon={faHandshake} className='text-primary me-1' />
       </Overlay>
     );
