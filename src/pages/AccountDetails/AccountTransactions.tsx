@@ -23,7 +23,8 @@ export const AccountTransactions = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions(getAccountTransfers, getAccountTransfersCount, {
-    address
+    address,
+    withTxsRelayedByAddress: true
   });
 
   useEffect(() => {

@@ -15,7 +15,7 @@ export const StatusColumnFilters = ({
   inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
-  const { status, hashes, miniBlockHash, isRelayed } =
+  const { status, hashes, miniBlockHash, relayer, isRelayed } =
     Object.fromEntries(searchParams);
 
   const existingHashesValues: SelectFilterType['options'] = useMemo(() => {
@@ -44,13 +44,15 @@ export const StatusColumnFilters = ({
     TransactionFiltersEnum.status,
     TransactionFiltersEnum.miniBlockHash,
     TransactionFiltersEnum.isRelayed,
-    TransactionFiltersEnum.hashes
+    TransactionFiltersEnum.hashes,
+    TransactionFiltersEnum.relayer
   ].every((filter) => inactiveFilters.includes(filter));
 
   const isActive =
     status !== undefined ||
     miniBlockHash !== undefined ||
     isRelayed !== undefined ||
+    relayer !== undefined ||
     hashes !== undefined;
 
   if (allInactive) {
@@ -82,17 +84,6 @@ export const StatusColumnFilters = ({
                 </>
               )}
 
-              {!inactiveFilters.includes(TransactionFiltersEnum.isRelayed) && (
-                <div className='filter-block'>
-                  <div className='mb-1'>Relayed</div>
-                  <SelectFilter
-                    name='is-relayed-filter'
-                    options={relayedOptions}
-                    filter={TransactionFiltersEnum.isRelayed}
-                  />
-                </div>
-              )}
-
               {!inactiveFilters.includes(TransactionFiltersEnum.hashes) && (
                 <div className='filter-block'>
                   <div className='mb-1'>Txn Hash</div>
@@ -119,6 +110,29 @@ export const StatusColumnFilters = ({
                     filter={TransactionFiltersEnum.miniBlockHash}
                     placeholder='Hash'
                     validation='hash'
+                  />
+                </div>
+              )}
+
+              {!inactiveFilters.includes(TransactionFiltersEnum.isRelayed) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Relayed</div>
+                  <SelectFilter
+                    name='is-relayed-filter'
+                    options={relayedOptions}
+                    filter={TransactionFiltersEnum.isRelayed}
+                  />
+                </div>
+              )}
+
+              {!inactiveFilters.includes(TransactionFiltersEnum.relayer) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Relayer</div>
+                  <SearchFilter
+                    name='relayer-filter'
+                    filter={TransactionFiltersEnum.relayer}
+                    placeholder='Relayer'
+                    validation='address'
                   />
                 </div>
               )}

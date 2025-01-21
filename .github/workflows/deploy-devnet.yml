@@ -2,7 +2,7 @@ name: deploy-devnet
 
 on:
   push:
-    branches: [development]
+    branches: [add-relayer]
   repository_dispatch:
     types: deploy-devnet
   workflow_dispatch:
@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: development
+          ref: add-relayer
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
