@@ -55,7 +55,7 @@ export function getTransactionsParams({
   withScamInfo = false,
   withUsername = true,
   withBlockInfo = false,
-  withTxsRelayedByAddress = true,
+  withTxsRelayedByAddress = false,
 
   // not on api
   isCount = false
@@ -72,8 +72,7 @@ export function getTransactionsParams({
           ...(withLogs ? { withLogs } : {}),
           ...(withScamInfo ? { withScamInfo } : {}),
           ...(withUsername ? { withUsername } : {}),
-          ...(withBlockInfo ? { withBlockInfo } : {}),
-          ...(withTxsRelayedByAddress ? { withTxsRelayedByAddress } : {})
+          ...(withBlockInfo ? { withBlockInfo } : {})
         }),
     ...(senderShard !== undefined ? { senderShard } : {}),
     ...(receiverShard !== undefined ? { receiverShard } : {}),
@@ -89,7 +88,8 @@ export function getTransactionsParams({
     ...(token ? { token } : {}),
     ...(hashes ? { hashes } : {}),
     ...(relayer ? { relayer } : {}),
-    ...(isRelayed ? { isRelayed } : {})
+    ...(isRelayed ? { isRelayed } : {}),
+    ...(withTxsRelayedByAddress ? { withTxsRelayedByAddress } : {})
   };
 
   return params;
