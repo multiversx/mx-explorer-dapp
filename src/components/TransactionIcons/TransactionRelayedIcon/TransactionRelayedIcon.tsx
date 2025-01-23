@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { AccountLink, Overlay } from 'components';
 import { useActiveRoute } from 'hooks';
-import { faHandshake, faHandHoldingHand } from 'icons/regular';
+import { faHandHoldingHand } from 'icons/regular';
+import { faArrowProgress } from 'icons/solid';
 import { accountSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
 import { UITransactionType } from 'types';
@@ -43,7 +44,10 @@ export const TransactionRelayedIcon = ({
           className='relayed-icon'
           persistent
         >
-          <FontAwesomeIcon icon={faHandshake} className='text-primary me-1' />
+          <FontAwesomeIcon
+            icon={faArrowProgress}
+            className='text-primary me-1'
+          />
         </Overlay>
         {isRelayedByCurrentAccount && (
           <Overlay
