@@ -1,132 +1,167 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, PageSize, FormatAmount, AccountLink } from 'components';
-import { useAdapter, useGetPage, useHasGrowthWidgets } from 'hooks';
+import { ELLIPSIS } from 'appConstants';
+import {
+  Loader,
+  Pager,
+  PageSize,
+  FormatAmount,
+  AccountLink,
+  TableWrapper,
+  Sort,
+  TableSearch
+} from 'components';
+import {
+  useAdapter,
+  useGetPage,
+  useGetSearch,
+  useGetSort,
+  useHasGrowthWidgets
+} from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
-import { AccountType } from 'types';
+import { AccountType, SortOrderEnum } from 'types';
 
 import { FailedAccounts } from './components/FailedAccounts';
 import { NoAccounts } from './components/NoAccounts';
 
 export const Accounts = () => {
-  const ref = useRef(null);
-  const [searchParams] = useSearchParams();
   const hasGrowthWidgets = useHasGrowthWidgets();
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
 
+  const sort = useGetSort();
+  const { search } = useGetSearch();
   const { page, size } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
 
   const [accounts, setAccounts] = useState<AccountType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
-  const [totalAccounts, setTotalAccounts] = useState<number | '...'>('...');
+  const [dataChanged, setDataChanged] = useState<boolean>(false);
+  const [totalAccounts, setTotalAccounts] = useState<number | typeof ELLIPSIS>(
+    ELLIPSIS
+  );
+  const { totalAccounts: growthTotalAccounts } = pageHeadersAccounts;
 
   const fetchAccounts = () => {
-    getAccounts({ page, size }).then(({ data, success }) => {
-      if (ref.current !== null) {
-        if (success) {
-          setAccounts(data);
+    setDataChanged(true);
+    Promise.all([
+      getAccounts({
+        page,
+        size,
+        search,
+        ...sort
+      }),
+      getAccountsCount({ search })
+    ])
+      .then(([accountsData, accountsCountData]) => {
+        if (accountsData.success && accountsCountData.success) {
+          setAccounts(accountsData.data);
+          setTotalAccounts(accountsCountData.data);
         }
-        setDataReady(success);
-      }
-    });
-  };
-
-  const fetchAccountsCount = () => {
-    getAccountsCount({}).then(({ data: count, success }) => {
-      if (ref.current !== null && success) {
-        setTotalAccounts(count);
-      }
-    });
+        setDataReady(accountsData.success && accountsCountData.success);
+      })
+      .finally(() => {
+        setDataChanged(false);
+      });
   };
 
   useEffect(() => {
     fetchAccounts();
-    fetchAccountsCount();
   }, [activeNetworkId, searchParams]);
 
+  if (
+    dataReady === undefined ||
+    (hasGrowthWidgets && Object.keys(pageHeadersAccounts).length === 0)
+  ) {
+    return <Loader />;
+  }
+
   return (
-    <>
-      {(dataReady === undefined ||
-        (hasGrowthWidgets &&
-          Object.keys(pageHeadersAccounts).length === 0)) && <Loader />}
+    <div className='container page-content'>
       {dataReady === false && <FailedAccounts />}
-
-      <div ref={ref}>
-        {dataReady === true && (
-          <div className='container page-content'>
-            <div className='row'>
-              <div className='col-12'>
-                <div className='card'>
-                  {accounts && accounts.length > 0 ? (
-                    <>
-                      <div className='card-header'>
-                        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-                          <h5
-                            data-testid='title'
-                            className='table-title d-flex align-items-center'
-                          >
-                            Accounts
-                          </h5>
-                          <Pager
-                            total={totalAccounts}
-                            show={accounts.length > 0}
-                            className='d-flex ms-auto me-auto me-sm-0'
-                          />
-                        </div>
-                      </div>
-
-                      <div className='card-body'>
-                        <div className='table-wrapper animated-list'>
-                          <table className='table mb-0'>
-                            <thead>
-                              <tr>
-                                <th>Address</th>
-                                <th>Balance</th>
-                              </tr>
-                            </thead>
-                            <tbody data-testid='accountsTable'>
-                              {accounts.map((account) => (
-                                <tr key={account.address}>
-                                  <td>
-                                    <AccountLink
-                                      address={account.address}
-                                      assets={account?.assets}
-                                      className='full-hash'
-                                      linkClassName='trim-only-sm'
-                                    />
-                                  </td>
-                                  <td className='text-neutral-100'>
-                                    <FormatAmount value={account.balance} />
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-
-                      <div className='card-footer table-footer'>
-                        <PageSize />
-                        <Pager
-                          total={totalAccounts}
-                          show={accounts.length > 0}
+      {dataReady === true && (
+        <div className='row'>
+          <div className='col-12'>
+            <div className='card'>
+              {accounts && accounts.length > 0 ? (
+                <>
+                  <div className='card-header'>
+                    <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
+                      <h5
+                        data-testid='title'
+                        className='table-title d-flex align-items-center'
+                      >
+                        Accounts
+                      </h5>
+                      <div className='filters accounts-filters'>
+                        <TableSearch
+                          className='input-group-sm'
+                          searchValue={growthTotalAccounts || totalAccounts}
+                          placeholderText='account'
+                          name='accountsSearch'
                         />
                       </div>
-                    </>
-                  ) : (
-                    <NoAccounts />
-                  )}
-                </div>
-              </div>
+                      <Pager
+                        total={totalAccounts}
+                        show={accounts.length > 0}
+                        className='d-flex ms-auto me-auto me-sm-0'
+                      />
+                    </div>
+                  </div>
+
+                  <div className='card-body'>
+                    <TableWrapper dataChanged={dataChanged}>
+                      <table className='table mb-0'>
+                        <thead>
+                          <tr>
+                            <th>Address</th>
+                            <th>
+                              <Sort
+                                id='balance'
+                                text='Balance'
+                                defaultOrder={SortOrderEnum.desc}
+                                defaultActive
+                              />
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody data-testid='accountsTable'>
+                          {accounts.map((account) => (
+                            <tr key={account.address}>
+                              <td>
+                                <AccountLink
+                                  address={account.address}
+                                  assets={account?.assets}
+                                  className='full-hash'
+                                  linkClassName='trim-only-sm'
+                                />
+                              </td>
+                              <td className='text-neutral-100'>
+                                <FormatAmount value={account.balance} />
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </TableWrapper>
+                  </div>
+
+                  <div className='card-footer table-footer'>
+                    <PageSize />
+                    <Pager total={totalAccounts} show={accounts.length > 0} />
+                  </div>
+                </>
+              ) : (
+                <NoAccounts />
+              )}
             </div>
           </div>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   );
 };

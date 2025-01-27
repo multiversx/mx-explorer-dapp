@@ -73,9 +73,9 @@ export const AccountTokensTableHeader = ({
         </menu>
         <div className='filters tokens-filters d-flex align-items-start align-items-md-center justify-content-md-between flex-column flex-md-row gap-3'>
           <TableSearch
+            className='input-group-sm'
             searchValue={tokenCount}
             placeholderText='token'
-            className='input-group-sm'
           />
         </div>
       </div>
