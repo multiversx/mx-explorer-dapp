@@ -62,7 +62,7 @@ export const TableSearch = ({
       role='search'
       className={classNames(
         'input-group input-group-seamless',
-        { 'input-group-search search-sm': !className },
+        { 'input-group-search': !className },
         className
       )}
     >

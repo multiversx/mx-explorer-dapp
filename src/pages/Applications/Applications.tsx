@@ -40,8 +40,8 @@ import { NoApplications } from './components/NoApplications';
 
 export const Applications = () => {
   const isMainnet = useIsMainnet();
-  const [searchParams] = useSearchParams();
   const hasGrowthWidgets = useHasGrowthWidgets();
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { isFetched: isGrowthDataFetched } = useSelector(
     growthMostUsedSelector
