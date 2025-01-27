@@ -27,7 +27,8 @@ import {
   useGetSort,
   useHasGrowthWidgets,
   useFetchGrowthMostUsed,
-  useIsMainnet
+  useIsMainnet,
+  useGetSearch
 } from 'hooks';
 import { faBadgeCheck } from 'icons/solid';
 import { activeNetworkSelector, growthMostUsedSelector } from 'redux/selectors';
@@ -48,6 +49,7 @@ export const Applications = () => {
   useFetchGrowthMostUsed();
 
   const sort = useGetSort();
+  const { search } = useGetSearch();
   const { page, size } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
 
@@ -72,6 +74,7 @@ export const Applications = () => {
     Promise.all([
       getAccounts({
         page,
+        search,
         isSmartContract: true,
         withOwnerAssets: true,
         withDeployInfo: true,
@@ -79,7 +82,7 @@ export const Applications = () => {
         ...(is24hCountAvailable ? { size } : { size: minSize }),
         ...sort
       }),
-      getAccountsCount({ isSmartContract: true })
+      getAccountsCount({ isSmartContract: true, search })
     ])
       .then(([applicationsData, applicationsCountData]) => {
         if (applicationsData.success && applicationsCountData.success) {

@@ -3,7 +3,12 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Loader, Pager, PageSize, FormatAmount, AccountLink } from 'components';
-import { useAdapter, useGetPage, useHasGrowthWidgets } from 'hooks';
+import {
+  useAdapter,
+  useGetPage,
+  useGetSearch,
+  useHasGrowthWidgets
+} from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
 import { AccountType } from 'types';
@@ -18,6 +23,7 @@ export const Accounts = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const pageHeadersAccounts = useSelector(pageHeadersAccountsStatsSelector);
 
+  const { search } = useGetSearch();
   const { page, size } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
 
@@ -26,7 +32,7 @@ export const Accounts = () => {
   const [totalAccounts, setTotalAccounts] = useState<number | '...'>('...');
 
   const fetchAccounts = () => {
-    getAccounts({ page, size }).then(({ data, success }) => {
+    getAccounts({ page, size, search }).then(({ data, success }) => {
       if (ref.current !== null) {
         if (success) {
           setAccounts(data);
@@ -37,7 +43,7 @@ export const Accounts = () => {
   };
 
   const fetchAccountsCount = () => {
-    getAccountsCount({}).then(({ data: count, success }) => {
+    getAccountsCount({ search }).then(({ data: count, success }) => {
       if (ref.current !== null && success) {
         setTotalAccounts(count);
       }

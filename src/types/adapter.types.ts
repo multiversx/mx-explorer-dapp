@@ -28,6 +28,7 @@ export interface GetAccountType {
 }
 
 export interface GetAccountsType extends SortableApiType {
+  search?: string;
   ownerAddress?: string;
   isSmartContract?: boolean;
   withOwnerAssets?: boolean;
