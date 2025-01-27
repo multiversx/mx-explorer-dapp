@@ -62,7 +62,11 @@ export const NodesStatistics = () => {
       <div className='card-header position-unset'>
         <NodesTabs />
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-          <TableSearch searchValue={totalNodes} placeholderText='node' />
+          <TableSearch
+            className='input-group-search'
+            searchValue={totalNodes}
+            placeholderText='node'
+          />
           {dataReady === true && (
             <Pager
               total={totalNodes}

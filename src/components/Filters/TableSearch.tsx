@@ -60,11 +60,7 @@ export const TableSearch = ({
   return (
     <div
       role='search'
-      className={classNames(
-        'input-group input-group-seamless',
-        { 'input-group-search': !className },
-        className
-      )}
+      className={classNames('input-group input-group-seamless', className)}
     >
       <input
         type='text'
