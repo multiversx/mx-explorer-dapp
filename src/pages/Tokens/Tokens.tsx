@@ -135,7 +135,7 @@ export const Tokens = () => {
                     <div className='filters tokens-filters'>
                       <TableSearch
                         className='input-group-sm'
-                        searchValue={totalTokens}
+                        searchValue={displayTotalTokens}
                         placeholderText='token'
                         name='tokensSearch'
                       />

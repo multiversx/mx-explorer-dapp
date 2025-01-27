@@ -40,6 +40,7 @@ export const Collections = () => {
   const pageHeadersCollections = useSelector(
     pageHeadersCollectionsStatsSelector
   );
+  const { totalCollections: growthTotalCollections } = pageHeadersCollections;
 
   const [collections, setCollections] = useState<CollectionType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -60,7 +61,6 @@ export const Collections = () => {
 
   const fetchCollections = () => {
     const type = getCollectionType();
-
     Promise.all([
       getCollections({
         search,
@@ -141,7 +141,11 @@ export const Collections = () => {
                     <div className='filters collections-filters'>
                       <TableSearch
                         className='input-group-sm'
-                        searchValue={totalCollections}
+                        searchValue={
+                          activeRoute(collectionRoutes.collections)
+                            ? growthTotalCollections || totalCollections
+                            : totalCollections
+                        }
                         placeholderText='collection'
                         name='collectionsSearch'
                       />

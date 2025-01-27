@@ -18,7 +18,11 @@ export const formatBigNumber = ({
   if (value === ELLIPSIS || value === undefined) {
     return ELLIPSIS;
   }
-  const bNvalue = BigNumber.isBigNumber(value) ? value : new BigNumber(value);
+  const formattedValue = String(value).replace(/[^\d.-]/g, '');
+  const bNvalue = BigNumber.isBigNumber(value)
+    ? value
+    : new BigNumber(formattedValue);
+
   const formattedAmount = bNvalue.toFormat({
     groupSeparator: '',
     decimalSeparator: '.'
@@ -42,7 +46,7 @@ export const formatBigNumber = ({
   }
 
   const displayDigits = maxDigits ?? digits;
-  const bN = new BigNumber(value).toFormat();
+  const bN = bNvalue.toFormat();
   if (bN.includes('.')) {
     return bN.slice(
       0,

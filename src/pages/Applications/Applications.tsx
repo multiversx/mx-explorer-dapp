@@ -32,7 +32,11 @@ import {
   useGetSearch
 } from 'hooks';
 import { faBadgeCheck } from 'icons/solid';
-import { activeNetworkSelector, growthMostUsedSelector } from 'redux/selectors';
+import {
+  activeNetworkSelector,
+  growthEconomicsSelector,
+  growthMostUsedSelector
+} from 'redux/selectors';
 import { AccountType, SortOrderEnum } from 'types';
 import { MostUsedApplications } from 'widgets';
 
@@ -47,7 +51,7 @@ export const Applications = () => {
   const { isFetched: isGrowthDataFetched } = useSelector(
     growthMostUsedSelector
   );
-  useFetchGrowthMostUsed();
+  const { applicationsDeployed } = useSelector(growthEconomicsSelector);
 
   const sort = useGetSort();
   const { search } = useGetSearch();
@@ -69,6 +73,8 @@ export const Applications = () => {
   }
 
   const minSize = Math.min(size, 15);
+
+  useFetchGrowthMostUsed();
 
   const fetchApplications = () => {
     setDataChanged(true);
@@ -126,7 +132,7 @@ export const Applications = () => {
                       <div className='filters application-filters'>
                         <TableSearch
                           className='input-group-sm'
-                          searchValue={totalAccounts}
+                          searchValue={applicationsDeployed || totalAccounts}
                           placeholderText='App'
                           name='applicationsSearch'
                         />

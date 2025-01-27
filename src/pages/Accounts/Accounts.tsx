@@ -44,6 +44,7 @@ export const Accounts = () => {
   const [totalAccounts, setTotalAccounts] = useState<number | typeof ELLIPSIS>(
     ELLIPSIS
   );
+  const { totalAccounts: growthTotalAccounts } = pageHeadersAccounts;
 
   const fetchAccounts = () => {
     setDataChanged(true);
@@ -99,7 +100,7 @@ export const Accounts = () => {
                       <div className='filters accounts-filters'>
                         <TableSearch
                           className='input-group-sm'
-                          searchValue={totalAccounts}
+                          searchValue={growthTotalAccounts || totalAccounts}
                           placeholderText='account'
                           name='accountsSearch'
                         />
