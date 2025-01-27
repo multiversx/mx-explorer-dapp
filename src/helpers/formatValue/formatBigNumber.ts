@@ -18,10 +18,9 @@ export const formatBigNumber = ({
   if (value === ELLIPSIS || value === undefined) {
     return ELLIPSIS;
   }
-  const formattedValue = String(value).replace(/[^\d.-]/g, '');
   const bNvalue = BigNumber.isBigNumber(value)
     ? value
-    : new BigNumber(formattedValue);
+    : new BigNumber(String(value).replace(/[^\d.-]/g, ''));
 
   const formattedAmount = bNvalue.toFormat({
     groupSeparator: '',
