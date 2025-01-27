@@ -146,6 +146,8 @@ export const Applications = () => {
                                 <Sort
                                   id='transfersLast24h'
                                   text='Transactions / 24h'
+                                  defaultOrder={SortOrderEnum.desc}
+                                  defaultActive
                                 />
                               ) : (
                                 'Transactions'
