@@ -18,7 +18,8 @@ import {
   TimeAgo,
   Trim,
   TableWrapper,
-  InfoTooltip
+  InfoTooltip,
+  TableSearch
 } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
 import {
@@ -27,10 +28,15 @@ import {
   useGetSort,
   useHasGrowthWidgets,
   useFetchGrowthMostUsed,
-  useIsMainnet
+  useIsMainnet,
+  useGetSearch
 } from 'hooks';
 import { faBadgeCheck } from 'icons/solid';
-import { activeNetworkSelector, growthMostUsedSelector } from 'redux/selectors';
+import {
+  activeNetworkSelector,
+  growthEconomicsSelector,
+  growthMostUsedSelector
+} from 'redux/selectors';
 import { AccountType, SortOrderEnum } from 'types';
 import { MostUsedApplications } from 'widgets';
 
@@ -39,15 +45,16 @@ import { NoApplications } from './components/NoApplications';
 
 export const Applications = () => {
   const isMainnet = useIsMainnet();
-  const [searchParams] = useSearchParams();
   const hasGrowthWidgets = useHasGrowthWidgets();
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { isFetched: isGrowthDataFetched } = useSelector(
     growthMostUsedSelector
   );
-  useFetchGrowthMostUsed();
+  const { applicationsDeployed } = useSelector(growthEconomicsSelector);
 
   const sort = useGetSort();
+  const { search } = useGetSearch();
   const { page, size } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
 
@@ -67,11 +74,14 @@ export const Applications = () => {
 
   const minSize = Math.min(size, 15);
 
+  useFetchGrowthMostUsed();
+
   const fetchApplications = () => {
     setDataChanged(true);
     Promise.all([
       getAccounts({
         page,
+        search,
         isSmartContract: true,
         withOwnerAssets: true,
         withDeployInfo: true,
@@ -79,7 +89,7 @@ export const Applications = () => {
         ...(is24hCountAvailable ? { size } : { size: minSize }),
         ...sort
       }),
-      getAccountsCount({ isSmartContract: true })
+      getAccountsCount({ isSmartContract: true, search })
     ])
       .then(([applicationsData, applicationsCountData]) => {
         if (applicationsData.success && applicationsCountData.success) {
@@ -119,6 +129,14 @@ export const Applications = () => {
                       >
                         Browse all deployed apps
                       </h5>
+                      <div className='filters application-filters'>
+                        <TableSearch
+                          className='input-group-sm'
+                          searchValue={applicationsDeployed || totalAccounts}
+                          placeholderText='App'
+                          name='applicationsSearch'
+                        />
+                      </div>
                       <Pager
                         total={totalAccounts}
                         itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
@@ -143,6 +161,8 @@ export const Applications = () => {
                                 <Sort
                                   id='transfersLast24h'
                                   text='Transactions / 24h'
+                                  defaultOrder={SortOrderEnum.desc}
+                                  defaultActive
                                 />
                               ) : (
                                 'Transactions'
