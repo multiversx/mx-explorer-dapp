@@ -127,7 +127,7 @@ export const Applications = () => {
                         <TableSearch
                           className='input-group-sm'
                           searchValue={totalAccounts}
-                          placeholderText='Application'
+                          placeholderText='App'
                           name='applicationsSearch'
                         />
                       </div>
