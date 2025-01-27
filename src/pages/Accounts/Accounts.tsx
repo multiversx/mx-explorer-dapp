@@ -10,7 +10,8 @@ import {
   FormatAmount,
   AccountLink,
   TableWrapper,
-  Sort
+  Sort,
+  TableSearch
 } from 'components';
 import {
   useAdapter,
@@ -95,6 +96,14 @@ export const Accounts = () => {
                       >
                         Accounts
                       </h5>
+                      <div className='filters accounts-filters'>
+                        <TableSearch
+                          className='input-group-sm'
+                          searchValue={totalAccounts}
+                          placeholderText='account'
+                          name='accountsSearch'
+                        />
+                      </div>
                       <Pager
                         total={totalAccounts}
                         show={accounts.length > 0}

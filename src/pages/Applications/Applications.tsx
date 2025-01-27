@@ -18,7 +18,8 @@ import {
   TimeAgo,
   Trim,
   TableWrapper,
-  InfoTooltip
+  InfoTooltip,
+  TableSearch
 } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
 import {
@@ -122,6 +123,14 @@ export const Applications = () => {
                       >
                         Browse all deployed apps
                       </h5>
+                      <div className='filters application-filters'>
+                        <TableSearch
+                          className='input-group-sm'
+                          searchValue={totalAccounts}
+                          placeholderText='Application'
+                          name='applicationsSearch'
+                        />
+                      </div>
                       <Pager
                         total={totalAccounts}
                         itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
