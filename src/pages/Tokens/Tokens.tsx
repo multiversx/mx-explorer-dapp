@@ -141,11 +141,11 @@ export const Tokens = () => {
                       />
                     </div>
                   </div>
-                  {tokens.length > 0 && (
-                    <div className='d-none d-sm-flex'>
-                      <Pager total={totalTokens} show={tokens.length > 0} />
-                    </div>
-                  )}
+                  <Pager
+                    total={totalTokens}
+                    show={tokens && tokens.length > 0}
+                    className='d-flex ms-auto me-auto me-sm-0'
+                  />
                 </div>
               </div>
 

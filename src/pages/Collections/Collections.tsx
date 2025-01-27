@@ -147,14 +147,11 @@ export const Collections = () => {
                       />
                     </div>
                   </div>
-                  <div className='d-none d-sm-flex'>
-                    {collections && collections.length > 0 && (
-                      <Pager
-                        total={totalCollections}
-                        show={collections.length > 0}
-                      />
-                    )}
-                  </div>
+                  <Pager
+                    total={totalCollections}
+                    show={collections && collections.length > 0}
+                    className='d-flex ms-auto me-auto me-sm-0'
+                  />
                 </div>
               </div>
 

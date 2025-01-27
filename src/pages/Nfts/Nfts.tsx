@@ -66,12 +66,11 @@ export const Nfts = () => {
                       name='nftsSearch'
                     />
                   </div>
-                  {nfts && nfts.length > 0 && (
-                    <Pager
-                      total={totalNfts}
-                      className='d-flex ms-auto me-auto me-sm-0'
-                    />
-                  )}
+                  <Pager
+                    total={totalNfts}
+                    show={nfts && nfts.length > 0}
+                    className='d-flex ms-auto me-auto me-sm-0'
+                  />
                 </div>
               </div>
 
