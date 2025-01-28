@@ -5,7 +5,8 @@ import {
   TableWrapper,
   Loader,
   PageState,
-  PulsatingLed
+  PulsatingLed,
+  ColSpanWrapper
 } from 'components';
 import { formatBigNumber, getStringPlural } from 'helpers';
 import { useGetTransactionInPoolFilters } from 'hooks';
@@ -26,12 +27,6 @@ export interface TransactionsInPoolTableUIType {
   isDataReady?: boolean;
   inactiveFilters?: TransactionFiltersEnum[];
 }
-
-const ColSpanWrapper = ({ children }: { children: React.ReactNode }) => (
-  <tr>
-    <td colSpan={7}>{children}</td>
-  </tr>
-);
 
 export const TransactionsInPoolTable = ({
   transactionsInPool,
@@ -73,12 +68,12 @@ export const TransactionsInPoolTable = ({
               <TransactionsInPoolHeader inactiveFilters={inactiveFilters} />
               <tbody>
                 {isDataReady === undefined && (
-                  <ColSpanWrapper>
+                  <ColSpanWrapper colSpan={7}>
                     <Loader />
                   </ColSpanWrapper>
                 )}
                 {isDataReady === false && (
-                  <ColSpanWrapper>
+                  <ColSpanWrapper colSpan={7}>
                     <PageState
                       icon={faExchangeAlt}
                       title={`No ${type ? `${type} ` : ''}Transactions in Pool`}
@@ -100,7 +95,7 @@ export const TransactionsInPoolTable = ({
                       </>
                     ) : (
                       <>
-                        <ColSpanWrapper>
+                        <ColSpanWrapper colSpan={7}>
                           <PageState
                             icon={faCode}
                             title={`No  ${
