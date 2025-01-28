@@ -52,10 +52,10 @@ export const Accounts = () => {
       getAccounts({
         page,
         size,
-        search,
+        name: search,
         ...sort
       }),
-      getAccountsCount({ search })
+      getAccountsCount({ name: search })
     ])
       .then(([accountsData, accountsCountData]) => {
         if (accountsData.success && accountsCountData.success) {
