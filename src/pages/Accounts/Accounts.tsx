@@ -11,7 +11,8 @@ import {
   AccountLink,
   TableWrapper,
   Sort,
-  TableSearch
+  TableSearch,
+  ColSpanWrapper
 } from 'components';
 import {
   useAdapter,
@@ -87,77 +88,76 @@ export const Accounts = () => {
         <div className='row'>
           <div className='col-12'>
             <div className='card'>
-              {accounts && accounts.length > 0 ? (
-                <>
-                  <div className='card-header'>
-                    <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-                      <h5
-                        data-testid='title'
-                        className='table-title d-flex align-items-center'
-                      >
-                        Accounts
-                      </h5>
-                      <div className='filters accounts-filters'>
-                        <TableSearch
-                          className='input-group-sm'
-                          searchValue={growthTotalAccounts || totalAccounts}
-                          placeholderText='account'
-                          name='accountsSearch'
-                        />
-                      </div>
-                      <Pager
-                        total={totalAccounts}
-                        show={accounts.length > 0}
-                        className='d-flex ms-auto me-auto me-sm-0'
-                      />
-                    </div>
+              <div className='card-header'>
+                <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
+                  <h5
+                    data-testid='title'
+                    className='table-title d-flex align-items-center'
+                  >
+                    Accounts
+                  </h5>
+                  <div className='filters accounts-filters me-auto'>
+                    <TableSearch
+                      className='input-group-sm'
+                      searchValue={growthTotalAccounts || totalAccounts}
+                      placeholderText='account'
+                      name='accountsSearch'
+                    />
                   </div>
+                  <Pager
+                    total={totalAccounts}
+                    show={accounts.length > 0}
+                    className='d-flex ms-auto me-auto me-sm-0'
+                  />
+                </div>
+              </div>
 
-                  <div className='card-body'>
-                    <TableWrapper dataChanged={dataChanged}>
-                      <table className='table mb-0'>
-                        <thead>
-                          <tr>
-                            <th>Address</th>
-                            <th>
-                              <Sort
-                                id='balance'
-                                text='Balance'
-                                defaultOrder={SortOrderEnum.desc}
-                                defaultActive
-                              />
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody data-testid='accountsTable'>
-                          {accounts.map((account) => (
-                            <tr key={account.address}>
-                              <td>
-                                <AccountLink
-                                  address={account.address}
-                                  assets={account?.assets}
-                                  className='full-hash'
-                                  linkClassName='trim-only-sm'
-                                />
-                              </td>
-                              <td className='text-neutral-100'>
-                                <FormatAmount value={account.balance} />
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </TableWrapper>
-                  </div>
+              <div className='card-body'>
+                <TableWrapper dataChanged={dataChanged}>
+                  <table className='table mb-0'>
+                    <thead>
+                      <tr>
+                        <th>Address</th>
+                        <th>
+                          <Sort
+                            id='balance'
+                            text='Balance'
+                            defaultOrder={SortOrderEnum.desc}
+                            defaultActive
+                          />
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody data-testid='accountsTable'>
+                      {accounts.length === 0 && (
+                        <ColSpanWrapper colSpan={2}>
+                          <NoAccounts />
+                        </ColSpanWrapper>
+                      )}
+                      {accounts.map((account) => (
+                        <tr key={account.address}>
+                          <td>
+                            <AccountLink
+                              address={account.address}
+                              assets={account?.assets}
+                              className='full-hash'
+                              linkClassName='trim-only-sm'
+                            />
+                          </td>
+                          <td className='text-neutral-100'>
+                            <FormatAmount value={account.balance} />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </TableWrapper>
+              </div>
 
-                  <div className='card-footer table-footer'>
-                    <PageSize />
-                    <Pager total={totalAccounts} show={accounts.length > 0} />
-                  </div>
-                </>
-              ) : (
-                <NoAccounts />
-              )}
+              <div className='card-footer table-footer'>
+                <PageSize />
+                <Pager total={totalAccounts} show={accounts.length > 0} />
+              </div>
             </div>
           </div>
         </div>

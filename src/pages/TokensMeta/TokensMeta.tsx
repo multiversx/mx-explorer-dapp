@@ -10,7 +10,8 @@ import {
   AccountLink,
   Pager,
   PageSize,
-  TableSearch
+  TableSearch,
+  ColSpanWrapper
 } from 'components';
 import { urlBuilder } from 'helpers';
 import {
@@ -123,109 +124,106 @@ export const TokensMeta = () => {
                   </div>
                   <Pager
                     total={totalMetaCollections}
-                    show={metaCollections && metaCollections.length > 0}
+                    show={metaCollections.length > 0}
                     className='d-flex ms-auto me-auto me-sm-0'
                   />
                 </div>
               </div>
 
-              {metaCollections && metaCollections.length > 0 ? (
-                <>
-                  <div className='card-body'>
-                    <div className='table-wrapper animated-list'>
-                      <table className='table tokens-table'>
-                        <thead>
-                          <tr>
-                            <th>Token</th>
-                            <th>Name</th>
-                            <th>Owner</th>
-                          </tr>
-                        </thead>
-                        <tbody data-testid='collectionsTable'>
-                          {metaCollections.map((metaCollection, i) => (
-                            <tr
-                              key={`${metaCollection.name}-${metaCollection.collection}`}
-                            >
-                              <td>
-                                <div className='token-identity d-flex flex-row'>
-                                  <div className='d-flex align-items-center me-3'>
-                                    <NetworkLink
-                                      to={urlBuilder.tokenMetaEsdtDetails(
-                                        metaCollection.collection
-                                      )}
-                                      data-testid={`metaEsdtsLink${i}`}
-                                      className='side-link'
-                                    >
-                                      {metaCollection.assets &&
-                                      metaCollection.assets.svgUrl ? (
-                                        <img
-                                          src={metaCollection.assets.svgUrl}
-                                          alt={metaCollection.name}
-                                          className='side-icon side-icon-md-large'
-                                        />
-                                      ) : (
-                                        <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
-                                          <FontAwesomeIcon icon={faDiamond} />
-                                        </div>
-                                      )}
-                                    </NetworkLink>
-                                  </div>
+              <div className='card-body'>
+                <div className='table-wrapper animated-list'>
+                  <table className='table tokens-table'>
+                    <thead>
+                      <tr>
+                        <th>Token</th>
+                        <th>Name</th>
+                        <th>Owner</th>
+                      </tr>
+                    </thead>
+                    <tbody data-testid='collectionsTable'>
+                      {metaCollections.length === 0 && (
+                        <ColSpanWrapper colSpan={3}>
+                          <NoTokens />
+                        </ColSpanWrapper>
+                      )}
+                      {metaCollections.map((metaCollection, i) => (
+                        <tr
+                          key={`${metaCollection.name}-${metaCollection.collection}`}
+                        >
+                          <td>
+                            <div className='token-identity d-flex flex-row'>
+                              <div className='d-flex align-items-center me-3'>
+                                <NetworkLink
+                                  to={urlBuilder.tokenMetaEsdtDetails(
+                                    metaCollection.collection
+                                  )}
+                                  data-testid={`metaEsdtsLink${i}`}
+                                  className='side-link'
+                                >
+                                  {metaCollection.assets &&
+                                  metaCollection.assets.svgUrl ? (
+                                    <img
+                                      src={metaCollection.assets.svgUrl}
+                                      alt={metaCollection.name}
+                                      className='side-icon side-icon-md-large'
+                                    />
+                                  ) : (
+                                    <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
+                                      <FontAwesomeIcon icon={faDiamond} />
+                                    </div>
+                                  )}
+                                </NetworkLink>
+                              </div>
 
-                                  <div className='d-flex flex-column justify-content-center'>
-                                    <NetworkLink
-                                      to={urlBuilder.tokenMetaEsdtDetails(
-                                        metaCollection.collection
-                                      )}
-                                      data-testid={`metaEsdtsLink${i}`}
-                                      className='d-block token-ticker'
+                              <div className='d-flex flex-column justify-content-center'>
+                                <NetworkLink
+                                  to={urlBuilder.tokenMetaEsdtDetails(
+                                    metaCollection.collection
+                                  )}
+                                  data-testid={`metaEsdtsLink${i}`}
+                                  className='d-block token-ticker'
+                                >
+                                  {metaCollection.ticker}
+                                </NetworkLink>
+                                {metaCollection.assets &&
+                                  metaCollection.assets.description && (
+                                    <div
+                                      className='token-description text-wrap text-neutral-400 small d-none d-md-block'
+                                      title={metaCollection.assets.description}
                                     >
-                                      {metaCollection.ticker}
-                                    </NetworkLink>
-                                    {metaCollection.assets &&
-                                      metaCollection.assets.description && (
-                                        <div
-                                          className='token-description text-wrap text-neutral-400 small d-none d-md-block'
-                                          title={
-                                            metaCollection.assets.description
-                                          }
-                                        >
-                                          {metaCollection.assets.description}
-                                        </div>
-                                      )}
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                {metaCollection.scamInfo
-                                  ? `[Hidden - ${metaCollection.scamInfo.info}]`
-                                  : metaCollection.name}
-                              </td>
-                              <td>
-                                <div className='d-flex trim-size-xl'>
-                                  <AccountLink
-                                    address={metaCollection.owner}
-                                    hasHighlight
-                                  />
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                                      {metaCollection.assets.description}
+                                    </div>
+                                  )}
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            {metaCollection.scamInfo
+                              ? `[Hidden - ${metaCollection.scamInfo.info}]`
+                              : metaCollection.name}
+                          </td>
+                          <td>
+                            <div className='d-flex trim-size-xl'>
+                              <AccountLink
+                                address={metaCollection.owner}
+                                hasHighlight
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
-                  <div className='card-footer table-footer'>
-                    <PageSize />
-                    <Pager
-                      total={totalMetaCollections}
-                      show={metaCollections.length > 0}
-                    />
-                  </div>
-                </>
-              ) : (
-                <NoTokens />
-              )}
+              <div className='card-footer table-footer'>
+                <PageSize />
+                <Pager
+                  total={totalMetaCollections}
+                  show={metaCollections.length > 0}
+                />
+              </div>
             </div>
           </div>
         </div>

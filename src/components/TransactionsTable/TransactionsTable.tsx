@@ -1,5 +1,11 @@
 import { MAX_TRANSACTIONS_PAGE_SIZE } from 'appConstants';
-import { Pager, PageSize, TableWrapper, Loader } from 'components';
+import {
+  Pager,
+  PageSize,
+  TableWrapper,
+  Loader,
+  ColSpanWrapper
+} from 'components';
 import { FailedScResults } from 'components/ScResultsTable/FailedScResults';
 import { NoScResults } from 'components/ScResultsTable/NoScResults';
 import { TransactionFiltersEnum, TransactionTableType } from 'types';
@@ -11,18 +17,6 @@ import {
   TransactionRow,
   MethodList
 } from './components';
-
-const ColSpanWrapper = ({
-  children,
-  showDirectionCol
-}: {
-  children: React.ReactNode;
-  showDirectionCol: boolean;
-}) => (
-  <tr>
-    <td colSpan={showDirectionCol ? 8 : 7}>{children}</td>
-  </tr>
-);
 
 export const TransactionsTable = ({
   transactions,
@@ -41,6 +35,8 @@ export const TransactionsTable = ({
   isDataReady,
   inactiveFilters = [TransactionFiltersEnum.isRelayed]
 }: TransactionTableType) => {
+  const colSpan = showDirectionCol ? 8 : 7;
+
   return (
     <div
       className={`transactions-table ${
@@ -74,12 +70,12 @@ export const TransactionsTable = ({
               />
               <tbody>
                 {isDataReady === undefined && (
-                  <ColSpanWrapper showDirectionCol={showDirectionCol}>
+                  <ColSpanWrapper colSpan={colSpan}>
                     <Loader />
                   </ColSpanWrapper>
                 )}
                 {isDataReady === false && (
-                  <ColSpanWrapper showDirectionCol={showDirectionCol}>
+                  <ColSpanWrapper colSpan={colSpan}>
                     {isScResultsTable ? (
                       <FailedScResults />
                     ) : (
@@ -105,7 +101,7 @@ export const TransactionsTable = ({
                       </>
                     ) : (
                       <>
-                        <ColSpanWrapper showDirectionCol={showDirectionCol}>
+                        <ColSpanWrapper colSpan={colSpan}>
                           {isScResultsTable ? (
                             <NoScResults />
                           ) : (
