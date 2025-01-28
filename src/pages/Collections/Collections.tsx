@@ -12,7 +12,8 @@ import {
   PageSize,
   CollectionLink,
   TimeAgo,
-  TableSearch
+  TableSearch,
+  ColSpanWrapper
 } from 'components';
 import {
   useAdapter,
@@ -153,84 +154,76 @@ export const Collections = () => {
                   </div>
                   <Pager
                     total={totalCollections}
-                    show={collections && collections.length > 0}
+                    show={collections.length > 0}
                     className='d-flex ms-auto me-auto me-sm-0'
                   />
                 </div>
               </div>
 
-              {collections && collections.length > 0 ? (
-                <>
-                  <div className='card-body'>
-                    <div className='table-wrapper animated-list'>
-                      <table className='table mb-0'>
-                        <thead>
-                          <tr>
-                            <th>Collection</th>
-                            <th>Name</th>
-                            <th>Age</th>
-                            <th className='table-width-xl-helper'>Items</th>
-                            <th className='table-width-xl-helper'>Holders</th>
-                            <th>Owner</th>
-                          </tr>
-                        </thead>
-                        <tbody data-testid='collectionsTable'>
-                          {collections.map((collection, i) => (
-                            <tr
-                              key={`${collection.name}-${collection.collection}`}
-                            >
-                              <td>
-                                <div className='d-flex align-items-center'>
-                                  <CollectionLink
-                                    collection={collection}
-                                    data-testid={`collectionLink${i}`}
-                                  />
-                                </div>
-                              </td>
-                              <td>{collection.name}</td>
-                              <td>
-                                <TimeAgo value={collection.timestamp} tooltip />
-                              </td>
-                              <td>
-                                {collection?.nftCount
-                                  ? new BigNumber(collection.nftCount).toFormat(
-                                      0
-                                    )
-                                  : ''}
-                              </td>
-                              <td>
-                                {collection?.holderCount
-                                  ? new BigNumber(
-                                      collection.holderCount
-                                    ).toFormat(0)
-                                  : ''}
-                              </td>
-                              <td>
-                                <div className='d-flex trim-size-xl'>
-                                  <AccountLink
-                                    address={collection.owner}
-                                    hasHighlight
-                                  />
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+              <div className='card-body'>
+                <div className='table-wrapper animated-list'>
+                  <table className='table mb-0'>
+                    <thead>
+                      <tr>
+                        <th>Collection</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th className='table-width-xl-helper'>Items</th>
+                        <th className='table-width-xl-helper'>Holders</th>
+                        <th>Owner</th>
+                      </tr>
+                    </thead>
+                    <tbody data-testid='collectionsTable'>
+                      {collections.length === 0 && (
+                        <ColSpanWrapper colSpan={6}>
+                          <NoCollections />
+                        </ColSpanWrapper>
+                      )}
+                      {collections.map((collection, i) => (
+                        <tr key={`${collection.name}-${collection.collection}`}>
+                          <td>
+                            <div className='d-flex align-items-center'>
+                              <CollectionLink
+                                collection={collection}
+                                data-testid={`collectionLink${i}`}
+                              />
+                            </div>
+                          </td>
+                          <td>{collection.name}</td>
+                          <td>
+                            <TimeAgo value={collection.timestamp} tooltip />
+                          </td>
+                          <td>
+                            {collection?.nftCount
+                              ? new BigNumber(collection.nftCount).toFormat(0)
+                              : ''}
+                          </td>
+                          <td>
+                            {collection?.holderCount
+                              ? new BigNumber(collection.holderCount).toFormat(
+                                  0
+                                )
+                              : ''}
+                          </td>
+                          <td>
+                            <div className='d-flex trim-size-xl'>
+                              <AccountLink
+                                address={collection.owner}
+                                hasHighlight
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
-                  <div className='card-footer table-footer'>
-                    <PageSize />
-                    <Pager
-                      total={totalCollections}
-                      show={collections.length > 0}
-                    />
-                  </div>
-                </>
-              ) : (
-                <NoCollections />
-              )}
+              <div className='card-footer table-footer'>
+                <PageSize />
+                <Pager total={totalCollections} show={collections.length > 0} />
+              </div>
             </div>
           </div>
         </div>
