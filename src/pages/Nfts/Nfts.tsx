@@ -9,7 +9,8 @@ import {
   PageSize,
   CollectionBlock,
   NftBadge,
-  TableSearch
+  TableSearch,
+  ColSpanWrapper
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useAdapter, useGetSearch, useGetPage } from 'hooks';
@@ -68,87 +69,83 @@ export const Nfts = () => {
                   </div>
                   <Pager
                     total={totalNfts}
-                    show={nfts && nfts.length > 0}
+                    show={nfts.length > 0}
                     className='d-flex ms-auto me-auto me-sm-0'
                   />
                 </div>
               </div>
 
-              {nfts && nfts.length > 0 ? (
-                <>
-                  <div className='card-body'>
-                    <div className='table-wrapper animated-list'>
-                      <table className='table mb-0'>
-                        <thead>
-                          <tr>
-                            <th>Identifier</th>
-                            <th>Name</th>
-                            <th>Collection</th>
-                            <th>Creator Account</th>
-                          </tr>
-                        </thead>
-                        <tbody data-testid='nftsTable'>
-                          {nfts.map((nft, i) => (
-                            <tr key={`${nft.name}-${nft.identifier}`}>
-                              <td>
+              <div className='card-body'>
+                <div className='table-wrapper animated-list'>
+                  <table className='table mb-0'>
+                    <thead>
+                      <tr>
+                        <th>Identifier</th>
+                        <th>Name</th>
+                        <th>Collection</th>
+                        <th>Creator Account</th>
+                      </tr>
+                    </thead>
+                    <tbody data-testid='nftsTable'>
+                      {nfts.length === 0 && (
+                        <ColSpanWrapper colSpan={4}>
+                          <NoNfts />
+                        </ColSpanWrapper>
+                      )}
+                      {nfts.map((nft, i) => (
+                        <tr key={`${nft.name}-${nft.identifier}`}>
+                          <td>
+                            <div className='d-flex align-items-center'>
+                              <NetworkLink
+                                to={urlBuilder.nftDetails(nft.identifier)}
+                                data-testid={`nftsLink${i}`}
+                                className={`d-flex text-truncate ${
+                                  nft.assets?.svgUrl ? 'side-link' : ''
+                                }`}
+                              >
                                 <div className='d-flex align-items-center'>
-                                  <NetworkLink
-                                    to={urlBuilder.nftDetails(nft.identifier)}
-                                    data-testid={`nftsLink${i}`}
-                                    className={`d-flex text-truncate ${
-                                      nft.assets?.svgUrl ? 'side-link' : ''
-                                    }`}
-                                  >
-                                    <div className='d-flex align-items-center'>
-                                      {nft.assets && nft.assets.svgUrl && (
-                                        <img
-                                          src={nft.assets.svgUrl}
-                                          className='side-icon me-1'
-                                          alt=''
-                                          role='presentation'
-                                        />
-                                      )}
-                                      <div>{nft.identifier}</div>
-                                    </div>
-                                  </NetworkLink>
-                                  <NftBadge
-                                    type={nft.type}
-                                    subType={nft.subType}
-                                    className='ms-2'
-                                  />
+                                  {nft.assets && nft.assets.svgUrl && (
+                                    <img
+                                      src={nft.assets.svgUrl}
+                                      className='side-icon me-1'
+                                      alt=''
+                                      role='presentation'
+                                    />
+                                  )}
+                                  <div>{nft.identifier}</div>
                                 </div>
-                              </td>
-                              <td>
-                                {nft.scamInfo
-                                  ? `[Hidden - ${nft.scamInfo.info}]`
-                                  : nft.name}
-                              </td>
-                              <td>
-                                <CollectionBlock nft={nft} />
-                              </td>
-                              <td>
-                                <div className='d-flex trim-size-xl'>
-                                  <AccountLink
-                                    address={nft.creator}
-                                    hasHighlight
-                                  />
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                              </NetworkLink>
+                              <NftBadge
+                                type={nft.type}
+                                subType={nft.subType}
+                                className='ms-2'
+                              />
+                            </div>
+                          </td>
+                          <td>
+                            {nft.scamInfo
+                              ? `[Hidden - ${nft.scamInfo.info}]`
+                              : nft.name}
+                          </td>
+                          <td>
+                            <CollectionBlock nft={nft} />
+                          </td>
+                          <td>
+                            <div className='d-flex trim-size-xl'>
+                              <AccountLink address={nft.creator} hasHighlight />
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
-                  <div className='card-footer table-footer'>
-                    <PageSize />
-                    <Pager total={totalNfts} show={nfts.length > 0} />
-                  </div>
-                </>
-              ) : (
-                <NoNfts />
-              )}
+              <div className='card-footer table-footer'>
+                <PageSize />
+                <Pager total={totalNfts} show={nfts.length > 0} />
+              </div>
             </div>
           </div>
         </div>

@@ -14,7 +14,8 @@ import {
   FormatNumber,
   Sort,
   Loader,
-  Overlay
+  Overlay,
+  ColSpanWrapper
 } from 'components';
 import { isValidTokenValue } from 'helpers';
 import { useAdapter } from 'hooks';
@@ -26,12 +27,6 @@ import { TokenType, SortOrderEnum } from 'types';
 import { AccountTokensTableHeader } from './components';
 import { SortTokenFieldEnum } from './helpers';
 import { usePageTokens, useProcessTokens } from './hooks';
-
-const ColSpanWrapper = ({ children }: { children: React.ReactNode }) => (
-  <tr>
-    <td colSpan={5}>{children}</td>
-  </tr>
-);
 
 export const AccountTokensTable = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -126,12 +121,12 @@ export const AccountTokensTable = () => {
             </thead>
             <tbody data-testid='accountTokensTable'>
               {isDataReady === undefined && (
-                <ColSpanWrapper>
+                <ColSpanWrapper colSpan={5}>
                   <Loader />
                 </ColSpanWrapper>
               )}
               {isDataReady === false && (
-                <ColSpanWrapper>
+                <ColSpanWrapper colSpan={5}>
                   <PageState
                     icon={faCoins}
                     title='Unable to load tokens'
@@ -213,7 +208,7 @@ export const AccountTokensTable = () => {
                     </>
                   ) : (
                     <>
-                      <ColSpanWrapper>
+                      <ColSpanWrapper colSpan={5}>
                         <PageState icon={faCoins} title='No tokens' />
                       </ColSpanWrapper>
                     </>
