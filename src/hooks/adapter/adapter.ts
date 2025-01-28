@@ -251,8 +251,8 @@ export const useAdapter = () => {
         }
       }),
 
-    getAccountsCount: ({ isSmartContract }: GetAccountsType) =>
-      provider({ url: '/accounts/c', params: { isSmartContract } }),
+    getAccountsCount: (params: GetAccountsType) =>
+      provider({ url: '/accounts/c', params }),
 
     getAccountTransfers: ({ address, ...rest }: GetTransactionsType) =>
       provider({
