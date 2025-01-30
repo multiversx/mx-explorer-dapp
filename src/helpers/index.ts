@@ -3,6 +3,7 @@ export * as bech32 from './bech32';
 export * from './formatValue';
 export * from './getValue';
 export * from './hasCondition';
+export * from './isCondition';
 export * from './processData';
 
 export * from './addressIsBech32';
