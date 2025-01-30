@@ -68,12 +68,12 @@ export const TransactionsInPoolTable = ({
               <TransactionsInPoolHeader inactiveFilters={inactiveFilters} />
               <tbody>
                 {isDataReady === undefined && (
-                  <ColSpanWrapper colSpan={7}>
+                  <ColSpanWrapper colSpan={8}>
                     <Loader />
                   </ColSpanWrapper>
                 )}
                 {isDataReady === false && (
-                  <ColSpanWrapper colSpan={7}>
+                  <ColSpanWrapper colSpan={8}>
                     <PageState
                       icon={faExchangeAlt}
                       title={`No ${type ? `${type} ` : ''}Transactions in Pool`}
@@ -95,7 +95,7 @@ export const TransactionsInPoolTable = ({
                       </>
                     ) : (
                       <>
-                        <ColSpanWrapper colSpan={7}>
+                        <ColSpanWrapper colSpan={8}>
                           <PageState
                             icon={faCode}
                             title={`No  ${

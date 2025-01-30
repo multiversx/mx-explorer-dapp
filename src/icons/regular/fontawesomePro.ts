@@ -119,6 +119,7 @@ import {
   faUserCheck,
   faUserFriends,
   faUserLock,
+  faUsers,
   faWifiSlash
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -245,5 +246,6 @@ export {
   faUserCheck,
   faUserFriends,
   faUserLock,
+  faUsers,
   faWifiSlash
 };

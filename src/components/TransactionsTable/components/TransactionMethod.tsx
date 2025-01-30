@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Overlay } from 'components';
-import { getTransactionMethod, isEllipsisActive } from 'helpers';
+import { getTransactionMethod, isEllipsisActive, isTouchDevice } from 'helpers';
 import { interfaceSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices/interface';
 import { UITransactionType } from 'types';
@@ -82,8 +82,10 @@ export const TransactionMethod = ({
   const TransactionMethodBadge = () => {
     const dispatch = useDispatch();
     const { highlightedText } = useSelector(interfaceSelector);
+
+    const isTouch = isTouchDevice();
     const isHighlightBadge =
-      hasHighlight && highlightedText === transactionMethodText;
+      !isTouch && hasHighlight && highlightedText === transactionMethodText;
 
     return (
       <div className='d-inline-block'>
@@ -92,7 +94,7 @@ export const TransactionMethod = ({
             className={classNames('badge badge-outline badge-outline-green', {
               'badge-outline-highlight': isHighlightBadge
             })}
-            {...(hasHighlight
+            {...(hasHighlight && !isTouch
               ? {
                   onMouseEnter: () => {
                     dispatch(setHighlightedText(transactionMethodText));

@@ -11,7 +11,10 @@ import {
   faDiscord,
   faReddit,
   faThreads,
-  faTiktok
+  faTiktok,
+  faGithub,
+  faGooglePlay,
+  faAppStore
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -19,42 +22,52 @@ import { ReactComponent as CoinGecko } from 'assets/img/logos/coingecko.svg';
 import { ReactComponent as CoinMarketCap } from 'assets/img/logos/coinmarketcap.svg';
 import { Overlay } from 'components';
 import { faGlobe, faEnvelope, faPencil, faFileAlt } from 'icons/regular';
+import { faUsers } from 'icons/solid';
 
 const getFaIcon = (icon: string) => {
-  switch (icon) {
-    case 'email':
-      return faEnvelope;
+  const searchIcon = String(icon).toLowerCase();
+  switch (searchIcon) {
+    case 'appstore':
+      return faAppStore;
     case 'blog':
       return faPencil;
-    case 'whitepaper':
-      return faFileAlt;
-    case 'twitter':
-    case 'x':
-      return faXTwitter;
+    case 'community':
+      return faUsers;
+    case 'discord':
+      return faDiscord;
+    case 'email':
+      return faEnvelope;
+    case 'facebook':
+      return faFacebook;
+    case 'github':
+      return faGithub;
+    case 'googleplay':
+      return faGooglePlay;
     case 'instagram':
       return faInstagram;
     case 'linkedin':
       return faLinkedin;
-    case 'youtube':
-      return faYoutube;
-    case 'facebook':
-      return faFacebook;
+    case 'medium':
+      return faMedium;
+    case 'medium-m':
+      return faMediumM;
+    case 'reddit':
+      return faReddit;
     case 'telegram-plane':
       return faTelegramPlane;
     case 'telegram':
       return faTelegram;
-    case 'medium-m':
-      return faMediumM;
-    case 'medium':
-      return faMedium;
-    case 'discord':
-      return faDiscord;
-    case 'reddit':
-      return faReddit;
     case 'threads':
       return faThreads;
     case 'tiktok':
       return faTiktok;
+    case 'whitepaper':
+      return faFileAlt;
+    case 'x':
+    case 'twitter':
+      return faXTwitter;
+    case 'youtube':
+      return faYoutube;
     default:
       return faGlobe;
   }
