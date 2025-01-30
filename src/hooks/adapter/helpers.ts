@@ -56,6 +56,7 @@ export function getTransactionsParams({
   withUsername = true,
   withBlockInfo = false,
   withTxsRelayedByAddress = false,
+  withCrossChainTransfers = false,
 
   // not on api
   isCount = false
@@ -89,7 +90,8 @@ export function getTransactionsParams({
     ...(hashes ? { hashes } : {}),
     ...(relayer ? { relayer } : {}),
     ...(isRelayed ? { isRelayed } : {}),
-    ...(withTxsRelayedByAddress ? { withTxsRelayedByAddress } : {})
+    ...(withTxsRelayedByAddress ? { withTxsRelayedByAddress } : {}),
+    ...(withCrossChainTransfers ? { withCrossChainTransfers } : {})
   };
 
   return params;
