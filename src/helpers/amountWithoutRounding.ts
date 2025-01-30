@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
+
 import { DIGITS } from 'config';
-import { stringIsFloat } from './stringIsFloat';
+import { stringIsFloat } from 'helpers';
 
 export const amountWithoutRounding = (
   amount: string | number | BigNumber,
