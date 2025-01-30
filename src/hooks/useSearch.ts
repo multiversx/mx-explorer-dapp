@@ -14,7 +14,9 @@ import { useAdapter, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { TokenTypeEnum } from 'types';
 
-export const useSearch = (searchHash: string) => {
+export const useSearch = (hash: string) => {
+  const searchHash = String(hash).trim();
+
   const networkRoute = useNetworkRoute();
   const {
     getAccount,
