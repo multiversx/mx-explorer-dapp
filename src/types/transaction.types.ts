@@ -85,6 +85,7 @@ export interface TransactionInPoolType {
   senderShard: number;
   receiverShard: number;
   receiverUsername?: string;
+  function?: string;
   data?: string;
 }
 

@@ -60,9 +60,12 @@ export const TransactionInPoolTypeBadge = ({
     <div className='d-inline-block'>
       <TransactionTypeText>
         <span
-          className={classNames('badge badge-outline badge-outline-green', {
-            'badge-outline-highlight': isHighlightBadge
-          })}
+          className={classNames(
+            'badge badge-outline badge-outline-primary-alt',
+            {
+              'badge-outline-highlight': isHighlightBadge
+            }
+          )}
           {...(hasHighlight
             ? {
                 onMouseEnter: () => {
