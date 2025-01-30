@@ -5,7 +5,7 @@ import { Navigate, Outlet, useParams } from 'react-router-dom';
 import { NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
 import { Loader } from 'components';
 import { useAdapter, useGetPage } from 'hooks';
-import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
+import { activeNetworkSelector } from 'redux/selectors';
 import { setToken } from 'redux/slices';
 
 import { FailedTokenDetails } from './FailedTokenDetails';
@@ -17,7 +17,6 @@ export const TokenLayout = () => {
   const { hash: tokenId } = useParams();
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
-  const { token } = useSelector(tokenSelector);
 
   const isNativeToken =
     tokenId &&
@@ -44,8 +43,7 @@ export const TokenLayout = () => {
     }
   }, [firstPageRefreshTrigger, activeNetworkId, tokenId, isNativeToken]);
 
-  const loading =
-    isDataReady === undefined || (tokenId && tokenId !== token.identifier);
+  const loading = isDataReady === undefined;
   const failed = isDataReady === false;
 
   if (isNativeToken) {
