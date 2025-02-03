@@ -15,26 +15,25 @@ export const HashSearch = () => {
     search();
   }, [query]);
 
+  if (isSearching) {
+    return <Loader />;
+  }
+
   return (
     <>
-      {isSearching === undefined && <Loader />}
-      {isSearching === false && (
-        <>
-          {searchRoute && searchRoute !== notFoundRoute ? (
-            navigate(searchRoute)
-          ) : (
-            <PageState
-              icon={faSearch}
-              title="Your search does not match anything we've got"
-              description={
-                <div className='px-spacer'>
-                  <span className='text-break-all'>{query}</span>
-                </div>
-              }
-              isError
-            />
-          )}
-        </>
+      {searchRoute && searchRoute !== notFoundRoute ? (
+        navigate(searchRoute)
+      ) : (
+        <PageState
+          icon={faSearch}
+          title="Your search does not match anything we've got"
+          description={
+            <div className='px-spacer'>
+              <span className='text-break-all'>{query}</span>
+            </div>
+          }
+          isError
+        />
       )}
     </>
   );

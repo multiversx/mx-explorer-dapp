@@ -13,6 +13,7 @@ import { useIsSovereign } from 'hooks';
 import { faArrowRight } from 'icons/regular';
 import { UITransactionInPoolType } from 'types';
 
+import { TransactionInPoolMethodBadge } from './TransactionInPoolMethodBadge';
 import { TransactionInPoolTypeBadge } from './TransactionInPoolTypeBadge';
 
 export interface TransactionInPoolRowUIType {
@@ -88,6 +89,9 @@ export const TransactionInPoolRow = ({
       </td>
       <td className='transaction-type'>
         <TransactionInPoolTypeBadge type={type} hasHighlight />
+      </td>
+      <td className='transaction-function'>
+        <TransactionInPoolMethodBadge transaction={transaction} />
       </td>
       <td className='transaction-value'>
         <FormatAmount value={value} />

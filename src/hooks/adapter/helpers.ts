@@ -45,6 +45,7 @@ export function getTransactionsParams({
   search,
   token,
   hashes,
+  relayer,
   isRelayed = false,
 
   // include data
@@ -54,6 +55,7 @@ export function getTransactionsParams({
   withScamInfo = false,
   withUsername = true,
   withBlockInfo = false,
+  withTxsRelayedByAddress = false,
 
   // not on api
   isCount = false
@@ -85,7 +87,9 @@ export function getTransactionsParams({
     ...(search ? { search } : {}),
     ...(token ? { token } : {}),
     ...(hashes ? { hashes } : {}),
-    ...(isRelayed ? { isRelayed } : {})
+    ...(relayer ? { relayer } : {}),
+    ...(isRelayed ? { isRelayed } : {}),
+    ...(withTxsRelayedByAddress ? { withTxsRelayedByAddress } : {})
   };
 
   return params;

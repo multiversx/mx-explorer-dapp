@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { NetworkLink, ShardSpan } from 'components';
-import { urlBuilder } from 'helpers';
+import { isTouchDevice, urlBuilder } from 'helpers';
 import { useFetchShards, useIsSovereign, useGetShardText } from 'hooks';
 import { interfaceSelector, shardsSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices/interface';
@@ -57,17 +57,20 @@ export const ShardLink = ({
     link = urlBuilder.receiverShard(shard);
   }
 
+  const isTouch = isTouchDevice();
+  const isHighlighted =
+    !isTouch && hasHighlight && highlightedText === shardHighlightKey;
+
   const ShardDisplay = ({ className }: WithClassnameType) => {
     if (!hasLink) {
       return (
         <span
           data-testid={dataTestId}
           className={classNames(className, {
-            'text-highlighted':
-              hasHighlight && highlightedText === shardHighlightKey,
+            'text-highlighted': isHighlighted,
             'text-neutral-400': isSovereignShard
           })}
-          {...(hasHighlight
+          {...(hasHighlight && !isTouch
             ? {
                 onMouseEnter: () => {
                   dispatch(setHighlightedText(shardHighlightKey));
@@ -89,7 +92,7 @@ export const ShardLink = ({
           'text-highlighted':
             hasHighlight && highlightedText === shardHighlightKey
         })}
-        {...(hasHighlight
+        {...(hasHighlight && !isTouch
           ? {
               onMouseEnter: () => {
                 dispatch(setHighlightedText(shardHighlightKey));

@@ -16,6 +16,7 @@ import {
   faFileAlt,
   faFileCode,
   faFlag as faFlagAlt,
+  faThumbsUp as faHandHoldingHand,
   faHandshake,
   faHeart,
   faHourglass,
@@ -41,6 +42,7 @@ import {
   faArrowUp,
   faArrowUpRightFromSquare as faArrowUpRight,
   faArrowUpRightFromSquare,
+  faArrowsTurnToDots as faArrowProgress,
   faBan,
   faBridge,
   faBridge as faPersonToPortal,
@@ -117,6 +119,7 @@ import {
   faUserCheck,
   faUserFriends,
   faUserLock,
+  faUsers,
   faXmark as faClose,
   faWifi as faWifiSlash
 } from '@fortawesome/free-solid-svg-icons';
@@ -129,6 +132,7 @@ export {
   faAnglesRight,
   faAngleUp,
   faArrowDown,
+  faArrowProgress,
   faArrowRight,
   faArrowRightFromArc,
   faArrowToTop,
@@ -190,6 +194,7 @@ export {
   faGlobe,
   faGrid,
   faGrid2,
+  faHandHoldingHand,
   faHandshake,
   faHeart,
   faHexagonCheck,
@@ -239,5 +244,6 @@ export {
   faUserCheck,
   faUserFriends,
   faUserLock,
+  faUsers,
   faWifiSlash
 };

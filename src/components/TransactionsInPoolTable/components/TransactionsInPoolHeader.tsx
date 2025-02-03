@@ -37,6 +37,7 @@ export const TransactionsInPoolHeader = ({
         <th scope='col'>
           <TransactionInPoolTypeFilter text='Type' />
         </th>
+        <th scope='col'>Method</th>
         <th scope='col'>Value</th>
       </tr>
     </thead>

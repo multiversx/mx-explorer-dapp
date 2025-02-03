@@ -1,7 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from 'react-redux';
 
-import { Overlay } from 'components';
-import { faHandshake } from 'icons/regular';
+import { AccountLink, Overlay } from 'components';
+import { useActiveRoute } from 'hooks';
+import { faHandHoldingHand } from 'icons/regular';
+import { faArrowProgress } from 'icons/solid';
+import { accountSelector } from 'redux/selectors';
+import { accountsRoutes } from 'routes';
 import { UITransactionType } from 'types';
 
 export const TransactionRelayedIcon = ({
@@ -9,15 +14,54 @@ export const TransactionRelayedIcon = ({
 }: {
   transaction: UITransactionType;
 }) => {
-  if (transaction?.isRelayed) {
-    const relayedText = transaction?.relayedVersion
-      ? `Relayed Version: ${transaction.relayedVersion}`
-      : 'Relayed';
+  const { account } = useSelector(accountSelector);
+  const activeRoute = useActiveRoute();
 
+  const relayedText = transaction?.relayedVersion
+    ? `Relayed Tx Version: ${transaction.relayedVersion}`
+    : 'Relayed Transaction';
+
+  const isRelayedByCurrentAccount =
+    activeRoute(accountsRoutes.accountDetails) &&
+    account?.address &&
+    transaction?.relayer === account.address;
+
+  if (transaction?.isRelayed) {
     return (
-      <Overlay title={relayedText} className='relayed-icon'>
-        <FontAwesomeIcon icon={faHandshake} className='text-primary me-1' />
-      </Overlay>
+      <>
+        <Overlay
+          title={
+            <>
+              <p className='mb-0'>{relayedText}</p>
+              {transaction?.relayer && !isRelayedByCurrentAccount && (
+                <p className='mb-0'>
+                  Transaction relayed by{' '}
+                  <AccountLink address={transaction.relayer} />
+                </p>
+              )}
+            </>
+          }
+          className='relayed-icon'
+          persistent
+        >
+          <FontAwesomeIcon
+            icon={faArrowProgress}
+            className='text-primary me-1'
+          />
+        </Overlay>
+        {isRelayedByCurrentAccount && (
+          <Overlay
+            title='Transaction relayed by current account'
+            className='relayed-icon'
+            persistent
+          >
+            <FontAwesomeIcon
+              icon={faHandHoldingHand}
+              className='text-primary me-1'
+            />
+          </Overlay>
+        )}
+      </>
     );
   }
 
