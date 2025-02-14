@@ -12,6 +12,7 @@ export * from './getNodeStatusDisplay';
 export * from './getOperationDirection';
 export * from './getPercentage';
 export * from './getPrimaryColor';
+export * from './getProofHash';
 export * from './getStringPlural';
 export * from './getSubdomainNetwork';
 export * from './getTotalTokenUsdValue';

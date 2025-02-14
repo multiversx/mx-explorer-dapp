@@ -12,7 +12,7 @@ import {
   TableSearch,
   ColSpanWrapper
 } from 'components';
-import { urlBuilder } from 'helpers';
+import { isProof, urlBuilder } from 'helpers';
 import { useAdapter, useGetSearch, useGetPage } from 'hooks';
 import { NftType } from 'types';
 
@@ -118,6 +118,7 @@ export const Nfts = () => {
                               <NftBadge
                                 type={nft.type}
                                 subType={nft.subType}
+                                isProof={isProof(nft)}
                                 className='ms-2'
                               />
                             </div>

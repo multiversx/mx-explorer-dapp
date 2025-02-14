@@ -8,7 +8,8 @@ import {
   isContract,
   addressIsBech32,
   bech32,
-  formatHerotag
+  formatHerotag,
+  isProof
 } from 'helpers';
 import { useAdapter, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -117,7 +118,11 @@ export const useSearch = (hash: string) => {
                 );
                 break;
               case nft.success:
-                setSearchRoute(networkRoute(urlBuilder.nftDetails(searchHash)));
+                const isNftProof = isProof(nft.data);
+                const nftRoute = isNftProof
+                  ? urlBuilder.proofDetails(searchHash)
+                  : urlBuilder.nftDetails(searchHash);
+                setSearchRoute(networkRoute(nftRoute));
                 break;
               case collection.success:
                 setSearchRoute(
@@ -237,8 +242,14 @@ export const useSearch = (hash: string) => {
                   tokens.data[0].type === TokenTypeEnum.MetaESDT;
 
                 if (tokens.data.length === 1) {
+                  const isNftProof = isProof(tokens.data[0]);
+                  const metaRoute = isNftProof
+                    ? urlBuilder.proofDetails(tokens.data[0].identifier)
+                    : urlBuilder.tokenMetaEsdtDetails(
+                        tokens.data[0].identifier
+                      );
                   const route = isFirstMetaESDT
-                    ? urlBuilder.tokenMetaEsdtDetails(tokens.data[0].identifier)
+                    ? metaRoute
                     : urlBuilder.tokenDetails(tokens.data[0].identifier);
                   setSearchRoute(networkRoute(route));
                 } else {

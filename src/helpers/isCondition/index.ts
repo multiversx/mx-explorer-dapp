@@ -4,6 +4,7 @@ export * from './isEgldToken';
 export * from './isEllipsisActive';
 export * from './isHash';
 export * from './isMetachain';
+export * from './isProof';
 export * from './isTouchDevice';
 export * from './isUtf8';
 export * from './isValidTokenValue';
