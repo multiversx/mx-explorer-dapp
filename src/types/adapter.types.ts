@@ -128,6 +128,7 @@ export interface GetTransactionsType extends SortableApiType {
   withUsername?: boolean;
   withBlockInfo?: boolean;
   withTxsRelayedByAddress?: boolean;
+  withCrossChainTransfers?: boolean;
   isRelayed?: boolean;
 }
 
