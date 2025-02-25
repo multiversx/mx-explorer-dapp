@@ -35,4 +35,9 @@ if [ -n "$START_API_ADDRESS_STOP" ]; then
   find /usr/share/nginx/html/ -type f -exec sed -i 's|START_API_ADDRESS_STOP|'${START_API_ADDRESS_STOP}'|g' {} +
 fi
 
+if [ -n "$START_IS_SOVEREIGN_STOP" ]; then
+  echo "IS Sovereign defined: ${START_IS_SOVEREIGN_STOP}, replacing in config"
+  find /usr/share/nginx/html/ -type f -exec sed -i 's|START_IS_SOVEREIGN_STOP|'${START_IS_SOVEREIGN_STOP}'|g' {} +
+fi
+
 exec nginx -g 'daemon off;'
