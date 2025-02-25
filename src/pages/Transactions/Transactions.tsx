@@ -9,7 +9,8 @@ import {
   useGetPage,
   useGetTransactionFilters,
   useFetchTransactions,
-  useGetShardText
+  useGetShardText,
+  useIsSovereign
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { transactionsRoutes } from 'routes';
@@ -19,8 +20,9 @@ export const Transactions = () => {
   const [searchParams] = useSearchParams();
   const getShardText = useGetShardText();
   const urlParams = useGetTransactionFilters();
-  const { senderShard, receiverShard } = urlParams;
+  const isSovereign = useIsSovereign();
 
+  const { senderShard, receiverShard } = urlParams;
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
@@ -32,7 +34,9 @@ export const Transactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getTransactions, getTransactionsCount);
+  } = useFetchTransactions(getTransactions, getTransactionsCount, {
+    ...(isSovereign ? { withCrossChainTransfers: true } : {})
+  });
 
   useEffect(() => {
     if (ref.current !== null) {
