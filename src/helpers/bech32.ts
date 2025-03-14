@@ -1,8 +1,9 @@
 import { bech32 } from 'bech32';
+import { DEFAULT_HRP } from 'appConstants';
 
-const encode = (publicKey: any) => {
+const encode = (publicKey: any, hrp = DEFAULT_HRP) => {
   const words = bech32.toWords(Buffer.from(publicKey, 'hex'));
-  return bech32.encode('erd', words);
+  return bech32.encode(hrp, words);
 };
 
 const decode = (address: any) => {

@@ -10,7 +10,7 @@ import {
   bech32,
   formatHerotag
 } from 'helpers';
-import { useAdapter, useNetworkRoute } from 'hooks';
+import { useAdapter, useGetHrp, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { TokenTypeEnum } from 'types';
 
@@ -18,6 +18,7 @@ export const useSearch = (hash: string) => {
   const searchHash = String(hash).trim();
 
   const networkRoute = useNetworkRoute();
+  const hrp = useGetHrp();
   const {
     getAccount,
     getBlock,
@@ -66,7 +67,8 @@ export const useSearch = (hash: string) => {
       let isPubKeyAccount = false;
       try {
         isPubKeyAccount =
-          searchHash.length < 65 && addressIsBech32(bech32.encode(searchHash));
+          searchHash.length < 65 &&
+          addressIsBech32(bech32.encode(searchHash, hrp));
       } catch {}
 
       switch (true) {
@@ -177,23 +179,17 @@ export const useSearch = (hash: string) => {
                   break;
                 default:
                   if (isPubKeyAccount) {
-                    getAccount({ address: bech32.encode(searchHash) }).then(
-                      (account) => {
-                        if (account.success) {
-                          if (
-                            isContract(searchHash) ||
-                            account.data.nonce > 0
-                          ) {
-                            const newRoute = networkRoute(
-                              urlBuilder.accountDetails(
-                                bech32.encode(searchHash)
-                              )
-                            );
-                            setSearchRoute(newRoute);
-                          }
+                    const address = bech32.encode(searchHash, hrp);
+                    getAccount({ address }).then((account) => {
+                      if (account.success) {
+                        if (isContract(searchHash) || account.data.nonce > 0) {
+                          const newRoute = networkRoute(
+                            urlBuilder.accountDetails(address)
+                          );
+                          setSearchRoute(newRoute);
                         }
                       }
-                    );
+                    });
                   }
                   setSearchRoute(notFoundRoute);
                   break;
