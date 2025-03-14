@@ -8,6 +8,7 @@ button.badge {
 
 .badge-primary,
 .badge-green-alt,
+.badge-green,
 .badge-yellow,
 .badge-orange,
 .badge-grey {
@@ -23,6 +24,14 @@ button.badge {
     90deg,
     rgba(0, 245, 160, 0.4),
     rgba(0, 217, 245, 0.4)
+  );
+}
+.badge-green {
+  background: linear-gradient(
+    90deg,
+    rgba(134, 239, 172, 0.5),
+    rgba(74, 222, 128, 0.5),
+    rgba(22, 163, 74, 0.5)
   );
 }
 .badge-green-alt {

@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 import { FormatAmount, NetworkLink, NftBadge, Overlay } from 'components';
-import { urlBuilder } from 'helpers';
+import { isProof, urlBuilder } from 'helpers';
 import { NftTypeEnum, TransactionTokenArgumentType } from 'types';
 
 export const TransactionActionNft = ({
@@ -17,6 +17,10 @@ export const TransactionActionNft = ({
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
 }) => {
+  if (!token) {
+    return null;
+  }
+
   const displayIdentifier =
     token?.identifier && token.ticker === token.collection
       ? token.identifier
@@ -45,59 +49,55 @@ export const TransactionActionNft = ({
 
   return (
     <div className='nft-action-block d-contents'>
-      {token && (
-        <>
-          {showBadge && token.type !== NftTypeEnum.MetaESDT && (
-            <NftBadge type={token.type} className='me-1 my-auto' />
+      {showBadge && token.type !== NftTypeEnum.MetaESDT && (
+        <NftBadge type={token.type} className='me-1 my-auto' />
+      )}
+      {!noValue && token.type !== NftTypeEnum.NonFungibleESDT && (
+        <div className={`me-1  ${token.svgUrl ? 'text-truncate' : ''}`}>
+          {token.decimals !== undefined && tokenValue !== undefined ? (
+            <FormatAmount
+              value={String(tokenValue)}
+              showLabel={false}
+              showSymbol={false}
+              decimals={token.decimals}
+              showLastNonZeroDecimal={showLastNonZeroDecimal}
+            />
+          ) : (
+            <>
+              {tokenValue &&
+                Number(tokenValue).toLocaleString('en') !== '∞' && (
+                  <span className='badge badge-orange'>
+                    {new BigNumber(tokenValue).toFormat()}
+                  </span>
+                )}
+            </>
           )}
-          {!noValue && token.type !== NftTypeEnum.NonFungibleESDT && (
-            <div className={`me-1  ${token.svgUrl ? 'text-truncate' : ''}`}>
-              {token.decimals !== undefined && tokenValue !== undefined ? (
-                <FormatAmount
-                  value={String(tokenValue)}
-                  showLabel={false}
-                  showSymbol={false}
-                  decimals={token.decimals}
-                  showLastNonZeroDecimal={showLastNonZeroDecimal}
-                />
-              ) : (
-                <>
-                  {tokenValue &&
-                    Number(tokenValue).toLocaleString('en') !== '∞' && (
-                      <span className='badge badge-orange'>
-                        {new BigNumber(tokenValue).toFormat()}
-                      </span>
-                    )}
-                </>
-              )}
-            </div>
-          )}
-          {token.identifier ? (
-            <NetworkLink
-              to={
-                token.type === NftTypeEnum.MetaESDT && token?.collection
-                  ? urlBuilder.tokenMetaEsdtDetails(token.collection)
-                  : urlBuilder.nftDetails(token.identifier)
-              }
-              className={`d-flex text-truncate ${
-                token.svgUrl ? 'side-link' : ''
-              }`}
-              {...(token.type === NftTypeEnum.MetaESDT
-                ? { 'aria-label': token.identifier }
-                : {})}
-            >
-              {token.type === NftTypeEnum.MetaESDT && token?.svgUrl ? (
-                <Overlay title={token.identifier} truncate>
-                  <TokenInfo />
-                </Overlay>
-              ) : (
-                <TokenInfo />
-              )}
-            </NetworkLink>
+        </div>
+      )}
+      {token.identifier ? (
+        <NetworkLink
+          to={
+            token.type === NftTypeEnum.MetaESDT && token?.collection
+              ? isProof(token)
+                ? urlBuilder.proofDetails(token?.identifier)
+                : urlBuilder.tokenMetaEsdtDetails(token?.collection)
+              : urlBuilder.nftDetails(token.identifier)
+          }
+          className={`d-flex text-truncate ${token.svgUrl ? 'side-link' : ''}`}
+          {...(token.type === NftTypeEnum.MetaESDT
+            ? { 'aria-label': token.identifier }
+            : {})}
+        >
+          {token.type === NftTypeEnum.MetaESDT && token?.svgUrl ? (
+            <Overlay title={token.identifier} truncate>
+              <TokenInfo />
+            </Overlay>
           ) : (
             <TokenInfo />
           )}
-        </>
+        </NetworkLink>
+      ) : (
+        <TokenInfo />
       )}
     </div>
   );

@@ -25,6 +25,7 @@ export interface NftType {
   creator: string;
   royalties: number;
   balance: string;
+  hash?: string;
   subType?: NftSubtypeEnum;
   ticker?: string;
   uris?: string[];
