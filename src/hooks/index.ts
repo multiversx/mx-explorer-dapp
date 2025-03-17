@@ -34,4 +34,6 @@ export * from './useScamFlag';
 export * from './useScollInView';
 export * from './useScrollToTransactionSection';
 export * from './useSearch';
+export * from './useSetBrowserClassNames';
+export * from './useSetDappConfig';
 export * from './useTempStorageNotification';

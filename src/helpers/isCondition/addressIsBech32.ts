@@ -2,9 +2,7 @@ import { Address } from '@multiversx/sdk-core';
 
 function canTransformToPublicKey(address: string) {
   try {
-    const checkAddress = Address.newFromBech32(address);
-
-    return Boolean(checkAddress.bech32());
+    return Address.isValid(address);
   } catch {
     return false;
   }

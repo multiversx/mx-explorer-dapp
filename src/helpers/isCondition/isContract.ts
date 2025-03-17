@@ -6,7 +6,7 @@ export const isContract = (initiator: string | undefined) => {
   }
 
   try {
-    return Address.newFromBech32(initiator).isSmartContract();
+    return new Address(initiator).isSmartContract();
   } catch {
     return false;
   }
