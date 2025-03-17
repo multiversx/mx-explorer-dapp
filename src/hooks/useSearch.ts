@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
+import { Address } from '@multiversx/sdk-core/out';
 import { useSelector } from 'react-redux';
 
-import { HEROTAG_SUFFIX, NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
+import {
+  DEFAULT_HRP,
+  HEROTAG_SUFFIX,
+  NATIVE_TOKEN_IDENTIFIER
+} from 'appConstants';
 import {
   urlBuilder,
   isHash,
@@ -54,6 +59,7 @@ export const useSearch = (hash: string) => {
       const accountQueryFields = ['address', 'ownerAddress'].join(',');
 
       const isAccount = addressIsBech32(searchHash);
+
       const isValidHash = isHash(searchHash);
       const isNode =
         validHashChars.test(searchHash) === true && searchHash.length === 192;
@@ -70,6 +76,11 @@ export const useSearch = (hash: string) => {
         isPubKeyAccount =
           searchHash.length < 65 &&
           addressIsBech32(bech32.encode(searchHash, hrp));
+      } catch {}
+      let isErdAddress = false;
+      try {
+        const erdAddress = Address.newFromBech32(searchHash);
+        isErdAddress = erdAddress.getHrp() === DEFAULT_HRP;
       } catch {}
 
       switch (true) {
@@ -89,10 +100,22 @@ export const useSearch = (hash: string) => {
           });
           break;
 
+        case isErdAddress:
         case isAccount:
-          getAccount({ address: searchHash }).then((account) => {
+          let searchAddress = searchHash;
+          if (isErdAddress) {
+            try {
+              const erdAddress = new Address(
+                Address.newFromBech32(searchHash).getPublicKey(),
+                hrp
+              ).toBech32();
+              searchAddress = erdAddress;
+            } catch {}
+          }
+
+          getAccount({ address: searchAddress }).then((account) => {
             const newRoute = account.success
-              ? networkRoute(urlBuilder.accountDetails(searchHash))
+              ? networkRoute(urlBuilder.accountDetails(searchAddress))
               : notFoundRoute;
             setSearchRoute(newRoute);
           });
