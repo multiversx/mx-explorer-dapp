@@ -3,6 +3,7 @@ export * from './getAccountLegacyDelegationDetails';
 export * from './getAccountStakingDetails';
 export * from './getAccountValidatorStakeDetails';
 export * from './getColors';
+export * from './getCustomPageName';
 export * from './getDisplayReceiver';
 export * from './getItemsPage';
 export * from './getNftText';
