@@ -6,14 +6,18 @@ import { DEFAULT_HRP } from 'appConstants';
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const useSetDappConfig = () => {
-  const activeNetowrk = useSelector(activeNetworkSelector);
+  const activeNetwork = useSelector(activeNetworkSelector);
 
   useEffect(() => {
-    if (activeNetowrk?.hrp && activeNetowrk.hrp !== DEFAULT_HRP) {
+    if (!activeNetwork.hrp) {
+      return;
+    }
+
+    if (activeNetwork.hrp !== DEFAULT_HRP) {
       // set the default HRP in sdk-js
       try {
-        LibraryConfig.DefaultAddressHrp = activeNetowrk.hrp;
+        LibraryConfig.DefaultAddressHrp = activeNetwork.hrp;
       } catch {}
     }
-  }, [activeNetowrk]);
+  }, [activeNetwork]);
 };
