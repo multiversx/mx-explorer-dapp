@@ -17,7 +17,7 @@
     "@fortawesome/free-solid-svg-icons": "6.5.1",
     "@fortawesome/react-fontawesome": "0.2.0",
     "@multiversx/sdk-core": "13.17.2",
-    "@multiversx/sdk-dapp": "3.3.1",
+    "@multiversx/sdk-dapp": "3.3.2-alpha.0",
     "@multiversx/sdk-dapp-sc-explorer": "0.0.2-beta.2",
     "@react-three/fiber": "8.18.0",
     "@reduxjs/toolkit": "1.9.5",
