@@ -4,6 +4,9 @@
 
 This project was bootstrapped with [Vite](https://vitejs.dev/guide/).
 
+## Tests
+ [![E2E tests](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/pre-merge-main-e2e-tests.yml/badge.svg)](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/pre-merge-main-e2e-tests.yml)
+
 ## Deployments
 
 [![deploy-devnet](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/deploy-devnet.yml/badge.svg)](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/deploy-devnet.yml)
