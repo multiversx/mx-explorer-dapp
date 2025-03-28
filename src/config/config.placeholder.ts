@@ -1,4 +1,4 @@
-import { NetworkType } from 'types/network.types';
+import { NetworkType, NetworkUrlType } from 'types/network.types';
 
 import { getStorageCustomNetworks } from './helpers';
 import { allApps, schema } from './sharedConfig';

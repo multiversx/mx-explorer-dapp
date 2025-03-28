@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { SC_INIT_CHARACTERS_LENGTH } from 'appConstants';
 import { Overlay } from 'components';
+import { isContract } from 'helpers';
 import { faCommand } from 'icons/regular';
 
 interface ScAddressIconType {
@@ -9,18 +9,11 @@ interface ScAddressIconType {
   secondInitiator?: string;
 }
 
-export const isContract = (initiator: string | undefined, charNum: number) =>
-  initiator &&
-  charNum > 0 &&
-  initiator.substring('erd1'.length).startsWith('q'.repeat(charNum));
-
 export const ScAddressIcon = ({
   initiator,
   secondInitiator
 }: ScAddressIconType) => {
-  const showIcon =
-    isContract(initiator, SC_INIT_CHARACTERS_LENGTH) ||
-    isContract(secondInitiator, SC_INIT_CHARACTERS_LENGTH);
+  const showIcon = isContract(initiator) || isContract(secondInitiator);
 
   return showIcon ? (
     <Overlay title='Smart Contract'>

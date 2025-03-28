@@ -1,17 +1,21 @@
 import { useLocation } from 'react-router-dom';
 import { PageState } from 'components';
 import { analytics } from 'helpers';
+import { useGetHrp } from 'hooks';
 import { faTimes } from 'icons/regular';
 
 export const PageNotFound = () => {
-  const { pathname } = useLocation();
   const explorerVersion = import.meta.env.VITE_APP_CACHE_BUST;
+
+  const { pathname } = useLocation();
+  const hrp = useGetHrp();
 
   if (explorerVersion !== undefined) {
     analytics.sendEvent({
       action: 'page-not-found',
       label: pathname,
-      explorerVersion
+      explorerVersion,
+      hrp
     });
   }
 

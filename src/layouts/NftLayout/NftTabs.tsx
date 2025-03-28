@@ -1,14 +1,15 @@
 import { useSelector } from 'react-redux';
 
 import { Tabs } from 'components/Tabs';
-import { urlBuilder } from 'helpers';
+import { isProof, urlBuilder } from 'helpers';
 import { nftSelector } from 'redux/selectors';
-import { nftRoutes } from 'routes';
+import { nftRoutes, tokensRoutes } from 'routes';
 import { NftTypeEnum } from 'types';
 
 export const NftTabs = () => {
   const { nftState } = useSelector(nftSelector);
   const { identifier, type, metadata, rarities } = nftState;
+  const isNftProof = isProof(nftState);
 
   const showOverview = Boolean(
     type &&
@@ -24,16 +25,26 @@ export const NftTabs = () => {
       activationRoutes: [nftRoutes.nftDetails]
     },
     {
-      show: type && type !== NftTypeEnum.MetaESDT,
-      tabTo: urlBuilder.nftDetailsTransactions(identifier),
+      show: type && (type !== NftTypeEnum.MetaESDT || isNftProof),
+      tabTo: isNftProof
+        ? urlBuilder.proofDetails(identifier)
+        : urlBuilder.nftDetailsTransactions(identifier),
       tabLabel: 'Transactions',
-      activationRoutes: [nftRoutes.nftDetailsTransactions]
+      activationRoutes: [
+        nftRoutes.nftDetailsTransactions,
+        tokensRoutes.tokensProofDetails
+      ]
     },
     {
-      show: type && type === NftTypeEnum.SemiFungibleESDT,
-      tabTo: urlBuilder.nftDetailsAccounts(identifier),
+      show: type && (type === NftTypeEnum.SemiFungibleESDT || isNftProof),
+      tabTo: isNftProof
+        ? urlBuilder.proofDetailsAccounts(identifier)
+        : urlBuilder.nftDetailsAccounts(identifier),
       tabLabel: 'Holders',
-      activationRoutes: [nftRoutes.nftDetailsAccounts]
+      activationRoutes: [
+        nftRoutes.nftDetailsAccounts,
+        tokensRoutes.tokensProofDetailsAccounts
+      ]
     }
   ];
 

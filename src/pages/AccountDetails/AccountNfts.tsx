@@ -13,7 +13,7 @@ import {
   NftBadge,
   NetworkLink
 } from 'components';
-import { urlBuilder } from 'helpers';
+import { isProof, urlBuilder } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
@@ -133,6 +133,7 @@ export const AccountNfts = () => {
                       <NftBadge
                         type={nft.type}
                         subType={nft.subType}
+                        isProof={isProof(nft)}
                         className='ms-2'
                       />
                     </div>

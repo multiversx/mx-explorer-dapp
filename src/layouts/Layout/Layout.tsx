@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useLocation, Outlet } from 'react-router-dom';
-import { UAParser } from 'ua-parser-js';
 
 import { NotificationsBar, NetworkReady, MetaTags } from 'components';
 import {
@@ -12,7 +11,9 @@ import {
   useLoopManager,
   useCheckVersion,
   useGetURLNetwork,
-  useInitDatadog
+  useInitDatadog,
+  useSetBrowserClassNames,
+  useSetDappConfig
 } from 'hooks';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 
@@ -20,12 +21,8 @@ import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Unavailable } from './components/Unavailable';
-import { formatClassName } from './helpers';
 
 export const Layout = () => {
-  const [freeze, setFreeze] = useState(false);
-
-  const browser = UAParser();
   const { pathname } = useLocation();
   const urlNetwork = useGetURLNetwork();
 
@@ -39,24 +36,16 @@ export const Layout = () => {
   useLoopManager();
   useCheckVersion();
   useInitDatadog();
+  useSetDappConfig();
+  useSetBrowserClassNames();
+
+  const [freeze, setFreeze] = useState(false);
 
   const offline = !window.navigator.onLine;
 
   const pathArray = pathname.split('/');
   const pageClass =
     activeNetworkId === defaultNetworkId ? pathArray?.[1] : pathArray?.[2];
-
-  useEffect(() => {
-    if (browser?.browser?.name) {
-      document.body.classList.add(formatClassName(browser.browser.name));
-    }
-    if (browser?.engine?.name) {
-      document.body.classList.add(formatClassName(browser.engine.name));
-    }
-    if (browser?.os?.name) {
-      document.body.classList.add(formatClassName(browser.os.name));
-    }
-  }, []);
 
   useEffect(() => {
     if (urlNetwork && urlNetwork.id === activeNetworkId) {

@@ -1,3 +1,4 @@
+import { DEFAULT_HRP } from 'appConstants';
 import { NetworkAdapterEnum, NetworkType } from 'types';
 
 export const getInternalNetworks = (): NetworkType[] => {
@@ -14,7 +15,8 @@ export const getInternalNetworks = (): NetworkType[] => {
             ...network,
             ...(!network?.adapter ? { adapter: NetworkAdapterEnum.api } : {}),
             ...(!network?.egldLabel ? { egldLabel: 'xEGLD' } : {}),
-            ...(!network?.chainId ? { chainId: 'T' } : {})
+            ...(!network?.chainId ? { chainId: 'T' } : {}),
+            ...(!network?.hrp ? { hrp: DEFAULT_HRP } : {})
           };
         });
       }

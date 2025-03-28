@@ -321,6 +321,7 @@ export interface TransactionTokenArgumentType {
   type: NftTypeEnum | TokenTypeEnum;
   name: string;
   ticker: string;
+  hash?: string;
   collection?: string;
   identifier?: string;
   token?: string;

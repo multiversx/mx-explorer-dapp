@@ -8,6 +8,7 @@ export interface TokenType {
   name: string;
   balance?: string;
   decimals?: number;
+  hash?: string;
   owner: string;
   minted: string;
   burnt: string;

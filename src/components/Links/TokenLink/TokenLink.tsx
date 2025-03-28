@@ -3,11 +3,13 @@ import { useSelector } from 'react-redux';
 
 import { NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
 import { NativeTokenSymbol, NetworkLink, Overlay } from 'components';
-import { urlBuilder, isEgldToken } from 'helpers';
+import { urlBuilder, isEgldToken, isProof } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
 import { TokenType, TokenTypeEnum } from 'types';
 
 export const TokenLink = ({ token }: { token: TokenType }) => {
+  const isNftProof = isProof(token);
+
   const { egldLabel = '' } = useSelector(activeNetworkSelector);
 
   const identifierArray = token.identifier ? token.identifier.split('-') : [];
@@ -15,9 +17,14 @@ export const TokenLink = ({ token }: { token: TokenType }) => {
     identifierArray.pop();
   }
   const detailsIdentifier = identifierArray.join('-');
+
+  const metaDetails = isNftProof
+    ? urlBuilder.proofDetails(token.identifier)
+    : urlBuilder.tokenMetaEsdtDetails(detailsIdentifier);
+
   const networkLink =
     token.type === TokenTypeEnum.MetaESDT
-      ? urlBuilder.tokenMetaEsdtDetails(detailsIdentifier)
+      ? metaDetails
       : urlBuilder.tokenDetails(token.identifier);
 
   if (token.identifier === NATIVE_TOKEN_IDENTIFIER) {

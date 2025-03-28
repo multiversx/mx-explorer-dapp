@@ -118,6 +118,9 @@ export const urlBuilder = {
   tokenDetailsLockedAccounts: (tokenId: string) =>
     `/tokens/${tokenId}/locked-accounts`,
   tokenDetailsRoles: (tokenId: string) => `/tokens/${tokenId}/roles`,
+  proofDetails: (identifier: string) => `/proofs/${identifier}`,
+  proofDetailsAccounts: (identifier: string) =>
+    `/proofs/${identifier}/accounts`,
   nativeTokenDetails: (egldLabel: string) => `/${egldLabel.toLowerCase()}`,
   nativeTokenDetailsAccounts: (egldLabel: string) =>
     `/${egldLabel.toLowerCase()}/accounts`,
