@@ -223,14 +223,14 @@ export const useSearch = (hash: string) => {
               fields: accountQueryFields,
               ...defaultQueryParams
             }),
+            getUsername(formatHerotag(searchHash)),
             getAccounts({
               search: searchHash,
               isSmartContract: false,
               fields: accountQueryFields,
               ...defaultQueryParams
-            }),
-            getUsername(formatHerotag(searchHash))
-          ]).then(([tokens, collections, applications, accounts, account]) => {
+            })
+          ]).then(([tokens, collections, applications, username, accounts]) => {
             switch (true) {
               case Boolean(tokens.success && tokens?.data?.[0]):
                 const isFirstMetaESDT =
@@ -269,6 +269,12 @@ export const useSearch = (hash: string) => {
                 setSearchRoute(networkRoute(collectionRoute));
                 break;
 
+              case Boolean(username.success && username?.data?.address):
+                setSearchRoute(
+                  networkRoute(urlBuilder.accountDetails(username.data.address))
+                );
+                break;
+
               case Boolean(accounts.success && accounts?.data?.[0]):
                 const accountRoute =
                   accounts.data.length === 1
@@ -278,13 +284,6 @@ export const useSearch = (hash: string) => {
                 setSearchRoute(networkRoute(accountRoute));
                 break;
 
-              case account.success:
-                setSearchRoute(
-                  networkRoute(
-                    urlBuilder.accountDetails(account?.data?.address)
-                  )
-                );
-                break;
               default:
                 setSearchRoute(notFoundRoute);
                 break;
