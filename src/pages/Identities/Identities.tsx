@@ -1,5 +1,5 @@
-import { Fragment } from 'react';
-import { useEffect, useState } from 'react';
+import { Fragment, useMemo } from 'react';
+import { useEffect } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -15,7 +15,7 @@ import {
   stakeExtraSelector
 } from 'redux/selectors';
 import { setStakeExtra } from 'redux/slices/stakeExtra';
-import { IdentityType, SortOrderEnum } from 'types';
+import { SortOrderEnum } from 'types';
 
 import { IdentityRow, ResiliencyRow } from './components';
 import { sortIdentities, SortIdentitesFieldEnum } from './helpers';
@@ -28,10 +28,6 @@ export const Identities = () => {
   const { isNodesIdentityCountFetched, unprocessed: stakeExtraUnprocessed } =
     useSelector(stakeExtraSelector);
   const { nodesIdentities, isFetched } = useSelector(nodesIdentitiesSelector);
-
-  const [displayNodesIdentities, setDisplayNodesIdentities] = useState<
-    IdentityType[]
-  >([]);
 
   useFetchNodesIdentities({
     sort: SortIdentitesFieldEnum.validators,
@@ -67,24 +63,24 @@ export const Identities = () => {
           })
         );
       }
-
-      if (sort && order) {
-        const sortedIdentities = sortIdentities({
-          field: sort as SortIdentitesFieldEnum,
-          order,
-          sortArray: [...nodesIdentities]
-        });
-
-        const processedCumulativeStake =
-          processNodesIdentities(sortedIdentities);
-
-        setDisplayNodesIdentities(processedCumulativeStake);
-
-        return;
-      }
-
-      setDisplayNodesIdentities(nodesIdentities);
     }
+  }, [sort, order, nodesIdentities, isFetched]);
+
+  const displayNodesIdentities = useMemo(() => {
+    if (!isFetched || !nodesIdentities) {
+      return [];
+    }
+
+    const sortedIdentities = sortIdentities({
+      field:
+        (sort as SortIdentitesFieldEnum) ?? SortIdentitesFieldEnum.validators,
+      order: order ?? SortOrderEnum.desc,
+      sortArray: [...nodesIdentities]
+    });
+
+    const processedCumulativeStake = processNodesIdentities(sortedIdentities);
+
+    return processedCumulativeStake;
   }, [sort, order, nodesIdentities, isFetched]);
 
   return (

@@ -87,7 +87,6 @@ export interface IdentityType {
   score: number;
   stake: string;
   locked: string;
-  stakePercent: number;
   validators: number;
   rank?: number;
   twitter?: string;
@@ -102,6 +101,7 @@ export interface IdentityType {
   url?: string;
 
   // not on API
+  stakePercent?: number;
   overallStakePercent?: number;
   validatorsPercent?: number;
   overallValidatorsPercent?: number;
