@@ -2,21 +2,32 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { Loader, PageState } from 'components';
-import { useFetchAccountStakingDetails } from 'hooks';
+import { Loader, PageState, SelectFilter, Sort } from 'components';
+import { useFetchAccountStakingDetails, useGetSort } from 'hooks';
 import { faChartPie } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
-
 import { accountStakingSelector } from 'redux/selectors';
+import { SortOrderEnum } from 'types';
 
 import { AccountDelegation } from './components/AccountDelegation';
 import { AccountLegacyDelegation } from './components/AccountLegacyDelegation';
 import { AccountStake } from './components/AccountStake';
 import { DonutChart } from './components/DonutChart';
+import { useGetDelegationList } from './hooks';
+
+export enum AccountStakingSortingEnum {
+  staked = 'staked',
+  undelegated = 'undelegated',
+  rewards = 'rewards',
+  name = 'name',
+  filled = 'filled',
+  apr = 'apr'
+}
 
 export const AccountStaking = () => {
   const { fetchAccountStakingDetails } = useFetchAccountStakingDetails();
   const { hash: address } = useParams();
+  const { sort } = useGetSort();
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const stakingDetails = useSelector(accountStakingSelector);
@@ -45,6 +56,35 @@ export const AccountStaking = () => {
     providerDataReady &&
     accountStakingFetched &&
     ((needsData && dataReady) || !needsData);
+
+  const delegations = useGetDelegationList({ delegation, delegationProviders });
+
+  const sortOptions = [
+    {
+      value: AccountStakingSortingEnum.staked,
+      label: 'Amount Staked'
+    },
+    {
+      value: AccountStakingSortingEnum.rewards,
+      label: 'Claimable Rewards'
+    },
+    {
+      value: AccountStakingSortingEnum.undelegated,
+      label: 'Undelegated'
+    },
+    {
+      value: AccountStakingSortingEnum.name,
+      label: 'Name'
+    },
+    {
+      value: AccountStakingSortingEnum.filled,
+      label: '% Filled'
+    },
+    {
+      value: AccountStakingSortingEnum.apr,
+      label: 'APR'
+    }
+  ];
 
   useEffect(() => {
     if (needsData) {
@@ -81,24 +121,38 @@ export const AccountStaking = () => {
                   </div>
                 </div>
                 <div className='col-lg-7 pe-lg-0 order-lg-first'>
-                  {showDelegation && delegation && delegation.length > 0 && (
+                  {showDelegation && delegations.length > 0 && (
                     <div className='account-delegation stake-container'>
-                      <div className='px-spacer py-3 delegation-title'>
-                        Staking List
+                      <div className='px-spacer initial-title delegation-title d-flex flex-wrap gap-2 align-items-center justify-content-between'>
+                        Staking List{' '}
+                        <div className='d-flex align-items-center'>
+                          <SelectFilter
+                            className='stake-values-sort'
+                            name='senderShard-filter'
+                            options={sortOptions}
+                            filter={'sort'}
+                            placeholder='Sort'
+                            showAllPlaceholder='Default'
+                          />
+                          <Sort
+                            id={sort ?? 'default'}
+                            text={''}
+                            defaultOrder={SortOrderEnum.desc}
+                            defaultActive={false}
+                            keepId
+                          />
+                        </div>
                       </div>
                       <div className='d-flex flex-column staking-list'>
-                        {delegation.map((delegation, i) => {
-                          const provider = delegationProviders?.find(
-                            ({ provider }) => delegation.contract === provider
-                          );
-                          return provider ? (
+                        {delegations.map(
+                          ({ delegationDetails, providerDetails }, i) => (
                             <AccountDelegation
-                              delegation={delegation}
-                              provider={provider}
+                              delegation={delegationDetails}
+                              provider={providerDetails}
                               key={i}
                             />
-                          ) : null;
-                        })}
+                          )
+                        )}
                       </div>
                     </div>
                   )}
