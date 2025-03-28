@@ -30,6 +30,7 @@ export const HEROTAG_SUFFIX = '.elrond';
 export const TEMP_LOCAL_NOTIFICATION_DISMISSED = 'tempNotificationDismissed2';
 export const CUSTOM_NETWORK_ID = 'custom-network';
 export const NEW_VERSION_NOTIFICATION = 'newExplorerVersion';
+export const NAVIGATION_SEARCH_STATE = 'fromSearch';
 
 export const SC_INIT_CHARACTERS_LENGTH = 13;
 
