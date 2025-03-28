@@ -1,4 +1,4 @@
-import { getPercentageFilled, hasDelegationCap } from '../helpers';
+import { getPercentageFilled, hasDelegationCap } from 'helpers';
 
 interface PercentageFilledUIType {
   locked: string;

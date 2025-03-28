@@ -1,6 +1,5 @@
+import { getPercentageFilled } from 'helpers';
 import { ProviderType, SortOrderEnum } from 'types';
-
-import { getPercentageFilled } from './getPercentageFilled';
 
 export enum SortProviderFieldEnum {
   filled = 'filled',

@@ -14,7 +14,7 @@ export const AccountDelegation = ({
   provider
 }: {
   delegation: AccountDelegationType;
-  provider: ProviderType;
+  provider?: ProviderType;
 }) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
 
@@ -32,7 +32,7 @@ export const AccountDelegation = ({
 
   return (
     <div className='delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4'>
-      <ProviderDetails provider={provider} />
+      {provider && <ProviderDetails provider={provider} />}
 
       {userActiveStake !== ZERO && (
         <DetailsBlock>

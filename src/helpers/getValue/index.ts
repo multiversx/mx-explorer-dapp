@@ -12,6 +12,7 @@ export * from './getNodeIssue';
 export * from './getNodeStatusDisplay';
 export * from './getOperationDirection';
 export * from './getPercentage';
+export * from './getPercentageFilled';
 export * from './getPrimaryColor';
 export * from './getProofHash';
 export * from './getStringPlural';
