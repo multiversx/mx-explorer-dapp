@@ -66,6 +66,10 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
     identity.validatorsPercent || 0
   ).plus(identity.overallValidatorsPercent || 0);
 
+  const currentStakeTotalPercent = new BigNumber(
+    identity.stakePercent || 0
+  ).plus(identity.overallStakePercent || 0);
+
   const isStakeSorting = sort === SortIdentitesFieldEnum.locked;
 
   const link = identity.identity
@@ -99,9 +103,14 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
 
         <td>{new BigNumber(identity.validators).toFormat()}</td>
         <td>
-          {identity.validatorsPercent ? (
+          {(isStakeSorting && identity.stakePercent) ||
+          identity.validatorsPercent ? (
             <FormatNumber
-              value={identity.validatorsPercent}
+              value={
+                isStakeSorting
+                  ? identity.stakePercent || 0
+                  : identity.validatorsPercent || 0
+              }
               label='%'
               decimalOpacity={false}
               hideLessThanOne
@@ -124,7 +133,11 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
                 />
                 <div className='ms-2'>
                   <FormatNumber
-                    value={identity.stakePercent}
+                    value={
+                      currentStakeTotalPercent.isGreaterThan(100)
+                        ? 100
+                        : currentStakeTotalPercent
+                    }
                     label='%'
                     maxDigits={2}
                     decimalOpacity={false}
@@ -146,7 +159,11 @@ export const IdentityRow = ({ identity, index }: IdentityRowType) => {
                 />
                 <div className='ms-2'>
                   <FormatNumber
-                    value={currentValidatorsTotalPercent}
+                    value={
+                      currentValidatorsTotalPercent.isGreaterThan(100)
+                        ? 100
+                        : currentValidatorsTotalPercent
+                    }
                     label='%'
                     maxDigits={2}
                     decimalOpacity={false}
