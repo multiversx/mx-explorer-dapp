@@ -299,11 +299,9 @@ export const useSearch = (hash: string) => {
                 setSearchRoute(networkRoute(collectionRoute));
                 break;
 
-              case username.success:
+              case Boolean(username.success && username?.data?.address):
                 setSearchRoute(
-                  networkRoute(
-                    urlBuilder.accountDetails(username?.data?.address)
-                  )
+                  networkRoute(urlBuilder.accountDetails(username.data.address))
                 );
                 break;
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, useLocation } from 'react-router-dom';
+
+import { NAVIGATION_SEARCH_STATE } from 'appConstants';
 import { useSearch } from 'hooks';
 import { faCircleNotch, faSearch } from 'icons/regular';
 import { WithClassnameType } from 'types';
@@ -27,7 +29,7 @@ export const Search = ({ className }: WithClassnameType) => {
     if (searchRoute) {
       setSearchRoute('');
       setSearchHash('');
-      navigate(searchRoute);
+      navigate(searchRoute, { state: NAVIGATION_SEARCH_STATE });
     }
   }, [searchRoute, pathname]);
 
