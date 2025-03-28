@@ -168,8 +168,8 @@ export const ChartDonut = ({ config }: ChartProps) => {
             data={chartData}
             cx='50%'
             cy='50%'
-            innerRadius={roundedChart ? 75 : undefined}
-            outerRadius={roundedChart ? 100 : undefined}
+            innerRadius={75}
+            outerRadius={100}
             cornerRadius={roundedChart ? 5 : undefined}
             dataKey='value'
             onMouseEnter={onPieEnter}
