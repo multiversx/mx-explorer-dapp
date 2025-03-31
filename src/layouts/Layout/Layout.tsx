@@ -57,15 +57,15 @@ export const Layout = () => {
   }, [activeNetworkId, urlNetwork]);
 
   return (
-    <div className={`d-flex ${pageClass}`}>
+    <div className={classNames('d-flex', pageClass, { homepage: !pageClass })}>
       <NetworkReady>
         <div
           className={classNames('main-content', {
             'overflow-hidden vh-100': freeze
           })}
         >
-          <Header onExpand={setFreeze} />
           <NotificationsBar />
+          <Header onExpand={setFreeze} />
           <main className='main-content-container d-flex flex-column'>
             {offline ? (
               <Unavailable />
