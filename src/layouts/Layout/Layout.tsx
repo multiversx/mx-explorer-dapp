@@ -13,7 +13,8 @@ import {
   useGetURLNetwork,
   useInitDatadog,
   useSetBrowserClassNames,
-  useSetDappConfig
+  useSetDappConfig,
+  useTempStorageNotification
 } from 'hooks';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 
@@ -38,6 +39,7 @@ export const Layout = () => {
   useInitDatadog();
   useSetDappConfig();
   useSetBrowserClassNames();
+  useTempStorageNotification();
 
   const [freeze, setFreeze] = useState(false);
 

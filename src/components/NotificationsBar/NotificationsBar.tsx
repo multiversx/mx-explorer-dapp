@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import {
@@ -21,68 +22,73 @@ export const NotificationsBar = () => {
   const notification: NotificationType =
     sortedByPriorityAsc.length > 0 ? sortedByPriorityAsc[0] : undefined;
 
+  const bgClassName = Boolean(notification?.bgClassName)
+    ? notification.bgClassName
+    : 'bg-warning';
+
   return (
     <>
       {notification !== undefined ? (
         <div
-          className={`${
-            notification.bgClassName !== ''
-              ? notification.bgClassName
-              : 'bg-warning'
-          } notification-bar d-flex flex-row align-items-center justify-content-center alert fade show m-0`}
+          className={classNames(
+            'notification-bar d-flex flex-row align-items-center justify-content-center alert fade show m-0',
+            bgClassName
+          )}
           role='alert'
           data-testid='notificationBar'
         >
-          <div className='container d-flex flex-row align-items-center justify-content-between'>
-            {notification.id === NEW_VERSION_NOTIFICATION && (
-              <div className='d-flex justify-content-between align-items-center w-100'>
-                A new version of the Explorer is available.
+          <div className='container'>
+            <div className='col-12 notification d-flex flex-row align-items-center justify-content-between'>
+              {notification.id === NEW_VERSION_NOTIFICATION && (
+                <div className='d-flex justify-content-between align-items-center w-100'>
+                  A new version of the Explorer is available.
+                  <a
+                    href='/#'
+                    onClick={(e: React.MouseEvent) => {
+                      e.preventDefault();
+                      window.location.reload();
+                    }}
+                    className='ms-1 text-black'
+                  >
+                    <u>Reload</u>
+                  </a>
+                </div>
+              )}
+              {notification.id === TEMP_LOCAL_NOTIFICATION_DISMISSED && (
+                <div className='w-100'>
+                  <a
+                    href='https://governance.multiversx.com/proposal/erd1qqqqqqqqqqqqqpgqfn2mu8l0dte34eqh6qtgmpjpxpkhunccrl4sy2sp07/1'
+                    target='_blank'
+                    rel='noreferrer nofollow noopener'
+                    className='text-black'
+                  >
+                    <u>
+                      Governance Vote LIVE: Andromeda Protocol Upgrade. Vote
+                      now!
+                    </u>
+                  </a>
+                </div>
+              )}
+              {![
+                TEMP_LOCAL_NOTIFICATION_DISMISSED,
+                NEW_VERSION_NOTIFICATION
+              ].includes(notification.id) && (
+                <div className='w-100'>{notification.text}</div>
+              )}
+
+              {notification.dismissable && (
                 <a
                   href='/#'
-                  onClick={(e: React.MouseEvent) => {
-                    e.preventDefault();
-                    window.location.reload();
+                  onClick={(event) => {
+                    event.preventDefault();
+                    removeNotification(notification.id);
                   }}
-                  className='ms-1 text-black'
+                  className='d-flex'
                 >
-                  <u>Reload</u>
+                  <FontAwesomeIcon icon={faTimes} className='close-icon' />
                 </a>
-              </div>
-            )}
-            {notification.id === TEMP_LOCAL_NOTIFICATION_DISMISSED && (
-              <div className='w-100'>
-                <a
-                  href='https://governance.multiversx.com/proposal/erd1qqqqqqqqqqqqqpgq8xqp6c0kzwn3f2c5zsxfex6h69s2x9rwhg4smw0gfc/1'
-                  target='_blank'
-                  rel='noreferrer nofollow noopener'
-                  className='text-black'
-                >
-                  <u>
-                    MultiversX Governance Vote is LIVE | Vote Now For The Vega
-                    (Staking V4) upgrade 🗳️
-                  </u>
-                </a>
-              </div>
-            )}
-            {![
-              TEMP_LOCAL_NOTIFICATION_DISMISSED,
-              NEW_VERSION_NOTIFICATION
-            ].includes(notification.id) && (
-              <div className='w-100'>{notification.text}</div>
-            )}
-
-            {notification.dismissable && (
-              <a
-                href='/#'
-                onClick={(event) => {
-                  event.preventDefault();
-                  removeNotification(notification.id);
-                }}
-                className='d-flex'
-              >
-                <FontAwesomeIcon icon={faTimes} className='close-icon' />
-              </a>
-            )}
+              )}
+            </div>
           </div>
         </div>
       ) : null}
