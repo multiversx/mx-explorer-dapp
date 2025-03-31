@@ -22,8 +22,9 @@ export const useTempStorageNotification = () => {
       if (!exists) {
         addNotification({
           id: TEMP_LOCAL_NOTIFICATION_DISMISSED,
-          text: 'MultiversX Governance Vote is LIVE | Vote Now For The Vega (Staking V4) upgrade.',
+          text: 'Governance Vote LIVE: Andromeda Protocol Upgrade. Vote now!',
           dismissable: true,
+          bgClassName: 'bg-centered-primary',
           priority: 2
         });
       }
