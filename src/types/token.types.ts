@@ -1,12 +1,14 @@
-import { RolesType, SliceType, AccountAssetType } from 'types';
+import { RolesType, SliceType, AccountAssetType, NftSubtypeEnum } from 'types';
 
 export interface TokenType {
   type: TokenTypeEnum;
+  subType?: NftSubtypeEnum;
   identifier: string;
   ticker?: string;
   name: string;
   balance?: string;
   decimals?: number;
+  hash?: string;
   owner: string;
   minted: string;
   burnt: string;
@@ -22,6 +24,7 @@ export interface TokenType {
   isPaused?: boolean;
   transactions: number;
   accounts: number;
+  transfers?: number;
   price?: number;
   marketCap?: number;
   valueUsd?: number;
@@ -29,7 +32,6 @@ export interface TokenType {
   totalLiquidity?: number;
   isLowLiquidity?: boolean;
   lowLiquidityThresholdPercent?: number;
-  transfersCount?: number;
   roles?: TokenRolesType[];
 }
 
@@ -70,6 +72,17 @@ export interface TokenSupplyType {
   lockedAccounts?: TokenLockedAccountType[];
 }
 
+export enum TokenAssetsPriceSourceTypeEnum {
+  dataApi = 'dataApi',
+  customUrl = 'customUrl'
+}
+
+export interface TokenAssetPriceSourceType {
+  type?: TokenAssetsPriceSourceTypeEnum;
+  url?: string;
+  path?: string;
+}
+
 export interface TokenAssetType {
   name?: string;
   website?: string;
@@ -80,4 +93,5 @@ export interface TokenAssetType {
   social?: { [key: string]: string };
   extraTokens?: string[];
   lockedAccounts?: { [key: string]: string };
+  priceSource?: TokenAssetPriceSourceType;
 }

@@ -1,5 +1,5 @@
 import { TransactionDecodeParamsType } from 'hooks';
-import { GetTokensType, GetCollectionsType } from 'types';
+import { GetTokensType, GetCollectionsType, GetAccountsType } from 'types';
 
 export const urlBuilder = {
   shard: (shard: number | string) => `/blocks?shard=${shard}`,
@@ -49,6 +49,13 @@ export const urlBuilder = {
   },
   transactionInPoolDetails: (hash: string) => `/transactions/pool/${hash}`,
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
+  accounts: (params?: GetAccountsType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/accounts/?${urlSearch}`;
+  },
   accountDetails: (address: string) => `/accounts/${address}`,
   accountDetailsTokens: (address: string) => `/accounts/${address}/tokens`,
   accountDetailsNfts: (address: string) => `/accounts/${address}/nfts`,
@@ -81,6 +88,13 @@ export const urlBuilder = {
   accountDetailsCollectionRoles: (address: string) =>
     `/accounts/${address}/roles/collections`,
   accountDetailsNodes: (address: string) => `/accounts/${address}/nodes`,
+  applications: (params?: GetAccountsType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/applications/?${urlSearch}`;
+  },
   identityDetails: (id: string) => `/identities/${id}`,
   tokens: (params?: GetTokensType) => {
     const urlSearch = params
@@ -104,6 +118,9 @@ export const urlBuilder = {
   tokenDetailsLockedAccounts: (tokenId: string) =>
     `/tokens/${tokenId}/locked-accounts`,
   tokenDetailsRoles: (tokenId: string) => `/tokens/${tokenId}/roles`,
+  proofDetails: (identifier: string) => `/proofs/${identifier}`,
+  proofDetailsAccounts: (identifier: string) =>
+    `/proofs/${identifier}/accounts`,
   nativeTokenDetails: (egldLabel: string) => `/${egldLabel.toLowerCase()}`,
   nativeTokenDetailsAccounts: (egldLabel: string) =>
     `/${egldLabel.toLowerCase()}/accounts`,

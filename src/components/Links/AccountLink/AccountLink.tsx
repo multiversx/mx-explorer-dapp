@@ -8,7 +8,7 @@ import {
   AccountName,
   LockedTokenAddressIcon
 } from 'components';
-import { addressIsBech32, urlBuilder } from 'helpers';
+import { addressIsBech32, isTouchDevice, urlBuilder } from 'helpers';
 import { interfaceSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices/interface';
 import { AccountAssetType, WithClassnameType } from 'types';
@@ -41,17 +41,20 @@ export const AccountLink = ({
     return '-';
   }
 
+  const isTouch = isTouchDevice();
+  const isHighlighted = !isTouch && hasHighlight && highlightedText === address;
+
   return (
     <div
       className={classNames(
         'd-flex',
         'align-items-center',
         'trim-wrapper',
-        { 'text-highlighted': hasHighlight && highlightedText === address },
+        { 'text-highlighted': isHighlighted },
         className
       )}
       data-testid={testId}
-      {...(hasHighlight
+      {...(hasHighlight && !isTouch
         ? {
             onMouseEnter: () => {
               dispatch(setHighlightedText(address));

@@ -1,4 +1,4 @@
-import { NetworkType } from 'types/network.types';
+import { NetworkType, NetworkUrlType } from 'types/network.types';
 
 import { getStorageCustomNetworks } from './helpers';
 import { allApps, schema } from './sharedConfig';
@@ -18,6 +18,7 @@ export const networks: NetworkType[] = [
     walletAddress: 'START_WALLET_ADDRESS_STOP',
     explorerAddress: 'START_EXPLORER_ADDRESS_STOP',
     nftExplorerAddress: 'START_NFT_EXPLORER_ADDRESS_STOP',
+    isSovereign: 'START_IS_SOVEREIGN_STOP',
     apiAddress: 'START_API_ADDRESS_STOP'
   },
 

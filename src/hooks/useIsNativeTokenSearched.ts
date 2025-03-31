@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { BRAND_NAME } from 'appConstants';
+import { BRAND_NAME, NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
 import { useGetSearch } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 
@@ -15,7 +15,8 @@ export const useIsNativeTokenSearched = () => {
         'elrond',
         'multiversx',
         BRAND_NAME.toLowerCase(),
-        (egldLabel ?? '').toLowerCase()
+        (egldLabel ?? '').toLowerCase(),
+        NATIVE_TOKEN_IDENTIFIER.toLowerCase()
       ].includes(search.toLowerCase().trim())
   );
 

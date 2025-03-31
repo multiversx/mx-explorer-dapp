@@ -9,7 +9,8 @@ import {
   RolesBadges,
   HeroDetailsCard,
   FormatUSD,
-  LowLiquidityTooltip
+  LowLiquidityTooltip,
+  PriceSourceTooltip
 } from 'components';
 
 import { tokenSelector } from 'redux/selectors';
@@ -27,7 +28,7 @@ export const TokenDetailsCard = () => {
     circulatingSupply,
     accounts,
     transactions,
-    transfersCount,
+    transfers,
     price,
     marketCap,
     isLowLiquidity
@@ -76,7 +77,9 @@ export const TokenDetailsCard = () => {
           {
             title: (
               <>
-                Price <LowLiquidityTooltip token={token} className='ms-1' />
+                Price
+                <PriceSourceTooltip token={token} className='ms-1' />
+                <LowLiquidityTooltip token={token} className='ms-1' />
               </>
             ),
             value: (
@@ -104,7 +107,7 @@ export const TokenDetailsCard = () => {
     { title: 'Holders', value: new BigNumber(accounts).toFormat() },
     {
       title: 'Transactions',
-      value: new BigNumber(transfersCount || transactions || 0).toFormat()
+      value: new BigNumber(transfers || transactions || 0).toFormat()
     }
   ];
 

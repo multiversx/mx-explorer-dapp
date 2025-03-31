@@ -1,21 +1,44 @@
-import { NetworkLink, Trim, AccountLink, FormatAmount } from 'components';
-import { urlBuilder } from 'helpers';
-import { TransactionInPoolType } from 'types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 
+import {
+  NetworkLink,
+  Trim,
+  AccountLink,
+  FormatAmount,
+  ShardLink
+} from 'components';
+import { urlBuilder } from 'helpers';
+import { useIsSovereign } from 'hooks';
+import { faArrowRight } from 'icons/regular';
+import { UITransactionInPoolType } from 'types';
+
+import { TransactionInPoolMethodBadge } from './TransactionInPoolMethodBadge';
 import { TransactionInPoolTypeBadge } from './TransactionInPoolTypeBadge';
 
 export interface TransactionInPoolRowUIType {
-  transaction: TransactionInPoolType;
+  transaction: UITransactionInPoolType;
 }
 
 export const TransactionInPoolRow = ({
   transaction
 }: TransactionInPoolRowUIType) => {
-  const { txHash, sender, receiver, receiverUsername, type, value } =
-    transaction;
+  const {
+    isNew,
+    txHash,
+    sender,
+    receiver,
+    receiverUsername,
+    type,
+    value,
+    senderShard,
+    receiverShard
+  } = transaction;
+
+  const isSovereign = useIsSovereign();
 
   return (
-    <tr className='animated-row'>
+    <tr className={classNames('animated-row', { new: isNew })}>
       <td>
         <div className='d-flex align-items-center hash'>
           <NetworkLink
@@ -27,11 +50,35 @@ export const TransactionInPoolRow = ({
           </NetworkLink>
         </div>
       </td>
-
+      <td>
+        <div className='d-flex align-items-center'>
+          {isSovereign && senderShard === receiverShard ? (
+            <>Local Transaction</>
+          ) : (
+            <>
+              <ShardLink
+                shard={senderShard}
+                data-testid='shardFromLink'
+                transactionSenderShard
+                hasHighlight
+              />
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                className='text-neutral-500 mx-2'
+              />
+              <ShardLink
+                shard={receiverShard}
+                data-testid='shardToLink'
+                transactionReceiverShard
+                hasHighlight
+              />
+            </>
+          )}
+        </div>
+      </td>
       <td className='sender text-truncate'>
         <AccountLink address={sender} data-testid='receiverLink' hasHighlight />
       </td>
-
       <td className='receiver text-truncate'>
         <AccountLink
           address={receiver}
@@ -42,6 +89,9 @@ export const TransactionInPoolRow = ({
       </td>
       <td className='transaction-type'>
         <TransactionInPoolTypeBadge type={type} hasHighlight />
+      </td>
+      <td className='transaction-function'>
+        <TransactionInPoolMethodBadge transaction={transaction} />
       </td>
       <td className='transaction-value'>
         <FormatAmount value={value} />

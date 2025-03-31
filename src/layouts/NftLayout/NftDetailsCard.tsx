@@ -14,18 +14,27 @@ import {
   Overlay,
   SocialIcons,
   SocialWebsite,
-  NftSubTypeBadge
+  NftSubTypeBadge,
+  CopyButton,
+  NftProofBadge
 } from 'components';
-import { formatDate, getNftText, hasNftOverview } from 'helpers';
+import {
+  formatDate,
+  getNftText,
+  getProofHash,
+  hasNftOverview,
+  isProof
+} from 'helpers';
 import { faClock, faExclamationTriangle } from 'icons/regular';
 import { faHexagonCheck } from 'icons/solid';
 import { nftSelector } from 'redux/selectors';
-import { NftTypeEnum } from 'types';
+import { NftSubtypeEnum, NftTypeEnum } from 'types';
 
 export const NftDetailsCard = () => {
   const { nftState } = useSelector(nftSelector);
   const {
     identifier,
+    hash,
     collection,
     timestamp,
     nonce,
@@ -46,6 +55,8 @@ export const NftDetailsCard = () => {
     isVerified,
     tags
   } = nftState;
+  const isNftProof = isProof(nftState);
+
   const [showData, setShowData] = useState(!Boolean(scamInfo));
 
   const showTags =
@@ -68,7 +79,7 @@ export const NftDetailsCard = () => {
             : ''
         }`
       : titleTickerText
-  } ${getNftText(type)}`;
+  } ${isNftProof ? 'Proof' : getNftText(type)}`;
   const seoTitle =
     !scamInfo && assets
       ? `${name}${
@@ -171,8 +182,27 @@ export const NftDetailsCard = () => {
               value: <NftSubTypeBadge subType={subType} />
             }
           : {},
+        isNftProof && hash
+          ? {
+              title: 'Subtype',
+              value: <NftProofBadge />
+            }
+          : {},
         !assets && ticker !== name && (!scamInfo || showData)
           ? { title: 'Name', value: name }
+          : {},
+        isNftProof && hash
+          ? {
+              title: 'Proof hash',
+              value: (
+                <div className='d-flex align-items-center'>
+                  <div className='small py-1 px-2 bg-neutral-800 text-break-all rounded'>
+                    {getProofHash(hash)}
+                  </div>
+                  <CopyButton text={getProofHash(hash)} />
+                </div>
+              )
+            }
           : {},
         { title: 'Collection', value: <CollectionBlock nft={nftState} /> },
         { title: 'Identifier', value: identifier },
@@ -236,7 +266,7 @@ export const NftDetailsCard = () => {
                   {tags.map((tag) => (
                     <div
                       key={tag}
-                      className='badge badge-outline badge-outline-grey gap-2'
+                      className='badge badge-outline badge-outline-grey gap-2 text-wrap text-break-all text-start'
                     >
                       #{tag}
                     </div>

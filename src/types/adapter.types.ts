@@ -19,13 +19,24 @@ export interface SortableApiType extends BaseApiType {
   order?: SortOrderEnum;
 }
 
+export interface GetAccountType {
+  address: string;
+  withGuardianInfo?: boolean;
+  withTxCount?: boolean;
+  withScrCount?: boolean;
+  withAssets?: boolean;
+}
+
 export interface GetAccountsType extends SortableApiType {
+  search?: string;
+  name?: string;
   ownerAddress?: string;
   isSmartContract?: boolean;
   withOwnerAssets?: boolean;
   withDeployInfo?: boolean;
   withTxCount?: boolean;
   withScrCount?: boolean;
+  withAssets?: boolean;
 }
 export interface GetBlocksType extends BaseApiType {
   shard?: number;
@@ -109,18 +120,23 @@ export interface GetTransactionsType extends SortableApiType {
   search?: string;
   token?: string;
   hashes?: string;
+  relayer?: string;
   withScResults?: boolean;
   withOperations?: boolean;
   withLogs?: boolean;
   withScamInfo?: boolean;
   withUsername?: boolean;
   withBlockInfo?: boolean;
+  withTxsRelayedByAddress?: boolean;
+  withCrossChainTransfers?: boolean;
   isRelayed?: boolean;
 }
 
 export interface GetTransactionsInPoolType extends SortableApiType {
   sender?: string;
   receiver?: string;
+  senderShard?: number;
+  receiverShard?: number;
   type?: TransactionInPoolTypeEnum;
 }
 

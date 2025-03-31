@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
+import { isTouchDevice } from 'helpers';
 import { useGetTransactionInPoolFilters } from 'hooks';
 import { interfaceSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices/interface';
@@ -21,7 +22,8 @@ export const TransactionInPoolTypeBadge = ({
   const { type: filteredType } = useGetTransactionInPoolFilters();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const isHighlightBadge = hasHighlight && highlightedText === type;
+  const isTouch = isTouchDevice();
+  const isHighlightBadge = !isTouch && hasHighlight && highlightedText === type;
 
   const updateType = (newType: TransactionInPoolTypeEnum) => {
     const { page, size, type, ...rest } = Object.fromEntries(searchParams);
@@ -60,10 +62,13 @@ export const TransactionInPoolTypeBadge = ({
     <div className='d-inline-block'>
       <TransactionTypeText>
         <span
-          className={classNames('badge badge-outline badge-outline-green', {
-            'badge-outline-highlight': isHighlightBadge
-          })}
-          {...(hasHighlight
+          className={classNames(
+            'badge badge-outline badge-outline-primary-alt',
+            {
+              'badge-outline-highlight': isHighlightBadge
+            }
+          )}
+          {...(hasHighlight && !isTouch
             ? {
                 onMouseEnter: () => {
                   dispatch(setHighlightedText(type));

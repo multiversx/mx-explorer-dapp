@@ -7,6 +7,7 @@ import { SortOrderEnum, TableFilterUIType } from 'types';
 
 export interface TableSortUIType extends TableFilterUIType {
   id: string;
+  keepId?: boolean;
   hasNegativeMargin?: boolean;
 }
 
@@ -16,7 +17,9 @@ export const Sort = ({
   hideFilters,
   defaultActive,
   defaultOrder,
+  keepId,
   hasNegativeMargin = true,
+
   className
 }: TableSortUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,7 +51,7 @@ export const Sort = ({
   const updateSortValue = () => {
     const nextUrlParams = {
       ...rest,
-      ...(newOrder ? { sort: id } : {}),
+      ...(newOrder || keepId ? { sort: id } : {}),
       ...(newOrder ? { order: newOrder } : {})
     };
 

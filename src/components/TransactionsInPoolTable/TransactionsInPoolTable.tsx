@@ -5,17 +5,22 @@ import {
   TableWrapper,
   Loader,
   PageState,
-  PulsatingLed
+  PulsatingLed,
+  ColSpanWrapper
 } from 'components';
-import { formatBigNumber } from 'helpers';
+import { formatBigNumber, getStringPlural } from 'helpers';
 import { useGetTransactionInPoolFilters } from 'hooks';
 import { faCode, faExchangeAlt } from 'icons/regular';
-import { TransactionInPoolType, TransactionFiltersEnum } from 'types';
+import {
+  UITransactionInPoolType,
+  TransactionFiltersEnum,
+  TransactionInPoolTypeEnum
+} from 'types';
 
 import { TransactionsInPoolHeader, TransactionInPoolRow } from './components';
 
 export interface TransactionsInPoolTableUIType {
-  transactionsInPool: TransactionInPoolType[];
+  transactionsInPool: UITransactionInPoolType[];
   totalTransactionsInPool: number | typeof ELLIPSIS;
   title?: React.ReactNode;
   dataChanged?: boolean;
@@ -23,19 +28,16 @@ export interface TransactionsInPoolTableUIType {
   inactiveFilters?: TransactionFiltersEnum[];
 }
 
-const ColSpanWrapper = ({ children }: { children: React.ReactNode }) => (
-  <tr>
-    <td colSpan={7}>{children}</td>
-  </tr>
-);
-
 export const TransactionsInPoolTable = ({
   transactionsInPool,
   totalTransactionsInPool,
   title = (
     <h5 data-testid='title' className='table-title d-flex align-items-center'>
-      {formatBigNumber({ value: totalTransactionsInPool })} Transactions In Pool{' '}
-      <PulsatingLed className='ms-2 mt-1' />
+      {formatBigNumber({ value: totalTransactionsInPool })}{' '}
+      {getStringPlural(totalTransactionsInPool, {
+        string: 'Transaction'
+      })}{' '}
+      In Pool <PulsatingLed className='ms-2 mt-1' />
     </h5>
   ),
   dataChanged = false,
@@ -66,12 +68,12 @@ export const TransactionsInPoolTable = ({
               <TransactionsInPoolHeader inactiveFilters={inactiveFilters} />
               <tbody>
                 {isDataReady === undefined && (
-                  <ColSpanWrapper>
+                  <ColSpanWrapper colSpan={8}>
                     <Loader />
                   </ColSpanWrapper>
                 )}
                 {isDataReady === false && (
-                  <ColSpanWrapper>
+                  <ColSpanWrapper colSpan={8}>
                     <PageState
                       icon={faExchangeAlt}
                       title={`No ${type ? `${type} ` : ''}Transactions in Pool`}
@@ -93,11 +95,13 @@ export const TransactionsInPoolTable = ({
                       </>
                     ) : (
                       <>
-                        <ColSpanWrapper>
+                        <ColSpanWrapper colSpan={8}>
                           <PageState
                             icon={faCode}
                             title={`No  ${
-                              type ? `${type} ` : ''
+                              type && type !== TransactionInPoolTypeEnum.All
+                                ? `${type} `
+                                : ''
                             }Transactions in Pool`}
                             className='py-spacer my-auto'
                           />

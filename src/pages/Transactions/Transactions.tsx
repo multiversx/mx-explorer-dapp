@@ -2,24 +2,27 @@ import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { TransactionsTable, PulsatingLed } from 'components';
+import { TransactionsTable, PulsatingLed, NetworkLink } from 'components';
 import { MethodList } from 'components/TransactionsTable/components';
 import {
   useAdapter,
   useGetPage,
   useGetTransactionFilters,
   useFetchTransactions,
-  useGetShardText
+  useGetShardText,
+  useIsSovereign
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
+import { transactionsRoutes } from 'routes';
 
 export const Transactions = () => {
   const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const getShardText = useGetShardText();
   const urlParams = useGetTransactionFilters();
-  const { senderShard, receiverShard } = urlParams;
+  const isSovereign = useIsSovereign();
 
+  const { senderShard, receiverShard } = urlParams;
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
@@ -31,7 +34,9 @@ export const Transactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getTransactions, getTransactionsCount);
+  } = useFetchTransactions(getTransactions, getTransactionsCount, {
+    ...(isSovereign ? { withCrossChainTransfers: true } : {})
+  });
 
   useEffect(() => {
     if (ref.current !== null) {
@@ -81,12 +86,12 @@ export const Transactions = () => {
                   )}
                   <PulsatingLed className='mx-2 mt-1' />
                   <div className='d-flex align-items-center flex-wrap gap-2'>
-                    {/* <NetworkLink
+                    <NetworkLink
                       to={transactionsRoutes.transactionsInPool}
                       className='btn btn-sm btn-dark-gradient'
                     >
                       Transaction Pool
-                    </NetworkLink> */}
+                    </NetworkLink>
                     <MethodList />
                   </div>
                 </h5>

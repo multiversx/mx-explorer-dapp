@@ -1,5 +1,5 @@
 import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
-import { AccountRolesTypeEnum } from 'types';
+import { AccountRolesTypeEnum, GetAccountType } from 'types';
 import {
   BaseApiType,
   GetBlocksType,
@@ -224,14 +224,8 @@ export const useAdapter = () => {
 
     /* Account */
 
-    getAccount: ({
-      address,
-      ...rest
-    }: {
-      address: string;
-      fields?: string;
-      withGuardianInfo?: boolean;
-    }) => provider({ url: `/accounts/${address}`, params: rest }),
+    getAccount: ({ address, ...rest }: GetAccountType) =>
+      provider({ url: `/accounts/${address}`, params: rest }),
 
     getAccounts: ({
       page,
@@ -257,8 +251,8 @@ export const useAdapter = () => {
         }
       }),
 
-    getAccountsCount: ({ isSmartContract }: GetAccountsType) =>
-      provider({ url: '/accounts/c', params: { isSmartContract } }),
+    getAccountsCount: (params: GetAccountsType) =>
+      provider({ url: '/accounts/c', params }),
 
     getAccountTransfers: ({ address, ...rest }: GetTransactionsType) =>
       provider({

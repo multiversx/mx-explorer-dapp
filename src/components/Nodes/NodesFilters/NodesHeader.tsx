@@ -55,6 +55,7 @@ export const NodesHeader = ({
         </h3>
       )}
       <TableSearch
+        className='input-group-search'
         searchValue={searchValue}
         placeholderText={type === NodeTypeEnum.observer ? 'observer' : 'node'}
       />

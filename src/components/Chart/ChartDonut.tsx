@@ -151,6 +151,9 @@ export const ChartDonut = ({ config }: ChartProps) => {
     return null;
   }, [chartData, activeIndex]);
 
+  const roundedChart = chartData.length > 10 ? false : true;
+  const strokeWidth = chartData.length > 1 ? (roundedChart ? 3 : 1) : 0;
+
   const docStyle = window.getComputedStyle(document.documentElement);
   const cardBgColor = docStyle.getPropertyValue('--neutral-950');
   const mutedColor = docStyle.getPropertyValue('--muted');
@@ -167,12 +170,12 @@ export const ChartDonut = ({ config }: ChartProps) => {
             cy='50%'
             innerRadius={75}
             outerRadius={100}
-            cornerRadius={5}
+            cornerRadius={roundedChart ? 5 : undefined}
             dataKey='value'
             onMouseEnter={onPieEnter}
             onMouseLeave={onPieLeave}
             onClick={onPieEnter}
-            strokeWidth={chartData.length > 1 ? 3 : 0}
+            strokeWidth={strokeWidth}
             stroke={cardBgColor}
           >
             {chartData.map((entry: any, index: number) => (

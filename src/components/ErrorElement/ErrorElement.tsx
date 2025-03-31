@@ -1,19 +1,24 @@
 import { useLocation, useRouteError } from 'react-router-dom';
 import { PageState } from 'components';
 import { analytics } from 'helpers';
+import { useGetHrp } from 'hooks';
 import { faTimes } from 'icons/regular';
 
 export const ErrorElement = () => {
-  const { pathname } = useLocation();
   const explorerVersion = import.meta.env.VITE_APP_CACHE_BUST;
+
+  const { pathname } = useLocation();
+  const hrp = useGetHrp();
   const error = useRouteError();
+
   console.error(error);
 
   if (explorerVersion !== undefined) {
     analytics.sendEvent({
       action: 'error-encountered',
       label: pathname,
-      explorerVersion
+      explorerVersion,
+      hrp
     });
   }
 

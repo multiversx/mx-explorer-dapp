@@ -18,7 +18,9 @@ import {
   TimeAgo,
   Trim,
   TableWrapper,
-  InfoTooltip
+  InfoTooltip,
+  TableSearch,
+  ColSpanWrapper
 } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
 import {
@@ -27,10 +29,15 @@ import {
   useGetSort,
   useHasGrowthWidgets,
   useFetchGrowthMostUsed,
-  useIsMainnet
+  useIsMainnet,
+  useGetSearch
 } from 'hooks';
 import { faBadgeCheck } from 'icons/solid';
-import { activeNetworkSelector, growthMostUsedSelector } from 'redux/selectors';
+import {
+  activeNetworkSelector,
+  growthEconomicsSelector,
+  growthMostUsedSelector
+} from 'redux/selectors';
 import { AccountType, SortOrderEnum } from 'types';
 import { MostUsedApplications } from 'widgets';
 
@@ -39,15 +46,16 @@ import { NoApplications } from './components/NoApplications';
 
 export const Applications = () => {
   const isMainnet = useIsMainnet();
-  const [searchParams] = useSearchParams();
   const hasGrowthWidgets = useHasGrowthWidgets();
+  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { isFetched: isGrowthDataFetched } = useSelector(
     growthMostUsedSelector
   );
-  useFetchGrowthMostUsed();
+  const { applicationsDeployed } = useSelector(growthEconomicsSelector);
 
   const sort = useGetSort();
+  const { search } = useGetSearch();
   const { page, size } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
 
@@ -67,11 +75,14 @@ export const Applications = () => {
 
   const minSize = Math.min(size, 15);
 
+  useFetchGrowthMostUsed();
+
   const fetchApplications = () => {
     setDataChanged(true);
     Promise.all([
       getAccounts({
         page,
+        name: search,
         isSmartContract: true,
         withOwnerAssets: true,
         withDeployInfo: true,
@@ -79,7 +90,7 @@ export const Applications = () => {
         ...(is24hCountAvailable ? { size } : { size: minSize }),
         ...sort
       }),
-      getAccountsCount({ isSmartContract: true })
+      getAccountsCount({ isSmartContract: true, name: search })
     ])
       .then(([applicationsData, applicationsCountData]) => {
         if (applicationsData.success && applicationsCountData.success) {
@@ -109,174 +120,179 @@ export const Applications = () => {
         <div className='row'>
           <div className='col-12'>
             <div className='card'>
-              {accounts && accounts.length > 0 ? (
-                <>
-                  <div className='card-header'>
-                    <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-                      <h5
-                        data-testid='title'
-                        className='table-title d-flex align-items-center'
-                      >
-                        Browse all deployed apps
-                      </h5>
-                      <Pager
-                        total={totalAccounts}
-                        itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
-                        show={accounts.length > 0}
-                        className='d-flex ms-auto me-auto me-sm-0'
-                      />
-                    </div>
+              <div className='card-header'>
+                <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
+                  <h5
+                    data-testid='title'
+                    className='table-title d-flex align-items-center'
+                  >
+                    Browse all deployed apps
+                  </h5>
+                  <div className='filters application-filters me-auto'>
+                    <TableSearch
+                      className='input-group-sm'
+                      searchValue={applicationsDeployed || totalAccounts}
+                      placeholderText='App'
+                      name='applicationsSearch'
+                    />
                   </div>
+                  <Pager
+                    total={totalAccounts}
+                    itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
+                    show={accounts.length > 0}
+                    className='d-flex ms-auto me-auto me-sm-0'
+                  />
+                </div>
+              </div>
 
-                  <div className='card-body'>
-                    <TableWrapper dataChanged={dataChanged}>
-                      <table className='table mb-0'>
-                        <thead>
-                          <tr>
-                            <th>Name/Address</th>
-                            <th>Owner</th>
-                            <th>
-                              <Sort id='balance' text='Balance' />
-                            </th>
-                            <th>
-                              {is24hCountAvailable ? (
-                                <Sort
-                                  id='transfersLast24h'
-                                  text='Transactions / 24h'
+              <div className='card-body'>
+                <TableWrapper dataChanged={dataChanged}>
+                  <table className='table mb-0'>
+                    <thead>
+                      <tr>
+                        <th>Name/Address</th>
+                        <th>Owner</th>
+                        <th>
+                          <Sort id='balance' text='Balance' />
+                        </th>
+                        <th>
+                          {is24hCountAvailable ? (
+                            <Sort
+                              id='transfersLast24h'
+                              text='Transactions / 24h'
+                              defaultOrder={SortOrderEnum.desc}
+                              defaultActive
+                            />
+                          ) : (
+                            'Transactions'
+                          )}
+                        </th>
+                        <th className='text-end'>Deployed</th>
+                      </tr>
+                    </thead>
+                    <tbody data-testid='accountsTable'>
+                      {accounts.length == 0 && (
+                        <ColSpanWrapper colSpan={5}>
+                          <NoApplications />
+                        </ColSpanWrapper>
+                      )}
+                      {accounts.map((account, i) => (
+                        <tr key={account.address}>
+                          <td>
+                            <NetworkLink
+                              to={urlBuilder.accountDetails(account.address)}
+                              data-testid={`applicationLink${i}`}
+                              className='d-flex align-items-center trim-wrapper gap-2 hash hash-xxl'
+                            >
+                              {account.assets?.iconSvg ||
+                              account.assets?.iconPng ? (
+                                <img
+                                  src={
+                                    account.assets?.iconSvg ||
+                                    account.assets?.iconPng
+                                  }
+                                  alt={account.assets?.name}
+                                  className='side-icon side-icon-md-large'
                                 />
                               ) : (
-                                'Transactions'
+                                <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
+                                  <DefaultImage />
+                                </div>
                               )}
-                            </th>
-                            <th className='text-end'>Deployed</th>
-                          </tr>
-                        </thead>
-                        <tbody data-testid='accountsTable'>
-                          {accounts.map((account, i) => (
-                            <tr key={account.address}>
-                              <td>
-                                <NetworkLink
-                                  to={urlBuilder.accountDetails(
-                                    account.address
-                                  )}
-                                  data-testid={`applicationLink${i}`}
-                                  className='d-flex align-items-center trim-wrapper gap-2 hash hash-xxl'
-                                >
-                                  {account.assets?.iconSvg ||
-                                  account.assets?.iconPng ? (
-                                    <img
-                                      src={
-                                        account.assets?.iconSvg ||
-                                        account.assets?.iconPng
-                                      }
-                                      alt={account.assets?.name}
-                                      className='side-icon side-icon-md-large'
-                                    />
-                                  ) : (
-                                    <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
-                                      <DefaultImage />
-                                    </div>
-                                  )}
-                                  <AccountName
-                                    address={account.address}
-                                    assets={account.assets}
+                              <AccountName
+                                address={account.address}
+                                assets={account.assets}
+                              />
+                              {account.isVerified && (
+                                <Overlay title='Verified'>
+                                  <FontAwesomeIcon
+                                    icon={faBadgeCheck}
+                                    size='sm'
+                                    className='text-primary'
                                   />
-                                  {account.isVerified && (
-                                    <Overlay title='Verified'>
-                                      <FontAwesomeIcon
-                                        icon={faBadgeCheck}
-                                        size='sm'
-                                        className='text-primary'
-                                      />
-                                    </Overlay>
-                                  )}
-                                </NetworkLink>
-                              </td>
-                              <td>
-                                {account?.ownerAddress && (
-                                  <AccountLink
-                                    address={account.ownerAddress}
-                                    assets={account.ownerAssets}
-                                    className='hash'
-                                  />
-                                )}
-                              </td>
-                              <td className='text-neutral-100'>
-                                <FormatAmount value={account.balance} />
-                              </td>
-                              <td>
-                                {account.transfersLast24h ? (
+                                </Overlay>
+                              )}
+                            </NetworkLink>
+                          </td>
+                          <td>
+                            {account?.ownerAddress && (
+                              <AccountLink
+                                address={account.ownerAddress}
+                                assets={account.ownerAssets}
+                                className='hash'
+                              />
+                            )}
+                          </td>
+                          <td className='text-neutral-100'>
+                            <FormatAmount value={account.balance} />
+                          </td>
+                          <td>
+                            {account.transfersLast24h ? (
+                              formatBigNumber({
+                                value: account.transfersLast24h
+                              })
+                            ) : (
+                              <>
+                                {account.scrCount &&
                                   formatBigNumber({
-                                    value: account.transfersLast24h
-                                  })
-                                ) : (
-                                  <>
-                                    {account.scrCount &&
-                                      formatBigNumber({
-                                        value: account.scrCount
-                                      })}
-                                  </>
+                                    value: account.scrCount
+                                  })}
+                              </>
+                            )}
+                          </td>
+                          <td className='text-end'>
+                            {account.deployedAt ? (
+                              <div className='d-flex align-items-center justify-content-end'>
+                                <TimeAgo
+                                  value={account.deployedAt}
+                                  short
+                                  showAgo
+                                  tooltip
+                                />
+                                {account.deployTxHash && (
+                                  <InfoTooltip
+                                    title={
+                                      <>
+                                        <span className='text-neutral-400'>
+                                          Deploy Transaction:
+                                        </span>
+                                        <NetworkLink
+                                          to={urlBuilder.transactionDetails(
+                                            account.deployTxHash
+                                          )}
+                                          data-testid='upgradeTxHashLink'
+                                          className='trim-wrapper'
+                                        >
+                                          <Trim text={account.deployTxHash} />
+                                        </NetworkLink>
+                                      </>
+                                    }
+                                    persistent
+                                  />
                                 )}
-                              </td>
-                              <td className='text-end'>
-                                {account.deployedAt ? (
-                                  <div className='d-flex align-items-center justify-content-end'>
-                                    <TimeAgo
-                                      value={account.deployedAt}
-                                      short
-                                      showAgo
-                                      tooltip
-                                    />
-                                    {account.deployTxHash && (
-                                      <InfoTooltip
-                                        title={
-                                          <>
-                                            <span className='text-neutral-400'>
-                                              Deploy Transaction:
-                                            </span>
-                                            <NetworkLink
-                                              to={urlBuilder.transactionDetails(
-                                                account.deployTxHash
-                                              )}
-                                              data-testid='upgradeTxHashLink'
-                                              className='trim-wrapper'
-                                            >
-                                              <Trim
-                                                text={account.deployTxHash}
-                                              />
-                                            </NetworkLink>
-                                          </>
-                                        }
-                                        persistent
-                                      />
-                                    )}
-                                  </div>
-                                ) : (
-                                  <span className='text-neutral-400'>N/A</span>
-                                )}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </TableWrapper>
-                  </div>
+                              </div>
+                            ) : (
+                              <span className='text-neutral-400'>N/A</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </TableWrapper>
+              </div>
 
-                  <div className='card-footer table-footer'>
-                    <PageSize
-                      defaultSize={is24hCountAvailable ? PAGE_SIZE : 15}
-                      maxSize={PAGE_SIZE}
-                    />
-                    <Pager
-                      total={totalAccounts}
-                      itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
-                      show={accounts.length > 0}
-                    />
-                  </div>
-                </>
-              ) : (
-                <NoApplications />
-              )}
+              <div className='card-footer table-footer'>
+                <PageSize
+                  defaultSize={is24hCountAvailable ? PAGE_SIZE : 15}
+                  maxSize={PAGE_SIZE}
+                />
+                <Pager
+                  total={totalAccounts}
+                  itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
+                  show={accounts.length > 0}
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -45,6 +45,7 @@ export const useShowGlobalStats = () => {
     case activeRoute(accountsRoutes.accountCodeEvents):
     case activeRoute(accountsRoutes.accountRolesCollections):
     case activeRoute(accountsRoutes.accountRolesTokens):
+    case activeRoute(accountsRoutes.accountUpgrades):
     case activeRoute(accountsRoutes.accountNodes):
     case isCollectionDetails:
     case activeRoute(collectionRoutes.collectionDetailsRoles):
@@ -58,6 +59,8 @@ export const useShowGlobalStats = () => {
     case activeRoute(tokensRoutes.tokenDetailsRoles):
     case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
     case activeRoute(tokensRoutes.tokensMetaEsdtDetailsRoles):
+    case activeRoute(tokensRoutes.tokensProofDetails):
+    case activeRoute(tokensRoutes.tokensProofDetailsAccounts):
     case activeRoute(transactionsRoutes.transactionDetails):
     case activeRoute(transactionsRoutes.transactionDetailsLogs):
     case activeRoute(validatorsRoutes.identityDetails):

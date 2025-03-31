@@ -35,6 +35,8 @@ export interface TransactionType {
   guardianSignature?: string;
   isRelayed?: boolean;
   relayedVersion?: boolean;
+  relayer?: string;
+  relayerSignature?: string;
   logs?: TransactionSCResultLogType;
   results?: TransactionSCResultType[];
   operations?: TransactionOperationType[];
@@ -80,11 +82,17 @@ export interface TransactionInPoolType {
   gasPrice: number;
   gasLimit: number;
   type: TransactionInPoolTypeEnum;
+  senderShard: number;
+  receiverShard: number;
   receiverUsername?: string;
+  function?: string;
   data?: string;
 }
 
 export enum TransactionInPoolTypeEnum {
+  // UI only
+  All = 'All',
+
   Transaction = 'Transaction',
   SmartContractResult = 'SmartContractResult',
   Reward = 'Reward'
@@ -124,7 +132,8 @@ export enum TransactionFiltersEnum {
   token = 'token',
   transactionsInPoolType = 'type',
   hashes = 'hashes',
-  isRelayed = 'isRelayed'
+  isRelayed = 'isRelayed',
+  relayer = 'relayer'
 }
 
 // Avoid issues with differences between methods and actions
@@ -251,6 +260,10 @@ export interface UITransactionType extends TransferType {
   tokenIdentifier?: string;
 }
 
+export interface UITransactionInPoolType extends TransactionInPoolType {
+  isNew?: boolean; // UI flag
+}
+
 export interface TransactionTableType {
   transactions: UITransactionType[];
   address?: string;
@@ -308,6 +321,7 @@ export interface TransactionTokenArgumentType {
   type: NftTypeEnum | TokenTypeEnum;
   name: string;
   ticker: string;
+  hash?: string;
   collection?: string;
   identifier?: string;
   token?: string;

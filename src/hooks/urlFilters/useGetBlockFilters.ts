@@ -8,6 +8,6 @@ export const useGetBlockFilters = () => {
   const getParam = getUrlParam(searchParams);
 
   return {
-    shard: getParam(BlockFiltersEnum.shard)
+    shard: getParam(BlockFiltersEnum.shard, true)
   };
 };

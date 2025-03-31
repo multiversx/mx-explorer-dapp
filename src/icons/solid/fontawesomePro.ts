@@ -7,6 +7,7 @@ import {
   faAnglesRight,
   faAngleUp,
   faArrowDown,
+  faArrowProgress,
   faArrowRight,
   faArrowRightFromArc,
   faArrowToTop,
@@ -68,6 +69,7 @@ import {
   faGlobe,
   faGrid,
   faGrid2,
+  faHandHoldingHand,
   faHandshake,
   faHeart,
   faHexagonCheck,
@@ -117,6 +119,7 @@ import {
   faUserCheck,
   faUserFriends,
   faUserLock,
+  faUsers,
   faWifiSlash
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -131,6 +134,7 @@ export {
   faAnglesRight,
   faAngleUp,
   faArrowDown,
+  faArrowProgress,
   faArrowRight,
   faArrowRightFromArc,
   faArrowToTop,
@@ -192,6 +196,7 @@ export {
   faGlobe,
   faGrid,
   faGrid2,
+  faHandHoldingHand,
   faHandshake,
   faHeart,
   faHexagonCheck,
@@ -241,5 +246,6 @@ export {
   faUserCheck,
   faUserFriends,
   faUserLock,
+  faUsers,
   faWifiSlash
 };

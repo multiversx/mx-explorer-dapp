@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { DecodeMethodEnum } from '@multiversx/sdk-dapp/types';
 import { Anchorme } from 'react-anchorme';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import { DetailItem, ModalLink, DataDecode } from 'components';
-import { DecodeMethodEnum } from 'components/DataDecode';
 import { truncate } from 'helpers';
 import {
   useScamFlag,
@@ -64,7 +64,10 @@ export const DataField = ({
   }, [decodeMethod, pathname]);
 
   const showRawLinks =
-    decodeMethod === DecodeMethodEnum.raw && (showData || skipDataScamCheck);
+    decodeMethod === DecodeMethodEnum.raw &&
+    stringWithLinks &&
+    (showData || skipDataScamCheck);
+
   const value = truncate(
     skipDataScamCheck ? dataString : output,
     MAX_DISPLAY_TX_DATA_LENGTH
@@ -76,17 +79,20 @@ export const DataField = ({
         value={value}
         initialDecodeMethod={!id ? dataDecode : DecodeMethodEnum.raw}
         setDecodeMethod={setDecodeMethod}
-      >
-        {showRawLinks && (
-          <Anchorme
-            linkComponent={ModalLink}
-            target='_blank'
-            rel='noreferrer nofollow noopener'
-          >
-            {stringWithLinks}
-          </Anchorme>
-        )}
-      </DataDecode>
+        {...(showRawLinks
+          ? {
+              anchoredContent: (
+                <Anchorme
+                  linkComponent={ModalLink}
+                  target='_blank'
+                  rel='noreferrer nofollow noopener'
+                >
+                  {stringWithLinks || output}
+                </Anchorme>
+              )
+            }
+          : {})}
+      />
       {found && !skipDataScamCheck && (
         <a href='/#' onClick={show} className='small-font text-muted'>
           {!showData ? 'Show' : 'Hide'} original message

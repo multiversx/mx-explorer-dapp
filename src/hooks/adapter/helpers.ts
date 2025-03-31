@@ -4,6 +4,7 @@ import {
   PAGE_SIZE,
   TRANSACTIONS_TABLE_FIELDS
 } from 'appConstants';
+import { TransactionInPoolTypeEnum } from 'types';
 import {
   BaseApiType,
   AdapterProviderPropsType,
@@ -44,6 +45,7 @@ export function getTransactionsParams({
   search,
   token,
   hashes,
+  relayer,
   isRelayed = false,
 
   // include data
@@ -53,6 +55,8 @@ export function getTransactionsParams({
   withScamInfo = false,
   withUsername = true,
   withBlockInfo = false,
+  withTxsRelayedByAddress = false,
+  withCrossChainTransfers = false,
 
   // not on api
   isCount = false
@@ -84,7 +88,10 @@ export function getTransactionsParams({
     ...(search ? { search } : {}),
     ...(token ? { token } : {}),
     ...(hashes ? { hashes } : {}),
-    ...(isRelayed ? { isRelayed } : {})
+    ...(relayer ? { relayer } : {}),
+    ...(isRelayed ? { isRelayed } : {}),
+    ...(withTxsRelayedByAddress ? { withTxsRelayedByAddress } : {}),
+    ...(withCrossChainTransfers ? { withCrossChainTransfers } : {})
   };
 
   return params;
@@ -96,6 +103,8 @@ export function getTransactionsInPoolParams({
 
   sender,
   receiver,
+  senderShard,
+  receiverShard,
   type,
 
   // not on api
@@ -103,9 +112,11 @@ export function getTransactionsInPoolParams({
 }: GetTransactionsInPoolType) {
   const params: AdapterProviderPropsType['params'] = {
     ...(isCount ? {} : getPageParams({ page, size })),
+    ...(senderShard !== undefined ? { senderShard } : {}),
+    ...(receiverShard !== undefined ? { receiverShard } : {}),
     ...(sender ? { sender } : {}),
     ...(receiver ? { receiver } : {}),
-    ...(type ? { type } : {})
+    ...(type && type !== TransactionInPoolTypeEnum.All ? { type } : {})
   };
 
   return params;

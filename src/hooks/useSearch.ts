@@ -1,18 +1,30 @@
 import { useEffect, useState } from 'react';
-import { HEROTAG_SUFFIX } from 'appConstants';
+import { Address } from '@multiversx/sdk-core/out';
+import { useSelector } from 'react-redux';
+
+import {
+  DEFAULT_HRP,
+  HEROTAG_SUFFIX,
+  NATIVE_TOKEN_IDENTIFIER
+} from 'appConstants';
 import {
   urlBuilder,
   isHash,
   isContract,
   addressIsBech32,
   bech32,
-  formatHerotag
+  formatHerotag,
+  isProof
 } from 'helpers';
-import { useAdapter, useNetworkRoute } from 'hooks';
+import { useAdapter, useGetHrp, useNetworkRoute } from 'hooks';
+import { activeNetworkSelector } from 'redux/selectors';
 import { TokenTypeEnum } from 'types';
 
-export const useSearch = (searchHash: string) => {
+export const useSearch = (hash: string) => {
+  const searchHash = String(hash).trim();
+
   const networkRoute = useNetworkRoute();
+  const hrp = useGetHrp();
   const {
     getAccount,
     getBlock,
@@ -26,11 +38,13 @@ export const useSearch = (searchHash: string) => {
     getScResult,
     getCollection,
     getCollections,
-    getUsername
+    getUsername,
+    getAccounts
   } = useAdapter();
   const [searchRoute, setSearchRoute] = useState('');
   const [isSearching, setIsSearching] = useState<undefined | boolean>();
 
+  const { egldLabel } = useSelector(activeNetworkSelector);
   const notFoundRoute = networkRoute(`/search/${searchHash}`);
 
   const search = async () => {
@@ -38,7 +52,14 @@ export const useSearch = (searchHash: string) => {
       setIsSearching(true);
       const validHashChars = /^[0-9A-Fa-f]+$/i;
 
+      const defaultQueryParams = { size: 2 };
+
+      const tokenQueryFields = ['type', 'identifier'].join(',');
+      const collectionQueryFields = ['type', 'collection'].join(',');
+      const accountQueryFields = ['address', 'ownerAddress'].join(',');
+
       const isAccount = addressIsBech32(searchHash);
+
       const isValidHash = isHash(searchHash);
       const isNode =
         validHashChars.test(searchHash) === true && searchHash.length === 192;
@@ -48,14 +69,28 @@ export const useSearch = (searchHash: string) => {
         validHashChars.test(searchHash.split('-')[1]) === true;
       const isUsername =
         searchHash.startsWith('@') || searchHash.endsWith(HEROTAG_SUFFIX);
+      const isNativeToken = NATIVE_TOKEN_IDENTIFIER === searchHash;
 
       let isPubKeyAccount = false;
       try {
         isPubKeyAccount =
-          searchHash.length < 65 && addressIsBech32(bech32.encode(searchHash));
+          searchHash.length < 65 &&
+          addressIsBech32(bech32.encode(searchHash, hrp));
+      } catch {}
+      let isErdAddress = false;
+      try {
+        const erdAddress = Address.newFromBech32(searchHash);
+        isErdAddress = erdAddress.getHrp() === DEFAULT_HRP;
       } catch {}
 
       switch (true) {
+        case isNativeToken:
+          const newRoute = networkRoute(
+            urlBuilder.nativeTokenDetails(egldLabel ?? 'EGLD')
+          );
+          setSearchRoute(newRoute);
+
+          break;
         case isUsername:
           getUsername(formatHerotag(searchHash)).then((account) => {
             const newRoute = account?.data?.address
@@ -65,10 +100,22 @@ export const useSearch = (searchHash: string) => {
           });
           break;
 
+        case isErdAddress:
         case isAccount:
-          getAccount({ address: searchHash }).then((account) => {
+          let searchAddress = searchHash;
+          if (isErdAddress) {
+            try {
+              const erdAddress = new Address(
+                Address.newFromBech32(searchHash).getPublicKey(),
+                hrp
+              ).toBech32();
+              searchAddress = erdAddress;
+            } catch {}
+          }
+
+          getAccount({ address: searchAddress }).then((account) => {
             const newRoute = account.success
-              ? networkRoute(urlBuilder.accountDetails(searchHash))
+              ? networkRoute(urlBuilder.accountDetails(searchAddress))
               : notFoundRoute;
             setSearchRoute(newRoute);
           });
@@ -96,7 +143,11 @@ export const useSearch = (searchHash: string) => {
                 );
                 break;
               case nft.success:
-                setSearchRoute(networkRoute(urlBuilder.nftDetails(searchHash)));
+                const isNftProof = isProof(nft.data);
+                const nftRoute = isNftProof
+                  ? urlBuilder.proofDetails(searchHash)
+                  : urlBuilder.nftDetails(searchHash);
+                setSearchRoute(networkRoute(nftRoute));
                 break;
               case collection.success:
                 setSearchRoute(
@@ -156,23 +207,17 @@ export const useSearch = (searchHash: string) => {
                   break;
                 default:
                   if (isPubKeyAccount) {
-                    getAccount({ address: bech32.encode(searchHash) }).then(
-                      (account) => {
-                        if (account.success) {
-                          if (
-                            isContract(searchHash) ||
-                            account.data.nonce > 0
-                          ) {
-                            const newRoute = networkRoute(
-                              urlBuilder.accountDetails(
-                                bech32.encode(searchHash)
-                              )
-                            );
-                            setSearchRoute(newRoute);
-                          }
+                    const address = bech32.encode(searchHash, hrp);
+                    getAccount({ address }).then((account) => {
+                      if (account.success) {
+                        if (isContract(searchHash) || account.data.nonce > 0) {
+                          const newRoute = networkRoute(
+                            urlBuilder.accountDetails(address)
+                          );
+                          setSearchRoute(newRoute);
                         }
                       }
-                    );
+                    });
                   }
                   setSearchRoute(notFoundRoute);
                   break;
@@ -184,18 +229,46 @@ export const useSearch = (searchHash: string) => {
 
         default:
           Promise.all([
-            getTokens({ search: searchHash, includeMetaESDT: true }),
-            getCollections({ search: searchHash, excludeMetaESDT: true }),
-            getUsername(formatHerotag(searchHash))
-          ]).then(([tokens, collections, account]) => {
+            getTokens({
+              search: searchHash,
+              includeMetaESDT: true,
+              fields: tokenQueryFields,
+              ...defaultQueryParams
+            }),
+            getCollections({
+              search: searchHash,
+              excludeMetaESDT: true,
+              fields: collectionQueryFields,
+              ...defaultQueryParams
+            }),
+            getAccounts({
+              search: searchHash,
+              isSmartContract: true,
+              fields: accountQueryFields,
+              ...defaultQueryParams
+            }),
+            getUsername(formatHerotag(searchHash)),
+            getAccounts({
+              search: searchHash,
+              isSmartContract: false,
+              fields: accountQueryFields,
+              ...defaultQueryParams
+            })
+          ]).then(([tokens, collections, applications, username, accounts]) => {
             switch (true) {
               case Boolean(tokens.success && tokens?.data?.[0]):
                 const isFirstMetaESDT =
                   tokens.data[0].type === TokenTypeEnum.MetaESDT;
 
                 if (tokens.data.length === 1) {
+                  const isNftProof = isProof(tokens.data[0]);
+                  const metaRoute = isNftProof
+                    ? urlBuilder.proofDetails(tokens.data[0].identifier)
+                    : urlBuilder.tokenMetaEsdtDetails(
+                        tokens.data[0].identifier
+                      );
                   const route = isFirstMetaESDT
-                    ? urlBuilder.tokenMetaEsdtDetails(tokens.data[0].identifier)
+                    ? metaRoute
                     : urlBuilder.tokenDetails(tokens.data[0].identifier);
                   setSearchRoute(networkRoute(route));
                 } else {
@@ -204,26 +277,43 @@ export const useSearch = (searchHash: string) => {
                     : urlBuilder.tokens({ search: searchHash });
                   setSearchRoute(networkRoute(route));
                 }
-
                 break;
+
+              case Boolean(applications.success && applications?.data?.[0]):
+                const applicationRoute =
+                  applications.data.length === 1
+                    ? urlBuilder.accountDetails(applications.data[0].address)
+                    : urlBuilder.applications({ search: searchHash });
+
+                setSearchRoute(networkRoute(applicationRoute));
+                break;
+
               case Boolean(collections.success && collections?.data?.[0]):
-                const route =
+                const collectionRoute =
                   collections.data.length === 1
                     ? urlBuilder.collectionDetails(
                         collections.data[0].collection
                       )
                     : urlBuilder.collections({ search: searchHash });
 
-                setSearchRoute(networkRoute(route));
-
+                setSearchRoute(networkRoute(collectionRoute));
                 break;
-              case account.success:
+
+              case Boolean(username.success && username?.data?.address):
                 setSearchRoute(
-                  networkRoute(
-                    urlBuilder.accountDetails(account?.data?.address)
-                  )
+                  networkRoute(urlBuilder.accountDetails(username.data.address))
                 );
                 break;
+
+              case Boolean(accounts.success && accounts?.data?.[0]):
+                const accountRoute =
+                  accounts.data.length === 1
+                    ? urlBuilder.accountDetails(accounts.data[0].address)
+                    : urlBuilder.accounts({ search: searchHash });
+
+                setSearchRoute(networkRoute(accountRoute));
+                break;
+
               default:
                 setSearchRoute(notFoundRoute);
                 break;
