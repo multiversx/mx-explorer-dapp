@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, Outlet } from 'react-router-dom';
+import { useParams, Outlet, Navigate } from 'react-router-dom';
 
 import { Loader } from 'components';
-import { useAdapter, useGetPage } from 'hooks';
+import { urlBuilder } from 'helpers';
+import { useActiveRoute, useAdapter, useGetPage, useIsMainnet } from 'hooks';
 import { activeNetworkSelector, nftSelector } from 'redux/selectors';
 import { setNft } from 'redux/slices';
+import { tokensRoutes } from 'routes';
 
 import { FailedNftDetails } from './FailedNftDetails';
 import { NftDetailsCard } from './NftDetailsCard';
 
 export const NftLayout = () => {
   const dispatch = useDispatch();
+  const isMainnet = useIsMainnet();
+  const activeRoute = useActiveRoute();
   const { getNft } = useAdapter();
   const { hash: identifier } = useParams();
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { nftState } = useSelector(nftSelector);
+
+  const isProofRoute =
+    activeRoute(tokensRoutes.tokensProofDetails) ||
+    activeRoute(tokensRoutes.tokensProofDetailsAccounts);
 
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
@@ -47,6 +55,11 @@ export const NftLayout = () => {
 
   if (loading) {
     return <Loader />;
+  }
+
+  // Redirect to NFT page until api structure final on mainnet
+  if (isMainnet && identifier && isProofRoute) {
+    return <Navigate replace to={urlBuilder.nftDetails(identifier)} />;
   }
 
   return (

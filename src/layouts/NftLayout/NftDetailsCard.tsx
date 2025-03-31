@@ -28,7 +28,7 @@ import {
 import { faClock, faExclamationTriangle } from 'icons/regular';
 import { faHexagonCheck } from 'icons/solid';
 import { nftSelector } from 'redux/selectors';
-import { NftSubtypeEnum, NftTypeEnum } from 'types';
+import { NftTypeEnum } from 'types';
 
 export const NftDetailsCard = () => {
   const { nftState } = useSelector(nftSelector);
