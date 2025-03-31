@@ -82,7 +82,7 @@ export const Hero = () => {
       {isHome ? (
         <HeroHome />
       ) : (
-        <div className='row main-search-container mt-3'>
+        <div className='row main-search-container'>
           <div className='col-12 col-lg-5 col-xl-6'>
             <Search className='input-group-black' />
           </div>
