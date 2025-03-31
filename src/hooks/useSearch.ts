@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react';
+import { Address } from '@multiversx/sdk-core/out';
 import { useSelector } from 'react-redux';
 
-import { HEROTAG_SUFFIX, NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
+import {
+  DEFAULT_HRP,
+  HEROTAG_SUFFIX,
+  NATIVE_TOKEN_IDENTIFIER
+} from 'appConstants';
 import {
   urlBuilder,
   isHash,
   isContract,
   addressIsBech32,
   bech32,
-  formatHerotag
+  formatHerotag,
+  isProof
 } from 'helpers';
-import { useAdapter, useNetworkRoute } from 'hooks';
+import { useAdapter, useGetHrp, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { TokenTypeEnum } from 'types';
 
@@ -18,6 +24,7 @@ export const useSearch = (hash: string) => {
   const searchHash = String(hash).trim();
 
   const networkRoute = useNetworkRoute();
+  const hrp = useGetHrp();
   const {
     getAccount,
     getBlock,
@@ -52,6 +59,7 @@ export const useSearch = (hash: string) => {
       const accountQueryFields = ['address', 'ownerAddress'].join(',');
 
       const isAccount = addressIsBech32(searchHash);
+
       const isValidHash = isHash(searchHash);
       const isNode =
         validHashChars.test(searchHash) === true && searchHash.length === 192;
@@ -66,7 +74,13 @@ export const useSearch = (hash: string) => {
       let isPubKeyAccount = false;
       try {
         isPubKeyAccount =
-          searchHash.length < 65 && addressIsBech32(bech32.encode(searchHash));
+          searchHash.length < 65 &&
+          addressIsBech32(bech32.encode(searchHash, hrp));
+      } catch {}
+      let isErdAddress = false;
+      try {
+        const erdAddress = Address.newFromBech32(searchHash);
+        isErdAddress = erdAddress.getHrp() === DEFAULT_HRP;
       } catch {}
 
       switch (true) {
@@ -86,10 +100,22 @@ export const useSearch = (hash: string) => {
           });
           break;
 
+        case isErdAddress:
         case isAccount:
-          getAccount({ address: searchHash }).then((account) => {
+          let searchAddress = searchHash;
+          if (isErdAddress) {
+            try {
+              const erdAddress = new Address(
+                Address.newFromBech32(searchHash).getPublicKey(),
+                hrp
+              ).toBech32();
+              searchAddress = erdAddress;
+            } catch {}
+          }
+
+          getAccount({ address: searchAddress }).then((account) => {
             const newRoute = account.success
-              ? networkRoute(urlBuilder.accountDetails(searchHash))
+              ? networkRoute(urlBuilder.accountDetails(searchAddress))
               : notFoundRoute;
             setSearchRoute(newRoute);
           });
@@ -117,7 +143,11 @@ export const useSearch = (hash: string) => {
                 );
                 break;
               case nft.success:
-                setSearchRoute(networkRoute(urlBuilder.nftDetails(searchHash)));
+                const isNftProof = isProof(nft.data);
+                const nftRoute = isNftProof
+                  ? urlBuilder.proofDetails(searchHash)
+                  : urlBuilder.nftDetails(searchHash);
+                setSearchRoute(networkRoute(nftRoute));
                 break;
               case collection.success:
                 setSearchRoute(
@@ -177,23 +207,17 @@ export const useSearch = (hash: string) => {
                   break;
                 default:
                   if (isPubKeyAccount) {
-                    getAccount({ address: bech32.encode(searchHash) }).then(
-                      (account) => {
-                        if (account.success) {
-                          if (
-                            isContract(searchHash) ||
-                            account.data.nonce > 0
-                          ) {
-                            const newRoute = networkRoute(
-                              urlBuilder.accountDetails(
-                                bech32.encode(searchHash)
-                              )
-                            );
-                            setSearchRoute(newRoute);
-                          }
+                    const address = bech32.encode(searchHash, hrp);
+                    getAccount({ address }).then((account) => {
+                      if (account.success) {
+                        if (isContract(searchHash) || account.data.nonce > 0) {
+                          const newRoute = networkRoute(
+                            urlBuilder.accountDetails(address)
+                          );
+                          setSearchRoute(newRoute);
                         }
                       }
-                    );
+                    });
                   }
                   setSearchRoute(notFoundRoute);
                   break;
@@ -237,8 +261,14 @@ export const useSearch = (hash: string) => {
                   tokens.data[0].type === TokenTypeEnum.MetaESDT;
 
                 if (tokens.data.length === 1) {
+                  const isNftProof = isProof(tokens.data[0]);
+                  const metaRoute = isNftProof
+                    ? urlBuilder.proofDetails(tokens.data[0].identifier)
+                    : urlBuilder.tokenMetaEsdtDetails(
+                        tokens.data[0].identifier
+                      );
                   const route = isFirstMetaESDT
-                    ? urlBuilder.tokenMetaEsdtDetails(tokens.data[0].identifier)
+                    ? metaRoute
                     : urlBuilder.tokenDetails(tokens.data[0].identifier);
                   setSearchRoute(networkRoute(route));
                 } else {

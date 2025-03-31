@@ -59,6 +59,8 @@ export const useShowGlobalStats = () => {
     case activeRoute(tokensRoutes.tokenDetailsRoles):
     case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
     case activeRoute(tokensRoutes.tokensMetaEsdtDetailsRoles):
+    case activeRoute(tokensRoutes.tokensProofDetails):
+    case activeRoute(tokensRoutes.tokensProofDetailsAccounts):
     case activeRoute(transactionsRoutes.transactionDetails):
     case activeRoute(transactionsRoutes.transactionDetailsLogs):
     case activeRoute(validatorsRoutes.identityDetails):

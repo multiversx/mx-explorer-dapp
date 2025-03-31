@@ -8,7 +8,7 @@ import { TransactionFiltersEnum } from 'types';
 
 export interface SelectFilterType {
   name: string;
-  filter: TransactionFiltersEnum;
+  filter: TransactionFiltersEnum | string;
   options: SelectOptionType[];
   placeholder?: string;
   hasCustomSearch?: boolean;

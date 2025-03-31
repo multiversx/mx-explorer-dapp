@@ -10,6 +10,10 @@ export const processNodesIdentities = (identities: IdentityType[]) => {
     .map(({ validators }) => validators || 0)
     .reduce((a, b) => new BigNumber(a).plus(b), new BigNumber(0));
 
+  const totalLocked = identities
+    .map(({ locked }) => locked || 0)
+    .reduce((a, b) => new BigNumber(a).plus(b), new BigNumber(0));
+
   identities.forEach((identity: IdentityType) => {
     if (
       !identity.stake ||
@@ -22,14 +26,19 @@ export const processNodesIdentities = (identities: IdentityType[]) => {
       .dividedBy(totalValidators)
       .times(100);
 
+    const stakePercent = new BigNumber(identity.locked)
+      .dividedBy(totalLocked)
+      .times(100);
+
     identitiesList.push({
       ...identity,
+      stakePercent: stakePercent.toNumber(),
       overallStakePercent: overallStakePercent.toNumber(),
       validatorsPercent: validatorsPercent.toNumber(),
       overallValidatorsPercent: overallValidatorsPercent.toNumber()
     });
 
-    overallStakePercent = overallStakePercent.plus(identity.stakePercent);
+    overallStakePercent = overallStakePercent.plus(stakePercent);
     overallValidatorsPercent = overallValidatorsPercent.plus(validatorsPercent);
   });
 

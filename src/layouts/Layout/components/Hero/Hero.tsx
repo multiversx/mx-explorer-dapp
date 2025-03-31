@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import { BRAND_NAME } from 'appConstants';
 import { FormatEGLD, Search } from 'components';
-import { getSubdomainNetwork } from 'helpers';
+import { getSubdomainNetwork, getCustomPageName } from 'helpers';
 import {
   useActiveRoute,
   useIsMainnet,
@@ -32,7 +32,6 @@ import {
   useShowNodesStats,
   useShowTransactionStats
 } from './hooks';
-import { getCustomPageName } from '../../helpers';
 
 export const Hero = () => {
   const { pathname } = useLocation();
