@@ -31,7 +31,7 @@ export const NotificationsBar = () => {
       {notification !== undefined ? (
         <div
           className={classNames(
-            'notification-bar d-flex flex-row align-items-center justify-content-center fade show m-0',
+            'notification-bar d-flex flex-row align-items-center justify-content-center alert fade show m-0',
             bgClassName
           )}
           role='alert'
