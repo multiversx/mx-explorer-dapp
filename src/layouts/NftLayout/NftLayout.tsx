@@ -3,8 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Outlet, Navigate } from 'react-router-dom';
 
 import { Loader } from 'components';
-import { urlBuilder } from 'helpers';
-import { useActiveRoute, useAdapter, useGetPage, useIsMainnet } from 'hooks';
+import {
+  useActiveRoute,
+  useAdapter,
+  useGetPage,
+  useIsMainnet,
+  useNetworkRoute
+} from 'hooks';
 import { activeNetworkSelector, nftSelector } from 'redux/selectors';
 import { setNft } from 'redux/slices';
 import { tokensRoutes } from 'routes';
@@ -16,6 +21,7 @@ export const NftLayout = () => {
   const dispatch = useDispatch();
   const isMainnet = useIsMainnet();
   const activeRoute = useActiveRoute();
+  const networkRoute = useNetworkRoute();
   const { getNft } = useAdapter();
   const { hash: identifier } = useParams();
   const { firstPageRefreshTrigger } = useGetPage();
@@ -57,9 +63,9 @@ export const NftLayout = () => {
     return <Loader />;
   }
 
-  // Redirect to NFT page until api structure final on mainnet
+  // Redirect to not-found page until route/api structure final on mainnet
   if (isMainnet && identifier && isProofRoute) {
-    return <Navigate replace to={urlBuilder.nftDetails(identifier)} />;
+    return <Navigate replace to={networkRoute('/not-found')} />;
   }
 
   return (
