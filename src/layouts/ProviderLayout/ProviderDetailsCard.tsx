@@ -11,7 +11,7 @@ import {
   DelegationCap,
   PercentageFilled
 } from 'components/ProvidersTable/components';
-import { hasDelegationCap } from 'components/ProvidersTable/helpers';
+import { hasDelegationCap } from 'helpers';
 
 import {
   faServer,

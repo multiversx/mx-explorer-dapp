@@ -59,6 +59,11 @@
   .delegation-title {
     background-color: var(--neutral-800-opacity-60);
     border-radius: $border-radius;
+
+    &.initial-title {
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+    }
   }
   .stake-container:first-of-type {
     @include media-breakpoint-up(lg) {
@@ -74,5 +79,8 @@
       overflow: auto;
       @include webkit-scrollbar;
     }
+  }
+  .stake-values-sort {
+    min-width: 12rem;
   }
 }
