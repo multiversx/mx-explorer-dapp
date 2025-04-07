@@ -6,5 +6,6 @@ export * from './formatOrdinals';
 export * from './formatPercentLabel';
 export * from './formatTimeUntilTimestamp';
 export * from './formatSize';
+export * from './formatTimestamp';
 export * from './formatUSD';
 export * from './formatVersion';
