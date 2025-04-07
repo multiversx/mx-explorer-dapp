@@ -170,7 +170,9 @@ export const Identities = () => {
                   }
                   return (
                     <Fragment key={i}>
-                      {showResiliencyCoefficient && isOverCoefficient && (
+                      {Boolean(
+                        showResiliencyCoefficient && isOverCoefficient
+                      ) && (
                         <ResiliencyRow coefficient={resiliencyCoefficient} />
                       )}
                       <IdentityRow key={i} identity={identity} index={i + 1} />
