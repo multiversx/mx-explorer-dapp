@@ -1,5 +1,5 @@
 import { Overlay } from 'components';
-import { formatDate } from 'helpers';
+import { formatDate, formatTimestamp } from 'helpers';
 import { WithClassnameType } from 'types';
 
 import { timeAgo } from './helpers/timeAgo';
@@ -21,9 +21,7 @@ export const TimeAgo = ({
     return 'N/A';
   }
 
-  const ms = value * 1000;
-  let result = timeAgo(ms);
-
+  let result = timeAgo(formatTimestamp(value));
   if (short) {
     const parts = result.split(' ');
     if (parts.length > 1) {
