@@ -20,6 +20,8 @@ const getStepInterval = (refreshInterval: number) => {
       return new BigNumber(500);
     case 1000:
       return new BigNumber(200);
+    case 600:
+      return new BigNumber(100);
 
     default:
       return new BigNumber(

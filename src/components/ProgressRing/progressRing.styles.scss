@@ -1,10 +1,17 @@
 .progress-ring-wrapper {
+  transform: rotate(-90deg);
+
   &.has-bg {
     background: rgba(23, 23, 23, 0.95);
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.9);
     border-radius: 50%;
   }
-  transform: rotate(-90deg);
+  &.sub-second {
+    .progress-ring circle {
+      transition: stroke-dashoffset 0.1s;
+    }
+  }
+
   .progress-ring {
     circle {
       transition: stroke-dashoffset 0.35s;
