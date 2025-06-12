@@ -25,6 +25,8 @@ import {
   nftRoutes,
   tokenLayout,
   tokensRoutes,
+  proofLayout,
+  proofRoutes,
   transactionsLayout,
   transactionsRoutes,
   validatorLayout,
@@ -38,6 +40,7 @@ export {
   collectionRoutes,
   nftRoutes,
   tokensRoutes,
+  proofRoutes,
   transactionsRoutes,
   validatorsRoutes
 };
@@ -107,6 +110,7 @@ const mainRoutes: TitledRouteObject[] = [
       ...collectionLayout,
       ...nftLayout,
       ...tokenLayout,
+      ...proofLayout,
       ...transactionsLayout,
       ...validatorLayout,
       ...nativeTokenLayout

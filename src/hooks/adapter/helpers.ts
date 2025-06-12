@@ -4,7 +4,7 @@ import {
   PAGE_SIZE,
   TRANSACTIONS_TABLE_FIELDS
 } from 'appConstants';
-import { TransactionInPoolTypeEnum } from 'types';
+import { GetProofsType, TransactionInPoolTypeEnum } from 'types';
 import {
   BaseApiType,
   AdapterProviderPropsType,
@@ -316,6 +316,29 @@ export function getNftsParams({
     ...(hasUris !== undefined ? { hasUris } : {}),
     ...(includeFlagged !== undefined ? { includeFlagged } : {}),
     ...(excludeMetaESDT !== undefined ? { excludeMetaESDT } : {})
+  };
+
+  return params;
+}
+
+export function getProofsParams({
+  page,
+  size,
+  fields,
+
+  hash,
+
+  // not on api
+  isCount = false
+}: GetProofsType) {
+  const params: AdapterProviderPropsType['params'] = {
+    ...(isCount
+      ? {}
+      : {
+          ...getPageParams({ page, size }),
+          ...(fields !== undefined ? { fields } : {})
+        }),
+    ...(hash !== undefined ? { hash } : {})
   };
 
   return params;

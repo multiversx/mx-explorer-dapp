@@ -82,6 +82,10 @@ export interface GetCollectionsType extends SortableApiType {
   withOwner?: boolean;
 }
 
+export interface GetProofsType extends BaseApiType {
+  hash?: string;
+}
+
 export interface GetNodesType extends SortableApiType {
   search?: string;
   issues?: string;

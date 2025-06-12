@@ -12,6 +12,7 @@ import {
   analyticsRoutes,
   routes
 } from 'routes';
+import { proofRoutes } from 'routes/layouts';
 
 export const useShowGlobalStats = () => {
   const activeRoute = useActiveRoute();
@@ -59,8 +60,8 @@ export const useShowGlobalStats = () => {
     case activeRoute(tokensRoutes.tokenDetailsRoles):
     case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
     case activeRoute(tokensRoutes.tokensMetaEsdtDetailsRoles):
-    case activeRoute(tokensRoutes.tokensProofDetails):
-    case activeRoute(tokensRoutes.tokensProofDetailsAccounts):
+    case activeRoute(proofRoutes.proofDetails):
+    case activeRoute(proofRoutes.proofDetailsAccounts):
     case activeRoute(transactionsRoutes.transactionDetails):
     case activeRoute(transactionsRoutes.transactionDetailsLogs):
     case activeRoute(validatorsRoutes.identityDetails):

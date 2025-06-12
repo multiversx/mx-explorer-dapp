@@ -29,6 +29,7 @@ import { pageHeadersAccountsReducer } from './slices/pageHeadersAccountsStats';
 import { pageHeadersBlocksReducer } from './slices/pageHeadersBlocksStats';
 import { pageHeadersCollectionsReducer } from './slices/pageHeadersCollectionsStats';
 import { pageHeadersTokensReducer } from './slices/pageHeadersTokensStats';
+import { proofReducer } from './slices/proof';
 import { refreshReducer } from './slices/refresh';
 import { stakeReducer } from './slices/stake';
 import { stakeExtraReducer } from './slices/stakeExtra';
@@ -78,6 +79,7 @@ export const customIgnoredSlices = {
   metaTags: metaTagsReducer,
   miniBlock: miniBlockReducer,
   nft: nftReducer,
+  proof: proofReducer,
   nodesIdentities: nodesIdentitiesReducer,
   nodesOverview: nodesOverviewReducer,
   nodesVersions: nodesVersionsReducer,

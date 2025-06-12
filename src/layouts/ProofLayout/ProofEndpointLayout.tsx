@@ -2,43 +2,31 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Outlet, Navigate } from 'react-router-dom';
 
-import { Loader } from 'components';
-import {
-  useActiveRoute,
-  useAdapter,
-  useGetPage,
-  useIsMainnet,
-  useNetworkRoute
-} from 'hooks';
-import { activeNetworkSelector, nftSelector } from 'redux/selectors';
-import { setNft } from 'redux/slices';
-import { proofRoutes } from 'routes';
+import { Loader, PageState } from 'components';
+import { useAdapter, useGetPage, useIsMainnet, useNetworkRoute } from 'hooks';
+import { faReceipt } from 'icons/regular';
+import { activeNetworkSelector, proofSelector } from 'redux/selectors';
+import { setProof } from 'redux/slices';
 
-import { FailedNftDetails } from './FailedNftDetails';
-import { NftDetailsCard } from './NftDetailsCard';
+import { ProofDetailsCard } from './ProofDetailsCard';
 
-export const NftLayout = () => {
+export const ProofEndpointLayout = () => {
   const dispatch = useDispatch();
   const isMainnet = useIsMainnet();
-  const activeRoute = useActiveRoute();
   const networkRoute = useNetworkRoute();
-  const { getNft } = useAdapter();
+  const { getProof } = useAdapter();
   const { hash: identifier } = useParams();
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { nftState } = useSelector(nftSelector);
-
-  const isProofRoute =
-    activeRoute(proofRoutes.proofDetails) ||
-    activeRoute(proofRoutes.proofDetailsAccounts);
+  const { proofState } = useSelector(proofSelector);
 
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
-  const fetchNftDetails = () => {
+  const fetchProofDetails = () => {
     if (identifier) {
-      getNft(identifier).then(({ success, data }) => {
+      getProof(identifier).then(({ success, data }) => {
         if (success && data) {
-          dispatch(setNft({ isFetched: true, nftState: data }));
+          dispatch(setProof({ isFetched: true, proofState: data }));
         }
 
         setIsDataReady(success);
@@ -47,16 +35,27 @@ export const NftLayout = () => {
   };
 
   useEffect(() => {
-    fetchNftDetails();
+    fetchProofDetails();
   }, [firstPageRefreshTrigger, activeNetworkId, identifier]);
 
   const loading =
     isDataReady === undefined ||
-    (identifier && identifier !== nftState.identifier);
+    (identifier && identifier !== proofState.identifier);
   const failed = isDataReady === false;
 
   if (failed) {
-    return <FailedNftDetails identifier={identifier} />;
+    return (
+      <PageState
+        icon={faReceipt}
+        title='Unable to locate this Proof'
+        description={
+          <div className='px-spacer'>
+            <span className='text-break-all'>{identifier}</span>
+          </div>
+        }
+        isError
+      />
+    );
   }
 
   if (loading) {
@@ -64,13 +63,13 @@ export const NftLayout = () => {
   }
 
   // Redirect to not-found page until route/api structure final on mainnet
-  if (isMainnet && identifier && isProofRoute) {
+  if (isMainnet) {
     return <Navigate replace to={networkRoute('/not-found')} />;
   }
 
   return (
     <div className='container page-content'>
-      <NftDetailsCard />
+      <ProofDetailsCard />
       <Outlet />
     </div>
   );

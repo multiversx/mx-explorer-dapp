@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Tabs } from 'components/Tabs';
 import { isProof, urlBuilder } from 'helpers';
 import { nftSelector } from 'redux/selectors';
-import { nftRoutes, tokensRoutes } from 'routes';
+import { nftRoutes, proofRoutes } from 'routes';
 import { NftTypeEnum } from 'types';
 
 export const NftTabs = () => {
@@ -32,7 +32,7 @@ export const NftTabs = () => {
       tabLabel: 'Transactions',
       activationRoutes: [
         nftRoutes.nftDetailsTransactions,
-        tokensRoutes.tokensProofDetails
+        proofRoutes.proofDetails
       ]
     },
     {
@@ -43,7 +43,7 @@ export const NftTabs = () => {
       tabLabel: 'Holders',
       activationRoutes: [
         nftRoutes.nftDetailsAccounts,
-        tokensRoutes.tokensProofDetailsAccounts
+        proofRoutes.proofDetailsAccounts
       ]
     }
   ];

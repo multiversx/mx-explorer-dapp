@@ -14,6 +14,7 @@ export interface NetworkType extends Partial<NetworkConfigType> {
   nftExplorerAddress?: string;
   isSovereign?: boolean;
   isCustom?: boolean;
+  hasProofsEndpoint?: boolean;
 }
 
 export interface NetworkUrlType {

@@ -20,6 +20,7 @@ export * from './nft';
 export * from './nodesIdentities';
 export * from './nodesOverview';
 export * from './nodesVersions';
+export * from './proof';
 export * from './refresh';
 export * from './stake';
 export * from './stakeExtra';

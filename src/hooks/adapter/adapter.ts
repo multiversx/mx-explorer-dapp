@@ -1,5 +1,5 @@
 import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
-import { AccountRolesTypeEnum, GetAccountType } from 'types';
+import { AccountRolesTypeEnum, GetAccountType, GetProofsType } from 'types';
 import {
   BaseApiType,
   GetBlocksType,
@@ -24,7 +24,8 @@ import {
   getCollectionsParams,
   getNftsParams,
   getTransactionsInPoolParams,
-  getPageParams
+  getPageParams,
+  getProofsParams
 } from './helpers';
 import { useAdapterConfig } from './useAdapterConfig';
 
@@ -701,6 +702,23 @@ export const useAdapter = () => {
           isCount: true,
           ...rest
         })
+      }),
+
+    // Proofs
+
+    getProof: (identifierOrHash: string) =>
+      provider({ url: `/proofs/${identifierOrHash}` }),
+
+    getProofs: (params: GetProofsType) =>
+      provider({
+        url: '/proofs',
+        params: getProofsParams(params)
+      }),
+
+    getProofsCount: (params: GetProofsType) =>
+      provider({
+        url: '/proofs/count',
+        params: getProofsParams({ isCount: true, ...params })
       }),
 
     // General

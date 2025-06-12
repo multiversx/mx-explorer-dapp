@@ -16,6 +16,7 @@ export * from './miniBlock';
 export * from './networks';
 export * from './nft';
 export * from './nodesOverview';
+export * from './proof';
 export * from './refresh';
 export * from './stake';
 export * from './stakeExtra';

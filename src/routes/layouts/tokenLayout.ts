@@ -1,10 +1,7 @@
 import { CollectionLayout } from 'layouts/CollectionLayout';
-import { NftLayout } from 'layouts/NftLayout';
 import { TokenLayout } from 'layouts/TokenLayout';
 import { CollectionRoles } from 'pages/CollectionDetails/CollectionRoles';
 import { CollectionTransactions } from 'pages/CollectionDetails/CollectionTransactions';
-import { NftAccounts } from 'pages/NftDetails/NftAccounts';
-import { NftTransactions } from 'pages/NftDetails/NftTransactions';
 import { TokenDetailsAccounts } from 'pages/TokenDetails/TokenAccounts';
 import { TokenDetailsLockedAccounts } from 'pages/TokenDetails/TokenLockedAccounts';
 import { TokenDetailsRoles } from 'pages/TokenDetails/TokenRoles';
@@ -20,8 +17,6 @@ export const tokensRoutes = {
   tokensMetaEsdt: '/meta-esdt',
   tokensMetaEsdtDetails: '/meta-esdt/:hash',
   tokensMetaEsdtDetailsRoles: '/meta-esdt/:hash/roles',
-  tokensProofDetails: '/proofs/:hash',
-  tokensProofDetailsAccounts: '/proofs/:hash/accounts',
   tokenDetails: '/tokens/:hash',
   tokenDetailsAccounts: '/tokens/:hash/accounts',
   tokenDetailsLockedAccounts: '/tokens/:hash/locked-accounts',
@@ -57,25 +52,6 @@ export const tokenLayout: TitledRouteObject[] = [
         title: 'Meta-ESDT Roles',
         preventScroll: true,
         Component: CollectionRoles
-      }
-    ]
-  },
-  {
-    path: tokensRoutes.tokensProofDetails,
-    preventScroll: true,
-    Component: NftLayout,
-    children: [
-      {
-        path: tokensRoutes.tokensProofDetails,
-        title: 'Proof Transactions',
-        preventScroll: true,
-        Component: NftTransactions
-      },
-      {
-        path: tokensRoutes.tokensProofDetailsAccounts,
-        title: 'Proof Holders',
-        preventScroll: true,
-        Component: NftAccounts
       }
     ]
   },
