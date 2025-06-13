@@ -22,7 +22,7 @@ export const useTempStorageNotification = () => {
       if (!exists) {
         addNotification({
           id: TEMP_LOCAL_NOTIFICATION_DISMISSED,
-          text: 'Governance Vote LIVE: Andromeda Protocol Upgrade. Vote now!',
+          text: 'Governance Vote LIVE: Barnard Protocol Upgrade. Vote now!',
           dismissable: true,
           bgClassName: 'bg-centered-primary',
           priority: 2
