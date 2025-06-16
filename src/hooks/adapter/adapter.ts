@@ -1,5 +1,10 @@
 import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
-import { AccountRolesTypeEnum, GetAccountType } from 'types';
+import {
+  AccountRolesTypeEnum,
+  GetAccountType,
+  GetApplicationsType,
+  GetApplicationType
+} from 'types';
 import {
   BaseApiType,
   GetBlocksType,
@@ -389,6 +394,28 @@ export const useAdapter = () => {
       address: string;
       type: AccountRolesTypeEnum;
     }) => provider({ url: `/accounts/${address}/roles/${type}/c` }),
+
+    getApplication: ({ address, ...rest }: GetApplicationType) =>
+      provider({ url: `/applications/${address}`, params: rest }),
+
+    getApplications: ({
+      page,
+      size,
+      isVerified,
+      ...rest
+    }: GetApplicationsType) =>
+      provider({
+        url: '/applications',
+        timeout: 15000,
+        params: {
+          ...getPageParams({ page, size }),
+          ...(isVerified !== undefined ? { isVerified } : {}),
+          ...rest
+        }
+      }),
+
+    getApplicationsCount: (params: GetApplicationsType) =>
+      provider({ url: '/applications/count', params }),
 
     /* Validators */
 

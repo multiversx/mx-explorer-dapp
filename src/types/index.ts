@@ -1,6 +1,7 @@
 export * from './account.types';
 export * from './accountStake.types';
 export * from './adapter.types';
+export * from './application.types';
 export * from './block.types';
 export * from './collection.types';
 export * from './economics.types';

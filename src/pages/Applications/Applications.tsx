@@ -38,7 +38,12 @@ import {
   growthEconomicsSelector,
   growthMostUsedSelector
 } from 'redux/selectors';
-import { AccountType, SortOrderEnum } from 'types';
+import {
+  AccountType,
+  ApplicationSortEnum,
+  ApplicationType,
+  SortOrderEnum
+} from 'types';
 import { MostUsedApplications } from 'widgets';
 
 import { FailedApplications } from './components/FailedApplications';
@@ -57,19 +62,17 @@ export const Applications = () => {
   const sort = useGetSort();
   const { search } = useGetSearch();
   const { page, size } = useGetPage();
-  const { getAccounts, getAccountsCount } = useAdapter();
+  const { getApplications, getApplicationsCount } = useAdapter();
 
-  const [accounts, setAccounts] = useState<AccountType[]>([]);
+  const [applications, setApplications] = useState<ApplicationType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [dataChanged, setDataChanged] = useState<boolean>(false);
-  const [totalAccounts, setTotalAccounts] = useState<number | typeof ELLIPSIS>(
-    ELLIPSIS
-  );
+  const [totalApplications, setTotalApplications] = useState<
+    number | typeof ELLIPSIS
+  >(ELLIPSIS);
 
-  const is24hCountAvailable = isMainnet;
-
-  if (!sort.sort && is24hCountAvailable) {
-    sort.sort = 'transfersLast24h';
+  if (!sort.sort) {
+    sort.sort = ApplicationSortEnum.transfersLast24h;
     sort.order = SortOrderEnum.desc;
   }
 
@@ -80,22 +83,17 @@ export const Applications = () => {
   const fetchApplications = () => {
     setDataChanged(true);
     Promise.all([
-      getAccounts({
+      getApplications({
         page,
-        name: search,
-        isSmartContract: true,
-        withOwnerAssets: true,
-        withDeployInfo: true,
-        ...(is24hCountAvailable ? {} : { withScrCount: true }),
-        ...(is24hCountAvailable ? { size } : { size: minSize }),
+        search,
         ...sort
       }),
-      getAccountsCount({ isSmartContract: true, name: search })
+      getApplicationsCount({ search })
     ])
       .then(([applicationsData, applicationsCountData]) => {
         if (applicationsData.success && applicationsCountData.success) {
-          setAccounts(applicationsData.data);
-          setTotalAccounts(applicationsCountData.data);
+          setApplications(applicationsData.data);
+          setTotalApplications(applicationsCountData.data);
         }
         setDataReady(applicationsData.success && applicationsCountData.success);
       })
@@ -131,15 +129,14 @@ export const Applications = () => {
                   <div className='filters application-filters me-auto'>
                     <TableSearch
                       className='input-group-sm'
-                      searchValue={applicationsDeployed || totalAccounts}
+                      searchValue={applicationsDeployed || totalApplications}
                       placeholderText='App'
                       name='applicationsSearch'
                     />
                   </div>
                   <Pager
-                    total={totalAccounts}
-                    itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
-                    show={accounts.length > 0}
+                    total={totalApplications}
+                    show={applications.length > 0}
                     className='d-flex ms-auto me-auto me-sm-0'
                   />
                 </div>
@@ -151,47 +148,48 @@ export const Applications = () => {
                     <thead>
                       <tr>
                         <th>Name/Address</th>
-                        <th>Owner</th>
+
                         <th>
                           <Sort id='balance' text='Balance' />
                         </th>
                         <th>
-                          {is24hCountAvailable ? (
-                            <Sort
-                              id='transfersLast24h'
-                              text='Transactions / 24h'
-                              defaultOrder={SortOrderEnum.desc}
-                              defaultActive
-                            />
-                          ) : (
-                            'Transactions'
-                          )}
+                          <Sort id='usersCount' text='Users Count' />
+                        </th>
+                        <th>
+                          <Sort
+                            id='transfersLast24h'
+                            text='Transactions'
+                            defaultOrder={SortOrderEnum.desc}
+                            defaultActive
+                          />
                         </th>
                         <th className='text-end'>Deployed</th>
                       </tr>
                     </thead>
-                    <tbody data-testid='accountsTable'>
-                      {accounts.length == 0 && (
+                    <tbody data-testid='applicationsTable'>
+                      {applications.length == 0 && (
                         <ColSpanWrapper colSpan={5}>
                           <NoApplications />
                         </ColSpanWrapper>
                       )}
-                      {accounts.map((account, i) => (
-                        <tr key={account.address}>
+                      {applications.map((application, i) => (
+                        <tr key={application.address}>
                           <td>
                             <NetworkLink
-                              to={urlBuilder.accountDetails(account.address)}
+                              to={urlBuilder.applicationDetails(
+                                application.address
+                              )}
                               data-testid={`applicationLink${i}`}
                               className='d-flex align-items-center trim-wrapper gap-2 hash hash-xxl'
                             >
-                              {account.assets?.iconSvg ||
-                              account.assets?.iconPng ? (
+                              {application.assets?.iconSvg ||
+                              application.assets?.iconPng ? (
                                 <img
                                   src={
-                                    account.assets?.iconSvg ||
-                                    account.assets?.iconPng
+                                    application.assets?.iconSvg ||
+                                    application.assets?.iconPng
                                   }
-                                  alt={account.assets?.name}
+                                  alt={application.assets?.name}
                                   className='side-icon side-icon-md-large'
                                 />
                               ) : (
@@ -200,10 +198,10 @@ export const Applications = () => {
                                 </div>
                               )}
                               <AccountName
-                                address={account.address}
-                                assets={account.assets}
+                                address={application.address}
+                                assets={application.assets}
                               />
-                              {account.isVerified && (
+                              {application.isVerified && (
                                 <Overlay title='Verified'>
                                   <FontAwesomeIcon
                                     icon={faBadgeCheck}
@@ -214,42 +212,38 @@ export const Applications = () => {
                               )}
                             </NetworkLink>
                           </td>
-                          <td>
-                            {account?.ownerAddress && (
-                              <AccountLink
-                                address={account.ownerAddress}
-                                assets={account.ownerAssets}
-                                className='hash'
-                              />
-                            )}
-                          </td>
+
                           <td className='text-neutral-100'>
-                            <FormatAmount value={account.balance} />
+                            <FormatAmount value={application.balance} />
                           </td>
                           <td>
-                            {account.transfersLast24h ? (
+                            {application.usersCount ? (
                               formatBigNumber({
-                                value: account.transfersLast24h
+                                value: application.usersCount
                               })
                             ) : (
-                              <>
-                                {account.scrCount &&
-                                  formatBigNumber({
-                                    value: account.scrCount
-                                  })}
-                              </>
+                              <>-</>
+                            )}
+                          </td>
+                          <td>
+                            {application.txCount ? (
+                              formatBigNumber({
+                                value: application.txCount
+                              })
+                            ) : (
+                              <>-</>
                             )}
                           </td>
                           <td className='text-end'>
-                            {account.deployedAt ? (
+                            {application.deployedAt ? (
                               <div className='d-flex align-items-center justify-content-end'>
                                 <TimeAgo
-                                  value={account.deployedAt}
+                                  value={application.deployedAt}
                                   short
                                   showAgo
                                   tooltip
                                 />
-                                {account.deployTxHash && (
+                                {application.deployTxHash && (
                                   <InfoTooltip
                                     title={
                                       <>
@@ -258,12 +252,14 @@ export const Applications = () => {
                                         </span>
                                         <NetworkLink
                                           to={urlBuilder.transactionDetails(
-                                            account.deployTxHash
+                                            application.deployTxHash
                                           )}
                                           data-testid='upgradeTxHashLink'
                                           className='trim-wrapper'
                                         >
-                                          <Trim text={account.deployTxHash} />
+                                          <Trim
+                                            text={application.deployTxHash}
+                                          />
                                         </NetworkLink>
                                       </>
                                     }
@@ -283,14 +279,10 @@ export const Applications = () => {
               </div>
 
               <div className='card-footer table-footer'>
-                <PageSize
-                  defaultSize={is24hCountAvailable ? PAGE_SIZE : 15}
-                  maxSize={PAGE_SIZE}
-                />
+                <PageSize />
                 <Pager
-                  total={totalAccounts}
-                  itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
-                  show={accounts.length > 0}
+                  total={totalApplications}
+                  show={applications.length > 0}
                 />
               </div>
             </div>

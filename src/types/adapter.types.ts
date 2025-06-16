@@ -5,6 +5,12 @@ export enum NetworkAdapterEnum {
   elastic = 'elastic'
 }
 
+export enum UsersCountRangeEnum {
+  _24h = '24h',
+  _7d = '7d',
+  _30d = '30d'
+}
+
 export interface BaseApiType {
   page?: number;
   size?: number;
@@ -37,6 +43,20 @@ export interface GetAccountsType extends SortableApiType {
   withTxCount?: boolean;
   withScrCount?: boolean;
   withAssets?: boolean;
+}
+
+export interface GetApplicationType {
+  address: string;
+}
+
+export interface GetApplicationsType extends SortableApiType {
+  search?: string;
+  addresses?: string[];
+  ownerAddress?: string;
+  usersCountRange?: UsersCountRangeEnum;
+  feesRange?: UsersCountRangeEnum;
+  isVerified?: boolean;
+  hasAssets?: boolean;
 }
 export interface GetBlocksType extends BaseApiType {
   shard?: number;

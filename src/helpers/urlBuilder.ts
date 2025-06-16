@@ -95,6 +95,7 @@ export const urlBuilder = {
 
     return `/applications/?${urlSearch}`;
   },
+  applicationDetails: (address: string) => `/applications/${address}`,
   identityDetails: (id: string) => `/identities/${id}`,
   tokens: (params?: GetTokensType) => {
     const urlSearch = params
