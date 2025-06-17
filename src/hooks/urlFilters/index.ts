@@ -1,3 +1,4 @@
+export * from './useGetApplicationsFilters';
 export * from './useGetBlockFilters';
 export * from './useGetNodeFilters';
 export * from './useGetPage';
