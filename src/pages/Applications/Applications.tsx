@@ -148,13 +148,6 @@ export const Applications = () => {
                     <thead>
                       <tr>
                         <th>Name/Address</th>
-
-                        <th>
-                          <Sort id='balance' text='Balance' />
-                        </th>
-                        <th>
-                          <Sort id='usersCount' text='Users Count' />
-                        </th>
                         <th>
                           <Sort
                             id='transfersLast24h'
@@ -163,6 +156,13 @@ export const Applications = () => {
                             defaultActive
                           />
                         </th>
+                        <th>
+                          <Sort id='usersCount' text='Users' />
+                        </th>
+                        <th>
+                          <Sort id='balance' text='Balance' />
+                        </th>
+                        <th>Fees Captured</th>
                         <th className='text-end'>Deployed</th>
                       </tr>
                     </thead>
@@ -212,27 +212,21 @@ export const Applications = () => {
                               )}
                             </NetworkLink>
                           </td>
-
+                          <td className='text-neutral-100'>
+                            {formatBigNumber({
+                              value: application.txCount
+                            })}
+                          </td>
+                          <td className='text-neutral-100'>
+                            {formatBigNumber({
+                              value: application.usersCount
+                            })}
+                          </td>
                           <td className='text-neutral-100'>
                             <FormatAmount value={application.balance} />
                           </td>
-                          <td>
-                            {application.usersCount ? (
-                              formatBigNumber({
-                                value: application.usersCount
-                              })
-                            ) : (
-                              <>-</>
-                            )}
-                          </td>
-                          <td>
-                            {application.txCount ? (
-                              formatBigNumber({
-                                value: application.txCount
-                              })
-                            ) : (
-                              <>-</>
-                            )}
+                          <td className='text-neutral-100'>
+                            <FormatAmount value={application.feesCaptured} />
                           </td>
                           <td className='text-end'>
                             {application.deployedAt ? (
