@@ -186,12 +186,12 @@ export const Applications = () => {
                       <Sort id='balance' text='Balance' />
                     </th>
                     <th className='fees'>Fees Captured</th>
-                    <th className='depoloyed'>Deployed</th>
+                    <th className='deployed'>Deployed</th>
                   </tr>
                 </thead>
                 <tbody data-testid='applicationsTable'>
                   {applications.length == 0 && (
-                    <ColSpanWrapper colSpan={5}>
+                    <ColSpanWrapper colSpan={6}>
                       <NoApplications />
                     </ColSpanWrapper>
                   )}
