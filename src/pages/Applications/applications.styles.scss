@@ -1,0 +1,18 @@
+.applications {
+  .applications-table {
+    th {
+      &.transfers,
+      &.users,
+      &.balance,
+      &.fees,
+      &.deployed {
+        min-width: 10rem;
+        max-width: 10rem;
+      }
+
+      &.deployed {
+        text-align: right;
+      }
+    }
+  }
+}

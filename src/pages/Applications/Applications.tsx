@@ -139,7 +139,7 @@ export const Applications = () => {
   }
 
   return (
-    <div className='container page-content'>
+    <div className='container page-content applications'>
       {hasGrowthWidgets && <MostUsedApplications className='mb-3' />}
       {dataReady === false && <FailedApplications />}
 
@@ -167,11 +167,11 @@ export const Applications = () => {
 
           <div className='card-body'>
             <TableWrapper dataChanged={dataChanged}>
-              <table className='table mb-0'>
+              <table className='table applications-table mb-0'>
                 <thead>
                   <tr>
                     <th>Name/Address</th>
-                    <th>
+                    <th className='transfers'>
                       <Sort
                         id='transfersLast24h'
                         text='Transactions'
@@ -179,14 +179,14 @@ export const Applications = () => {
                         defaultActive
                       />
                     </th>
-                    <th>
+                    <th className='users'>
                       <Sort id='usersCount' text='Users' />
                     </th>
-                    <th>
+                    <th className='balance'>
                       <Sort id='balance' text='Balance' />
                     </th>
-                    <th>Fees Captured</th>
-                    <th className='text-end'>Deployed</th>
+                    <th className='fees'>Fees Captured</th>
+                    <th className='depoloyed'>Deployed</th>
                   </tr>
                 </thead>
                 <tbody data-testid='applicationsTable'>
