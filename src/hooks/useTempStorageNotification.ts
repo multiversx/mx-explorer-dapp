@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import { TEMP_LOCAL_NOTIFICATION_DISMISSED } from 'appConstants';
@@ -19,7 +20,12 @@ export const useTempStorageNotification = () => {
       const exists = notifications.find(
         (item) => item.id === TEMP_LOCAL_NOTIFICATION_DISMISSED
       );
+
       if (!exists) {
+        if (moment.utc().isSameOrAfter(moment.unix(1750528800))) {
+          return;
+        }
+
         addNotification({
           id: TEMP_LOCAL_NOTIFICATION_DISMISSED,
           text: 'Governance Vote LIVE: Barnard Protocol Upgrade. Vote now!',
