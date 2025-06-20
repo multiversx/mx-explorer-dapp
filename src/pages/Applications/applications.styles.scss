@@ -13,6 +13,9 @@
       &.deployed {
         text-align: right;
       }
+      &:last-child {
+        padding-right: 1rem !important;
+      }
     }
   }
 }
