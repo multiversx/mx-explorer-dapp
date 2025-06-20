@@ -186,12 +186,13 @@ export const Applications = () => {
                       <Sort id='balance' text='Balance' />
                     </th>
                     <th className='fees'>Fees Captured</th>
+                    <th className='developer-rewards'>Developer Rewards</th>
                     <th className='deployed'>Deployed</th>
                   </tr>
                 </thead>
                 <tbody data-testid='applicationsTable'>
                   {applications.length == 0 && (
-                    <ColSpanWrapper colSpan={6}>
+                    <ColSpanWrapper colSpan={7}>
                       <NoApplications />
                     </ColSpanWrapper>
                   )}
@@ -250,6 +251,9 @@ export const Applications = () => {
                       </td>
                       <td className='text-neutral-100'>
                         <FormatAmount value={application.feesCaptured} />
+                      </td>
+                      <td className='text-neutral-100'>
+                        <FormatAmount value={application.developerReward} />
                       </td>
                       <td className='text-end'>
                         {application.deployedAt ? (

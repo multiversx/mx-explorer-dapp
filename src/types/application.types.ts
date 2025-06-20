@@ -11,6 +11,7 @@ export interface ApplicationType {
   balance: string;
   usersCount: number;
   feesCaptured: string;
+  developerReward: string;
   deployedAt: number;
   deployTxHash: string;
   isVerified: boolean;

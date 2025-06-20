@@ -8,7 +8,8 @@ export enum NetworkAdapterEnum {
 export enum UsersCountRangeEnum {
   _24h = '24h',
   _7d = '7d',
-  _30d = '30d'
+  _30d = '30d',
+  _allTime = 'allTime'
 }
 
 export interface BaseApiType {
