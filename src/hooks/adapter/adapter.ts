@@ -3,7 +3,8 @@ import {
   AccountRolesTypeEnum,
   GetAccountType,
   GetApplicationsType,
-  GetApplicationType
+  GetApplicationType,
+  UsersCountRangeEnum
 } from 'types';
 import {
   BaseApiType,
@@ -402,6 +403,7 @@ export const useAdapter = () => {
       page,
       size,
       isVerified,
+      usersCountRange,
       ...rest
     }: GetApplicationsType) =>
       provider({
@@ -410,12 +412,23 @@ export const useAdapter = () => {
         params: {
           ...getPageParams({ page, size }),
           ...(isVerified !== undefined ? { isVerified } : {}),
+          ...(usersCountRange !== undefined
+            ? { usersCountRange }
+            : { usersCountRange: UsersCountRangeEnum._30d }),
           ...rest
         }
       }),
 
-    getApplicationsCount: (params: GetApplicationsType) =>
-      provider({ url: '/applications/count', params }),
+    getApplicationsCount: ({ usersCountRange, ...rest }: GetApplicationsType) =>
+      provider({
+        url: '/applications/count',
+        params: {
+          ...(usersCountRange !== undefined
+            ? { usersCountRange }
+            : { usersCountRange: UsersCountRangeEnum._30d }),
+          ...rest
+        }
+      }),
 
     /* Validators */
 

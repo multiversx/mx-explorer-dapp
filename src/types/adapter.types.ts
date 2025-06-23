@@ -54,8 +54,8 @@ export interface GetApplicationsType extends SortableApiType {
   search?: string;
   addresses?: string[];
   ownerAddress?: string;
-  usersCountRange?: UsersCountRangeEnum;
-  feesRange?: UsersCountRangeEnum;
+  usersCountRange?: string;
+  feesRange?: string;
   isVerified?: boolean;
   hasAssets?: boolean;
 }

@@ -3,14 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { ELLIPSIS, PAGE_SIZE } from 'appConstants';
+import { ELLIPSIS } from 'appConstants';
 import { ReactComponent as DefaultImage } from 'assets/img/default-icon.svg';
 import {
   Loader,
   Pager,
   PageSize,
   FormatAmount,
-  AccountLink,
   NetworkLink,
   Sort,
   AccountName,
@@ -19,7 +18,6 @@ import {
   Trim,
   TableWrapper,
   InfoTooltip,
-  TableSearch,
   ColSpanWrapper
 } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
@@ -29,42 +27,31 @@ import {
   useGetSort,
   useHasGrowthWidgets,
   useFetchGrowthMostUsed,
-  useIsMainnet,
   useGetSearch,
   useGetApplicationsFilters
 } from 'hooks';
 import { faBadgeCheck } from 'icons/solid';
-import {
-  activeNetworkSelector,
-  growthEconomicsSelector,
-  growthMostUsedSelector
-} from 'redux/selectors';
-import {
-  AccountType,
-  ApplicationSortEnum,
-  ApplicationType,
-  SortOrderEnum
-} from 'types';
+import { activeNetworkSelector, growthMostUsedSelector } from 'redux/selectors';
+import { ApplicationSortEnum, ApplicationType, SortOrderEnum } from 'types';
 import { MostUsedApplications } from 'widgets';
 
-import { FailedApplications } from './components/FailedApplications';
-import { NoApplications } from './components/NoApplications';
 import { ApplicationsFilters } from './components/ApplicationsFilters';
 import { ApplicationsHeader } from './components/ApplicationsHeader';
+import { ApplicationsTimelineFilterTabs } from './components/ApplicationsTimelineFilterTabs';
+import { FailedApplications } from './components/FailedApplications';
+import { NoApplications } from './components/NoApplications';
 
 export const Applications = () => {
-  const isMainnet = useIsMainnet();
   const hasGrowthWidgets = useHasGrowthWidgets();
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { isFetched: isGrowthDataFetched } = useSelector(
     growthMostUsedSelector
   );
-  const { applicationsDeployed } = useSelector(growthEconomicsSelector);
 
   const sort = useGetSort();
   const { search } = useGetSearch();
-  const { page, size } = useGetPage();
+  const { page } = useGetPage();
   const applicationsFilters = useGetApplicationsFilters();
   const { getApplications, getApplicationsCount } = useAdapter();
 
@@ -84,8 +71,6 @@ export const Applications = () => {
     sort.sort = ApplicationSortEnum.transfersLast24h;
     sort.order = SortOrderEnum.desc;
   }
-
-  const minSize = Math.min(size, 15);
 
   useFetchGrowthMostUsed();
 
@@ -151,16 +136,12 @@ export const Applications = () => {
                 applicationsCount={applicationsCount}
                 verifiedApplicationsCount={verifiedApplicationsCount}
               />
-              <div className='d-flex flex-wrap align-items-center gap-3 w-100'>
+              <div className='d-flex flex-wrap justify-content-between align-items-center gap-3 w-100'>
                 <ApplicationsFilters
                   applicationsCount={applicationsCount}
                   verifiedApplicationsCount={verifiedApplicationsCount}
                 />
-                <Pager
-                  total={totalApplications}
-                  className='d-flex ms-auto me-auto me-sm-0'
-                  show
-                />
+                <ApplicationsTimelineFilterTabs />
               </div>
             </div>
           </div>
