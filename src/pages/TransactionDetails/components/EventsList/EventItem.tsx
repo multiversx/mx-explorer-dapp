@@ -81,7 +81,11 @@ export const EventItem = ({ event, txHash, id }: EventItemUIType) => {
           <div className='row mb-3 d-flex flex-column flex-sm-row'>
             <div className='col-sm-2 col-left'>Address</div>
             <div className='col-sm-10 d-flex align-items-center'>
-              <AccountLink address={event.address} hasHighlight />
+              <AccountLink
+                address={event.address}
+                assets={event.addressAssets}
+                hasHighlight
+              />
               <CopyButton text={event.address} className='side-action ms-2' />
             </div>
           </div>

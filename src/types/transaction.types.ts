@@ -224,6 +224,7 @@ export interface EventType {
   topics: string[];
   additionalData?: string[];
   data?: string;
+  addressAssets?: AccountAssetType;
 }
 
 // GENERAL
