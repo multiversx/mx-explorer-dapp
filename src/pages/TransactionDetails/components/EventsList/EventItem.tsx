@@ -12,12 +12,12 @@ import {
 } from 'hooks';
 import { faExchange, faSearch } from 'icons/regular';
 import { transactionsRoutes } from 'routes';
-import { EventType } from 'types';
+import { TransactionEventType } from 'types';
 
 import { EventExtraData } from './EventExtraData';
 
 interface EventItemUIType {
-  event: EventType;
+  event: TransactionEventType;
   txHash: string;
   id: string;
 }

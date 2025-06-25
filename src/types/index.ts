@@ -4,6 +4,7 @@ export * from './adapter.types';
 export * from './block.types';
 export * from './collection.types';
 export * from './economics.types';
+export * from './events.types';
 export * from './explorerOrigin.types';
 export * from './general.types';
 export * from './stake.types';

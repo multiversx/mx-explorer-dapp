@@ -1,5 +1,5 @@
 import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
-import { AccountRolesTypeEnum, GetAccountType } from 'types';
+import { AccountRolesTypeEnum, GetAccountType, GetEventsType } from 'types';
 import {
   BaseApiType,
   GetBlocksType,
@@ -24,7 +24,8 @@ import {
   getCollectionsParams,
   getNftsParams,
   getTransactionsInPoolParams,
-  getPageParams
+  getPageParams,
+  getEventsParams
 } from './helpers';
 import { useAdapterConfig } from './useAdapterConfig';
 
@@ -205,6 +206,22 @@ export const useAdapter = () => {
       }),
 
     getScResultsCount: () => provider({ url: '/results/c' }),
+
+    /* Events */
+
+    getEvent: (hash: string) => provider({ url: `/events/${hash}` }),
+
+    getEvents: (params: GetEventsType) =>
+      provider({
+        url: '/events',
+        params: getEventsParams(params)
+      }),
+
+    getEventsCount: (params: GetEventsType) =>
+      provider({
+        url: '/events/count',
+        params: getEventsParams({ isCount: true, ...params })
+      }),
 
     /* Transactions Pool */
 

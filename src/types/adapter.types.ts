@@ -140,6 +140,15 @@ export interface GetTransactionsInPoolType extends SortableApiType {
   type?: TransactionInPoolTypeEnum;
 }
 
+export interface GetEventsType extends BaseApiType {
+  address?: string;
+  identifier?: string;
+  txHash?: number;
+  shard?: number;
+  before?: number;
+  after?: number;
+}
+
 export interface GetProvidersType extends BaseApiType {
   identity?: string;
   providers?: string;
