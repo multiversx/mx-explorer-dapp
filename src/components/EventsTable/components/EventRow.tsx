@@ -15,7 +15,7 @@ export const EventRow = ({ event }: EventRowUIType) => {
       <td>
         <div className='d-flex align-items-center hash'>
           <NetworkLink
-            to={urlBuilder.transactionDetails(txHash)}
+            to={urlBuilder.eventDetails(txHash)}
             data-testid='transactionLink'
             className='trim-wrapper'
           >

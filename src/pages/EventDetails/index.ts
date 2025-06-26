@@ -1,1 +1,1 @@
-export * from './TransactionInPoolDetails';
+export * from './EventDetails';
