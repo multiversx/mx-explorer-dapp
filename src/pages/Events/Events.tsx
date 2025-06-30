@@ -63,28 +63,6 @@ export const Events = () => {
     }
   };
 
-  // const fetchEvents = () => {
-  //   setDataChanged(true);
-  //   Promise.all([
-  //     getEvents({
-  //       ...urlParams,
-  //       page,
-  //       size
-  //     }),
-  //     getEventsCount({ ...urlParams })
-  //   ])
-  //     .then(([eventsData, eventsCountData]) => {
-  //       if (eventsData.success && eventsCountData.success) {
-  //         setEvents(eventsData.data);
-  //         setTotalEvents(eventsCountData.data);
-  //       }
-  //       setIsDataReady(eventsData.success && eventsCountData.success);
-  //     })
-  //     .finally(() => {
-  //       setDataChanged(false);
-  //     });
-  // };
-
   useEffect(() => {
     fetchEvents();
   }, [activeNetworkId, searchParams, firstPageRefreshTrigger]);
