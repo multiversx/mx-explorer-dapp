@@ -10,6 +10,8 @@ export interface EventType {
   txOrder: number;
   order: number;
   timestamp: number;
+
+  isNew?: boolean; // UI flag
 }
 
 export enum TransactionEventIdentifiersEnum {

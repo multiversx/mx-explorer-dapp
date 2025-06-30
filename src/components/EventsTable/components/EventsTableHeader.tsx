@@ -1,8 +1,8 @@
 import {
   FromColumnFilters,
-  ShardColumnFilters,
   AgeColumnFilters,
-  IdentifierColumnFilters
+  IdentifierColumnFilters,
+  ShardFilter
 } from 'components';
 import { useIsSovereign } from 'hooks';
 import { TransactionFiltersEnum, WithClassnameType } from 'types';
@@ -23,13 +23,7 @@ export const EventsTableHeader = ({
           Age <AgeColumnFilters inactiveFilters={inactiveFilters} />
         </th>
         <th scope='col'>
-          {isSovereign ? (
-            <>Chain</>
-          ) : (
-            <>
-              Shard <ShardColumnFilters inactiveFilters={inactiveFilters} />
-            </>
-          )}
+          <ShardFilter text={isSovereign ? 'Chain' : 'Shard'} />
         </th>
         <th scope='col' className='hash-xxl'>
           Address <FromColumnFilters inactiveFilters={inactiveFilters} />

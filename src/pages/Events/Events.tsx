@@ -4,18 +4,20 @@ import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS } from 'appConstants';
 import { Loader, PageState, EventsTable } from 'components';
-import { useAdapter, useGetPage, useGetSearch, useGetSort } from 'hooks';
+import { useAdapter, useGetEventFilters, useGetPage } from 'hooks';
 import { faExchange } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 
-import { EventType, SortOrderEnum } from 'types';
+import { EventType } from 'types';
 
 export const Events = () => {
+  let isCalled = false;
+
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const sort = useGetSort();
-  const { search } = useGetSearch();
+  const urlParams = useGetEventFilters();
+  const { firstPageRefreshTrigger } = useGetPage();
   const { page, size } = useGetPage();
   const { getEvents, getEventsCount } = useAdapter();
 
@@ -26,31 +28,66 @@ export const Events = () => {
     ELLIPSIS
   );
 
-  const fetchEvents = () => {
-    setDataChanged(true);
-    Promise.all([
-      getEvents({
-        page,
-        size,
-        ...sort
-      }),
-      getEventsCount({})
-    ])
-      .then(([eventsData, eventsCountData]) => {
-        if (eventsData.success && eventsCountData.success) {
-          setEvents(eventsData.data);
-          setTotalEvents(eventsCountData.data);
-        }
-        setIsDataReady(eventsData.success && eventsCountData.success);
-      })
-      .finally(() => {
-        setDataChanged(false);
-      });
+  const fetchEvents = (paramsChange = false) => {
+    if (!isCalled) {
+      isCalled = true;
+      if (searchParams.toString() && paramsChange) {
+        setDataChanged(true);
+      }
+      Promise.all([
+        getEvents({
+          ...urlParams,
+          page,
+          size
+        }),
+        getEventsCount({ ...urlParams })
+      ])
+        .then(([eventsData, eventsCountData]) => {
+          if (eventsData.success && eventsCountData.success) {
+            const existingHashes = events.map((b) => b.txHash);
+            const newEvents = eventsData.data.map((event: EventType) => ({
+              ...event,
+              isNew: page === 1 && !existingHashes.includes(event.txHash)
+            }));
+            setEvents(newEvents);
+            setTotalEvents(eventsCountData.data);
+          }
+          setIsDataReady(eventsData.success && eventsCountData.success);
+        })
+        .finally(() => {
+          if (paramsChange) {
+            isCalled = false;
+            setDataChanged(false);
+          }
+        });
+    }
   };
+
+  // const fetchEvents = () => {
+  //   setDataChanged(true);
+  //   Promise.all([
+  //     getEvents({
+  //       ...urlParams,
+  //       page,
+  //       size
+  //     }),
+  //     getEventsCount({ ...urlParams })
+  //   ])
+  //     .then(([eventsData, eventsCountData]) => {
+  //       if (eventsData.success && eventsCountData.success) {
+  //         setEvents(eventsData.data);
+  //         setTotalEvents(eventsCountData.data);
+  //       }
+  //       setIsDataReady(eventsData.success && eventsCountData.success);
+  //     })
+  //     .finally(() => {
+  //       setDataChanged(false);
+  //     });
+  // };
 
   useEffect(() => {
     fetchEvents();
-  }, [activeNetworkId, searchParams]);
+  }, [activeNetworkId, searchParams, firstPageRefreshTrigger]);
 
   if (isDataReady === undefined) {
     return <Loader />;

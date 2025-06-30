@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import { NetworkLink, Trim, AccountLink, ShardLink, TimeAgo } from 'components';
 import { urlBuilder } from 'helpers';
 import { EventType, WithClassnameType } from 'types';
@@ -8,10 +10,10 @@ export interface EventRowUIType extends WithClassnameType {
 }
 
 export const EventRow = ({ event }: EventRowUIType) => {
-  const { txHash, identifier, address, shardID, timestamp } = event;
+  const { txHash, identifier, address, shardID, timestamp, isNew } = event;
 
   return (
-    <tr>
+    <tr className={classNames('animated-row', { new: isNew })}>
       <td>
         <div className='d-flex align-items-center hash'>
           <NetworkLink

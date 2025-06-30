@@ -143,7 +143,7 @@ export interface GetTransactionsInPoolType extends SortableApiType {
 export interface GetEventsType extends BaseApiType {
   address?: string;
   identifier?: string;
-  txHash?: number;
+  txHash?: string;
   shard?: number;
   before?: number;
   after?: number;
