@@ -48,6 +48,7 @@ export const urlBuilder = {
     }`;
   },
   transactionInPoolDetails: (hash: string) => `/transactions/pool/${hash}`,
+  eventDetails: (txHash: string) => `/events/${txHash}`,
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accounts: (params?: GetAccountsType) => {
     const urlSearch = params
