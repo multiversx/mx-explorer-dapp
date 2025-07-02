@@ -9,11 +9,12 @@ import {
   ComponentProps
 } from 'react-select-async-paginate';
 
+import { NATIVE_TOKEN_SEARCH_LABEL } from 'appConstants';
 import { SelectOptionType, NativeTokenLogo } from 'components';
 import { useAdapter, useGetHash, useActiveRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
-import { CollectionType, TokenType, TransactionFiltersEnum } from 'types';
+import { CollectionType, TokenType, WithClassnameType } from 'types';
 
 type AsyncPaginateCreatableProps<
   OptionType,
@@ -49,21 +50,20 @@ export interface TokenSelectOptionType extends SelectOptionType {
   svgUrl?: string;
 }
 
-export interface TokenSelectFilterType {
+export interface TokenSelectFilterUIType extends WithClassnameType {
   name: string;
-  filter: TransactionFiltersEnum;
+  filter: string;
   options?: TokenSelectOptionType[];
   placeholder?: string;
   hasCustomSearch?: boolean;
   hasShowAllOption?: boolean;
   showAllPlaceholder?: string;
-  className?: string;
   isMulti?: boolean;
+  defaultToken?: string;
+  selectDefaultValue?: any;
   validation?: 'address' | 'hash';
   noOptionsMessage?: string;
 }
-
-const egldSearchLabel = 'EGLD';
 
 const Option: typeof components.Option = (props) => {
   return (
@@ -77,7 +77,8 @@ const Option: typeof components.Option = (props) => {
             role='presentation'
           />
         )}
-        {(props.data as TokenSelectOptionType).value === egldSearchLabel && (
+        {(props.data as TokenSelectOptionType).value ===
+          NATIVE_TOKEN_SEARCH_LABEL && (
           <NativeTokenLogo className='side-icon me-1' role='presentation' />
         )}
         <span className='text-truncate'>{props.label}</span>
@@ -92,11 +93,12 @@ export const TokenSelectFilter = ({
   options = [],
   placeholder = 'Select...',
   className = '',
+  defaultToken,
   hasShowAllOption = true,
   isMulti = false,
   showAllPlaceholder = 'Show All',
   noOptionsMessage
-}: TokenSelectFilterType) => {
+}: TokenSelectFilterUIType) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
   const [defaultValue, setDefaultValue] = useState<SelectOptionType>();
   const activeRoute = useActiveRoute();
@@ -112,9 +114,10 @@ export const TokenSelectFilter = ({
 
   const [searchParams, setSearchParams] = useSearchParams();
   const paramsObject = Object.fromEntries(searchParams);
+  const defaultTokens = defaultToken ? [defaultToken] : [];
   const existingValues = paramsObject[filter]
     ? paramsObject[filter].split(',')
-    : [];
+    : defaultTokens;
 
   const hasExistingShowAllOption = options.find(
     (option) => option.label === showAllPlaceholder
@@ -129,13 +132,13 @@ export const TokenSelectFilter = ({
   }
 
   if (!hasExistingEgldOption && egldLabel) {
-    options.push({ value: egldSearchLabel, label: egldLabel });
+    options.push({ value: NATIVE_TOKEN_SEARCH_LABEL, label: egldLabel });
   }
 
   useEffect(() => {
     const isEgld =
-      defaultValue?.value === egldSearchLabel ||
-      existingValues[0] === egldSearchLabel;
+      defaultValue?.value === NATIVE_TOKEN_SEARCH_LABEL ||
+      existingValues[0] === NATIVE_TOKEN_SEARCH_LABEL;
     if (
       existingValues.length > 0 &&
       (!defaultValue ||
@@ -143,7 +146,7 @@ export const TokenSelectFilter = ({
     ) {
       if (isEgld && egldLabel) {
         const defaultVal = {
-          value: egldSearchLabel,
+          value: NATIVE_TOKEN_SEARCH_LABEL,
           label: egldLabel
         };
         setDefaultValue(defaultVal);
@@ -206,7 +209,11 @@ export const TokenSelectFilter = ({
     let collectionsOptions: SelectOptionType[] = [];
     let tokenResponse = undefined;
 
-    if (activeRoute(accountsRoutes.accountDetails) && address) {
+    if (
+      (activeRoute(accountsRoutes.accountDetails) ||
+        activeRoute(accountsRoutes.accountAnalytics)) &&
+      address
+    ) {
       tokenResponse = await getAccountTokens({
         address,
         page,

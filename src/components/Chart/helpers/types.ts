@@ -74,10 +74,10 @@ export interface ChartConfigType {
   tooltipStrokeDasharray?: string;
   zero?: boolean;
   showUsdValue?: boolean;
+  price?: number;
   yAxisConfig?: ChartYAxisFormatConfig;
   legend?: ChartLabelConfigType;
   tooltip?: {
-    showUsdValue?: boolean;
     dateFormat?: string;
   };
 }
@@ -117,6 +117,7 @@ export interface ChartProps {
   size?: ChartSizeEnum;
   hasOnlyStartEndTick?: boolean;
   tooltip?: {
+    price?: number;
     showUsdValue?: boolean;
     dateFormat?: string;
   };

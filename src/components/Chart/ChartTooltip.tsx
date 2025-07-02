@@ -130,7 +130,7 @@ export const ChartTooltip = ({
                   <p className='text-neutral-400 small mb-0'>
                     {usdValue({
                       amount: displayValue,
-                      usd: unprocessed.price,
+                      usd: currentSeries?.price ?? unprocessed.price,
                       showPrefix: true
                     })}
                   </p>
