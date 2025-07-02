@@ -64,7 +64,6 @@ export const AccountAnalytics = () => {
       if (price && isValidTokenPrice(searchedTokenData)) {
         setTokenPrice(price);
       }
-      setCurrency(searchedTokenData?.ticker ?? searchedTokenData.identifier);
       setSelectDefaultValue(defaultVal);
       searchedToken = searchedTokenData;
     }
@@ -89,6 +88,10 @@ export const AccountAnalytics = () => {
 
       const frequency = getFrequency(reversedData);
       const normalizedData = getNormalizedTimeEntries(reversedData, frequency);
+
+      setCurrency(
+        searchedToken?.ticker ?? searchedToken?.identifier ?? egldLabel
+      );
       setChartData(normalizedData);
 
       setStartDate(moment.unix(startTimestamp).utc().format('MMM DD, YYYY'));
