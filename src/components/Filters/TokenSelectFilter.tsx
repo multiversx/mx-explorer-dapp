@@ -1,4 +1,4 @@
-import { useState, ReactElement, useEffect } from 'react';
+import { useState, ReactElement, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { components, GroupBase } from 'react-select';
@@ -59,8 +59,8 @@ export interface TokenSelectFilterUIType extends WithClassnameType {
   hasShowAllOption?: boolean;
   showAllPlaceholder?: string;
   isMulti?: boolean;
+  isClearable?: boolean;
   defaultToken?: string;
-  selectDefaultValue?: any;
   validation?: 'address' | 'hash';
   noOptionsMessage?: string;
 }
@@ -96,6 +96,7 @@ export const TokenSelectFilter = ({
   defaultToken,
   hasShowAllOption = true,
   isMulti = false,
+  isClearable = true,
   showAllPlaceholder = 'Show All',
   noOptionsMessage
 }: TokenSelectFilterUIType) => {
@@ -113,82 +114,103 @@ export const TokenSelectFilter = ({
   } = useAdapter();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const paramsObject = Object.fromEntries(searchParams);
-  const defaultTokens = defaultToken ? [defaultToken] : [];
-  const existingValues = paramsObject[filter]
-    ? paramsObject[filter].split(',')
-    : defaultTokens;
 
-  const hasExistingShowAllOption = options.find(
-    (option) => option.label === showAllPlaceholder
-  );
+  const unique = (options: SelectOptionType[], set = new Set()) =>
+    options.filter(({ value }) => (set.has(value) ? false : set.add(value)));
 
-  const hasExistingEgldOption = options.find(
-    (option) => option.label === egldLabel
-  );
+  const existingValues = useMemo(() => {
+    const paramsObject = Object.fromEntries(searchParams);
+    if (paramsObject[filter]) {
+      return paramsObject[filter].split(',');
+    }
+    if (defaultToken) {
+      return [defaultToken];
+    }
+    return [];
+  }, [defaultToken, searchParams]);
 
-  if (hasShowAllOption && !hasExistingShowAllOption) {
-    options.push({ value: '', label: showAllPlaceholder });
-  }
+  const defaultOptions = useMemo(() => {
+    const appendedDefaultOptions = [...options];
+    const hasExistingShowAllOption = appendedDefaultOptions.find(
+      (option) => option.label === showAllPlaceholder
+    );
 
-  if (!hasExistingEgldOption && egldLabel) {
-    options.push({ value: NATIVE_TOKEN_SEARCH_LABEL, label: egldLabel });
-  }
+    const hasExistingEgldOption = appendedDefaultOptions.find(
+      (option) => option.label === egldLabel
+    );
+
+    if (hasShowAllOption && !hasExistingShowAllOption) {
+      appendedDefaultOptions.push({ value: '', label: showAllPlaceholder });
+    }
+
+    if (!hasExistingEgldOption && egldLabel) {
+      appendedDefaultOptions.push({
+        value: NATIVE_TOKEN_SEARCH_LABEL,
+        label: egldLabel
+      });
+    }
+
+    if (defaultValue) {
+      appendedDefaultOptions.push(defaultValue);
+    }
+
+    const set = new Set();
+    appendedDefaultOptions.filter(({ value }) =>
+      set.has(value) ? false : set.add(value)
+    );
+
+    return unique(appendedDefaultOptions);
+  }, [options, egldLabel, showAllPlaceholder, defaultValue]);
 
   useEffect(() => {
-    const isEgld =
-      defaultValue?.value === NATIVE_TOKEN_SEARCH_LABEL ||
-      existingValues[0] === NATIVE_TOKEN_SEARCH_LABEL;
-    if (
-      existingValues.length > 0 &&
-      (!defaultValue ||
-        (defaultValue && existingValues[0] !== defaultValue?.value))
-    ) {
-      if (isEgld && egldLabel) {
+    if (defaultValue || existingValues.length === 0) {
+      return;
+    }
+    const searchedToken = existingValues[0];
+    const isEgld = searchedToken === NATIVE_TOKEN_SEARCH_LABEL;
+    if (isEgld && egldLabel) {
+      const defaultVal = {
+        value: NATIVE_TOKEN_SEARCH_LABEL,
+        label: egldLabel
+      };
+      setDefaultValue(defaultVal);
+      return;
+    }
+
+    // get only for first
+
+    getToken(searchedToken).then(({ data, success }) => {
+      if (data && success) {
+        const { identifier, assets, ticker } = data as TokenType;
+        const label = assets && ticker ? ticker : identifier;
         const defaultVal = {
-          value: NATIVE_TOKEN_SEARCH_LABEL,
-          label: egldLabel
+          value: identifier,
+          label,
+          ...(assets?.svgUrl ? { svgUrl: assets.svgUrl } : {})
         };
         setDefaultValue(defaultVal);
       } else {
-        // get only for first
-        getToken(existingValues[0]).then(({ data, success }) => {
+        getCollection(searchedToken).then(({ data, success }) => {
           if (data && success) {
-            const { identifier, assets, ticker } = data as TokenType;
-            const label = assets && ticker ? ticker : identifier;
+            const { collection, assets, ticker } = data as CollectionType;
+            const label = assets && ticker ? ticker : collection;
             const defaultVal = {
-              value: identifier,
+              value: collection,
               label,
               ...(assets?.svgUrl ? { svgUrl: assets.svgUrl } : {})
             };
             setDefaultValue(defaultVal);
-            options.push(defaultVal);
           } else {
-            getCollection(existingValues[0]).then(({ data, success }) => {
-              if (data && success) {
-                const { collection, assets, ticker } = data as CollectionType;
-                const label = assets && ticker ? ticker : collection;
-                const defaultVal = {
-                  value: collection,
-                  label,
-                  ...(assets?.svgUrl ? { svgUrl: assets.svgUrl } : {})
-                };
-                setDefaultValue(defaultVal);
-                options.push(defaultVal);
-              } else {
-                const defaultVal = {
-                  value: existingValues[0],
-                  label: existingValues[0]
-                };
-                setDefaultValue(defaultVal);
-                options.push(defaultVal);
-              }
-            });
+            const defaultVal = {
+              value: searchedToken,
+              label: searchedToken
+            };
+            setDefaultValue(defaultVal);
           }
         });
       }
-    }
-  }, [existingValues, defaultValue]);
+    });
+  }, [existingValues, defaultValue, egldLabel]);
 
   const updateSelectValue = (selectValue: string) => {
     const paramsObject = Object.fromEntries(searchParams);
@@ -289,14 +311,20 @@ export const TokenSelectFilter = ({
     };
   };
 
+  if (
+    defaultOptions.length === 0 ||
+    (existingValues.length > 0 && !defaultValue)
+  ) {
+    return null;
+  }
+
   return (
     <CreatableAsyncPaginate
       debounceTimeout={700}
       additional={defaultAdditional}
-      value={defaultValue}
       loadOptions={loadPageOptions as any}
       defaultValue={defaultValue}
-      defaultOptions={options}
+      defaultOptions={defaultOptions}
       name={name}
       data-testid={name}
       className={`styled-select ${className}`}
@@ -304,7 +332,7 @@ export const TokenSelectFilter = ({
       placeholder={placeholder}
       createOptionPosition='first'
       formatCreateLabel={(inputValue: string) => `Search for ${inputValue}`}
-      isClearable
+      isClearable={isClearable}
       components={{
         Option
       }}

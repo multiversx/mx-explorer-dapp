@@ -133,9 +133,10 @@ export const AccountAnalytics = () => {
               filter='token'
               placeholder='Search for a Token'
               noOptionsMessage='Invalid Identifier'
-              hasShowAllOption={false}
+              className='account-analytics-token-select mx-2'
               defaultToken={NATIVE_TOKEN_SEARCH_LABEL}
-              className='mx-2'
+              hasShowAllOption={false}
+              isClearable={false}
             />{' '}
             Balance{' '}
             {chartData.length > 1 && (
