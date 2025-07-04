@@ -21,10 +21,10 @@ export const TokenDetailsAnalytics = () => {
 
   const fetchExchangeTokenPriceHistory = () => {
     getExchangeTokenPriceHistory({ identifier }).then(({ data, success }) => {
-      if (success && data?.lockedAccounts) {
-        setTokenPriceHistory(data.lockedAccounts);
+      if (success && data) {
+        setTokenPriceHistory(data);
       }
-      setIsDataReady(Boolean(success && data?.lockedAccounts));
+      setIsDataReady(Boolean(success && data));
     });
   };
 

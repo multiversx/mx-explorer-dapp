@@ -4,35 +4,53 @@ import { Navigate, Outlet, useParams } from 'react-router-dom';
 
 import { NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
 import { Loader } from 'components';
-import { useAdapter, useGetPage } from 'hooks';
-import { activeNetworkSelector } from 'redux/selectors';
-import { setToken } from 'redux/slices';
+import { useAdapter, useGetPage, useHasExchangeData } from 'hooks';
+import { activeNetworkSelector, tokenExtraSelector } from 'redux/selectors';
+import { setToken, setTokenExtra } from 'redux/slices';
 
 import { FailedTokenDetails } from './FailedTokenDetails';
 import { TokenDetailsCard } from './TokenDetailsCard';
 
 export const TokenLayout = () => {
   const dispatch = useDispatch();
-  const { getToken } = useAdapter();
-  const { hash: tokenId } = useParams();
+  const { getToken, getExchangeTokenPriceHistory } = useAdapter();
+  const { hash: identifier } = useParams();
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
+  const { isFetched: isTokenExtraFetched } = useSelector(tokenExtraSelector);
 
+  const hasExchangeData = useHasExchangeData();
   const isNativeToken =
-    tokenId &&
-    (tokenId.toLowerCase() === egldLabel?.toLowerCase() ||
-      tokenId.toLowerCase() === NATIVE_TOKEN_IDENTIFIER.toLowerCase());
+    identifier &&
+    (identifier.toLowerCase() === egldLabel?.toLowerCase() ||
+      identifier.toLowerCase() === NATIVE_TOKEN_IDENTIFIER.toLowerCase());
 
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
   const fetchTokenDetails = () => {
-    if (tokenId) {
-      getToken(tokenId).then(({ success, data }) => {
-        if (success && data) {
-          dispatch(setToken({ isFetched: true, token: data }));
-        }
+    if (identifier) {
+      const promises = [
+        getToken(identifier),
+        ...(hasExchangeData && !isTokenExtraFetched
+          ? [getExchangeTokenPriceHistory({ identifier })]
+          : [])
+      ];
+      Promise.all(promises).then((response) => {
+        const [tokenData, tokenPriceHistoryData] = response;
 
-        setIsDataReady(success);
+        if (tokenData.success && tokenData.data) {
+          dispatch(setToken({ isFetched: true, token: tokenData.data }));
+          dispatch(
+            setTokenExtra({
+              isFetched: true,
+              tokenExtra: {
+                identifier: tokenData.data?.identifier,
+                priceHistory: tokenPriceHistoryData.data ?? []
+              }
+            })
+          );
+        }
+        setIsDataReady(tokenData.success);
       });
     }
   };
@@ -41,7 +59,13 @@ export const TokenLayout = () => {
     if (!isNativeToken) {
       fetchTokenDetails();
     }
-  }, [firstPageRefreshTrigger, activeNetworkId, tokenId, isNativeToken]);
+  }, [
+    firstPageRefreshTrigger,
+    activeNetworkId,
+    identifier,
+    isNativeToken,
+    isTokenExtraFetched
+  ]);
 
   const loading = isDataReady === undefined;
   const failed = isDataReady === false;
@@ -51,7 +75,7 @@ export const TokenLayout = () => {
   }
 
   if (failed) {
-    return <FailedTokenDetails tokenId={tokenId} />;
+    return <FailedTokenDetails tokenId={identifier} />;
   }
 
   if (loading) {

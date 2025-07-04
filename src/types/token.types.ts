@@ -1,4 +1,10 @@
-import { RolesType, SliceType, AccountAssetType, NftSubtypeEnum } from 'types';
+import {
+  RolesType,
+  SliceType,
+  AccountAssetType,
+  NftSubtypeEnum,
+  GrowthChartDataType
+} from 'types';
 
 export interface TokenType {
   type: TokenTypeEnum;
@@ -37,6 +43,13 @@ export interface TokenType {
 
 export interface TokenSliceType extends SliceType {
   token: TokenType;
+}
+
+export interface TokenExtraSliceType extends SliceType {
+  tokenExtra: {
+    identifier: string;
+    priceHistory: GrowthChartDataType[];
+  };
 }
 
 export enum TokenTypeEnum {
