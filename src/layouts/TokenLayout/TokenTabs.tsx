@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 
 import { Tabs } from 'components/Tabs';
 import { urlBuilder } from 'helpers';
+import { useHasExchangeData } from 'hooks';
 import { tokenSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';
 
@@ -9,6 +10,7 @@ export const TokenTabs = () => {
   const { token } = useSelector(tokenSelector);
   const { identifier, assets, roles } = token;
 
+  const hasExchangeData = useHasExchangeData();
   const showLockedAccounts = Boolean(assets?.lockedAccounts);
   const showRoles = Boolean(roles);
 
@@ -30,10 +32,16 @@ export const TokenTabs = () => {
       show: showLockedAccounts
     },
     {
+      tabLabel: 'Analytics',
+      tabTo: urlBuilder.tokenDetailsAnalytics(identifier),
+      activationRoutes: [tokensRoutes.tokenDetailsAnalytics],
+      show: showRoles
+    },
+    {
       tabLabel: 'Roles',
       tabTo: urlBuilder.tokenDetailsRoles(identifier),
       activationRoutes: [tokensRoutes.tokenDetailsRoles],
-      show: showRoles
+      show: hasExchangeData
     }
   ];
 
