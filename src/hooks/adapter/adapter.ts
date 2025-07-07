@@ -336,17 +336,29 @@ export const useAdapter = () => {
 
     getAccountHistory: ({
       address,
+      identifier,
       size
     }: {
       address: string;
+      identifier?: string;
       size?: number;
-    }) =>
-      provider({
+    }) => {
+      if (identifier) {
+        return provider({
+          url: `/accounts/${address}/history/${identifier}`,
+          params: {
+            ...(size !== undefined ? { size } : {})
+          }
+        });
+      }
+
+      return provider({
         url: `/accounts/${address}/history`,
         params: {
           ...(size !== undefined ? { size } : {})
         }
-      }),
+      });
+    },
 
     getAccountContractVerification: ({ address }: { address: string }) =>
       provider({

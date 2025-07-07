@@ -1,4 +1,4 @@
-import { useState, ReactElement, useEffect } from 'react';
+import { useState, ReactElement, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { components, GroupBase } from 'react-select';
@@ -9,11 +9,12 @@ import {
   ComponentProps
 } from 'react-select-async-paginate';
 
+import { NATIVE_TOKEN_SEARCH_LABEL } from 'appConstants';
 import { SelectOptionType, NativeTokenLogo } from 'components';
 import { useAdapter, useGetHash, useActiveRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
-import { CollectionType, TokenType, TransactionFiltersEnum } from 'types';
+import { CollectionType, TokenType, WithClassnameType } from 'types';
 
 type AsyncPaginateCreatableProps<
   OptionType,
@@ -49,21 +50,20 @@ export interface TokenSelectOptionType extends SelectOptionType {
   svgUrl?: string;
 }
 
-export interface TokenSelectFilterType {
+export interface TokenSelectFilterUIType extends WithClassnameType {
   name: string;
-  filter: TransactionFiltersEnum;
+  filter: string;
   options?: TokenSelectOptionType[];
   placeholder?: string;
   hasCustomSearch?: boolean;
   hasShowAllOption?: boolean;
   showAllPlaceholder?: string;
-  className?: string;
   isMulti?: boolean;
+  isClearable?: boolean;
+  defaultToken?: string;
   validation?: 'address' | 'hash';
   noOptionsMessage?: string;
 }
-
-const egldSearchLabel = 'EGLD';
 
 const Option: typeof components.Option = (props) => {
   return (
@@ -77,7 +77,8 @@ const Option: typeof components.Option = (props) => {
             role='presentation'
           />
         )}
-        {(props.data as TokenSelectOptionType).value === egldSearchLabel && (
+        {(props.data as TokenSelectOptionType).value ===
+          NATIVE_TOKEN_SEARCH_LABEL && (
           <NativeTokenLogo className='side-icon me-1' role='presentation' />
         )}
         <span className='text-truncate'>{props.label}</span>
@@ -92,11 +93,13 @@ export const TokenSelectFilter = ({
   options = [],
   placeholder = 'Select...',
   className = '',
+  defaultToken,
   hasShowAllOption = true,
   isMulti = false,
+  isClearable = true,
   showAllPlaceholder = 'Show All',
   noOptionsMessage
-}: TokenSelectFilterType) => {
+}: TokenSelectFilterUIType) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
   const [defaultValue, setDefaultValue] = useState<SelectOptionType>();
   const activeRoute = useActiveRoute();
@@ -111,81 +114,103 @@ export const TokenSelectFilter = ({
   } = useAdapter();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const paramsObject = Object.fromEntries(searchParams);
-  const existingValues = paramsObject[filter]
-    ? paramsObject[filter].split(',')
-    : [];
 
-  const hasExistingShowAllOption = options.find(
-    (option) => option.label === showAllPlaceholder
-  );
+  const unique = (options: SelectOptionType[], set = new Set()) =>
+    options.filter(({ value }) => (set.has(value) ? false : set.add(value)));
 
-  const hasExistingEgldOption = options.find(
-    (option) => option.label === egldLabel
-  );
+  const existingValues = useMemo(() => {
+    const paramsObject = Object.fromEntries(searchParams);
+    if (paramsObject[filter]) {
+      return paramsObject[filter].split(',');
+    }
+    if (defaultToken) {
+      return [defaultToken];
+    }
+    return [];
+  }, [defaultToken, searchParams]);
 
-  if (hasShowAllOption && !hasExistingShowAllOption) {
-    options.push({ value: '', label: showAllPlaceholder });
-  }
+  const defaultOptions = useMemo(() => {
+    const appendedDefaultOptions = [...options];
+    const hasExistingShowAllOption = appendedDefaultOptions.find(
+      (option) => option.label === showAllPlaceholder
+    );
 
-  if (!hasExistingEgldOption && egldLabel) {
-    options.push({ value: egldSearchLabel, label: egldLabel });
-  }
+    const hasExistingEgldOption = appendedDefaultOptions.find(
+      (option) => option.label === egldLabel
+    );
+
+    if (hasShowAllOption && !hasExistingShowAllOption) {
+      appendedDefaultOptions.push({ value: '', label: showAllPlaceholder });
+    }
+
+    if (!hasExistingEgldOption && egldLabel) {
+      appendedDefaultOptions.push({
+        value: NATIVE_TOKEN_SEARCH_LABEL,
+        label: egldLabel
+      });
+    }
+
+    if (defaultValue) {
+      appendedDefaultOptions.push(defaultValue);
+    }
+
+    const set = new Set();
+    appendedDefaultOptions.filter(({ value }) =>
+      set.has(value) ? false : set.add(value)
+    );
+
+    return unique(appendedDefaultOptions);
+  }, [options, egldLabel, showAllPlaceholder, defaultValue]);
 
   useEffect(() => {
-    const isEgld =
-      defaultValue?.value === egldSearchLabel ||
-      existingValues[0] === egldSearchLabel;
-    if (
-      existingValues.length > 0 &&
-      (!defaultValue ||
-        (defaultValue && existingValues[0] !== defaultValue?.value))
-    ) {
-      if (isEgld && egldLabel) {
+    if (defaultValue || existingValues.length === 0) {
+      return;
+    }
+    const searchedToken = existingValues[0];
+    const isEgld = searchedToken === NATIVE_TOKEN_SEARCH_LABEL;
+    if (isEgld && egldLabel) {
+      const defaultVal = {
+        value: NATIVE_TOKEN_SEARCH_LABEL,
+        label: egldLabel
+      };
+      setDefaultValue(defaultVal);
+      return;
+    }
+
+    // get only for first
+
+    getToken(searchedToken).then(({ data, success }) => {
+      if (data && success) {
+        const { identifier, assets, ticker } = data as TokenType;
+        const label = assets && ticker ? ticker : identifier;
         const defaultVal = {
-          value: egldSearchLabel,
-          label: egldLabel
+          value: identifier,
+          label,
+          ...(assets?.svgUrl ? { svgUrl: assets.svgUrl } : {})
         };
         setDefaultValue(defaultVal);
       } else {
-        // get only for first
-        getToken(existingValues[0]).then(({ data, success }) => {
+        getCollection(searchedToken).then(({ data, success }) => {
           if (data && success) {
-            const { identifier, assets, ticker } = data as TokenType;
-            const label = assets && ticker ? ticker : identifier;
+            const { collection, assets, ticker } = data as CollectionType;
+            const label = assets && ticker ? ticker : collection;
             const defaultVal = {
-              value: identifier,
+              value: collection,
               label,
               ...(assets?.svgUrl ? { svgUrl: assets.svgUrl } : {})
             };
             setDefaultValue(defaultVal);
-            options.push(defaultVal);
           } else {
-            getCollection(existingValues[0]).then(({ data, success }) => {
-              if (data && success) {
-                const { collection, assets, ticker } = data as CollectionType;
-                const label = assets && ticker ? ticker : collection;
-                const defaultVal = {
-                  value: collection,
-                  label,
-                  ...(assets?.svgUrl ? { svgUrl: assets.svgUrl } : {})
-                };
-                setDefaultValue(defaultVal);
-                options.push(defaultVal);
-              } else {
-                const defaultVal = {
-                  value: existingValues[0],
-                  label: existingValues[0]
-                };
-                setDefaultValue(defaultVal);
-                options.push(defaultVal);
-              }
-            });
+            const defaultVal = {
+              value: searchedToken,
+              label: searchedToken
+            };
+            setDefaultValue(defaultVal);
           }
         });
       }
-    }
-  }, [existingValues, defaultValue]);
+    });
+  }, [existingValues, defaultValue, egldLabel]);
 
   const updateSelectValue = (selectValue: string) => {
     const paramsObject = Object.fromEntries(searchParams);
@@ -206,7 +231,11 @@ export const TokenSelectFilter = ({
     let collectionsOptions: SelectOptionType[] = [];
     let tokenResponse = undefined;
 
-    if (activeRoute(accountsRoutes.accountDetails) && address) {
+    if (
+      (activeRoute(accountsRoutes.accountDetails) ||
+        activeRoute(accountsRoutes.accountAnalytics)) &&
+      address
+    ) {
       tokenResponse = await getAccountTokens({
         address,
         page,
@@ -282,14 +311,20 @@ export const TokenSelectFilter = ({
     };
   };
 
+  if (
+    defaultOptions.length === 0 ||
+    (existingValues.length > 0 && !defaultValue)
+  ) {
+    return null;
+  }
+
   return (
     <CreatableAsyncPaginate
       debounceTimeout={700}
       additional={defaultAdditional}
-      value={defaultValue}
       loadOptions={loadPageOptions as any}
       defaultValue={defaultValue}
-      defaultOptions={options}
+      defaultOptions={defaultOptions}
       name={name}
       data-testid={name}
       className={`styled-select ${className}`}
@@ -297,7 +332,7 @@ export const TokenSelectFilter = ({
       placeholder={placeholder}
       createOptionPosition='first'
       formatCreateLabel={(inputValue: string) => `Search for ${inputValue}`}
-      isClearable
+      isClearable={isClearable}
       components={{
         Option
       }}
