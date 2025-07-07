@@ -3,7 +3,8 @@ import {
   SliceType,
   AccountAssetType,
   NftSubtypeEnum,
-  GrowthChartDataType
+  GrowthChartDataType,
+  ExchangePriceRangeEnum
 } from 'types';
 
 export interface TokenType {
@@ -48,6 +49,7 @@ export interface TokenSliceType extends SliceType {
 export interface TokenExtraSliceType extends SliceType {
   tokenExtra: {
     identifier: string;
+    range: ExchangePriceRangeEnum;
     priceHistory: GrowthChartDataType[];
   };
 }

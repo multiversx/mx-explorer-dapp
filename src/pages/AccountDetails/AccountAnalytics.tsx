@@ -27,10 +27,6 @@ export const AccountAnalytics = () => {
   const [dataReady, setDataReady] = useState<boolean | undefined>();
   const [tokenPrice, setTokenPrice] = useState<number | undefined>();
   const [currency, setCurrency] = useState(egldLabel);
-  const [selectDefaultValue, setSelectDefaultValue] = useState({
-    value: NATIVE_TOKEN_SEARCH_LABEL,
-    label: egldLabel
-  });
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const [startDate, setStartDate] = useState<string>(ELLIPSIS);
   const [endDate, setEndDate] = useState<string>(ELLIPSIS);
@@ -52,19 +48,10 @@ export const AccountAnalytics = () => {
         return;
       }
 
-      const { identifier, assets, ticker, price } =
-        searchedTokenData as TokenType;
-      const label = assets && ticker ? ticker : identifier;
-      const defaultVal = {
-        value: identifier,
-        label,
-        ...(assets?.svgUrl ? { svgUrl: assets.svgUrl } : {})
-      };
-
+      const { price } = searchedTokenData as TokenType;
       if (price && isValidTokenPrice(searchedTokenData)) {
         setTokenPrice(price);
       }
-      setSelectDefaultValue(defaultVal);
       searchedToken = searchedTokenData;
     }
 

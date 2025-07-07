@@ -7,6 +7,7 @@ import { Loader } from 'components';
 import { useAdapter, useGetPage, useHasExchangeData } from 'hooks';
 import { activeNetworkSelector, tokenExtraSelector } from 'redux/selectors';
 import { setToken, setTokenExtra } from 'redux/slices';
+import { ExchangePriceRangeEnum } from 'types';
 
 import { FailedTokenDetails } from './FailedTokenDetails';
 import { TokenDetailsCard } from './TokenDetailsCard';
@@ -17,7 +18,8 @@ export const TokenLayout = () => {
   const { hash: identifier } = useParams();
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
-  const { isFetched: isTokenExtraFetched } = useSelector(tokenExtraSelector);
+  const { isFetched: isTokenExtraFetched, tokenExtra } =
+    useSelector(tokenExtraSelector);
 
   const hasExchangeData = useHasExchangeData();
   const isNativeToken =
@@ -31,7 +33,7 @@ export const TokenLayout = () => {
     if (identifier) {
       const promises = [
         getToken(identifier),
-        ...(hasExchangeData && !isTokenExtraFetched
+        ...(hasExchangeData && tokenExtra.identifier !== identifier
           ? [getExchangeTokenPriceHistory({ identifier })]
           : [])
       ];
@@ -40,15 +42,18 @@ export const TokenLayout = () => {
 
         if (tokenData.success && tokenData.data) {
           dispatch(setToken({ isFetched: true, token: tokenData.data }));
-          dispatch(
-            setTokenExtra({
-              isFetched: true,
-              tokenExtra: {
-                identifier: tokenData.data?.identifier,
-                priceHistory: tokenPriceHistoryData.data ?? []
-              }
-            })
-          );
+          if (tokenPriceHistoryData?.data) {
+            dispatch(
+              setTokenExtra({
+                isFetched: true,
+                tokenExtra: {
+                  identifier: tokenData.data.identifier,
+                  range: ExchangePriceRangeEnum.hourly,
+                  priceHistory: tokenPriceHistoryData.data
+                }
+              })
+            );
+          }
         }
         setIsDataReady(tokenData.success);
       });
@@ -64,7 +69,7 @@ export const TokenLayout = () => {
     activeNetworkId,
     identifier,
     isNativeToken,
-    isTokenExtraFetched
+    tokenExtra
   ]);
 
   const loading = isDataReady === undefined;

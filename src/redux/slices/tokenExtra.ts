@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ExchangePriceRangeEnum } from 'types';
 import { TokenExtraSliceType } from 'types/token.types';
 
 export const getInitialTokenExtraState = (): TokenExtraSliceType => {
   return {
     tokenExtra: {
+      range: ExchangePriceRangeEnum.hourly,
       identifier: '',
       priceHistory: []
     },
@@ -20,6 +22,7 @@ export const tokenExtraSlice = createSlice({
       action: PayloadAction<TokenExtraSliceType>
     ) => {
       state.tokenExtra.identifier = action.payload.tokenExtra.identifier;
+      state.tokenExtra.range = action.payload.tokenExtra.range;
       state.tokenExtra.priceHistory = action.payload.tokenExtra.priceHistory;
 
       state.isFetched = action.payload.isFetched;
