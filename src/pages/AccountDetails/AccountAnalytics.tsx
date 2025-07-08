@@ -150,12 +150,12 @@ export const AccountAnalytics = () => {
             <>
               {chartData.length > 1 ? (
                 <div className='mx-n4'>
-                  <Chart.AreaNew
+                  <Chart.Area
                     config={config}
                     tooltip={{
                       dateFormat: 'MMM DD, YYYY HH:mm:ss UTC'
                     }}
-                  ></Chart.AreaNew>
+                  ></Chart.Area>
                 </div>
               ) : (
                 <PageState

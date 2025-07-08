@@ -1,15 +1,16 @@
 import moment from 'moment';
-
 import {
   ResponsiveContainer,
   XAxis,
   YAxis,
   Area,
   AreaChart,
-  Tooltip
+  Tooltip,
+  CartesianGrid
 } from 'recharts';
 
-import { CustomTooltip } from './helpers/CustomTooltip';
+import { getColors } from 'helpers';
+import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { getChartMergedData } from './helpers/getChartMergedData';
 import { StartEndTick } from './helpers/StartEndTick';
@@ -21,38 +22,49 @@ export const ChartArea = ({
   dateFormat,
   filter,
   category,
-  currency,
-  percentageMultiplier,
-  decimals,
   size,
   tooltip,
   hasOnlyStartEndTick
 }: ChartProps) => {
   const chartData = getChartMergedData({ config, data, filter, category });
+  const seriesConfig = config.length > 0 ? config[0] : null;
   const domain = [
     chartData[0].timestamp,
     chartData[chartData.length - 1].timestamp
   ];
 
-  const docStyle = window.getComputedStyle(document.documentElement);
-  const mutedColor = docStyle.getPropertyValue('--muted');
-  const primaryColor = docStyle.getPropertyValue('--primary');
+  const [neutral800, muted, primary] = getColors([
+    'neutral-800',
+    'muted',
+    'primary'
+  ]);
+
+  if (!seriesConfig) {
+    return null;
+  }
 
   return (
     <div
-      className={`chart-area mb-n3 ${size ? `chart-area-${size}` : ''} ${
+      className={`mb-n3 ${size ? `chart-area-${size}` : ''} ${
         hasOnlyStartEndTick ? 'has-only-start-end-tick' : ''
       }`}
     >
-      <ResponsiveContainer width='100%' height='100%'>
+      <ResponsiveContainer width='100%' height={448}>
         <AreaChart data={chartData}>
           <defs>
-            <linearGradient id='defaultGradient' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor={primaryColor} stopOpacity={0.25} />
-              <stop offset='35%' stopColor={primaryColor} stopOpacity={0.4} />
-              <stop offset='95%' stopColor={primaryColor} stopOpacity={0} />
+            <linearGradient id='transparent' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='100%' stopColor='transparent' stopOpacity={0} />
             </linearGradient>
           </defs>
+          <defs>
+            <linearGradient id='defaultGradient' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor={primary} stopOpacity={0.15} />
+              <stop offset='95%' stopColor={primary} stopOpacity={0} />
+            </linearGradient>
+          </defs>
+
+          <CartesianGrid vertical={false} stroke={neutral800} opacity={0.8} />
+
           <XAxis
             minTickGap={40}
             tickCount={10}
@@ -70,51 +82,57 @@ export const ChartArea = ({
               ? { tick: <StartEndTick dateformat={dateFormat} /> }
               : {})}
             {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
-            {...(chartData.length > 3 ? { scale: 'time' } : {})}
+            dy={15}
           />
 
           <YAxis
-            orientation='right'
+            orientation={seriesConfig.yAxisConfig?.orientation}
             tickFormatter={(tick) =>
               formatYAxis({
                 tick,
-                currency,
-                percentageMultiplier,
-                decimals
+                currency: seriesConfig.yAxisConfig?.currency,
+                percentageMultiplier:
+                  seriesConfig.yAxisConfig?.percentageMultiplier,
+                decimals: seriesConfig.yAxisConfig?.decimals
               })
             }
             axisLine={false}
             tickLine={false}
             tickCount={5}
+            stroke={seriesConfig.stroke}
+            dy={2}
           />
-          {config.map((chartConfig) => (
-            <Area
-              type='monotone'
-              dataKey={chartConfig.id}
-              stroke={chartConfig.stroke ?? primaryColor}
-              {...(chartConfig.gradient
-                ? { fill: `url(#${chartConfig.gradient})` }
-                : { fill: 'url(#transparent)' })}
-              {...(chartConfig.strokeDasharray
-                ? { strokeDasharray: chartConfig.strokeDasharray }
-                : {})}
-              key={chartConfig.id}
-              strokeWidth={1.5}
-            />
-          ))}
+
+          <Area
+            type='monotone'
+            dataKey={seriesConfig.id}
+            stroke={seriesConfig.stroke ?? primary}
+            {...(seriesConfig.gradient
+              ? { fill: `url(#${seriesConfig.gradient})` }
+              : { fill: 'url(#transparent)' })}
+            {...(seriesConfig.strokeDasharray
+              ? { strokeDasharray: seriesConfig.strokeDasharray }
+              : {})}
+            key={seriesConfig.id}
+            strokeWidth={1.5}
+            activeDot={{
+              stroke: primary,
+              fill: primary
+            }}
+          />
+
           <Tooltip
             content={(props) => (
-              <CustomTooltip
+              <ChartTooltip
                 {...props}
-                currency={currency}
-                percentageMultiplier={percentageMultiplier}
-                decimals={decimals}
-                {...tooltip}
+                seriesConfig={[seriesConfig]}
+                dateFormat={tooltip?.dateFormat}
+                color={primary}
               />
             )}
             cursor={{
               strokeDasharray: '3 5',
-              stroke: mutedColor
+              stroke: muted
             }}
           />
         </AreaChart>

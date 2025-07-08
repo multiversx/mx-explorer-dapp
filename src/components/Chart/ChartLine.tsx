@@ -3,8 +3,8 @@ import {
   ResponsiveContainer,
   XAxis,
   YAxis,
-  Area,
-  AreaChart,
+  Line,
+  LineChart,
   Tooltip,
   CartesianGrid
 } from 'recharts';
@@ -16,7 +16,7 @@ import { getChartMergedData } from './helpers/getChartMergedData';
 import { StartEndTick } from './helpers/StartEndTick';
 import { ChartProps } from './helpers/types';
 
-export const ChartAreaNew = ({
+export const ChartLine = ({
   config,
   data,
   dateFormat,
@@ -45,12 +45,12 @@ export const ChartAreaNew = ({
 
   return (
     <div
-      className={`mb-n3 ${size ? `chart-area-${size}` : ''} ${
+      className={`mb-n3 ${size ? `chart-line-${size}` : ''} ${
         hasOnlyStartEndTick ? 'has-only-start-end-tick' : ''
       }`}
     >
       <ResponsiveContainer width='100%' height={448}>
-        <AreaChart data={chartData}>
+        <LineChart data={chartData}>
           <defs>
             <linearGradient id='transparent' x1='0' y1='0' x2='0' y2='1'>
               <stop offset='100%' stopColor='transparent' stopOpacity={0} />
@@ -103,7 +103,7 @@ export const ChartAreaNew = ({
             dy={2}
           />
 
-          <Area
+          <Line
             type='monotone'
             dataKey={seriesConfig.id}
             stroke={seriesConfig.stroke ?? primary}
@@ -135,7 +135,7 @@ export const ChartAreaNew = ({
               stroke: muted
             }}
           />
-        </AreaChart>
+        </LineChart>
       </ResponsiveContainer>
     </div>
   );

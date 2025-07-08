@@ -108,13 +108,13 @@ export const TokenDetailsAnalytics = () => {
             <>
               {tokenPriceHistory.length > 1 ? (
                 <div className='mx-n4'>
-                  <Chart.AreaNew
+                  <Chart.Area
                     config={config}
                     tooltip={{
                       dateFormat
                     }}
                     dateFormat={dateFormat}
-                  ></Chart.AreaNew>
+                  ></Chart.Area>
                 </div>
               ) : (
                 <PageState
