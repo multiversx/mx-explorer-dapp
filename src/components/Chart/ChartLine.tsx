@@ -24,7 +24,13 @@ export const ChartLine = ({
   category,
   size,
   tooltip,
-  hasOnlyStartEndTick
+  width,
+  height,
+  hasOnlyStartEndTick,
+  hasAxis = true,
+  hasGrid = true,
+  hasDot = true,
+  hasCursor = true
 }: ChartProps) => {
   const chartData = getChartMergedData({ config, data, filter, category });
   const seriesConfig = config.length > 0 ? config[0] : null;
@@ -39,6 +45,22 @@ export const ChartLine = ({
     'primary'
   ]);
 
+  const gradientOffset = () => {
+    const dataMax = Math.max(...chartData.map((i: any) => i.value));
+    const dataMin = Math.min(...chartData.map((i: any) => i.value));
+
+    if (dataMax <= 0) {
+      return 0;
+    }
+    if (dataMin >= 0) {
+      return 1;
+    }
+
+    return dataMax / (dataMax - dataMin);
+  };
+
+  const off = gradientOffset();
+
   if (!seriesConfig) {
     return null;
   }
@@ -49,7 +71,7 @@ export const ChartLine = ({
         hasOnlyStartEndTick ? 'has-only-start-end-tick' : ''
       }`}
     >
-      <ResponsiveContainer width='100%' height={448}>
+      <ResponsiveContainer width={width ?? '100%'} height={height ?? '100%'}>
         <LineChart data={chartData}>
           <defs>
             <linearGradient id='transparent' x1='0' y1='0' x2='0' y2='1'>
@@ -62,9 +84,16 @@ export const ChartLine = ({
               <stop offset='95%' stopColor={primary} stopOpacity={0} />
             </linearGradient>
           </defs>
+          <defs>
+            <linearGradient id='splitColor' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='50%' stopColor='green' />
+              <stop offset='50%' stopColor='red' />
+            </linearGradient>
+          </defs>
 
-          <CartesianGrid vertical={false} stroke={neutral800} opacity={0.8} />
-
+          {hasGrid && (
+            <CartesianGrid vertical={false} stroke={neutral800} opacity={0.8} />
+          )}
           <XAxis
             minTickGap={40}
             tickCount={10}
@@ -83,8 +112,8 @@ export const ChartLine = ({
               : {})}
             {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
             dy={15}
+            hide={!hasAxis}
           />
-
           <YAxis
             orientation={seriesConfig.yAxisConfig?.orientation}
             tickFormatter={(tick) =>
@@ -96,11 +125,13 @@ export const ChartLine = ({
                 decimals: seriesConfig.yAxisConfig?.decimals
               })
             }
+            domain={['auto', 'auto']}
             axisLine={false}
             tickLine={false}
             tickCount={5}
             stroke={seriesConfig.stroke}
             dy={2}
+            hide={!hasAxis}
           />
 
           <Line
@@ -115,10 +146,15 @@ export const ChartLine = ({
               : {})}
             key={seriesConfig.id}
             strokeWidth={1.5}
-            activeDot={{
-              stroke: primary,
-              fill: primary
-            }}
+            activeDot={
+              hasDot
+                ? {
+                    stroke: primary,
+                    fill: primary
+                  }
+                : false
+            }
+            dot={hasDot}
           />
 
           <Tooltip
@@ -130,10 +166,14 @@ export const ChartLine = ({
                 color={primary}
               />
             )}
-            cursor={{
-              strokeDasharray: '3 5',
-              stroke: muted
-            }}
+            cursor={
+              hasCursor
+                ? {
+                    strokeDasharray: '3 5',
+                    stroke: muted
+                  }
+                : false
+            }
           />
         </LineChart>
       </ResponsiveContainer>

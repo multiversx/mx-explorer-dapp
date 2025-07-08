@@ -116,11 +116,18 @@ export interface ChartProps {
   decimals?: number;
   size?: ChartSizeEnum;
   hasOnlyStartEndTick?: boolean;
+  width?: number;
+  height?: number;
+  hasAxis?: boolean;
+  hasGrid?: boolean;
+  hasDot?: boolean;
+  hasCursor?: boolean;
   tooltip?: {
     price?: number;
     showUsdValue?: boolean;
     dateFormat?: string;
   };
+  activeDot?: any;
 }
 
 export interface StackedChartConfig {

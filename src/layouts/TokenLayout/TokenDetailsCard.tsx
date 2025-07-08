@@ -10,13 +10,15 @@ import {
   HeroDetailsCard,
   FormatUSD,
   LowLiquidityTooltip,
-  PriceSourceTooltip
+  PriceSourceTooltip,
+  Chart
 } from 'components';
-
-import { tokenSelector } from 'redux/selectors';
+import { ChartConfigType } from 'components/Chart/helpers/types';
+import { tokenExtraSelector, tokenSelector } from 'redux/selectors';
 
 export const TokenDetailsCard = () => {
   const { token } = useSelector(tokenSelector);
+  const { tokenExtra } = useSelector(tokenExtraSelector);
   const {
     identifier,
     ticker,
@@ -37,6 +39,15 @@ export const TokenDetailsCard = () => {
   const formattedName = `${name}${ticker !== name ? ` (${ticker})` : ''}`;
   const title = `${assets ? formattedName : ticker} Token`;
   const seoTitle = assets ? formattedName : '';
+
+  const config: ChartConfigType[] = [
+    {
+      id: 'value',
+      label: 'Price',
+      stroke: 'url(#splitColor)',
+      data: tokenExtra.priceHistory
+    }
+  ];
 
   const detailItems = [
     assets?.description
@@ -83,7 +94,28 @@ export const TokenDetailsCard = () => {
               </>
             ),
             value: (
-              <FormatUSD value={price} usd={1} digits={4} showPrefix={false} />
+              <div
+                className='d-flex flex-norwap align-items-start gap-1'
+                style={{ minHeight: '40px' }}
+              >
+                <FormatUSD
+                  value={price}
+                  usd={1}
+                  digits={4}
+                  showPrefix={false}
+                />
+                {tokenExtra.priceHistory.length > 0 && (
+                  <Chart.Line
+                    config={config}
+                    hasAxis={false}
+                    hasGrid={false}
+                    hasCursor={false}
+                    hasDot={false}
+                    height={40}
+                    width={120}
+                  ></Chart.Line>
+                )}
+              </div>
             )
           },
           !isLowLiquidity ||
