@@ -35,21 +35,21 @@ export const formatYAxis = ({
   if (Number(tick) > 1000) {
     if (currency) {
       if (currency === '$') {
-        return numeral(tick).format('$0.[000000]a');
+        return numeral(tick).format('$0.[00]a');
       }
-      return `${numeral(tick).format('0.[000000]a')} ${currency}`;
+      return `${numeral(tick).format('0.[00]a')} ${currency}`;
     }
 
     return numeral(tick).format('0a');
   }
 
   if (currency) {
-    const formatted = formatBigNumber({ value: tick, maxDigits: 6 });
+    const formatted = formatBigNumber({ value: tick, maxDigits: 4 });
     if (currency === '$') {
-      return numeral(formatted).format('$0.[000000]');
+      return numeral(formatted).format('$0.[0000]');
     }
 
-    return `${numeral(tick).format('$0.[000000]')} ${currency}`;
+    return `${numeral(tick).format('$0.[0000]')} ${currency}`;
   }
 
   return numeral(tick).format('0');
