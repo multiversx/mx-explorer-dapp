@@ -108,7 +108,7 @@ export const TokenDetailsCard = () => {
                     to={urlBuilder.tokenDetailsAnalytics(identifier)}
                   >
                     <Chart.Line
-                      className='mt-n2'
+                      className='mt-n1'
                       config={config}
                       hasDot={false}
                       hasAxis={false}
