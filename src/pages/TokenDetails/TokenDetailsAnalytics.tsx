@@ -85,7 +85,8 @@ export const TokenDetailsAnalytics = () => {
       data: priceHistory,
       yAxisConfig: {
         orientation: 'left',
-        currency: '$'
+        currency: '$',
+        domain: range === 'day' ? ['auto', 'auto'] : undefined
       }
     }
   ];

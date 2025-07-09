@@ -96,6 +96,7 @@ export const ChartArea = ({
                 decimals: seriesConfig.yAxisConfig?.decimals
               })
             }
+            domain={seriesConfig.yAxisConfig?.domain}
             axisLine={false}
             tickLine={false}
             tickCount={5}

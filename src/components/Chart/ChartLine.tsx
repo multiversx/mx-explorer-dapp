@@ -67,6 +67,11 @@ export const ChartLine = ({
   };
   const off = gradientOffset();
 
+  const displayStroke =
+    seriesConfig?.stroke === 'url(#splitColor)' && off === 0
+      ? primary
+      : seriesConfig?.stroke;
+
   if (!seriesConfig) {
     return null;
   }
@@ -143,7 +148,7 @@ export const ChartLine = ({
           <Line
             type='monotone'
             dataKey={seriesConfig.id}
-            stroke={seriesConfig.stroke ?? primary}
+            stroke={displayStroke ?? primary}
             {...(seriesConfig.gradient
               ? { fill: `url(#${seriesConfig.gradient})` }
               : { fill: 'url(#transparent)' })}

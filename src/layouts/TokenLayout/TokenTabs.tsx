@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 import { Tabs } from 'components/Tabs';
 import { urlBuilder } from 'helpers';
 import { useHasExchangeData } from 'hooks';
-import { tokenSelector } from 'redux/selectors';
+import { tokenExtraSelector, tokenSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';
 
 export const TokenTabs = () => {
   const { token } = useSelector(tokenSelector);
+  const { tokenExtra } = useSelector(tokenExtraSelector);
   const { identifier, assets, roles } = token;
 
   const hasExchangeData = useHasExchangeData();
@@ -29,7 +30,7 @@ export const TokenTabs = () => {
       tabLabel: 'Analytics',
       tabTo: urlBuilder.tokenDetailsAnalytics(identifier),
       activationRoutes: [tokensRoutes.tokenDetailsAnalytics],
-      show: hasExchangeData
+      show: hasExchangeData && tokenExtra.priceHistory.length > 0
     },
     {
       tabLabel: 'Locked Accounts',

@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import { AxisDomain } from 'recharts/types/util/types';
 import { WithClassnameType } from 'types';
 
 export interface ChartDataType {
@@ -54,6 +55,7 @@ export interface ChartYAxisFormatConfig {
   currency?: string;
   percentageMultiplier?: number;
   decimals?: number;
+  domain?: AxisDomain;
 }
 
 export type ChartLabelConfigType = {
