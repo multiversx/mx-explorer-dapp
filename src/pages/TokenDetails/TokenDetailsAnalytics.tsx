@@ -27,7 +27,7 @@ export const TokenDetailsAnalytics = () => {
   const [tokenPriceHistory, setTokenPriceHistory] = useState<
     GrowthChartDataType[]
   >(tokenExtra.priceHistory);
-  const [range, setRange] = useState<ChartResolutionRangeType>('month');
+  const [range, setRange] = useState<ChartResolutionRangeType>('day');
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
   const showTokenPrice = isValidTokenPrice(token);
@@ -65,7 +65,8 @@ export const TokenDetailsAnalytics = () => {
       stroke: primary,
       data: tokenPriceHistory,
       yAxisConfig: {
-        orientation: 'left'
+        orientation: 'left',
+        currency: '$'
       }
     }
   ];
