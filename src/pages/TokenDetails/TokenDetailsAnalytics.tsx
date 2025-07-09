@@ -1,39 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { Chart, Loader, PageState } from 'components';
+import { ChartConfigType } from 'components/Chart/helpers/types';
 import { getPrimaryColor, isValidTokenPrice } from 'helpers';
 import { useAdapter } from 'hooks';
+import { faCoins } from 'icons/regular';
+import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
+import { ChartResolutionSelector } from 'pages/AnalyticsCompare/AnalyticsChart/components/ChartResolution';
+import { ChartResolutionRangeType } from 'pages/AnalyticsCompare/AnalyticsChart/components/ChartResolution/types';
 import {
   activeNetworkSelector,
   tokenExtraSelector,
   tokenSelector
 } from 'redux/selectors';
 import { ExchangePriceRangeEnum, GrowthChartDataType } from 'types';
-import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
-import { Chart, Loader, PageState } from 'components';
-import { PageStats } from 'widgets/PageStats';
-import { faCoins } from 'icons/regular';
-import { ChartConfigType } from 'components/Chart/helpers/types';
-import { ChartResolutionSelector } from 'pages/AnalyticsCompare/AnalyticsChart/components/ChartResolution';
-import { ChartResolutionRangeType } from 'pages/AnalyticsCompare/AnalyticsChart/components/ChartResolution/types';
 
 export const TokenDetailsAnalytics = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { token } = useSelector(tokenSelector);
-  const { identifier, price, supply, decimals } = token;
+  const { identifier } = token;
   const { getExchangeTokenPriceHistory } = useAdapter();
   const { tokenExtra } = useSelector(tokenExtraSelector);
 
   const [tokenPriceHistory, setTokenPriceHistory] = useState<
     GrowthChartDataType[]
-  >(tokenExtra.priceHistory);
+  >([]);
   const [range, setRange] = useState<ChartResolutionRangeType>('day');
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
   const showTokenPrice = isValidTokenPrice(token);
 
   const fetchExchangeTokenPriceHistory = () => {
-    getExchangeTokenPriceHistory({ identifier }).then(({ data, success }) => {
+    setIsDataReady(undefined);
+    getExchangeTokenPriceHistory({
+      identifier,
+      range: ExchangePriceRangeEnum.daily
+    }).then(({ data, success }) => {
       if (success && data) {
         setTokenPriceHistory(data);
       }
@@ -42,20 +45,36 @@ export const TokenDetailsAnalytics = () => {
   };
 
   useEffect(() => {
-    if (showTokenPrice && identifier) {
-      if (tokenExtra.range !== ExchangePriceRangeEnum.hourly) {
-        fetchExchangeTokenPriceHistory();
-        return;
-      }
-      setIsDataReady(true);
+    if (
+      showTokenPrice &&
+      identifier &&
+      range !== 'day' &&
+      tokenPriceHistory.length === 0
+    ) {
+      fetchExchangeTokenPriceHistory();
+      return;
     }
-  }, [activeNetworkId, identifier, showTokenPrice, tokenExtra]);
+    setIsDataReady(true);
+  }, [activeNetworkId, identifier, showTokenPrice, range, tokenPriceHistory]);
+
+  const priceHistory = useMemo(() => {
+    switch (range) {
+      case 'day':
+        return tokenExtra.priceHistory;
+      case 'week':
+        return tokenPriceHistory.slice(-7);
+      case 'month':
+        return tokenPriceHistory.slice(-30);
+      case 'year':
+        return tokenPriceHistory.slice(-365);
+      case 'all':
+      default:
+        return tokenPriceHistory;
+    }
+  }, [range, tokenPriceHistory, tokenExtra.priceHistory]);
 
   const primary = getPrimaryColor();
-  const dateFormat =
-    tokenExtra.range === ExchangePriceRangeEnum.hourly
-      ? 'HH:mm:ss UTC'
-      : 'MMM DD, YYYY HH:mm:ss UTC';
+  const dateFormat = range === 'day' ? 'HH:mm UTC' : 'D MMM YYYY';
 
   const config: ChartConfigType[] = [
     {
@@ -63,7 +82,7 @@ export const TokenDetailsAnalytics = () => {
       label: 'price',
       gradient: 'defaultGradient',
       stroke: primary,
-      data: tokenPriceHistory,
+      data: priceHistory,
       yAxisConfig: {
         orientation: 'left',
         currency: '$'
@@ -107,7 +126,7 @@ export const TokenDetailsAnalytics = () => {
           )}
           {isDataReady === true && (
             <>
-              {tokenPriceHistory.length > 1 ? (
+              {priceHistory.length > 1 ? (
                 <div className='mx-n4'>
                   <Chart.Area
                     config={config}
