@@ -11,10 +11,12 @@ import {
   FormatUSD,
   LowLiquidityTooltip,
   PriceSourceTooltip,
-  Chart
+  Chart,
+  NetworkLink
 } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 import { tokenExtraSelector, tokenSelector } from 'redux/selectors';
+import { urlBuilder } from 'helpers';
 
 export const TokenDetailsCard = () => {
   const { token } = useSelector(tokenSelector);
@@ -94,10 +96,7 @@ export const TokenDetailsCard = () => {
               </>
             ),
             value: (
-              <div
-                className='d-flex flex-norwap align-items-start gap-1'
-                style={{ minHeight: '40px' }}
-              >
+              <div className='d-flex flex-norwap align-items-start gap-1 mh-3 cursor-pointer'>
                 <FormatUSD
                   value={price}
                   usd={1}
@@ -105,15 +104,20 @@ export const TokenDetailsCard = () => {
                   showPrefix={false}
                 />
                 {tokenExtra.priceHistory.length > 0 && (
-                  <Chart.Line
-                    config={config}
-                    hasAxis={false}
-                    hasGrid={false}
-                    hasCursor={false}
-                    hasDot={false}
-                    height={40}
-                    width={120}
-                  ></Chart.Line>
+                  <NetworkLink
+                    to={urlBuilder.tokenDetailsAnalytics(identifier)}
+                  >
+                    <Chart.Line
+                      className='mt-n2'
+                      config={config}
+                      hasDot={false}
+                      hasAxis={false}
+                      hasGrid={false}
+                      hasTooltip={false}
+                      height={48}
+                      width={120}
+                    ></Chart.Line>
+                  </NetworkLink>
                 )}
               </div>
             )

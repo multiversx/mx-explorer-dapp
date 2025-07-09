@@ -18,8 +18,7 @@ export const TokenLayout = () => {
   const { hash: identifier } = useParams();
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
-  const { isFetched: isTokenExtraFetched, tokenExtra } =
-    useSelector(tokenExtraSelector);
+  const { tokenExtra } = useSelector(tokenExtraSelector);
 
   const hasExchangeData = useHasExchangeData();
   const isNativeToken =
@@ -42,14 +41,14 @@ export const TokenLayout = () => {
 
         if (tokenData.success && tokenData.data) {
           dispatch(setToken({ isFetched: true, token: tokenData.data }));
-          if (tokenPriceHistoryData?.data) {
+          if (hasExchangeData && tokenExtra.identifier !== identifier) {
             dispatch(
               setTokenExtra({
                 isFetched: true,
                 tokenExtra: {
                   identifier: tokenData.data.identifier,
                   range: ExchangePriceRangeEnum.hourly,
-                  priceHistory: tokenPriceHistoryData.data
+                  priceHistory: tokenPriceHistoryData?.data ?? []
                 }
               })
             );
@@ -64,13 +63,7 @@ export const TokenLayout = () => {
     if (!isNativeToken) {
       fetchTokenDetails();
     }
-  }, [
-    firstPageRefreshTrigger,
-    activeNetworkId,
-    identifier,
-    isNativeToken,
-    tokenExtra
-  ]);
+  }, [firstPageRefreshTrigger, activeNetworkId, identifier, isNativeToken]);
 
   const loading = isDataReady === undefined;
   const failed = isDataReady === false;

@@ -1,3 +1,5 @@
+import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 import moment from 'moment';
 import {
   ResponsiveContainer,
@@ -22,7 +24,6 @@ export const ChartLine = ({
   dateFormat,
   filter,
   category,
-  size,
   tooltip,
   width,
   height,
@@ -30,7 +31,9 @@ export const ChartLine = ({
   hasAxis = true,
   hasGrid = true,
   hasDot = true,
-  hasCursor = true
+  hasCursor = true,
+  hasTooltip = true,
+  className
 }: ChartProps) => {
   const chartData = getChartMergedData({ config, data, filter, category });
   const seriesConfig = config.length > 0 ? config[0] : null;
@@ -46,8 +49,12 @@ export const ChartLine = ({
   ]);
 
   const gradientOffset = () => {
-    const dataMax = Math.max(...chartData.map((i: any) => i.value));
-    const dataMin = Math.min(...chartData.map((i: any) => i.value));
+    const fistValue = new BigNumber(chartData?.[0]?.value ?? '0');
+    const apendedData = chartData.map((i: any) =>
+      new BigNumber(i.value).minus(fistValue).toNumber()
+    );
+    const dataMax = Math.max(...apendedData);
+    const dataMin = Math.min(...apendedData);
 
     if (dataMax <= 0) {
       return 0;
@@ -58,7 +65,6 @@ export const ChartLine = ({
 
     return dataMax / (dataMax - dataMin);
   };
-
   const off = gradientOffset();
 
   if (!seriesConfig) {
@@ -67,9 +73,9 @@ export const ChartLine = ({
 
   return (
     <div
-      className={`mb-n3 ${size ? `chart-line-${size}` : ''} ${
-        hasOnlyStartEndTick ? 'has-only-start-end-tick' : ''
-      }`}
+      className={classNames(className, {
+        'has-only-start-end-tick': hasOnlyStartEndTick
+      })}
     >
       <ResponsiveContainer width={width ?? '100%'} height={height ?? '100%'}>
         <LineChart data={chartData}>
@@ -86,8 +92,8 @@ export const ChartLine = ({
           </defs>
           <defs>
             <linearGradient id='splitColor' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='50%' stopColor='green' />
-              <stop offset='50%' stopColor='red' />
+              <stop offset={off} stopColor='#4ade80' />
+              <stop offset={off} stopColor='#f87171' />
             </linearGradient>
           </defs>
 
@@ -157,24 +163,26 @@ export const ChartLine = ({
             dot={hasDot}
           />
 
-          <Tooltip
-            content={(props) => (
-              <ChartTooltip
-                {...props}
-                seriesConfig={[seriesConfig]}
-                dateFormat={tooltip?.dateFormat}
-                color={primary}
-              />
-            )}
-            cursor={
-              hasCursor
-                ? {
-                    strokeDasharray: '3 5',
-                    stroke: muted
-                  }
-                : false
-            }
-          />
+          {hasTooltip && (
+            <Tooltip
+              content={(props) => (
+                <ChartTooltip
+                  {...props}
+                  seriesConfig={[seriesConfig]}
+                  dateFormat={tooltip?.dateFormat}
+                  color={primary}
+                />
+              )}
+              cursor={
+                hasCursor
+                  ? {
+                      strokeDasharray: '3 5',
+                      stroke: muted
+                    }
+                  : false
+              }
+            />
+          )}
         </LineChart>
       </ResponsiveContainer>
     </div>

@@ -26,22 +26,22 @@ export const TokenTabs = () => {
       activationRoutes: [tokensRoutes.tokenDetailsAccounts]
     },
     {
+      tabLabel: 'Analytics',
+      tabTo: urlBuilder.tokenDetailsAnalytics(identifier),
+      activationRoutes: [tokensRoutes.tokenDetailsAnalytics],
+      show: hasExchangeData
+    },
+    {
       tabLabel: 'Locked Accounts',
       tabTo: urlBuilder.tokenDetailsLockedAccounts(identifier),
       activationRoutes: [tokensRoutes.tokenDetailsLockedAccounts],
       show: showLockedAccounts
     },
     {
-      tabLabel: 'Analytics',
-      tabTo: urlBuilder.tokenDetailsAnalytics(identifier),
-      activationRoutes: [tokensRoutes.tokenDetailsAnalytics],
-      show: showRoles
-    },
-    {
       tabLabel: 'Roles',
       tabTo: urlBuilder.tokenDetailsRoles(identifier),
       activationRoutes: [tokensRoutes.tokenDetailsRoles],
-      show: hasExchangeData
+      show: showRoles
     }
   ];
 

@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import { WithClassnameType } from 'types';
 
 export interface ChartDataType {
   timestamp: number;
@@ -105,7 +106,7 @@ export enum ChartSizeEnum {
   lg = 'lg'
 }
 
-export interface ChartProps {
+export interface ChartProps extends WithClassnameType {
   config: ChartConfigType[];
   data?: any;
   dateFormat?: string;
@@ -122,6 +123,7 @@ export interface ChartProps {
   hasGrid?: boolean;
   hasDot?: boolean;
   hasCursor?: boolean;
+  hasTooltip?: boolean;
   tooltip?: {
     price?: number;
     showUsdValue?: boolean;
