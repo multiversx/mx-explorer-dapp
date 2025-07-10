@@ -27,15 +27,28 @@ export const ChartResolution: ChartResolutionType = {
   week: {
     label: '7d',
     range: 'week'
+  },
+  day: {
+    label: '24h',
+    range: 'day'
   }
 };
 
 export const ChartResolutionSelector = ({
   value,
   onChange,
+  hasDayOption = false,
   isResponsive = false
 }: ChartResolutionSelectorPropsType) => {
   const options: SelectOptionType[] = [
+    ...(hasDayOption
+      ? [
+          {
+            label: '24h',
+            value: ChartResolution['day'].range
+          }
+        ]
+      : []),
     {
       label: '7d',
       value: ChartResolution['week'].range

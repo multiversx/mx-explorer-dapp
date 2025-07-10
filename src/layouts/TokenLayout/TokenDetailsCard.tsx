@@ -10,13 +10,17 @@ import {
   HeroDetailsCard,
   FormatUSD,
   LowLiquidityTooltip,
-  PriceSourceTooltip
+  PriceSourceTooltip,
+  Chart,
+  NetworkLink
 } from 'components';
-
-import { tokenSelector } from 'redux/selectors';
+import { ChartConfigType } from 'components/Chart/helpers/types';
+import { urlBuilder } from 'helpers';
+import { tokenExtraSelector, tokenSelector } from 'redux/selectors';
 
 export const TokenDetailsCard = () => {
   const { token } = useSelector(tokenSelector);
+  const { tokenExtra } = useSelector(tokenExtraSelector);
   const {
     identifier,
     ticker,
@@ -37,6 +41,15 @@ export const TokenDetailsCard = () => {
   const formattedName = `${name}${ticker !== name ? ` (${ticker})` : ''}`;
   const title = `${assets ? formattedName : ticker} Token`;
   const seoTitle = assets ? formattedName : '';
+
+  const config: ChartConfigType[] = [
+    {
+      id: 'value',
+      label: 'Price',
+      stroke: 'url(#splitColor)',
+      data: tokenExtra.priceHistory
+    }
+  ];
 
   const detailItems = [
     assets?.description
@@ -83,7 +96,30 @@ export const TokenDetailsCard = () => {
               </>
             ),
             value: (
-              <FormatUSD value={price} usd={1} digits={4} showPrefix={false} />
+              <div className='d-flex flex-norwap align-items-start gap-1 mh-3 cursor-pointer'>
+                <FormatUSD
+                  value={price}
+                  usd={1}
+                  digits={4}
+                  showPrefix={false}
+                />
+                {tokenExtra.priceHistory.length > 0 && (
+                  <NetworkLink
+                    to={urlBuilder.tokenDetailsAnalytics(identifier)}
+                  >
+                    <Chart.Line
+                      className='mt-n1'
+                      config={config}
+                      hasDot={false}
+                      hasAxis={false}
+                      hasGrid={false}
+                      hasTooltip={false}
+                      height={48}
+                      width={120}
+                    ></Chart.Line>
+                  </NetworkLink>
+                )}
+              </div>
             )
           },
           !isLowLiquidity ||

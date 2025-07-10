@@ -1,4 +1,9 @@
-export type ChartResolutionRangeType = 'all' | 'year' | 'month' | 'week';
+export type ChartResolutionRangeType =
+  | 'all'
+  | 'year'
+  | 'month'
+  | 'week'
+  | 'day';
 
 export interface ChartResolutionItemType {
   label: string;
@@ -15,5 +20,6 @@ export type ChartResolutionType = {
 export interface ChartResolutionSelectorPropsType {
   value: ChartResolutionRangeType;
   onChange?: (resolution: ChartResolutionItemType) => void;
+  hasDayOption?: boolean;
   isResponsive?: boolean;
 }

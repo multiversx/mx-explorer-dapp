@@ -1,5 +1,10 @@
 import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
-import { AccountRolesTypeEnum, GetAccountType, GetEventsType } from 'types';
+import {
+  AccountRolesTypeEnum,
+  GetAccountType,
+  GetEventsType,
+  ExchangePriceRangeEnum
+} from 'types';
 import {
   BaseApiType,
   GetBlocksType,
@@ -750,6 +755,21 @@ export const useAdapter = () => {
         baseUrl,
         url: ''
       }),
+
+    // xExchange Data
+
+    getExchangeTokenPriceHistory: ({
+      identifier,
+      range = ExchangePriceRangeEnum.hourly
+    }: {
+      identifier: string;
+      range?: ExchangePriceRangeEnum;
+    }) => {
+      if (range === ExchangePriceRangeEnum.daily) {
+        return provider({ url: `/mex/tokens/prices/daily/${identifier}` });
+      }
+      return provider({ url: `/mex/tokens/prices/hourly/${identifier}` });
+    },
 
     // Growth Charts
 

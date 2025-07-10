@@ -1,4 +1,6 @@
 import { CSSProperties } from 'react';
+import { AxisDomain } from 'recharts/types/util/types';
+import { WithClassnameType } from 'types';
 
 export interface ChartDataType {
   timestamp: number;
@@ -53,6 +55,7 @@ export interface ChartYAxisFormatConfig {
   currency?: string;
   percentageMultiplier?: number;
   decimals?: number;
+  domain?: AxisDomain;
 }
 
 export type ChartLabelConfigType = {
@@ -105,7 +108,7 @@ export enum ChartSizeEnum {
   lg = 'lg'
 }
 
-export interface ChartProps {
+export interface ChartProps extends WithClassnameType {
   config: ChartConfigType[];
   data?: any;
   dateFormat?: string;
@@ -116,11 +119,19 @@ export interface ChartProps {
   decimals?: number;
   size?: ChartSizeEnum;
   hasOnlyStartEndTick?: boolean;
+  width?: number;
+  height?: number;
+  hasAxis?: boolean;
+  hasGrid?: boolean;
+  hasDot?: boolean;
+  hasCursor?: boolean;
+  hasTooltip?: boolean;
   tooltip?: {
     price?: number;
     showUsdValue?: boolean;
     dateFormat?: string;
   };
+  activeDot?: any;
 }
 
 export interface StackedChartConfig {
