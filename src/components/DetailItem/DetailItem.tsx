@@ -18,7 +18,7 @@ export const DetailItem = ({
   noBorder = false,
   verticalCenter = false
 }: DetailItemUIType) => {
-  if (!title && !children) {
+  if (!title && children === undefined) {
     return null;
   }
 
@@ -43,7 +43,7 @@ export const DetailItem = ({
       >
         {title}
       </div>
-      {children && (
+      {children !== undefined && (
         <div className={`col-lg-${12 - Number(colWidth)} pe-lg-spacer`}>
           {children}
         </div>

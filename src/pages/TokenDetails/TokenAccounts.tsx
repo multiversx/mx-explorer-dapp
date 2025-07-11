@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD } from 'appConstants';
 import { AccountsTable } from 'components';
+import { isValidTokenPrice } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
@@ -21,9 +20,7 @@ export const TokenDetailsAccounts = () => {
   const {
     identifier,
     price,
-    marketCap,
     supply,
-    isLowLiquidity,
     decimals,
     accounts: totalAccounts
   } = token;
@@ -51,14 +48,7 @@ export const TokenDetailsAccounts = () => {
     fetchAccounts();
   }, [activeNetworkId, totalAccounts, searchParams, identifier]);
 
-  const showValue = Boolean(
-    price &&
-      marketCap &&
-      (!isLowLiquidity ||
-        new BigNumber(marketCap).isLessThan(
-          LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
-        ))
-  );
+  const showValue = isValidTokenPrice(token);
 
   return (
     <AccountsTable

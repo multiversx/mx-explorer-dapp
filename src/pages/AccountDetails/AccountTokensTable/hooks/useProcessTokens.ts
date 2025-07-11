@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { isValidTokenValue, getTotalTokenUsdValue } from 'helpers';
+import { isValidAccountTokenValue, getTotalTokenUsdValue } from 'helpers';
 import { useGetSearch, useGetSort } from 'hooks';
 import { accountExtraSelector } from 'redux/selectors';
 import { setAccountExtra, getInitialAccountExtraState } from 'redux/slices';
@@ -29,7 +29,7 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
   const { type } = Object.fromEntries(searchParams);
 
   const validTokenValues = accountTokens.filter((token: TokenType) =>
-    isValidTokenValue(token)
+    isValidAccountTokenValue(token)
   );
   const tokenBalance = getTotalTokenUsdValue(validTokenValues);
 
@@ -55,7 +55,7 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
     let currentOrder = order;
     if (!(sort && order)) {
       const hasValidValues = filteredTokens.some((token) =>
-        isValidTokenValue(token)
+        isValidAccountTokenValue(token)
       );
       if (!hasValidValues) {
         currentSort = SortTokenFieldEnum.name;

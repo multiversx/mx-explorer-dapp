@@ -14,6 +14,7 @@ export * from './CopyButton';
 export * from './CustomNetwork';
 export * from './DataDecode';
 export * from './DetailItem';
+export * from './EventsTable';
 export * from './ExpandRow';
 export * from './Filters';
 export * from './FormatValue';

@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
-import { LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD } from 'appConstants';
 import { AccountsTable } from 'components';
+import { isValidTokenPrice } from 'helpers';
 import { useAdapter } from 'hooks';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
@@ -12,8 +11,7 @@ import { TokenLockedAccountType } from 'types';
 export const TokenDetailsLockedAccounts = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { token } = useSelector(tokenSelector);
-  const { identifier, price, marketCap, supply, isLowLiquidity, decimals } =
-    token;
+  const { identifier, price, supply, decimals } = token;
   const { getTokenSupply } = useAdapter();
 
   const [tokenLockedAccounts, setTokenLockedAccounts] = useState<
@@ -34,14 +32,7 @@ export const TokenDetailsLockedAccounts = () => {
     fetchTokenLockedAccounts();
   }, [activeNetworkId, identifier]);
 
-  const showValue = Boolean(
-    price &&
-      marketCap &&
-      (!isLowLiquidity ||
-        new BigNumber(marketCap).isLessThan(
-          LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
-        ))
-  );
+  const showValue = isValidTokenPrice(token);
 
   return (
     <AccountsTable

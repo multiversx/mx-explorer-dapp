@@ -118,8 +118,7 @@ export const useFetchAccountStakingDetails = () => {
         setAccountStaking({
           ...stakingData,
           accountStakingFetched,
-          providerDataReady:
-            providersData.success && legacyIdentityData.success,
+          providerDataReady: providersData.success,
           delegationProviders: providersData?.data,
           delegationLegacyIdentity: legacyIdentityData?.data
         })

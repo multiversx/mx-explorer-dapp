@@ -17,7 +17,7 @@ import {
   Overlay,
   ColSpanWrapper
 } from 'components';
-import { isValidTokenValue } from 'helpers';
+import { isValidAccountTokenValue } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
@@ -52,7 +52,7 @@ export const AccountTokensTable = () => {
   };
 
   const hasValidValues = accountTokens.some((token) =>
-    isValidTokenValue(token)
+    isValidAccountTokenValue(token)
   );
   const processedAccountTokens = useProcessTokens(accountTokens);
   const pagedTokens = usePageTokens(processedAccountTokens);
@@ -139,7 +139,8 @@ export const AccountTokensTable = () => {
                   {pagedTokens.length > 0 ? (
                     <>
                       {pagedTokens.map((token) => {
-                        const isValidDisplayValue = isValidTokenValue(token);
+                        const isValidDisplayValue =
+                          isValidAccountTokenValue(token);
 
                         return (
                           <tr key={token.identifier}>

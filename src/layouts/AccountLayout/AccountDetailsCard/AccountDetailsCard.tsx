@@ -18,7 +18,7 @@ import {
   formatHerotag,
   formatBigNumber,
   getTotalTokenUsdValue,
-  isValidTokenValue
+  isValidAccountTokenValue
 } from 'helpers';
 import { useAdapter, useIsSovereign } from 'hooks';
 import { faClock, faExclamationTriangle } from 'icons/regular';
@@ -114,7 +114,7 @@ export const AccountDetailsCard = () => {
         }
         if (accountTokensValueData.success) {
           const validTokenValues = accountTokensValueData.data.filter(
-            (token: TokenType) => isValidTokenValue(token)
+            (token: TokenType) => isValidAccountTokenValue(token)
           );
           const tokenBalance = getTotalTokenUsdValue(validTokenValues);
           accountExtraDetails.tokenBalance = tokenBalance;

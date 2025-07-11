@@ -17,7 +17,8 @@ export const networks: NetworkType[] = [
     explorerAddress: 'https://explorer.multiversx.com',
     nftExplorerAddress: 'https://xspotlight.com',
     apiAddress: 'https://api.multiversx.com',
-    growthApi: 'https://tools.multiversx.com/growth-api'
+    growthApi: 'https://tools.multiversx.com/growth-api',
+    hasExchangeData: true
   },
 
   // Saved Custom Network Configs
