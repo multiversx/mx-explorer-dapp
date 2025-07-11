@@ -47,7 +47,10 @@ export const TokenDetailsCard = () => {
       id: 'value',
       label: 'Price',
       stroke: 'url(#splitColor)',
-      data: tokenExtra.priceHistory
+      data: tokenExtra.priceHistory,
+      yAxisConfig: {
+        domain: ['auto', 'auto']
+      }
     }
   ];
 

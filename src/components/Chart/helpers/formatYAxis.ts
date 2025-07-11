@@ -49,7 +49,7 @@ export const formatYAxis = ({
       return numeral(formatted).format('$0.[0000]');
     }
 
-    return `${numeral(tick).format('$0.[0000]')} ${currency}`;
+    return `${numeral(tick).format('0.[0000]')} ${currency}`;
   }
 
   return numeral(tick).format('0');

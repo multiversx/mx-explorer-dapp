@@ -4,13 +4,19 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS, NATIVE_TOKEN_SEARCH_LABEL } from 'appConstants';
-import { Loader, PageState, Chart, TokenSelectFilter } from 'components';
+import {
+  Loader,
+  PageState,
+  Chart,
+  TokenSelectFilter,
+  PageSize
+} from 'components';
 import {
   getNormalizedTimeEntries,
   getFrequency
 } from 'components/Chart/helpers/getChartBinnedData';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
-import { getPrimaryColor, isValidTokenPrice } from 'helpers';
+import { getPrimaryColor, isValidTokenPrice, stringIsInteger } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
@@ -31,8 +37,11 @@ export const AccountAnalytics = () => {
   const [startDate, setStartDate] = useState<string>(ELLIPSIS);
   const [endDate, setEndDate] = useState<string>(ELLIPSIS);
 
+  const { token, size: urlSize } = Object.fromEntries(searchParams);
+
   const primary = getPrimaryColor();
-  const { token } = Object.fromEntries(searchParams);
+  const size = stringIsInteger(urlSize) ? parseInt(urlSize) : 100;
+
   const showUsdValue =
     !Boolean(token) || Boolean(token && tokenPrice && token !== egldLabel);
 
@@ -58,7 +67,7 @@ export const AccountAnalytics = () => {
     const { success: accountsHistroySuccess, data: accountsHistoryData } =
       await getAccountHistory({
         address,
-        size: 100,
+        size: Number(size),
         ...(token !== egldLabel ? { identifier: token } : {})
       });
 
@@ -173,6 +182,11 @@ export const AccountAnalytics = () => {
             </>
           )}
         </Chart.Body>
+        <PageSize
+          className='mt-spacer'
+          defaultSize={100}
+          sizeArray={[100, 200, 500, 1000, 5000]}
+        />
       </div>
     </div>
   );

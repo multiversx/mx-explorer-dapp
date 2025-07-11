@@ -122,8 +122,8 @@ export const ChartLine = ({
               ? { tick: <StartEndTick dateformat={dateFormat} /> }
               : {})}
             {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
-            dy={15}
             hide={!hasAxis}
+            dy={15}
           />
           <YAxis
             orientation={seriesConfig.yAxisConfig?.orientation}
@@ -136,13 +136,13 @@ export const ChartLine = ({
                 decimals: seriesConfig.yAxisConfig?.decimals
               })
             }
-            domain={['auto', 'auto']}
+            domain={seriesConfig.yAxisConfig?.domain}
             axisLine={false}
             tickLine={false}
             tickCount={5}
             stroke={seriesConfig.stroke}
-            dy={2}
             hide={!hasAxis}
+            dy={2}
           />
 
           <Line
@@ -157,6 +157,7 @@ export const ChartLine = ({
               : {})}
             key={seriesConfig.id}
             strokeWidth={1.5}
+            dot={hasDot}
             activeDot={
               hasDot
                 ? {
@@ -165,7 +166,6 @@ export const ChartLine = ({
                   }
                 : false
             }
-            dot={hasDot}
           />
 
           {hasTooltip && (

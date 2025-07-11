@@ -1,3 +1,5 @@
+import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 import moment from 'moment';
 import {
   ResponsiveContainer,
@@ -22,9 +24,16 @@ export const ChartArea = ({
   dateFormat,
   filter,
   category,
-  size,
   tooltip,
-  hasOnlyStartEndTick
+  width,
+  height = 448,
+  hasOnlyStartEndTick,
+  hasAxis = true,
+  hasGrid = true,
+  hasDot = true,
+  hasCursor = true,
+  hasTooltip = true,
+  className
 }: ChartProps) => {
   const chartData = getChartMergedData({ config, data, filter, category });
   const seriesConfig = config.length > 0 ? config[0] : null;
@@ -39,17 +48,36 @@ export const ChartArea = ({
     'primary'
   ]);
 
+  const gradientOffset = () => {
+    const fistValue = new BigNumber(chartData?.[0]?.value ?? '0');
+    const apendedData = chartData.map((i: any) =>
+      new BigNumber(i.value).minus(fistValue).toNumber()
+    );
+    const dataMax = Math.max(...apendedData);
+    const dataMin = Math.min(...apendedData);
+
+    if (dataMax <= 0) {
+      return 0;
+    }
+    if (dataMin >= 0) {
+      return 1;
+    }
+
+    return dataMax / (dataMax - dataMin);
+  };
+  const off = gradientOffset();
+
   if (!seriesConfig) {
     return null;
   }
 
   return (
     <div
-      className={`mb-n3 ${size ? `chart-area-${size}` : ''} ${
-        hasOnlyStartEndTick ? 'has-only-start-end-tick' : ''
-      }`}
+      className={classNames('mb-n3', className, {
+        'has-only-start-end-tick': hasOnlyStartEndTick
+      })}
     >
-      <ResponsiveContainer width='100%' height={448}>
+      <ResponsiveContainer width={width ?? '100%'} height={height}>
         <AreaChart data={chartData}>
           <defs>
             <linearGradient id='transparent' x1='0' y1='0' x2='0' y2='1'>
@@ -62,8 +90,16 @@ export const ChartArea = ({
               <stop offset='95%' stopColor={primary} stopOpacity={0} />
             </linearGradient>
           </defs>
+          <defs>
+            <linearGradient id='splitColor' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset={off} stopColor='#4ade80' />
+              <stop offset={off} stopColor='#f87171' />
+            </linearGradient>
+          </defs>
 
-          <CartesianGrid vertical={false} stroke={neutral800} opacity={0.8} />
+          {hasGrid && (
+            <CartesianGrid vertical={false} stroke={neutral800} opacity={0.8} />
+          )}
 
           <XAxis
             minTickGap={40}
@@ -82,6 +118,7 @@ export const ChartArea = ({
               ? { tick: <StartEndTick dateformat={dateFormat} /> }
               : {})}
             {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
+            hide={!hasAxis}
             dy={15}
           />
 
@@ -101,6 +138,7 @@ export const ChartArea = ({
             tickLine={false}
             tickCount={5}
             stroke={seriesConfig.stroke}
+            hide={!hasAxis}
             dy={2}
           />
 
@@ -116,26 +154,36 @@ export const ChartArea = ({
               : {})}
             key={seriesConfig.id}
             strokeWidth={1.5}
-            activeDot={{
-              stroke: primary,
-              fill: primary
-            }}
+            activeDot={
+              hasDot
+                ? {
+                    stroke: primary,
+                    fill: primary
+                  }
+                : false
+            }
           />
 
-          <Tooltip
-            content={(props) => (
-              <ChartTooltip
-                {...props}
-                seriesConfig={[seriesConfig]}
-                dateFormat={tooltip?.dateFormat}
-                color={primary}
-              />
-            )}
-            cursor={{
-              strokeDasharray: '3 5',
-              stroke: muted
-            }}
-          />
+          {hasTooltip && (
+            <Tooltip
+              content={(props) => (
+                <ChartTooltip
+                  {...props}
+                  seriesConfig={[seriesConfig]}
+                  dateFormat={tooltip?.dateFormat}
+                  color={primary}
+                />
+              )}
+              cursor={
+                hasCursor
+                  ? {
+                      strokeDasharray: '3 5',
+                      stroke: muted
+                    }
+                  : false
+              }
+            />
+          )}
         </AreaChart>
       </ResponsiveContainer>
     </div>
