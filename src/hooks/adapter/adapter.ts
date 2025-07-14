@@ -1,5 +1,10 @@
 import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
-import { AccountRolesTypeEnum, GetAccountType } from 'types';
+import {
+  AccountRolesTypeEnum,
+  GetAccountType,
+  GetEventsType,
+  ExchangePriceRangeEnum
+} from 'types';
 import {
   BaseApiType,
   GetBlocksType,
@@ -24,7 +29,8 @@ import {
   getCollectionsParams,
   getNftsParams,
   getTransactionsInPoolParams,
-  getPageParams
+  getPageParams,
+  getEventsParams
 } from './helpers';
 import { useAdapterConfig } from './useAdapterConfig';
 
@@ -206,6 +212,22 @@ export const useAdapter = () => {
 
     getScResultsCount: () => provider({ url: '/results/c' }),
 
+    /* Events */
+
+    getEvent: (hash: string) => provider({ url: `/events/${hash}` }),
+
+    getEvents: (params: GetEventsType) =>
+      provider({
+        url: '/events',
+        params: getEventsParams(params)
+      }),
+
+    getEventsCount: (params: GetEventsType) =>
+      provider({
+        url: '/events/count',
+        params: getEventsParams({ isCount: true, ...params })
+      }),
+
     /* Transactions Pool */
 
     getTransactionInPool: (hash: string) => provider({ url: `/pool/${hash}` }),
@@ -319,17 +341,29 @@ export const useAdapter = () => {
 
     getAccountHistory: ({
       address,
+      identifier,
       size
     }: {
       address: string;
+      identifier?: string;
       size?: number;
-    }) =>
-      provider({
+    }) => {
+      if (identifier) {
+        return provider({
+          url: `/accounts/${address}/history/${identifier}`,
+          params: {
+            ...(size !== undefined ? { size } : {})
+          }
+        });
+      }
+
+      return provider({
         url: `/accounts/${address}/history`,
         params: {
           ...(size !== undefined ? { size } : {})
         }
-      }),
+      });
+    },
 
     getAccountContractVerification: ({ address }: { address: string }) =>
       provider({
@@ -721,6 +755,21 @@ export const useAdapter = () => {
         baseUrl,
         url: ''
       }),
+
+    // xExchange Data
+
+    getExchangeTokenPriceHistory: ({
+      identifier,
+      range = ExchangePriceRangeEnum.hourly
+    }: {
+      identifier: string;
+      range?: ExchangePriceRangeEnum;
+    }) => {
+      if (range === ExchangePriceRangeEnum.daily) {
+        return provider({ url: `/mex/tokens/prices/daily/${identifier}` });
+      }
+      return provider({ url: `/mex/tokens/prices/hourly/${identifier}` });
+    },
 
     // Growth Charts
 

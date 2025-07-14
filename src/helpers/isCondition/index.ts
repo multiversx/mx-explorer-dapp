@@ -7,6 +7,7 @@ export * from './isMetachain';
 export * from './isProof';
 export * from './isTouchDevice';
 export * from './isUtf8';
-export * from './isValidTokenValue';
+export * from './isValidAccountTokenValue';
+export * from './isValidTokenPrice';
 export * from './stringIsFloat';
 export * from './stringIsInteger';

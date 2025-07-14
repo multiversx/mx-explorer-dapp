@@ -4,9 +4,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
 import { isHash, urlBuilder } from 'helpers';
-import { useAdapter, useNetworkRoute } from 'hooks';
+import {
+  useActiveRoute,
+  useAdapter,
+  useGetTransactionUrlHashParams,
+  useNetworkRoute
+} from 'hooks';
 import { faExchangeAlt } from 'icons/regular';
 import { refreshSelector } from 'redux/selectors/refresh';
+import { transactionsRoutes } from 'routes';
 import { TransactionType, TransactionApiStatusEnum } from 'types';
 
 import { TransactionInfo } from './components';
@@ -16,12 +22,16 @@ export const TransactionDetails = () => {
   const { hash: transactionId } = params;
   const navigate = useNavigate();
   const networkRoute = useNetworkRoute();
+  const activeRoute = useActiveRoute();
+  const { id, order } = useGetTransactionUrlHashParams();
 
   const { timestamp } = useSelector(refreshSelector);
   const { getTransaction, getScResult } = useAdapter();
 
   const [transaction, setTransaction] = useState<TransactionType | undefined>();
   const [dataReady, setDataReady] = useState<boolean | undefined>();
+
+  const isLogsRoute = activeRoute(transactionsRoutes.transactionDetailsLogs);
 
   const fetchTransaction = async () => {
     if (transactionId && isHash(transactionId)) {
@@ -38,6 +48,19 @@ export const TransactionDetails = () => {
       }
 
       if (originalTxHash) {
+        if (isLogsRoute) {
+          navigate(
+            networkRoute(
+              urlBuilder.transactionDetailsLogs(originalTxHash, {
+                id,
+                order
+              })
+            ),
+            { replace: true }
+          );
+
+          return;
+        }
         const options = {
           pathname: networkRoute(urlBuilder.transactionDetails(originalTxHash)),
           hash: transactionId

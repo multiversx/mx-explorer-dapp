@@ -1,17 +1,26 @@
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
-import { formatAmount } from 'helpers';
+import { formatAmount, formatBigNumber } from 'helpers';
 import { ChartAxisType } from './types';
 
 export const formatYAxis = ({
-  tick,
+  tick: tickValue,
   currency,
   percentageMultiplier,
   decimals
 }: ChartAxisType) => {
+  const bNtick = new BigNumber(tickValue);
+  const tick = bNtick.toFixed();
+
+  if (bNtick.isEqualTo(0)) {
+    return numeral(tick).format('0');
+  }
+
   if (percentageMultiplier) {
     return `${numeral(Number(tick) * 100).format('0.0')}%`;
-  } else if (decimals) {
+  }
+
+  if (decimals) {
     const formattedValue = formatAmount({
       input: new BigNumber(tick).toString(10),
       decimals,
@@ -21,21 +30,26 @@ export const formatYAxis = ({
     return `${numeral(formattedValue).format('0a')}${
       currency ? ` ${currency}` : ''
     }`;
-  } else if (currency) {
-    if (currency === '$') {
-      return numeral(tick).format('$0a');
-    }
+  }
 
-    return `${numeral(tick).format('0a')} ${currency}`;
-  } else if (Number(tick) > 1000) {
+  if (Number(tick) > 1000) {
     if (currency) {
       if (currency === '$') {
-        return numeral(tick).format('$0.0a');
+        return numeral(tick).format('$0.[00]a');
       }
-      return `${numeral(tick).format('0.0a')} ${currency}`;
+      return `${numeral(tick).format('0.[00]a')} ${currency}`;
     }
 
     return numeral(tick).format('0a');
+  }
+
+  if (currency) {
+    const formatted = formatBigNumber({ value: tick, maxDigits: 4 });
+    if (currency === '$') {
+      return numeral(formatted).format('$0.[0000]');
+    }
+
+    return `${numeral(tick).format('0.[0000]')} ${currency}`;
   }
 
   return numeral(tick).format('0');
