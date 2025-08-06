@@ -1,5 +1,6 @@
 export * from './useGetApplicationsFilters';
 export * from './useGetBlockFilters';
+export * from './useGetEventFilters';
 export * from './useGetNodeFilters';
 export * from './useGetPage';
 export * from './useGetSearch';

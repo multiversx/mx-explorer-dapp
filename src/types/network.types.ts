@@ -12,6 +12,7 @@ export interface NetworkType extends Partial<NetworkConfigType> {
   elasticUrl?: string;
   proxyUrl?: string;
   nftExplorerAddress?: string;
+  hasExchangeData?: boolean;
   isSovereign?: boolean;
   isCustom?: boolean;
 }

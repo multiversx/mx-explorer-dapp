@@ -48,6 +48,7 @@ export const urlBuilder = {
     }`;
   },
   transactionInPoolDetails: (hash: string) => `/transactions/pool/${hash}`,
+  eventDetails: (txHash: string) => `/events/${txHash}`,
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accounts: (params?: GetAccountsType) => {
     const urlSearch = params
@@ -119,6 +120,7 @@ export const urlBuilder = {
   tokenDetailsLockedAccounts: (tokenId: string) =>
     `/tokens/${tokenId}/locked-accounts`,
   tokenDetailsRoles: (tokenId: string) => `/tokens/${tokenId}/roles`,
+  tokenDetailsAnalytics: (tokenId: string) => `/tokens/${tokenId}/analytics`,
   proofDetails: (identifier: string) => `/proofs/${identifier}`,
   proofDetailsAccounts: (identifier: string) =>
     `/proofs/${identifier}/accounts`,

@@ -3,55 +3,98 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { ELLIPSIS } from 'appConstants';
-import { Loader, PageState, Chart } from 'components';
+import { ELLIPSIS, NATIVE_TOKEN_SEARCH_LABEL } from 'appConstants';
+import {
+  Loader,
+  PageState,
+  Chart,
+  TokenSelectFilter,
+  PageSize
+} from 'components';
 import {
   getNormalizedTimeEntries,
   getFrequency
 } from 'components/Chart/helpers/getChartBinnedData';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
-import { getPrimaryColor } from 'helpers';
+import { getPrimaryColor, isValidTokenPrice, stringIsInteger } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+import { AccountBalanceHistoryType, TokenType } from 'types';
 
 export const AccountAnalytics = () => {
   const { account } = useSelector(accountSelector);
   const { address } = account;
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
-  const { getAccountHistory } = useAdapter();
+  const { getAccountHistory, getToken } = useAdapter();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
+  const [tokenPrice, setTokenPrice] = useState<number | undefined>();
+  const [currency, setCurrency] = useState(egldLabel);
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
   const [startDate, setStartDate] = useState<string>(ELLIPSIS);
   const [endDate, setEndDate] = useState<string>(ELLIPSIS);
 
+  const { token, size: urlSize } = Object.fromEntries(searchParams);
+
   const primary = getPrimaryColor();
+  const size = stringIsInteger(urlSize) ? parseInt(urlSize) : 100;
 
-  const getData = () => {
-    getAccountHistory({ address, size: 100 }).then((accountsHistoryData) => {
-      if (
-        accountsHistoryData.success &&
-        accountsHistoryData?.data?.length > 0
-      ) {
-        const reversedData = accountsHistoryData.data.reverse();
-        const startTimestamp = reversedData[0].timestamp;
-        const endTimestamp = reversedData[reversedData.length - 1].timestamp;
+  const showUsdValue =
+    !Boolean(token) || Boolean(token && tokenPrice && token !== egldLabel);
 
-        const frequency = getFrequency(reversedData);
-        const normalizedData = getNormalizedTimeEntries(
-          reversedData,
-          frequency
-        );
-        setChartData(normalizedData);
+  const getChartData = async () => {
+    setTokenPrice(undefined);
+    let searchedToken = undefined;
+    if (token && token !== egldLabel) {
+      const { success: searchedTokenSuccess, data: searchedTokenData } =
+        await getToken(token);
 
-        setStartDate(moment.unix(startTimestamp).utc().format('MMM DD, YYYY'));
-        setEndDate(moment.unix(endTimestamp).utc().format('MMM DD, YYYY'));
+      if (!searchedTokenSuccess) {
+        setDataReady(true);
+        return;
       }
-      setDataReady(accountsHistoryData.success);
-    });
+
+      const { price } = searchedTokenData as TokenType;
+      if (price && isValidTokenPrice(searchedTokenData)) {
+        setTokenPrice(price);
+      }
+      searchedToken = searchedTokenData;
+    }
+
+    const { success: accountsHistroySuccess, data: accountsHistoryData } =
+      await getAccountHistory({
+        address,
+        size: Number(size),
+        ...(token !== egldLabel ? { identifier: token } : {})
+      });
+
+    if (accountsHistroySuccess && accountsHistoryData?.length > 0) {
+      const updatedData = searchedToken
+        ? accountsHistoryData.map((historyData: AccountBalanceHistoryType) => {
+            return { ...historyData, decimals: searchedToken.decimals };
+          })
+        : accountsHistoryData;
+
+      const reversedData = updatedData.reverse();
+      const startTimestamp = reversedData[0].timestamp;
+      const endTimestamp = reversedData[reversedData.length - 1].timestamp;
+
+      const frequency = getFrequency(reversedData);
+      const normalizedData = getNormalizedTimeEntries(reversedData, frequency);
+
+      setCurrency(
+        searchedToken?.ticker ?? searchedToken?.identifier ?? egldLabel
+      );
+      setChartData(normalizedData);
+
+      setStartDate(moment.unix(startTimestamp).utc().format('MMM DD, YYYY'));
+      setEndDate(moment.unix(endTimestamp).utc().format('MMM DD, YYYY'));
+    }
+
+    setDataReady(accountsHistroySuccess);
   };
 
   const config: ChartConfigType[] = [
@@ -61,23 +104,37 @@ export const AccountAnalytics = () => {
       gradient: 'defaultGradient',
       stroke: primary,
       data: chartData,
-      showUsdValue: true,
+      showUsdValue,
       yAxisConfig: {
-        currency: egldLabel,
+        currency,
         orientation: 'left'
-      }
+      },
+      ...(tokenPrice ? { price: tokenPrice } : {})
     }
   ];
 
-  useEffect(getData, [activeNetworkId, searchParams]);
+  useEffect(() => {
+    getChartData();
+  }, [activeNetworkId, searchParams, egldLabel]);
 
   return (
     <div className='card'>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <AccountTabs />
-          <div className='d-flex align-items-center '>
-            Account {egldLabel} Balance{' '}
+          <div className='d-flex flex-wrap align-items-center w-100'>
+            Account{' '}
+            <TokenSelectFilter
+              name='token-filter'
+              filter='token'
+              placeholder='Search for a Token'
+              noOptionsMessage='Invalid Identifier'
+              className='account-analytics-token-select mx-2'
+              defaultToken={NATIVE_TOKEN_SEARCH_LABEL}
+              hasShowAllOption={false}
+              isClearable={false}
+            />{' '}
+            Balance{' '}
             {chartData.length > 1 && (
               <span className='text-neutral-400 ms-1'>
                 ( from {startDate} to {endDate} )
@@ -102,13 +159,12 @@ export const AccountAnalytics = () => {
             <>
               {chartData.length > 1 ? (
                 <div className='mx-n4'>
-                  <Chart.AreaNew
+                  <Chart.Area
                     config={config}
                     tooltip={{
-                      showUsdValue: true,
                       dateFormat: 'MMM DD, YYYY HH:mm:ss UTC'
                     }}
-                  ></Chart.AreaNew>
+                  ></Chart.Area>
                 </div>
               ) : (
                 <PageState
@@ -126,6 +182,11 @@ export const AccountAnalytics = () => {
             </>
           )}
         </Chart.Body>
+        <PageSize
+          className='mt-spacer'
+          defaultSize={100}
+          sizeArray={[100, 200, 500, 1000, 5000]}
+        />
       </div>
     </div>
   );
