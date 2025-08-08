@@ -4,9 +4,6 @@ import { NotificationModal } from '@multiversx/sdk-dapp/UI/NotificationModal/Not
 import { SignTransactionsModals } from '@multiversx/sdk-dapp/UI/SignTransactionsModals/SignTransactionsModals';
 import { TransactionsToastList } from '@multiversx/sdk-dapp/UI/TransactionsToastList/TransactionsToastList';
 import { DappProvider } from '@multiversx/sdk-dapp/wrappers/DappProvider/DappProvider';
-import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/containers/ScExplorerContainer';
-import { VerifiedContractTabsEnum } from '@multiversx/sdk-dapp-sc-explorer/types/base.types';
-import { VerifiedContractType } from '@multiversx/sdk-dapp-sc-explorer/types/verifiedContract.types';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,6 +30,11 @@ import {
   faSpinner
 } from 'icons/solid';
 import { getHeaders } from 'interceptors';
+import {
+  ScExplorerContainer,
+  VerifiedContractTabsEnum,
+  VerifiedContractType
+} from 'lib';
 import { accountSelector, activeNetworkSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
