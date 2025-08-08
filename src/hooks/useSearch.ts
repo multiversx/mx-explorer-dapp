@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Address } from '@multiversx/sdk-core/out';
 import { useSelector } from 'react-redux';
 
 import {
@@ -17,6 +16,7 @@ import {
   isProof
 } from 'helpers';
 import { useAdapter, useGetHrp, useNetworkRoute } from 'hooks';
+import { Address } from 'lib';
 import { activeNetworkSelector } from 'redux/selectors';
 import { TokenTypeEnum } from 'types';
 
