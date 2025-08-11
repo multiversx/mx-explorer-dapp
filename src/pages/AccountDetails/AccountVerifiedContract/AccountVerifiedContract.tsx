@@ -1,9 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useGetLoginInfo, useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { NotificationModal } from '@multiversx/sdk-dapp/UI/NotificationModal/NotificationModal';
-import { SignTransactionsModals } from '@multiversx/sdk-dapp/UI/SignTransactionsModals/SignTransactionsModals';
-import { TransactionsToastList } from '@multiversx/sdk-dapp/UI/TransactionsToastList/TransactionsToastList';
-import { DappProvider } from '@multiversx/sdk-dapp/wrappers/DappProvider/DappProvider';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,6 +27,8 @@ import {
 import { getHeaders } from 'interceptors';
 import {
   ScExplorerContainer,
+  useGetAccountInfo,
+  useGetLoginInfo,
   VerifiedContractTabsEnum,
   VerifiedContractType
 } from 'lib';
@@ -40,6 +37,7 @@ import { WithClassnameType } from 'types';
 
 import { getVerifiedContractSectionUrl } from './helpers';
 import { useGetActiveSection, useGetEnvironment } from './hooks';
+import { SdkDappWrapper } from './SdkDappWrapper';
 
 export interface AccountVerifiedContractUIType extends WithClassnameType {
   contract?: VerifiedContractType;
@@ -76,8 +74,6 @@ export const AccountVerifiedContract = ({
   if (!isVerified || !environment) {
     return null;
   }
-
-  const walletConnectV2ProjectId = import.meta.env.VITE_APP_WALLETCONNECT_ID;
 
   const customClassNames = {
     cardClassName: 'card card-black',
@@ -136,21 +132,7 @@ export const AccountVerifiedContract = ({
       )}
       {isDataReady === true && contract && (
         <div>
-          <DappProvider
-            environment={environment}
-            customNetworkConfig={{
-              name: 'sdk-sc-explorer',
-              skipFetchFromServer: true,
-              walletConnectV2ProjectId,
-              apiAddress
-            }}
-            dappConfig={{
-              shouldUseWebViewProvider: true
-            }}
-          >
-            <TransactionsToastList />
-            <NotificationModal />
-            <SignTransactionsModals />
+          <SdkDappWrapper>
             <ScExplorerContainer
               smartContract={{
                 verifiedContract: contract,
@@ -183,7 +165,7 @@ export const AccountVerifiedContract = ({
                   : {})
               }}
             />
-          </DappProvider>
+          </SdkDappWrapper>
         </div>
       )}
     </>

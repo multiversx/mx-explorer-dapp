@@ -6,12 +6,11 @@ import {
   useState
 } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DecodeMethodEnum } from '@multiversx/sdk-dapp/types';
-import { decodeForDisplay } from '@multiversx/sdk-dapp/utils/transactions/transactionInfoHelpers/decodeForDisplay';
 import { Anchor, Dropdown } from 'react-bootstrap';
 import { MAX_DECODE_TX_DATA_LENGTH } from 'appConstants';
 import { CopyButton } from 'components';
 import { faExclamationTriangle } from 'icons/regular';
+import { DecodeMethodEnum, getAllDecodedFormats } from 'lib';
 import { WithClassnameType } from 'types';
 
 export interface DataDecodeUIType extends WithClassnameType {
@@ -51,11 +50,16 @@ export const DataDecode = ({
   };
 
   useEffect(() => {
-    const { displayValue, validationWarnings } = decodeForDisplay({
-      input: value,
-      decodeMethod: activeKey as DecodeMethodEnum,
+    const decodedDisplay = getAllDecodedFormats({
+      data: value,
+      highlight: '',
       identifier
     });
+    const decodedValue = decodedDisplay[activeKey as DecodeMethodEnum];
+    if (!decodedValue) {
+      return;
+    }
+    const { displayValue, validationWarnings } = decodedValue;
     setDisplayValue(displayValue);
     setValidationWarnings(validationWarnings);
   }, [activeKey, value]);

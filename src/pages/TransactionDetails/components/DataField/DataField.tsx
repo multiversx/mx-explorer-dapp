@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { DecodeMethodEnum } from '@multiversx/sdk-dapp/types';
 import { Anchorme } from 'react-anchorme';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -12,6 +11,7 @@ import {
   useActiveRoute,
   useGetTransactionUrlHashParams
 } from 'hooks';
+import { DecodeMethodEnum } from 'lib';
 import { transactionsRoutes } from 'routes';
 import { ScamInfoType, WithClassnameType } from 'types';
 

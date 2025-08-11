@@ -1,4 +1,4 @@
-import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
+import { stringIsInteger } from 'lib';
 
 export const getUrlParam =
   (searchParams: URLSearchParams) =>
