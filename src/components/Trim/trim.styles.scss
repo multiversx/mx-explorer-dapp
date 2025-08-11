@@ -110,6 +110,10 @@
   display: flex;
   max-width: 100%;
   overflow: hidden;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  line-height: inherit;
 }
 
 // Link Extra Logic
