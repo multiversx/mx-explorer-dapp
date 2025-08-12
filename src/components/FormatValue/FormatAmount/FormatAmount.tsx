@@ -6,7 +6,7 @@ import { ELLIPSIS } from 'appConstants';
 import { NativeTokenSymbol } from 'components';
 import { DECIMALS, DIGITS } from 'config';
 import { formatAmount, isEgldToken } from 'helpers';
-import { SdkDappFormatAmountType, stringIsInteger } from 'lib';
+import { stringIsInteger } from 'lib';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
 
 import { WithClassnameType } from 'types';
@@ -14,9 +14,16 @@ import { WithClassnameType } from 'types';
 import { FormatDisplayValue } from '../FormatDisplayValue';
 import { FormatUSD } from '../FormatUSD';
 
-export interface FormatAmountUIType
-  extends SdkDappFormatAmountType,
-    WithClassnameType {
+export interface FormatAmountUIType extends WithClassnameType {
+  value: string;
+  showLastNonZeroDecimal?: boolean;
+  showLabel?: boolean;
+  token?: string;
+  digits?: number;
+  decimals?: number;
+  egldLabel?: string;
+  'data-testid'?: string;
+
   showTooltip?: boolean;
   showSymbol?: boolean;
   superSuffix?: boolean;
@@ -98,7 +105,7 @@ export const FormatAmount = (props: FormatAmountUIType) => {
               <>
                 <NativeTokenSymbol
                   className={classNames('sym', { custom: isCustomIcon })}
-                />{' '}
+                />
               </>
             )
           }
