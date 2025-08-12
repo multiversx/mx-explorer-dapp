@@ -5,18 +5,14 @@ import { initApp, InitAppType } from 'lib';
 import { activeNetworkSelector } from 'redux/selectors';
 
 import { useGetEnvironment } from './hooks';
+import { Loader } from 'components';
 
 export const SdkDappWrapper = ({ children }: { children: ReactNode }) => {
   const environment = useGetEnvironment();
   const { apiAddress } = useSelector(activeNetworkSelector);
   const walletConnectV2ProjectId = import.meta.env.VITE_APP_WALLETCONNECT_ID;
 
-  const [state, setState] = useState<{
-    content: ReactNode | null;
-  }>({
-    content: null
-  });
-
+  const [initialized, setInitialized] = useState<boolean>(false);
   const isMountingRef = useRef(false);
 
   const initializeApp = async () => {
@@ -44,18 +40,17 @@ export const SdkDappWrapper = ({ children }: { children: ReactNode }) => {
       }
     };
 
-    await initApp(config);
-
-    setState({
-      content: children
-    });
-
-    isMountingRef.current = false;
+    try {
+      await initApp(config);
+      setInitialized(true);
+    } catch (error) {
+      console.error('Error initializing app:', error);
+    }
   };
 
   useEffect(() => {
     initializeApp();
   }, []);
 
-  return <>{state.content}</>;
+  return <>{!initialized ? <Loader /> : children}</>;
 };
