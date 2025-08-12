@@ -1,0 +1,104 @@
+@import './variables';
+
+/* ----------------- Inputs ----------------- */
+
+.#{$package-name} {
+  &-input,
+  &-select {
+    height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+  &-select {
+    border-radius: 1rem;
+  }
+  &-input-group-append.input-group-text {
+    top: 0;
+    padding: 0.438rem;
+    &:first-of-type:not(:last-of-type) {
+      right: 0;
+    }
+  }
+  &-label {
+    font-size: 0.875rem;
+    margin-bottom: 0.125rem;
+  }
+  &-general-error {
+    color: var(--danger);
+    margin-top: 1rem;
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  &-amount-select-input-group {
+    --dapp-form-bg: var(--neutral-900);
+    --dapp-form-label-color: var(--neutral-400);
+    --dapp-form-input-bg: var(--neutral-800);
+    --dapp-form-placeholder-color: var(--neutral-500);
+    --dapp-form-input-color: var(--neutral-300);
+    --dapp-form-error-color: #dc3545;
+    --dapp-form-max-btn-bg: var(--neutral-900);
+    --dapp-form-max-hover-btn-bg: var(--black);
+    --dapp-form-max-btn-color: var(--neutral-200);
+    --dapp-form-input-border-radius: 1rem;
+    --dapp-form-input-border-color: var(--neutral-800);
+    --dapp-form-input-border-focus: var(--primary);
+    --dapp-form-select-input-color: var(--neutral-200);
+    --dapp-form-select-input-color-hover: var(--neutral-400);
+    --dapp-form-select-icon-border: var(--border-color);
+    --dapp-form-select-icon-bg: var(--neutral-900);
+    --dapp-form-select-indicator-fill: var(--neutral-200);
+    --dapp-form-select-indicator-fill-hover: var(--neutral-400);
+    --dapp-form-select-menu-bg: var(--neutral-800);
+    --dapp-form-select-menu-border: var(--border-color);
+    --dapp-form-select-menu-scroll-track: transparent;
+    --dapp-form-select-option-bg: var(--neutral-800);
+    --dapp-form-select-option-bg-hover: var(--neutral-700);
+    --dapp-form-select-option-bg-selected: var(--black);
+    --dapp-form-select-option-color: var(--neutral-200);
+    --dapp-form-btn-bg: var(--primary);
+    --dapp-form-nftsft-preview-bg: var(--black);
+
+    margin-top: 2rem;
+
+    &.dapp-core-component__amountSelect-module__amount {
+      .dapp-core-component__amountSelect-module__label {
+        margin-bottom: 0.25rem;
+        .dapp-core-component__globals-module__label {
+          font-size: 0.875rem;
+        }
+        .dapp-core-component__tokenBalance-module__balance {
+          font-size: 0.875rem;
+          span {
+            color: var(--neutral-400);
+          }
+        }
+      }
+      .dapp-core-component__tokenSelect-module__select
+        .dapp-core-component__tokenSelect-module__control {
+        .dapp-core-component__tokenSelect-module__container {
+          height: 3.125rem;
+        }
+        .dapp-core-component__tokenSelect-module__payload
+          .dapp-core-component__tokenSelect-module__wrapper {
+          flex-direction: row;
+        }
+      }
+      .dapp-core-component__amountInput-module__amount-input {
+        padding: 1rem 0.5rem;
+        font-weight: 400;
+      }
+      .dapp-core-component__globals-module__error {
+        padding-top: 0;
+        margin-top: 0.25rem;
+        font-size: 0.875em;
+      }
+      .dapp-core-component__tokenSelect-module__control {
+        &:hover {
+          box-shadow: 0 0 0 1px var(--primary);
+          border-color: var(--primary);
+        }
+      }
+    }
+  }
+}

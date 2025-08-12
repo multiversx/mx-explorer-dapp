@@ -1,0 +1,80 @@
+@import './variables';
+
+/* ----------------- Modals ----------------- */
+
+.#{$package-name} {
+  &-modal {
+    --modal-zindex: 1100;
+  }
+  &-modal-dialog {
+    --modal-width: 480px;
+    --modal-bg: var(--black);
+  }
+
+  &-modal-header {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1rem 0 1rem;
+    border: 0;
+    font-size: $h4-font-size;
+    font-family: $headings-font-family;
+    .btn-close {
+      order: -1;
+    }
+    .i-icon,
+    .btn-close {
+      font-size: $font-size-base;
+    }
+    .i-icon {
+      margin-left: 0.5rem;
+      margin-top: 0.25rem;
+      color: var(--neutral-500);
+    }
+    @include media-breakpoint-up(sm) {
+      padding: $spacer-val $spacer-val 0 $spacer-val;
+    }
+  }
+
+  &-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 10rem;
+  }
+
+  &-modal-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &-login-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  &-unlock-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &-mutate-modal {
+    &-form-fields {
+      label {
+        color: var(--neutral-400);
+      }
+    }
+    &-form-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+  }
+}

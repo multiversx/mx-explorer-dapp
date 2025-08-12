@@ -1,0 +1,27 @@
+@import './variables';
+
+/* ----------------- Tabs ----------------- */
+
+.#{$package-name} {
+  &-tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    padding-right: 0.75rem;
+    font-family: var(--headings-font-family);
+    --nav-link-font-size: 1rem;
+    --nav-link-padding-y: 0.75rem;
+    --nav-link-padding-x: 1rem;
+    --nav-link-color: var(--teal-200);
+    --nav-link-hover-color: var(--neutral-100);
+    .badge {
+      padding: 0.125rem 0.25rem;
+    }
+    &:hover,
+    &-active {
+      background: var(--black);
+    }
+  }
+}
