@@ -29,7 +29,7 @@
     }
     @include media-breakpoint-up(md) {
       padding: 0.5rem 0.625rem;
-      font-size: $font-size-base;
+      font-size: var(--body-font-size);
       border-radius: 2rem;
       height: 2rem;
 

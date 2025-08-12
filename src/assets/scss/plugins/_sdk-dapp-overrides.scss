@@ -140,7 +140,7 @@
   .ledger-confirm-address-data {
     background-color: var(--neutral-800) !important;
     color: var(--neutral-200) !important;
-    font-size: $font-size-base !important;
+    font-size: var(--body-font-size) !important;
     font-family: $font-family-sans-serif !important;
   }
 
@@ -349,7 +349,7 @@
   color: var(--neutral-200) !important;
   border-color: var(--border-color) !important;
   font-weight: 400 !important;
-  font-size: $font-size-base !important;
+  font-size: var(--body-font-size) !important;
   width: 100% !important;
   text-align: left;
   border-radius: var(--border-radius);

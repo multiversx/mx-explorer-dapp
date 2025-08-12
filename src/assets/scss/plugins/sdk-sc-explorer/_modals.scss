@@ -23,7 +23,7 @@
     }
     .i-icon,
     .btn-close {
-      font-size: $font-size-base;
+      font-size: var(--body-font-size);
     }
     .i-icon {
       margin-left: 0.5rem;
