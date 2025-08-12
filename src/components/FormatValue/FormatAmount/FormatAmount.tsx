@@ -105,7 +105,7 @@ export const FormatAmount = (props: FormatAmountUIType) => {
               <>
                 <NativeTokenSymbol
                   className={classNames('sym', { custom: isCustomIcon })}
-                />
+                />{' '}
               </>
             )
           }
