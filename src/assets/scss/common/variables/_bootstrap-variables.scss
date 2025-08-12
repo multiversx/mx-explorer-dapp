@@ -350,7 +350,16 @@ $form-select-border-width: 0;
 // of components dependent on the z-axis and are designed to all work together.
 
 // scss-docs-start zindex-stack
-$zindex-sticky: 1020;
+$zindex-dropdown: 10;
+$zindex-sticky: 11;
+$zindex-fixed: 12;
+$zindex-offcanvas-backdrop: 13;
+$zindex-offcanvas: 14;
+$zindex-modal-backdrop: 15;
+$zindex-modal: 16;
+$zindex-popover: 17;
+$zindex-tooltip: 18;
+$zindex-toast: 19;
 // scss-docs-end zindex-stack
 
 // Dropdowns

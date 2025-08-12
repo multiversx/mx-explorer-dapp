@@ -48,6 +48,9 @@
       color: var(--warning);
     }
   }
+  &-interaction-form-button {
+    margin-top: 1rem;
+  }
   &-interaction-modal-form-button,
   &-transaction-panel-button {
     display: flex;

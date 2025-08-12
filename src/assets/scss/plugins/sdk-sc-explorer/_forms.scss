@@ -24,9 +24,6 @@
       max-width: 100%;
       gap: 0.5rem;
       margin-right: 0.25rem;
-      .dapp-trim {
-        max-width: 14rem !important;
-      }
     }
   }
   &-form-panel {
@@ -67,6 +64,9 @@
           margin-bottom: 0;
           line-height: 1.5;
         }
+      }
+      &-button {
+        margin-top: 1rem;
       }
     }
   }

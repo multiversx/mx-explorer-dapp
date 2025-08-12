@@ -28,14 +28,15 @@
       color: var(--neutral-400);
     }
     &-value {
-      .dapp-trim {
+      align-items: center;
+      mvx-trim {
         display: flex;
         max-width: 100%;
         overflow: hidden;
         position: relative;
         white-space: nowrap;
       }
-      .dapp-copy-button {
+      mvx-copy-button {
         margin-left: 0.5rem;
         svg[data-icon='clone'] {
           color: var(--body-color);

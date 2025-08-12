@@ -4,7 +4,7 @@
 
 .header {
   position: sticky;
-  z-index: 1100;
+  z-index: 20;
   top: 0;
 
   @include media-breakpoint-up(lg) {

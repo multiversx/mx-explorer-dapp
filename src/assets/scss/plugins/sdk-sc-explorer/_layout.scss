@@ -82,6 +82,9 @@
     border-radius: 0.5rem;
     background: var(--neutral-900);
     max-width: 16rem;
+    mvx-trim {
+      max-width: 9rem;
+    }
     @include media-breakpoint-up(md) {
       margin-left: auto;
     }
