@@ -22,13 +22,10 @@ export default () => {
         globals: { Buffer: true, global: true, process: true }
       }),
       svgr({
+        include: '**/*.svg',
         svgrOptions: {
-          exportType: 'named',
-          ref: true,
-          svgo: false,
-          titleProp: true
-        },
-        include: '**/*.svg'
+          exportType: 'default'
+        }
       }),
       ...(shouldUseTSL ? [basicSsl()] : [])
     ],

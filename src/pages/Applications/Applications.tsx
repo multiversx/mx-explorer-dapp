@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS, PAGE_SIZE } from 'appConstants';
-import { ReactComponent as DefaultImage } from 'assets/img/default-icon.svg';
+import DefaultImage from 'assets/img/default-icon.svg';
 import {
   Loader,
   Pager,
