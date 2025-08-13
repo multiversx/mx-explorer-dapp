@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { BRAND_NAME } from 'appConstants';
-import { ReactComponent as MultiversXLogo } from 'assets/img/logo-full.svg';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
+import MultiversXLogo from 'assets/img/logo-full.svg';
+import MultiversXSymbol from 'assets/img/symbol.svg';
 import { NetworkLink } from 'components';
 import { useIsMainnet, useGetExplorerTitle } from 'hooks';
 import { faGrid, faGrid2 } from 'icons/solid';

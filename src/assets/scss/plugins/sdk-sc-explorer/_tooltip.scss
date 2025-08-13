@@ -1,0 +1,26 @@
+@import './variables';
+
+/* ----------------- Tooltip ----------------- */
+
+.#{$package-name} {
+  &-tooltip {
+    .tooltip-inner {
+      text-align: left;
+      min-width: 12rem;
+      @include media-breakpoint-up(md) {
+        max-width: 24rem;
+      }
+      @include media-breakpoint-up(xl) {
+        max-width: 30rem;
+      }
+    }
+  }
+  &-tooltip-icon,
+  &-definitions-tooltip-icon {
+    color: var(--neutral-600);
+    cursor: context-menu;
+  }
+  &-definitions-tooltip-icon {
+    font-size: 0.75rem;
+  }
+}

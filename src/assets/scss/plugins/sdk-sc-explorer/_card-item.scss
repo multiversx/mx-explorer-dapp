@@ -1,0 +1,52 @@
+@import './variables';
+
+/* ----------------- Card Item ----------------- */
+
+.#{$package-name} {
+  &-card-item {
+    row-gap: 0.5rem;
+    column-gap: 1rem;
+    padding: 0.25rem 0.5rem;
+    flex-basis: 25%;
+    flex-grow: 0;
+    &:last-of-type {
+      flex-grow: 1;
+    }
+    &-container {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: 1rem;
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+      }
+    }
+    &-content {
+      min-width: 0;
+      width: 100%;
+    }
+    &-title {
+      color: var(--neutral-400);
+    }
+    &-value {
+      align-items: center;
+      mvx-trim {
+        display: flex;
+        max-width: 100%;
+        overflow: hidden;
+        position: relative;
+        white-space: nowrap;
+      }
+      mvx-copy-button {
+        margin-left: 0.5rem;
+        svg[data-icon='clone'] {
+          color: var(--body-color);
+        }
+      }
+    }
+  }
+  &-collapsible-card {
+    &.card > .card-header {
+      cursor: pointer;
+    }
+  }
+}

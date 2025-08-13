@@ -39,7 +39,7 @@
   .left span,
   .right span {
     color: var(--#{$prefix}body-color);
-    font-size: $font-size-base;
+    font-size: var(--body-font-size);
     pointer-events: none;
     user-select: none;
   }
@@ -110,6 +110,10 @@
   display: flex;
   max-width: 100%;
   overflow: hidden;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  line-height: inherit;
 }
 
 // Link Extra Logic
