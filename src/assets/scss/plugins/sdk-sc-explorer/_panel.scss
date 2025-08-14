@@ -1,0 +1,97 @@
+@import './variables';
+
+/* ----------------- Panel ----------------- */
+
+.#{$package-name} {
+  &-panel {
+    @include media-breakpoint-down(md) {
+      flex-wrap: wrap;
+      flex-direction: column;
+    }
+    &:first-of-type {
+      .#{$package-name}-panel-content-wrapper {
+        border-top-right-radius: var(--border-radius);
+        border-top-left-radius: var(--border-radius);
+      }
+    }
+    &:last-of-type {
+      .#{$package-name}-panel-content-wrapper {
+        border-bottom-right-radius: var(--border-radius);
+        border-bottom-left-radius: var(--border-radius);
+      }
+    }
+  }
+  &-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+    @include media-breakpoint-up(md) {
+      margin-top: 0;
+    }
+    &-title {
+      font-family: var(--headings-font-family);
+      font-weight: 500;
+      @include media-breakpoint-up(md) {
+        font-size: 1.25rem;
+      }
+    }
+    &-buttons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+  &-panel-mode {
+    flex: 10% 0 0;
+    padding: 0.625rem 0.5rem 0.625rem 0;
+  }
+  &-panel-name {
+    padding: 0.625rem;
+    background-color: var(--neutral-900);
+    flex-grow: 1;
+    min-width: 100%;
+    @include media-breakpoint-up(sm) {
+      text-align: right;
+      flex-basis: 25%;
+      flex-grow: 0;
+      flex-shrink: 0;
+      min-width: 25%;
+    }
+    @include media-breakpoint-up(md) {
+      flex-basis: 17%;
+      min-width: 17%;
+    }
+  }
+  &-panel-content {
+    padding-right: 0.5rem;
+    .#{$package-name}-panel-content {
+      padding: 0.5rem;
+      padding-right: 0;
+      @include media-breakpoint-up(md) {
+        padding-left: 0;
+      }
+      .#{$package-name}-panel-content {
+        padding-left: 0.5rem;
+      }
+    }
+  }
+
+  &-panel-content-wrapper {
+    background-color: #0a0a0a;
+    overflow: hidden;
+    padding-right: 0;
+
+    &-row {
+      .#{$package-name}-panel-content-wrapper-row {
+        .#{$package-name}-panel-content-wrapper-row {
+          border-left: 0.25rem solid var(--neutral-800);
+          border-top-left-radius: 0.25rem;
+          border-bottom-left-radius: 0.25rem;
+        }
+      }
+    }
+  }
+}

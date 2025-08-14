@@ -1,7 +1,6 @@
-import { FormatAmountType as SdkDappFormatAmountType } from '@multiversx/sdk-dapp/utils/operations/formatAmount';
-import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import { ELLIPSIS, MAX_DISPLAY_ZERO_DECIMALS, ZERO } from 'appConstants';
 import { DECIMALS, DIGITS } from 'config';
+import { SdkDappFormatAmountType, stringIsInteger } from 'lib';
 
 interface FormatAmountType extends SdkDappFormatAmountType {
   maxDisplayZeroDecimals?: number;

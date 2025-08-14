@@ -1,4 +1,4 @@
-import { NetworkType as NetworkConfigType } from '@multiversx/sdk-dapp/types/network.types';
+import { NetworkConfigType } from 'lib';
 import { NetworkAdapterEnum } from './adapter.types';
 
 export interface NetworkType extends Partial<NetworkConfigType> {

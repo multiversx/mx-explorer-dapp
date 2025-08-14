@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
+import MultiversXSymbol from 'assets/img/multiversx-legacy-delegation.svg';
 import { FormatAmount } from 'components';
 import { faLeaf } from 'icons/regular';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
