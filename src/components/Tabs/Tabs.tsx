@@ -89,7 +89,7 @@ export const Tabs = (props: TabsPropsType) => {
           );
 
           return (
-            <li key={tab.tabTo} className='d-flex'>
+            <li key={tab.filterValue} className='d-flex'>
               <button
                 type='button'
                 className={`nav-item tab btn btn-link ${
