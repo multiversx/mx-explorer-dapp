@@ -1,0 +1,15 @@
+@import './variables';
+
+/* ----------------- General Layout ----------------- */
+
+.#{$package-name} {
+  @include media-breakpoint-down(md) {
+    --card-spacer-x: 0.5rem;
+  }
+  &-code {
+    background: var(--table-header) !important;
+  }
+  &-sc-icon {
+    margin-right: 0.25rem;
+  }
+}

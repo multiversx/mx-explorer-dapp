@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DecodeMethodEnum } from '@multiversx/sdk-dapp/types';
-import { decodeForDisplay } from '@multiversx/sdk-dapp/utils/transactions/transactionInfoHelpers/decodeForDisplay';
+
 import { InfoTooltip, NetworkLink } from 'components';
 import {
   getTransactionMessages,
@@ -8,6 +7,7 @@ import {
   urlBuilder
 } from 'helpers';
 import { faAngleDown } from 'icons/regular';
+import { DecodeMethodEnum, getAllDecodedFormats } from 'lib';
 import {
   TransactionType,
   TransactionApiStatusEnum,
@@ -19,12 +19,13 @@ export const InternalErrorDisplay = ({ data }: { data: string }) => {
   if (data) {
     const dataBase64Buffer = Buffer.from(String(data), 'base64');
     const dataHexValue = dataBase64Buffer.toString('hex');
-    const decodedDisplay = decodeForDisplay({
-      input: dataHexValue,
-      decodeMethod: DecodeMethodEnum.smart
+    const decodedDisplay = getAllDecodedFormats({
+      data: dataHexValue,
+      highlight: ''
     });
-    if (decodedDisplay.displayValue) {
-      return <p className='text-start'>{decodedDisplay.displayValue}</p>;
+    const decodedValue = decodedDisplay[DecodeMethodEnum.smart];
+    if (decodedValue?.displayValue) {
+      return <p className='text-start'>{decodedValue.displayValue}</p>;
     }
   }
 

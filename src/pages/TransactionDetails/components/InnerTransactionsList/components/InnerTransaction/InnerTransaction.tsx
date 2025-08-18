@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DecodeMethodEnum } from '@multiversx/sdk-dapp/types';
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 
@@ -21,6 +20,7 @@ import {
   useScrollToTransactionSection
 } from 'hooks';
 import { faExchange, faSearch } from 'icons/regular';
+import { DecodeMethodEnum } from 'lib';
 import { transactionsRoutes } from 'routes';
 import { TransactionInnerType } from 'types';
 

@@ -1,0 +1,13 @@
+@import './variables';
+
+/* ----------------- Badge ----------------- */
+
+.#{$package-name} {
+  &-badge {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    &.badge-outline::before {
+      border-radius: 0.5rem;
+    }
+  }
+}

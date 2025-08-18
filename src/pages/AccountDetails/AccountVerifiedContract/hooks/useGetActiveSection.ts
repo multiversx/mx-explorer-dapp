@@ -1,7 +1,7 @@
-import { VerifiedContractTabsEnum } from '@multiversx/sdk-dapp-sc-explorer/types/base.types';
 import { useMatch } from 'react-router-dom';
 
 import { useNetworkRoute } from 'hooks';
+import { VerifiedContractTabsEnum } from 'lib';
 import { accountsRoutes } from 'routes';
 
 export const useGetActiveSection = () => {

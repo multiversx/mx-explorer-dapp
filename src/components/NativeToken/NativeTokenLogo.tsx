@@ -1,8 +1,8 @@
 import { SVGProps } from 'react';
 import { useSelector } from 'react-redux';
 
-import { ReactComponent as EgldLogo } from 'assets/img/tokens/egld-logo.svg';
-import { ReactComponent as SpcLogo } from 'assets/img/tokens/spc-logo.svg';
+import EgldLogo from 'assets/img/tokens/egld-logo.svg';
+import SpcLogo from 'assets/img/tokens/spc-logo.svg';
 import { isEgldToken } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
 

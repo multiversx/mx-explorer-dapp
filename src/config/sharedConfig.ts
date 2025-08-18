@@ -1,11 +1,12 @@
+import { object, string, boolean } from 'yup';
+
 import {
   DECIMALS,
   GAS_LIMIT,
   GAS_PER_DATA_BYTE,
   GAS_PRICE_MODIFIER,
-  GAS_PRICE as DEFAULT_GAS_PRICE
-} from '@multiversx/sdk-dapp/constants/index';
-import { object, string, boolean } from 'yup';
+  DEFAULT_GAS_PRICE
+} from 'lib';
 import { NetworkUrlType } from 'types/network.types';
 
 interface AppLinksType {

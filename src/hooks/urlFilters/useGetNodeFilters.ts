@@ -1,5 +1,6 @@
-import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import { useSearchParams } from 'react-router-dom';
+
+import { stringIsInteger } from 'lib';
 
 export const useGetNodeFilters = () => {
   const [searchParams] = useSearchParams();

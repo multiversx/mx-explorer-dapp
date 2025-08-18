@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 
-import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
+import MultiversXSymbol from 'assets/img/multiversx-legacy-delegation.svg';
 import { FormatAmount } from 'components';
 import { AccountStakeType } from 'types';
 
