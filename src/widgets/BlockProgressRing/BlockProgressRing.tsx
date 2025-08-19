@@ -11,6 +11,7 @@ export const BlockProgressRing = ({ className }: WithClassnameType) => {
       <ProgressRing
         progress={Number(roundProgress.toFixed(2))}
         size={100}
+        isSubSecond={roundTimeProgress.isLessThan(1)}
         hasBg
       >
         <div className='label' data-testid='currentEpoch'>

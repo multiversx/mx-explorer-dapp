@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { HEROTAG_SUFFIX } from 'appConstants';
-import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
+import IdentityLogo from 'assets/img/logos/identity.svg';
 import { Trim, Overlay } from 'components';
 import { formatHerotag } from 'helpers';
 import { useAdapter } from 'hooks';

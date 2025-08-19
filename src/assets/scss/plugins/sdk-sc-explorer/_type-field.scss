@@ -1,0 +1,21 @@
+@import './variables';
+
+/* ----------------- Type Field ----------------- */
+
+.#{$package-name} {
+  &-field {
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 1.625rem;
+    background-color: var(--neutral-900);
+    flex-wrap: wrap;
+    flex-grow: 1;
+    @include media-breakpoint-up(md) {
+      flex-wrap: nowrap;
+      flex-grow: 0;
+    }
+    &-value {
+      color: var(--neutral-400);
+    }
+  }
+}

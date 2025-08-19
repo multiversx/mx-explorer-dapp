@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
+import MultiversXSymbol from 'assets/img/multiversx-legacy-delegation.svg';
 import { FormatAmount } from 'components';
 import { faLeaf } from 'icons/regular';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
@@ -63,14 +63,15 @@ export const AccountLegacyDelegation = ({
             <div className='provider-title font-headings d-flex align-items-center'>
               MultiversX Legacy Delegation
             </div>
-
-            <div className='d-flex flex-wrap provider-metrics'>
-              <div>
-                <FontAwesomeIcon size='xs' icon={faLeaf} className='me-1' />
-                Up to {legacyDelegationApr}
-                <span className='text-neutral-400 ms-1'>APY</span>
+            {identity && (
+              <div className='d-flex flex-wrap provider-metrics'>
+                <div>
+                  <FontAwesomeIcon size='xs' icon={faLeaf} className='me-1' />
+                  Up to {legacyDelegationApr}
+                  <span className='text-neutral-400 ms-1'>APY</span>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

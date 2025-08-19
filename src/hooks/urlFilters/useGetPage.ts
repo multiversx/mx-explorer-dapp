@@ -1,8 +1,8 @@
-import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { PAGE_SIZE } from 'appConstants';
+import { stringIsInteger } from 'lib';
 import { refreshSelector } from 'redux/selectors/refresh';
 
 export const useGetPage = () => {

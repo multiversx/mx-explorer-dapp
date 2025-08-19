@@ -1,6 +1,6 @@
 .notification-bar {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  --alert-margin-bottom: 0;
+  padding: 0.5rem;
   border-radius: 0;
   color: $black;
 
@@ -19,5 +19,17 @@
       rgba(240, 152, 25, 0.8),
       rgba(237, 222, 93, 0.8)
     );
+  }
+  &.bg-centered-primary {
+    text-align: center;
+    padding: 0;
+    font-family: var(--font-headings-semibold);
+    font-weight: 700;
+    .notification {
+      padding: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      border-bottom-left-radius: 0.5rem;
+      background-color: var(--primary-400);
+    }
   }
 }

@@ -1,7 +1,13 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { capitalize, formatAmount, getColors, usdValue } from 'helpers';
+import {
+  capitalize,
+  formatAmount,
+  formatBigNumber,
+  getColors,
+  usdValue
+} from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 import { ChartConfigType } from './helpers/types';
 
@@ -116,9 +122,7 @@ export const ChartTooltip = ({
                   className='item-value'
                 >
                   {currentSeries?.yAxisConfig?.currency === '$' ? '$' : ''}
-                  {currentSeries?.yAxisConfig?.currency === '$'
-                    ? new BigNumber(displayValue).toFormat(2)
-                    : new BigNumber(displayValue).toFormat()}
+                  {formatBigNumber({ value: displayValue })}
                   {currentSeries?.yAxisConfig?.currency &&
                   currentSeries?.yAxisConfig?.currency !== '$'
                     ? ` ${currentSeries?.yAxisConfig?.currency}`
@@ -130,7 +134,7 @@ export const ChartTooltip = ({
                   <p className='text-neutral-400 small mb-0'>
                     {usdValue({
                       amount: displayValue,
-                      usd: unprocessed.price,
+                      usd: currentSeries?.price ?? unprocessed.price,
                       showPrefix: true
                     })}
                   </p>

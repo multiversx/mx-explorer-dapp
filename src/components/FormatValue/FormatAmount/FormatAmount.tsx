@@ -1,5 +1,3 @@
-import { FormatAmountPropsType as SdkDappFormatAmountType } from '@multiversx/sdk-dapp/UI/FormatAmount/formatAmount.types';
-import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
@@ -8,11 +6,24 @@ import { ELLIPSIS } from 'appConstants';
 import { NativeTokenSymbol } from 'components';
 import { DECIMALS, DIGITS } from 'config';
 import { formatAmount, isEgldToken } from 'helpers';
+import { stringIsInteger } from 'lib';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
+
+import { WithClassnameType } from 'types';
+
 import { FormatDisplayValue } from '../FormatDisplayValue';
 import { FormatUSD } from '../FormatUSD';
 
-export interface FormatAmountUIType extends SdkDappFormatAmountType {
+export interface FormatAmountUIType extends WithClassnameType {
+  value: string;
+  showLastNonZeroDecimal?: boolean;
+  showLabel?: boolean;
+  token?: string;
+  digits?: number;
+  decimals?: number;
+  egldLabel?: string;
+  'data-testid'?: string;
+
   showTooltip?: boolean;
   showSymbol?: boolean;
   superSuffix?: boolean;

@@ -1,6 +1,5 @@
-import { VerifiedContractTabsEnum } from '@multiversx/sdk-dapp-sc-explorer/types/base.types';
-
 import { urlBuilder } from 'helpers';
+import { VerifiedContractTabsEnum } from 'lib';
 
 export const getVerifiedContractSectionUrl = (
   activeSection: VerifiedContractTabsEnum,

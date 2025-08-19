@@ -123,3 +123,11 @@ export enum AccountRolesTypeEnum {
   tokens = 'tokens',
   collections = 'collections'
 }
+
+export interface AccountBalanceHistoryType {
+  address: string;
+  balance: string;
+  timestamp: number;
+  decimals?: number;
+  isSender?: boolean;
+}

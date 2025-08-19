@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { WithClassnameType } from 'types';
 
 export interface ProgressRingType extends WithClassnameType {
@@ -6,6 +7,7 @@ export interface ProgressRingType extends WithClassnameType {
   trackWidth?: number;
   indicatorWidth?: number;
   hasBg?: boolean;
+  isSubSecond?: boolean;
   children?: React.ReactNode;
 }
 
@@ -15,6 +17,7 @@ export const ProgressRing = ({
   trackWidth = 3,
   indicatorWidth = 3,
   hasBg = false,
+  isSubSecond,
   children,
   className
 }: ProgressRingType) => {
@@ -29,9 +32,12 @@ export const ProgressRing = ({
 
   return (
     <div
-      className={`progress-ring-wrapper ${className ?? ''} ${
-        hasBg ? 'has-bg' : ''
-      }`}
+      className={classNames(
+        'progress-ring-wrapper',
+        { 'has-bg': hasBg },
+        { 'sub-second': isSubSecond },
+        className
+      )}
       style={{ width: size, height: size }}
     >
       <svg
