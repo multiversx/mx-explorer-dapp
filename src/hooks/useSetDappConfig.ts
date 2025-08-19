@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { LibraryConfig } from '@multiversx/sdk-core/out';
 import { useSelector } from 'react-redux';
 
 import { DEFAULT_HRP } from 'appConstants';
+import { LibraryConfig } from 'lib';
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const useSetDappConfig = () => {

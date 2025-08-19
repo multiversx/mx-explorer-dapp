@@ -9,7 +9,6 @@ import {
   Trim,
   NetworkLink,
   DataDecode,
-  DecodeMethodEnum,
   AccountLink
 } from 'components';
 import { urlBuilder, truncate } from 'helpers';
@@ -19,6 +18,7 @@ import {
   useGetTransactionUrlHashParams
 } from 'hooks';
 import { faExchange, faSearch } from 'icons/regular';
+import { DecodeMethodEnum } from 'lib';
 import { transactionsRoutes } from 'routes';
 import { TransactionSCResultType } from 'types';
 

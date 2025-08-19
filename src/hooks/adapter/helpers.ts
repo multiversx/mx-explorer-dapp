@@ -4,7 +4,7 @@ import {
   PAGE_SIZE,
   TRANSACTIONS_TABLE_FIELDS
 } from 'appConstants';
-import { GetProofsType, TransactionInPoolTypeEnum } from 'types';
+import { GetEventsType, GetProofsType, TransactionInPoolTypeEnum } from 'types';
 import {
   BaseApiType,
   AdapterProviderPropsType,
@@ -92,6 +92,33 @@ export function getTransactionsParams({
     ...(isRelayed ? { isRelayed } : {}),
     ...(withTxsRelayedByAddress ? { withTxsRelayedByAddress } : {}),
     ...(withCrossChainTransfers ? { withCrossChainTransfers } : {})
+  };
+
+  return params;
+}
+
+export function getEventsParams({
+  page,
+  size,
+
+  address,
+  identifier,
+  txHash,
+  shard,
+  before,
+  after,
+
+  // not on api
+  isCount = false
+}: GetEventsType) {
+  const params: AdapterProviderPropsType['params'] = {
+    ...(isCount ? {} : getPageParams({ page, size })),
+    ...(address ? { address } : {}),
+    ...(identifier ? { identifier } : {}),
+    ...(txHash ? { txHash } : {}),
+    ...(shard !== undefined ? { shard } : {}),
+    ...(before ? { before } : {}),
+    ...(after ? { after } : {})
   };
 
   return params;

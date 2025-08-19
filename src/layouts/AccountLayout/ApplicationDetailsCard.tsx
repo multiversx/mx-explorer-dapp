@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
-import { ReactComponent as DefaultImage } from 'assets/img/default.svg';
+import DefaultImage from 'assets/img/default.svg';
 import {
   CopyButton,
   FormatAmount,

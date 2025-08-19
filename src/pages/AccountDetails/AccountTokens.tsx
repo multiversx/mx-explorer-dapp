@@ -14,7 +14,7 @@ import {
   FormatUSD,
   LowLiquidityTooltip
 } from 'components';
-import { isValidTokenValue } from 'helpers';
+import { isValidAccountTokenValue } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
@@ -90,7 +90,7 @@ export const AccountTokens = () => {
           {dataReady === true && accountTokens.length > 0 && (
             <>
               {accountTokens.map((token) => {
-                const isValidDisplayValue = isValidTokenValue(token);
+                const isValidDisplayValue = isValidAccountTokenValue(token);
                 return (
                   <DetailItem
                     title={token.name}

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { VerifiedContractType } from '@multiversx/sdk-dapp-sc-explorer/types/verifiedContract.types';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
@@ -7,6 +6,7 @@ import { CopyButton } from 'components';
 import { urlBuilder } from 'helpers';
 import { useNetworkRoute, useAdapter } from 'hooks';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
+import { VerifiedContractType } from 'lib';
 import { accountSelector } from 'redux/selectors';
 
 import { DownloadABIFile } from './DownloadABIFile';

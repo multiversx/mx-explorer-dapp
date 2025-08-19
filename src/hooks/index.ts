@@ -19,6 +19,7 @@ export * from './useGetRemainingTime';
 export * from './useGetURLNetwork';
 export * from './useHasGrowthWidgets';
 export * from './useHasProofsEndpoint';
+export * from './useHasExchangeData';
 export * from './useIsAuctionNodeDropped';
 export * from './useIsDevnet';
 export * from './useIsMainnet';

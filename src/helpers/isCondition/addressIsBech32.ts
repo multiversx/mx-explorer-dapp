@@ -1,4 +1,4 @@
-import { Address } from '@multiversx/sdk-core';
+import { Address } from 'lib';
 
 function canTransformToPublicKey(address: string) {
   try {

@@ -1,0 +1,109 @@
+@import './variables';
+
+/* ----------------- Buttons ----------------- */
+
+.#{$package-name} {
+  &-button-unstyled {
+    font-weight: 300;
+    --btn-active-color: var(--primary);
+    --btn-active-bg: transparent;
+    @extend .btn-link-base !optional;
+    color: var(--primary);
+    @include media-breakpoint-up(md) {
+      font-size: 1rem;
+    }
+  }
+  &-button-add-argument,
+  &-button-remove-argument {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  &-button-endpoint-action {
+    svg {
+      margin-left: -0.25rem;
+    }
+  }
+  &-login-button-wrapper {
+    gap: 0.5rem;
+    &-text {
+      font-size: 0.875rem;
+      color: var(--neutral-400);
+    }
+  }
+  &-button-login {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  &-button-logout {
+    @extend .btn-link-base !optional;
+    --btn-active-color: var(--warning);
+    --btn-active-bg: transparent;
+    margin-left: 0.25rem;
+    background-color: transparent;
+    color: var(--neutral-500);
+    &:hover {
+      color: var(--warning);
+    }
+  }
+  &-interaction-form-button {
+    margin-top: 1.75rem;
+  }
+  &-interaction-modal-form-button,
+  &-transaction-panel-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  &-interaction-modal-form-button,
+  &-transaction-panel-button {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  &-button-login-provider {
+    // must overwrite sdk-dapp styling
+    --btn-color: var(--body-color) !important;
+    --btn-bg: var(--neutral-800) !important;
+    --btn-padding-y: 0.75rem !important;
+
+    --btn-focus-box-shadow: none !important;
+
+    --btn-hover-color: var(--body-color) !important;
+    --btn-hover-bg: var(--neutral-900) !important;
+
+    --btn-active-color: var(--body-color) !important;
+    --btn-active-bg: var(--neutral-900) !important;
+    --btn-active-border-color: var(--primary) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin: 0 !important;
+    box-shadow: none;
+
+    &-title svg {
+      margin-right: 0.5rem;
+    }
+    .icon-foreground-color {
+      fill: var(--neutral-800);
+    }
+    &:hover,
+    &:active,
+    &:focus,
+    &:focus-visible {
+      .icon-foreground-color {
+        fill: var(--primary);
+      }
+    }
+    &:focus,
+    &:focus-visible {
+      background-color: var(--btn-active-bg) !important;
+      border-color: var(--btn-active-border-color) !important;
+      box-shadow: none !important;
+    }
+  }
+}

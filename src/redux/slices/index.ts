@@ -22,3 +22,4 @@ export * from './stake';
 export * from './stakeExtra';
 export * from './stats';
 export * from './token';
+export * from './tokenExtra';

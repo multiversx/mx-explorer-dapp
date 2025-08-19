@@ -3,6 +3,7 @@ import { TokenLayout } from 'layouts/TokenLayout';
 import { CollectionRoles } from 'pages/CollectionDetails/CollectionRoles';
 import { CollectionTransactions } from 'pages/CollectionDetails/CollectionTransactions';
 import { TokenDetailsAccounts } from 'pages/TokenDetails/TokenAccounts';
+import { TokenDetailsAnalytics } from 'pages/TokenDetails/TokenDetailsAnalytics';
 import { TokenDetailsLockedAccounts } from 'pages/TokenDetails/TokenLockedAccounts';
 import { TokenDetailsRoles } from 'pages/TokenDetails/TokenRoles';
 import { TokenTransactions } from 'pages/TokenDetails/TokenTransactions';
@@ -20,7 +21,8 @@ export const tokensRoutes = {
   tokenDetails: '/tokens/:hash',
   tokenDetailsAccounts: '/tokens/:hash/accounts',
   tokenDetailsLockedAccounts: '/tokens/:hash/locked-accounts',
-  tokenDetailsRoles: '/tokens/:hash/roles'
+  tokenDetailsRoles: '/tokens/:hash/roles',
+  tokenDetailsAnalytics: '/tokens/:hash/analytics'
 };
 
 export const tokenLayout: TitledRouteObject[] = [
@@ -89,6 +91,12 @@ export const tokenLayout: TitledRouteObject[] = [
         title: 'Token Roles',
         preventScroll: true,
         Component: TokenDetailsRoles
+      },
+      {
+        path: tokensRoutes.tokenDetailsAnalytics,
+        title: 'Token Analytics',
+        preventScroll: true,
+        Component: TokenDetailsAnalytics
       }
     ]
   }

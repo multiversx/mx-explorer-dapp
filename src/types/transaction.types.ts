@@ -68,7 +68,7 @@ export interface TransactionSCResultType {
 export interface TransactionSCResultLogType {
   id: string;
   address: string;
-  events: EventType[];
+  events: TransactionEventType[];
 }
 
 // TRANSACTION IN POOL
@@ -217,13 +217,14 @@ export enum TransactionMethodsEnum {
   openMysteryBox = 'openMysteryBox'
 }
 
-export interface EventType {
+export interface TransactionEventType {
   address: string;
   identifier: string;
   order: number;
   topics: string[];
   additionalData?: string[];
   data?: string;
+  addressAssets?: AccountAssetType;
 }
 
 // GENERAL
