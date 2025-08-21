@@ -11,6 +11,7 @@ import { ExchangePriceRangeEnum } from 'types';
 
 import { FailedTokenDetails } from './FailedTokenDetails';
 import { TokenDetailsCard } from './TokenDetailsCard';
+import { TokenHolderDetailsCard } from './TokenHolderDetailsCard';
 
 export const TokenLayout = () => {
   const dispatch = useDispatch();
@@ -83,6 +84,7 @@ export const TokenLayout = () => {
   return (
     <div className='container page-content'>
       <TokenDetailsCard />
+      <TokenHolderDetailsCard />
       <Outlet />
     </div>
   );
