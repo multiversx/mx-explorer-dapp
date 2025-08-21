@@ -27,11 +27,7 @@ export const TokenHolderDetailsCard = () => {
 
   const filterAddress = sender || receiver;
   const address = String(filterAddress);
-  const usdValue =
-    accountTokenDetails?.valueUsd &&
-    isValidAccountTokenValue(accountTokenDetails)
-      ? accountTokenDetails.valueUsd
-      : ZERO;
+  const usdValue = accountTokenDetails?.valueUsd ?? ZERO;
 
   const fetchAccountTokens = async () => {
     const { data, success } = await getAccountTokens({
@@ -85,9 +81,11 @@ export const TokenHolderDetailsCard = () => {
             </div>
           </div>
         </CardItem>
-        <CardItem title='Value' icon={faDollarSign} className='n3'>
-          <FormatUSD value={usdValue} usd={1} />
-        </CardItem>
+        {isValidAccountTokenValue(accountTokenDetails) && (
+          <CardItem title='Value' icon={faDollarSign} className='n3'>
+            <FormatUSD value={usdValue} usd={1} />
+          </CardItem>
+        )}
       </div>
     </div>
   );
