@@ -44,6 +44,12 @@ export const SVG_ICON_PLACEHOLDER_IMAGE_PATH = 'assets/img/default-icon.svg';
 
 export const DEFAULT_HRP = 'erd';
 
+// Sovereign Chains - subject to change
+export const SOVEREIGN_BRIDGE_ADDRESSES = [
+  'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u'
+];
+export const MAIN_CHAIN_SHARD_IDS = [MAIN_SHARD_ID];
+
 export const DEFAULT_PROVIDER_COLORS: {
   [index: string]: string;
 } = {
