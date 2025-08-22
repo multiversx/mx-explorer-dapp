@@ -18,6 +18,7 @@ export * from './getProofHash';
 export * from './getStringPlural';
 export * from './getSubdomainNetwork';
 export * from './getTotalTokenUsdValue';
+export * from './getTransactionBridgeDetails';
 export * from './getTotalTxTokenUsdValue';
 export * from './getTransactionFee';
 export * from './getTransactionMessages';
