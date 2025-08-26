@@ -54,13 +54,23 @@
       --nav-link-padding-y: 0.5rem;
 
       width: auto;
-      margin-left: 0.25rem;
     }
 
     @include media-breakpoint-up(xl) {
       --nav-link-font-size: 0.875rem;
       --nav-link-padding-x: 0.75rem;
       --nav-link-padding-y: 0.5rem;
+    }
+
+    &.has-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .nav-link {
+        --nav-link-padding-x: 0;
+        --nav-link-padding-y: 0;
+      }
     }
 
     &:hover,

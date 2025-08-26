@@ -12,7 +12,7 @@ import {
   useHasGrowthWidgets,
   useNetworkRoute
 } from 'hooks';
-import { faAngleDown } from '@fortawesome/pro-regular-svg-icons';
+import { faAngleDown } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 import {
   blocksRoutes,
@@ -161,45 +161,49 @@ export const Links = (props: LinksPropsType) => {
         {links.map((link) => {
           if (link.subRoutes) {
             return (
-              <NavDropdown
-                className='link'
-                key={`dropdown-${link.label}`}
-                id={`dropdown-${link.label}`}
-                title={
-                  <>
-                    {link.label}{' '}
-                    <FontAwesomeIcon
-                      icon={faAngleDown}
-                      className='ms-1'
-                      size='sm'
-                    />
-                  </>
-                }
-                renderMenuOnMount={true}
-                show={show}
-                onMouseEnter={() => setShow(true)}
-                onMouseLeave={() => setShow(false)}
-                onClick={() => {
-                  setShow((show) => !show);
-                  //  navigate(networkRoute(link.to));
-                }}
-              >
-                {link.subRoutes.map((subroute) => {
-                  return (
-                    <NavDropdown.Item
-                      as={Link}
-                      key={subroute.label}
-                      to={networkRoute(subroute.to)}
-                      className={classNames({
-                        active: getIsLinkActive(subroute)
-                      })}
-                      onClick={onClick}
-                    >
-                      {subroute.label}
-                    </NavDropdown.Item>
-                  );
+              <li
+                className={classNames('link nav-link has-dropdown', {
+                  active: getIsLinkActive(link)
                 })}
-              </NavDropdown>
+                key={`dropdown-${link.label}`}
+              >
+                <Link
+                  to={link.to}
+                  onClick={onClick}
+                  onMouseEnter={() => setShow(true)}
+                  onMouseLeave={() => setShow(false)}
+                  role='menuitem'
+                >
+                  {link.label}
+                </Link>
+                <NavDropdown
+                  id={`dropdown-${link.label}`}
+                  title={<FontAwesomeIcon icon={faAngleDown} size='sm' />}
+                  renderMenuOnMount={true}
+                  show={show}
+                  onMouseEnter={() => setShow(true)}
+                  onMouseLeave={() => setShow(false)}
+                  onClick={() => {
+                    setShow((show) => !show);
+                  }}
+                >
+                  {link.subRoutes.map((subroute) => {
+                    return (
+                      <NavDropdown.Item
+                        as={Link}
+                        key={subroute.label}
+                        to={networkRoute(subroute.to)}
+                        className={classNames({
+                          active: getIsLinkActive(subroute)
+                        })}
+                        onClick={onClick}
+                      >
+                        {subroute.label}
+                      </NavDropdown.Item>
+                    );
+                  })}
+                </NavDropdown>
+              </li>
             );
           }
 
