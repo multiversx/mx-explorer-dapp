@@ -135,7 +135,7 @@ export const Links = (props: LinksPropsType) => {
     }
   ].filter((link) => link.show);
 
-  const getIsLinkActive = (link: MenuLinkType) => {
+  const getIsLinkActive = (link: MenuLinkType, includeAsterisk?: boolean) => {
     if (isOnAccountRoute) {
       if (isContract(address)) {
         return link.to === applicationsRoutes.applications;
@@ -145,7 +145,7 @@ export const Links = (props: LinksPropsType) => {
     }
 
     // avoid false positive from * transactionDetails route
-    if (isOnTransactionsInPoolRoute) {
+    if (isOnTransactionsInPoolRoute && includeAsterisk) {
       return (
         link.to === transactionsInPoolRoutes.transactionsInPool ||
         link.to === transactionsInPoolRoutes.transactionsInPoolDetails
@@ -162,21 +162,28 @@ export const Links = (props: LinksPropsType) => {
           if (link.subRoutes) {
             return (
               <li
-                className={classNames('link nav-link has-dropdown', {
-                  active: getIsLinkActive(link)
-                })}
                 key={`dropdown-${link.label}`}
+                className={classNames('link dropdown-wrapper', {
+                  active: getIsLinkActive(link) || show
+                })}
+                role='presentation'
               >
                 <Link
                   to={link.to}
                   onClick={onClick}
+                  role='menuitem'
+                  className={classNames('link nav-link has-dropdown', {
+                    active: getIsLinkActive(link) || show
+                  })}
                   onMouseEnter={() => setShow(true)}
                   onMouseLeave={() => setShow(false)}
-                  role='menuitem'
                 >
                   {link.label}
                 </Link>
                 <NavDropdown
+                  className={classNames('link', {
+                    active: getIsLinkActive(link)
+                  })}
                   id={`dropdown-${link.label}`}
                   title={<FontAwesomeIcon icon={faAngleDown} size='sm' />}
                   renderMenuOnMount={true}
@@ -194,7 +201,7 @@ export const Links = (props: LinksPropsType) => {
                         key={subroute.label}
                         to={networkRoute(subroute.to)}
                         className={classNames({
-                          active: getIsLinkActive(subroute)
+                          active: getIsLinkActive(subroute, true)
                         })}
                         onClick={onClick}
                       >
