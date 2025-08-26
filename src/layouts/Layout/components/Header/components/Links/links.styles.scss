@@ -5,9 +5,12 @@
   &.navbar-nav .dropdown-menu {
     position: absolute;
   }
-  // .nav-item.dropdown:hover .dropdown-menu {
-  //   display: block;
-  // }
+
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+    margin-right: 0.5rem;
+  }
+
   .dropdown-toggle {
     &.show {
       svg.fa-angle-down {
@@ -20,9 +23,11 @@
     }
   }
 
-  @include media-breakpoint-up(lg) {
-    flex-direction: row;
-    margin-right: 0.5rem;
+  .nav-item {
+    width: 100%;
+    @include media-breakpoint-up(lg) {
+      width: auto;
+    }
   }
 
   .nav-link {
@@ -37,6 +42,7 @@
     --nav-link-padding-x: 0.75rem;
     --nav-link-padding-y: 0.75rem;
 
+    width: 100%;
     line-height: 1;
     transition: all 200ms ease;
     background-color: transparent;
@@ -47,6 +53,7 @@
       --nav-link-padding-x: 0.5rem;
       --nav-link-padding-y: 0.5rem;
 
+      width: auto;
       margin-left: 0.25rem;
     }
 
