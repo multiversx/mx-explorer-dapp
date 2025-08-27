@@ -7,11 +7,13 @@ import {
 } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Anchor, Dropdown } from 'react-bootstrap';
-import { MAX_DECODE_TX_DATA_LENGTH } from 'appConstants';
 import { CopyButton } from 'components';
-import { getDecodedData } from 'helpers';
 import { faExclamationTriangle } from 'icons/regular';
-import { DecodeMethodEnum } from 'lib';
+import {
+  MAX_DECODE_TX_DATA_LENGTH,
+  DecodeMethodEnum,
+  getDecodedDataField
+} from 'lib';
 import { WithClassnameType } from 'types';
 
 export interface DataDecodeUIType extends WithClassnameType {
@@ -51,8 +53,8 @@ export const DataDecode = ({
   };
 
   useEffect(() => {
-    const { displayValue, validationWarnings } = getDecodedData({
-      input: value,
+    const { displayValue, validationWarnings } = getDecodedDataField({
+      data: value,
       decodeMethod: activeKey as DecodeMethodEnum,
       identifier
     });
