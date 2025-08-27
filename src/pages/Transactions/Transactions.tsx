@@ -13,7 +13,7 @@ import {
   useIsSovereign
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { transactionsRoutes } from 'routes';
+import { transactionsInPoolRoutes } from 'routes';
 
 export const Transactions = () => {
   const ref = useRef(null);
@@ -87,7 +87,7 @@ export const Transactions = () => {
                   <PulsatingLed className='mx-2 mt-1' />
                   <div className='d-flex align-items-center flex-wrap gap-2'>
                     <NetworkLink
-                      to={transactionsRoutes.transactionsInPool}
+                      to={transactionsInPoolRoutes.transactionsInPool}
                       className='btn btn-sm btn-dark-gradient'
                     >
                       Transaction Pool
