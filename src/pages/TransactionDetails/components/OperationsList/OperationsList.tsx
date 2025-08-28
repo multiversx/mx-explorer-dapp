@@ -14,7 +14,7 @@ import {
   TransactionOperationType,
   TransactionOperationActionEnum,
   TransactionVisibleOperationEnum,
-  TransactionOperationDirectionEnum
+  TransactionDirectionEnum
 } from 'types';
 
 const internalTransactionActions = [
@@ -168,7 +168,7 @@ const OperationText = ({
           operation={operation}
           address={operation.sender}
           action='Mint by'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
         />
       );
@@ -179,7 +179,7 @@ const OperationText = ({
           operation={operation}
           address={operation.sender}
           action='Add quantity by'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
         />
       );
@@ -192,7 +192,7 @@ const OperationText = ({
           operation={operation}
           address={operation.sender}
           action='Burn by'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
         />
       );
@@ -203,7 +203,7 @@ const OperationText = ({
           operation={operation}
           address={operation.receiver}
           action='Wipe from'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
         />
       );
@@ -252,7 +252,7 @@ const OperationText = ({
           operation={operation}
           address={operation.sender}
           action='Write log by'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
           isFullSize
         />
@@ -264,7 +264,7 @@ const OperationText = ({
           operation={operation}
           address={operation.sender}
           action='Signal error by'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
           isFullSize
         />

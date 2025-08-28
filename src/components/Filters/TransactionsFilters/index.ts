@@ -1,4 +1,5 @@
 export * from './AgeColumnFilters';
+export * from './DirectionColumnFilters';
 export * from './FromColumnFilters';
 export * from './IdentifierColumnFilters';
 export * from './MethodColumnFilters';

@@ -279,7 +279,7 @@ export interface TransactionTableType {
   inactiveFilters?: TransactionFiltersEnum[];
 }
 
-export enum TransactionOperationDirectionEnum {
+export enum TransactionDirectionEnum {
   out = 'out',
   in = 'in',
   self = 'self',

@@ -64,6 +64,7 @@ export const TransactionsTable = ({
               <Header
                 transactions={transactions}
                 totalTransactions={totalTransactions}
+                address={address}
                 showDirectionCol={showDirectionCol}
                 showLockedAccounts={showLockedAccounts}
                 inactiveFilters={inactiveFilters}
