@@ -4,11 +4,10 @@ import { InfoTooltip, NetworkLink } from 'components';
 import {
   getTransactionMessages,
   capitalizeFirstLetter,
-  urlBuilder,
-  getDecodedData
+  urlBuilder
 } from 'helpers';
 import { faAngleDown } from 'icons/regular';
-import { DecodeMethodEnum } from 'lib';
+import { DecodeMethodEnum, getDecodedDataField } from 'lib';
 import {
   TransactionType,
   TransactionApiStatusEnum,
@@ -20,8 +19,8 @@ export const InternalErrorDisplay = ({ data }: { data: string }) => {
   if (data) {
     const dataBase64Buffer = Buffer.from(String(data), 'base64');
     const dataHexValue = dataBase64Buffer.toString('hex');
-    const decodedDisplay = getDecodedData({
-      input: dataHexValue,
+    const decodedDisplay = getDecodedDataField({
+      data: dataHexValue,
       decodeMethod: DecodeMethodEnum.smart
     });
     if (decodedDisplay?.displayValue) {

@@ -6,7 +6,7 @@ export { getAccountProvider } from '@multiversx/sdk-dapp/out/providers/helpers/a
 export { signMessage } from '@multiversx/sdk-dapp/out/providers/strategies/helpers/signMessage/signMessage';
 export { verifyMessage } from '@multiversx/sdk-dapp/out/providers/DappProvider/helpers/signMessage/verifyMessage';
 export { addressIsValid } from '@multiversx/sdk-dapp/out/utils/validation/addressIsValid';
-export { getAllDecodedFormats } from '@multiversx/sdk-dapp/out/providers/strategies/helpers/signTransactions/helpers/getCommonData/helpers/decodeDataField';
+export { getDecodedDataField } from '@multiversx/sdk-dapp/out/utils/transactions/getDecodedDataField';
 
 export { isUtf8 } from '@multiversx/sdk-dapp/out/utils/decoders';
 export {
