@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
 
 import {
   AccountLink,
@@ -12,11 +11,16 @@ import {
   TransactionIcons,
   ShardLink
 } from 'components';
-import { urlBuilder, getDisplayReceiver } from 'helpers';
+import {
+  urlBuilder,
+  getDisplayReceiver,
+  getTransactionDirection
+} from 'helpers';
 import { useIsSovereign } from 'hooks';
 import { faArrowRight } from 'icons/regular';
-import { UITransactionType, TransferTypeEnum } from 'types';
+import { TransactionDirectionEnum, UITransactionType } from 'types';
 
+import { TransactionDirection } from './TransactionDirection';
 import { TransactionMethod } from './TransactionMethod';
 import { TransactionValue } from './TransactionValue';
 
@@ -37,34 +41,7 @@ export const TransactionRow = ({
 }: TransactionRowType) => {
   const isSovereign = useIsSovereign();
   const { receiver, receiverAssets } = getDisplayReceiver(transaction);
-  const directionOut = address === transaction.sender;
-  const directionIn = address === receiver;
-  const directionSelf = directionOut && directionIn;
-  const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
-  const isInnerTransaction =
-    transaction?.type === TransferTypeEnum.InnerTransaction ||
-    transaction?.type === TransferTypeEnum.innerTx;
-
-  let direction = 'Out';
-  switch (true) {
-    case isInnerTransaction:
-      direction = 'Inner Tx';
-      break;
-    case isScResult:
-      direction = 'Internal';
-      break;
-    case directionSelf:
-      direction = 'Self';
-      break;
-    case directionOut:
-      direction = 'Out';
-      break;
-    case directionIn:
-      direction = 'In';
-      break;
-  }
-
-  const directionClassName = direction.replace(' ', '-').toLowerCase();
+  const direction = getTransactionDirection({ transaction, address });
 
   return (
     <tr className={`animated-row ${transaction.isNew ? 'new' : ''}`}>
@@ -115,7 +92,7 @@ export const TransactionRow = ({
         </div>
       </td>
       <td className='sender text-truncate'>
-        {directionOut ? (
+        {direction === TransactionDirectionEnum.out ? (
           <div className='d-flex align-items-center'>
             <ScAddressIcon initiator={transaction.sender} />
             <AccountName
@@ -139,21 +116,16 @@ export const TransactionRow = ({
       </td>
       {showDirectionCol === true && (
         <td>
-          <div className='d-flex'>
-            <span
-              className={classNames(
-                'badge badge-outline badge-rounded badge-direction',
-                directionClassName
-              )}
-            >
-              {direction.toLowerCase().replace('internal', 'int').toUpperCase()}
-            </span>
-          </div>
+          <TransactionDirection
+            transaction={transaction}
+            address={address}
+            hasHighlight
+          />
         </td>
       )}
 
       <td className='receiver text-truncate'>
-        {directionIn ? (
+        {direction === TransactionDirectionEnum.in ? (
           <div className='d-flex align-items-center'>
             <ScAddressIcon initiator={receiver} />
             <AccountName

@@ -20,6 +20,7 @@ export * from './getSubdomainNetwork';
 export * from './getTotalTokenUsdValue';
 export * from './getTransactionBridgeDetails';
 export * from './getTotalTxTokenUsdValue';
+export * from './getTransactionDirection';
 export * from './getTransactionFee';
 export * from './getTransactionMessages';
 export * from './getTransactionMethod';

@@ -5,7 +5,8 @@ import {
   AccountLink,
   CopyButton,
   TransactionActionBlock,
-  FormatAmount
+  FormatAmount,
+  TransactionDirectionBadge
 } from 'components';
 import { addressIsBech32, getOperationDirection } from 'helpers';
 import { faChevronRight } from 'icons/solid';
@@ -84,7 +85,7 @@ const OperationBlock = ({
   operation: TransactionOperationType;
   action?: string;
   isFullSize?: boolean;
-  direction?: string;
+  direction?: TransactionDirectionEnum;
   isFirst?: boolean;
 }) => {
   let operationAssets;
@@ -114,11 +115,11 @@ const OperationBlock = ({
       }`}
     >
       {direction && (
-        <div
-          className={`me-2 badge badge-outline badge-rounded badge-direction ${direction.toLowerCase()}`}
-        >
-          {direction.toUpperCase()}
-        </div>
+        <TransactionDirectionBadge
+          direction={direction}
+          className='me-2'
+          hasHighlight
+        />
       )}
       {!isFirst && action && (
         <FontAwesomeIcon
@@ -153,7 +154,7 @@ const OperationText = ({
   operation: TransactionOperationType;
   transaction: UITransactionType;
 }) => {
-  const { direction } = getOperationDirection({
+  const direction = getOperationDirection({
     operation,
     address: transaction.sender
   });
