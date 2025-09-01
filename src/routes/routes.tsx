@@ -29,6 +29,7 @@ import {
   tokensRoutes,
   transactionsLayout,
   transactionsRoutes,
+  transactionsInPoolRoutes,
   validatorLayout,
   validatorsRoutes
 } from './layouts';
@@ -42,6 +43,7 @@ export {
   nftRoutes,
   tokensRoutes,
   transactionsRoutes,
+  transactionsInPoolRoutes,
   validatorsRoutes
 };
 export interface TitledRouteObject extends NonIndexRouteObject {
@@ -70,6 +72,7 @@ export const routes = {
   ...nftRoutes,
   ...searchRoutes,
   ...transactionsRoutes,
+  ...transactionsInPoolRoutes,
   ...tokensRoutes,
   ...validatorsRoutes
 };

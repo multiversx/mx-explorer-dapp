@@ -5,7 +5,8 @@ import {
   AccountLink,
   CopyButton,
   TransactionActionBlock,
-  FormatAmount
+  FormatAmount,
+  TransactionDirectionBadge
 } from 'components';
 import { addressIsBech32, getOperationDirection } from 'helpers';
 import { faChevronRight } from 'icons/solid';
@@ -14,7 +15,7 @@ import {
   TransactionOperationType,
   TransactionOperationActionEnum,
   TransactionVisibleOperationEnum,
-  TransactionOperationDirectionEnum
+  TransactionDirectionEnum
 } from 'types';
 
 const internalTransactionActions = [
@@ -84,7 +85,7 @@ const OperationBlock = ({
   operation: TransactionOperationType;
   action?: string;
   isFullSize?: boolean;
-  direction?: string;
+  direction?: TransactionDirectionEnum;
   isFirst?: boolean;
 }) => {
   let operationAssets;
@@ -114,11 +115,11 @@ const OperationBlock = ({
       }`}
     >
       {direction && (
-        <div
-          className={`me-2 badge badge-outline badge-rounded badge-direction ${direction.toLowerCase()}`}
-        >
-          {direction.toUpperCase()}
-        </div>
+        <TransactionDirectionBadge
+          direction={direction}
+          className='me-2'
+          hasHighlight
+        />
       )}
       {!isFirst && action && (
         <FontAwesomeIcon
@@ -153,7 +154,7 @@ const OperationText = ({
   operation: TransactionOperationType;
   transaction: UITransactionType;
 }) => {
-  const { direction } = getOperationDirection({
+  const direction = getOperationDirection({
     operation,
     address: transaction.sender
   });
@@ -168,7 +169,7 @@ const OperationText = ({
           operation={operation}
           address={operation.sender}
           action='Mint by'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
         />
       );
@@ -179,7 +180,7 @@ const OperationText = ({
           operation={operation}
           address={operation.sender}
           action='Add quantity by'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
         />
       );
@@ -192,7 +193,7 @@ const OperationText = ({
           operation={operation}
           address={operation.sender}
           action='Burn by'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
         />
       );
@@ -203,7 +204,7 @@ const OperationText = ({
           operation={operation}
           address={operation.receiver}
           action='Wipe from'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
         />
       );
@@ -252,7 +253,7 @@ const OperationText = ({
           operation={operation}
           address={operation.sender}
           action='Write log by'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
           isFullSize
         />
@@ -264,7 +265,7 @@ const OperationText = ({
           operation={operation}
           address={operation.sender}
           action='Signal error by'
-          direction={TransactionOperationDirectionEnum.internal}
+          direction={TransactionDirectionEnum.internal}
           isFirst
           isFullSize
         />

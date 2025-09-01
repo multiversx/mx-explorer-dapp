@@ -13,7 +13,6 @@ export const MAX_TRANSACTIONS_PAGE_SIZE = 50;
 export const MAX_RESULTS = 10000;
 
 export const MAX_DISPLAY_TX_DATA_LENGTH = 1_000_000;
-export const MAX_DECODE_TX_DATA_LENGTH = 60_000;
 export const MAX_DISPLAY_ZERO_DECIMALS = 5;
 export const MAX_ACOUNT_TOKENS_BALANCE = 1000;
 
@@ -43,6 +42,12 @@ export const SVG_PLACEHOLDER_IMAGE_PATH = 'assets/img/default.svg';
 export const SVG_ICON_PLACEHOLDER_IMAGE_PATH = 'assets/img/default-icon.svg';
 
 export const DEFAULT_HRP = 'erd';
+
+// Sovereign Chains - subject to change
+export const SOVEREIGN_BRIDGE_ADDRESSES = [
+  'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u'
+];
+export const MAIN_CHAIN_SHARD_IDS = [MAIN_SHARD_ID];
 
 export const DEFAULT_PROVIDER_COLORS: {
   [index: string]: string;
