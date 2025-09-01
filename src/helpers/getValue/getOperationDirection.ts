@@ -12,23 +12,19 @@ export const getOperationDirection = ({
   const directionSelf = directionOut && directionIn;
   const directionInternal = !directionSelf;
 
-  let direction = '';
   switch (true) {
-    case directionOut:
-      direction = TransactionDirectionEnum.out;
-      break;
     case directionIn:
-      direction = TransactionDirectionEnum.in;
-      break;
-    case directionSelf:
-      direction = TransactionDirectionEnum.self;
-      break;
-    case directionInternal:
-      direction = TransactionDirectionEnum.internal;
-      break;
-  }
+      return TransactionDirectionEnum.in;
 
-  return {
-    direction
-  };
+    case directionSelf:
+      return TransactionDirectionEnum.self;
+
+    case directionInternal:
+      return TransactionDirectionEnum.internal;
+
+    case directionOut:
+      return TransactionDirectionEnum.out;
+    default:
+      return null;
+  }
 };

@@ -283,7 +283,8 @@ export enum TransactionDirectionEnum {
   out = 'out',
   in = 'in',
   self = 'self',
-  internal = 'int'
+  internal = 'int',
+  inner = 'inner'
 }
 
 export enum TransactionApiStatusEnum {
