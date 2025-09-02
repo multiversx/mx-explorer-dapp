@@ -17,6 +17,7 @@ export * from './networks';
 export * from './nft';
 export * from './nodesOverview';
 export * from './refresh';
+export * from './search';
 export * from './stake';
 export * from './stakeExtra';
 export * from './stats';

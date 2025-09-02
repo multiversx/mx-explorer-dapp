@@ -30,6 +30,7 @@ import { pageHeadersBlocksReducer } from './slices/pageHeadersBlocksStats';
 import { pageHeadersCollectionsReducer } from './slices/pageHeadersCollectionsStats';
 import { pageHeadersTokensReducer } from './slices/pageHeadersTokensStats';
 import { refreshReducer } from './slices/refresh';
+import { searchReducer } from './slices/search';
 import { stakeReducer } from './slices/stake';
 import { stakeExtraReducer } from './slices/stakeExtra';
 import { statsReducer } from './slices/stats';
@@ -63,6 +64,7 @@ export const customIgnoredSlices = {
   collection: collectionReducer,
   economics: economicsReducer,
   general: generalReducer,
+  search: searchReducer,
   stake: stakeReducer,
   stakeExtra: stakeExtraReducer,
   growthHero: growthHeroReducer,
