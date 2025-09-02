@@ -9,4 +9,5 @@ export interface MenuLinkType {
   to: string;
   show: boolean;
   activeRoutes: string[];
+  subRoutes?: MenuLinkType[];
 }

@@ -5,16 +5,19 @@ import {
   StatusColumnFilters,
   MethodColumnFilters,
   ToColumnFilters,
-  ValueColumnFilters
+  ValueColumnFilters,
+  DirectionColumnFilters
 } from 'components';
 import { useIsSovereign } from 'hooks';
 import { TransactionTableType } from 'types';
 
 export const Header = ({
   showDirectionCol = false,
+  address,
   inactiveFilters
 }: TransactionTableType) => {
   const isSovereign = useIsSovereign();
+
   return (
     <thead>
       <tr>
@@ -36,7 +39,14 @@ export const Header = ({
         <th scope='col'>
           From <FromColumnFilters inactiveFilters={inactiveFilters} />
         </th>
-        {showDirectionCol && <th scope='col' />}
+        {showDirectionCol && (
+          <th scope='col'>
+            <DirectionColumnFilters
+              inactiveFilters={inactiveFilters}
+              address={address}
+            />
+          </th>
+        )}
         <th scope='col'>
           To <ToColumnFilters inactiveFilters={inactiveFilters} />
         </th>

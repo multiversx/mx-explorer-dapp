@@ -1,7 +1,4 @@
-import {
-  TransactionOperationType,
-  TransactionOperationDirectionEnum
-} from 'types';
+import { TransactionOperationType, TransactionDirectionEnum } from 'types';
 
 export const getOperationDirection = ({
   operation,
@@ -15,23 +12,19 @@ export const getOperationDirection = ({
   const directionSelf = directionOut && directionIn;
   const directionInternal = !directionSelf;
 
-  let direction = '';
   switch (true) {
-    case directionOut:
-      direction = TransactionOperationDirectionEnum.out;
-      break;
     case directionIn:
-      direction = TransactionOperationDirectionEnum.in;
-      break;
-    case directionSelf:
-      direction = TransactionOperationDirectionEnum.self;
-      break;
-    case directionInternal:
-      direction = TransactionOperationDirectionEnum.internal;
-      break;
-  }
+      return TransactionDirectionEnum.in;
 
-  return {
-    direction
-  };
+    case directionSelf:
+      return TransactionDirectionEnum.self;
+
+    case directionInternal:
+      return TransactionDirectionEnum.internal;
+
+    case directionOut:
+      return TransactionDirectionEnum.out;
+    default:
+      return null;
+  }
 };
