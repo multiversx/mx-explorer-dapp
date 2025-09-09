@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies
-RUN yarn install
+RUN yarn install --frozen-lockfile
 RUN yarn copy-placeholder-config & yarn build
 
 # Production image
