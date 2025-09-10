@@ -1,4 +1,5 @@
 export * from './apiFields';
+export * from './websocket.constants';
 
 export const BRAND_NAME = import.meta.env.VITE_APP_BRAND_NAME ?? 'MultiversX';
 
