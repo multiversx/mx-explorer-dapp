@@ -12,6 +12,7 @@ import {
   useCheckVersion,
   useGetURLNetwork,
   useInitDatadog,
+  useInitWebsocket,
   useSetBrowserClassNames,
   useSetDappConfig,
   useTempStorageNotification
@@ -37,6 +38,7 @@ export const Layout = () => {
   useLoopManager();
   useCheckVersion();
   useInitDatadog();
+  useInitWebsocket();
   useSetDappConfig();
   useSetBrowserClassNames();
   useTempStorageNotification();
@@ -51,6 +53,7 @@ export const Layout = () => {
 
   useEffect(() => {
     if (urlNetwork && urlNetwork.id === activeNetworkId) {
+      // initial fetch, will be updated by websocket
       fetchStats();
       fetchEconomics();
     }

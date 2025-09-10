@@ -14,3 +14,13 @@ export const websocketConnection: {
   instance: null,
   status: WebsocketConnectionStatusEnum.NOT_INITIALIZED
 };
+
+export const initialWebsocketClientConfigs = [
+  {
+    transactions: { from: 0, size: 5 },
+    blocks: { from: 0, size: 5 },
+    pool: { from: 0, size: 5 },
+    stats: true,
+    events: { shard: 0, from: 0, size: 3 }
+  }
+];
