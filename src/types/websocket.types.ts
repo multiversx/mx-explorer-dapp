@@ -7,6 +7,10 @@ export enum WebsocketSubcriptionsEnum {
 }
 
 export enum WebsocketEventsEnum {
+  connect = 'connect',
+  connect_error = 'connect_error',
+  disconnect = 'disconnect',
+
   transactionUpdate = 'transactionUpdate',
   blocksUpdate = 'blocksUpdate',
   poolUpdate = 'poolUpdate',

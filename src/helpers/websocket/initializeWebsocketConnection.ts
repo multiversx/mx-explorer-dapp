@@ -5,20 +5,19 @@ import {
   websocketConnection,
   initialWebsocketClientConfigs
 } from 'appConstants';
+import { isUpdatesWebsocketConnected } from 'helpers';
 import { WebsocketEventsEnum, WebsocketSubcriptionsEnum } from 'types';
 
 const TIMEOUT = 3000;
 const RECONNECTION_ATTEMPTS = 3;
 const RETRY_INTERVAL = 500;
 const MESSAGE_DELAY = 1000;
-const CONNECT = 'connect';
-const CONNECT_ERROR = 'connect_error';
-const DISCONNECT = 'disconnect';
 
 type TimeoutType = ReturnType<typeof setTimeout> | null;
 
 export async function initializeWebsocketConnection() {
   let messageTimeout: TimeoutType = null;
+  const isWebsocketConnected = isUpdatesWebsocketConnected();
   const config = initialWebsocketClientConfigs[0];
 
   // Update socket status in store for status subscription
@@ -41,11 +40,11 @@ export async function initializeWebsocketConnection() {
   const closeConnection = () => {
     const instance = websocketConnection.instance;
     if (instance) {
-      instance.off(CONNECT_ERROR);
-      instance.off(CONNECT);
-      instance.off(DISCONNECT);
+      instance.off(WebsocketEventsEnum.connect);
+      instance.off(WebsocketEventsEnum.connect_error);
+      instance.off(WebsocketEventsEnum.disconnect);
       instance.close();
-      console.log('Websocket disconnected.');
+      console.info('Updates Websocket disconnected.');
     }
 
     updateSocketStatus(WebsocketConnectionStatusEnum.NOT_INITIALIZED);
@@ -80,16 +79,18 @@ export async function initializeWebsocketConnection() {
 
     websocketConnection.instance.onAny(handleMessageReceived);
 
-    websocketConnection.instance.on(CONNECT, () => {
-      console.info('Websocket connected.');
+    websocketConnection.instance.on(WebsocketEventsEnum.connect, () => {
+      console.info('Updates Websocket connected.');
       updateSocketStatus(WebsocketConnectionStatusEnum.COMPLETED);
 
-      if (!websocketConnection.instance) {
+      const instance = websocketConnection.instance;
+
+      if (!instance) {
         return;
       }
 
       // Transactions
-      websocketConnection.instance.emit(
+      instance.emit(
         WebsocketSubcriptionsEnum.subscribeTransactions,
         config.transactions,
         (response: any) => {
@@ -98,7 +99,7 @@ export async function initializeWebsocketConnection() {
       );
 
       // Blocks
-      websocketConnection.instance.emit(
+      instance.emit(
         WebsocketSubcriptionsEnum.subscribeBlocks,
         config.blocks,
         (response: any) => {
@@ -107,7 +108,7 @@ export async function initializeWebsocketConnection() {
       );
 
       // Pool
-      websocketConnection.instance.emit(
+      instance.emit(
         WebsocketSubcriptionsEnum.subscribePool,
         config.pool,
         (response: any) => {
@@ -117,7 +118,7 @@ export async function initializeWebsocketConnection() {
 
       // Stats
       if (config.stats) {
-        websocketConnection.instance.emit(
+        instance.emit(
           WebsocketSubcriptionsEnum.subscribeStats,
           undefined,
           (response: any) => {
@@ -128,7 +129,7 @@ export async function initializeWebsocketConnection() {
 
       // Events
       if (config.events) {
-        websocketConnection.instance.emit(
+        instance.emit(
           WebsocketSubcriptionsEnum.subscribeEvent,
           config.events,
           (response: any) => {
@@ -195,21 +196,23 @@ export async function initializeWebsocketConnection() {
       }
     );
 
-    websocketConnection.instance.on(CONNECT_ERROR, (error) => {
-      console.warn('Websocket connect error: ', error.message);
-    });
+    websocketConnection.instance.on(
+      WebsocketEventsEnum.connect_error,
+      (error) => {
+        console.warn('Updates Websocket Connect Error: ', error.message);
+      }
+    );
 
-    websocketConnection.instance.on(DISCONNECT, (reason) => {
-      console.info('Websocket disconnected: ', reason);
-      updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
-    });
+    websocketConnection.instance.on(
+      WebsocketEventsEnum.disconnect,
+      (reason) => {
+        console.info('Updates Websocket Disconnected: ', reason);
+        updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
+      }
+    );
   };
 
-  if (
-    websocketConnection.status ===
-      WebsocketConnectionStatusEnum.NOT_INITIALIZED &&
-    !websocketConnection.instance?.active
-  ) {
+  if (isWebsocketConnected) {
     await initializeConnection();
   }
 
