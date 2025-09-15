@@ -30,7 +30,5 @@ export const useIsNativeTokenSearched = () => {
     (egldLabel ?? '').toLowerCase()
   ].includes(searchedToken);
 
-  console.log('----isNativeTokenSearched', isNativeTokenSearched);
-
   return isNativeTokenSearched;
 };
