@@ -57,7 +57,7 @@ export const FormatAmount = (props: FormatAmountUIType) => {
   const displayLabel =
     label === NATIVE_TOKEN_IDENTIFIER ? NATIVE_TOKEN_SEARCH_LABEL : label;
   const dataTestId = props['data-testid'] ?? 'formatAmountComponent';
-  const isCustomIcon = !isEgldToken(egldLabel);
+  const isCustomIcon = !isEgldToken(networkEgldLabel);
 
   if (!stringIsInteger(value)) {
     return (
