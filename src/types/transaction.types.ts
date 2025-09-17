@@ -1,6 +1,6 @@
 import { ELLIPSIS } from 'appConstants';
 import { AccountAssetType } from './account.types';
-import { ScamInfoType } from './general.types';
+import { ScamInfoType, SliceType } from './general.types';
 import { NftTypeEnum } from './nft.types';
 import { TokenTypeEnum } from './token.types';
 
@@ -263,6 +263,13 @@ export interface UITransactionType extends TransferType {
 
 export interface UITransactionInPoolType extends TransactionInPoolType {
   isNew?: boolean; // UI flag
+}
+
+export interface TransactionSliceType extends SliceType {
+  transactions: UITransactionType[];
+  transactionsCount: number | typeof ELLIPSIS;
+  isWebsocket: boolean;
+  isDataReady: boolean | undefined;
 }
 
 export interface TransactionTableType {

@@ -36,6 +36,8 @@ import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
 import { tokenExtraReducer } from './slices/tokenExtra';
 
+import { transactionsReducer } from './slices/updates';
+
 const asyncIgnoredSlices = {};
 
 // const networkPersisted = {
@@ -86,7 +88,9 @@ export const customIgnoredSlices = {
   pageHeadersBlocksStats: pageHeadersBlocksReducer,
   pageHeadersAccountsStats: pageHeadersAccountsReducer,
   pageHeadersCollectionsStats: pageHeadersCollectionsReducer,
-  pageHeadersTokensStats: pageHeadersTokensReducer
+  pageHeadersTokensStats: pageHeadersTokensReducer,
+
+  transactions: transactionsReducer
 };
 
 export const ignoredSliceNames: string[] = [
