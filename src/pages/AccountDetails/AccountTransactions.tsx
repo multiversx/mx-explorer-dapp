@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -8,13 +8,12 @@ import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 
 export const AccountTransactions = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
+  const { getAccountTransfers, getAccountTransfersCount } = useAdapter();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
   const { account } = useSelector(accountSelector);
   const { address, txCount, balance } = account;
-
-  const { getAccountTransfers, getAccountTransfersCount } = useAdapter();
 
   const {
     fetchTransactions,
@@ -22,15 +21,17 @@ export const AccountTransactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getAccountTransfers, getAccountTransfersCount, {
-    address,
-    withTxsRelayedByAddress: true
+  } = useFetchTransactions({
+    transactionPromise: getAccountTransfers,
+    transactionCountPromise: getAccountTransfersCount,
+    filters: {
+      address,
+      withTxsRelayedByAddress: true
+    }
   });
 
   useEffect(() => {
-    if (ref.current !== null) {
-      fetchTransactions();
-    }
+    fetchTransactions();
   }, [activeNetworkId, address, txCount, balance]);
 
   useEffect(() => {
@@ -38,22 +39,20 @@ export const AccountTransactions = () => {
   }, [searchParams]);
 
   return (
-    <>
-      <div ref={ref} className='card p-0'>
-        <div className='row'>
-          <div className='col-12'>
-            <TransactionsTable
-              transactions={transactions}
-              address={address}
-              totalTransactions={totalTransactions}
-              showDirectionCol={true}
-              title={<AccountTabs />}
-              dataChanged={dataChanged}
-              isDataReady={isDataReady}
-            />
-          </div>
+    <div className='card p-0'>
+      <div className='row'>
+        <div className='col-12'>
+          <TransactionsTable
+            transactions={transactions}
+            address={address}
+            totalTransactions={totalTransactions}
+            showDirectionCol={true}
+            title={<AccountTabs />}
+            dataChanged={dataChanged}
+            isDataReady={isDataReady}
+          />
         </div>
       </div>
-    </>
+    </div>
   );
 };

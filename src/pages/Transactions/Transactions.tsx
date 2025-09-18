@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -14,9 +14,9 @@ import {
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { transactionsInPoolRoutes } from 'routes';
+import { WebsocketEventsEnum, WebsocketSubcriptionsEnum } from 'types';
 
 export const Transactions = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const getShardText = useGetShardText();
   const urlParams = useGetTransactionFilters();
@@ -34,19 +34,17 @@ export const Transactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getTransactions, getTransactionsCount, {
-    ...(isSovereign ? { withCrossChainTransfers: true } : {})
+  } = useFetchTransactions({
+    transactionPromise: getTransactions,
+    transactionCountPromise: getTransactionsCount,
+    filters: { ...(isSovereign ? { withCrossChainTransfers: true } : {}) },
+    subscription: WebsocketSubcriptionsEnum.subscribeTransactions,
+    event: WebsocketEventsEnum.transactionUpdate
   });
 
   useEffect(() => {
-    if (ref.current !== null) {
-      fetchTransactions();
-    }
-  }, [activeNetworkId, firstPageRefreshTrigger]);
-
-  useEffect(() => {
     fetchTransactions(Boolean(searchParams.toString()));
-  }, [searchParams]);
+  }, [searchParams, activeNetworkId, firstPageRefreshTrigger]);
 
   useEffect(() => {
     if (senderShard !== undefined || receiverShard !== undefined) {
@@ -55,7 +53,7 @@ export const Transactions = () => {
   }, [receiverShard, senderShard]);
 
   return (
-    <div ref={ref} className='container page-content'>
+    <div className='container page-content'>
       <div className='card p-0'>
         <div className='row'>
           <div className='col-12'>

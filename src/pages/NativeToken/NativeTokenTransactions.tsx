@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
+import { NATIVE_TOKEN_SEARCH_LABEL } from 'appConstants';
 import { TransactionsTable } from 'components';
 import { isEgldToken } from 'helpers';
 import { useAdapter, useFetchTransactions } from 'hooks';
@@ -10,10 +11,9 @@ import { activeNetworkSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';
 
 export const NativeTokenTransactions = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { getTransfers, getTransfersCount } = useAdapter();
+  const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
 
   const {
     fetchTransactions,
@@ -21,14 +21,16 @@ export const NativeTokenTransactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getTransfers, getTransfersCount, {
-    token: isEgldToken(egldLabel) ? 'EGLD' : egldLabel
+  } = useFetchTransactions({
+    transactionPromise: getTransfers,
+    transactionCountPromise: getTransfersCount,
+    filters: {
+      token: isEgldToken(egldLabel) ? NATIVE_TOKEN_SEARCH_LABEL : egldLabel
+    }
   });
 
   useEffect(() => {
-    if (ref.current !== null) {
-      fetchTransactions();
-    }
+    fetchTransactions();
   }, [activeNetworkId]);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export const NativeTokenTransactions = () => {
   }, [searchParams]);
 
   return (
-    <div ref={ref} className='card p-0'>
+    <div className='card p-0'>
       <div className='row'>
         <div className='col-12'>
           <TransactionsTable

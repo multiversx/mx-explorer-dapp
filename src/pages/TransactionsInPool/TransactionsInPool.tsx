@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -13,15 +13,13 @@ import { activeNetworkSelector } from 'redux/selectors';
 import { TransactionInPoolTypeEnum, UITransactionInPoolType } from 'types';
 
 export const TransactionsInPool = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
+  const { getTransactionsInPool, getTransactionsInPoolCount } = useAdapter();
   const { type = TransactionInPoolTypeEnum.Transaction, ...rest } =
     useGetTransactionInPoolFilters();
 
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-
-  const { getTransactionsInPool, getTransactionsInPoolCount } = useAdapter();
 
   const {
     fetchTransactions,
@@ -29,15 +27,17 @@ export const TransactionsInPool = () => {
     totalTransactions: totalTransactionsInPool,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getTransactionsInPool, getTransactionsInPoolCount, {
-    ...rest,
-    type
+  } = useFetchTransactions({
+    transactionPromise: getTransactionsInPool,
+    transactionCountPromise: getTransactionsInPoolCount,
+    filters: {
+      ...rest,
+      type
+    }
   });
 
   useEffect(() => {
-    if (ref.current !== null) {
-      fetchTransactions();
-    }
+    fetchTransactions();
   }, [activeNetworkId, firstPageRefreshTrigger]);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export const TransactionsInPool = () => {
   }, [searchParams]);
 
   return (
-    <div ref={ref} className='container page-content'>
+    <div className='container page-content'>
       <div className='card p-0'>
         <div className='row'>
           <div className='col-12'>

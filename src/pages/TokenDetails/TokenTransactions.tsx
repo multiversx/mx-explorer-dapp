@@ -9,13 +9,12 @@ import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';
 
 export const TokenTransactions = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
+  const { getTokenTransfers, getTokenTransfersCount } = useAdapter();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { token } = useSelector(tokenSelector);
   const { transactions: transactionsCount } = token;
 
-  const { getTokenTransfers, getTokenTransfersCount } = useAdapter();
   const { hash: tokenId } = useParams();
 
   const {
@@ -24,14 +23,16 @@ export const TokenTransactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getTokenTransfers, getTokenTransfersCount, {
-    tokenId
+  } = useFetchTransactions({
+    transactionPromise: getTokenTransfers,
+    transactionCountPromise: getTokenTransfersCount,
+    filters: {
+      tokenId
+    }
   });
 
   useEffect(() => {
-    if (ref.current !== null) {
-      fetchTransactions();
-    }
+    fetchTransactions();
   }, [activeNetworkId, tokenId, transactionsCount]);
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export const TokenTransactions = () => {
   }, [searchParams]);
 
   return (
-    <div ref={ref} className='card p-0'>
+    <div className='card p-0'>
       <div className='row'>
         <div className='col-12'>
           <TransactionsTable

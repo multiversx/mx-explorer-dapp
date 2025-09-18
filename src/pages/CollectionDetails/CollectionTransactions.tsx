@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
@@ -9,11 +9,10 @@ import { activeNetworkSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';
 
 export const CollectionTransactions = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
+  const { getCollectionTransfers, getCollectionTransfersCount } = useAdapter();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { getCollectionTransfers, getCollectionTransfersCount } = useAdapter();
   const { hash: identifier } = useParams();
 
   const {
@@ -22,18 +21,16 @@ export const CollectionTransactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(
-    getCollectionTransfers,
-    getCollectionTransfersCount,
-    {
+  } = useFetchTransactions({
+    transactionPromise: getCollectionTransfers,
+    transactionCountPromise: getCollectionTransfersCount,
+    filters: {
       identifier
     }
-  );
+  });
 
   useEffect(() => {
-    if (ref.current !== null) {
-      fetchTransactions();
-    }
+    fetchTransactions();
   }, [activeNetworkId, identifier]);
 
   useEffect(() => {
@@ -41,7 +38,7 @@ export const CollectionTransactions = () => {
   }, [searchParams]);
 
   return (
-    <div ref={ref} className='card p-0'>
+    <div className='card p-0'>
       <div className='row'>
         <div className='col-12'>
           <TransactionsTable
