@@ -13,7 +13,7 @@ export const LatestItem = ({
 }) => {
   const ref = useRef(null);
   const [internalIsNew, setInternalIsNew] = useState<boolean | undefined>();
-  const expandDuration = 600;
+  const expandDuration = 120;
   const totalAnimationTime = totalItems * expandDuration;
   const itemAnimationDelay = totalAnimationTime - expandDuration * index;
 

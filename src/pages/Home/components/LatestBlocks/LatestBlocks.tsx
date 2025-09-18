@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
@@ -13,68 +13,32 @@ import {
 import { FailedBlocks } from 'components/BlocksTable/components/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import { urlBuilder } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAdapter, useFetchBlocks } from 'hooks';
 import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
 import { blocksRoutes } from 'routes';
-import { BlockType } from 'types';
+import { WebsocketEventsEnum, WebsocketSubcriptionsEnum } from 'types';
 
 export const LatestBlocks = () => {
-  const ref = useRef(null);
   const { timestamp } = useSelector(refreshSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { getLatestBlocks } = useAdapter();
+  const { getBlocks } = useAdapter();
 
-  const [blocks, setBlocks] = useState<BlockType[]>([]);
-  const [blocksFetched, setBlocksFetched] = useState<boolean | undefined>();
-  const size = 5;
-
-  const fetchBlocks = () => {
-    getLatestBlocks({ size }).then(({ data, success }) => {
-      if (ref.current !== null) {
-        if (success) {
-          const existingHashes = blocks.map((b) => b.hash);
-
-          // keep previous blocks and reset them
-          const oldBlocks: BlockType[] = [...blocks.slice(0, size)];
-          oldBlocks.forEach((block) => (block.isNew = false));
-
-          let newBlocks: BlockType[] = [];
-          data.forEach((block: BlockType) => {
-            const isNew = !existingHashes.includes(block.hash);
-            if (isNew) {
-              newBlocks.push({
-                ...block,
-                isNew
-              });
-            }
-          });
-
-          newBlocks = [...newBlocks, ...oldBlocks];
-
-          const allNew =
-            newBlocks.filter((a) => a.isNew === true).length ===
-            newBlocks.length;
-          if (allNew) {
-            newBlocks.forEach((block) => (block.isNew = false));
-          }
-
-          setBlocks(newBlocks);
-        }
-        setBlocksFetched(success);
-      }
-    });
-  };
+  const { fetchBlocks, blocks, isDataReady } = useFetchBlocks({
+    blockPromise: getBlocks,
+    subscription: WebsocketSubcriptionsEnum.subscribeBlocks,
+    event: WebsocketEventsEnum.blocksUpdate
+  });
 
   useEffect(fetchBlocks, [activeNetworkId, timestamp]);
 
   const Component = () => {
     return (
-      <div className='card card-lg card-black' ref={ref}>
-        {blocksFetched === undefined && <Loader data-testid='blocksLoader' />}
-        {blocksFetched === false && <FailedBlocks />}
-        {blocksFetched === true && blocks.length === 0 && <NoBlocks />}
-        {blocksFetched === true && blocks.length > 0 && (
+      <div className='card card-lg card-black'>
+        {isDataReady === undefined && <Loader data-testid='blocksLoader' />}
+        {isDataReady === false && <FailedBlocks />}
+        {isDataReady === true && blocks.length === 0 && <NoBlocks />}
+        {isDataReady === true && blocks.length > 0 && (
           <>
             <div className='card-header'>
               <div className='d-flex justify-content-between align-items-center flex-wrap'>
@@ -146,5 +110,6 @@ export const LatestBlocks = () => {
       </div>
     );
   };
-  return React.useMemo(Component, [blocks, blocksFetched]);
+
+  return React.useMemo(Component, [blocks]);
 };

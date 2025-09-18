@@ -22,8 +22,8 @@
 
   .latest-item {
     transition:
-      0.3s max-width ease-in-out,
-      1s opacity ease-in-out;
+      0.25s max-width ease-in-out,
+      0.5s opacity ease-in-out;
     max-width: $itemMaxWidth;
     white-space: nowrap;
     opacity: 1;

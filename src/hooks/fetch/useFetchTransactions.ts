@@ -19,7 +19,7 @@ import {
 
 export interface FetchTransactionsProps {
   transactionPromise: (params?: any) => Promise<ApiAdapterResponseType>;
-  transactionCountPromise: (params?: any) => Promise<ApiAdapterResponseType>;
+  transactionCountPromise?: (params?: any) => Promise<ApiAdapterResponseType>;
   filters?: Record<string, any>;
   subscription?: WebsocketSubcriptionsEnum;
   event?: WebsocketEventsEnum;
@@ -79,23 +79,30 @@ export const useFetchTransactions = ({
     if (searchParams.toString() && paramsChange) {
       setDataChanged(true);
     }
-    Promise.all([
+
+    const promises = [
       transactionPromise({
         ...urlParams,
         ...filters,
         page,
         size: maxTransactionsSize
       }),
-      transactionCountPromise({ ...urlParams, ...filters })
-    ])
-      .then(([transactionsData, transactionsCountData]) => {
+      ...(transactionCountPromise
+        ? [transactionCountPromise({ ...urlParams, ...filters })]
+        : [])
+    ];
+
+    Promise.all(promises)
+      .then((response) => {
+        const [transactionsData, transactionsCountData] = response;
         dispatch(
           setTransactions({
             transactions: transactionsData.data ?? [],
-            transactionsCount: transactionsCountData.data ?? 0,
+            transactionsCount: transactionsCountData?.data ?? ELLIPSIS,
             isWebsocket: false,
             isDataReady:
-              transactionsData.success && transactionsCountData.success
+              transactionsData.success &&
+              Boolean(!transactionCountPromise || transactionsCountData.success)
           })
         );
       })

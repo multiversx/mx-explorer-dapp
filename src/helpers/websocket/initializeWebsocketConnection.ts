@@ -2,10 +2,11 @@ import { io } from 'socket.io-client';
 
 import {
   WebsocketConnectionStatusEnum,
-  websocketConnection
+  websocketConnection,
+  initialWebsocketClientConfigs
 } from 'appConstants';
 import { isUpdatesWebsocketInactive } from 'helpers';
-import { WebsocketEventsEnum } from 'types';
+import { WebsocketEventsEnum, WebsocketSubcriptionsEnum } from 'types';
 
 const TIMEOUT = 3000;
 const RECONNECTION_ATTEMPTS = 3;
@@ -17,11 +18,13 @@ type TimeoutType = ReturnType<typeof setTimeout> | null;
 export async function initializeWebsocketConnection() {
   let messageTimeout: TimeoutType = null;
   const isWebsocketInactive = isUpdatesWebsocketInactive();
+  const config = initialWebsocketClientConfigs[0];
 
   // Update socket status in store for status subscription
   const updateSocketStatus = (status: WebsocketConnectionStatusEnum) => {
     websocketConnection.status = status;
     console.log('----status', status);
+    //setWebsocketStatus(status);
   };
 
   const handleMessageReceived = (message: string) => {
@@ -30,6 +33,7 @@ export async function initializeWebsocketConnection() {
     }
     messageTimeout = setTimeout(() => {
       console.log('---message', message);
+      //setWebsocketEvent(message);
     }, MESSAGE_DELAY);
   };
 
@@ -53,6 +57,9 @@ export async function initializeWebsocketConnection() {
 
   const initializeConnection = async () => {
     updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
+
+    // const websocketUrl =
+    //   customWebsocketUrl ?? (await getWebsocketUrl(apiAddress));
 
     const websocketUrl = 'https://devnet-socket-api.multiversx.com';
 
@@ -83,22 +90,125 @@ export async function initializeWebsocketConnection() {
         return;
       }
 
-      instance.on(WebsocketEventsEnum.connect_error, (error) => {
-        console.warn('Updates Websocket Connect Error: ', error.message);
-      });
+      // Transactions
+      // instance.emit(
+      //   WebsocketSubcriptionsEnum.subscribeTransactions,
+      //   config.transactions,
+      //   (response: any) => {
+      //     console.log(`Client ${config} subscribeTransactions =>`, response);
+      //   }
+      // );
 
-      instance.on(WebsocketEventsEnum.disconnect, (reason) => {
-        console.info('Updates Websocket Disconnected: ', reason);
-        updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
-      });
+      // Blocks
+      // instance.emit(
+      //   WebsocketSubcriptionsEnum.subscribeBlocks,
+      //   config.blocks,
+      //   (response: any) => {
+      //     console.log(`Client ${config} subscribeBlocks =>`, response);
+      //   }
+      // );
+
+      // Pool
+      // instance.emit(
+      //   WebsocketSubcriptionsEnum.subscribePool,
+      //   config.pool,
+      //   (response: any) => {
+      //     console.log(`Client ${config} subscribePool =>`, response);
+      //   }
+      // );
+
+      // Stats
+      if (config.stats) {
+        instance.emit(
+          WebsocketSubcriptionsEnum.subscribeStats,
+          undefined,
+          (response: any) => {
+            console.log(`Client ${config} subscribeStats =>`, response);
+          }
+        );
+      }
+
+      // Events
+      // if (config.events) {
+      //   instance.emit(
+      //     WebsocketSubcriptionsEnum.subscribeEvent,
+      //     config.events,
+      //     (response: any) => {
+      //       console.log(`Client ${config} subscribeEvents =>`, response);
+      //     }
+      //   );
+      // }
     });
 
-    if (isWebsocketInactive) {
-      await initializeConnection();
-    }
+    // websocketConnection.instance.on(
+    //   WebsocketEventsEnum.transactionUpdate,
+    //   (txs) => {
+    //     console.log(`Client ${config} transactions:`, txs);
+    //   }
+    // );
 
-    return {
-      closeConnection
-    };
+    // websocketConnection.instance.on(
+    //   WebsocketEventsEnum.blocksUpdate,
+    //   (blocks) => {
+    //     console.log(
+    //       `Client ${config} blocks:`,
+    //       blocks.map((b: any) => blocks)
+    //     );
+    //   }
+    // );
+
+    // websocketConnection.instance.on(WebsocketEventsEnum.poolUpdate, (pools) => {
+    //   console.log(
+    //     `Client ${config} pool:`,
+    //     pools.map((p: any) => ({
+    //       hash: p.hash,
+    //       proposer: p.proposer
+    //     }))
+    //   );
+    // });
+
+    websocketConnection.instance.on(
+      WebsocketEventsEnum.statsUpdate,
+      (stats) => {
+        console.log(`Client ${config} stats:`, stats);
+      }
+    );
+
+    // websocketConnection.instance.on(
+    //   WebsocketEventsEnum.eventsUpdate,
+    //   (events) => {
+    //     console.log(
+    //       `Client ${config} events:`,
+    //       events.map((e: any) => ({
+    //         address: e.address,
+    //         identifier: e.identifier,
+    //         topics: e.topics
+    //       }))
+    //     );
+    //   }
+    // );
+
+    websocketConnection.instance.on(
+      WebsocketEventsEnum.connect_error,
+      (error) => {
+        console.warn('Updates Websocket Connect Error: ', error.message);
+      }
+    );
+
+    websocketConnection.instance.on(
+      WebsocketEventsEnum.disconnect,
+      (reason) => {
+        console.info('Updates Websocket Disconnected: ', reason);
+        updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
+      }
+    );
+  };
+
+  if (isWebsocketInactive) {
+    await initializeConnection();
+  }
+
+  return {
+    closeConnection
   };
 }

@@ -19,7 +19,7 @@ import {
 
 export interface FetchBlocksProps {
   blockPromise: (params?: any) => Promise<ApiAdapterResponseType>;
-  blockCountPromise: (params?: any) => Promise<ApiAdapterResponseType>;
+  blockCountPromise?: (params?: any) => Promise<ApiAdapterResponseType>;
   filters?: Record<string, any>;
   subscription?: WebsocketSubcriptionsEnum;
   event?: WebsocketEventsEnum;
@@ -77,22 +77,31 @@ export const useFetchBlocks = ({
     if (searchParams.toString() && paramsChange) {
       setDataChanged(true);
     }
-    Promise.all([
+
+    const promises = [
       blockPromise({
         ...urlParams,
         ...filters,
         page,
         size
       }),
-      blockCountPromise({ ...urlParams, ...filters })
-    ])
-      .then(([blocksData, blocksCountData]) => {
+      ...(blockCountPromise
+        ? [blockCountPromise({ ...urlParams, ...filters })]
+        : [])
+    ];
+
+    Promise.all(promises)
+      .then((response) => {
+        const [blocksData, blocksCountData] = response;
+
         dispatch(
           setBlocks({
             blocks: blocksData.data ?? [],
-            blocksCount: blocksCountData.data ?? 0,
+            blocksCount: blocksCountData?.data ?? ELLIPSIS,
             isWebsocket: false,
-            isDataReady: blocksData.success && blocksCountData.success
+            isDataReady:
+              blocksData.success &&
+              Boolean(!blockCountPromise || blocksCountData?.success)
           })
         );
       })
