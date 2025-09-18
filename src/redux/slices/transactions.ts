@@ -26,8 +26,13 @@ export const transactionsSlice = createSlice({
           isNew: !existingHashes.includes(transaction.txHash)
         })
       );
+
       state.transactions = newTransactions;
-      state.transactionsCount = action.payload.transactionsCount;
+
+      if (action.payload.transactionsCount !== ELLIPSIS) {
+        state.transactionsCount = action.payload.transactionsCount;
+      }
+
       state.isDataReady = action.payload.isDataReady;
       state.isWebsocket = action.payload.isWebsocket;
     }

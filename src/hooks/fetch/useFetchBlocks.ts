@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { PAGE_SIZE } from 'appConstants';
+import { ELLIPSIS, PAGE_SIZE } from 'appConstants';
 import {
   useGetPage,
   useGetBlockFilters,
@@ -54,7 +54,7 @@ export const useFetchBlocks = ({
     dispatch(
       setBlocks({
         blocks: event ?? [],
-        blocksCount: blocksCount ?? event.length ?? 0,
+        blocksCount: ELLIPSIS,
         isWebsocket: true,
         isDataReady: true
       })
@@ -64,7 +64,7 @@ export const useFetchBlocks = ({
   useRegisterWebsocketListener({
     subscription,
     event,
-    config: { from: 0, size: PAGE_SIZE, ...config, ...filters },
+    config: { from: 0, size: PAGE_SIZE, withProposerIdentity: true, ...config },
     onEvent: onWebsocketEvent
   });
 

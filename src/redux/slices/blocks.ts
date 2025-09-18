@@ -26,7 +26,11 @@ export const blocksSlice = createSlice({
       }));
 
       state.blocks = newBlocks;
-      state.blocksCount = action.payload.blocksCount;
+
+      if (action.payload.blocksCount !== ELLIPSIS) {
+        state.blocksCount = action.payload.blocksCount;
+      }
+
       state.isDataReady = action.payload.isDataReady;
       state.isWebsocket = action.payload.isWebsocket;
     }

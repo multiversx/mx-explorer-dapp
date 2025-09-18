@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { MAX_TRANSACTIONS_PAGE_SIZE, PAGE_SIZE } from 'appConstants';
+import { ELLIPSIS, MAX_TRANSACTIONS_PAGE_SIZE, PAGE_SIZE } from 'appConstants';
 import {
   useGetPage,
   useGetTransactionFilters,
@@ -56,7 +56,7 @@ export const useFetchTransactions = ({
     dispatch(
       setTransactions({
         transactions: event ?? [],
-        transactionsCount: transactionsCount ?? event.length ?? 0,
+        transactionsCount: ELLIPSIS,
         isWebsocket: true,
         isDataReady: true
       })
