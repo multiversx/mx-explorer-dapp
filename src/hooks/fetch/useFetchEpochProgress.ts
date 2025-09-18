@@ -33,11 +33,11 @@ const getStepInterval = (refreshInterval: number) => {
 };
 
 export const useFetchEpochProgress = () => {
-  const fetchStats = useFetchStats();
+  const { fetchStats } = useFetchStats();
 
   const { timestamp } = useSelector(refreshSelector);
-  const { isFetched, unprocessed, epochPercentage, epochTimeRemaining } =
-    useSelector(statsSelector);
+  const { isFetched, unprocessed, stats } = useSelector(statsSelector);
+  const { epochPercentage, epochTimeRemaining } = stats;
   const { epoch, refreshRate, roundsPerEpoch, roundsPassed } = unprocessed;
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 

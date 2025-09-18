@@ -39,12 +39,10 @@ export const NodeDetails = () => {
   const { getNode, getIdentity, getRounds, getBlocks } = useAdapter();
   const isMainnet = useIsMainnet();
 
-  const stats = useSelector(statsSelector);
-
   const {
     isFetched,
     unprocessed: { epoch }
-  } = stats;
+  } = useSelector(statsSelector);
 
   const [dataReady, setDataReady] = useState<boolean | undefined>(true);
   const [node, setNode] = useState<NodeDetailType<NodeType>>(initialState);

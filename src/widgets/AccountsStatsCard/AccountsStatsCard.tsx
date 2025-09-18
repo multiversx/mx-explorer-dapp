@@ -16,8 +16,10 @@ export const AccountsStatsCard = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const { totalAccounts, activeAccountsToday } =
     useSelector(growthHeroSelector);
-  const { accounts } = useSelector(statsSelector);
+  const { stats } = useSelector(statsSelector);
   const { timestamp } = useSelector(refreshSelector);
+
+  const { accounts } = stats;
 
   const fetchHero = useFetchGrowthHero();
 

@@ -1,4 +1,5 @@
 import { Socket } from 'socket.io-client';
+import { WebsocketSubcriptionsEnum } from 'types';
 
 export enum WebsocketConnectionStatusEnum {
   NOT_INITIALIZED = 'not_initialized',
@@ -8,19 +9,11 @@ export enum WebsocketConnectionStatusEnum {
 
 export const websocketConnection: {
   instance: Socket | null;
+  subscriptions: WebsocketSubcriptionsEnum[];
   // Use the connection status to avoid multiple websocket connections
   status: WebsocketConnectionStatusEnum;
 } = {
   instance: null,
+  subscriptions: [],
   status: WebsocketConnectionStatusEnum.NOT_INITIALIZED
 };
-
-export const initialWebsocketClientConfigs = [
-  {
-    transactions: { from: 0, size: 5 },
-    blocks: { from: 0, size: 5 },
-    pool: { from: 0, size: 5 },
-    stats: true,
-    events: { shard: 0, from: 0, size: 3 }
-  }
-];

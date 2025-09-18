@@ -20,7 +20,8 @@ export function useRegisterWebsocketListener({
   useInitWebsocket();
 
   useEffect(() => {
-    if (!subscription || !event || !config) {
+    const websocketConfig = config ?? true;
+    if (!subscription || !event) {
       return;
     }
 
@@ -29,10 +30,10 @@ export function useRegisterWebsocketListener({
       return;
     }
 
-    websocket.emit(subscription, config, (response: any) => {
+    websocket.emit(subscription, websocketConfig, (response: any) => {
       console.log(
         `Emit subscription ${subscription} with options`,
-        config,
+        websocketConfig,
         response
       );
     });

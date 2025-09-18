@@ -20,8 +20,9 @@ export const TransactionsStatsCard = ({
   const hasGrowthWidgets = useHasGrowthWidgets();
   const { totalTransactions, totalTransactionsToday } =
     useSelector(growthHeroSelector);
-  const { transactions } = useSelector(statsSelector);
+  const { stats } = useSelector(statsSelector);
   const { timestamp } = useSelector(refreshSelector);
+  const { transactions } = stats;
 
   const fetchHero = useFetchGrowthHero();
 

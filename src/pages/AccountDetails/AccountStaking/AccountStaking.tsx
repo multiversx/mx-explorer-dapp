@@ -7,22 +7,13 @@ import { useFetchAccountStakingDetails, useGetSort } from 'hooks';
 import { faChartPie } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { accountStakingSelector } from 'redux/selectors';
-import { SortOrderEnum } from 'types';
+import { AccountStakingSortingEnum, SortOrderEnum } from 'types';
 
 import { AccountDelegation } from './components/AccountDelegation';
 import { AccountLegacyDelegation } from './components/AccountLegacyDelegation';
 import { AccountStake } from './components/AccountStake';
 import { DonutChart } from './components/DonutChart';
 import { useGetDelegationList } from './hooks';
-
-export enum AccountStakingSortingEnum {
-  staked = 'staked',
-  undelegated = 'undelegated',
-  rewards = 'rewards',
-  name = 'name',
-  filled = 'filled',
-  apr = 'apr'
-}
 
 export const AccountStaking = () => {
   const { fetchAccountStakingDetails } = useFetchAccountStakingDetails();
