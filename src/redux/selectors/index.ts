@@ -1,5 +1,3 @@
-export * from './updates';
-
 export * from './account';
 export * from './accountExtra';
 export * from './accountStaking';
@@ -28,3 +26,4 @@ export * from './stakeExtra';
 export * from './stats';
 export * from './token';
 export * from './tokenExtra';
+export * from './transactions';
