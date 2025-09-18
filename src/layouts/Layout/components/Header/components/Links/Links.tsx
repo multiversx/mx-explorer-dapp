@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { Navbar, NavDropdown } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
+import { NetworkLink } from 'components';
 import { isContract, addressIsBech32 } from 'helpers';
 import {
   useActiveRoute,
@@ -168,7 +169,7 @@ export const Links = (props: LinksPropsType) => {
                 })}
                 role='presentation'
               >
-                <Link
+                <NetworkLink
                   to={link.to}
                   onClick={onClick}
                   role='menuitem'
@@ -179,7 +180,7 @@ export const Links = (props: LinksPropsType) => {
                   onMouseLeave={() => setShow(false)}
                 >
                   {link.label}
-                </Link>
+                </NetworkLink>
                 <NavDropdown
                   className={classNames('link', {
                     active: getIsLinkActive(link)
@@ -215,7 +216,7 @@ export const Links = (props: LinksPropsType) => {
           }
 
           return (
-            <Link
+            <NetworkLink
               key={link.label}
               to={link.to}
               onClick={onClick}
@@ -225,7 +226,7 @@ export const Links = (props: LinksPropsType) => {
               role='menuitem'
             >
               {link.label}
-            </Link>
+            </NetworkLink>
           );
         })}
       </Navbar>

@@ -1,4 +1,8 @@
-import { PAGE_SIZE, TRANSACTIONS_TABLE_FIELDS } from 'appConstants';
+import {
+  LATEST_BLOCKS_FIELDS,
+  PAGE_SIZE,
+  TRANSACTIONS_TABLE_FIELDS
+} from 'appConstants';
 import {
   AccountRolesTypeEnum,
   GetAccountType,
@@ -20,7 +24,6 @@ import {
 } from 'types/adapter.types';
 
 import {
-  processBlocks,
   getShardAndEpochParams,
   getTransactionsParams,
   getNodeParams,
@@ -30,7 +33,8 @@ import {
   getNftsParams,
   getTransactionsInPoolParams,
   getPageParams,
-  getEventsParams
+  getEventsParams,
+  getBlocksParams
 } from './helpers';
 import { useAdapterConfig } from './useAdapterConfig';
 
@@ -55,17 +59,10 @@ export const useAdapter = () => {
         url: '/blocks',
         params: {
           size,
-          fields: [
-            'hash',
-            'nonce',
-            'shard',
-            'size',
-            'sizeTxs',
-            'timestamp',
-            'txCount'
-          ].join(',')
+          fields: LATEST_BLOCKS_FIELDS.join(',')
         }
       }),
+
     getLatestTransactions: ({
       size = 5,
       withUsername = true
@@ -81,84 +78,13 @@ export const useAdapter = () => {
 
     /* Blocks */
 
-    getBlock: async (blockId: string) => {
-      try {
-        const { data: block, success } = await provider({
-          url: `/blocks/${blockId}`
-        });
+    getBlock: (blockId: string) => provider({ url: `/blocks/${blockId}` }),
 
-        let nextHash;
-        try {
-          const { data } = await provider({
-            url: '/blocks',
-            params: {
-              nonce: block.nonce + 1,
-              shard: block.shard
-            }
-          });
-
-          nextHash = data[0] ? data[0].hash : '';
-        } catch {
-          nextHash = '';
-        }
-
-        return {
-          block,
-          nextHash,
-          success
-        };
-      } catch {
-        return { success: false };
-      }
-    },
-
-    getBlocks: async ({
-      page,
-      size,
-      shard,
-      epoch,
-      proposer,
-      withProposerIdentity
-    }: GetBlocksType) => {
-      try {
-        const { data: blocks, success } = await provider({
-          url: '/blocks',
-          params: {
-            ...getPageParams({ page, size }),
-            ...(proposer ? { proposer } : {}),
-            ...(withProposerIdentity ? { withProposerIdentity } : {}),
-            ...getShardAndEpochParams(shard, epoch),
-            fields: [
-              'hash',
-              'nonce',
-              'shard',
-              'size',
-              'sizeTxs',
-              'timestamp',
-              'txCount',
-              'gasConsumed',
-              'gasRefunded',
-              'gasPenalized',
-              'maxGasLimit',
-              'proposer',
-              'proposerIdentity'
-            ].join(',')
-          }
-        });
-        if (success) {
-          return {
-            data: processBlocks(blocks),
-            success
-          };
-        } else {
-          return { success: false };
-        }
-      } catch (err) {
-        return {
-          success: false
-        };
-      }
-    },
+    getBlocks: (params: GetBlocksType) =>
+      provider({
+        url: '/blocks',
+        params: getBlocksParams(params)
+      }),
 
     getBlocksCount: ({ shard, epoch }: GetBlocksType) =>
       provider({

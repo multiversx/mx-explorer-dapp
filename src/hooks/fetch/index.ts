@@ -1,4 +1,5 @@
 export * from './useFetchAccountStakingDetails';
+export * from './useFetchBlocks';
 export * from './useFetchEconomics';
 export * from './useFetchEpochProgress';
 export * from './useFetchStake';

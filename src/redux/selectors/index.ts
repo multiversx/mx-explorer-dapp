@@ -1,6 +1,7 @@
 export * from './account';
 export * from './accountExtra';
 export * from './accountStaking';
+export * from './blocks';
 export * from './collection';
 export * from './economics';
 export * from './general';

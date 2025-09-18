@@ -1,6 +1,7 @@
 export * from './account';
 export * from './accountExtra';
 export * from './accountStaking';
+export * from './blocks';
 export * from './collection';
 export * from './economics';
 export * from './general';
@@ -19,7 +20,7 @@ export * from './nodesOverview';
 export * from './refresh';
 export * from './stake';
 export * from './stakeExtra';
-export * from './transactions';
 export * from './stats';
 export * from './token';
 export * from './tokenExtra';
+export * from './transactions';

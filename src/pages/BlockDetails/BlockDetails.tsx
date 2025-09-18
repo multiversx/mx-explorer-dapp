@@ -1,67 +1,83 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 
 import { Loader, PageState } from 'components';
 import { isHash } from 'helpers';
 import { useAdapter, useNetworkRoute } from 'hooks';
 import { faCube } from 'icons/regular';
+import { UIBlockType } from 'types';
 
-import { BlockData, BlockDataType } from './components/BlockData';
+import { BlockData } from './components/BlockData';
 
 export const BlockDetails = () => {
-  const ref = useRef(null);
   const networkRoute = useNetworkRoute();
-  const { getBlock } = useAdapter();
+  const { getBlock, getBlocks } = useAdapter();
   const { hash: blockId } = useParams() as any;
 
-  const [state, setState] = useState<BlockDataType>();
+  const [block, setBlock] = useState<UIBlockType>();
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const invalid = blockId && !isHash(blockId);
 
-  const fetchBlock = () => {
-    if (!invalid) {
-      getBlock(blockId).then(({ success, block, nextHash }) => {
-        if (ref.current !== null) {
-          setState({ block, nextHash });
-          setDataReady(success);
-        }
+  const fetchBlock = async () => {
+    const { success, data } = await getBlock(blockId);
+    if (success && data?.nonce && data?.shard !== undefined) {
+      const { data: blocksData } = await getBlocks({
+        nonce: data.nonce + 1,
+        shard: data.shard,
+        withProposerIdentity: false,
+        size: 1,
+        fields: 'hash'
       });
+      const nextHash = blocksData?.[0]?.hash;
+
+      if (nextHash) {
+        setBlock({ ...data, nextHash });
+        setDataReady(success);
+        return;
+      }
     }
+
+    setBlock(block);
+    setDataReady(success);
   };
 
-  useEffect(fetchBlock, [blockId]); // run the operation only once since the parameter does not change
+  useEffect(() => {
+    if (!invalid) {
+      fetchBlock();
+    }
+  }, [blockId, invalid]);
 
-  return invalid ? (
-    <Navigate to={networkRoute('/not-found')} />
-  ) : (
-    <>
-      {dataReady === undefined && <Loader />}
+  if (invalid) {
+    return <Navigate to={networkRoute('/not-found')} />;
+  }
 
-      {dataReady === false && (
-        <PageState
-          icon={faCube}
-          title='Unable to locate this block hash'
-          description={
-            <div className='px-spacer'>
-              <span className='text-break-all'>{blockId}</span>
-            </div>
-          }
-          isError
-        />
-      )}
+  if (dataReady === undefined) {
+    return <Loader />;
+  }
 
-      <div className='block-details' ref={ref}>
-        {dataReady === true && state && state.block.hash && (
-          <div className='container page-content'>
-            <div className='row'>
-              <div className='col-12'>
-                <BlockData {...state} />
-              </div>
-            </div>
+  if (dataReady === false || !block) {
+    return (
+      <PageState
+        icon={faCube}
+        title='Unable to locate this block hash'
+        description={
+          <div className='px-spacer'>
+            <span className='text-break-all'>{blockId}</span>
           </div>
-        )}
+        }
+        isError
+      />
+    );
+  }
+
+  return (
+    <div className='container page-content'>
+      <div className='row'>
+        <div className='col-12'>
+          <BlockData block={block} />
+        </div>
       </div>
-    </>
+    </div>
   );
 };

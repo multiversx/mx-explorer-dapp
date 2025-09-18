@@ -9,7 +9,7 @@ import {
   useRegisterWebsocketListener
 } from 'hooks';
 import { transactionsSelector } from 'redux/selectors';
-import { setTransactions } from 'redux/slices/updates';
+import { setTransactions } from 'redux/slices';
 import {
   ApiAdapterResponseType,
   TransactionType,

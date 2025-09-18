@@ -66,3 +66,23 @@ export const ACCOUNT_TOKENS_FIELDS = [
   'balance',
   'valueUsd'
 ];
+
+export const BLOCKS_FIELDS = [
+  'hash',
+  'nonce',
+  'shard',
+  'size',
+  'sizeTxs',
+  'timestamp',
+  'txCount',
+  'gasConsumed',
+  'gasRefunded',
+  'gasPenalized',
+  'maxGasLimit',
+  'proposer',
+  'proposerIdentity'
+];
+
+export const LATEST_BLOCKS_FIELDS = [
+  ['hash', 'nonce', 'shard', 'size', 'sizeTxs', 'timestamp', 'txCount']
+];

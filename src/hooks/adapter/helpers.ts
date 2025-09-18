@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import {
+  BLOCKS_FIELDS,
   MAX_RESULTS,
   PAGE_SIZE,
   TRANSACTIONS_TABLE_FIELDS
@@ -14,7 +15,8 @@ import {
   GetTokensType,
   GetCollectionsType,
   GetNftsType,
-  GetTransactionsInPoolType
+  GetTransactionsInPoolType,
+  GetBlocksType
 } from 'types/adapter.types';
 
 export const getAccountParams = (address?: string) =>
@@ -204,6 +206,29 @@ export function getNodeParams({
   return params;
 }
 
+export function getBlocksParams({
+  page,
+  size,
+  fields = BLOCKS_FIELDS.join(','),
+
+  shard,
+  nonce,
+  epoch,
+  proposer,
+  withProposerIdentity = true
+}: GetBlocksType) {
+  const params: AdapterProviderPropsType['params'] = {
+    ...getPageParams({ page, size }),
+    ...(proposer ? { proposer } : {}),
+    ...(withProposerIdentity ? { withProposerIdentity } : {}),
+    ...getShardAndEpochParams(shard, epoch),
+    ...(nonce !== undefined ? { nonce } : {}),
+    ...(fields !== undefined ? { fields } : {})
+  };
+
+  return params;
+}
+
 export function getProviderParams({
   identity,
   providers,
@@ -364,30 +389,6 @@ export const getShardAndEpochParams = (
 
   return result;
 };
-
-export function processBlocks(blocks: any[]) {
-  let min = blocks && blocks.length > 0 ? blocks[0].nonce : 0;
-  let max = min;
-  for (const block in blocks) {
-    // tslint:disable-line
-    if (blocks[block].nonce < min) {
-      min = blocks[block].nonce;
-    }
-
-    if (blocks[block].nonce > max) {
-      max = blocks[block].nonce;
-    }
-  }
-
-  const startBlockNr = min;
-  const endBlockNr = max;
-
-  return {
-    blocks,
-    startBlockNr,
-    endBlockNr
-  };
-}
 
 export const getPageParams = ({ page = 1, size = PAGE_SIZE }: BaseApiType) => {
   const from = new BigNumber(page).minus(1).times(size);

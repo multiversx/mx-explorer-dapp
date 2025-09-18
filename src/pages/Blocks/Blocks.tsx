@@ -1,45 +1,44 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useSearchParams, Navigate } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 
-import { BlocksTable, Loader, Pager, PageSize, ShardSpan } from 'components';
-import { FailedBlocks } from 'components/BlocksTable/components/FailedBlocks';
-import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
+import { BlocksTable } from 'components';
+
 import {
   useAdapter,
-  useNetworkRoute,
-  useGetBlockFilters,
   useGetPage,
-  useHasGrowthWidgets
+  useGetBlockFilters,
+  useFetchBlocks,
+  useNetworkRoute
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { BlockType } from 'types';
-
-import { pageHeadersBlocksStatsSelector } from '../../redux/selectors/pageHeadersBlocksStats';
-
-interface StateType {
-  blocks: BlockType[];
-  startBlockNr: number;
-  endBlockNr: number;
-}
+import { WebsocketEventsEnum, WebsocketSubcriptionsEnum } from 'types';
 
 export const Blocks = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
-
+  const urlParams = useGetBlockFilters();
   const networkRoute = useNetworkRoute();
-  const hasGrowthWidgets = useHasGrowthWidgets();
-  const { shard: filterShard } = useGetBlockFilters();
-  const { page, size, firstPageRefreshTrigger } = useGetPage();
-  const { getBlocks, getBlocksCount } = useAdapter();
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const pageHeadersBlocks = useSelector(pageHeadersBlocksStatsSelector);
 
-  const [state, setState] = useState<StateType>();
-  const [dataReady, setDataReady] = useState<boolean | undefined>();
-  const [totalBlocks, setTotalBlocks] = useState<number | '...'>('...');
+  const { shard: filterShard } = urlParams;
+  const { firstPageRefreshTrigger } = useGetPage();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
+  const { getBlocks, getBlocksCount } = useAdapter();
 
   const shard = filterShard !== undefined ? Number(filterShard) : undefined;
+
+  const { fetchBlocks, blocks, totalBlocks, isDataReady, dataChanged } =
+    useFetchBlocks({
+      blockPromise: getBlocks,
+      blockCountPromise: getBlocksCount,
+      filters: { shard, withProposerIdentity: true },
+      subscription: WebsocketSubcriptionsEnum.subscribeBlocks,
+      event: WebsocketEventsEnum.blocksUpdate
+    });
+
+  useEffect(() => {
+    fetchBlocks(Boolean(searchParams.toString()));
+  }, [searchParams, activeNetworkId, firstPageRefreshTrigger]);
 
   useEffect(() => {
     if (shard !== undefined) {
@@ -47,96 +46,26 @@ export const Blocks = () => {
     }
   }, [shard]);
 
-  useEffect(() => {
-    getBlocks({ page, size, shard, withProposerIdentity: true }).then(
-      ({ success, data }) => {
-        if (ref.current !== null) {
-          if (success && data) {
-            const { blocks, endBlockNr, startBlockNr } = data;
-            const existingHashes = state
-              ? state.blocks.map((block: BlockType) => block.hash)
-              : [];
-            const newBlocks = blocks.map((block: BlockType) => ({
-              ...block,
-              isNew: !existingHashes.includes(block.hash)
-            }));
-            setState({ blocks: newBlocks, endBlockNr, startBlockNr });
-          }
-          setDataReady(success);
-        }
-      }
-    );
-    getBlocksCount({ page, shard }).then(({ data: count, success }) => {
-      if (ref.current !== null && success) {
-        setTotalBlocks(count);
-      }
-    });
-  }, [activeNetworkId, shard, firstPageRefreshTrigger, searchParams]);
+  if (shard && shard < 0) {
+    return <Navigate to={networkRoute('/not-found')} />;
+  }
 
-  return shard && shard < 0 ? (
-    <Navigate to={networkRoute('/not-found')} />
-  ) : (
-    <>
-      {(dataReady === undefined ||
-        (hasGrowthWidgets && Object.keys(pageHeadersBlocks).length === 0)) && (
-        <Loader />
-      )}
-      {dataReady === false && <FailedBlocks />}
-
-      <div ref={ref}>
-        {dataReady === true && (
-          <div className='container page-content'>
-            <div className='row'>
-              <div className='col-12'>
-                <div className='card'>
-                  {state && state.blocks.length > 0 ? (
-                    <>
-                      <div className='card-header'>
-                        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-                          <h5
-                            className='table-title d-flex align-items-center'
-                            data-testid='title'
-                          >
-                            Blocks
-                            {shard !== undefined && shard >= 0 && (
-                              <span className='ms-1'>
-                                from <ShardSpan shard={shard} />
-                              </span>
-                            )}
-                          </h5>
-                          <Pager
-                            total={totalBlocks}
-                            show={state.blocks.length > 0}
-                            className='d-flex ms-auto me-auto me-sm-0'
-                          />
-                        </div>
-                      </div>
-
-                      <div className='card-body'>
-                        <BlocksTable
-                          blocks={state.blocks}
-                          shard={shard}
-                          showProposerIdentity={true}
-                        />
-                      </div>
-
-                      <div className='card-footer table-footer'>
-                        <PageSize />
-                        <Pager
-                          total={totalBlocks}
-                          show={state.blocks.length > 0}
-                        />
-                      </div>
-                    </>
-                  ) : (
-                    <NoBlocks />
-                  )}
-                </div>
-              </div>
-            </div>
+  return (
+    <div className='container page-content'>
+      <div className='card p-0'>
+        <div className='row'>
+          <div className='col-12'>
+            <BlocksTable
+              blocks={blocks}
+              totalBlocks={totalBlocks}
+              dataChanged={dataChanged}
+              isDataReady={isDataReady}
+              showProposerIdentity={true}
+              shard={shard}
+            />
           </div>
-        )}
+        </div>
       </div>
-    </>
+    </div>
   );
 };

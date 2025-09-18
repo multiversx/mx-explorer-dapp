@@ -22,33 +22,6 @@ export interface RolesType {
   roles: string[];
 }
 
-export interface BlockType {
-  hash: string;
-  nonce: number;
-  shard: number;
-  size: number;
-  sizeTxs: number;
-  timestamp: number;
-  txCount: number;
-  validators: string[];
-  miniBlocksHashes: string[];
-  notarizedBlocksHashes: string[];
-  epoch?: number;
-  prevHash?: string;
-  proposer?: string;
-  pubKeyBitmap?: string;
-  round?: number;
-  stateRootHash?: string;
-  isNew?: boolean; // UI flag
-  gasConsumed: number;
-  gasRefunded: number;
-  gasPenalized: number;
-  maxGasLimit: number;
-  proposerIdentity?: IdentityType;
-}
-
-//----------
-
 export interface SliceType {
   isFetched?: boolean;
 }

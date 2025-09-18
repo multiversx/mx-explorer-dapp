@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage';
 import { accountReducer } from './slices/account';
 import { accountExtraReducer } from './slices/accountExtra';
 import { accountStakingReducer } from './slices/accountStaking';
+import { blocksReducer } from './slices/blocks';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
 import { generalReducer } from './slices/general';
@@ -35,8 +36,7 @@ import { stakeExtraReducer } from './slices/stakeExtra';
 import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
 import { tokenExtraReducer } from './slices/tokenExtra';
-
-import { transactionsReducer } from './slices/updates';
+import { transactionsReducer } from './slices/transactions';
 
 const asyncIgnoredSlices = {};
 
@@ -62,6 +62,7 @@ export const customIgnoredSlices = {
   account: accountReducer,
   accountExtra: accountExtraReducer,
   accountStaking: accountStakingReducer,
+  blocks: blocksReducer,
   collection: collectionReducer,
   economics: economicsReducer,
   general: generalReducer,
@@ -78,6 +79,7 @@ export const customIgnoredSlices = {
   stats: statsReducer,
   token: tokenReducer,
   tokenExtra: tokenExtraReducer,
+  transactions: transactionsReducer,
   markers: markersReducer,
   metaTags: metaTagsReducer,
   miniBlock: miniBlockReducer,
@@ -88,9 +90,7 @@ export const customIgnoredSlices = {
   pageHeadersBlocksStats: pageHeadersBlocksReducer,
   pageHeadersAccountsStats: pageHeadersAccountsReducer,
   pageHeadersCollectionsStats: pageHeadersCollectionsReducer,
-  pageHeadersTokensStats: pageHeadersTokensReducer,
-
-  transactions: transactionsReducer
+  pageHeadersTokensStats: pageHeadersTokensReducer
 };
 
 export const ignoredSliceNames: string[] = [
