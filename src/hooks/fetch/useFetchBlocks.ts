@@ -45,7 +45,7 @@ export const useFetchBlocks = ({
   const [dataChanged, setDataChanged] = useState<boolean>(false);
   let isCalled = false;
 
-  // Default Blocks Updater, subscribe to websocket events on default Tx flow
+  // Default Blocks Updater, subscribe to websocket events on default flow
   const onWebsocketEvent = (event: BlockType[]) => {
     if (Boolean(searchParams.toString())) {
       return;

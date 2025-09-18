@@ -77,28 +77,32 @@ export async function initializeWebsocketConnection() {
       console.info('Updates Websocket connected.');
       updateSocketStatus(WebsocketConnectionStatusEnum.COMPLETED);
 
-      const instance = websocketConnection.instance;
-
-      if (!instance) {
+      if (!websocketConnection.instance) {
         return;
       }
-
-      instance.on(WebsocketEventsEnum.connect_error, (error) => {
-        console.warn('Updates Websocket Connect Error: ', error.message);
-      });
-
-      instance.on(WebsocketEventsEnum.disconnect, (reason) => {
-        console.info('Updates Websocket Disconnected: ', reason);
-        updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
-      });
     });
 
-    if (isWebsocketInactive) {
-      await initializeConnection();
-    }
+    websocketConnection.instance.on(
+      WebsocketEventsEnum.connect_error,
+      (error) => {
+        console.warn('Updates Websocket Connect Error: ', error.message);
+      }
+    );
 
-    return {
-      closeConnection
-    };
+    websocketConnection.instance.on(
+      WebsocketEventsEnum.disconnect,
+      (reason) => {
+        console.info('Updates Websocket Disconnected: ', reason);
+        updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
+      }
+    );
+  };
+
+  if (isWebsocketInactive) {
+    await initializeConnection();
+  }
+
+  return {
+    closeConnection
   };
 }
