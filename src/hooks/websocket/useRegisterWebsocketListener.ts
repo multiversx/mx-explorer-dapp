@@ -26,17 +26,30 @@ export function useRegisterWebsocketListener({
     }
 
     const websocket = websocketConnection.instance;
-    if (!websocket || !websocket?.active) {
+
+    const subscriptionIndex =
+      websocketConnection.subscriptions.indexOf(subscription);
+    const hasSubscription = subscriptionIndex !== -1;
+
+    if (!websocket || !websocket?.active || hasSubscription) {
       return;
     }
 
-    websocket.emit(subscription, websocketConfig, (response: any) => {
-      console.log(
-        `Emit subscription ${subscription} with options`,
-        websocketConfig,
-        response
-      );
-    });
+    if (!hasSubscription) {
+      websocketConnection.subscriptions.push(subscription);
+
+      websocket.emit(subscription, websocketConfig, (response: any) => {
+        console.log(
+          `Emit subscription ${subscription} with options`,
+          websocketConfig,
+          response
+        );
+
+        if (response?.status !== 'success') {
+          websocketConnection.subscriptions.splice(subscriptionIndex, 1);
+        }
+      });
+    }
 
     websocket.on(event, (response: any) => {
       console.log(`Client ${event}:`, response);
