@@ -5,6 +5,7 @@ export * from './layout';
 export * from './pageStats';
 export * from './urlFilters';
 export * from './useActiveRoute';
+export * from './websocket';
 
 export * from './useCustomNetwork';
 export * from './useDebounce';

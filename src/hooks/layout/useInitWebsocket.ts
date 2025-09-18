@@ -1,8 +1,15 @@
 import { useEffect } from 'react';
-import { registerWebsocketListener } from 'helpers/websocket/registerWebsocket';
+import { initializeWebsocketConnection } from 'helpers/websocket/initializeWebsocketConnection';
+import { useHasWebsocketUrl } from 'hooks/websocket';
 
 export const useInitWebsocket = () => {
+  const hasWebsocketUrl = useHasWebsocketUrl();
+
   useEffect(() => {
-    registerWebsocketListener();
-  }, []);
+    if (!hasWebsocketUrl) {
+      return;
+    }
+
+    initializeWebsocketConnection();
+  }, [hasWebsocketUrl]);
 };

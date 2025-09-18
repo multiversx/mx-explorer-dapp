@@ -6,7 +6,7 @@ export * from './isHash';
 export * from './isMetachain';
 export * from './isProof';
 export * from './isTouchDevice';
-export * from './isUpdatesWebsocketConnected';
+export * from './isUpdatesWebsocketInactive';
 export * from './isUtf8';
 export * from './isValidAccountTokenValue';
 export * from './isValidTokenPrice';

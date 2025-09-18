@@ -3,7 +3,7 @@ import {
   WebsocketConnectionStatusEnum
 } from 'appConstants';
 
-export const isUpdatesWebsocketConnected = () => {
+export const isUpdatesWebsocketInactive = () => {
   return (
     websocketConnection.status ===
       WebsocketConnectionStatusEnum.NOT_INITIALIZED &&
