@@ -34,7 +34,7 @@ export const LatestTransactions = () => {
 
   const { fetchTransactions, transactions, isDataReady } = useFetchTransactions(
     {
-      transactionPromise: getTransactions,
+      dataPromise: getTransactions,
       filters: { ...(isSovereign ? { withCrossChainTransfers: true } : {}) },
       subscription: WebsocketSubcriptionsEnum.subscribeTransactions,
       event: WebsocketEventsEnum.transactionUpdate

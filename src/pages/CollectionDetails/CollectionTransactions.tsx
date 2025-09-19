@@ -22,8 +22,8 @@ export const CollectionTransactions = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions({
-    transactionPromise: getCollectionTransfers,
-    transactionCountPromise: getCollectionTransfersCount,
+    dataPromise: getCollectionTransfers,
+    dataCountPromise: getCollectionTransfersCount,
     filters: {
       identifier
     }

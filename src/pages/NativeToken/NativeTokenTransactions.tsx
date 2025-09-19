@@ -22,8 +22,8 @@ export const NativeTokenTransactions = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions({
-    transactionPromise: getTransfers,
-    transactionCountPromise: getTransfersCount,
+    dataPromise: getTransfers,
+    dataCountPromise: getTransfersCount,
     filters: {
       token: isEgldToken(egldLabel) ? NATIVE_TOKEN_SEARCH_LABEL : egldLabel
     }

@@ -12,8 +12,6 @@ export const useGetTransactionInPoolFilters = () => {
   const [searchParams] = useSearchParams();
   const getParam = getUrlParam(searchParams);
 
-  const type = searchParams.get('type') ? String(searchParams.get('type')) : '';
-
   const senderShard =
     getParam(TransactionFiltersEnum.senderShard, true) ??
     getParam('sendershard', true);
@@ -22,11 +20,18 @@ export const useGetTransactionInPoolFilters = () => {
     getParam(TransactionFiltersEnum.receiverShard, true) ??
     getParam('receivershard', true);
 
+  const type = checkType(
+    searchParams.get('type') ? String(searchParams.get('type')) : ''
+  );
+
+  const sender = getParam(TransactionFiltersEnum.sender);
+  const receiver = getParam(TransactionFiltersEnum.receiver);
+
   return {
-    senderShard,
-    receiverShard,
-    type: checkType(type),
-    sender: getParam(TransactionFiltersEnum.sender),
-    receiver: getParam(TransactionFiltersEnum.receiver)
+    ...(senderShard !== undefined ? { senderShard } : {}),
+    ...(receiverShard !== undefined ? { receiverShard } : {}),
+    ...(type ? { type } : {}),
+    ...(sender ? { sender } : {}),
+    ...(receiver ? { receiver } : {})
   };
 };

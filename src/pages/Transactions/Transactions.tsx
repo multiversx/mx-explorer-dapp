@@ -35,11 +35,12 @@ export const Transactions = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions({
-    transactionPromise: getTransactions,
-    transactionCountPromise: getTransactionsCount,
+    dataPromise: getTransactions,
+    dataCountPromise: getTransactionsCount,
     filters: { ...(isSovereign ? { withCrossChainTransfers: true } : {}) },
     subscription: WebsocketSubcriptionsEnum.subscribeTransactions,
-    event: WebsocketEventsEnum.transactionUpdate
+    event: WebsocketEventsEnum.transactionUpdate,
+    hasMaxTransactionsSize: true
   });
 
   useEffect(() => {

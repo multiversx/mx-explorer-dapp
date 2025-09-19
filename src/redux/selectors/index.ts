@@ -28,3 +28,4 @@ export * from './stats';
 export * from './token';
 export * from './tokenExtra';
 export * from './transactions';
+export * from './transactionsInPool';

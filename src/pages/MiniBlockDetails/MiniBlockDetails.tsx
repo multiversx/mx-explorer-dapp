@@ -20,8 +20,8 @@ export const MiniBlockDetails = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions({
-    transactionPromise: getTransfers,
-    transactionCountPromise: getTransfersCount,
+    dataPromise: getTransfers,
+    dataCountPromise: getTransfersCount,
     filters: {
       miniBlockHash
     }

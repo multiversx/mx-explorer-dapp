@@ -11,3 +11,4 @@ export * from './useFetchNodesVersions';
 export * from './useFetchShards';
 export * from './useFetchStats';
 export * from './useFetchTransactions';
+export * from './useFetchTransactionsInPool';

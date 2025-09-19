@@ -22,8 +22,8 @@ export const AccountTransactions = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions({
-    transactionPromise: getAccountTransfers,
-    transactionCountPromise: getAccountTransfersCount,
+    dataPromise: getAccountTransfers,
+    dataCountPromise: getAccountTransfersCount,
     filters: {
       address,
       withTxsRelayedByAddress: true

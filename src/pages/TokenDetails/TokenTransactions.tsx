@@ -24,8 +24,8 @@ export const TokenTransactions = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions({
-    transactionPromise: getTokenTransfers,
-    transactionCountPromise: getTokenTransfersCount,
+    dataPromise: getTokenTransfers,
+    dataCountPromise: getTokenTransfersCount,
     filters: {
       tokenId
     }

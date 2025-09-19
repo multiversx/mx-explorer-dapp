@@ -5,12 +5,17 @@ import { useSearchParams } from 'react-router-dom';
 import { TransactionsInPoolTable } from 'components/TransactionsInPoolTable';
 import {
   useAdapter,
-  useFetchTransactions,
+  useFetchTransactionsInPool,
   useGetPage,
   useGetTransactionInPoolFilters
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { TransactionInPoolTypeEnum, UITransactionInPoolType } from 'types';
+import {
+  TransactionInPoolTypeEnum,
+  UITransactionInPoolType,
+  WebsocketEventsEnum,
+  WebsocketSubcriptionsEnum
+} from 'types';
 
 export const TransactionsInPool = () => {
   const [searchParams] = useSearchParams();
@@ -22,27 +27,23 @@ export const TransactionsInPool = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const {
-    fetchTransactions,
-    transactions: transactionsInPool,
-    totalTransactions: totalTransactionsInPool,
+    fetchTransactionsInPool,
+    transactionsInPool,
+    totalTransactionsInPool,
     isDataReady,
     dataChanged
-  } = useFetchTransactions({
-    transactionPromise: getTransactionsInPool,
-    transactionCountPromise: getTransactionsInPoolCount,
-    filters: {
-      ...rest,
-      type
-    }
+  } = useFetchTransactionsInPool({
+    dataPromise: getTransactionsInPool,
+    dataCountPromise: getTransactionsInPoolCount,
+    filters: { ...rest, type },
+    config: { type },
+    subscription: WebsocketSubcriptionsEnum.subscribePool,
+    event: WebsocketEventsEnum.transactionUpdate
   });
 
   useEffect(() => {
-    fetchTransactions();
-  }, [activeNetworkId, firstPageRefreshTrigger]);
-
-  useEffect(() => {
-    fetchTransactions(Boolean(searchParams.toString()));
-  }, [searchParams]);
+    fetchTransactionsInPool(Boolean(searchParams.toString()));
+  }, [searchParams, activeNetworkId, firstPageRefreshTrigger]);
 
   return (
     <div className='container page-content'>

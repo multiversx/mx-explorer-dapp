@@ -27,8 +27,8 @@ export const ProviderTransactions = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions({
-    transactionPromise: getAccountTransfers,
-    transactionCountPromise: getAccountTransfersCount,
+    dataPromise: getAccountTransfers,
+    dataCountPromise: getAccountTransfersCount,
     filters: {
       address
     }

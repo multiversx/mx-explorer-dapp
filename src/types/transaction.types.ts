@@ -268,8 +268,11 @@ export interface UITransactionInPoolType extends TransactionInPoolType {
 export interface TransactionSliceType extends SliceType {
   transactions: UITransactionType[];
   transactionsCount: number | typeof ELLIPSIS;
-  isWebsocket: boolean;
-  isDataReady: boolean | undefined;
+}
+
+export interface TransactionInPoolSliceType extends SliceType {
+  transactionsInPool: UITransactionInPoolType[];
+  transactionsInPoolCount: number | typeof ELLIPSIS;
 }
 
 export interface TransactionTableType {

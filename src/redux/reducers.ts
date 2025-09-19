@@ -37,6 +37,7 @@ import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
 import { tokenExtraReducer } from './slices/tokenExtra';
 import { transactionsReducer } from './slices/transactions';
+import { transactionsInPoolReducer } from './slices/transactionsInPool';
 
 const asyncIgnoredSlices = {};
 
@@ -80,6 +81,7 @@ export const customIgnoredSlices = {
   token: tokenReducer,
   tokenExtra: tokenExtraReducer,
   transactions: transactionsReducer,
+  transactionsInPool: transactionsInPoolReducer,
   markers: markersReducer,
   metaTags: metaTagsReducer,
   miniBlock: miniBlockReducer,

@@ -22,8 +22,8 @@ export const NftTransactions = () => {
     isDataReady,
     dataChanged
   } = useFetchTransactions({
-    transactionPromise: getNftTransfers,
-    transactionCountPromise: getNftTransfersCount,
+    dataPromise: getNftTransfers,
+    dataCountPromise: getNftTransfersCount,
     filters: {
       identifier
     }
