@@ -23,7 +23,7 @@ export const ChartPrice = () => {
     price7d,
     price30d,
     priceAll,
-    isFetched
+    isDataReady
   } = useSelector(growthPriceSelector);
 
   const filters: SelectOptionType[] = [
@@ -72,18 +72,18 @@ export const ChartPrice = () => {
 
   const handleChange = useCallback(
     (option: SingleValue<SelectOptionType>) => {
-      if (option && option.value && isFetched) {
+      if (option && option.value && isDataReady) {
         setData(dataMap.get(String(option.value)));
       }
     },
-    [isFetched]
+    [isDataReady]
   );
 
   const onInitialLoad = useCallback(() => {
-    if (isFetched) {
+    if (isDataReady) {
       setData(dataMap.get(initialFilter));
     }
-  }, [isFetched]);
+  }, [isDataReady]);
 
   useFetchGrowthPrice();
   useEffect(onInitialLoad, [onInitialLoad]);

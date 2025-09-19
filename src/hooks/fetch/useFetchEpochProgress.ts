@@ -36,7 +36,7 @@ export const useFetchEpochProgress = () => {
   const { fetchStats } = useFetchStats();
 
   const { timestamp } = useSelector(refreshSelector);
-  const { isFetched, unprocessed, stats } = useSelector(statsSelector);
+  const { isDataReady, unprocessed, stats } = useSelector(statsSelector);
   const { epochPercentage, epochTimeRemaining } = stats;
   const { epoch, refreshRate, roundsPerEpoch, roundsPassed } = unprocessed;
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
@@ -135,7 +135,7 @@ export const useFetchEpochProgress = () => {
     : roundsPerEpoch - roundsPassed + 1; // add one in order to take into account the css animation and the api call sync on the first run
 
   return {
-    isReady: isFetched,
+    isReady: isDataReady,
     roundProgress,
     roundTimeProgress,
     roundsPerEpoch,

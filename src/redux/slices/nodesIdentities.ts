@@ -6,7 +6,7 @@ export const getInitialNodesIdentitiesState = (): NodesIdentitiesSliceType => {
     unprocessed: [],
 
     nodesIdentities: [],
-    isFetched: undefined
+    isDataReady: undefined
   };
 };
 
@@ -21,7 +21,7 @@ export const nodesIdentitiesSlice = createSlice({
       state.nodesIdentities = action.payload.nodesIdentities;
 
       state.unprocessed = action.payload.unprocessed;
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

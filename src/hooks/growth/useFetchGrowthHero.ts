@@ -12,7 +12,7 @@ export const useFetchGrowthHero = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
   const { getGrowthWidget } = useAdapter();
-  const { isFetched } = useSelector(growthHeroSelector);
+  const { isDataReady } = useSelector(growthHeroSelector);
 
   const getGrowthHeroOnce = () => {
     if (currentRequest) {
@@ -44,7 +44,7 @@ export const useFetchGrowthHero = () => {
           ...processedGrowthHero,
 
           unprocessed: data,
-          isFetched: success
+          isDataReady: success
         })
       );
     }
@@ -53,7 +53,7 @@ export const useFetchGrowthHero = () => {
   };
 
   useEffect(() => {
-    if (!isFetched && hasGrowthWidgets) {
+    if (!isDataReady && hasGrowthWidgets) {
       fetchGrowthHero();
     }
   }, [hasGrowthWidgets]);

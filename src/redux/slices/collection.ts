@@ -20,7 +20,7 @@ export const getInitialCollectionState = (): CollectionSliceType => {
       canTransfer: false,
       owner: ''
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -32,7 +32,7 @@ export const collectionSlice = createSlice({
       state: CollectionSliceType,
       action: PayloadAction<CollectionSliceType>
     ) => {
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
       state.collectionState = {
         ...getInitialCollectionState().collectionState,
         ...action.payload.collectionState

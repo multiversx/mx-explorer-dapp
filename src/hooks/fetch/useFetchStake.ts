@@ -58,7 +58,7 @@ export const useFetchStake = () => {
           ...processedStake,
 
           unprocessed: processedData,
-          isFetched: true
+          isDataReady: true
         })
       );
     }

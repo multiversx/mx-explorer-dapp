@@ -40,7 +40,7 @@ export const useFetchEconomics = () => {
           ...processedEconomics,
 
           unprocessed: data,
-          isFetched: true
+          isDataReady: true
         })
       );
     }

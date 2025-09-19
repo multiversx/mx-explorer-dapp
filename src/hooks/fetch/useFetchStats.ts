@@ -43,7 +43,7 @@ export const useFetchStats = () => {
 
   // Default Stats Updater, subscribe to websocket events on default flow
   const onWebsocketEvent = (event: StatsType) => {
-    dispatch(setStats({ stats: event, isWebsocket: true, isFetched: true }));
+    dispatch(setStats({ stats: event, isWebsocket: true, isDataReady: true }));
   };
 
   useRegisterWebsocketListener({
@@ -59,7 +59,7 @@ export const useFetchStats = () => {
         setStats({
           stats: data,
           isWebsocket: false,
-          isFetched: true
+          isDataReady: true
         })
       );
     }

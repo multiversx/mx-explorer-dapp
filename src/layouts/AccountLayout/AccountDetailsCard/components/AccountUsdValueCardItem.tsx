@@ -20,9 +20,9 @@ export const AccountUsdValueCardItem = ({
   cardItemClass?: string;
 }) => {
   const { account } = useSelector(accountSelector);
-  const { isFetched: isEconomicsFetched, unprocessed } =
+  const { isDataReady: isEconomicsFetched, unprocessed } =
     useSelector(economicsSelector);
-  const { accountExtra, isFetched: isAccountExtraFetched } =
+  const { accountExtra, isDataReady: isAccountExtraFetched } =
     useSelector(accountExtraSelector);
   const {
     accountStakingFetched,

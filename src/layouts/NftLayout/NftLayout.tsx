@@ -38,7 +38,7 @@ export const NftLayout = () => {
     if (identifier) {
       getNft(identifier).then(({ success, data }) => {
         if (success && data) {
-          dispatch(setNft({ isFetched: true, nftState: data }));
+          dispatch(setNft({ isDataReady: true, nftState: data }));
         }
 
         setIsDataReady(success);

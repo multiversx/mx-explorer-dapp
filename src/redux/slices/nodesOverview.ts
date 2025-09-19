@@ -10,7 +10,7 @@ export const getInitialNodesOverviewState = (): NodesOverviewSliceType => {
   return {
     nodes: [],
     nodeDetails: {},
-    isFetched: undefined
+    isDataReady: undefined
   };
 };
 
@@ -23,7 +23,7 @@ export const nodesOverviewSlice = createSlice({
       action: PayloadAction<NodesOverviewSliceType>
     ) => {
       state.nodes = processNodesOverview(action.payload.nodes);
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     },
     addNodeDetails: (
       state: NodesOverviewSliceType,

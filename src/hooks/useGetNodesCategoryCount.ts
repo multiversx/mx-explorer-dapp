@@ -18,7 +18,7 @@ export const useGetNodesCategoryCount = ({
   const {
     unprocessed: { totalNodes, totalValidatorNodes }
   } = useSelector(stakeExtraSelector);
-  const { nodes, isFetched: isNodesOverviewFetched } = useSelector(
+  const { nodes, isDataReady: isNodesOverviewFetched } = useSelector(
     nodesOverviewSelector
   );
 

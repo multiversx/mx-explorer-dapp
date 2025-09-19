@@ -8,7 +8,7 @@ export const getInitialAccountExtraState = (): AccountExtraSliceType => {
       firstTransactionDate: undefined,
       tokenBalance: undefined
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -26,7 +26,7 @@ export const accountExtraSlice = createSlice({
       state.accountExtra.tokenBalance =
         action.payload.accountExtra.tokenBalance;
 
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

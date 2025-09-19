@@ -11,7 +11,7 @@ interface StatsActionType extends SliceType {
 
 export const getInitialStatsState = (): StatsSliceType => {
   return {
-    isFetched: false,
+    isDataReady: false,
     unprocessed: {
       shards: 0,
       blocks: 0,
@@ -65,7 +65,7 @@ export const statsSlice = createSlice({
 
       const processedStats = processStats(action.payload.stats);
 
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
       state.isWebsocket = action.payload.isWebsocket;
 
       state.unprocessed = {

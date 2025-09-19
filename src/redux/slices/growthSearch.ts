@@ -14,7 +14,7 @@ export const getInitialGrowthSearchState = (): GrowthSearchSliceType => {
       priceChange24h: 0,
       activeAccountsToday: 0
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -32,7 +32,7 @@ export const growthSearchSlice = createSlice({
       state.priceChangeTrend = action.payload.priceChangeTrend;
 
       state.unprocessed = action.payload.unprocessed;
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

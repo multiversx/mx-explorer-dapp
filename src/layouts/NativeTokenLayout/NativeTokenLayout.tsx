@@ -13,10 +13,10 @@ import { NativeTokenDetailsCard } from './NativeTokenDetailsCard';
 export const NativeTokenLayout = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const { egldLabel } = useSelector(activeNetworkSelector);
-  const { isFetched } = useSelector(economicsSelector);
+  const { isDataReady } = useSelector(economicsSelector);
 
-  const loading = isFetched === undefined;
-  const failed = isFetched === false;
+  const loading = isDataReady === undefined;
+  const failed = isDataReady === false;
 
   useEffect(() => {
     setTimeout(() => {

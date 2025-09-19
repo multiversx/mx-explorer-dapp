@@ -21,7 +21,7 @@ export const getInitialGrowthTransactionsState =
         scResults: 0,
         transactions: 0
       },
-      isFetched: false
+      isDataReady: false
     };
   };
 
@@ -45,7 +45,7 @@ export const growthTransactionsSlice = createSlice({
       state.transactionsAll = action.payload.transactionsAll;
 
       state.unprocessed = action.payload.unprocessed;
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

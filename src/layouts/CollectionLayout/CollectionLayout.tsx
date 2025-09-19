@@ -24,7 +24,7 @@ export const CollectionLayout = () => {
     if (collection) {
       getCollection(collection).then(({ success, data }) => {
         if (success && data) {
-          dispatch(setCollection({ isFetched: true, collectionState: data }));
+          dispatch(setCollection({ isDataReady: true, collectionState: data }));
         }
 
         setIsDataReady(success);

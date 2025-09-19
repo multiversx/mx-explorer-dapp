@@ -9,7 +9,7 @@ export const getInitialTokenExtraState = (): TokenExtraSliceType => {
       identifier: '',
       priceHistory: []
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -25,7 +25,7 @@ export const tokenExtraSlice = createSlice({
       state.tokenExtra.range = action.payload.tokenExtra.range;
       state.tokenExtra.priceHistory = action.payload.tokenExtra.priceHistory;
 
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

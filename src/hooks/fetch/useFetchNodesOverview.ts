@@ -41,7 +41,7 @@ export const useFetchNodesOverview = (config: GetNodesType) => {
       dispatch(
         setNodesOverview({
           nodes: processedNodesOverview,
-          isFetched: success
+          isDataReady: success
         })
       );
     }

@@ -9,11 +9,11 @@ import { setGrowthStaking } from 'redux/slices/growthStaking';
 export const useFetchGrowthStaking = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
-  const { isFetched } = useSelector(growthStakingSelector);
+  const { isDataReady } = useSelector(growthStakingSelector);
   const { getGrowthWidget } = useAdapter();
 
   const fetchGrowthStaking = () => {
-    if (!isFetched) {
+    if (!isDataReady) {
       getGrowthWidget('/staking').then(({ data, success }) => {
         if (data && success) {
           const processedGrowthStaking = processGrowthStaking(data);
@@ -29,7 +29,7 @@ export const useFetchGrowthStaking = () => {
               totalStakedAll: data.totalStakedAll,
 
               unprocessed: rest,
-              isFetched: success
+              isDataReady: success
             })
           );
         }

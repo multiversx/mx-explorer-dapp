@@ -15,7 +15,7 @@ export const getInitialGrowthHeroState = (): GrowthHeroSliceType => {
       totalAccounts: 0,
       activeAccountsToday: 0
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -33,7 +33,7 @@ export const growthHeroSlice = createSlice({
       state.activeAccountsToday = action.payload.activeAccountsToday;
 
       state.unprocessed = action.payload.unprocessed;
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

@@ -9,11 +9,11 @@ import { setGrowthSearch } from 'redux/slices/growthSearch';
 export const useFetchGrowthSearch = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
-  const { isFetched } = useSelector(growthSearchSelector);
+  const { isDataReady } = useSelector(growthSearchSelector);
   const { getGrowthWidget } = useAdapter();
 
   const fetchGrowthSearch = () => {
-    if (!isFetched) {
+    if (!isDataReady) {
       getGrowthWidget('/search').then(({ data, success }) => {
         if (data && success) {
           const processedGrowthSearch = processGrowthSearch(data);
@@ -22,7 +22,7 @@ export const useFetchGrowthSearch = () => {
               ...processedGrowthSearch,
 
               unprocessed: data,
-              isFetched: success
+              isDataReady: success
             })
           );
         }

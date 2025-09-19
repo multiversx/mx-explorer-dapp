@@ -9,11 +9,11 @@ import { setGrowthTransactions } from 'redux/slices/growthTransactions';
 export const useFetchGrowthTransactions = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
-  const { isFetched } = useSelector(growthTransactionsSelector);
+  const { isDataReady } = useSelector(growthTransactionsSelector);
   const { getGrowthWidget } = useAdapter();
 
   const fetchGrowthTransactions = () => {
-    if (!isFetched) {
+    if (!isDataReady) {
       getGrowthWidget('/transactions').then(({ data, success }) => {
         if (data && success) {
           const processedGrowthTransactions = processGrowthTransactions(data);
@@ -39,7 +39,7 @@ export const useFetchGrowthTransactions = () => {
               transactionsAll: data.transactionsAll,
 
               unprocessed: rest,
-              isFetched: success
+              isDataReady: success
             })
           );
         }

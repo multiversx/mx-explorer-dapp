@@ -17,7 +17,7 @@ import { IdentityType, NodeTypeEnum, ProviderType } from 'types';
 import { ProviderDetailsCard } from './ProviderDetailsCard';
 
 export const ProviderLayout = () => {
-  const { isFetched: isNodesOverviewFetched } = useSelector(
+  const { isDataReady: isNodesOverviewFetched } = useSelector(
     nodesOverviewSelector
   );
   const { hash: address } = useParams();

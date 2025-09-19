@@ -1,4 +1,4 @@
-import { AccountAssetType, IdentityType } from 'types';
+import { AccountAssetType } from 'types';
 
 export enum NetworkIdEnum {
   mainnet = 'mainnet',
@@ -23,7 +23,8 @@ export interface RolesType {
 }
 
 export interface SliceType {
-  isFetched?: boolean;
+  isWebsocket?: boolean;
+  isDataReady?: boolean | undefined;
 }
 
 export enum TrendEnum {

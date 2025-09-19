@@ -26,7 +26,7 @@ export const ChartStake = ({ className }: WithClassnameType) => {
     totalStaked7d,
     totalStaked30d,
     totalStakedAll,
-    isFetched
+    isDataReady
   } = useSelector(growthStakingSelector);
   const { egldLabel } = useSelector(activeNetworkSelector);
 
@@ -84,18 +84,18 @@ export const ChartStake = ({ className }: WithClassnameType) => {
 
   const handleChange = useCallback(
     (option: SingleValue<SelectOptionType>) => {
-      if (option && option.value && isFetched) {
+      if (option && option.value && isDataReady) {
         setData(dataMap.get(String(option.value)));
       }
     },
-    [isFetched]
+    [isDataReady]
   );
 
   const onInitialLoad = useCallback(() => {
-    if (isFetched) {
+    if (isDataReady) {
       setData(dataMap.get(initialFilter));
     }
-  }, [isFetched]);
+  }, [isDataReady]);
 
   useFetchGrowthStaking();
   useEffect(onInitialLoad, [onInitialLoad]);

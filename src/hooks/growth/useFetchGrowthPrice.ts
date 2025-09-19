@@ -9,11 +9,11 @@ import { setGrowthPrice } from 'redux/slices/growthPrice';
 export const useFetchGrowthPrice = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
-  const { isFetched } = useSelector(growthPriceSelector);
+  const { isDataReady } = useSelector(growthPriceSelector);
   const { getGrowthWidget } = useAdapter();
 
   const fetchGrowthPrice = () => {
-    if (!isFetched) {
+    if (!isDataReady) {
       getGrowthWidget('/price').then(({ data, success }) => {
         if (data && success) {
           const processedGrowthPrice = processGrowthPrice(data);
@@ -27,7 +27,7 @@ export const useFetchGrowthPrice = () => {
               priceAll: data.priceAll,
 
               unprocessed: rest,
-              isFetched: success
+              isDataReady: success
             })
           );
         }

@@ -16,7 +16,7 @@ export const getInitialTokenState = (): TokenSliceType => {
       accounts: 0,
       transactions: 0
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -28,7 +28,7 @@ export const tokenSlice = createSlice({
       state: TokenSliceType,
       action: PayloadAction<TokenSliceType>
     ) => {
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
       state.token = {
         ...getInitialTokenState().token,
         ...action.payload.token

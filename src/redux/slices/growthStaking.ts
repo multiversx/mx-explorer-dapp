@@ -21,7 +21,7 @@ export const getInitialGrowthStakingState = (): GrowthStakingSliceType => {
       usersStaking: 0,
       averageAPR: 0
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -43,7 +43,7 @@ export const growthStakingSlice = createSlice({
       state.totalStakedAll = action.payload.totalStakedAll;
 
       state.unprocessed = action.payload.unprocessed;
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

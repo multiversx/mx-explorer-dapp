@@ -7,7 +7,7 @@ export const getInitialGrowthMostUsedState = (): GrowthMostUsedSliceType => {
     dailyMostTransactedNFTs: [],
     dailyMostTransactedTokens: [],
 
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -25,7 +25,7 @@ export const growthMostUsedSlice = createSlice({
       state.dailyMostTransactedTokens =
         action.payload.dailyMostTransactedTokens;
 
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

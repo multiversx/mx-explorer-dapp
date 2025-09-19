@@ -13,7 +13,7 @@ export const getInitialGrowthEconomicsState = (): GrowthEconomicsSliceType => {
       feesCaptured: 0,
       applicationsDeployed: 0
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -30,7 +30,7 @@ export const growthEconomicsSlice = createSlice({
       state.applicationsDeployed = action.payload.applicationsDeployed;
 
       state.unprocessed = action.payload.unprocessed;
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

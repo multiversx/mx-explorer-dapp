@@ -27,7 +27,7 @@ export const NativeTokenDetailsCard = () => {
     circulatingSupply
   } = useGetNativeTokenDetails();
 
-  const { unprocessed: unprocessedGrowth, isFetched: isGrowthFetched } =
+  const { unprocessed: unprocessedGrowth, isDataReady: isGrowthFetched } =
     useSelector(growthPriceSelector);
 
   const title = assets?.name ?? name;

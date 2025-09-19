@@ -24,10 +24,11 @@ export const Identities = () => {
   const dispatch = useDispatch();
   const { sort, order } = useGetSort();
   const { egldLabel } = useSelector(activeNetworkSelector);
-  const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
+  const { isDataReady: isStakeFetched, unprocessed } =
+    useSelector(stakeSelector);
   const { isNodesIdentityCountFetched, unprocessed: stakeExtraUnprocessed } =
     useSelector(stakeExtraSelector);
-  const { nodesIdentities, isFetched } = useSelector(nodesIdentitiesSelector);
+  const { nodesIdentities, isDataReady } = useSelector(nodesIdentitiesSelector);
 
   useFetchNodesIdentities({
     sort: SortIdentitesFieldEnum.validators,
@@ -45,7 +46,7 @@ export const Identities = () => {
     isStakeFetched && resiliencyCoefficient && isValidatorsSorting;
 
   useEffect(() => {
-    if (isFetched && nodesIdentities.length > 0) {
+    if (isDataReady && nodesIdentities.length > 0) {
       // avoid an extra call on identity details page, save existing data in state
       if (!isNodesIdentityCountFetched) {
         const totalValidators = nodesIdentities
@@ -64,10 +65,10 @@ export const Identities = () => {
         );
       }
     }
-  }, [sort, order, nodesIdentities, isFetched]);
+  }, [sort, order, nodesIdentities, isDataReady]);
 
   const displayNodesIdentities = useMemo(() => {
-    if (!isFetched || !nodesIdentities) {
+    if (!isDataReady || !nodesIdentities) {
       return [];
     }
 
@@ -81,7 +82,7 @@ export const Identities = () => {
     const processedCumulativeStake = processNodesIdentities(sortedIdentities);
 
     return processedCumulativeStake;
-  }, [sort, order, nodesIdentities, isFetched]);
+  }, [sort, order, nodesIdentities, isDataReady]);
 
   return (
     <div className='card identities'>
@@ -89,11 +90,11 @@ export const Identities = () => {
         <NodesTabs />
       </div>
 
-      {isFetched === undefined && <Loader />}
-      {isFetched === false && (
+      {isDataReady === undefined && <Loader />}
+      {isDataReady === false && (
         <PageState icon={faCogs} title='Unable to load validators' isError />
       )}
-      {isFetched === true && (
+      {isDataReady === true && (
         <div className='card-body'>
           <div className='table-wrapper animated-list'>
             <table className='table mb-0'>

@@ -11,7 +11,7 @@ export const getInitialAccountState = (): AccountSliceType => {
       scrCount: 0,
       claimableRewards: ''
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -23,7 +23,7 @@ export const accountSlice = createSlice({
       state: AccountSliceType,
       action: PayloadAction<AccountSliceType>
     ) => {
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
       state.account = {
         ...getInitialAccountState().account,
         ...action.payload.account

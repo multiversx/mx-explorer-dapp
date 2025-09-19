@@ -12,7 +12,7 @@ export const useFetchGrowthEconomics = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
   const { getGrowthWidget } = useAdapter();
-  const { isFetched } = useSelector(growthEconomicsSelector);
+  const { isDataReady } = useSelector(growthEconomicsSelector);
 
   const getGrowthEconomicsOnce = () => {
     if (currentRequest) {
@@ -44,7 +44,7 @@ export const useFetchGrowthEconomics = () => {
           ...processedGrowthEconomics,
 
           unprocessed: data,
-          isFetched: success
+          isDataReady: success
         })
       );
     }
@@ -53,7 +53,7 @@ export const useFetchGrowthEconomics = () => {
   };
 
   useEffect(() => {
-    if (!isFetched && hasGrowthWidgets) {
+    if (!isDataReady && hasGrowthWidgets) {
       fetchGrowthEconomics();
     }
   }, []);

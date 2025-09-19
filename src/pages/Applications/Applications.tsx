@@ -49,7 +49,7 @@ export const Applications = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { isFetched: isGrowthDataFetched } = useSelector(
+  const { isDataReady: isGrowthDataFetched } = useSelector(
     growthMostUsedSelector
   );
   const { applicationsDeployed } = useSelector(growthEconomicsSelector);

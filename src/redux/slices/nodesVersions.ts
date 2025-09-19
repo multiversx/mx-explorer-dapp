@@ -6,7 +6,7 @@ export const getInitialNodesVersionsState = (): NodesVersionsSliceType => {
     unprocessed: {},
 
     nodesVersions: [],
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -21,7 +21,7 @@ export const nodesVersionsSlice = createSlice({
       state.nodesVersions = action.payload.nodesVersions;
 
       state.unprocessed = action.payload.unprocessed;
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

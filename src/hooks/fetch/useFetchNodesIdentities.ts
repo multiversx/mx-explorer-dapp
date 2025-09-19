@@ -47,7 +47,7 @@ export const useFetchNodesIdentities = (sortParams?: SortableApiType) => {
         setNodesIdentities({
           nodesIdentities: processedNodesIdentities,
           unprocessed: data,
-          isFetched: success
+          isDataReady: success
         })
       );
     }

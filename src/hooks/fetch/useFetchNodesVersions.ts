@@ -11,7 +11,7 @@ let currentRequest: any = null;
 export const useFetchNodesVersions = () => {
   const dispatch = useDispatch();
   const { getNodesVersions } = useAdapter();
-  const { isFetched } = useSelector(nodesVersionsSelector);
+  const { isDataReady } = useSelector(nodesVersionsSelector);
 
   const getNodesVersionsOnce = () => {
     if (currentRequest) {
@@ -44,7 +44,7 @@ export const useFetchNodesVersions = () => {
           ...processedNodesVersions,
 
           unprocessed: data,
-          isFetched: success
+          isDataReady: success
         })
       );
     }
@@ -53,7 +53,7 @@ export const useFetchNodesVersions = () => {
   };
 
   useEffect(() => {
-    if (!isFetched) {
+    if (!isDataReady) {
       fetchNodesVersions();
     }
   }, []);

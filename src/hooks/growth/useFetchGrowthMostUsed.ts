@@ -8,18 +8,18 @@ import { setGrowthMostUsed } from 'redux/slices/growthMostUsed';
 export const useFetchGrowthMostUsed = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
-  const { isFetched } = useSelector(growthMostUsedSelector);
+  const { isDataReady } = useSelector(growthMostUsedSelector);
   const { getGrowthWidget } = useAdapter();
 
   const fetchGrowthMostUsed = () => {
-    if (!isFetched) {
+    if (!isDataReady) {
       getGrowthWidget('/verified-most-used').then((growthMostUsed) => {
         if (growthMostUsed?.data && growthMostUsed.success) {
           dispatch(
             setGrowthMostUsed({
               ...growthMostUsed.data,
 
-              isFetched: growthMostUsed.success
+              isDataReady: growthMostUsed.success
             })
           );
         }

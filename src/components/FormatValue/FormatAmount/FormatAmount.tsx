@@ -38,7 +38,7 @@ export interface FormatAmountUIType extends WithClassnameType {
 
 export const FormatAmount = (props: FormatAmountUIType) => {
   const { egldLabel: networkEgldLabel } = useSelector(activeNetworkSelector);
-  const { isFetched, unprocessed } = useSelector(economicsSelector);
+  const { isDataReady, unprocessed } = useSelector(economicsSelector);
   const {
     egldLabel,
     value,
@@ -94,7 +94,7 @@ export const FormatAmount = (props: FormatAmountUIType) => {
     showUsdValue &&
     !isZero &&
     (showSymbol || showLabel) &&
-    ((isFetched && unprocessed.price) || (usd && !token));
+    ((isDataReady && unprocessed.price) || (usd && !token));
 
   return (
     <FormatDisplayValue

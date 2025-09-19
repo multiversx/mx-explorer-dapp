@@ -7,7 +7,7 @@ import { statsSelector } from 'redux/selectors';
 
 export const useGetEpochRemainingTime = () => {
   const {
-    isFetched: isStatsFetched,
+    isDataReady: isStatsFetched,
     unprocessed: { epochTimeRemaining: unprocessedEpochTimeRemaining },
     stats
   } = useSelector(statsSelector);

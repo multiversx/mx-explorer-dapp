@@ -20,7 +20,7 @@ export const getInitialGrowthPriceState = (): GrowthPriceSliceType => {
       marketCap: 0,
       volume24h: 0
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -43,7 +43,7 @@ export const growthPriceSlice = createSlice({
       state.priceAll = action.payload.priceAll;
 
       state.unprocessed = action.payload.unprocessed;
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

@@ -25,7 +25,7 @@ export const NodeDangerZoneTooltip = ({
 }: NodeDangerZoneTooltipUIType) => {
   const { isAuctionDangerZone, isQualified } = useGetNodeFilters();
   const {
-    isFetched: isStakeFetched,
+    isDataReady: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
 

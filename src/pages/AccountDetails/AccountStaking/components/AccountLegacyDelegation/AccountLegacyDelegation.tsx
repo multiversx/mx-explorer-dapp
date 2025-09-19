@@ -20,7 +20,7 @@ export const AccountLegacyDelegation = ({
   identity?: IdentityType;
 }) => {
   const {
-    isFetched,
+    isDataReady,
     unprocessed: { baseApr, topUpApr }
   } = useSelector(economicsSelector);
   const { egldLabel } = useSelector(activeNetworkSelector);
@@ -37,7 +37,7 @@ export const AccountLegacyDelegation = ({
     useState<string>(ELLIPSIS);
 
   const getLegacyDelegationApr = () => {
-    if (isFetched && identity?.stake && identity?.topUp && identity?.locked) {
+    if (isDataReady && identity?.stake && identity?.topUp && identity?.locked) {
       const legacyDelegationBN = new BigNumber(identity.stake)
         .times(new BigNumber(baseApr))
         .plus(new BigNumber(identity.topUp).times(topUpApr))
@@ -50,7 +50,7 @@ export const AccountLegacyDelegation = ({
     }
   };
 
-  useEffect(getLegacyDelegationApr, [isFetched, identity]);
+  useEffect(getLegacyDelegationApr, [isDataReady, identity]);
 
   return (
     <div className='delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4'>

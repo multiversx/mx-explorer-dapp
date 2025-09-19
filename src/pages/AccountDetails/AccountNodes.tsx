@@ -32,7 +32,7 @@ import { NodeType, NodeStatusEnum, NodeTypeEnum } from 'types';
 
 export const AccountNodes = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { isFetched: isNodesOverviewFetched } = useSelector(
+  const { isDataReady: isNodesOverviewFetched } = useSelector(
     nodesOverviewSelector
   );
   const [searchParams] = useSearchParams();
