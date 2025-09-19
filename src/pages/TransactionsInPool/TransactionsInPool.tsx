@@ -38,7 +38,7 @@ export const TransactionsInPool = () => {
     filters: { ...rest, type },
     config: { type },
     subscription: WebsocketSubcriptionsEnum.subscribePool,
-    event: WebsocketEventsEnum.transactionUpdate
+    event: WebsocketEventsEnum.poolUpdate
   });
 
   useEffect(() => {

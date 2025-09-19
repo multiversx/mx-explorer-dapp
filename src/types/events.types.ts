@@ -1,3 +1,6 @@
+import { ELLIPSIS } from 'appConstants';
+import { SliceType } from './general.types';
+
 export interface EventType {
   txHash: string;
   logAddress: string;
@@ -10,8 +13,15 @@ export interface EventType {
   txOrder: number;
   order: number;
   timestamp: number;
+}
 
+export interface UIEventType extends EventType {
   isNew?: boolean; // UI flag
+}
+
+export interface EventsSliceType extends SliceType {
+  events: UIEventType[];
+  eventsCount: number | typeof ELLIPSIS;
 }
 
 export enum TransactionEventIdentifiersEnum {

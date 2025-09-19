@@ -38,6 +38,4 @@ export enum BlockFiltersEnum {
 export interface BlocksSliceType extends SliceType {
   blocks: UIBlockType[];
   blocksCount: number | typeof ELLIPSIS;
-  isWebsocket: boolean;
-  isDataReady: boolean | undefined;
 }

@@ -2,6 +2,7 @@ export * from './useFetchAccountStakingDetails';
 export * from './useFetchBlocks';
 export * from './useFetchEconomics';
 export * from './useFetchEpochProgress';
+export * from './useFetchEvents';
 export * from './useFetchStake';
 export * from './useFetchMarkers';
 export * from './useFetchNodesCount';

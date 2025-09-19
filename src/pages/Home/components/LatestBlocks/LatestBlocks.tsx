@@ -25,7 +25,7 @@ export const LatestBlocks = () => {
   const { getBlocks } = useAdapter();
 
   const { fetchBlocks, blocks, isDataReady } = useFetchBlocks({
-    blockPromise: getBlocks,
+    dataPromise: getBlocks,
     subscription: WebsocketSubcriptionsEnum.subscribeBlocks,
     event: WebsocketEventsEnum.blocksUpdate
   });

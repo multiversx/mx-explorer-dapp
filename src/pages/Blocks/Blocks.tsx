@@ -29,8 +29,8 @@ export const Blocks = () => {
 
   const { fetchBlocks, blocks, totalBlocks, isDataReady, dataChanged } =
     useFetchBlocks({
-      blockPromise: getBlocks,
-      blockCountPromise: getBlocksCount,
+      dataPromise: getBlocks,
+      dataCountPromise: getBlocksCount,
       filters: { shard, withProposerIdentity: true },
       subscription: WebsocketSubcriptionsEnum.subscribeBlocks,
       event: WebsocketEventsEnum.blocksUpdate

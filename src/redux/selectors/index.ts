@@ -4,6 +4,7 @@ export * from './accountStaking';
 export * from './blocks';
 export * from './collection';
 export * from './economics';
+export * from './events';
 export * from './general';
 export * from './growthHero';
 export * from './growthMostUsed';

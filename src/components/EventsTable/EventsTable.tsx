@@ -10,12 +10,12 @@ import {
 } from 'components';
 import { formatBigNumber, getStringPlural } from 'helpers';
 import { faExchange } from 'icons/regular';
-import { EventType } from 'types';
+import { UIEventType } from 'types';
 
 import { EventRow, EventsTableHeader } from './components';
 
 export interface EventsTableUIType {
-  events: EventType[];
+  events: UIEventType[];
   totalEvents: number | typeof ELLIPSIS;
   dataChanged?: boolean;
   isDataReady?: boolean;

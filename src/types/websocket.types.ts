@@ -3,7 +3,7 @@ export enum WebsocketSubcriptionsEnum {
   subscribeBlocks = 'subscribeBlocks',
   subscribePool = 'subscribePool',
   subscribeStats = 'subscribeStats',
-  subscribeEvent = 'subscribeEvent'
+  subscribeEvents = 'subscribeEvents'
 }
 
 export enum WebsocketEventsEnum {
