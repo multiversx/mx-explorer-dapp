@@ -65,7 +65,7 @@ export const ChartContractsTransactions = ({
     scResults7d,
     scResults30d,
     scResultsAll,
-    isFetched
+    isDataReady
   } = useSelector(growthTransactionsSelector);
 
   const [success, primary, violet500] = getColors([
@@ -178,7 +178,7 @@ export const ChartContractsTransactions = ({
 
   const onChange = useCallback(
     (option: SingleValue<SelectOptionType>) => {
-      if (option && option.value && isFetched) {
+      if (option && option.value && isDataReady) {
         const value = String(option.value).replace('transactions', '');
         const [transactionsKey, contractsKey, totalKey] = [
           `transactions${value}`,
@@ -191,11 +191,11 @@ export const ChartContractsTransactions = ({
         setTotalPayload(dataTotal.get(totalKey));
       }
     },
-    [isFetched]
+    [isDataReady]
   );
 
   const onInitialLoad = useCallback(() => {
-    if (isFetched) {
+    if (isDataReady) {
       setTransactionsPayload(dataTransactions.get('transactions30d'));
       setContractsPayload(dataContracts.get('scResults30d'));
       setTotalPayload(dataTotal.get('total30d'));
