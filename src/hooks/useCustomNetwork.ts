@@ -31,7 +31,7 @@ const validateUrl = (url: string) => {
 };
 
 export const useCustomNetwork = (customUrl: string) => {
-  const { getDappConfig, getNetworkConfig } = useAdapter();
+  const { getDappConfig, getNetworkConfig, getWebsocketConfig } = useAdapter();
   const getNetworkChangeLink = useGetNetworkChangeLink();
   const { isSubSubdomain } = getSubdomainNetwork();
   const activeNetwork = useSelector(activeNetworkSelector);
@@ -63,9 +63,10 @@ export const useCustomNetwork = (customUrl: string) => {
 
     const apiAddress = new URL(customUrl).toString().replace(/\/+$/, '');
 
-    const [dappConfig, networkConfig] = await Promise.all([
+    const [dappConfig, networkConfig, websocketConfig] = await Promise.all([
       getDappConfig(apiAddress),
-      getNetworkConfig(apiAddress)
+      getNetworkConfig(apiAddress),
+      getWebsocketConfig(apiAddress)
     ]);
     const { data, success } = dappConfig;
     if (data && success) {
@@ -79,6 +80,7 @@ export const useCustomNetwork = (customUrl: string) => {
       } = data as DappNetworkConfigType;
       const hrp =
         networkConfig?.data?.data?.config?.erd_address_hrp ?? DEFAULT_HRP;
+      const updatesWebsocketUrl = websocketConfig?.data?.url;
 
       if (chainId && egldLabel && walletAddress && explorerAddress) {
         const customNetwork = {
@@ -93,7 +95,10 @@ export const useCustomNetwork = (customUrl: string) => {
           egldLabel,
           hrp,
           walletAddress,
-          explorerAddress
+          explorerAddress,
+          ...(updatesWebsocketUrl
+            ? { updatesWebsocketUrl: `https://${updatesWebsocketUrl}` }
+            : {})
         };
 
         try {
@@ -122,9 +127,11 @@ export const useCustomNetwork = (customUrl: string) => {
         setIsSaving(false);
 
         // we want to reset the whole state, react router's navigate might lead to unwanted innacuracies
-        window.location.href = getNetworkChangeLink({
-          networkId: CUSTOM_NETWORK_ID
-        });
+        setTimeout(() => {
+          window.location.href = getNetworkChangeLink({
+            networkId: CUSTOM_NETWORK_ID
+          });
+        }, 400);
 
         return;
       }

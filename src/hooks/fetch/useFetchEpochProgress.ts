@@ -47,7 +47,7 @@ export const useFetchEpochProgress = () => {
   const pageHidden = document.hidden;
 
   const refreshInterval =
-    refreshRate ?? initialNetworkRefreshRate ?? REFRESH_RATE;
+    refreshRate || initialNetworkRefreshRate || REFRESH_RATE;
   const refreshIntervalSec = new BigNumber(refreshInterval).dividedBy(1000);
 
   const stepInterval = getStepInterval(refreshInterval);
@@ -64,7 +64,7 @@ export const useFetchEpochProgress = () => {
   const [epochRoundsLeft, setEpochRoundsLeft] = useState<number>(0);
 
   const updateStats = () => {
-    if (!refreshRate) {
+    if (!refreshInterval) {
       return;
     }
     setIsNewState(oldTestnetId !== activeNetworkId);
@@ -105,7 +105,7 @@ export const useFetchEpochProgress = () => {
   };
 
   const startRoundTime = () => {
-    if (!refreshRate) {
+    if (!refreshInterval) {
       return;
     }
     const intervalRoundTime = setInterval(() => {
@@ -125,10 +125,10 @@ export const useFetchEpochProgress = () => {
   }, [activeNetworkId]);
 
   useEffect(() => {
-    if (refreshRate && roundTimeProgress && timestamp) {
+    if (refreshInterval && roundTimeProgress && timestamp) {
       updateStats();
     }
-  }, [timestamp, roundTimeProgress, refreshRate]);
+  }, [timestamp, roundTimeProgress, refreshInterval]);
 
   const roundProgress = roundTimeProgress
     .times(100)

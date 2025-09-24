@@ -721,6 +721,12 @@ export const useAdapter = () => {
       provider({
         baseUrl,
         url: '/network/config'
+      }),
+
+    getWebsocketConfig: (baseUrl: string) =>
+      provider({
+        baseUrl,
+        url: '/websocket/config'
       })
   };
 };
