@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { websocketConnection } from 'appConstants';
 import { useInitWebsocket } from 'hooks/layout';
 import { WebsocketEventsEnum, WebsocketSubcriptionsEnum } from 'types';
+import { useHasWebsocketUrl } from './useHasWebsocketUrl';
 
 export interface RegisterWebsocketListenerType {
   onEvent: (response: any) => void;
@@ -17,6 +18,8 @@ export function useRegisterWebsocketListener({
   config,
   onEvent
 }: RegisterWebsocketListenerType) {
+  const hasWebsocketUrl = useHasWebsocketUrl();
+
   useInitWebsocket();
 
   useEffect(() => {
@@ -52,12 +55,12 @@ export function useRegisterWebsocketListener({
     }
 
     websocket.on(event, (response: any) => {
-      console.log(`Client ${event}:`, response);
+      //   console.log(`Client ${event}:`, response);
       onEvent(response);
     });
 
     return () => {
-      websocket?.off(event);
+      // websocket?.off(event);
     };
-  }, [websocketConnection]);
+  }, [websocketConnection, hasWebsocketUrl]);
 }

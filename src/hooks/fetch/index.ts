@@ -13,3 +13,4 @@ export * from './useFetchShards';
 export * from './useFetchStats';
 export * from './useFetchTransactions';
 export * from './useFetchTransactionsInPool';
+export * from './useFetchWebsocketConfig';

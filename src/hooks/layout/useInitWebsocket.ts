@@ -1,19 +1,30 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { initializeWebsocketConnection } from 'helpers/websocket/initializeWebsocketConnection';
-import { useHasWebsocketUrl } from 'hooks/websocket';
+import { isUpdatesWebsocketActive } from 'helpers';
+import { registerWebsocketListener } from 'helpers/websocket/registerWebsocket';
+import { useFetchWebsocketConfig } from 'hooks/fetch';
 import { activeNetworkSelector } from 'redux/selectors';
 
 export const useInitWebsocket = () => {
   const { updatesWebsocketUrl } = useSelector(activeNetworkSelector);
-  const hasWebsocketUrl = useHasWebsocketUrl();
+  const fetchWebsocketConfig = useFetchWebsocketConfig();
+  const isWebsocketActive = isUpdatesWebsocketActive();
 
-  useEffect(() => {
-    if (!hasWebsocketUrl || !updatesWebsocketUrl) {
+  const configWebsocket = async () => {
+    if (updatesWebsocketUrl) {
+      await registerWebsocketListener(updatesWebsocketUrl);
       return;
     }
 
-    initializeWebsocketConnection(updatesWebsocketUrl);
-  }, [hasWebsocketUrl]);
+    await fetchWebsocketConfig();
+  };
+
+  useEffect(() => {
+    if (isWebsocketActive) {
+      return;
+    }
+
+    configWebsocket();
+  }, [updatesWebsocketUrl, isWebsocketActive]);
 };

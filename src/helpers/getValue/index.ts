@@ -29,5 +29,6 @@ export * from './getTransactionStatusText';
 export * from './getTransactionTokens';
 export * from './getTransactionVisibleOperations';
 export * from './getTrend';
+export * from './getUrlNetwork';
 export * from './getUrlParam';
 export * from './getValidLink';

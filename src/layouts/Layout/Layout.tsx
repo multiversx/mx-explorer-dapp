@@ -7,7 +7,6 @@ import { NotificationsBar, NetworkReady, MetaTags } from 'components';
 import {
   useFetchStats,
   useFetchEconomics,
-  useNetworkRouter,
   useLoopManager,
   useCheckVersion,
   useGetURLNetwork,
@@ -34,7 +33,6 @@ export const Layout = () => {
   const fetchEconomics = useFetchEconomics();
   const { fetchStats } = useFetchStats();
 
-  useNetworkRouter();
   useLoopManager();
   useCheckVersion();
   useInitDatadog();
