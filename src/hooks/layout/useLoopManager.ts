@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { REFRESH_RATE } from 'appConstants';
 import {
   activeNetworkSelector,
   refreshSelector,
@@ -14,11 +15,23 @@ export const useLoopManager = () => {
 
   const { timestamp } = useSelector(refreshSelector);
   const { unprocessed } = useSelector(statsSelector);
-  const { refreshRate: settingsRefreshRate } = unprocessed;
+  const { refreshRate: statsRefreshRate } = unprocessed;
 
-  const { refreshRate: initialRefreshRate } = useSelector(
+  const { refreshRate: initialNetworkRefreshRate } = useSelector(
     activeNetworkSelector
   );
+
+  const initialRefreshRate = useMemo(() => {
+    if (statsRefreshRate) {
+      return statsRefreshRate;
+    }
+
+    if (initialNetworkRefreshRate) {
+      return initialNetworkRefreshRate;
+    }
+
+    return REFRESH_RATE;
+  }, [initialNetworkRefreshRate, statsRefreshRate]);
 
   const [refreshRate, setRefreshRate] = useState(initialRefreshRate);
 
@@ -42,10 +55,10 @@ export const useLoopManager = () => {
   };
 
   useEffect(() => {
-    if (settingsRefreshRate && settingsRefreshRate !== refreshRate) {
-      setRefreshRate(settingsRefreshRate);
+    if (statsRefreshRate && statsRefreshRate !== refreshRate) {
+      setRefreshRate(statsRefreshRate);
     }
-  }, [settingsRefreshRate, refreshRate]);
+  }, [statsRefreshRate, refreshRate]);
 
   useEffect(setLoopInterval, [refreshRate]);
 };
