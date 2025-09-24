@@ -4,6 +4,7 @@ import { NetworkAdapterEnum } from './adapter.types';
 export interface NetworkType extends Partial<NetworkConfigType> {
   adapter: NetworkAdapterEnum | string; // temporary, will be restricted on a future network adapter overhaul
   hrp?: string;
+  refreshRate?: number;
   theme?: string;
   default?: boolean;
   accessToken?: boolean;
@@ -39,4 +40,5 @@ export interface DappNetworkConfigType {
   apiAddress: string;
   explorerAddress: string;
   chainId: string;
+  refreshRate?: number;
 }

@@ -19,8 +19,8 @@ export const websocketManager = {
   closeConnectionRef: undefined as (() => void) | undefined
 };
 
-export async function registerWebsocketListener() {
-  const { closeConnection } = await initializeWebsocketConnection();
+export async function registerWebsocketListener(websocketUrl: string) {
+  const { closeConnection } = await initializeWebsocketConnection(websocketUrl);
 
   websocketManager.closeConnectionRef = closeConnection;
 }

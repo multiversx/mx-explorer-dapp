@@ -711,10 +711,16 @@ export const useAdapter = () => {
       provider({ baseUrl: `${growthApi}/explorer/headers`, url }),
 
     // Network Config
-    getNetworkConfig: (baseUrl: string) =>
+    getDappConfig: (baseUrl: string) =>
       provider({
         baseUrl,
         url: '/dapp/config'
+      }),
+
+    getNetworkConfig: (baseUrl: string) =>
+      provider({
+        baseUrl,
+        url: '/network/config'
       })
   };
 };

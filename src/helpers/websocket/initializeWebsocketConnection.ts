@@ -14,7 +14,7 @@ const MESSAGE_DELAY = 1000;
 
 type TimeoutType = ReturnType<typeof setTimeout> | null;
 
-export async function initializeWebsocketConnection() {
+export async function initializeWebsocketConnection(websocketUrl: string) {
   let messageTimeout: TimeoutType = null;
   const isWebsocketInactive = isUpdatesWebsocketInactive();
 
@@ -53,8 +53,6 @@ export async function initializeWebsocketConnection() {
 
   const initializeConnection = async () => {
     updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
-
-    const websocketUrl = 'https://devnet-socket-api.multiversx.com';
 
     if (!websocketUrl) {
       updateSocketStatus(WebsocketConnectionStatusEnum.NOT_INITIALIZED);

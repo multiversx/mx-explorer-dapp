@@ -36,6 +36,9 @@ export const useFetchEpochProgress = () => {
   const { fetchStats } = useFetchStats();
 
   const { timestamp } = useSelector(refreshSelector);
+  const { refreshRate: initialNetworkRefreshRate } = useSelector(
+    activeNetworkSelector
+  );
   const { isDataReady, unprocessed, stats } = useSelector(statsSelector);
   const { epochPercentage, epochTimeRemaining } = stats;
   const { epoch, refreshRate, roundsPerEpoch, roundsPassed } = unprocessed;
@@ -43,7 +46,8 @@ export const useFetchEpochProgress = () => {
 
   const pageHidden = document.hidden;
 
-  const refreshInterval = refreshRate ? refreshRate : REFRESH_RATE;
+  const refreshInterval =
+    refreshRate ?? initialNetworkRefreshRate ?? REFRESH_RATE;
   const refreshIntervalSec = new BigNumber(refreshInterval).dividedBy(1000);
 
   const stepInterval = getStepInterval(refreshInterval);
@@ -128,7 +132,7 @@ export const useFetchEpochProgress = () => {
 
   const roundProgress = roundTimeProgress
     .times(100)
-    .dividedBy(refreshIntervalSec);
+    .dividedBy(refreshIntervalSec ?? 1);
 
   const roundsLeft = epochRoundsLeft
     ? epochRoundsLeft

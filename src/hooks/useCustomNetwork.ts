@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
-import { CUSTOM_NETWORK_ID } from 'appConstants';
+import { CUSTOM_NETWORK_ID, DEFAULT_HRP, REFRESH_RATE } from 'appConstants';
 import { networks } from 'config';
 import { cookie, storage, getSubdomainNetwork } from 'helpers';
 import { useAdapter, useGetNetworkChangeLink } from 'hooks';
@@ -31,7 +31,7 @@ const validateUrl = (url: string) => {
 };
 
 export const useCustomNetwork = (customUrl: string) => {
-  const { getNetworkConfig } = useAdapter();
+  const { getDappConfig, getNetworkConfig } = useAdapter();
   const getNetworkChangeLink = useGetNetworkChangeLink();
   const { isSubSubdomain } = getSubdomainNetwork();
   const activeNetwork = useSelector(activeNetworkSelector);
@@ -63,10 +63,22 @@ export const useCustomNetwork = (customUrl: string) => {
 
     const apiAddress = new URL(customUrl).toString().replace(/\/+$/, '');
 
-    const { data, success } = await getNetworkConfig(apiAddress);
+    const [dappConfig, networkConfig] = await Promise.all([
+      getDappConfig(apiAddress),
+      getNetworkConfig(apiAddress)
+    ]);
+    const { data, success } = dappConfig;
     if (data && success) {
-      const { chainId, egldLabel, explorerAddress, walletAddress, name } =
-        data as DappNetworkConfigType;
+      const {
+        chainId,
+        egldLabel,
+        explorerAddress,
+        walletAddress,
+        name,
+        refreshRate
+      } = data as DappNetworkConfigType;
+      const hrp =
+        networkConfig?.data?.data?.config?.erd_address_hrp ?? DEFAULT_HRP;
 
       if (chainId && egldLabel && walletAddress && explorerAddress) {
         const customNetwork = {
@@ -75,9 +87,11 @@ export const useCustomNetwork = (customUrl: string) => {
           adapter: NetworkAdapterEnum.api,
           theme: 'testnet',
           isCustom: true,
+          refreshRate: refreshRate ?? REFRESH_RATE,
           apiAddress,
           chainId,
           egldLabel,
+          hrp,
           walletAddress,
           explorerAddress
         };

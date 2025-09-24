@@ -1,18 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
-import { REFRESH_RATE } from 'appConstants';
 
-import { refreshSelector, statsSelector } from 'redux/selectors';
+import {
+  activeNetworkSelector,
+  refreshSelector,
+  statsSelector
+} from 'redux/selectors';
 import { triggerRefresh } from 'redux/slices/refresh';
 
 export const useLoopManager = () => {
   const intervalRef = useRef<any>(null);
+
   const { timestamp } = useSelector(refreshSelector);
   const { unprocessed } = useSelector(statsSelector);
   const { refreshRate: settingsRefreshRate } = unprocessed;
 
-  const [refreshRate, setRefreshRate] = useState(REFRESH_RATE);
+  const { refreshRate: initialRefreshRate } = useSelector(
+    activeNetworkSelector
+  );
+
+  const [refreshRate, setRefreshRate] = useState(initialRefreshRate);
 
   const dispatch = useDispatch();
 

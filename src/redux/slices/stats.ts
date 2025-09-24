@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ELLIPSIS } from 'appConstants';
+import { ELLIPSIS, REFRESH_RATE } from 'appConstants';
 import { getExtraStats, processStats } from 'helpers';
 import { SliceType } from 'types';
 import { StatsSliceType, StatsType } from 'types/stats.types';
@@ -18,7 +18,7 @@ export const getInitialStatsState = (): StatsSliceType => {
       accounts: 0,
       transactions: 0,
       scResults: 0,
-      refreshRate: 0,
+      refreshRate: REFRESH_RATE,
       epoch: 0,
       roundsPassed: 0,
       roundsPerEpoch: 0,
@@ -34,7 +34,7 @@ export const getInitialStatsState = (): StatsSliceType => {
       accounts: ELLIPSIS,
       transactions: ELLIPSIS,
       scResults: ELLIPSIS,
-      refreshRate: 0,
+      refreshRate: REFRESH_RATE,
       epoch: 0,
       roundsPassed: 0,
       roundsPerEpoch: 0,

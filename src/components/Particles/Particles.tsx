@@ -199,7 +199,8 @@ export const Particles = memo(() => {
     };
   }, []);
 
-  const skipAnimation = isExcluded() || !isWebGLReady;
+  // const skipAnimation = isExcluded() || !isWebGLReady;
+  const skipAnimation = true; // todo remove when linux issues fixed
 
   return (
     <div
