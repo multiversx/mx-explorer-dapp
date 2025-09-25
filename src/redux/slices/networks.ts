@@ -29,11 +29,11 @@ export const getInitialState = (): CurrentNetworkSliceType => {
 
   const defaultNetworkInList = defaultActiveNetwork ?? networks[0];
   const baseNetwork = urlNetwork ?? defaultNetworkInList;
-  const defaultNetwork = baseNetwork ?? emptyNetwork;
+  const defaultNetwork = defaultNetworkInList ?? emptyNetwork;
 
   return {
     defaultNetwork,
-    activeNetwork: defaultNetwork
+    activeNetwork: baseNetwork
   };
 };
 

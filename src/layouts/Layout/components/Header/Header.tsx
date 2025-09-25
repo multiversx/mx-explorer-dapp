@@ -1,4 +1,4 @@
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent, useEffect, memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
@@ -13,7 +13,7 @@ import { Links } from './components/Links';
 import { Switcher } from './components/Switcher';
 import { HeaderPropsType } from './types';
 
-export const Header = (props: HeaderPropsType) => {
+export const Header = memo((props: HeaderPropsType) => {
   const isMainnet = useIsMainnet();
   const explorerTitle = useGetExplorerTitle();
 
@@ -130,4 +130,4 @@ export const Header = (props: HeaderPropsType) => {
       </div>
     </header>
   );
-};
+});
