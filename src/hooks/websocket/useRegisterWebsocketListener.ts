@@ -12,6 +12,26 @@ export interface RegisterWebsocketListenerType {
   config?: Record<string, any>;
 }
 
+const addToSubscriptions = (
+  arr: WebsocketSubcriptionsEnum[],
+  subscription: WebsocketSubcriptionsEnum
+) => {
+  const subscriptionIndex = arr.indexOf(subscription);
+  if (subscriptionIndex === -1) {
+    arr.push(subscription);
+  }
+};
+
+const removeSubscription = (
+  arr: WebsocketSubcriptionsEnum[],
+  subscription: WebsocketSubcriptionsEnum
+) => {
+  const subscriptionIndex = arr.indexOf(subscription);
+  if (subscriptionIndex !== -1) {
+    arr.splice(subscriptionIndex, 1);
+  }
+};
+
 export function useRegisterWebsocketListener({
   subscription,
   event,
@@ -32,35 +52,47 @@ export function useRegisterWebsocketListener({
 
     const subscriptionIndex =
       websocketConnection.subscriptions.indexOf(subscription);
+    const activeSubscriptionIndex =
+      websocketConnection.activeSubscriptions.indexOf(subscription);
     const hasSubscription = subscriptionIndex !== -1;
+    const hasActiveSubscription = activeSubscriptionIndex !== -1;
 
-    if (!websocket || !websocket?.active || hasSubscription) {
+    addToSubscriptions(websocketConnection.subscriptions, subscription);
+    addToSubscriptions(websocketConnection.activeSubscriptions, subscription);
+
+    if (!websocket || !websocket?.active) {
       return;
     }
 
     if (!hasSubscription) {
-      websocketConnection.subscriptions.push(subscription);
-
       websocket.emit(subscription, websocketConfig, (response: any) => {
-        console.log(
-          `Emit subscription ${subscription} with options`,
+        console.info(
+          `Websocket New Subscription ${subscription} with options`,
           websocketConfig,
           response
         );
-
         if (response?.status !== 'success') {
-          websocketConnection.subscriptions.splice(subscriptionIndex, 1);
+          removeSubscription(websocketConnection.subscriptions, subscription);
+          removeSubscription(
+            websocketConnection.activeSubscriptions,
+            subscription
+          );
         }
       });
     }
 
+    if (hasActiveSubscription) {
+      return;
+    }
+
     websocket.on(event, (response: any) => {
-      //   console.log(`Client ${event}:`, response);
+      console.info(`Client ${event}:`, response);
       onEvent(response);
     });
 
     return () => {
-      // websocket?.off(event);
+      websocket?.off(event);
+      removeSubscription(websocketConnection.activeSubscriptions, subscription);
     };
-  }, [websocketConnection, hasWebsocketUrl]);
+  }, [websocketConnection, hasWebsocketUrl, event, subscription]);
 }

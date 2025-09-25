@@ -68,7 +68,7 @@ export async function initializeWebsocketConnection(websocketUrl: string) {
       transports: ['websocket']
     });
 
-    websocketConnection.instance.onAny(handleMessageReceived);
+    // websocketConnection.instance.onAny(handleMessageReceived);
 
     websocketConnection.instance.on(WebsocketEventsEnum.connect, () => {
       console.info('Websocket Connected.');
