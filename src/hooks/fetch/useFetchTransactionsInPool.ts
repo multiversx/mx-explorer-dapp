@@ -7,6 +7,11 @@ import { setTransactionsInPool } from 'redux/slices';
 import { TransactionInPoolType } from 'types';
 import { FetchApiDataProps, useFetchApiData } from './useFetchApiData';
 
+interface TransactionsInPoolWebsocketResponseType {
+  pool: TransactionInPoolType[];
+  poolCount: number;
+}
+
 export const useFetchTransactionsInPool = (
   props: Omit<FetchApiDataProps, 'onApiData'>
 ) => {
@@ -23,15 +28,16 @@ export const useFetchTransactionsInPool = (
     isWebsocket
   } = useSelector(transactionsInPoolSelector);
 
-  const onWebsocketData = (event: TransactionInPoolType[]) => {
+  const onWebsocketData = (event: TransactionsInPoolWebsocketResponseType) => {
     if (!event) {
       return;
     }
 
+    const { pool, poolCount } = event;
     dispatch(
       setTransactionsInPool({
-        transactionsInPool: event,
-        transactionsInPoolCount: ELLIPSIS,
+        transactionsInPool: pool,
+        transactionsInPoolCount: poolCount,
         isWebsocket: true,
         isDataReady: true
       })

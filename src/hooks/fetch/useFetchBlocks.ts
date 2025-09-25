@@ -7,6 +7,11 @@ import { setBlocks } from 'redux/slices';
 import { BlockType } from 'types';
 import { FetchApiDataProps, useFetchApiData } from './useFetchApiData';
 
+interface BlocksWebsocketResponseType {
+  blocks: BlockType[];
+  blocksCount: number;
+}
+
 export const useFetchBlocks = (props: Omit<FetchApiDataProps, 'onApiData'>) => {
   const dispatch = useDispatch();
   const blockFilters = useGetBlockFilters();
@@ -16,15 +21,16 @@ export const useFetchBlocks = (props: Omit<FetchApiDataProps, 'onApiData'>) => {
   const { blocks, blocksCount, isDataReady, isWebsocket } =
     useSelector(blocksSelector);
 
-  const onWebsocketData = (event: BlockType[]) => {
+  const onWebsocketData = (event: BlocksWebsocketResponseType) => {
     if (!event) {
       return;
     }
 
+    const { blocks, blocksCount } = event;
     dispatch(
       setBlocks({
-        blocks: event,
-        blocksCount: ELLIPSIS,
+        blocks,
+        blocksCount,
         isWebsocket: true,
         isDataReady: true
       })

@@ -7,6 +7,11 @@ import { setEvents } from 'redux/slices';
 import { EventType } from 'types';
 import { FetchApiDataProps, useFetchApiData } from './useFetchApiData';
 
+interface EventsWebsocketResponseType {
+  events: EventType[];
+  eventsCount: number;
+}
+
 export const useFetchEvents = (props: Omit<FetchApiDataProps, 'onApiData'>) => {
   const dispatch = useDispatch();
   const eventFilters = useGetEventFilters();
@@ -16,15 +21,16 @@ export const useFetchEvents = (props: Omit<FetchApiDataProps, 'onApiData'>) => {
   const { events, eventsCount, isDataReady, isWebsocket } =
     useSelector(eventsSelector);
 
-  const onWebsocketData = (event: EventType[]) => {
+  const onWebsocketData = (event: EventsWebsocketResponseType) => {
     if (!event) {
       return;
     }
 
+    const { events, eventsCount } = event;
     dispatch(
       setEvents({
-        events: event,
-        eventsCount: ELLIPSIS,
+        events,
+        eventsCount,
         isWebsocket: true,
         isDataReady: true
       })

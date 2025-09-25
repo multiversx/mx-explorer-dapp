@@ -1,16 +1,15 @@
 import { io } from 'socket.io-client';
 
 import {
+  WEBSOCKET_MESSAGE_DELAY,
+  WEBSOCKET_RECONNECTION_ATTEMPTS,
+  WEBSOCKET_RETRY_INTERVAL,
+  WEBSOCKET_TIMEOUT,
   WebsocketConnectionStatusEnum,
   websocketConnection
 } from 'appConstants';
 import { isUpdatesWebsocketInactive } from 'helpers';
 import { WebsocketEventsEnum } from 'types';
-
-const TIMEOUT = 3000;
-const RECONNECTION_ATTEMPTS = 3;
-const RETRY_INTERVAL = 500;
-const MESSAGE_DELAY = 1000;
 
 type TimeoutType = ReturnType<typeof setTimeout> | null;
 
@@ -30,7 +29,7 @@ export async function initializeWebsocketConnection(websocketUrl: string) {
     }
     messageTimeout = setTimeout(() => {
       console.info('Websocket Message:', message);
-    }, MESSAGE_DELAY);
+    }, WEBSOCKET_MESSAGE_DELAY);
   };
 
   const closeConnection = () => {
@@ -62,9 +61,9 @@ export async function initializeWebsocketConnection(websocketUrl: string) {
     websocketConnection.instance = io(websocketUrl, {
       forceNew: true,
       reconnection: true,
-      reconnectionAttempts: RECONNECTION_ATTEMPTS,
-      reconnectionDelay: RETRY_INTERVAL,
-      timeout: TIMEOUT,
+      reconnectionAttempts: WEBSOCKET_RECONNECTION_ATTEMPTS,
+      reconnectionDelay: WEBSOCKET_RETRY_INTERVAL,
+      timeout: WEBSOCKET_TIMEOUT,
       path: '/ws/subscription',
       transports: ['websocket']
     });
@@ -74,10 +73,6 @@ export async function initializeWebsocketConnection(websocketUrl: string) {
     websocketConnection.instance.on(WebsocketEventsEnum.connect, () => {
       console.info('Websocket Connected.');
       updateSocketStatus(WebsocketConnectionStatusEnum.COMPLETED);
-
-      if (!websocketConnection.instance) {
-        return;
-      }
     });
 
     websocketConnection.instance.on(

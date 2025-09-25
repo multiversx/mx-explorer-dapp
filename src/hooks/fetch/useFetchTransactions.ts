@@ -12,6 +12,11 @@ export interface FetchTransactionsProps
   hasMaxTransactionsSize?: boolean;
 }
 
+interface TransactionsWebsocketResponseType {
+  transactions: TransactionType[];
+  transactionsCount: number;
+}
+
 export const useFetchTransactions = (props: FetchTransactionsProps) => {
   const dispatch = useDispatch();
   const transactionFilters = useGetTransactionFilters();
@@ -27,15 +32,16 @@ export const useFetchTransactions = (props: FetchTransactionsProps) => {
       ? MAX_TRANSACTIONS_PAGE_SIZE
       : size;
 
-  const onWebsocketData = (event: TransactionType[]) => {
+  const onWebsocketData = (event: TransactionsWebsocketResponseType) => {
     if (!event) {
       return;
     }
 
+    const { transactions, transactionsCount } = event;
     dispatch(
       setTransactions({
-        transactions: event,
-        transactionsCount: ELLIPSIS,
+        transactions,
+        transactionsCount,
         isWebsocket: true,
         isDataReady: true
       })
