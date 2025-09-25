@@ -5,7 +5,7 @@ import { TitledRouteObject } from '../routes';
 
 export const eventsRoutes = {
   events: '/events',
-  transactionDetails: '/events/:hash'
+  eventDetails: '/events/:hash'
 };
 
 export const eventsLayout: TitledRouteObject[] = [
@@ -15,7 +15,7 @@ export const eventsLayout: TitledRouteObject[] = [
     Component: Events
   },
   {
-    path: eventsRoutes.transactionDetails,
+    path: eventsRoutes.eventDetails,
     title: 'Event Details',
     Component: EventDetails
   }

@@ -24,8 +24,12 @@ export const Events = () => {
     });
 
   useEffect(() => {
+    fetchEvents();
+  }, [activeNetworkId, firstPageRefreshTrigger]);
+
+  useEffect(() => {
     fetchEvents(Boolean(searchParams.toString()));
-  }, [searchParams, activeNetworkId, firstPageRefreshTrigger]);
+  }, [searchParams]);
 
   return (
     <div className='container page-content'>

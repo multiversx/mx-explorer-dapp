@@ -44,6 +44,7 @@ export const EventsTable = ({
             </h5>
             <Pager
               total={totalEvents}
+              show={events.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
             />
           </div>

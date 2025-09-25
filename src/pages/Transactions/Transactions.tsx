@@ -44,8 +44,12 @@ export const Transactions = () => {
   });
 
   useEffect(() => {
+    fetchTransactions();
+  }, [activeNetworkId, firstPageRefreshTrigger]);
+
+  useEffect(() => {
     fetchTransactions(Boolean(searchParams.toString()));
-  }, [searchParams, activeNetworkId, firstPageRefreshTrigger]);
+  }, [searchParams]);
 
   useEffect(() => {
     if (senderShard !== undefined || receiverShard !== undefined) {

@@ -42,8 +42,12 @@ export const TransactionsInPool = () => {
   });
 
   useEffect(() => {
+    fetchTransactionsInPool();
+  }, [activeNetworkId, firstPageRefreshTrigger]);
+
+  useEffect(() => {
     fetchTransactionsInPool(Boolean(searchParams.toString()));
-  }, [searchParams, activeNetworkId, firstPageRefreshTrigger]);
+  }, [searchParams]);
 
   return (
     <div className='container page-content'>

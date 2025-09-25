@@ -37,8 +37,12 @@ export const Blocks = () => {
     });
 
   useEffect(() => {
+    fetchBlocks();
+  }, [activeNetworkId, firstPageRefreshTrigger]);
+
+  useEffect(() => {
     fetchBlocks(Boolean(searchParams.toString()));
-  }, [searchParams, activeNetworkId, firstPageRefreshTrigger]);
+  }, [searchParams]);
 
   useEffect(() => {
     if (shard !== undefined) {
