@@ -10,6 +10,7 @@ export * from './amountWithoutRounding';
 export * from './analytics';
 export * from './capitalize';
 export * from './capitalizeFirstLetter';
+export * from './cleanUrlFilters';
 export * from './cookie';
 export * from './copyToClipboard';
 export * from './downloadFile';
