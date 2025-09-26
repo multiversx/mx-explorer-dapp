@@ -1,37 +1,84 @@
 .links {
   margin-top: 0;
   margin-bottom: 0;
+
   @include media-breakpoint-up(lg) {
     flex-direction: row;
     margin-right: 0.5rem;
   }
 
+  .dropdown-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    cursor: pointer;
+    padding-left: var(--nav-link-padding-x);
+    padding-right: var(--nav-link-padding-x);
+    margin: auto;
+
+    .nav-link {
+      // --nav-link-padding-y: 0;
+      --nav-link-padding-x: 0;
+      width: auto;
+    }
+    .dropdown-toggle {
+      margin-left: 0.375rem;
+      &.show {
+        svg.fa-angle-down {
+          transform: rotateZ(180deg);
+          transition: transform 0.125s ease-out;
+        }
+      }
+      &:after {
+        display: none;
+      }
+    }
+
+    .dropdown-menu {
+      --dropdown-item-padding-y: 0.625rem;
+      top: 1.75rem;
+      position: absolute;
+      left: -6rem;
+    }
+  }
+
   .link {
-    display: block;
+    --link-color: var(--neutral-200);
+    --link-hover-color: var(--primary);
+    --navbar-active-color: var(--primary);
+
+    --nav-link-color: var(--neutral-200);
+    --nav-link-hover-color: var(--primary);
+
+    --nav-link-font-size: 1.125rem;
+    --nav-link-padding-x: 0.75rem;
+    --nav-link-padding-y: 0.75rem;
+
+    width: 100%;
     line-height: 1;
-    font-size: 1.125rem;
-    color: var(--neutral-200);
-    padding: 0.75rem;
     transition: all 200ms ease;
     background-color: transparent;
     border-radius: 0.5rem;
 
     @include media-breakpoint-up(lg) {
-      font-size: 0.75rem;
-      padding: 0.5rem;
-      margin-left: 0.25rem;
+      --nav-link-font-size: 0.75rem;
+      --nav-link-padding-x: 0.5rem;
+      --nav-link-padding-y: 0.5rem;
+
+      width: auto;
     }
 
     @include media-breakpoint-up(xl) {
-      padding: 0.5rem 0.75rem;
-      font-size: 0.875rem;
+      --nav-link-font-size: 0.875rem;
+      --nav-link-padding-x: 0.75rem;
+      --nav-link-padding-y: 0.5rem;
     }
 
     &:hover,
     &.active {
+      --link-color: var(--primary);
+      --nav-link-color: var(--primary);
       background-color: var(--black);
-      color: var(--primary);
-
       @include media-breakpoint-up(lg) {
         background-color: rgba(black, 0.2);
       }

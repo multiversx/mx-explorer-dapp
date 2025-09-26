@@ -4,6 +4,7 @@ import { Navigate, Outlet, useParams } from 'react-router-dom';
 
 import { NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
 import { Loader } from 'components';
+import { isEgldToken } from 'helpers';
 import { useAdapter, useGetPage, useHasExchangeData } from 'hooks';
 import { activeNetworkSelector, tokenExtraSelector } from 'redux/selectors';
 import { setToken, setTokenExtra } from 'redux/slices';
@@ -11,20 +12,23 @@ import { ExchangePriceRangeEnum } from 'types';
 
 import { FailedTokenDetails } from './FailedTokenDetails';
 import { TokenDetailsCard } from './TokenDetailsCard';
+import { TokenHolderDetailsCard } from './TokenHolderDetailsCard';
 
 export const TokenLayout = () => {
   const dispatch = useDispatch();
   const { getToken, getExchangeTokenPriceHistory } = useAdapter();
-  const { hash: identifier } = useParams();
+  const { hash: identifier = '' } = useParams();
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { tokenExtra } = useSelector(tokenExtraSelector);
 
   const hasExchangeData = useHasExchangeData();
+  const isEgldNetworkToken =
+    isEgldToken(egldLabel) &&
+    identifier.toLowerCase() === NATIVE_TOKEN_IDENTIFIER.toLowerCase();
+
   const isNativeToken =
-    identifier &&
-    (identifier.toLowerCase() === egldLabel?.toLowerCase() ||
-      identifier.toLowerCase() === NATIVE_TOKEN_IDENTIFIER.toLowerCase());
+    identifier.toLowerCase() === egldLabel?.toLowerCase() || isEgldNetworkToken;
 
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
@@ -83,6 +87,7 @@ export const TokenLayout = () => {
   return (
     <div className='container page-content'>
       <TokenDetailsCard />
+      <TokenHolderDetailsCard />
       <Outlet />
     </div>
   );

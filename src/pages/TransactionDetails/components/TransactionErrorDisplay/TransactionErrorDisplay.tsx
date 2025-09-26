@@ -7,7 +7,7 @@ import {
   urlBuilder
 } from 'helpers';
 import { faAngleDown } from 'icons/regular';
-import { DecodeMethodEnum, getAllDecodedFormats } from 'lib';
+import { DecodeMethodEnum, getDecodedDataField } from 'lib';
 import {
   TransactionType,
   TransactionApiStatusEnum,
@@ -19,13 +19,12 @@ export const InternalErrorDisplay = ({ data }: { data: string }) => {
   if (data) {
     const dataBase64Buffer = Buffer.from(String(data), 'base64');
     const dataHexValue = dataBase64Buffer.toString('hex');
-    const decodedDisplay = getAllDecodedFormats({
+    const decodedDisplay = getDecodedDataField({
       data: dataHexValue,
-      highlight: ''
+      decodeMethod: DecodeMethodEnum.smart
     });
-    const decodedValue = decodedDisplay[DecodeMethodEnum.smart];
-    if (decodedValue?.displayValue) {
-      return <p className='text-start'>{decodedValue.displayValue}</p>;
+    if (decodedDisplay?.displayValue) {
+      return <p className='text-start'>{decodedDisplay.displayValue}</p>;
     }
   }
 

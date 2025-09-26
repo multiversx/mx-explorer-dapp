@@ -1,7 +1,10 @@
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
+import {
+  NATIVE_TOKEN_IDENTIFIER,
+  NATIVE_TOKEN_SEARCH_LABEL
+} from 'appConstants';
 import { NativeTokenSymbol, NetworkLink, Overlay } from 'components';
 import { urlBuilder, isEgldToken, isProof } from 'helpers';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -28,17 +31,25 @@ export const TokenLink = ({ token }: { token: TokenType }) => {
       : urlBuilder.tokenDetails(token.identifier);
 
   if (token.identifier === NATIVE_TOKEN_IDENTIFIER) {
-    const isCustomIcon = !isEgldToken(egldLabel);
-    const defaultCoinLink = `/${egldLabel.toLowerCase()}`;
+    const isEgldNetworkToken = isEgldToken(egldLabel);
+
+    if (isEgldNetworkToken) {
+      const defaultCoinLink = `/${egldLabel.toLowerCase()}`;
+      return (
+        <NetworkLink to={defaultCoinLink} className='d-flex text-truncate'>
+          <span className='fam'></span>
+          <NativeTokenSymbol
+            className={classNames('sym', { custom: !isEgldNetworkToken })}
+          />
+          <sup className='suf opc'></sup>
+        </NetworkLink>
+      );
+    }
 
     return (
-      <NetworkLink to={defaultCoinLink} className='d-flex text-truncate'>
-        <span className='fam'></span>
-        <NativeTokenSymbol
-          className={classNames('sym', { custom: isCustomIcon })}
-        />
-        <sup className='suf opc'></sup>
-      </NetworkLink>
+      <span className='d-flex align-items-center text-truncate'>
+        <div className='text-truncate'>{NATIVE_TOKEN_SEARCH_LABEL}</div>
+      </span>
     );
   }
 

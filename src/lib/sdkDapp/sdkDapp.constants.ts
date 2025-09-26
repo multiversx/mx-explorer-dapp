@@ -8,3 +8,4 @@ export {
   GAS_PRICE_MODIFIER,
   GAS_PRICE as DEFAULT_GAS_PRICE
 } from '@multiversx/sdk-dapp/out/constants/mvx.constants';
+export { MAX_DECODE_TX_DATA_LENGTH } from '@multiversx/sdk-dapp/out/constants/transactions.constants';

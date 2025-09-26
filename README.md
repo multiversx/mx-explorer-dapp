@@ -5,7 +5,8 @@
 This project was bootstrapped with [Vite](https://vitejs.dev/guide/).
 
 ## Tests
- [![E2E tests](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/pre-merge-main-e2e-tests.yml/badge.svg)](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/pre-merge-main-e2e-tests.yml)
+
+[![E2E tests](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/pre-merge-main-e2e-tests.yml/badge.svg)](https://github.com/multiversx/mx-explorer-dapp/actions/workflows/pre-merge-main-e2e-tests.yml)
 
 ## Deployments
 
@@ -15,7 +16,7 @@ This project was bootstrapped with [Vite](https://vitejs.dev/guide/).
 ## Requirements
 
 - a `git` client installed
-- `nodejs` (v18.19.0 LTS), `npm` and `yarn` installed
+- `nodejs` (v20.19.4 LTS), `npm` and `yarn` installed
 - optional, but useful: an IDE (Visual Code for example)
 
 ## Quick start
