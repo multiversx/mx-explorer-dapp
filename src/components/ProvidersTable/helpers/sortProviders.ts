@@ -64,6 +64,21 @@ export const sortProviders = ({
         });
         break;
 
+      case field === SortProviderFieldEnum.numNodes:
+        sortArray.sort((a, b) => {
+          const aNnodes =
+            a.identityInfo?.validators !== undefined
+              ? a.identityInfo.validators
+              : a.numNodes ?? 0;
+          const bNnodes =
+            b.identityInfo?.validators !== undefined
+              ? b.identityInfo.validators
+              : b.numNodes ?? 0;
+
+          return aNnodes > bNnodes ? sortParams[0] : sortParams[1];
+        });
+        break;
+
       default:
         sortArray.sort((a: any, b: any) =>
           parseFloat(a[field]) > parseFloat(b[field])

@@ -42,7 +42,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
 
   const valueParts = String(formattedValue).split('.');
   const isZero = Number(completeValue) === 0;
-  const displayLabel = label ?? (token ? token : egldLabel);
+  const displayLabel = label ?? token ?? egldLabel;
 
   const DisplayValue = () => {
     if (hideLessThanOne) {
