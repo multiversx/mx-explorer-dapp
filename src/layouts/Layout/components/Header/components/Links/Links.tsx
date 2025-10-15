@@ -34,11 +34,14 @@ export const Links = (props: LinksPropsType) => {
   const { onClick } = props;
   const { adapter } = useSelector(activeNetworkSelector);
   const activeRoute = useActiveRoute();
-  const { hash: address } = useParams();
-
   const networkRoute = useNetworkRoute();
   const hasGrowthWidgets = useHasGrowthWidgets();
   const isMainnet = useIsMainnet();
+  const { hash: address } = useParams();
+  const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>(
+    {}
+  );
+
   const isAdapterAPI = adapter === 'api';
   const isOnAccountRoute =
     address &&
@@ -49,7 +52,13 @@ export const Links = (props: LinksPropsType) => {
     transactionsInPoolRoutes
   ).some((item) => activeRoute(item));
 
-  const [show, setShow] = useState(false);
+  const toggleDropdown = (label: string) => {
+    setOpenDropdowns((prev) => ({ ...prev, [label]: !prev[label] }));
+  };
+
+  const setDropdownOpen = (label: string, isOpen: boolean) => {
+    setOpenDropdowns((prev) => ({ ...prev, [label]: isOpen }));
+  };
 
   const links: MenuLinkType[] = [
     {
@@ -160,6 +169,7 @@ export const Links = (props: LinksPropsType) => {
       <Navbar collapseOnSelect className='links navbar-nav mt-0' role='menubar'>
         {links.map((link) => {
           if (link.subRoutes) {
+            const show = openDropdowns[link.label];
             return (
               <li
                 key={`dropdown-${link.label}`}
@@ -175,8 +185,8 @@ export const Links = (props: LinksPropsType) => {
                   className={classNames('link nav-link has-dropdown', {
                     active: getIsLinkActive(link) || show
                   })}
-                  onMouseEnter={() => setShow(true)}
-                  onMouseLeave={() => setShow(false)}
+                  onMouseEnter={() => setDropdownOpen(link.label, true)}
+                  onMouseLeave={() => setDropdownOpen(link.label, false)}
                 >
                   {link.label}
                 </Link>
@@ -188,10 +198,10 @@ export const Links = (props: LinksPropsType) => {
                   title={<FontAwesomeIcon icon={faAngleDown} size='sm' />}
                   renderMenuOnMount={true}
                   show={show}
-                  onMouseEnter={() => setShow(true)}
-                  onMouseLeave={() => setShow(false)}
+                  onMouseEnter={() => setDropdownOpen(link.label, true)}
+                  onMouseLeave={() => setDropdownOpen(link.label, false)}
                   onClick={() => {
-                    setShow((show) => !show);
+                    toggleDropdown(link.label);
                   }}
                 >
                   {link.subRoutes.map((subroute) => {

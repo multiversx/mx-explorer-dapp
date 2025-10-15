@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js';
 
-import { LOW_LIQUIDITY_DISPLAY_TRESHOLD } from 'appConstants';
-import { formatAmount } from 'helpers';
+import { formatAmount, isValidAccountTokenValue } from 'helpers';
 import { TokenType, SortOrderEnum } from 'types';
 
 export enum SortTokenFieldEnum {
@@ -23,16 +22,9 @@ export interface SortTokensType {
   tokenBalance?: string;
 }
 
-const getTokenDisplayValue = ({
-  valueUsd,
-  isLowLiquidity
-}: ProcessedTokenType) => {
-  if (
-    valueUsd &&
-    (!isLowLiquidity ||
-      new BigNumber(valueUsd).isLessThan(LOW_LIQUIDITY_DISPLAY_TRESHOLD))
-  ) {
-    return new BigNumber(valueUsd);
+const getTokenDisplayValue = (token: ProcessedTokenType) => {
+  if (isValidAccountTokenValue(token)) {
+    return new BigNumber(token?.valueUsd ?? 0);
   }
 
   return new BigNumber(0);
