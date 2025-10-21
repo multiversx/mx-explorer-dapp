@@ -22,7 +22,8 @@ export const AuctionListThresholdRow = ({
   isSortDesc,
   className
 }: AuctionListThresholdRowUIType) => {
-  const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
+  const { isDataReady: isStakeFetched, unprocessed } =
+    useSelector(stakeSelector);
   const { qualifiedValidators, notQualifiedValidators } =
     thresholdRowConfig ?? {};
   const hasValidatorCount =

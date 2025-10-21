@@ -16,7 +16,8 @@ export const networks: NetworkType[] = [
     walletAddress: 'https://testnet-wallet.multiversx.com',
     explorerAddress: 'https://testnet-explorer.multiversx.com',
     nftExplorerAddress: 'https://testnet.xspotlight.com',
-    apiAddress: 'https://testnet-api.multiversx.com'
+    apiAddress: 'https://testnet-api.multiversx.com',
+    updatesWebsocketUrl: 'https://testnet-socket-api.multiversx.com'
   },
 
   // Saved Custom Network Configs

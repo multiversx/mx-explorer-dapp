@@ -20,7 +20,8 @@ export const networks: NetworkType[] = [
     walletAddress: 'https://testnet-wallet.multiversx.com/',
     explorerAddress: 'https://testnet-explorer.multiversx.com/',
     nftExplorerAddress: 'https://testnet.xspotlight.com',
-    apiAddress: 'https://testnet-api.multiversx.com'
+    apiAddress: 'https://testnet-api.multiversx.com',
+    updatesWebsocketUrl: 'https://testnet-socket-api.multiversx.com'
   },
   {
     id: 'devnet',
@@ -32,7 +33,8 @@ export const networks: NetworkType[] = [
     walletAddress: 'https://devnet-wallet.multiversx.com',
     explorerAddress: 'https://devnet-explorer.multiversx.com',
     nftExplorerAddress: 'https://devnet.xspotlight.com',
-    apiAddress: 'https://devnet-api.multiversx.com'
+    apiAddress: 'https://devnet-api.multiversx.com',
+    updatesWebsocketUrl: 'https://devnet-socket-api.multiversx.com'
   },
 
   // Internal Testnets

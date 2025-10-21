@@ -1,11 +1,11 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { Loader } from 'components';
 import { initApp, InitAppType } from 'lib';
 import { activeNetworkSelector } from 'redux/selectors';
 
 import { useGetEnvironment } from './hooks';
-import { Loader } from 'components';
 
 export const SdkDappWrapper = ({ children }: { children: ReactNode }) => {
   const environment = useGetEnvironment();

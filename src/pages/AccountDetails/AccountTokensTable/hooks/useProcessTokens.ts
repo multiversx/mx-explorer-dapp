@@ -21,7 +21,7 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
 
   const [searchParams] = useSearchParams();
   const { hash: address } = useParams() as any;
-  const { accountExtra, isFetched: isAccountExtraFetched } =
+  const { accountExtra, isDataReady: isAccountExtraFetched } =
     useSelector(accountExtraSelector);
   const { address: extraAddress } = accountExtra;
   const { search } = useGetSearch();
@@ -39,7 +39,7 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
     dispatch(
       setAccountExtra({
         accountExtra: { ...accountExtraDetails, address },
-        isFetched: true
+        isDataReady: true
       })
     );
   }

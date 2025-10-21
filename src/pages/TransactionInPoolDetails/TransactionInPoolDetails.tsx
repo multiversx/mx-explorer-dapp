@@ -6,7 +6,7 @@ import { Loader, NetworkLink, PageState } from 'components';
 import { isHash, urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faExchangeAlt } from 'icons/regular';
-import { refreshSelector } from 'redux/selectors/refresh';
+import { refreshSelector } from 'redux/selectors';
 import {
   TransactionType,
   TransactionSCResultType,

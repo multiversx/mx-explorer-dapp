@@ -1,18 +1,20 @@
 import { useSearchParams } from 'react-router-dom';
 
-import { stringIsInteger } from 'lib';
+import { cleanUrlFilters, getUrlParam } from 'helpers';
+import { TransactionFiltersEnum } from 'types';
 
 export const useGetEventFilters = () => {
   const [searchParams] = useSearchParams();
-  const { address, identifier, txHash, shard, before, after } =
-    Object.fromEntries(searchParams);
+  const getParam = getUrlParam(searchParams);
 
-  return {
-    ...(address ? { address } : {}),
-    ...(identifier ? { identifier } : {}),
-    ...(txHash ? { txHash } : {}),
-    ...(shard && stringIsInteger(shard) ? { shard: Number(shard) } : {}),
-    ...(before && stringIsInteger(before) ? { before: Number(before) } : {}),
-    ...(after && stringIsInteger(after) ? { after: Number(after) } : {})
+  const filters = {
+    address: getParam('address'),
+    identifier: getParam('identifier'),
+    txHash: getParam('txHash'),
+    shard: getParam('shard', true),
+    before: getParam(TransactionFiltersEnum.before, true),
+    after: getParam(TransactionFiltersEnum.after, true)
   };
+
+  return cleanUrlFilters(filters);
 };

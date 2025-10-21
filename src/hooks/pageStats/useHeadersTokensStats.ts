@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 import { useAdapter, useHasGrowthWidgets } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
-import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
+import { pageHeaderTokensStatsSelector } from 'redux/selectors';
 import {
   setPageHeaderBlocksStatsEcosystemMarketCap,
   setPageHeaderTokensStats
-} from 'redux/slices/pageHeadersTokensStats';
+} from 'redux/slices';
 import { HeadersTokensType } from 'types/headerStats.types';
 
 export const useHeadersTokensStats = () => {

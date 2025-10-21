@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { processStake } from 'helpers';
 import { useAdapter } from 'hooks';
-import { setStake } from 'redux/slices/stake';
+import { setStake } from 'redux/slices';
 
 let currentRequest: any = null;
 
@@ -58,7 +58,7 @@ export const useFetchStake = () => {
           ...processedStake,
 
           unprocessed: processedData,
-          isFetched: true
+          isDataReady: true
         })
       );
     }

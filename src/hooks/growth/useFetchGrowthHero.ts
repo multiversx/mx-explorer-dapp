@@ -1,41 +1,18 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { processGrowthHero } from 'helpers';
-import { useAdapter, useHasGrowthWidgets } from 'hooks';
-import { growthHeroSelector } from 'redux/selectors';
-import { setGrowthHero } from 'redux/slices/growthHero';
-
-let currentRequest: any = null;
+import { useHasGrowthWidgets } from 'hooks';
+import { setGrowthHero } from 'redux/slices';
+import { useFetchGrowthWidgetOnce } from './useFetchGrowthWidgetOnce';
 
 export const useFetchGrowthHero = () => {
-  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
-  const { getGrowthWidget } = useAdapter();
-  const { isFetched } = useSelector(growthHeroSelector);
-
-  const getGrowthHeroOnce = () => {
-    if (currentRequest) {
-      return currentRequest;
-    }
-
-    const requestPromise = new Promise(async (resolve, reject) => {
-      try {
-        const response = await getGrowthWidget('/hero');
-        resolve(response);
-      } catch (error) {
-        reject(error);
-      } finally {
-        currentRequest = null;
-      }
-    });
-
-    currentRequest = requestPromise;
-    return requestPromise;
-  };
+  const hasGrowthWidgets = useHasGrowthWidgets();
+  const fetchGrowthWidgetOnce = useFetchGrowthWidgetOnce();
 
   const fetchGrowthHero = async () => {
-    const { data, success } = await getGrowthHeroOnce();
+    const { data, success } = await fetchGrowthWidgetOnce('/hero');
 
     if (data && success) {
       const processedGrowthHero = processGrowthHero(data);
@@ -44,7 +21,7 @@ export const useFetchGrowthHero = () => {
           ...processedGrowthHero,
 
           unprocessed: data,
-          isFetched: success
+          isDataReady: success
         })
       );
     }
@@ -53,9 +30,11 @@ export const useFetchGrowthHero = () => {
   };
 
   useEffect(() => {
-    if (!isFetched && hasGrowthWidgets) {
-      fetchGrowthHero();
+    if (!hasGrowthWidgets) {
+      return;
     }
+
+    fetchGrowthHero();
   }, [hasGrowthWidgets]);
 
   return fetchGrowthHero;

@@ -1,3 +1,6 @@
+import classNames from 'classnames';
+import { useSelector } from 'react-redux';
+
 import {
   AgeColumnFilters,
   FromColumnFilters,
@@ -6,17 +9,22 @@ import {
   MethodColumnFilters,
   ToColumnFilters,
   ValueColumnFilters,
-  DirectionColumnFilters
+  DirectionColumnFilters,
+  PauseRefreshButton
 } from 'components';
 import { useIsSovereign } from 'hooks';
+import { transactionsSelector } from 'redux/selectors';
+import { pauseRefresh, resumeRefresh } from 'redux/slices/transactions';
 import { TransactionTableType } from 'types';
 
 export const Header = ({
   showDirectionCol = false,
   address,
-  inactiveFilters
+  inactiveFilters,
+  hasPauseButton
 }: TransactionTableType) => {
   const isSovereign = useIsSovereign();
+  const { isRefreshPaused } = useSelector(transactionsSelector);
 
   return (
     <thead>
@@ -53,8 +61,22 @@ export const Header = ({
         <th scope='col'>
           Method <MethodColumnFilters inactiveFilters={inactiveFilters} />
         </th>
-        <th scope='col'>
-          Value <ValueColumnFilters inactiveFilters={inactiveFilters} />
+        <th
+          scope='col'
+          className={classNames({
+            'd-flex align-item-center justify-content-between': hasPauseButton
+          })}
+        >
+          <div className='d-flex align-item-center'>
+            Value <ValueColumnFilters inactiveFilters={inactiveFilters} />
+          </div>
+          {hasPauseButton && (
+            <PauseRefreshButton
+              pauseRefresh={pauseRefresh}
+              resumeRefresh={resumeRefresh}
+              isRefreshPaused={isRefreshPaused}
+            />
+          )}
         </th>
       </tr>
     </thead>

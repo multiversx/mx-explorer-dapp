@@ -1,6 +1,8 @@
 export * from './useFetchAccountStakingDetails';
+export * from './useFetchBlocks';
 export * from './useFetchEconomics';
 export * from './useFetchEpochProgress';
+export * from './useFetchEvents';
 export * from './useFetchStake';
 export * from './useFetchMarkers';
 export * from './useFetchNodesCount';
@@ -10,3 +12,5 @@ export * from './useFetchNodesVersions';
 export * from './useFetchShards';
 export * from './useFetchStats';
 export * from './useFetchTransactions';
+export * from './useFetchTransactionsInPool';
+export * from './useFetchWebsocketConfig';

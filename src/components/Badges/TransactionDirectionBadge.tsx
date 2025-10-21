@@ -3,16 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { isTouchDevice } from 'helpers';
 import { interfaceSelector } from 'redux/selectors';
-import { setHighlightedText } from 'redux/slices/interface';
-import { TransactionDirectionEnum, WithClassnameType } from 'types';
-
-export enum TransactionDirectionDisplayEnum {
-  out = 'Out',
-  in = 'In',
-  self = 'Self',
-  internal = 'Int',
-  inner = 'Inner Tx'
-}
+import { setHighlightedText } from 'redux/slices';
+import {
+  TransactionDirectionDisplayEnum,
+  TransactionDirectionEnum,
+  WithClassnameType
+} from 'types';
 
 const getDisplayDirection = (direction: TransactionDirectionEnum) => {
   switch (direction) {

@@ -1,34 +1,24 @@
 import { useSearchParams } from 'react-router-dom';
 
-import { stringIsInteger } from 'lib';
+import { cleanUrlFilters, getUrlParam } from 'helpers';
+import { NodeFiltersEnum } from 'types';
 
 export const useGetNodeFilters = () => {
   const [searchParams] = useSearchParams();
-  const {
-    online,
-    status,
-    type,
-    issues,
-    fullHistory,
-    shard,
-    identity,
-    isQualified,
-    isAuctioned,
-    isAuctionDangerZone
-  } = Object.fromEntries(searchParams);
+  const getParam = getUrlParam(searchParams);
 
-  return {
-    ...(status ? { status } : {}),
-    ...(type ? { type } : {}),
-    ...(identity ? { identity } : {}),
-    ...(shard && stringIsInteger(shard) ? { shard } : {}),
-    ...(online ? { online: online === 'true' } : {}),
-    ...(issues ? { issues: 'true' } : {}),
-    ...(fullHistory ? { fullHistory: 'true' } : {}),
-    ...(isQualified ? { isQualified: isQualified === 'true' } : {}),
-    ...(isAuctioned ? { isAuctioned: isAuctioned === 'true' } : {}),
-    ...(isAuctionDangerZone
-      ? { isAuctionDangerZone: isAuctionDangerZone === 'true' }
-      : {})
+  const filters = {
+    status: getParam(NodeFiltersEnum.status),
+    type: getParam(NodeFiltersEnum.type),
+    identity: getParam(NodeFiltersEnum.identity),
+    shard: getParam(NodeFiltersEnum.shard, true),
+    online: getParam(NodeFiltersEnum.online),
+    issues: getParam(NodeFiltersEnum.issues),
+    fullHistory: getParam(NodeFiltersEnum.fullHistory),
+    isQualified: getParam(NodeFiltersEnum.isQualified),
+    isAuctioned: getParam(NodeFiltersEnum.isAuctioned),
+    isAuctionDangerZone: getParam(NodeFiltersEnum.isAuctionDangerZone)
   };
+
+  return cleanUrlFilters(filters);
 };

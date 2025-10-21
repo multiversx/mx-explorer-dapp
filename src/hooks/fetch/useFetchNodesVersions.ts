@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { processNodesVersions } from 'helpers';
 import { useAdapter } from 'hooks';
 import { nodesVersionsSelector } from 'redux/selectors';
-import { setNodesVersions } from 'redux/slices/nodesVersions';
+import { setNodesVersions } from 'redux/slices';
 
 let currentRequest: any = null;
 
 export const useFetchNodesVersions = () => {
   const dispatch = useDispatch();
   const { getNodesVersions } = useAdapter();
-  const { isFetched } = useSelector(nodesVersionsSelector);
+  const { isDataReady } = useSelector(nodesVersionsSelector);
 
   const getNodesVersionsOnce = () => {
     if (currentRequest) {
@@ -44,7 +44,7 @@ export const useFetchNodesVersions = () => {
           ...processedNodesVersions,
 
           unprocessed: data,
-          isFetched: success
+          isDataReady: success
         })
       );
     }
@@ -53,7 +53,7 @@ export const useFetchNodesVersions = () => {
   };
 
   useEffect(() => {
-    if (!isFetched) {
+    if (!isDataReady) {
       fetchNodesVersions();
     }
   }, []);

@@ -2,11 +2,11 @@ import classNames from 'classnames';
 
 import { NetworkLink, Trim, AccountLink, ShardLink, TimeAgo } from 'components';
 import { urlBuilder } from 'helpers';
-import { EventType, WithClassnameType } from 'types';
+import { UIEventType, WithClassnameType } from 'types';
 import { EventIdentifierBadge } from './EventIdentifierBadge';
 
 export interface EventRowUIType extends WithClassnameType {
-  event: EventType;
+  event: UIEventType;
 }
 
 export const EventRow = ({ event }: EventRowUIType) => {

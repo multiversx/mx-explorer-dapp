@@ -7,12 +7,14 @@ import { statsSelector } from 'redux/selectors';
 
 export const useGetEpochRemainingTime = () => {
   const {
-    isFetched: isStatsFetched,
+    isDataReady: isStatsFetched,
     unprocessed: { epochTimeRemaining: unprocessedEpochTimeRemaining },
-    epoch
+    stats
   } = useSelector(statsSelector);
 
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const { epoch } = stats;
 
   const currentTimestamp = useMemo(
     () => moment().unix() + unprocessedEpochTimeRemaining / 1000,

@@ -19,7 +19,7 @@ export interface FormatEGLDUIType extends Omit<FormatAmountUIType, 'value'> {
 
 export const FormatEGLD = (props: FormatEGLDUIType) => {
   const { egldLabel = '' } = useSelector(activeNetworkSelector);
-  const { isFetched, unprocessed } = useSelector(economicsSelector);
+  const { isDataReady, unprocessed } = useSelector(economicsSelector);
   const {
     value,
     usd,
@@ -49,7 +49,7 @@ export const FormatEGLD = (props: FormatEGLDUIType) => {
   const showUsdValueTooltip =
     !bNValue.isZero() &&
     showUsdValue &&
-    ((isFetched && unprocessed.price) || usd);
+    ((isDataReady && unprocessed.price) || usd);
 
   return (
     <FormatDisplayValue

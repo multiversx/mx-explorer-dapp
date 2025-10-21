@@ -18,7 +18,8 @@ export const AuctionThresholdRow = ({
   isSortDesc,
   className
 }: AuctionThresholdRowUIType) => {
-  const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
+  const { isDataReady: isStakeFetched, unprocessed } =
+    useSelector(stakeSelector);
 
   return (
     <tr className={classNames('threshold-row', className)}>

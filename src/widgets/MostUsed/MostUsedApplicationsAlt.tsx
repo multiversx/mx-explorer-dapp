@@ -21,7 +21,7 @@ export const MostUsedApplications = ({
 }: MostUsedApplicationsUIType) => {
   const hasGrowthWidgets = useHasGrowthWidgets();
 
-  const { isFetched, dailyMostUsedApplications } = useSelector(
+  const { isDataReady, dailyMostUsedApplications } = useSelector(
     growthMostUsedSelector
   );
 
@@ -53,7 +53,7 @@ export const MostUsedApplications = ({
 
   return (
     <>
-      {isFetched ? (
+      {isDataReady ? (
         <div
           className={classNames(
             'most-used-applications card card-black',

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { IDENTITIES_FIELDS } from 'appConstants';
 import { processNodesIdentities } from 'helpers';
 import { useAdapter } from 'hooks';
-import { setNodesIdentities } from 'redux/slices/nodesIdentities';
+import { setNodesIdentities } from 'redux/slices';
 import { SortableApiType } from 'types';
 
 let currentRequest: any = null;
@@ -47,7 +47,7 @@ export const useFetchNodesIdentities = (sortParams?: SortableApiType) => {
         setNodesIdentities({
           nodesIdentities: processedNodesIdentities,
           unprocessed: data,
-          isFetched: success
+          isDataReady: success
         })
       );
     }

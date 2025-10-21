@@ -14,10 +14,10 @@ describe('Dashboard', () => {
 
   it('should successfully return the API responses', () => {
     cy.verifyApiResponse(ApiEndpointsEnum.blocks, (xhr) => {
-      expect(xhr?.response?.body).to.have.lengthOf(5);
+      expect(xhr?.response?.body).to.have.lengthOf(25);
     });
     cy.verifyApiResponse(ApiEndpointsEnum.transactions, (xhr) => {
-      expect(xhr?.response?.body).to.have.lengthOf(5);
+      expect(xhr?.response?.body).to.have.lengthOf(25);
     });
     cy.verifyApiResponse(ApiEndpointsEnum.stats, (xhr) => {
       expect(xhr?.response?.body?.accounts).to.be.at.least(3200);

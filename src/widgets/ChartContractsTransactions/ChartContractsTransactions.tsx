@@ -6,13 +6,12 @@ import { SingleValue } from 'react-select';
 
 import { Select, SelectOptionType } from 'components';
 import { getColors } from 'helpers';
-import { useFetchGrowthTransactions } from 'hooks';
-import { growthTransactionsSelector } from 'redux/selectors';
 import {
-  GrowthChartDataType,
-  StatisticType,
-  TransactionsStatisticsLabelEnum
-} from 'types';
+  useFetchGrowthTransactions,
+  useGetTransactionsStatistics
+} from 'hooks';
+import { growthTransactionsSelector } from 'redux/selectors';
+import { GrowthChartDataType } from 'types';
 
 import { ChartArea } from './ChartArea';
 import { PayloadType } from './ChartArea/types';
@@ -56,17 +55,19 @@ export const ChartContractsTransactions = ({
   className
 }: ChartContractsTransactionsUIType) => {
   const {
-    scResults,
-    transactions,
-    totalTransactions,
     transactions7d,
     transactions30d,
     transactionsAll,
     scResults7d,
     scResults30d,
     scResultsAll,
-    isFetched
+    isDataReady
   } = useSelector(growthTransactionsSelector);
+
+  const statistics = useGetTransactionsStatistics({
+    showTotal,
+    customStatistics
+  });
 
   const [success, primary, violet500] = getColors([
     'success',
@@ -92,27 +93,6 @@ export const ChartContractsTransactions = ({
       value: 'transactionsAll'
     }
   ];
-
-  const statistics: StatisticType[] =
-    customStatistics.length > 0
-      ? customStatistics
-      : [
-          {
-            label: TransactionsStatisticsLabelEnum.Transactions,
-            value: totalTransactions,
-            color: primary
-          },
-          {
-            label: TransactionsStatisticsLabelEnum.Applications,
-            value: scResults,
-            color: showTotal ? success : primary
-          },
-          {
-            label: TransactionsStatisticsLabelEnum.Standard,
-            value: transactions,
-            color: violet500
-          }
-        ];
 
   const transactions365d = transactionsAll.slice(
     transactionsAll.length - 365,
@@ -178,7 +158,7 @@ export const ChartContractsTransactions = ({
 
   const onChange = useCallback(
     (option: SingleValue<SelectOptionType>) => {
-      if (option && option.value && isFetched) {
+      if (option && option.value && isDataReady) {
         const value = String(option.value).replace('transactions', '');
         const [transactionsKey, contractsKey, totalKey] = [
           `transactions${value}`,
@@ -191,11 +171,11 @@ export const ChartContractsTransactions = ({
         setTotalPayload(dataTotal.get(totalKey));
       }
     },
-    [isFetched]
+    [isDataReady]
   );
 
   const onInitialLoad = useCallback(() => {
-    if (isFetched) {
+    if (isDataReady) {
       setTransactionsPayload(dataTransactions.get('transactions30d'));
       setContractsPayload(dataContracts.get('scResults30d'));
       setTotalPayload(dataTotal.get('total30d'));

@@ -11,7 +11,8 @@ import { stakeSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
 export const NodesEpochStatusCards = ({ className }: WithClassnameType) => {
-  const { isFetched: isStakeFetched, unprocessed } = useSelector(stakeSelector);
+  const { isDataReady: isStakeFetched, unprocessed } =
+    useSelector(stakeSelector);
   const { epoch, remainingTime, isStatsFetched } = useGetEpochRemainingTime();
 
   const [days, hours, minutes, seconds] = remainingTime;

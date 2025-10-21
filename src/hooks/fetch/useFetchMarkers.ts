@@ -4,7 +4,7 @@ import { object, string, number } from 'yup';
 
 import { useAdapter } from 'hooks';
 import { markersSelector } from 'redux/selectors';
-import { setMarkers } from 'redux/slices/markers';
+import { setMarkers } from 'redux/slices';
 
 const schema = object({
   continent: string().defined(),
@@ -19,10 +19,10 @@ export const useFetchMarkers = () => {
   const dispatch = useDispatch();
   const markerUrl = import.meta.env.VITE_APP_MARKERS_API_URL;
   const { getMarkers } = useAdapter();
-  const { isFetched } = useSelector(markersSelector);
+  const { isDataReady } = useSelector(markersSelector);
 
   const fetchMarkers = () => {
-    if (!isFetched && markerUrl) {
+    if (!isDataReady && markerUrl) {
       getMarkers(markerUrl).then(({ data, success }) => {
         if (data && success) {
           schema
@@ -35,7 +35,7 @@ export const useFetchMarkers = () => {
             setMarkers({
               markers: data,
 
-              isFetched: success
+              isDataReady: success
             })
           );
         }

@@ -1,43 +1,46 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { processGrowthPrice } from 'helpers';
-import { useAdapter, useHasGrowthWidgets } from 'hooks';
-import { growthPriceSelector } from 'redux/selectors';
-import { setGrowthPrice } from 'redux/slices/growthPrice';
+import { useHasGrowthWidgets } from 'hooks';
+import { setGrowthPrice } from 'redux/slices';
+import { useFetchGrowthWidgetOnce } from './useFetchGrowthWidgetOnce';
 
 export const useFetchGrowthPrice = () => {
-  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
-  const { isFetched } = useSelector(growthPriceSelector);
-  const { getGrowthWidget } = useAdapter();
+  const hasGrowthWidgets = useHasGrowthWidgets();
+  const fetchGrowthWidgetOnce = useFetchGrowthWidgetOnce();
 
-  const fetchGrowthPrice = () => {
-    if (!isFetched) {
-      getGrowthWidget('/price').then(({ data, success }) => {
-        if (data && success) {
-          const processedGrowthPrice = processGrowthPrice(data);
-          const { price7d, price30d, priceAll, ...rest } = data;
-          dispatch(
-            setGrowthPrice({
-              ...processedGrowthPrice,
+  const fetchGrowthPrice = async () => {
+    const { data, success } = await fetchGrowthWidgetOnce('/price');
 
-              price7d: data.price7d,
-              price30d: data.price30d,
-              priceAll: data.priceAll,
+    if (data && success) {
+      const processedGrowthPrice = processGrowthPrice(data);
+      const { price7d, price30d, priceAll, ...rest } = data;
+      dispatch(
+        setGrowthPrice({
+          ...processedGrowthPrice,
 
-              unprocessed: rest,
-              isFetched: success
-            })
-          );
-        }
-      });
+          price7d: data.price7d,
+          price30d: data.price30d,
+          priceAll: data.priceAll,
+
+          unprocessed: rest,
+          isDataReady: success
+        })
+      );
     }
+
+    return { data, success };
   };
 
   useEffect(() => {
-    if (hasGrowthWidgets) {
-      fetchGrowthPrice();
+    if (!hasGrowthWidgets) {
+      return;
     }
+
+    fetchGrowthPrice();
   }, [hasGrowthWidgets]);
+
+  return fetchGrowthPrice;
 };

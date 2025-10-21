@@ -22,7 +22,7 @@ import {
   useHasGrowthWidgets
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
+import { pageHeadersAccountsStatsSelector } from 'redux/selectors';
 import { AccountType, SortOrderEnum } from 'types';
 
 import { FailedAccounts } from './components/FailedAccounts';

@@ -28,7 +28,7 @@ export const getInitialEconomicsState = (): EconomicsSliceType => {
       baseApr: 0,
       tokenMarketCap: 0
     },
-    isFetched: undefined
+    isDataReady: undefined
   };
 };
 
@@ -54,7 +54,7 @@ export const economicsSlice = createSlice({
       state.ecosystemMarketCap = action.payload.ecosystemMarketCap;
 
       state.unprocessed = action.payload.unprocessed;
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

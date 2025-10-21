@@ -1,3 +1,4 @@
+export * from './processBlocks';
 export * from './processEconomics';
 export * from './processStake';
 export * from './processGrowthEconomics';

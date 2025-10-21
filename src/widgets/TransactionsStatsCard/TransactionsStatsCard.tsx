@@ -1,15 +1,12 @@
-import { useEffect } from 'react';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
-import { useFetchGrowthHero, useHasGrowthWidgets } from 'hooks';
+import { POOLING_REFRESH_RATE_LIMIT } from 'appConstants';
+import { FormatNumber } from 'components';
+import { formatBigNumber } from 'helpers';
+import { useGetNewTransactionsToday, useHasGrowthWidgets } from 'hooks';
 import { faCirclePlus } from 'icons/solid';
-import {
-  growthHeroSelector,
-  refreshSelector,
-  statsSelector
-} from 'redux/selectors';
+import { activeNetworkSelector, statsSelector } from 'redux/selectors';
 import { StatsCard } from 'widgets';
 
 export const TransactionsStatsCard = ({
@@ -18,33 +15,39 @@ export const TransactionsStatsCard = ({
   className?: string;
 }) => {
   const hasGrowthWidgets = useHasGrowthWidgets();
-  const { totalTransactions, totalTransactionsToday } =
-    useSelector(growthHeroSelector);
-  const { transactions } = useSelector(statsSelector);
-  const { timestamp } = useSelector(refreshSelector);
+  const { refreshRate } = useSelector(activeNetworkSelector);
+  const { unprocessed } = useSelector(statsSelector);
+  const { transactions } = unprocessed;
 
-  const fetchHero = useFetchGrowthHero();
+  const newTransactionsToday = useGetNewTransactionsToday();
 
-  useEffect(() => {
-    if (hasGrowthWidgets) {
-      fetchHero();
-    }
-  }, [timestamp, hasGrowthWidgets]);
+  const isAnimated = Boolean(
+    refreshRate && refreshRate < POOLING_REFRESH_RATE_LIMIT
+  );
 
   return (
-    <>
-      {hasGrowthWidgets ? (
-        <StatsCard
-          title='Total Transactions'
-          value={totalTransactions}
-          className={className}
-        >
+    <StatsCard
+      title='Total Transactions'
+      value={
+        <FormatNumber
+          value={transactions}
+          isAnimated={isAnimated}
+          showEllipsisIfZero
+        />
+      }
+      className={className}
+      isAnimated={isAnimated}
+    >
+      {hasGrowthWidgets && (
+        <>
           <FontAwesomeIcon icon={faCirclePlus} className='me-2' />
-          {totalTransactionsToday} today
-        </StatsCard>
-      ) : (
-        <StatsCard title='Total Transactions' value={transactions} />
+          {formatBigNumber({
+            value: newTransactionsToday,
+            showEllipsisIfZero: true
+          })}{' '}
+          today
+        </>
       )}
-    </>
+    </StatsCard>
   );
 };

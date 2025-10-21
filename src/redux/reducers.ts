@@ -3,38 +3,50 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 // import sessionStorage from 'redux-persist/lib/storage/session';
 
-import { accountReducer } from './slices/account';
-import { accountExtraReducer } from './slices/accountExtra';
-import { accountStakingReducer } from './slices/accountStaking';
+import {
+  accountReducer,
+  accountExtraReducer,
+  accountStakingReducer
+} from './slices/account';
+import { blocksReducer } from './slices/blocks';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
+import { eventsReducer } from './slices/events';
 import { generalReducer } from './slices/general';
-import { growthEconomicsReducer } from './slices/growthEconomics';
-import { growthHeroReducer } from './slices/growthHero';
-import { growthMostUsedReducer } from './slices/growthMostUsed';
-import { growthPriceReducer } from './slices/growthPrice';
-import { growthSearchReducer } from './slices/growthSearch';
-import { growthStakingReducer } from './slices/growthStaking';
-import { growthTransactionsReducer } from './slices/growthTransactions';
+
 import { interfaceReducer } from './slices/interface';
 import { markersReducer } from './slices/markers';
 import { metaTagsReducer } from './slices/metaTags';
 import { miniBlockReducer } from './slices/miniBlock';
 import { networkReducer } from './slices/networks';
 import { nftReducer } from './slices/nft';
-import { nodesIdentitiesReducer } from './slices/nodesIdentities';
-import { nodesOverviewReducer } from './slices/nodesOverview';
-import { nodesVersionsReducer } from './slices/nodesVersions';
-import { pageHeadersAccountsReducer } from './slices/pageHeadersAccountsStats';
-import { pageHeadersBlocksReducer } from './slices/pageHeadersBlocksStats';
-import { pageHeadersCollectionsReducer } from './slices/pageHeadersCollectionsStats';
-import { pageHeadersTokensReducer } from './slices/pageHeadersTokensStats';
+import {
+  nodesIdentitiesReducer,
+  nodesOverviewReducer,
+  nodesVersionsReducer
+} from './slices/nodes';
+
 import { refreshReducer } from './slices/refresh';
 import { stakeReducer } from './slices/stake';
 import { stakeExtraReducer } from './slices/stakeExtra';
 import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
 import { tokenExtraReducer } from './slices/tokenExtra';
+import { transactionsReducer } from './slices/transactions';
+import { transactionsInPoolReducer } from './slices/transactionsInPool';
+import {
+  growthEconomicsReducer,
+  growthHeroReducer,
+  growthMostUsedReducer,
+  growthPriceReducer,
+  growthSearchReducer,
+  growthStakingReducer,
+  growthTransactionsReducer,
+  pageHeadersAccountsReducer,
+  pageHeadersBlocksReducer,
+  pageHeadersCollectionsReducer,
+  pageHeadersTokensReducer
+} from './slices/widgets';
 
 const asyncIgnoredSlices = {};
 
@@ -60,8 +72,10 @@ export const customIgnoredSlices = {
   account: accountReducer,
   accountExtra: accountExtraReducer,
   accountStaking: accountStakingReducer,
+  blocks: blocksReducer,
   collection: collectionReducer,
   economics: economicsReducer,
+  events: eventsReducer,
   general: generalReducer,
   stake: stakeReducer,
   stakeExtra: stakeExtraReducer,
@@ -76,6 +90,8 @@ export const customIgnoredSlices = {
   stats: statsReducer,
   token: tokenReducer,
   tokenExtra: tokenExtraReducer,
+  transactions: transactionsReducer,
+  transactionsInPool: transactionsInPoolReducer,
   markers: markersReducer,
   metaTags: metaTagsReducer,
   miniBlock: miniBlockReducer,

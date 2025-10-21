@@ -3,12 +3,19 @@ import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useAdapter, useHasGrowthWidgets } from 'hooks';
-import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
-import { setPageHeaderAccountsStats } from 'redux/slices/pageHeadersAccountsStats';
+import {
+  pageHeadersAccountsStatsSelector,
+  statsSelector
+} from 'redux/selectors';
+import {
+  setPageHeaderAccountsStats,
+  setPageHeaderAccountStatsTotalAccounts
+} from 'redux/slices';
 import { HeadersAccountsType } from 'types/headerStats.types';
 
 export const useHeaderAccountsStats = () => {
   const headersAccounts = useSelector(pageHeadersAccountsStatsSelector);
+  const { unprocessed: unprocessedStats } = useSelector(statsSelector);
 
   const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
@@ -45,6 +52,18 @@ export const useHeaderAccountsStats = () => {
       getHeadersAccounts();
     }
   }, [hasGrowthWidgets]);
+
+  useEffect(() => {
+    if (unprocessedStats.accounts === 0) {
+      return;
+    }
+
+    dispatch(
+      setPageHeaderAccountStatsTotalAccounts(
+        new BigNumber(unprocessedStats.accounts).toFormat(0)
+      )
+    );
+  }, [unprocessedStats.accounts, headersAccounts]);
 
   return {
     title: 'Accounts',

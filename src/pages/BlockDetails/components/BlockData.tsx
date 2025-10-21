@@ -18,12 +18,7 @@ import {
 import { formatDate, formatSize, urlBuilder } from 'helpers';
 import { useIsSovereign } from 'hooks';
 import { faChevronLeft, faChevronRight, faClock } from 'icons/regular';
-import { BlockType } from 'types';
-
-export interface BlockDataType {
-  block: BlockType;
-  nextHash: string;
-}
+import { UIBlockType } from 'types';
 
 function decodeHex(hex: string) {
   let str = '';
@@ -38,8 +33,7 @@ function createHashItemIfLengthIsOdd(length: number) {
   ) : null;
 }
 
-export const BlockData = (props: BlockDataType) => {
-  const { block, nextHash } = props;
+export const BlockData = ({ block }: { block: UIBlockType }) => {
   const isFirstBlock = block.prevHash && block.prevHash.length > 64;
   const [expanded, setExpanded] = useState(false);
   const isSovereign = useIsSovereign();
@@ -83,10 +77,10 @@ export const BlockData = (props: BlockDataType) => {
               </li>
               <li className='list-inline-item me-0'>
                 <div className='pager pager-inline'>
-                  {nextHash !== '' ? (
+                  {block?.nextHash && block.nextHash !== '' ? (
                     <NetworkLink
                       data-testid='nextPageButton'
-                      to={`/blocks/${nextHash}`}
+                      to={`/blocks/${block.nextHash}`}
                     >
                       Next <FontAwesomeIcon icon={faChevronRight} />
                     </NetworkLink>

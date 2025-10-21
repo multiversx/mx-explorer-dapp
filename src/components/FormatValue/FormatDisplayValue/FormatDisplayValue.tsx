@@ -1,6 +1,7 @@
+import NumberFlow from '@number-flow/react';
 import classNames from 'classnames';
 
-import { MAX_DISPLAY_ZERO_DECIMALS, ZERO } from 'appConstants';
+import { ELLIPSIS, MAX_DISPLAY_ZERO_DECIMALS, ZERO } from 'appConstants';
 import { FormatAmountUIType, Overlay } from 'components';
 import { DIGITS } from 'config';
 
@@ -15,6 +16,7 @@ export interface FormatDisplayValueUIType
   showTooltipSymbol?: boolean;
   showTooltipLabel?: boolean;
   spacedLabel?: boolean;
+  isAnimated?: boolean;
 }
 
 export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
@@ -37,12 +39,15 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     showTooltipLabel,
     spacedLabel,
     decimalOpacity = true,
+    isAnimated,
+    showEllipsisIfZero,
     className
   } = props;
 
   const valueParts = String(formattedValue).split('.');
   const isZero = Number(completeValue) === 0;
   const displayLabel = label ?? token ?? egldLabel;
+  const canAnimate = isAnimated && !isNaN(Number(completeValue));
 
   const DisplayValue = () => {
     if (hideLessThanOne) {
@@ -93,9 +98,13 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     !isZero;
   const displayTooltip = showTooltip && (details || showCompleteValue);
 
+  if (isZero && showEllipsisIfZero) {
+    return <span className={classNames(className, 'fam')}>{ELLIPSIS}</span>;
+  }
+
   return (
     <span
-      className={classNames(className, 'fam')}
+      className={classNames(className, 'fam', { anim: canAnimate })}
       {...(props['data-testid'] ? { 'data-testid': props['data-testid'] } : {})}
     >
       {showSymbol && symbol && <>{symbol}</>}
@@ -126,12 +135,35 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
           persistent
           truncate
         >
-          <DisplayValue />
+          {canAnimate ? (
+            <NumberFlow
+              value={Number(completeValue)}
+              locales='en-US'
+              format={{
+                maximumFractionDigits: digits
+              }}
+            />
+          ) : (
+            <DisplayValue />
+          )}
         </Overlay>
       ) : (
-        <DisplayValue />
+        <>
+          {' '}
+          {canAnimate ? (
+            <NumberFlow
+              value={Number(completeValue)}
+              locales='en-US'
+              format={{
+                maximumFractionDigits: digits
+              }}
+            />
+          ) : (
+            <DisplayValue />
+          )}
+        </>
       )}
-      {showLabel && displayLabel && (
+      {showLabel && displayLabel && !canAnimate && (
         <>
           {superSuffix ? (
             <sup className={classNames('suf', { opc: decimalOpacity })}>

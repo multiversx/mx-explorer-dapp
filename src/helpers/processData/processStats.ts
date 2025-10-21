@@ -33,6 +33,7 @@ export const processStats = (data: StatsType) => {
     blocks: new BigNumber(data.blocks).toFormat(),
     accounts: new BigNumber(data.accounts).toFormat(),
     transactions: new BigNumber(data.transactions).toFormat(),
+    scResults: new BigNumber(data.scResults).toFormat(),
     refreshRate: data.refreshRate,
     epoch: data.epoch,
     epochPercentage,

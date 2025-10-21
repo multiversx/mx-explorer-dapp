@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useAdapter, useHasGrowthWidgets } from 'hooks';
 import { statsSelector } from 'redux/selectors';
-import { pageHeadersBlocksStatsSelector } from 'redux/selectors/pageHeadersBlocksStats';
+import { pageHeadersBlocksStatsSelector } from 'redux/selectors';
 import {
   setPageHeaderBlocksStats,
   setPageHeaderBlocksStatsBlockHeight
-} from 'redux/slices/pageHeadersBlocksStats';
+} from 'redux/slices';
 import { HeadersBlocksType } from 'types/headerStats.types';
 
 export const useHeadersBlocksStats = () => {
   const headersBlocks = useSelector(pageHeadersBlocksStatsSelector);
-  const { unprocessed } = useSelector(statsSelector);
+  const { unprocessed: unprocessedStats } = useSelector(statsSelector);
 
   const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ export const useHeadersBlocksStats = () => {
         totalApplicationsDeployed: new BigNumber(
           result.data.totalApplicationsDeployed
         ).toFormat(),
-        blockHeight: new BigNumber(unprocessed.blocks).toFormat(0)
+        blockHeight: new BigNumber(unprocessedStats.blocks).toFormat(0)
       })
     );
     return result.data;
@@ -56,10 +56,10 @@ export const useHeadersBlocksStats = () => {
   useEffect(() => {
     dispatch(
       setPageHeaderBlocksStatsBlockHeight(
-        new BigNumber(unprocessed.blocks).toFormat(0)
+        new BigNumber(unprocessedStats.blocks).toFormat(0)
       )
     );
-  }, [unprocessed.blocks, headersBlocks]);
+  }, [unprocessedStats.blocks, headersBlocks]);
 
   return {
     title: 'Blocks',

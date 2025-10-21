@@ -75,6 +75,19 @@ export enum NodeStatusRawEnum {
   notStaked = 'notStaked'
 }
 
+export enum NodeFiltersEnum {
+  status = 'status',
+  type = 'type',
+  identity = 'identity',
+  shard = 'shard',
+  online = 'online',
+  issues = 'issues',
+  fullHistory = 'fullHistory',
+  isQualified = 'isQualified',
+  isAuctioned = 'isAuctioned',
+  isAuctionDangerZone = 'isAuctionDangerZone'
+}
+
 const NodeApiStatusEnum = {
   ...NodeStatusEnum,
   ...NodeStatusRawEnum

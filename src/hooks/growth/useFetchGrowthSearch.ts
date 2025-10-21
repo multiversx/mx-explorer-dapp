@@ -1,38 +1,41 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { processGrowthSearch } from 'helpers';
-import { useAdapter, useHasGrowthWidgets } from 'hooks';
-import { growthSearchSelector } from 'redux/selectors';
-import { setGrowthSearch } from 'redux/slices/growthSearch';
+import { useHasGrowthWidgets } from 'hooks';
+import { setGrowthSearch } from 'redux/slices';
+import { useFetchGrowthWidgetOnce } from './useFetchGrowthWidgetOnce';
 
 export const useFetchGrowthSearch = () => {
-  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
-  const { isFetched } = useSelector(growthSearchSelector);
-  const { getGrowthWidget } = useAdapter();
+  const hasGrowthWidgets = useHasGrowthWidgets();
+  const fetchGrowthWidgetOnce = useFetchGrowthWidgetOnce();
 
-  const fetchGrowthSearch = () => {
-    if (!isFetched) {
-      getGrowthWidget('/search').then(({ data, success }) => {
-        if (data && success) {
-          const processedGrowthSearch = processGrowthSearch(data);
-          dispatch(
-            setGrowthSearch({
-              ...processedGrowthSearch,
+  const fetchGrowthSearch = async () => {
+    const { data, success } = await fetchGrowthWidgetOnce('/search');
 
-              unprocessed: data,
-              isFetched: success
-            })
-          );
-        }
-      });
+    if (data && success) {
+      const processedGrowthSearch = processGrowthSearch(data);
+      dispatch(
+        setGrowthSearch({
+          ...processedGrowthSearch,
+
+          unprocessed: data,
+          isDataReady: success
+        })
+      );
     }
+
+    return { data, success };
   };
 
   useEffect(() => {
-    if (hasGrowthWidgets) {
-      fetchGrowthSearch();
+    if (!hasGrowthWidgets) {
+      return;
     }
+
+    fetchGrowthSearch();
   }, [hasGrowthWidgets]);
+
+  return fetchGrowthSearch;
 };

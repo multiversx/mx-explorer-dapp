@@ -8,9 +8,9 @@ import { getColors } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
+import { ChartResolutionRangeType } from 'types';
 
 import { ChartResolutionSelector } from './components/ChartResolution';
-import { ChartResolutionRangeType } from './components/ChartResolution/types';
 
 import { RANGE } from '../constants';
 

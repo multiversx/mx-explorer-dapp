@@ -24,7 +24,7 @@ export const NodeQualification = ({
   className
 }: NodeQualificationUIType) => {
   const {
-    isFetched: isStakeFetched,
+    isDataReady: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
   const { isAuctionDangerZone, isQualified } = useGetNodeFilters();

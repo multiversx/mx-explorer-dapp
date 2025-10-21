@@ -33,7 +33,8 @@ export const TransactionsTable = ({
   dataChanged = false,
   isScResultsTable = false,
   isDataReady,
-  inactiveFilters = [TransactionFiltersEnum.isRelayed]
+  inactiveFilters = [TransactionFiltersEnum.isRelayed],
+  hasPauseButton
 }: TransactionTableType) => {
   const colSpan = showDirectionCol ? 8 : 7;
 
@@ -68,6 +69,7 @@ export const TransactionsTable = ({
                 showDirectionCol={showDirectionCol}
                 showLockedAccounts={showLockedAccounts}
                 inactiveFilters={inactiveFilters}
+                hasPauseButton={hasPauseButton}
               />
               <tbody>
                 {isDataReady === undefined && (

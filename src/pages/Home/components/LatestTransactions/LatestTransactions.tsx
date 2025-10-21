@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
@@ -19,90 +19,63 @@ import { NoTransactions } from 'components/TransactionsTable/components/NoTransa
 import { TransactionValue } from 'components/TransactionsTable/components/TransactionValue';
 import {
   addressIsBech32,
+  formatLatestEntries,
   getDisplayReceiver,
   getTransactionStatusIconAndColor
 } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAdapter, useFetchTransactions, useIsSovereign } from 'hooks';
 import { refreshSelector } from 'redux/selectors';
-import { UITransactionType } from 'types';
+import {
+  UITransactionType,
+  WebsocketEventsEnum,
+  WebsocketSubcriptionsEnum
+} from 'types';
 
 export const LatestTransactions = () => {
-  const ref = useRef(null);
+  const isSovereign = useIsSovereign();
   const { timestamp } = useSelector(refreshSelector);
+  const { getTransactions } = useAdapter();
 
-  const [transactions, setTransactions] = useState<UITransactionType[]>([]);
-  const [transactionsFetched, setTransactionsFetched] = useState<
-    boolean | undefined
-  >();
-  const { getLatestTransactions } = useAdapter();
-  const size = 5;
+  const previousTransactionsRef = useRef<UITransactionType[]>([]);
 
-  const fetchTransactions = () => {
-    getLatestTransactions({ size, withUsername: true }).then(
-      ({ data, success }) => {
-        if (ref.current !== null) {
-          if (success) {
-            const existingHashes = transactions.map((b) => b.txHash);
+  const {
+    fetchTransactions,
+    transactions: latestTransactions,
+    isDataReady
+  } = useFetchTransactions({
+    dataPromise: getTransactions,
+    filters: { ...(isSovereign ? { withCrossChainTransfers: true } : {}) },
+    subscription: WebsocketSubcriptionsEnum.subscribeTransactions,
+    event: WebsocketEventsEnum.transactionUpdate
+  });
 
-            // keep previous transactions, reset isNew and update status
-            const oldTransactions: UITransactionType[] = [
-              ...transactions.slice(0, size)
-            ];
-            oldTransactions.forEach((oldTx) => {
-              oldTx.isNew = false;
+  const transactions = useMemo(
+    () =>
+      formatLatestEntries({
+        latestEntries: latestTransactions,
+        previousEntries: previousTransactionsRef.current,
+        identifier: 'txHash'
+      }) as UITransactionType[],
+    [latestTransactions]
+  );
 
-              if (oldTx.status === 'pending') {
-                const newStatusTx = (data as UITransactionType[]).find(
-                  (newStatusTx) => newStatusTx.txHash === oldTx.txHash
-                );
-                oldTx.status = newStatusTx ? newStatusTx.status : oldTx.status;
-              }
-            });
-
-            let newTransactions: UITransactionType[] = [];
-            data.forEach((transaction: UITransactionType) => {
-              const isNew = !existingHashes.includes(transaction.txHash);
-              if (isNew) {
-                newTransactions.push({
-                  ...transaction,
-                  isNew
-                });
-              }
-            });
-
-            newTransactions = [...newTransactions, ...oldTransactions];
-
-            const allNew =
-              newTransactions.filter((a) => a.isNew === true).length ===
-              newTransactions.length;
-
-            if (allNew) {
-              newTransactions.forEach(
-                (transaction) => (transaction.isNew = false)
-              );
-            }
-
-            setTransactions(newTransactions);
-          }
-          setTransactionsFetched(success);
-        }
-      }
-    );
-  };
+  useEffect(() => {
+    previousTransactionsRef.current = transactions;
+  }, [transactions]);
 
   useEffect(fetchTransactions, [timestamp]);
 
   const Component = () => {
     return (
-      <div className='card card-lg card-black latest-transactions' ref={ref}>
-        {transactionsFetched === undefined && (
+      <div className='card card-lg card-black latest-transactions'>
+        {isDataReady === undefined && (
           <Loader data-testid='transactionsLoader' />
         )}
-        {transactionsFetched === false && <FailedTransactions />}
-        {transactionsFetched === true && transactions.length === 0 && (
+        {isDataReady === false && <FailedTransactions />}
+        {isDataReady === true && transactions.length === 0 && (
           <NoTransactions />
         )}
-        {transactionsFetched === true && transactions.length > 0 && (
+        {isDataReady === true && transactions.length > 0 && (
           <>
             <div className='card-header'>
               <div className='d-flex justify-content-between align-items-center flex-wrap'>
@@ -229,5 +202,5 @@ export const LatestTransactions = () => {
       </div>
     );
   };
-  return React.useMemo(Component, [transactions, transactionsFetched]);
+  return React.useMemo(Component, [transactions]);
 };

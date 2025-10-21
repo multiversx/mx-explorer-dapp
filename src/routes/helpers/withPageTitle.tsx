@@ -1,7 +1,7 @@
 import React, { useEffect, memo } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setMetaTags } from 'redux/slices/metaTags';
+import { setMetaTags } from 'redux/slices';
 
 export const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {

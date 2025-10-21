@@ -45,6 +45,7 @@ export * from './Pager';
 export * from './PageSize';
 export * from './PageState';
 export * from './Particles';
+export * from './PauseRefreshButton';
 export * from './PercentageBar';
 export * from './PercentageLed';
 export * from './ProgressRing';

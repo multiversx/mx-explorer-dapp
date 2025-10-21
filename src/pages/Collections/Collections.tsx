@@ -23,7 +23,7 @@ import {
   useHasGrowthWidgets,
   useIsMainnet
 } from 'hooks';
-import { pageHeadersCollectionsStatsSelector } from 'redux/selectors/pageHeadersCollectionsStats';
+import { pageHeadersCollectionsStatsSelector } from 'redux/selectors';
 import { collectionRoutes } from 'routes';
 import { NftTypeEnum, CollectionType, CollectionSortEnum } from 'types';
 

@@ -15,7 +15,7 @@ import {
   useHasGrowthWidgets
 } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
-import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
+import { pageHeaderTokensStatsSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';
 import { TokenType } from 'types';
 

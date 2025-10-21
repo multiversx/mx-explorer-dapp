@@ -1,51 +1,56 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { TransactionsInPoolTable } from 'components/TransactionsInPoolTable';
 import {
   useAdapter,
-  useFetchTransactions,
+  useFetchTransactionsInPool,
   useGetPage,
   useGetTransactionInPoolFilters
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { TransactionInPoolTypeEnum, UITransactionInPoolType } from 'types';
+import {
+  TransactionInPoolTypeEnum,
+  UITransactionInPoolType,
+  WebsocketEventsEnum,
+  WebsocketSubcriptionsEnum
+} from 'types';
 
 export const TransactionsInPool = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
+  const { getTransactionsInPool, getTransactionsInPoolCount } = useAdapter();
   const { type = TransactionInPoolTypeEnum.Transaction, ...rest } =
     useGetTransactionInPoolFilters();
 
   const { firstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { getTransactionsInPool, getTransactionsInPoolCount } = useAdapter();
-
   const {
-    fetchTransactions,
-    transactions: transactionsInPool,
-    totalTransactions: totalTransactionsInPool,
+    fetchTransactionsInPool,
+    transactionsInPool,
+    totalTransactionsInPool,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getTransactionsInPool, getTransactionsInPoolCount, {
-    ...rest,
-    type
+  } = useFetchTransactionsInPool({
+    dataPromise: getTransactionsInPool,
+    dataCountPromise: getTransactionsInPoolCount,
+    filters: { ...rest, type },
+    config: { type },
+    subscription: WebsocketSubcriptionsEnum.subscribePool,
+    event: WebsocketEventsEnum.poolUpdate
   });
 
   useEffect(() => {
-    if (ref.current !== null) {
-      fetchTransactions();
-    }
+    fetchTransactionsInPool();
   }, [activeNetworkId, firstPageRefreshTrigger]);
 
   useEffect(() => {
-    fetchTransactions(Boolean(searchParams.toString()));
+    fetchTransactionsInPool(Boolean(searchParams.toString()));
   }, [searchParams]);
 
   return (
-    <div ref={ref} className='container page-content'>
+    <div className='container page-content'>
       <div className='card p-0'>
         <div className='row'>
           <div className='col-12'>

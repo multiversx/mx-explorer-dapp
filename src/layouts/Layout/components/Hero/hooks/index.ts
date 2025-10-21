@@ -10,7 +10,9 @@ import {
   collectionRoutes,
   nftRoutes,
   analyticsRoutes,
-  routes
+  routes,
+  transactionsInPoolRoutes,
+  eventsRoutes
 } from 'routes';
 
 export const useShowGlobalStats = () => {
@@ -64,6 +66,10 @@ export const useShowGlobalStats = () => {
     case activeRoute(tokensRoutes.tokensProofDetailsAccounts):
     case activeRoute(transactionsRoutes.transactionDetails):
     case activeRoute(transactionsRoutes.transactionDetailsLogs):
+    case activeRoute(transactionsInPoolRoutes.transactionsInPool):
+    case activeRoute(transactionsInPoolRoutes.transactionsInPoolDetails):
+    case activeRoute(eventsRoutes.events):
+    case activeRoute(eventsRoutes.eventDetails):
     case activeRoute(validatorsRoutes.identityDetails):
     case activeRoute(validatorsRoutes.providerDetails):
     case activeRoute(validatorsRoutes.providerTransactions):

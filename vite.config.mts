@@ -38,7 +38,14 @@ export default () => {
       preprocessorOptions: {
         scss: {
           quietDeps: true,
-          silenceDeprecations: ['legacy-js-api', 'import']
+          silenceDeprecations: [
+            'legacy-js-api',
+            'import',
+            'global-builtin',
+            'mixed-decls',
+            'abs-percent',
+            'color-functions'
+          ]
         }
       }
     },

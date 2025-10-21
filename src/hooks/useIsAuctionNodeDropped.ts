@@ -6,7 +6,7 @@ import { NodeType } from 'types';
 
 export const useIsAuctionNodeDropped = (node?: NodeType) => {
   const {
-    isFetched: isStakeFetched,
+    isDataReady: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
 

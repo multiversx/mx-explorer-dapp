@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Overlay } from 'components';
 import { getTransactionMethod, isEllipsisActive, isTouchDevice } from 'helpers';
 import { interfaceSelector } from 'redux/selectors';
-import { setHighlightedText } from 'redux/slices/interface';
+import { setHighlightedText } from 'redux/slices';
 import { UITransactionType } from 'types';
 
 export interface TransactionMethodType {
