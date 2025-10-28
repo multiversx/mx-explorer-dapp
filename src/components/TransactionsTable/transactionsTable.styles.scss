@@ -18,6 +18,10 @@
       &:last-child {
         padding-right: 1rem !important;
       }
+      &.preview {
+        padding-left: 0;
+        padding-right: 0;
+      }
     }
     .transaction-value {
       color: var(--body-color);
@@ -30,6 +34,10 @@
       .transaction-function-badge {
         max-width: 8rem;
       }
+    }
+    .tx-preview-btn {
+      --btn-padding-y: 0.125rem;
+      --btn-padding-x: 0.5rem;
     }
   }
   &.has-direction {

@@ -1,9 +1,10 @@
-.panel-card {
+.preview-panel-card {
   display: flex;
   flex-direction: column;
   gap: 0.125rem;
   padding: 0.5rem 0.75rem;
   width: 7.5rem;
+  margin-bottom: 0;
   dt {
     color: var(--neutral-500);
   }
@@ -11,6 +12,7 @@
     font-family: var(--font-sans-serif);
     font-size: 0.875rem;
   }
+
   &.featured {
     --border-width: 2px;
     --border-style: solid;
@@ -25,14 +27,20 @@
       font-family: var(--font-headings-regular);
     }
   }
+  &.half-width {
+    width: calc(50% - 0.125rem);
+  }
+  &.full-width {
+    width: 100%;
+  }
 
   // custom displays
 
-  &.danger-zone {
+  &.border-warning {
     --border-color: var(--orange-400);
   }
 
-  .icon-dropped {
+  .icon-small {
     font-size: 0.75rem;
     margin-left: -0.25rem;
     margin-right: -0.25rem;

@@ -11,7 +11,6 @@ import {
 import { blocksReducer } from './slices/blocks';
 import { collectionReducer } from './slices/collection';
 import { economicsReducer } from './slices/economics';
-import { eventsReducer } from './slices/events';
 import { generalReducer } from './slices/general';
 
 import { interfaceReducer } from './slices/interface';
@@ -32,8 +31,13 @@ import { stakeExtraReducer } from './slices/stakeExtra';
 import { statsReducer } from './slices/stats';
 import { tokenReducer } from './slices/token';
 import { tokenExtraReducer } from './slices/tokenExtra';
-import { transactionsReducer } from './slices/transactions';
-import { transactionsInPoolReducer } from './slices/transactionsInPool';
+import {
+  eventsReducer,
+  transactionsReducer,
+  transactionsInPoolReducer,
+  transactionOverviewReducer
+} from './slices/transactions';
+
 import {
   growthEconomicsReducer,
   growthHeroReducer,
@@ -92,6 +96,7 @@ export const customIgnoredSlices = {
   tokenExtra: tokenExtraReducer,
   transactions: transactionsReducer,
   transactionsInPool: transactionsInPoolReducer,
+  transactionOverview: transactionOverviewReducer,
   markers: markersReducer,
   metaTags: metaTagsReducer,
   miniBlock: miniBlockReducer,

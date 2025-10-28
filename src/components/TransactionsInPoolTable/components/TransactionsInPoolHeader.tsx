@@ -9,7 +9,7 @@ import {
 } from 'components';
 import { useIsSovereign } from 'hooks';
 import { transactionsInPoolSelector } from 'redux/selectors';
-import { pauseRefresh, resumeRefresh } from 'redux/slices/transactionsInPool';
+import { pauseTxPoolRefresh, resumeTxPoolRefresh } from 'redux/slices';
 import { TransactionFiltersEnum, WithClassnameType } from 'types';
 
 export interface TransactionsInPoolHeaderUIType extends WithClassnameType {
@@ -52,8 +52,8 @@ export const TransactionsInPoolHeader = ({
         >
           Value{' '}
           <PauseRefreshButton
-            pauseRefresh={pauseRefresh}
-            resumeRefresh={resumeRefresh}
+            pauseRefresh={pauseTxPoolRefresh}
+            resumeRefresh={resumeTxPoolRefresh}
             isRefreshPaused={isRefreshPaused}
           />
         </th>

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Transaction Preview Button](https://github.com/multiversx/mx-explorer-dapp/pull/198)
+- [Removed FormatDisplayValue Whitespace](https://github.com/multiversx/mx-explorer-dapp/pull/197)
+
 - ## [[2.3.0](https://github.com/multiversx/mx-explorer-dapp/pull/196)] - 2025-10-20
 
 - [Websocket Updates and 600ms refreshRate Optimizations](https://github.com/multiversx/mx-explorer-dapp/pull/193)

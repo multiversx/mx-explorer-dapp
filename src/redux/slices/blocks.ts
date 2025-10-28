@@ -35,15 +35,16 @@ export const blocksSlice = createSlice({
       state.isDataReady = action.payload.isDataReady;
       state.isWebsocket = action.payload.isWebsocket;
     },
-    pauseRefresh: (state: BlocksSliceType) => {
+    pauseBlocksRefresh: (state: BlocksSliceType) => {
       state.isRefreshPaused = true;
     },
-    resumeRefresh: (state: BlocksSliceType) => {
+    resumeBlocksRefresh: (state: BlocksSliceType) => {
       state.isRefreshPaused = false;
     }
   }
 });
 
-export const { setBlocks, pauseRefresh, resumeRefresh } = blocksSlice.actions;
+export const { setBlocks, pauseBlocksRefresh, resumeBlocksRefresh } =
+  blocksSlice.actions;
 
 export const blocksReducer = blocksSlice.reducer;

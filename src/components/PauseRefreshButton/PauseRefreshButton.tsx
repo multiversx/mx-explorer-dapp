@@ -18,7 +18,10 @@ export const PauseRefreshButton = ({
   const { refreshRate } = useSelector(activeNetworkSelector);
   const dispatch = useDispatch();
 
-  if (!refreshRate || refreshRate > POOLING_REFRESH_RATE_LIMIT) {
+  if (
+    !isRefreshPaused &&
+    Boolean(!refreshRate || refreshRate > POOLING_REFRESH_RATE_LIMIT)
+  ) {
     return null;
   }
 

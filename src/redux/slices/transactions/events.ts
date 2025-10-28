@@ -37,15 +37,16 @@ export const eventsSlice = createSlice({
       state.isDataReady = action.payload.isDataReady;
       state.isWebsocket = action.payload.isWebsocket;
     },
-    pauseRefresh: (state: EventsSliceType) => {
+    pauseEventsRefresh: (state: EventsSliceType) => {
       state.isRefreshPaused = true;
     },
-    resumeRefresh: (state: EventsSliceType) => {
+    resumeEventsRefresh: (state: EventsSliceType) => {
       state.isRefreshPaused = false;
     }
   }
 });
 
-export const { setEvents, pauseRefresh, resumeRefresh } = eventsSlice.actions;
+export const { setEvents, pauseEventsRefresh, resumeEventsRefresh } =
+  eventsSlice.actions;
 
 export const eventsReducer = eventsSlice.reducer;

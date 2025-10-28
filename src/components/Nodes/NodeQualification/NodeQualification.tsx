@@ -79,7 +79,7 @@ export const NodeQualification = ({
           <Overlay title='Dropped'>
             <FontAwesomeIcon
               icon={faScissors}
-              className='text-red-400 icon-dropped'
+              className='text-red-400 icon-small'
             />
           </Overlay>
         )}

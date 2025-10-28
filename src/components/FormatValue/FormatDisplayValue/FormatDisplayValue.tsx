@@ -149,7 +149,6 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
         </Overlay>
       ) : (
         <>
-          {' '}
           {canAnimate ? (
             <NumberFlow
               value={Number(completeValue)}

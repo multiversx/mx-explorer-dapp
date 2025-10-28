@@ -37,16 +37,16 @@ export const transactionsSlice = createSlice({
       state.isDataReady = action.payload.isDataReady;
       state.isWebsocket = action.payload.isWebsocket;
     },
-    pauseRefresh: (state: TransactionSliceType) => {
+    pauseTxRefresh: (state: TransactionSliceType) => {
       state.isRefreshPaused = true;
     },
-    resumeRefresh: (state: TransactionSliceType) => {
+    resumeTxRefresh: (state: TransactionSliceType) => {
       state.isRefreshPaused = false;
     }
   }
 });
 
-export const { setTransactions, pauseRefresh, resumeRefresh } =
+export const { setTransactions, pauseTxRefresh, resumeTxRefresh } =
   transactionsSlice.actions;
 
 export const transactionsReducer = transactionsSlice.reducer;

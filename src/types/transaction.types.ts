@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { ELLIPSIS } from 'appConstants';
 import { AccountAssetType } from './account.types';
 import { ScamInfoType, SliceType } from './general.types';
@@ -283,12 +285,20 @@ export interface TransactionInPoolSliceType extends SliceType {
   transactionsInPoolCount: number | typeof ELLIPSIS;
 }
 
+export interface TransactionOverviewSliceType extends SliceType {
+  transactionsDetails?: { [key: string]: TransactionType };
+}
+
+export interface TransactionOverviewAddSliceType {
+  transactionDetails: TransactionType;
+}
+
 export interface TransactionTableType {
   transactions: UITransactionType[];
   totalTransactions: number | typeof ELLIPSIS;
   address?: string;
   token?: string;
-  title?: React.ReactNode;
+  title?: ReactNode;
   showDirectionCol?: boolean;
   dataChanged?: boolean;
   showLockedAccounts?: boolean;
@@ -296,6 +306,7 @@ export interface TransactionTableType {
   isDataReady?: boolean;
   inactiveFilters?: TransactionFiltersEnum[];
   hasPauseButton?: boolean;
+  hasTxPreviewBtn?: boolean;
 }
 
 export enum TransactionDirectionEnum {

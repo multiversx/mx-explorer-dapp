@@ -9,7 +9,7 @@ import {
 } from 'components';
 import { useIsSovereign } from 'hooks';
 import { eventsSelector } from 'redux/selectors';
-import { pauseRefresh, resumeRefresh } from 'redux/slices/events';
+import { pauseEventsRefresh, resumeEventsRefresh } from 'redux/slices';
 import { TransactionFiltersEnum, WithClassnameType } from 'types';
 
 export interface EventsTableHeaderUIType extends WithClassnameType {
@@ -42,8 +42,8 @@ export const EventsTableHeader = ({
             Identifier <IdentifierColumnFilters />
           </div>
           <PauseRefreshButton
-            pauseRefresh={pauseRefresh}
-            resumeRefresh={resumeRefresh}
+            pauseRefresh={pauseEventsRefresh}
+            resumeRefresh={resumeEventsRefresh}
             isRefreshPaused={isRefreshPaused}
           />
         </th>

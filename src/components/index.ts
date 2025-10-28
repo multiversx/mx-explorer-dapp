@@ -44,6 +44,7 @@ export * from './Overlay';
 export * from './Pager';
 export * from './PageSize';
 export * from './PageState';
+export * from './PreviewPanel';
 export * from './Particles';
 export * from './PauseRefreshButton';
 export * from './PercentageBar';

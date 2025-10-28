@@ -69,6 +69,7 @@ export const Transactions = () => {
               dataChanged={dataChanged}
               isDataReady={isDataReady}
               hasPauseButton
+              hasTxPreviewBtn
               title={
                 <h5
                   data-testid='title'

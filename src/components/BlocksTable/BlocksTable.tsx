@@ -20,7 +20,7 @@ import {
 import { formatSize } from 'helpers';
 import { useIsSovereign } from 'hooks';
 import { blocksSelector } from 'redux/selectors';
-import { pauseRefresh, resumeRefresh } from 'redux/slices/blocks';
+import { pauseBlocksRefresh, resumeBlocksRefresh } from 'redux/slices/blocks';
 import { UIBlockType, WithClassnameType } from 'types';
 
 import { FailedBlocks } from './components/FailedBlocks';
@@ -87,8 +87,8 @@ export const BlocksTable = ({
                     <th className='d-flex align-item-center justify-content-between'>
                       Leader{' '}
                       <PauseRefreshButton
-                        pauseRefresh={pauseRefresh}
-                        resumeRefresh={resumeRefresh}
+                        pauseRefresh={pauseBlocksRefresh}
+                        resumeRefresh={resumeBlocksRefresh}
                         isRefreshPaused={isRefreshPaused}
                       />
                     </th>
