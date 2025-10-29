@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { isTouchDevice } from 'helpers';
 import { useGetTransactionInPoolFilters } from 'hooks';
 import { interfaceSelector } from 'redux/selectors';
-import { setHighlightedText } from 'redux/slices/interface';
+import { setHighlightedText } from 'redux/slices';
 import { TransactionInPoolTypeEnum } from 'types';
 
 export interface TransactionInPoolTypeBadgeUIType {

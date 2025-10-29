@@ -1,34 +1,28 @@
-import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 
-import { ELLIPSIS } from 'appConstants';
 import { ProgressRing } from 'components';
+import { formatBigNumber } from 'helpers';
 import { useFetchEpochProgress } from 'hooks';
 import { WithClassnameType } from 'types';
 
 export const EpochHeroPill = ({ className }: WithClassnameType) => {
-  const { isReady, epoch, epochPercentage, epochTimeRemaining, roundsLeft } =
+  const { epoch, epochPercentage, epochTimeRemaining, roundsLeft } =
     useFetchEpochProgress();
 
   return (
     <div
-      className={`hero-pill epoch-hero-pill d-flex align-items-center justify-content-between font-headings ${
-        className ?? ''
-      }`}
+      className={classNames(
+        'hero-pill epoch-hero-pill d-flex align-items-center justify-content-between font-headings',
+        className
+      )}
     >
       <div className='d-flex flex-column lext-left me-3'>
         <div className='label' data-testid='currentEpoch'>
-          {isReady && epoch !== undefined ? (
-            <>Epoch {new BigNumber(epoch).toFormat(0)}</>
-          ) : (
-            ELLIPSIS
-          )}
+          Epoch {formatBigNumber({ value: epoch, showEllipsisIfZero: true })}
         </div>
         <div className='description cursor-context' title={epochTimeRemaining}>
-          {roundsLeft && roundsLeft >= 0 ? (
-            <>{new BigNumber(roundsLeft).toFormat(0)} Rounds Left</>
-          ) : (
-            ELLIPSIS
-          )}
+          {formatBigNumber({ value: roundsLeft, showEllipsisIfZero: true })}{' '}
+          Rounds Left
         </div>
       </div>
       <ProgressRing progress={epochPercentage} size={32} />

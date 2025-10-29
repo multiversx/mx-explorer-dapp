@@ -16,7 +16,7 @@ import { formatDate, isContract, urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faExchange } from 'icons/regular';
 import { EventExtraData } from 'pages/TransactionDetails/components/EventsList/EventExtraData';
-import { EventType } from 'types';
+import { UIEventType } from 'types';
 
 export const EventDetails = () => {
   const params: any = useParams();
@@ -24,7 +24,7 @@ export const EventDetails = () => {
 
   const { getEvent } = useAdapter();
 
-  const [event, setEvent] = useState<EventType | undefined>();
+  const [event, setEvent] = useState<UIEventType | undefined>();
   const [dataReady, setDataReady] = useState<boolean | undefined>();
 
   const decodedTopics = useMemo(() => {

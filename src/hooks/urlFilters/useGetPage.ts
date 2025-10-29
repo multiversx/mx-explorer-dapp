@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { PAGE_SIZE } from 'appConstants';
 import { stringIsInteger } from 'lib';
-import { refreshSelector } from 'redux/selectors/refresh';
+import { refreshSelector } from 'redux/selectors';
 
 export const useGetPage = () => {
   const { timestamp } = useSelector(refreshSelector);

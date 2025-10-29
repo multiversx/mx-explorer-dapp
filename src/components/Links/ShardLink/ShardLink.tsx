@@ -5,7 +5,7 @@ import { NetworkLink, ShardSpan } from 'components';
 import { isTouchDevice, urlBuilder } from 'helpers';
 import { useFetchShards, useIsSovereign, useGetShardText } from 'hooks';
 import { interfaceSelector, shardsSelector } from 'redux/selectors';
-import { setHighlightedText } from 'redux/slices/interface';
+import { setHighlightedText } from 'redux/slices';
 import { WithClassnameType } from 'types';
 
 export interface ShardLinkUIType extends WithClassnameType {

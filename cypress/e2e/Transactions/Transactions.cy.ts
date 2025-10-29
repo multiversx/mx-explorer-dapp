@@ -15,6 +15,7 @@ describe('Transactions', () => {
 
   it('should properly display the table', () => {
     const tableHead = [
+      '',
       'Txn Hash',
       'Age',
       'Shard',

@@ -2,37 +2,14 @@ import { Fragment, useMemo } from 'react';
 import classNames from 'classnames';
 import { SingleValue } from 'react-select';
 
+import { ChartResolution } from 'appConstants';
 import { Select, SelectOptionType } from 'components';
-
-import styles from './styles.module.scss';
 import {
   ChartResolutionRangeType,
-  ChartResolutionSelectorPropsType,
-  ChartResolutionType
-} from './types';
+  ChartResolutionSelectorPropsType
+} from 'types';
 
-export const ChartResolution: ChartResolutionType = {
-  all: {
-    label: 'Max',
-    range: 'all'
-  },
-  year: {
-    label: '365d',
-    range: 'year'
-  },
-  month: {
-    label: '30d',
-    range: 'month'
-  },
-  week: {
-    label: '7d',
-    range: 'week'
-  },
-  day: {
-    label: '24h',
-    range: 'day'
-  }
-};
+import styles from './styles.module.scss';
 
 export const ChartResolutionSelector = ({
   value,

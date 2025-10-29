@@ -35,4 +35,20 @@
       margin-top: -0.175em;
     }
   }
+  &.anim {
+    number-flow-react::part(fraction-digit) {
+      opacity: 0.75;
+    }
+    number-flow-react::part(right) {
+      opacity: 0.75;
+      margin-left: 0.125rem;
+      top: 0.2em;
+      font-size: 0.625em;
+      line-height: 1;
+      font-family: var(--font-headings-semibold);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      vertical-align: super;
+    }
+  }
 }

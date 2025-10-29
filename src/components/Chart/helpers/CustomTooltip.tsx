@@ -54,9 +54,9 @@ export const CustomTooltip = ({
   showUsdValue?: boolean;
   dateFormat?: string;
 }) => {
-  const { isFetched, unprocessed } = useSelector(economicsSelector);
+  const { isDataReady, unprocessed } = useSelector(economicsSelector);
 
-  if (active && payload && payload.length && isFetched) {
+  if (active && payload && payload.length && isDataReady) {
     return (
       <div className='custom-tooltip'>
         <ul className='recharts-tooltip-item-list list-unstyled'>

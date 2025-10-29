@@ -1,13 +1,15 @@
+import { ReactNode } from 'react';
 import classNames from 'classnames';
 
 import { WithClassnameType } from 'types';
 
 export interface StatsCardUIType extends WithClassnameType {
-  title?: string | React.ReactNode;
-  subTitle?: string | React.ReactNode;
-  icon?: React.ReactNode;
-  value?: string | React.ReactNode;
-  children?: React.ReactNode;
+  title?: ReactNode;
+  subTitle?: ReactNode;
+  icon?: ReactNode;
+  value?: ReactNode;
+  children?: ReactNode;
+  isAnimated?: boolean;
 }
 
 export const StatsCard = ({
@@ -16,6 +18,7 @@ export const StatsCard = ({
   value,
   icon,
   className,
+  isAnimated,
   children
 }: StatsCardUIType) => {
   if (!(title || value || subTitle || children)) {
@@ -29,7 +32,13 @@ export const StatsCard = ({
           <p className='text-neutral-400 mb-0 stats-card-title'>{title}</p>
         )}
         {value && (
-          <h2 className='stats-card-value mb-0 text-primary'>{value}</h2>
+          <h2
+            className={classNames('stats-card-value mb-0 text-primary', {
+              'has-animation': isAnimated
+            })}
+          >
+            {value}
+          </h2>
         )}
         {subTitle && (
           <p className='text-primary-200 mb-0 stats-card-title mt-2'>
@@ -38,7 +47,14 @@ export const StatsCard = ({
           </p>
         )}
         {children && (
-          <p className='mb-0 mt-2 text-primary-200 d-flex align-items-center'>
+          <p
+            className={classNames(
+              'text-primary-200 d-flex align-items-center stats-card-content',
+              {
+                'has-animation': isAnimated
+              }
+            )}
+          >
             {children}
           </p>
         )}

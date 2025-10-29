@@ -6,12 +6,11 @@ import { getPercentageFilled } from 'helpers';
 import { useGetSort } from 'hooks';
 import {
   AccountDelegationType,
+  AccountStakingSortingEnum,
   AccountUndelegationType,
   ProviderType,
   SortOrderEnum
 } from 'types';
-
-import { AccountStakingSortingEnum } from '../AccountStaking';
 
 interface UseGetDelegationListPropsType {
   delegation?: AccountDelegationType[];

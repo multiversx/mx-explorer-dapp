@@ -1,4 +1,4 @@
-import { DEFAULT_HRP } from 'appConstants';
+import { DEFAULT_HRP, REFRESH_RATE } from 'appConstants';
 import { NetworkAdapterEnum, NetworkType } from 'types';
 
 export const getInternalNetworks = (): NetworkType[] => {
@@ -16,7 +16,8 @@ export const getInternalNetworks = (): NetworkType[] => {
             ...(!network?.adapter ? { adapter: NetworkAdapterEnum.api } : {}),
             ...(!network?.egldLabel ? { egldLabel: 'xEGLD' } : {}),
             ...(!network?.chainId ? { chainId: 'T' } : {}),
-            ...(!network?.hrp ? { hrp: DEFAULT_HRP } : {})
+            ...(!network?.hrp ? { hrp: DEFAULT_HRP } : {}),
+            ...(!network?.refreshRate ? { refreshRate: REFRESH_RATE } : {})
           };
         });
       }

@@ -1,6 +1,8 @@
+import { ReactNode } from 'react';
+
 import { ELLIPSIS } from 'appConstants';
 import { AccountAssetType } from './account.types';
-import { ScamInfoType } from './general.types';
+import { ScamInfoType, SliceType } from './general.types';
 import { NftTypeEnum } from './nft.types';
 import { TokenTypeEnum } from './token.types';
 
@@ -242,6 +244,14 @@ export interface TransactionTokensType {
 
 // TRANSACTION UI
 
+export enum TransactionDirectionDisplayEnum {
+  out = 'Out',
+  in = 'In',
+  self = 'Self',
+  internal = 'Int',
+  inner = 'Inner Tx'
+}
+
 export enum TransferTypeEnum {
   Transaction = 'Transaction',
   SmartContractResult = 'SmartContractResult',
@@ -265,18 +275,38 @@ export interface UITransactionInPoolType extends TransactionInPoolType {
   isNew?: boolean; // UI flag
 }
 
+export interface TransactionSliceType extends SliceType {
+  transactions: UITransactionType[];
+  transactionsCount: number | typeof ELLIPSIS;
+}
+
+export interface TransactionInPoolSliceType extends SliceType {
+  transactionsInPool: UITransactionInPoolType[];
+  transactionsInPoolCount: number | typeof ELLIPSIS;
+}
+
+export interface TransactionOverviewSliceType extends SliceType {
+  transactionsDetails?: { [key: string]: TransactionType };
+}
+
+export interface TransactionOverviewAddSliceType {
+  transactionDetails: TransactionType;
+}
+
 export interface TransactionTableType {
   transactions: UITransactionType[];
+  totalTransactions: number | typeof ELLIPSIS;
   address?: string;
   token?: string;
-  totalTransactions: number | typeof ELLIPSIS;
-  title?: React.ReactNode;
+  title?: ReactNode;
   showDirectionCol?: boolean;
   dataChanged?: boolean;
   showLockedAccounts?: boolean;
   isScResultsTable?: boolean;
   isDataReady?: boolean;
   inactiveFilters?: TransactionFiltersEnum[];
+  hasPauseButton?: boolean;
+  hasTxPreviewBtn?: boolean;
 }
 
 export enum TransactionDirectionEnum {

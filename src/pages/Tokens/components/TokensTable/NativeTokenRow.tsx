@@ -37,13 +37,13 @@ export const NativeTokenRow = ({
 }) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
   const {
-    isFetched: isEconomicsFetched,
+    isDataReady: isEconomicsFetched,
     price,
     marketCap,
     circulatingSupply,
     unprocessed: unProcessedEconomics
   } = useSelector(economicsSelector);
-  const { isFetched: isStatsFetched } = useSelector(statsSelector);
+  const { isDataReady: isStatsFetched } = useSelector(statsSelector);
   const { assets, accounts, transactions } = useGetNativeTokenDetails();
   const { page, size } = useGetPage();
   const { search } = useGetSearch();

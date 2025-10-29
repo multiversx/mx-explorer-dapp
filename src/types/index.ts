@@ -2,6 +2,7 @@ export * from './account.types';
 export * from './accountStake.types';
 export * from './adapter.types';
 export * from './block.types';
+export * from './charts.types';
 export * from './collection.types';
 export * from './economics.types';
 export * from './events.types';
@@ -21,6 +22,7 @@ export * from './stake.types';
 export * from './stats.types';
 export * from './token.types';
 export * from './transaction.types';
+export * from './websocket.types';
 export * from './withClassname.types';
 
 export * from './growthWidgets';

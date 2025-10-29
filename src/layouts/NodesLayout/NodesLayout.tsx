@@ -14,7 +14,7 @@ import {
 export const NodesLayout = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const shards = useSelector(shardsSelector);
-  const { isFetched: isNodesVersionsFetched } = useSelector(
+  const { isDataReady: isNodesVersionsFetched } = useSelector(
     nodesVersionsSelector
   );
 

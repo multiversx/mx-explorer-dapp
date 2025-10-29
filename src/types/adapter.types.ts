@@ -40,6 +40,7 @@ export interface GetAccountsType extends SortableApiType {
 }
 export interface GetBlocksType extends BaseApiType {
   shard?: number;
+  nonce?: number;
   epoch?: number;
   proposer?: string;
   withProposerIdentity?: boolean;

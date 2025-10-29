@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useAdapter } from 'hooks';
 import { stakeExtraSelector } from 'redux/selectors';
-import { setStakeExtra } from 'redux/slices/stakeExtra';
+import { setStakeExtra } from 'redux/slices';
 
 let currentRequest: any = null;
 

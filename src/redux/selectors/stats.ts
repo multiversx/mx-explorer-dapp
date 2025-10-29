@@ -6,8 +6,3 @@ const stateSelector = (state: RootState) => {
 };
 
 export const statsSelector = createSelector(stateSelector, (state) => state);
-
-export const statsRefreshRateSelector = createSelector(
-  stateSelector,
-  (state) => state.refreshRate
-);

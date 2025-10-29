@@ -38,7 +38,7 @@ export const AccountLayout = () => {
         withTxCount: true
       }).then(({ success, data }) => {
         if (success && data) {
-          dispatch(setAccount({ isFetched: true, account: data }));
+          dispatch(setAccount({ isDataReady: true, account: data }));
         }
 
         setIsDataReady(success);

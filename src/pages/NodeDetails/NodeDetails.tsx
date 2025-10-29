@@ -39,12 +39,10 @@ export const NodeDetails = () => {
   const { getNode, getIdentity, getRounds, getBlocks } = useAdapter();
   const isMainnet = useIsMainnet();
 
-  const stats = useSelector(statsSelector);
-
   const {
-    isFetched,
+    isDataReady,
     unprocessed: { epoch }
-  } = stats;
+  } = useSelector(statsSelector);
 
   const [dataReady, setDataReady] = useState<boolean | undefined>(true);
   const [node, setNode] = useState<NodeDetailType<NodeType>>(initialState);
@@ -68,7 +66,7 @@ export const NodeDetails = () => {
 
           const shard = nodeData.data.shard;
 
-          if (hasExtendedInfo && isFetched) {
+          if (hasExtendedInfo && isDataReady) {
             const promises = [
               getRounds({ validator: publicKey, shard, epoch }),
               getBlocks({ proposer: publicKey, shard, epoch }),
@@ -124,7 +122,7 @@ export const NodeDetails = () => {
     });
   };
 
-  useEffect(fetchNodes, [search, publicKey, isFetched]);
+  useEffect(fetchNodes, [search, publicKey, isDataReady]);
 
   const showIdentity =
     identity.success === false ||

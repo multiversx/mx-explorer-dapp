@@ -7,6 +7,7 @@ import {
   useSearchParams
 } from 'react-router-dom';
 
+import { ChartResolution } from 'appConstants';
 import { Loader, Led } from 'components';
 import { ChartListType } from 'components/Chart/helpers/types';
 import { Tabs } from 'components/Tabs';
@@ -15,7 +16,6 @@ import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
 
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
-import { ChartResolution } from './AnalyticsChart/components/ChartResolution';
 import { FailedAnalytics } from './components/FailedAnalytics';
 import { NoAnalytics } from './components/NoAnalytics';
 import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';

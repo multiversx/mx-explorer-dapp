@@ -90,12 +90,14 @@ export const ChartArea = ({
               <stop offset='95%' stopColor={primary} stopOpacity={0} />
             </linearGradient>
           </defs>
-          <defs>
-            <linearGradient id='splitColor' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset={off} stopColor='#4ade80' />
-              <stop offset={off} stopColor='#f87171' />
-            </linearGradient>
-          </defs>
+          {!isNaN(off) && (
+            <defs>
+              <linearGradient id='splitColor' x1='0' y1='0' x2='0' y2='1'>
+                <stop offset={off} stopColor='#4ade80' />
+                <stop offset={off} stopColor='#f87171' />
+              </linearGradient>
+            </defs>
+          )}
 
           {hasGrid && (
             <CartesianGrid vertical={false} stroke={neutral800} opacity={0.8} />

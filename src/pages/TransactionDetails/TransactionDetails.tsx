@@ -11,7 +11,7 @@ import {
   useNetworkRoute
 } from 'hooks';
 import { faExchangeAlt } from 'icons/regular';
-import { refreshSelector } from 'redux/selectors/refresh';
+import { refreshSelector } from 'redux/selectors';
 import { transactionsRoutes } from 'routes';
 import { TransactionType, TransactionApiStatusEnum } from 'types';
 

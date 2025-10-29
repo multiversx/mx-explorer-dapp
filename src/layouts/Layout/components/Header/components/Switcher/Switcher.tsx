@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { Anchor, Dropdown } from 'react-bootstrap';
@@ -17,16 +18,18 @@ export const Switcher = () => {
   const { isSubSubdomain } = getSubdomainNetwork();
   const getNetworkChangeLink = useGetNetworkChangeLink();
 
-  const networkLinks = networks
-    .filter((network) => !network.isCustom)
-    .map(({ name, id }) => {
-      const url = getNetworkChangeLink({ networkId: id });
-      return {
-        name,
-        url,
-        id
-      };
-    });
+  const networkLinks = useMemo(() => {
+    return networks
+      .filter((network) => !network.isCustom)
+      .map(({ name, id }) => {
+        const url = getNetworkChangeLink({ networkId: id });
+        return {
+          name,
+          url,
+          id
+        };
+      });
+  }, [networks]);
 
   const LinksList = () => {
     return (

@@ -10,7 +10,7 @@ import {
 } from 'components';
 import { addressIsBech32, isTouchDevice, urlBuilder } from 'helpers';
 import { interfaceSelector } from 'redux/selectors';
-import { setHighlightedText } from 'redux/slices/interface';
+import { setHighlightedText } from 'redux/slices';
 import { AccountAssetType, WithClassnameType } from 'types';
 
 export interface AccountLinkType extends WithClassnameType {

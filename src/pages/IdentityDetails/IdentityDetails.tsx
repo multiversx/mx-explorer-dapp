@@ -25,7 +25,7 @@ import { IdentityType, NodeStatusEnum, NodeType, ProviderType } from 'types';
 
 export const IdentityDetails = () => {
   const { hash: id } = useParams() as any;
-  const { isFetched: isNodesOverviewFetched } = useSelector(
+  const { isDataReady: isNodesOverviewFetched } = useSelector(
     nodesOverviewSelector
   );
 

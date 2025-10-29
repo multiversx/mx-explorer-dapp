@@ -1,19 +1,22 @@
 import BigNumber from 'bignumber.js';
 
-import { LOW_LIQUIDITY_DISPLAY_TRESHOLD } from 'appConstants';
+import {
+  LOW_LIQUIDITY_DISPLAY_TRESHOLD,
+  LOW_LIQUIDITY_MIN_LIQUIDITY_THRESHHOLD
+} from 'appConstants';
 import { TokenType } from 'types';
 
 export const isValidAccountTokenValue = (token?: TokenType) => {
-  if (!token) {
+  if (!token?.valueUsd) {
     return true;
   }
 
-  const hasValidDisplayValue =
-    token.valueUsd &&
-    token.isLowLiquidity === undefined &&
-    new BigNumber(token.valueUsd).isLessThan(LOW_LIQUIDITY_DISPLAY_TRESHOLD);
+  const hasValidLowLiquidityDisplayValue =
+    token.isLowLiquidity &&
+    new BigNumber(token.valueUsd).isLessThan(LOW_LIQUIDITY_DISPLAY_TRESHOLD) &&
+    new BigNumber(token.totalLiquidity ?? 0).isGreaterThan(
+      LOW_LIQUIDITY_MIN_LIQUIDITY_THRESHHOLD
+    );
 
-  return Boolean(
-    (token.valueUsd && token.isLowLiquidity === false) || hasValidDisplayValue
-  );
+  return Boolean(!token.isLowLiquidity || hasValidLowLiquidityDisplayValue);
 };

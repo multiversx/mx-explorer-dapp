@@ -8,13 +8,17 @@ import { useAdapter } from 'hooks';
 import { faCoins } from 'icons/regular';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { ChartResolutionSelector } from 'pages/AnalyticsCompare/AnalyticsChart/components/ChartResolution';
-import { ChartResolutionRangeType } from 'pages/AnalyticsCompare/AnalyticsChart/components/ChartResolution/types';
+
 import {
   activeNetworkSelector,
   tokenExtraSelector,
   tokenSelector
 } from 'redux/selectors';
-import { ExchangePriceRangeEnum, GrowthChartDataType } from 'types';
+import {
+  ChartResolutionRangeType,
+  ExchangePriceRangeEnum,
+  GrowthChartDataType
+} from 'types';
 
 export const TokenDetailsAnalytics = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);

@@ -44,11 +44,11 @@ export const TokenLayout = () => {
         const [tokenData, tokenPriceHistoryData] = response;
 
         if (tokenData.success && tokenData.data) {
-          dispatch(setToken({ isFetched: true, token: tokenData.data }));
+          dispatch(setToken({ isDataReady: true, token: tokenData.data }));
           if (hasExchangeData && tokenExtra.identifier !== identifier) {
             dispatch(
               setTokenExtra({
-                isFetched: true,
+                isDataReady: true,
                 tokenExtra: {
                   identifier: tokenData.data.identifier,
                   range: ExchangePriceRangeEnum.hourly,

@@ -7,11 +7,11 @@ import { NotificationsBar, NetworkReady, MetaTags } from 'components';
 import {
   useFetchStats,
   useFetchEconomics,
-  useNetworkRouter,
   useLoopManager,
   useCheckVersion,
   useGetURLNetwork,
   useInitDatadog,
+  useInitWebsocket,
   useSetBrowserClassNames,
   useSetDappConfig,
   useTempStorageNotification
@@ -31,12 +31,12 @@ export const Layout = () => {
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
 
   const fetchEconomics = useFetchEconomics();
-  const fetchStats = useFetchStats();
+  const { fetchStats } = useFetchStats();
 
-  useNetworkRouter();
   useLoopManager();
   useCheckVersion();
   useInitDatadog();
+  useInitWebsocket();
   useSetDappConfig();
   useSetBrowserClassNames();
   useTempStorageNotification();
@@ -51,6 +51,7 @@ export const Layout = () => {
 
   useEffect(() => {
     if (urlNetwork && urlNetwork.id === activeNetworkId) {
+      // initial fetch, will be updated by websocket
       fetchStats();
       fetchEconomics();
     }

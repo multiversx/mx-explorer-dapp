@@ -10,12 +10,12 @@ import {
 } from 'components';
 import { formatBigNumber, getStringPlural } from 'helpers';
 import { faExchange } from 'icons/regular';
-import { EventType } from 'types';
+import { UIEventType } from 'types';
 
 import { EventRow, EventsTableHeader } from './components';
 
 export interface EventsTableUIType {
-  events: EventType[];
+  events: UIEventType[];
   totalEvents: number | typeof ELLIPSIS;
   dataChanged?: boolean;
   isDataReady?: boolean;
@@ -44,6 +44,7 @@ export const EventsTable = ({
             </h5>
             <Pager
               total={totalEvents}
+              show={events.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
             />
           </div>

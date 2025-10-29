@@ -34,7 +34,7 @@ export const ChartTooltip = ({
   stackedLabel?: string;
   totalValueStacked?: string | number;
 }) => {
-  const { isFetched, unprocessed } = useSelector(economicsSelector);
+  const { isDataReady, unprocessed } = useSelector(economicsSelector);
 
   const stackedLabelColor = getColors(['white']);
 
@@ -44,7 +44,7 @@ export const ChartTooltip = ({
     ? new BigNumber(totalValueStacked ?? '0').toFormat()
     : new BigNumber(totalValueStacked ?? '0').toFormat(2);
 
-  if (active && payload && payload.length && isFetched) {
+  if (active && payload && payload.length && isDataReady) {
     const data = payload.sort(
       (alpha: any, beta: any) => beta.value - alpha.value
     );

@@ -1,35 +1,39 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { useAdapter, useHasGrowthWidgets } from 'hooks';
-import { growthMostUsedSelector } from 'redux/selectors';
-import { setGrowthMostUsed } from 'redux/slices/growthMostUsed';
+import { useHasGrowthWidgets } from 'hooks';
+import { setGrowthMostUsed } from 'redux/slices';
+import { useFetchGrowthWidgetOnce } from './useFetchGrowthWidgetOnce';
 
 export const useFetchGrowthMostUsed = () => {
-  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
-  const { isFetched } = useSelector(growthMostUsedSelector);
-  const { getGrowthWidget } = useAdapter();
+  const hasGrowthWidgets = useHasGrowthWidgets();
+  const fetchGrowthWidgetOnce = useFetchGrowthWidgetOnce();
 
-  const fetchGrowthMostUsed = () => {
-    if (!isFetched) {
-      getGrowthWidget('/verified-most-used').then((growthMostUsed) => {
-        if (growthMostUsed?.data && growthMostUsed.success) {
-          dispatch(
-            setGrowthMostUsed({
-              ...growthMostUsed.data,
+  const fetchGrowthMostUsed = async () => {
+    const { data, success } = await fetchGrowthWidgetOnce(
+      '/verified-most-used'
+    );
 
-              isFetched: growthMostUsed.success
-            })
-          );
-        }
-      });
+    if (data && success) {
+      dispatch(
+        setGrowthMostUsed({
+          ...data,
+          isDataReady: success
+        })
+      );
     }
+
+    return { data, success };
   };
 
   useEffect(() => {
-    if (hasGrowthWidgets) {
-      fetchGrowthMostUsed();
+    if (!hasGrowthWidgets) {
+      return;
     }
+
+    fetchGrowthMostUsed();
   }, [hasGrowthWidgets]);
+
+  return fetchGrowthMostUsed;
 };

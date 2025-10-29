@@ -98,7 +98,7 @@ export const AccountDetailsCard = () => {
         accountTokensCountData,
         accountNftsCountData
       ]) => {
-        const isFetched =
+        const isDataReady =
           accountTransfersData.success || accountTokensValueData.success;
         const accountExtraDetails = getInitialAccountExtraState().accountExtra;
 
@@ -122,7 +122,7 @@ export const AccountDetailsCard = () => {
         dispatch(
           setAccountExtra({
             accountExtra: { ...accountExtraDetails, address },
-            isFetched
+            isDataReady
           })
         );
         if (accountTokensCountData.success) {

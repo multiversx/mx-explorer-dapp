@@ -70,7 +70,7 @@ function CameraControls() {
 
 function isExcluded() {
   const browser = UAParser();
-  const excludedOS = ['ubuntu', 'linux'];
+  const excludedOS = ['ubuntu', 'linux', 'debian', 'fedora'];
   const isExcludedOS = excludedOS.includes(
     browser?.os?.name ? browser.os.name?.replaceAll(' ', '-').toLowerCase() : ''
   );

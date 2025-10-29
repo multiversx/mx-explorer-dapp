@@ -8,12 +8,14 @@ export interface FormatBigNumberType {
   value: string | number | BigNumber | undefined | typeof ELLIPSIS;
   digits?: number;
   maxDigits?: number;
+  showEllipsisIfZero?: boolean;
 }
 
 export const formatBigNumber = ({
   value,
   digits = DIGITS,
-  maxDigits
+  maxDigits,
+  showEllipsisIfZero
 }: FormatBigNumberType) => {
   if (value === ELLIPSIS || value === undefined) {
     return ELLIPSIS;
@@ -30,6 +32,10 @@ export const formatBigNumber = ({
     return ELLIPSIS;
   }
   if (bNvalue.isZero()) {
+    if (showEllipsisIfZero) {
+      return ELLIPSIS;
+    }
+
     return ZERO;
   }
 

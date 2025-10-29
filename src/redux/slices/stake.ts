@@ -13,7 +13,7 @@ export const getInitialStakeState = (): StakeSliceType => {
       activeValidators: 0,
       totalStaked: ELLIPSIS
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -49,7 +49,7 @@ export const stakeSlice = createSlice({
         action.payload.notQualifiedAuctionValidators;
 
       state.unprocessed = action.payload.unprocessed;
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
     }
   }
 });

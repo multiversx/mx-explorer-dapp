@@ -1,29 +1,33 @@
-import React, { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { headersPropertiesMapper } from './constants/headersPropertiesMapper';
-import { useHeaderAccountsStats } from './useHeaderAccountsStats';
-import { useHeadersBlocksStats } from './useHeadersBlocksStats';
-import { useHeadersCollectionsStats } from './useHeadersCollectionsStats';
-import { useHeadersTokensStats } from './useHeadersTokensStats';
-import { pageHeadersAccountsStatsSelector } from '../../redux/selectors/pageHeadersAccountsStats';
-import { pageHeadersBlocksStatsSelector } from '../../redux/selectors/pageHeadersBlocksStats';
-import { pageHeadersCollectionsStatsSelector } from '../../redux/selectors/pageHeadersCollectionsStats';
-import { pageHeaderTokensStatsSelector } from '../../redux/selectors/pageHeadersTokensStats';
+
+import { useActiveRoute } from 'hooks';
+import {
+  pageHeadersAccountsStatsSelector,
+  pageHeadersBlocksStatsSelector,
+  pageHeadersCollectionsStatsSelector,
+  pageHeaderTokensStatsSelector
+} from 'redux/selectors';
 import {
   accountsRoutes,
   applicationsRoutes,
   blocksRoutes,
   collectionRoutes,
   tokensRoutes
-} from '../../routes';
-import { useActiveRoute } from '../useActiveRoute';
+} from 'routes';
+
+import { headersPropertiesMapper } from './constants/headersPropertiesMapper';
+import { useHeaderAccountsStats } from './useHeaderAccountsStats';
+import { useHeadersBlocksStats } from './useHeadersBlocksStats';
+import { useHeadersCollectionsStats } from './useHeadersCollectionsStats';
+import { useHeadersTokensStats } from './useHeadersTokensStats';
 
 type PageStatsDataType = {
   id: string;
   title: string;
   value: string | number;
   subTitle?: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   currency?: string;
   order: number;
 };

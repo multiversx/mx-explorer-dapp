@@ -22,6 +22,7 @@ import { TransactionDirectionEnum, UITransactionType } from 'types';
 
 import { TransactionDirection } from './TransactionDirection';
 import { TransactionMethod } from './TransactionMethod';
+import { TransactionPreview } from './TransactionPreview';
 import { TransactionValue } from './TransactionValue';
 
 export interface TransactionRowType {
@@ -30,6 +31,7 @@ export interface TransactionRowType {
   address?: string;
   token?: string;
   showLockedAccounts?: boolean;
+  hasTxPreviewBtn?: boolean;
 }
 
 export const TransactionRow = ({
@@ -37,7 +39,8 @@ export const TransactionRow = ({
   address,
   token,
   showDirectionCol,
-  showLockedAccounts
+  showLockedAccounts,
+  hasTxPreviewBtn
 }: TransactionRowType) => {
   const isSovereign = useIsSovereign();
   const { receiver, receiverAssets } = getDisplayReceiver(transaction);
@@ -45,6 +48,11 @@ export const TransactionRow = ({
 
   return (
     <tr className={`animated-row ${transaction.isNew ? 'new' : ''}`}>
+      {hasTxPreviewBtn && (
+        <td className='preview'>
+          <TransactionPreview transaction={transaction} />
+        </td>
+      )}
       <td>
         <div className='d-flex align-items-center hash'>
           <TransactionIcons transaction={transaction} />

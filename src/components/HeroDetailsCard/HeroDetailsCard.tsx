@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { ImageWithFallback } from 'components';
 import { useIsMainnet } from 'hooks';
-import { setMetaTags } from 'redux/slices/metaTags';
+import { setMetaTags } from 'redux/slices';
 import { WithClassnameType } from 'types';
 import { StatsCard, SmallStatsCard, StatsCardUIType } from 'widgets';
 

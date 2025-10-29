@@ -1,76 +1,91 @@
-import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ELLIPSIS, MAX_TRANSACTIONS_PAGE_SIZE } from 'appConstants';
 import { useGetPage, useGetTransactionFilters } from 'hooks';
-import { UITransactionType, ApiAdapterResponseType } from 'types';
+import { transactionsSelector } from 'redux/selectors';
+import { setTransactions } from 'redux/slices';
+import { TransactionType } from 'types';
+import { FetchApiDataProps, useFetchApiData } from './useFetchApiData';
 
-export const useFetchTransactions = (
-  transactionPromise: (params?: any) => Promise<ApiAdapterResponseType>,
-  transactionCountPromise: (params?: any) => Promise<ApiAdapterResponseType>,
-  filters: any = {}
-) => {
-  const [searchParams] = useSearchParams();
+export interface FetchTransactionsProps
+  extends Omit<FetchApiDataProps, 'onApiData'> {
+  hasMaxTransactionsSize?: boolean;
+}
 
-  const urlParams = useGetTransactionFilters();
+interface TransactionsWebsocketResponseType {
+  transactions: TransactionType[];
+  transactionsCount: number;
+}
+
+export const useFetchTransactions = (props: FetchTransactionsProps) => {
+  const dispatch = useDispatch();
+  const transactionFilters = useGetTransactionFilters();
   const { page, size } = useGetPage();
 
-  const [transactions, setTransactions] = useState<UITransactionType[]>([]);
-  const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
-  const [dataChanged, setDataChanged] = useState<boolean>(false);
-  const [totalTransactions, setTotalTransactions] = useState<
-    number | typeof ELLIPSIS
-  >(ELLIPSIS);
-  let isCalled = false;
-  const maxTransactionsSize =
-    size > MAX_TRANSACTIONS_PAGE_SIZE ? MAX_TRANSACTIONS_PAGE_SIZE : size;
+  const { hasMaxTransactionsSize, dataCountPromise, filters, websocketConfig } =
+    props;
 
-  const fetchTransactions = (paramsChange = false) => {
-    if (!isCalled) {
-      isCalled = true;
-      if (searchParams.toString() && paramsChange) {
-        setDataChanged(true);
-      }
-      Promise.all([
-        transactionPromise({
-          ...urlParams,
-          ...filters,
-          page,
-          size: maxTransactionsSize
-        }),
-        transactionCountPromise({ ...urlParams, ...filters })
-      ])
-        .then(([transactionsData, transactionsCountData]) => {
-          if (transactionsData.success && transactionsCountData.success) {
-            const existingHashes = transactions.map((b) => b.txHash);
-            const newTransactions = transactionsData.data.map(
-              (transaction: UITransactionType) => ({
-                ...transaction,
-                isNew:
-                  page === 1 && !existingHashes.includes(transaction.txHash)
-              })
-            );
-            setTransactions(newTransactions);
-            setTotalTransactions(transactionsCountData.data);
-          }
-          setIsDataReady(
-            transactionsData.success && transactionsCountData.success
-          );
-        })
-        .finally(() => {
-          if (paramsChange) {
-            isCalled = false;
-            setDataChanged(false);
-          }
-        });
+  const { transactions, transactionsCount, isDataReady, isRefreshPaused } =
+    useSelector(transactionsSelector);
+
+  const maxTransactionsSize =
+    hasMaxTransactionsSize && size > MAX_TRANSACTIONS_PAGE_SIZE
+      ? MAX_TRANSACTIONS_PAGE_SIZE
+      : size;
+
+  const onWebsocketData = (event: TransactionsWebsocketResponseType) => {
+    if (!event) {
+      return;
     }
+
+    const { transactions, transactionsCount } = event;
+    dispatch(
+      setTransactions({
+        transactions,
+        transactionsCount,
+        isWebsocket: true,
+        isDataReady: true
+      })
+    );
   };
 
+  const onApiData = (response: any[]) => {
+    const [transactionsData, transactionsCountData] = response;
+    dispatch(
+      setTransactions({
+        transactions: transactionsData.data ?? [],
+        transactionsCount: transactionsCountData?.data ?? ELLIPSIS,
+        isWebsocket: false,
+        isDataReady:
+          transactionsData.success &&
+          Boolean(!dataCountPromise || transactionsCountData?.success)
+      })
+    );
+  };
+
+  const { fetchData, dataChanged } = useFetchApiData({
+    ...props,
+    filters: {
+      page,
+      size: maxTransactionsSize,
+      ...transactionFilters,
+      ...filters
+    },
+    websocketConfig: {
+      withUsername: true,
+      ...websocketConfig
+    },
+    onWebsocketData,
+    onApiData,
+    urlParams: transactionFilters,
+    isRefreshPaused
+  });
+
   return {
-    fetchTransactions,
     transactions,
-    totalTransactions,
+    totalTransactions: transactionsCount,
     isDataReady,
+    fetchTransactions: fetchData,
     dataChanged
   };
 };

@@ -1,6 +1,7 @@
 export * from './formatAmount';
 export * from './formatDate';
 export * from './formatHerotag';
+export * from './formatLatestEntries';
 export * from './formatBigNumber';
 export * from './formatOrdinals';
 export * from './formatPercentLabel';

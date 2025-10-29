@@ -22,7 +22,7 @@ import {
   useHasGrowthWidgets
 } from 'hooks';
 import { faDiamond } from 'icons/regular';
-import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
+import { pageHeaderTokensStatsSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';
 import { CollectionType } from 'types';
 

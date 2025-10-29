@@ -16,7 +16,15 @@ export interface FormatNumberUIType extends Omit<FormatAmountUIType, 'value'> {
 }
 
 export const FormatNumber = (props: FormatNumberUIType) => {
-  const { value, symbol, label, hideLessThanOne, maxDigits, className } = props;
+  const {
+    value,
+    symbol,
+    label,
+    hideLessThanOne,
+    maxDigits,
+    className,
+    isAnimated
+  } = props;
   const bNamount = BigNumber.isBigNumber(value) ? value : new BigNumber(value);
   const completeValue = bNamount.toFormat();
 
@@ -41,7 +49,7 @@ export const FormatNumber = (props: FormatNumberUIType) => {
     <FormatDisplayValue
       {...props}
       formattedValue={formattedValue}
-      completeValue={completeValue}
+      completeValue={isAnimated ? bNamount.toNumber() : completeValue}
       symbol={symbol}
       egldLabel={label}
       hideLessThanOne={hideLessThanOne && bNamount.isLessThan(1)}

@@ -1,0 +1,57 @@
+@import './PreviewPanelCard/previewPanelCard.styles.scss';
+
+.preview-panel {
+  border-radius: 1rem;
+  background-color: var(--neutral-800);
+}
+
+.preview-panel-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0;
+}
+
+.preview-panel-wrapper {
+  --popover-max-width: 19rem; // 304px
+  --popover-font-size: 0.75rem;
+  --popover-bg: var(--neutral-800);
+  --popover-border-color: var(--neutral-700);
+  --popover-border-radius: 1rem;
+  --popover-inner-border-radius: calc(1rem - 1px);
+  --popover-header-padding-x: 1rem;
+  --popover-header-padding-y: 1rem;
+  --popover-header-font-size: 0.75rem;
+  --popover-header-color: var(--neutral-400);
+  --popover-header-bg: var(--neutral-800);
+  --popover-body-padding-x: 0.25rem;
+  --popover-body-padding-y: 0.25rem;
+  --popover-body-color: var(--neutral-400);
+  --popover-box-shadow: 0px 6px 14px 0px rgba(0, 0, 0, 0.24),
+    0px 25px 25px 0px rgba(0, 0, 0, 0.21), 0px 57px 34px 0px rgba(0, 0, 0, 0.12),
+    0px 101px 41px 0px rgba(0, 0, 0, 0.04), 0px 159px 44px 0px rgba(0, 0, 0, 0);
+
+  @include media-breakpoint-up(md) {
+    --popover-max-width: 31.375rem; // 508px
+    min-width: 31.375rem; // 508px;
+  }
+  font-family: var(--font-headings-regular);
+
+  .loader {
+    padding-top: 1.25rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+
+  .popover-header {
+    border-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    .preview-small {
+      font-size: 0.875rem;
+    }
+    .preview-hash {
+      max-width: 18rem;
+    }
+  }
+}

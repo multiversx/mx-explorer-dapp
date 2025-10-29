@@ -1,12 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import {
   FormatAmount,
-  ShardSpan,
   NetworkLink,
-  TimeAgo,
   TransactionStatus,
   DetailItem,
   Trim,
@@ -14,35 +11,29 @@ import {
   TransactionAction,
   FormatUSD,
   AccountLink,
-  ShardLink,
   TransactionIcons
 } from 'components';
 import {
-  addressIsBech32,
   formatAmount,
-  formatDate,
   isContract,
   getTransactionMethod,
   getTotalTxTokenUsdValue,
   getDisplayReceiver,
-  getTransactionVisibleOperations,
-  getTransactionFee
+  getTransactionVisibleOperations
 } from 'helpers';
-import { faClock, faSpinner } from 'icons/regular';
 import {
   OperationsList,
   ScResultsList,
   DataField,
-  TransactionErrorDisplay,
   TransactionWarningMessage
 } from 'pages/TransactionDetails/components';
 import { activeNetworkSelector } from 'redux/selectors';
 import {
   TransactionType,
   TransactionActionCategoryEnum,
-  TransactionActionEnum,
-  TransactionApiStatusEnum
+  TransactionActionEnum
 } from 'types';
+import { TxAge, TxFee, TxFrom, TxReceiver, TxTo } from './components';
 
 export const TransactionDetailsPanel = ({
   transaction
@@ -50,12 +41,7 @@ export const TransactionDetailsPanel = ({
   transaction: TransactionType;
 }) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
-  const { receiver, receiverAssets } = getDisplayReceiver(transaction);
-
-  const isTxPending =
-    (transaction?.status &&
-      transaction.status.toLowerCase() === TransactionApiStatusEnum.pending) ||
-    transaction.pendingResults;
+  const { receiver } = getDisplayReceiver(transaction);
 
   const txValue = formatAmount({
     input: transaction.value,
@@ -92,23 +78,7 @@ export const TransactionDetailsPanel = ({
       )}
 
       <DetailItem title='Age' className='text-neutral-400'>
-        {transaction.timestamp ? (
-          <div className='d-flex flex-wrap align-items-center'>
-            {isTxPending ? (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                className='me-2  fa-spin slow-spin'
-              />
-            ) : (
-              <FontAwesomeIcon icon={faClock} className='me-2 ' />
-            )}
-            <TimeAgo value={transaction.timestamp} />
-            &nbsp;
-            <span>({formatDate(transaction.timestamp, false, true)})</span>
-          </div>
-        ) : (
-          <span>N/A</span>
-        )}
+        <TxAge transaction={transaction} />
       </DetailItem>
 
       <DetailItem title='Miniblock'>
@@ -130,83 +100,27 @@ export const TransactionDetailsPanel = ({
       </DetailItem>
 
       <DetailItem title='From'>
-        <div className='d-flex align-items-center'>
-          {addressIsBech32(transaction.sender) ? (
-            <>
-              <AccountLink
-                address={transaction.sender}
-                assets={transaction.senderAssets}
-                hasHighlight
-              />
-              <CopyButton className='me-2' text={transaction.sender} />
-              <ShardLink
-                shard={transaction.senderShard}
-                className='flex-shrink-0'
-                transactionSenderShard
-                hasParanthesis
-              />
-            </>
-          ) : (
-            <ShardSpan shard={transaction.sender} />
-          )}
-        </div>
+        <TxFrom transaction={transaction} />
       </DetailItem>
 
       <DetailItem title='To'>
-        <div className='d-flex flex-column'>
-          <div className='d-flex align-items-center'>
-            {isContract(transaction.receiver) && (
-              <span className='me-2 text-neutral-400'>Contract</span>
-            )}
-            <AccountLink
-              address={transaction.receiver}
-              assets={transaction.receiverAssets}
-              hasHighlight
-            />
-            <CopyButton className='me-2' text={transaction.receiver} />
-            {!isNaN(transaction.receiverShard) && (
-              <ShardLink
-                shard={transaction.receiverShard}
-                className='flex-shrink-0'
-                transactionReceiverShard
-                hasParanthesis
-              />
-            )}
-          </div>
-          <div className='d-flex flex-column gap-1'>
-            <TransactionErrorDisplay transaction={transaction} />
-          </div>
-        </div>
+        <TxTo transaction={transaction} />
       </DetailItem>
 
       {receiver !== transaction.receiver && (
         <DetailItem title='Destination'>
-          <div className='d-flex flex-column'>
-            <div className='d-flex align-items-center'>
-              {isContract(receiver) && (
-                <span className='me-2 text-neutral-400'>Contract</span>
-              )}
-              <AccountLink
-                address={receiver}
-                assets={receiverAssets}
-                hasHighlight
-              />
-              <CopyButton className='me-2' text={receiver} />
-            </div>
-          </div>
+          <TxReceiver transaction={transaction} />
         </DetailItem>
       )}
 
       {transaction.relayer && (
         <DetailItem title='Relayer'>
-          <div className='d-flex flex-column'>
-            <div className='d-flex align-items-center'>
-              {isContract(transaction.relayer) && (
-                <span className='me-2 text-neutral-400'>Contract</span>
-              )}
-              <AccountLink address={transaction.relayer} hasHighlight />
-              <CopyButton className='me-2' text={transaction.relayer} />
-            </div>
+          <div className='d-flex align-items-center'>
+            {isContract(transaction.relayer) && (
+              <span className='me-2 text-neutral-400'>Contract</span>
+            )}
+            <AccountLink address={transaction.relayer} hasHighlight />
+            <CopyButton className='me-2' text={transaction.relayer} />
           </div>
         </DetailItem>
       )}
@@ -270,30 +184,7 @@ export const TransactionDetailsPanel = ({
       )}
 
       <DetailItem title='Transaction Fee' className='text-neutral-100'>
-        {transaction.fee !== undefined && transaction.gasUsed !== undefined ? (
-          <>
-            <FormatAmount
-              value={transaction.fee ?? getTransactionFee(transaction)}
-              showUsdValue={false}
-              showLastNonZeroDecimal
-            />
-            {transaction.price !== undefined && (
-              <>
-                {' '}
-                <FormatUSD
-                  value={formatAmount({
-                    input: transaction.fee ?? getTransactionFee(transaction),
-                    showLastNonZeroDecimal: true
-                  })}
-                  usd={transaction.price}
-                  className='text-neutral-400'
-                />
-              </>
-            )}
-          </>
-        ) : (
-          <span>N/A</span>
-        )}
+        <TxFee transaction={transaction} />
       </DetailItem>
 
       {transaction.price !== undefined && (
