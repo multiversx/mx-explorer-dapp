@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown, faArrowUp } from 'icons/regular';
 
-export const SearchModalFooter = () => {
+export const SearchFooter = () => {
   return (
-    <div className='search-modal-footer'>
+    <div className='search-footer'>
       <div className='key-action'>
         <div className='key-text'>Close</div>
         <div className='key-hint'>ESC</div>
