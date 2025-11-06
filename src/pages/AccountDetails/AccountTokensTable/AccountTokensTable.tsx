@@ -15,7 +15,8 @@ import {
   Sort,
   Loader,
   Overlay,
-  ColSpanWrapper
+  ColSpanWrapper,
+  PriceSourceTooltip
 } from 'components';
 import { isValidAccountTokenValue } from 'helpers';
 import { useAdapter } from 'hooks';
@@ -171,6 +172,10 @@ export const AccountTokensTable = () => {
                                     showPrefix={false}
                                   />
                                   <LowLiquidityTooltip token={token} />
+                                  <PriceSourceTooltip
+                                    token={token}
+                                    className='ms-0'
+                                  />
                                 </div>
                               ) : (
                                 <span className='text-neutral-500'>-</span>
