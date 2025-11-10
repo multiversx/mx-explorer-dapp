@@ -8,7 +8,7 @@ export const useGetBlockFilters = () => {
   const getParam = getUrlParam(searchParams);
 
   const filters = {
-    shard: getParam(BlockFiltersEnum.shard, true)
+    shard: getParam(BlockFiltersEnum.shard, { checkIsInteger: true })
   };
 
   return cleanUrlFilters(filters);

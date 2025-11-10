@@ -107,6 +107,7 @@ export const TokensTable = ({
                           >
                             {token.ticker}
                           </NetworkLink>
+                          <LowLiquidityTooltip token={token} />
                         </span>
                         {token.assets && token.assets.description && (
                           <div

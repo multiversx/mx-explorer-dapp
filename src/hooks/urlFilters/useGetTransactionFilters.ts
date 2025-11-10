@@ -17,20 +17,20 @@ export const useGetTransactionFilters = () => {
     : '';
 
   const senderShard =
-    getParam(TransactionFiltersEnum.senderShard, true) ??
-    getParam('sendershard', true);
+    getParam(TransactionFiltersEnum.senderShard, { checkIsInteger: true }) ??
+    getParam('sendershard', { checkIsInteger: true });
 
   const receiverShard =
-    getParam(TransactionFiltersEnum.receiverShard, true) ??
-    getParam('receivershard', true);
+    getParam(TransactionFiltersEnum.receiverShard, { checkIsInteger: true }) ??
+    getParam('receivershard', { checkIsInteger: true });
 
   const filters = {
     senderShard,
     receiverShard,
     sender: getParam(TransactionFiltersEnum.sender),
     receiver: getParam(TransactionFiltersEnum.receiver),
-    before: getParam(TransactionFiltersEnum.before, true),
-    after: getParam(TransactionFiltersEnum.after, true),
+    before: getParam(TransactionFiltersEnum.before, { checkIsInteger: true }),
+    after: getParam(TransactionFiltersEnum.after, { checkIsInteger: true }),
     status: checkStatus(status),
     miniBlockHash: getParam(TransactionFiltersEnum.miniBlockHash),
     method: getParam(TransactionFiltersEnum.method),
