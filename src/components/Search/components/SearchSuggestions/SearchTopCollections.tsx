@@ -21,70 +21,59 @@ export const SearchTopCollections = () => {
   }
 
   return (
-    <div className='search-suggestions search-top-collections'>
-      <div className='table-wrapper animated-list'>
-        <table className='table trim-size mb-0'>
-          <thead>
-            <tr>
-              <th>App</th>
-              <th className='text-end'>Txn</th>
-            </tr>
-          </thead>
-          <tbody data-testid='topAppsTable'>
-            {dailyMostTransactedNFTs.map(
-              ({ key: identifier, value, extraInfo }) => {
-                return (
-                  <tr key={identifier}>
-                    <td>
-                      <NetworkLink
-                        to={urlBuilder.collectionDetails(identifier)}
-                        className={`d-flex align-items-center symbol trim text-truncate text-primary-200 w-min-content ${
-                          extraInfo?.assets?.svgUrl ? 'side-link' : ''
-                        }`}
-                      >
-                        {extraInfo?.assets ? (
-                          <>
-                            {extraInfo.assets?.svgUrl && (
-                              <img
-                                src={extraInfo.assets.svgUrl}
-                                className='side-icon me-1'
-                                alt=''
-                                role='presentation'
-                              />
-                            )}
-                            <div className='text-truncate'>
-                              {extraInfo?.name ? (
-                                <>{extraInfo.name}</>
-                              ) : (
-                                <>{identifier}</>
-                              )}
-                            </div>
-                            {extraInfo?.isVerified && (
-                              <Overlay
-                                title='Verified'
-                                className='verified-badge-wrapper'
-                              >
-                                <FontAwesomeIcon
-                                  icon={faHexagonCheck}
-                                  size='sm'
-                                  className='text-yellow-spotlight ms-2'
-                                />
-                              </Overlay>
-                            )}
-                          </>
-                        ) : (
-                          <div className='text-truncate'>{identifier}</div>
-                        )}
-                      </NetworkLink>
-                    </td>
-                    <td>{formatBigNumber({ value })}</td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
+    <div className='search-group search-top-apps'>
+      <div className='search-category'>
+        Top NFT Collections<div className='ms-auto'>Txn / 24h</div>
       </div>
+      {dailyMostTransactedNFTs
+        .slice(0, 3)
+        .map(({ key: identifier, value, extraInfo }) => {
+          return (
+            <NetworkLink
+              to={urlBuilder.collectionDetails(identifier)}
+              key={identifier}
+              className='search-suggestion selectable'
+            >
+              <div className='search-text trim text-truncate'>
+                {extraInfo?.assets ? (
+                  <>
+                    {extraInfo.assets?.svgUrl && (
+                      <img
+                        src={extraInfo.assets.svgUrl}
+                        className='side-icon me-1'
+                        alt=''
+                        role='presentation'
+                      />
+                    )}
+                    <div className='text-truncate'>
+                      {extraInfo?.name ? (
+                        <>{extraInfo.name}</>
+                      ) : (
+                        <>{identifier}</>
+                      )}
+                    </div>
+                    {extraInfo?.isVerified && (
+                      <Overlay
+                        title='Verified'
+                        className='verified-badge-wrapper'
+                      >
+                        <FontAwesomeIcon
+                          icon={faHexagonCheck}
+                          size='sm'
+                          className='text-yellow-spotlight ms-2'
+                        />
+                      </Overlay>
+                    )}
+                  </>
+                ) : (
+                  identifier
+                )}
+              </div>
+
+              <div className='ms-auto'>{formatBigNumber({ value })}</div>
+            </NetworkLink>
+          );
+        })}
     </div>
   );
 };

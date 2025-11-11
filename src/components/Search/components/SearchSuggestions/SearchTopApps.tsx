@@ -22,61 +22,48 @@ export const SearchTopApps = () => {
   }
 
   return (
-    <div className='search-suggestions search-top-apps'>
-      <div className='table-wrapper animated-list'>
-        <table className='table trim-size mb-0'>
-          <thead>
-            <tr>
-              <th>App</th>
-              <th className='text-end'>Txn</th>
-            </tr>
-          </thead>
-          <tbody data-testid='topAppsTable'>
-            {dailyMostUsedApplications.map(
-              ({ key: address, value, extraInfo }) => {
-                const icon =
-                  extraInfo?.assets?.iconSvg || extraInfo?.assets?.iconPng;
-                return (
-                  <tr key={address}>
-                    <td>
-                      <NetworkLink
-                        to={urlBuilder.accountDetails(address)}
-                        className='d-flex align-items-center trim-wrapper gap-2 hash hash-xxl'
-                      >
-                        {icon ? (
-                          <img
-                            src={icon}
-                            alt={extraInfo?.assets?.name}
-                            className='side-icon side-icon-md-large'
-                          />
-                        ) : (
-                          <div className='side-icon side-icon-md-large d-flex align-items-center justify-content-center'>
-                            <DefaultImage />
-                          </div>
-                        )}
-                        <AccountName
-                          address={address}
-                          assets={extraInfo?.assets}
-                        />
-                        {extraInfo?.isVerified && (
-                          <Overlay title='Verified'>
-                            <FontAwesomeIcon
-                              icon={faBadgeCheck}
-                              size='sm'
-                              className='text-primary'
-                            />
-                          </Overlay>
-                        )}
-                      </NetworkLink>
-                    </td>
-                    <td>{formatBigNumber({ value })}</td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
+    <div className='search-group search-top-collections'>
+      <div className='search-category'>
+        Top Apps<div className='ms-auto'>Txn / 24h</div>
       </div>
+      {dailyMostUsedApplications
+        .slice(0, 3)
+        .map(({ key: address, value, extraInfo }) => {
+          const icon = extraInfo?.assets?.svgUrl || extraInfo?.assets?.pngUrl;
+          return (
+            <NetworkLink
+              to={urlBuilder.accountDetails(address)}
+              key={address}
+              className='search-suggestion selectable'
+            >
+              <div className='search-text trim text-truncate'>
+                {icon ? (
+                  <img
+                    src={icon}
+                    alt={extraInfo?.assets?.name}
+                    className='side-icon me-1'
+                    role='presentation'
+                  />
+                ) : (
+                  <div className='side-icon me-1 d-flex align-items-center justify-content-center'>
+                    <DefaultImage />
+                  </div>
+                )}
+                <AccountName address={address} assets={extraInfo?.assets} />
+                {extraInfo?.isVerified && (
+                  <Overlay title='Verified'>
+                    <FontAwesomeIcon
+                      icon={faBadgeCheck}
+                      size='sm'
+                      className='text-primary'
+                    />
+                  </Overlay>
+                )}
+              </div>
+              <div className='ms-auto'>{formatBigNumber({ value })}</div>
+            </NetworkLink>
+          );
+        })}
     </div>
   );
 };

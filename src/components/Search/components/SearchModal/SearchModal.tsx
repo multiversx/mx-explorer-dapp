@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { NAVIGATION_SEARCH_STATE } from 'appConstants';
@@ -7,23 +8,73 @@ import { useSearch } from 'hooks';
 import { faCircleNotch, faSearch } from 'icons/regular';
 import { WithClassnameType } from 'types';
 
+import { SearchContent } from './SearchContent';
+import {
+  handleArrowDown,
+  handleArrowUp
+} from 'components/Search/helpers/handleArrowAction';
+import { useOutsideClick } from 'components/Search/helpers/handleOutsideClick';
+
 export const SearchModal = ({ className }: WithClassnameType) => {
+  const ref: any = useRef(null);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [show, setShow] = useState(false);
   const [searchHash, setSearchHash] = useState<string>('');
   const { search, isSearching, searchRoute, setSearchRoute } =
     useSearch(searchHash);
+
+  const [index, setIndex] = useState(0);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       search();
     }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setIndex(0);
+      setShow(false);
+      setSearchHash('');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchHash(e.target.value);
+    if (e.target.value && !show) {
+      setShow(true);
+    }
   };
+
+  useHotkeys(['/', 'shift+/'], (ev) => {
+    setShow(true);
+    ev.preventDefault();
+  });
+  useHotkeys('Escape', (ev) => {
+    if (!show) {
+      return;
+    }
+    setShow(false);
+    setIndex(0);
+    setSearchHash('');
+    ev.preventDefault();
+  });
+  useHotkeys('down', () => handleArrowDown(index, setIndex), {
+    enableOnFormTags: true
+  });
+  useHotkeys('up', () => handleArrowUp(index, setIndex), {
+    enableOnFormTags: true
+  });
+
+  useOutsideClick(
+    ref.current,
+    () => {
+      setShow(false);
+      setIndex(0);
+      setSearchHash('');
+    },
+    [ref.current]
+  );
 
   useEffect(() => {
     if (searchRoute) {
@@ -34,12 +85,12 @@ export const SearchModal = ({ className }: WithClassnameType) => {
   }, [searchRoute, pathname]);
 
   return (
-    <search>
+    <search className='search' ref={ref}>
       <form
         className={`main-search w-100 d-flex ${className ?? ''}`}
         noValidate={true}
       >
-        <div className='input-group input-group-seamless mb-3'>
+        <div className='input-group input-group-seamless'>
           <input
             type='text'
             className='form-control text-truncate'
@@ -50,6 +101,7 @@ export const SearchModal = ({ className }: WithClassnameType) => {
             value={searchHash}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            onFocus={() => setShow(true)}
             aria-label='Search for an address, @herotag, transaction/block hash, validator key or token id'
             aria-describedby='search-addon'
           />
@@ -75,6 +127,7 @@ export const SearchModal = ({ className }: WithClassnameType) => {
           </button>
         </div>
       </form>
+      {show && <SearchContent />}
     </search>
   );
 };
