@@ -1,6 +1,6 @@
 .search-content {
   position: absolute;
-  margin-top: 0.5rem;
+  margin-top: -0.5rem;
   width: 100%;
   background-color: var(--neutral-900);
   border-radius: 1rem;
@@ -54,4 +54,5 @@
 
 .search-text {
   align-items: center;
+  padding-right: 0.5rem;
 }

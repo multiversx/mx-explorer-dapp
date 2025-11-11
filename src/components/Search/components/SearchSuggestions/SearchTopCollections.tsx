@@ -69,7 +69,6 @@ export const SearchTopCollections = () => {
                   identifier
                 )}
               </div>
-
               <div className='ms-auto'>{formatBigNumber({ value })}</div>
             </NetworkLink>
           );

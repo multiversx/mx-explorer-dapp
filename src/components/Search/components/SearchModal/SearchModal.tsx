@@ -90,7 +90,7 @@ export const SearchModal = ({ className }: WithClassnameType) => {
         className={`main-search w-100 d-flex ${className ?? ''}`}
         noValidate={true}
       >
-        <div className='input-group input-group-seamless'>
+        <div className='input-group input-group-seamless mb-3'>
           <input
             type='text'
             className='form-control text-truncate'

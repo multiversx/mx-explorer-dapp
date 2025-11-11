@@ -57,7 +57,6 @@ export const SearchTopTokens = () => {
                   identifier
                 )}
               </div>
-
               <div className='ms-auto'>{formatBigNumber({ value })}</div>
             </NetworkLink>
           );
