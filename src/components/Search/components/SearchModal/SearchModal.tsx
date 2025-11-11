@@ -17,6 +17,7 @@ import { useOutsideClick } from 'components/Search/helpers/handleOutsideClick';
 
 export const SearchModal = ({ className }: WithClassnameType) => {
   const ref: any = useRef(null);
+  const inputRef: any = useRef(null);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [show, setShow] = useState(false);
@@ -47,6 +48,10 @@ export const SearchModal = ({ className }: WithClassnameType) => {
   };
 
   useHotkeys(['/', 'shift+/'], (ev) => {
+    if (show) {
+      return;
+    }
+    inputRef?.current?.focus?.();
     setShow(true);
     ev.preventDefault();
   });
@@ -92,6 +97,7 @@ export const SearchModal = ({ className }: WithClassnameType) => {
       >
         <div className='input-group input-group-seamless mb-3'>
           <input
+            ref={inputRef}
             type='text'
             className='form-control text-truncate'
             placeholder='Search for an address, @herotag, transaction/block hash, validator key or token id'
