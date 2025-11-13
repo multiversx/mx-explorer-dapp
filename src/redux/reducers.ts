@@ -26,6 +26,7 @@ import {
 } from './slices/nodes';
 
 import { refreshReducer } from './slices/refresh';
+import { searchReducer } from './slices/search';
 import { stakeReducer } from './slices/stake';
 import { stakeExtraReducer } from './slices/stakeExtra';
 import { statsReducer } from './slices/stats';
@@ -91,6 +92,7 @@ export const customIgnoredSlices = {
   growthTransactions: growthTransactionsReducer,
   growthEconomics: growthEconomicsReducer,
   refresh: refreshReducer,
+  search: searchReducer,
   stats: statsReducer,
   token: tokenReducer,
   tokenExtra: tokenExtraReducer,

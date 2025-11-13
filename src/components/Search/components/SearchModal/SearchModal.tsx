@@ -22,15 +22,15 @@ export const SearchModal = ({ className }: WithClassnameType) => {
   const { pathname } = useLocation();
   const [show, setShow] = useState(false);
   const [searchHash, setSearchHash] = useState<string>('');
-  const { search, isSearching, searchRoute, setSearchRoute } =
-    useSearch(searchHash);
+  const { search, isSearching, setIsSearching } = useSearch(searchHash);
 
   const [index, setIndex] = useState(0);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = async (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      search();
+      const list = await search();
+      console.log('--list', list);
     }
     if (e.key === 'Escape') {
       e.preventDefault();
@@ -80,14 +80,6 @@ export const SearchModal = ({ className }: WithClassnameType) => {
     },
     [ref.current]
   );
-
-  useEffect(() => {
-    if (searchRoute) {
-      setSearchRoute('');
-      setSearchHash('');
-      navigate(searchRoute, { state: NAVIGATION_SEARCH_STATE });
-    }
-  }, [searchRoute, pathname]);
 
   return (
     <search className='search' ref={ref}>

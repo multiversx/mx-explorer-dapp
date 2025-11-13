@@ -1,0 +1,44 @@
+import { useSelector } from 'react-redux';
+
+import { PageState } from 'components';
+import { faSearch } from 'icons/regular';
+import { searchSelector } from 'redux/selectors';
+
+export const SearchResults = () => {
+  const { search, searchQuery } = useSelector(searchSelector);
+
+  const hasSearchResults = Object.keys(search).length > 0;
+  const {
+    account,
+    token,
+    collection,
+    nft,
+    node,
+    block,
+    miniblock,
+    transaction,
+    scResult,
+    transactionInPool,
+    accounts,
+    tokens,
+    collections,
+    nfts
+  } = search;
+
+  if (!hasSearchResults) {
+    return (
+      <PageState
+        icon={faSearch}
+        title="Your search does not match anything we've got"
+        description={
+          <div className='px-spacer'>
+            <span className='text-break-all'>{searchQuery}</span>
+          </div>
+        }
+        isError
+      />
+    );
+  }
+
+  return <></>;
+};

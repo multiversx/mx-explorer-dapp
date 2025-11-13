@@ -3,7 +3,8 @@ import { Navigate, useLocation, useParams } from 'react-router-dom';
 
 import { NAVIGATION_SEARCH_STATE } from 'appConstants';
 import { PageState, Loader } from 'components';
-import { useSearch, useNetworkRoute } from 'hooks';
+import { useNetworkRoute } from 'hooks';
+import { useSearch } from 'hooks/useSearch';
 import { faSearch } from 'icons/regular';
 
 export const HashSearch = () => {

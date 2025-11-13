@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { NAVIGATION_SEARCH_STATE } from 'appConstants';
-import { useSearch } from 'hooks';
+import { useSearch } from 'hooks/useSearch';
 import { faCircleNotch, faSearch } from 'icons/regular';
 import { WithClassnameType } from 'types';
 

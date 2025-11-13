@@ -117,10 +117,10 @@ export const useSearchSingleResponse = (hash: string) => {
       if (scResultResponse?.data?.originalTxHash) {
         return { scResult: scResultResponse?.data };
       }
-      if (transactionResponse?.data?.hash) {
+      if (transactionResponse?.data?.txHash) {
         return { transaction: transactionResponse?.data };
       }
-      if (transactionInPoolResponse?.data?.hash) {
+      if (transactionInPoolResponse?.data?.txHash) {
         return { transactionInPool: transactionInPoolResponse?.data };
       }
 

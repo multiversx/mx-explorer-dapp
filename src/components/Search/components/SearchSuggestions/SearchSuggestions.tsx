@@ -1,34 +1,20 @@
 import { useSelector } from 'react-redux';
 
 import { Loader } from 'components';
-import { useHasGrowthWidgets, useFetchGrowthMostUsed } from 'hooks';
-import { growthMostUsedSelector } from 'redux/selectors';
-import { SearchTopApps } from './SearchTopApps';
-import { SearchTopCollections } from './SearchTopCollections';
-import { SearchTopTokens } from './SearchTopTokens';
+import { searchSelector } from 'redux/selectors';
+import { SearchMostUsed } from './SearchMostUsed';
+import { SearchResults } from './SearchResults';
 
 export const SearchSuggestions = () => {
-  const hasGrowthWidgets = useHasGrowthWidgets();
+  const { searchQuery, isDataReady } = useSelector(searchSelector);
 
-  const { isDataReady } = useSelector(growthMostUsedSelector);
-
-  useFetchGrowthMostUsed();
-
-  if (!hasGrowthWidgets) {
-    return null;
+  if (isDataReady === false) {
+    return <Loader />;
   }
 
   return (
     <div className='search-suggestions'>
-      {isDataReady ? (
-        <>
-          <SearchTopTokens />
-          <SearchTopApps />
-          <SearchTopCollections />
-        </>
-      ) : (
-        <Loader />
-      )}
+      {searchQuery ? <SearchResults /> : <SearchMostUsed />}
     </div>
   );
 };
