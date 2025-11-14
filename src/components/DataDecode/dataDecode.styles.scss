@@ -1,15 +1,13 @@
 .data-decode {
-  $name: 'data-decode';
+  --data-decode-padding: 0.375rem 3rem 0.375rem 0.75rem;
+  border-radius: var(--border-radius);
 
-  $color: var(--#{$prefix}#{$name}-color, var(--neutral-200));
-  $bg-color: var(--#{$prefix}#{$name}-bg-color, var(--neutral-800));
-  $border-color: var(--#{$prefix}#{$name}-border-color, var(--border-color));
-  $border-width: var(--#{$prefix}#{$name}-border-width, 0);
-  $border-radius: var(--#{$prefix}#{$name}-border-radius, var(--border-radius));
-  $font-size: var(--#{$prefix}#{$name}-font-size, $font-size-base);
-  $padding: var(--#{$prefix}#{$name}-padding, 0.375rem 9rem 0.375rem 0.75rem);
-
-  border-radius: $border-radius;
+  &.has-decode {
+    --data-decode-padding: 0.375rem 9rem 0.375rem 0.75rem;
+    .copy-button {
+      right: 6.75rem;
+    }
+  }
 
   .button-holder {
     .dropdown {
@@ -29,7 +27,7 @@
     .copy-button {
       position: absolute;
       top: 0.313rem;
-      right: 6.75rem;
+      right: 0.313rem;
       width: 1.813rem;
       height: 1.813rem;
       border-radius: 0.5rem;
@@ -49,15 +47,15 @@
   .textarea {
     -moz-appearance: textfield-multiline;
     -webkit-appearance: textarea;
-    border: $border-width solid $border-color;
-    background-color: $bg-color;
-    color: $color;
-    border-radius: $border-radius;
-    font-size: $font-size;
+    border: var(--border-width) solid var(--border-color);
+    background-color: var(--neutral-800);
+    color: var(--neutral-200);
+    border-radius: var(--border-radius);
+    font-size: $font-size-base;
     min-height: 4rem;
     height: 5.5rem;
     overflow: auto;
-    padding: $padding;
+    padding: var(--data-decode-padding);
     word-wrap: break-word;
     white-space: pre-wrap;
     resize: vertical;
@@ -65,7 +63,12 @@
     overflow-x: hidden;
 
     &:hover {
-      border: $border-width solid $border-color;
+      border: var(--border-width) solid var(--border-color);
+    }
+
+    &.textarea-lg {
+      min-height: 8rem;
+      height: 9.5rem;
     }
   }
 }

@@ -34,8 +34,12 @@ function createHashItemIfLengthIsOdd(length: number) {
 }
 
 export const BlockData = ({ block }: { block: UIBlockType }) => {
-  const isFirstBlock = block.prevHash && block.prevHash.length > 64;
   const [expanded, setExpanded] = useState(false);
+
+  const isFirstBlock = block.prevHash && block.prevHash.length > 64;
+  const reservedText = block.reserved
+    ? Buffer.from(block.reserved, 'base64').toString()
+    : '';
   const isSovereign = useIsSovereign();
 
   const toggleCollapseClick = (e: React.MouseEvent) => {
@@ -64,34 +68,36 @@ export const BlockData = ({ block }: { block: UIBlockType }) => {
         <DetailItem title='Block Height'>
           <div className='d-flex justify-content-between align-items-center'>
             <div>{block.nonce}</div>
-            <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
-              <li className='list-inline-item me-0'>
-                <div className='pager pager-inline'>
-                  <NetworkLink
-                    to={`/blocks/${block.prevHash}`}
-                    data-testid='previousPageButton'
-                  >
-                    <FontAwesomeIcon icon={faChevronLeft} /> Prev
-                  </NetworkLink>
-                </div>
-              </li>
-              <li className='list-inline-item me-0'>
-                <div className='pager pager-inline'>
-                  {block?.nextHash && block.nextHash !== '' ? (
+            {Boolean(block.nonce) && (
+              <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+                <li className='list-inline-item me-0'>
+                  <div className='pager pager-inline'>
                     <NetworkLink
-                      data-testid='nextPageButton'
-                      to={`/blocks/${block.nextHash}`}
+                      to={`/blocks/${block.prevHash}`}
+                      data-testid='previousPageButton'
                     >
-                      Next <FontAwesomeIcon icon={faChevronRight} />
+                      <FontAwesomeIcon icon={faChevronLeft} /> Prev
                     </NetworkLink>
-                  ) : (
-                    <span className='text-neutral-400'>
-                      Next <FontAwesomeIcon icon={faChevronRight} />
-                    </span>
-                  )}
-                </div>
-              </li>
-            </ul>
+                  </div>
+                </li>
+                <li className='list-inline-item me-0'>
+                  <div className='pager pager-inline'>
+                    {block?.nextHash && block.nextHash !== '' ? (
+                      <NetworkLink
+                        data-testid='nextPageButton'
+                        to={`/blocks/${block.nextHash}`}
+                      >
+                        Next <FontAwesomeIcon icon={faChevronRight} />
+                      </NetworkLink>
+                    ) : (
+                      <span className='text-neutral-400'>
+                        Next <FontAwesomeIcon icon={faChevronRight} />
+                      </span>
+                    )}
+                  </div>
+                </li>
+              </ul>
+            )}
           </div>
         </DetailItem>
         <DetailItem title='Block Hash'>
@@ -155,7 +161,7 @@ export const BlockData = ({ block }: { block: UIBlockType }) => {
           {new BigNumber(block.maxGasLimit).toFormat()}
         </DetailItem>
         <DetailItem title='Proposer'>
-          {block.proposer ? (
+          {block.proposer && Boolean(block.nonce) ? (
             <IdentityBlock block={block} />
           ) : (
             <span className='text-neutral-400'>N/A</span>
@@ -278,6 +284,18 @@ export const BlockData = ({ block }: { block: UIBlockType }) => {
               </pre>
             </DetailItem>
           </>
+        )}
+        {reservedText && (
+          <DetailItem title='Data'>
+            <div className='position-relative data-decode overflow-hidden mt-1'>
+              <div className='form-control textarea textarea-lg'>
+                {reservedText}
+              </div>
+              <div className='d-flex button-holder'>
+                <CopyButton text={reservedText} className='copy-button' />
+              </div>
+            </div>
+          </DetailItem>
         )}
       </div>
     </div>
