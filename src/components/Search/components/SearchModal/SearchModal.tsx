@@ -1,85 +1,41 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useHotkeys } from 'react-hotkeys-hook';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { NAVIGATION_SEARCH_STATE } from 'appConstants';
-import { useSearch } from 'hooks';
+import { useHandleInput } from 'components/Search/hooks';
 import { faCircleNotch, faSearch } from 'icons/regular';
+import { searchSelector } from 'redux/selectors';
+import { setSearch } from 'redux/slices';
 import { WithClassnameType } from 'types';
 
 import { SearchContent } from './SearchContent';
-import {
-  handleArrowDown,
-  handleArrowUp
-} from 'components/Search/helpers/handleArrowAction';
-import { useOutsideClick } from 'components/Search/helpers/handleOutsideClick';
 
 export const SearchModal = ({ className }: WithClassnameType) => {
+  const dispatch = useDispatch();
+
+  const { searchQuery, isDataReady } = useSelector(searchSelector);
+
   const ref: any = useRef(null);
   const inputRef: any = useRef(null);
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [show, setShow] = useState(false);
-  const [searchHash, setSearchHash] = useState<string>('');
-  const { search, isSearching, setIsSearching } = useSearch(searchHash);
 
-  const [index, setIndex] = useState(0);
+  const {
+    show,
+    setShow,
+    searchHash,
+    handleKeyDown,
+    handleChange,
+    handleOnClick
+  } = useHandleInput({ wrapperRef: ref, inputRef });
 
-  const handleKeyDown = async (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      const list = await search();
-      console.log('--list', list);
-    }
-    if (e.key === 'Escape') {
-      e.preventDefault();
-      setIndex(0);
-      setShow(false);
-      setSearchHash('');
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchHash(e.target.value);
-    if (e.target.value && !show) {
-      setShow(true);
-    }
-  };
-
-  useHotkeys(['/', 'shift+/'], (ev) => {
-    if (show) {
+  useEffect(() => {
+    if (searchQuery && (show || searchHash)) {
       return;
     }
-    inputRef?.current?.focus?.();
-    setShow(true);
-    ev.preventDefault();
-  });
-  useHotkeys('Escape', (ev) => {
-    if (!show) {
-      return;
-    }
-    setShow(false);
-    setIndex(0);
-    setSearchHash('');
-    ev.preventDefault();
-  });
-  useHotkeys('down', () => handleArrowDown(index, setIndex), {
-    enableOnFormTags: true
-  });
-  useHotkeys('up', () => handleArrowUp(index, setIndex), {
-    enableOnFormTags: true
-  });
 
-  useOutsideClick(
-    ref.current,
-    () => {
-      setShow(false);
-      setIndex(0);
-      setSearchHash('');
-    },
-    [ref.current]
-  );
+    dispatch(
+      setSearch({ search: {}, searchQuery: '', isDataReady: undefined })
+    );
+  }, [show, searchHash, searchQuery]);
 
   return (
     <search className='search' ref={ref}>
@@ -106,14 +62,11 @@ export const SearchModal = ({ className }: WithClassnameType) => {
           <button
             type='submit'
             className='input-group-text'
-            onClick={(e) => {
-              e.preventDefault();
-              search();
-            }}
+            onClick={handleOnClick}
             data-testid='searchButton'
             aria-label='Search'
           >
-            {isSearching ? (
+            {isDataReady === false ? (
               <FontAwesomeIcon
                 icon={faCircleNotch}
                 spin

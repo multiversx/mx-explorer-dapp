@@ -8,7 +8,7 @@ import { SearchResults } from './SearchResults';
 export const SearchSuggestions = () => {
   const { searchQuery, isDataReady } = useSelector(searchSelector);
 
-  if (isDataReady === false) {
+  if (isDataReady === false && searchQuery) {
     return <Loader />;
   }
 

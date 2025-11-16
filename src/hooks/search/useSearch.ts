@@ -1,16 +1,22 @@
+import { useDispatch, useSelector } from 'react-redux';
+
 import { formatHerotag } from 'helpers';
 import { useAdapter } from 'hooks';
+import { searchSelector } from 'redux/selectors';
+import { setSearch } from 'redux/slices';
 import { SearchResponseType } from 'types';
 import { useSearchSingleResponse } from './useSearchSingleResponse';
 
 export const useSearch = (hash: string) => {
+  const dispatch = useDispatch();
+  const { searchQuery, isDataReady } = useSelector(searchSelector);
   const { getTokens, getCollections, getUsername, getAccounts } = useAdapter();
   const searchSingleResponse = useSearchSingleResponse(hash);
 
   const searchHash = String(hash).trim();
   const defaultQueryParams = { size: 10 };
 
-  const search = async (): Promise<SearchResponseType> => {
+  const fetchResults = async (): Promise<SearchResponseType> => {
     if (searchHash === undefined) {
       return {};
     }
@@ -56,6 +62,26 @@ export const useSearch = (hash: string) => {
         ? { account: usernameResponse?.data }
         : {})
     };
+  };
+
+  const search = async () => {
+    if (
+      isDataReady &&
+      searchHash &&
+      searchQuery &&
+      searchHash === searchQuery
+    ) {
+      return;
+    }
+
+    dispatch(
+      setSearch({ search: {}, searchQuery: searchHash, isDataReady: false })
+    );
+    const results = await fetchResults();
+    dispatch(
+      setSearch({ search: results, searchQuery: searchHash, isDataReady: true })
+    );
+    return results;
   };
 
   return { search };
