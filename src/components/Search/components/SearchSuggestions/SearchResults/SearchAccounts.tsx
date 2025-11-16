@@ -1,13 +1,116 @@
+import { useMemo } from 'react';
+import { isContract } from '@multiversx/sdk-dapp';
 import { useSelector } from 'react-redux';
 
-import { PageState } from 'components';
-import { faSearch } from 'icons/regular';
+import { AccountName, FormatAmount, NetworkLink } from 'components';
+import { urlBuilder } from 'helpers';
+import { useGetSearchQueryType } from 'hooks/search/useGetSearchQueryType';
 import { searchSelector } from 'redux/selectors';
+import { AccountType } from 'types';
+import { SearchAppRow } from './rows/SearchAppRow';
 
 export const SearchAccounts = () => {
   const { search, searchQuery } = useSelector(searchSelector);
+  const { account, accounts: searchAccounts = [] } = search;
+  const getSearchQueryType = useGetSearchQueryType();
 
-  const { account, accounts } = search;
+  const { isUsername: isUsernameQuery } = getSearchQueryType(searchQuery);
 
-  return <></>;
+  const AccountRow = ({ account }: { account: AccountType }) => {
+    const { address, assets, username } = account;
+    return (
+      <NetworkLink
+        to={urlBuilder.accountDetails(account.address)}
+        key={address}
+        className='search-suggestion selectable'
+      >
+        <div className='search-text trim text-truncate'>
+          <AccountName address={address} assets={assets} username={username} />
+        </div>
+
+        <div className='ms-auto'>
+          <FormatAmount value={account.balance} />
+        </div>
+      </NetworkLink>
+    );
+  };
+
+  const [accounts, apps] = useMemo(() => {
+    const merged = [...searchAccounts];
+    if (account) {
+      merged.push(account);
+    }
+
+    const unique = [
+      ...new Map(merged.map((account) => [account.address, account])).values()
+    ];
+    return unique.reduce(
+      (result, element) => {
+        const isApp = isContract(element.address);
+        result[isApp ? 1 : 0].push(element);
+        return result;
+      },
+      [[] as AccountType[], [] as AccountType[]]
+    );
+  }, [account, searchAccounts]);
+
+  if (searchAccounts.length === 0 && !account) {
+    return null;
+  }
+
+  const Accounts = () => {
+    if (accounts.length === 0) {
+      return null;
+    }
+    return (
+      <>
+        <div className='search-category'>
+          Accounts<div className='ms-auto'>Balance</div>
+        </div>
+        {accounts.map((account) => (
+          <AccountRow account={account} key={account.address} />
+        ))}
+      </>
+    );
+  };
+
+  const Apps = () => {
+    if (apps.length === 0) {
+      return null;
+    }
+
+    return (
+      <>
+        <div className='search-category'>
+          Applications<div className='ms-auto'>Balance</div>
+        </div>
+        {apps.map((app) => {
+          const { address, assets, balance } = app;
+          return (
+            <SearchAppRow address={address} assets={assets} key={address}>
+              <div className='ms-auto'>
+                <FormatAmount value={balance} />
+              </div>
+            </SearchAppRow>
+          );
+        })}
+      </>
+    );
+  };
+
+  return (
+    <div className='search-group search-accounts'>
+      {isUsernameQuery ? (
+        <>
+          <Accounts />
+          <Apps />
+        </>
+      ) : (
+        <>
+          <Apps />
+          <Accounts />
+        </>
+      )}
+    </div>
+  );
 };

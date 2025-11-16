@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 
-import { NetworkLink } from 'components';
-import { urlBuilder, formatBigNumber } from 'helpers';
+import { formatBigNumber } from 'helpers';
 import { useHasGrowthWidgets, useFetchGrowthMostUsed } from 'hooks';
 import { growthMostUsedSelector } from 'redux/selectors';
+import { SearchTokenRow } from '../SearchResults/rows/SearchTokenRow';
 
 export const SearchTopTokens = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
@@ -27,38 +27,15 @@ export const SearchTopTokens = () => {
         .slice(0, 3)
         .map(({ key: identifier, value, extraInfo }) => {
           return (
-            <NetworkLink
-              to={urlBuilder.tokenDetails(identifier)}
+            <SearchTokenRow
               key={identifier}
-              className='search-suggestion selectable'
+              identifier={identifier}
+              assets={extraInfo?.assets}
+              ticker={extraInfo?.ticker}
+              name={extraInfo?.name}
             >
-              <div className='search-text trim text-truncate'>
-                {extraInfo ? (
-                  <>
-                    {extraInfo?.assets?.svgUrl && (
-                      <img
-                        src={extraInfo?.assets.svgUrl}
-                        className='side-icon me-1'
-                        alt=''
-                        role='presentation'
-                      />
-                    )}
-                    <div className='text-truncate'>
-                      {extraInfo?.name ? (
-                        <>
-                          {extraInfo.name} ({extraInfo.ticker})
-                        </>
-                      ) : (
-                        <>{identifier}</>
-                      )}
-                    </div>
-                  </>
-                ) : (
-                  identifier
-                )}
-              </div>
               <div className='ms-auto'>{formatBigNumber({ value })}</div>
-            </NetworkLink>
+            </SearchTokenRow>
           );
         })}
     </div>
