@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Loader } from 'components';
@@ -5,7 +6,7 @@ import { searchSelector } from 'redux/selectors';
 import { SearchMostUsed } from './SearchMostUsed';
 import { SearchResults } from './SearchResults';
 
-export const SearchSuggestions = () => {
+export const SearchSuggestions = memo(() => {
   const { searchQuery, isDataReady } = useSelector(searchSelector);
 
   if (isDataReady === false && searchQuery) {
@@ -17,4 +18,4 @@ export const SearchSuggestions = () => {
       {searchQuery ? <SearchResults /> : <SearchMostUsed />}
     </div>
   );
-};
+});
