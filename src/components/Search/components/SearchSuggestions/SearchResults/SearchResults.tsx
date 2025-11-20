@@ -4,6 +4,8 @@ import { PageState } from 'components';
 import { faSearch } from 'icons/regular';
 import { searchSelector } from 'redux/selectors';
 import { SearchAccounts } from './SearchAccounts';
+import { SearchCollections } from './SearchCollections';
+import { SearchTokens } from './SearchTokens';
 
 export const SearchResults = () => {
   const { search, searchQuery } = useSelector(searchSelector);
@@ -45,7 +47,9 @@ export const SearchResults = () => {
 
   return (
     <>
+      <SearchTokens />
       <SearchAccounts />
+      <SearchCollections />
     </>
   );
 };

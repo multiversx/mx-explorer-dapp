@@ -40,10 +40,11 @@ export const SearchAccounts = () => {
     if (account) {
       merged.push(account);
     }
-
     const unique = [
       ...new Map(merged.map((account) => [account.address, account])).values()
     ];
+
+    unique.sort((account) => (account.username ? -1 : 1));
     return unique.reduce(
       (result, element) => {
         const isApp = isContract(element.address);
