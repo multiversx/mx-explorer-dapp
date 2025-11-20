@@ -1,13 +1,16 @@
 import { useMemo } from 'react';
 import { isContract } from '@multiversx/sdk-dapp';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
+import { MAX_SEARCH_SUGGESTION_COUNT } from 'appConstants';
 import { AccountName, FormatAmount, NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
 import { useGetSearchQueryType } from 'hooks/search/useGetSearchQueryType';
 import { searchSelector } from 'redux/selectors';
 import { AccountType } from 'types';
 import { SearchAppRow } from './rows/SearchAppRow';
+import { SearchAllResults } from './SearchAllResults';
 
 export const SearchAccounts = () => {
   const { search, searchQuery } = useSelector(searchSelector);
@@ -44,7 +47,14 @@ export const SearchAccounts = () => {
       ...new Map(merged.map((account) => [account.address, account])).values()
     ];
 
-    unique.sort((account) => (account.username ? -1 : 1));
+    unique.sort((a, b) => {
+      return (
+        (a.username ? -1 : 1) ||
+        b.txCount - a.txCount ||
+        new BigNumber(b.balance).minus(a.balance).toNumber()
+      );
+    });
+
     return unique.reduce(
       (result, element) => {
         const isApp = isContract(element.address);
@@ -68,9 +78,14 @@ export const SearchAccounts = () => {
         <div className='search-category'>
           Accounts<div className='ms-auto'>Balance</div>
         </div>
-        {accounts.map((account) => (
+        {accounts.slice(0, MAX_SEARCH_SUGGESTION_COUNT).map((account) => (
           <AccountRow account={account} key={account.address} />
         ))}
+        {accounts.length > MAX_SEARCH_SUGGESTION_COUNT && (
+          <SearchAllResults to={urlBuilder.accounts({ search: searchQuery })}>
+            All Accounts
+          </SearchAllResults>
+        )}
       </>
     );
   };
@@ -85,7 +100,7 @@ export const SearchAccounts = () => {
         <div className='search-category'>
           Applications<div className='ms-auto'>Balance</div>
         </div>
-        {apps.map((app) => {
+        {apps.slice(0, MAX_SEARCH_SUGGESTION_COUNT).map((app) => {
           const { address, assets, balance } = app;
           return (
             <SearchAppRow address={address} assets={assets} key={address}>
@@ -95,6 +110,13 @@ export const SearchAccounts = () => {
             </SearchAppRow>
           );
         })}
+        {apps.length > MAX_SEARCH_SUGGESTION_COUNT && (
+          <SearchAllResults
+            to={urlBuilder.applications({ search: searchQuery })}
+          >
+            All Apps
+          </SearchAllResults>
+        )}
       </>
     );
   };

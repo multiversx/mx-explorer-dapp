@@ -138,6 +138,13 @@ export const urlBuilder = {
     `/collections/${identifier}/roles`,
   collectionDetailsTransactions: (identifier: string) =>
     `/collections/${identifier}/transactions`,
+  nfts: (params?: GetCollectionsType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/nfts/?${urlSearch}`;
+  },
   nftDetails: (identifier: string) => `/nfts/${identifier}`,
   nftDetailsTransactions: (identifier: string) =>
     `/nfts/${identifier}/transactions`,

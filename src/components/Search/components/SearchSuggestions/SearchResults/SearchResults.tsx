@@ -5,6 +5,7 @@ import { faSearch } from 'icons/regular';
 import { searchSelector } from 'redux/selectors';
 import { SearchAccounts } from './SearchAccounts';
 import { SearchCollections } from './SearchCollections';
+import { SearchNfts } from './SearchNfts';
 import { SearchTokens } from './SearchTokens';
 
 export const SearchResults = () => {
@@ -50,6 +51,7 @@ export const SearchResults = () => {
       <SearchTokens />
       <SearchAccounts />
       <SearchCollections />
+      <SearchNfts />
     </>
   );
 };

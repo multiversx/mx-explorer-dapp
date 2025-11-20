@@ -4,12 +4,15 @@ import { useSelector } from 'react-redux';
 import { FormatNumber } from 'components';
 import { searchSelector } from 'redux/selectors';
 import { SearchCollectionRow } from './rows/SearchCollectionRow';
+import { MAX_SEARCH_SUGGESTION_COUNT } from 'appConstants';
+import { urlBuilder } from 'helpers';
+import { SearchAllResults } from './SearchAllResults';
 
 export const SearchCollections = () => {
-  const { search } = useSelector(searchSelector);
+  const { search, searchQuery } = useSelector(searchSelector);
   const { collection, collections: searchCollections = [] } = search;
 
-  const collectios = useMemo(() => {
+  const collections = useMemo(() => {
     const merged = [...searchCollections];
     if (collection) {
       merged.push(collection);
@@ -34,7 +37,7 @@ export const SearchCollections = () => {
       <div className='search-category'>
         Collections<div className='ms-auto'>Holders</div>
       </div>
-      {collectios.map((collection) => {
+      {collections.slice(0, MAX_SEARCH_SUGGESTION_COUNT).map((collection) => {
         const {
           collection: collectionIdentifier,
           assets,
@@ -55,6 +58,11 @@ export const SearchCollections = () => {
           </SearchCollectionRow>
         );
       })}
+      {collections.length > MAX_SEARCH_SUGGESTION_COUNT && (
+        <SearchAllResults to={urlBuilder.collections({ search: searchQuery })}>
+          All Collections
+        </SearchAllResults>
+      )}
     </div>
   );
 };

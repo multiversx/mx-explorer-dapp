@@ -10,7 +10,8 @@ import { useSearchSingleResponse } from './useSearchSingleResponse';
 export const useSearch = (hash: string) => {
   const dispatch = useDispatch();
   const { searchQuery, isDataReady } = useSelector(searchSelector);
-  const { getTokens, getCollections, getUsername, getAccounts } = useAdapter();
+  const { getTokens, getCollections, getNfts, getUsername, getAccounts } =
+    useAdapter();
   const searchSingleResponse = useSearchSingleResponse(hash);
 
   const searchHash = String(hash).trim();
@@ -29,6 +30,7 @@ export const useSearch = (hash: string) => {
     const [
       tokensResponse,
       collectionsResponse,
+      nftsResponse,
       accountsResponse,
       usernameResponse
     ] = await Promise.all([
@@ -42,8 +44,14 @@ export const useSearch = (hash: string) => {
         excludeMetaESDT: true,
         ...defaultQueryParams
       }),
+      getNfts({
+        search: searchHash,
+        excludeMetaESDT: true,
+        ...defaultQueryParams
+      }),
       getAccounts({
-        search: searchHash
+        search: searchHash,
+        withTxCount: true
       }),
       getUsername(formatHerotag(searchHash))
     ]);
@@ -51,12 +59,14 @@ export const useSearch = (hash: string) => {
     const foundTokens = tokensResponse?.data && tokensResponse.data.length > 0;
     const foundCollections =
       collectionsResponse?.data && collectionsResponse.data.length > 0;
+    const foundNfts = nftsResponse?.data && nftsResponse.data.length > 0;
     const foundAccounts =
       accountsResponse?.data && accountsResponse.data.length > 0;
 
     return {
       ...(foundTokens ? { tokens: tokensResponse?.data } : {}),
       ...(foundCollections ? { collections: collectionsResponse?.data } : {}),
+      ...(foundNfts ? { nfts: nftsResponse?.data } : {}),
       ...(foundAccounts ? { accounts: accountsResponse?.data } : {}),
       ...(usernameResponse?.data?.address
         ? { account: usernameResponse?.data }

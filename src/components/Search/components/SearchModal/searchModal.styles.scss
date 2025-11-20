@@ -52,6 +52,12 @@
   }
 }
 
+.search-separator {
+  display: flex;
+  flex-grow: 1;
+  border-top: 1px solid var(--neutral-600);
+}
+
 .search-text {
   align-items: center;
   padding-right: 0.5rem;
