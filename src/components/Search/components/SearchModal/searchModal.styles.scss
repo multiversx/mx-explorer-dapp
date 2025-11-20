@@ -39,6 +39,7 @@
   align-items: center;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  column-gap: 1rem;
   &:focus,
   &:focus-visible {
     border: 0;
@@ -60,5 +61,13 @@
 
 .search-text {
   align-items: center;
-  padding-right: 0.5rem;
+  .hash {
+    max-width: 6rem;
+    @include media-breakpoint-up(lg) {
+      max-width: 16rem;
+      &.small-hash {
+        max-width: 10rem;
+      }
+    }
+  }
 }

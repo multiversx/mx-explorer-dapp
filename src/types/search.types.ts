@@ -30,4 +30,5 @@ export interface SearchResponseType extends SearchSingleResponseType {
   tokens?: TokenType[];
   collections?: CollectionType[];
   nfts?: NftType[];
+  nodes?: NodeType[];
 }

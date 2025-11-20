@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 
 import { HEROTAG_SUFFIX } from 'appConstants';
 import IdentityLogo from 'assets/img/logos/identity.svg';
@@ -12,6 +13,7 @@ export interface AccountNameUIType extends WithClassnameType {
   username?: string;
   assets?: AccountAssetType;
   fetchAssets?: boolean;
+  trimClassName?: string;
 }
 
 export const AccountName = ({
@@ -19,7 +21,8 @@ export const AccountName = ({
   username,
   assets,
   fetchAssets = false,
-  className,
+  className = '',
+  trimClassName = '',
   'data-testid': dataTestId = ''
 }: AccountNameUIType) => {
   const { getAccountAssets } = useAdapter();
@@ -78,5 +81,11 @@ export const AccountName = ({
     );
   }
 
-  return <Trim text={address} className={className} data-testid={dataTestId} />;
+  return (
+    <Trim
+      text={address}
+      className={classNames(className, trimClassName)}
+      data-testid={dataTestId}
+    />
+  );
 };

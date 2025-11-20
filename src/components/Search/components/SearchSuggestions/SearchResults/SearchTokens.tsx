@@ -37,7 +37,7 @@ export const SearchTokens = () => {
   }
 
   return (
-    <div className='search-group search-accounts'>
+    <div className='search-group search-tokens'>
       <div className='search-category'>
         Tokens<div className='ms-auto'>Price</div>
       </div>

@@ -4,11 +4,12 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { MAX_SEARCH_SUGGESTION_COUNT } from 'appConstants';
-import { AccountName, FormatAmount, NetworkLink } from 'components';
+import { FormatAmount } from 'components';
 import { urlBuilder } from 'helpers';
 import { useGetSearchQueryType } from 'hooks/search/useGetSearchQueryType';
 import { searchSelector } from 'redux/selectors';
 import { AccountType } from 'types';
+import { SearchAccountRow } from './rows/SearchAccountRow';
 import { SearchAppRow } from './rows/SearchAppRow';
 import { SearchAllResults } from './SearchAllResults';
 
@@ -18,25 +19,6 @@ export const SearchAccounts = () => {
   const getSearchQueryType = useGetSearchQueryType();
 
   const { isUsername: isUsernameQuery } = getSearchQueryType(searchQuery);
-
-  const AccountRow = ({ account }: { account: AccountType }) => {
-    const { address, assets, username } = account;
-    return (
-      <NetworkLink
-        to={urlBuilder.accountDetails(account.address)}
-        key={address}
-        className='search-suggestion selectable'
-      >
-        <div className='search-text trim text-truncate'>
-          <AccountName address={address} assets={assets} username={username} />
-        </div>
-
-        <div className='ms-auto'>
-          <FormatAmount value={account.balance} />
-        </div>
-      </NetworkLink>
-    );
-  };
 
   const [accounts, apps] = useMemo(() => {
     const merged = [...searchAccounts];
@@ -79,7 +61,7 @@ export const SearchAccounts = () => {
           Accounts<div className='ms-auto'>Balance</div>
         </div>
         {accounts.slice(0, MAX_SEARCH_SUGGESTION_COUNT).map((account) => (
-          <AccountRow account={account} key={account.address} />
+          <SearchAccountRow account={account} key={account.address} />
         ))}
         {accounts.length > MAX_SEARCH_SUGGESTION_COUNT && (
           <SearchAllResults to={urlBuilder.accounts({ search: searchQuery })}>

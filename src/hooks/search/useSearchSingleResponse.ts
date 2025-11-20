@@ -47,7 +47,10 @@ export const useSearchSingleResponse = (hash: string) => {
     }
 
     if (isAccount) {
-      const { data } = await getAccount({ address: searchHash });
+      const { data } = await getAccount({
+        address: searchHash,
+        withAssets: true
+      });
       if (data?.address) {
         return { account: data };
       }
@@ -60,7 +63,10 @@ export const useSearchSingleResponse = (hash: string) => {
           Address.newFromBech32(searchHash).getPublicKey(),
           hrp
         ).toBech32();
-        const { data } = await getAccount({ address: erdAddress });
+        const { data } = await getAccount({
+          address: erdAddress,
+          withAssets: true
+        });
         if (data?.address) {
           return { account: data };
         }
@@ -127,7 +133,10 @@ export const useSearchSingleResponse = (hash: string) => {
       // Might be an account
       if (isPubKeyAccount) {
         const address = bech32.encode(searchHash, hrp);
-        const { data } = await getAccount({ address: address });
+        const { data } = await getAccount({
+          address: address,
+          withAssets: true
+        });
         if (data?.address && (isContract(data.address) || data.nonce > 0)) {
           return { account: data };
         }

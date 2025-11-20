@@ -30,7 +30,7 @@ export const SearchNfts = () => {
   }
 
   return (
-    <div className='search-group search-accounts'>
+    <div className='search-group search-nfts'>
       <div className='search-category'>
         NFTs<div className='ms-auto'>Name</div>
       </div>

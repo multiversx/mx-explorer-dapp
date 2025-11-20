@@ -10,12 +10,18 @@ import { useSearchSingleResponse } from './useSearchSingleResponse';
 export const useSearch = (hash: string) => {
   const dispatch = useDispatch();
   const { searchQuery, isDataReady } = useSelector(searchSelector);
-  const { getTokens, getCollections, getNfts, getUsername, getAccounts } =
-    useAdapter();
+  const {
+    getTokens,
+    getCollections,
+    getNfts,
+    getNodes,
+    getUsername,
+    getAccounts
+  } = useAdapter();
   const searchSingleResponse = useSearchSingleResponse(hash);
 
   const searchHash = String(hash).trim();
-  const defaultQueryParams = { size: 10 };
+  const defaultQueryParams = { size: 6 };
 
   const fetchResults = async (): Promise<SearchResponseType> => {
     if (searchHash === undefined) {
@@ -31,6 +37,7 @@ export const useSearch = (hash: string) => {
       tokensResponse,
       collectionsResponse,
       nftsResponse,
+      nodesResponse,
       accountsResponse,
       usernameResponse
     ] = await Promise.all([
@@ -49,8 +56,14 @@ export const useSearch = (hash: string) => {
         excludeMetaESDT: true,
         ...defaultQueryParams
       }),
+      getNodes({
+        search: searchHash,
+        withIdentityInfo: true,
+        ...defaultQueryParams
+      }),
       getAccounts({
         search: searchHash,
+        withAssets: true,
         withTxCount: true
       }),
       getUsername(formatHerotag(searchHash))
@@ -60,6 +73,7 @@ export const useSearch = (hash: string) => {
     const foundCollections =
       collectionsResponse?.data && collectionsResponse.data.length > 0;
     const foundNfts = nftsResponse?.data && nftsResponse.data.length > 0;
+    const foundNodes = nodesResponse?.data && nodesResponse.data.length > 0;
     const foundAccounts =
       accountsResponse?.data && accountsResponse.data.length > 0;
 
@@ -67,6 +81,7 @@ export const useSearch = (hash: string) => {
       ...(foundTokens ? { tokens: tokensResponse?.data } : {}),
       ...(foundCollections ? { collections: collectionsResponse?.data } : {}),
       ...(foundNfts ? { nfts: nftsResponse?.data } : {}),
+      ...(foundNodes ? { nodes: nodesResponse?.data } : {}),
       ...(foundAccounts ? { accounts: accountsResponse?.data } : {}),
       ...(usernameResponse?.data?.address
         ? { account: usernameResponse?.data }

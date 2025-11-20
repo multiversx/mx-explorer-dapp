@@ -33,7 +33,7 @@ export const SearchCollections = () => {
   }
 
   return (
-    <div className='search-group search-accounts'>
+    <div className='search-group search-collections'>
       <div className='search-category'>
         Collections<div className='ms-auto'>Holders</div>
       </div>

@@ -41,7 +41,7 @@ export const SearchAppRow = ({
             <DefaultImage />
           </div>
         )}
-        <AccountName address={address} assets={assets} />
+        <AccountName address={address} assets={assets} trimClassName='hash' />
         {isVerified && (
           <Overlay title='Verified'>
             <FontAwesomeIcon

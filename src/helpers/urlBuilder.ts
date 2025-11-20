@@ -1,5 +1,10 @@
 import { TransactionDecodeParamsType } from 'hooks';
-import { GetTokensType, GetCollectionsType, GetAccountsType } from 'types';
+import {
+  GetTokensType,
+  GetCollectionsType,
+  GetAccountsType,
+  GetNodesType
+} from 'types';
 
 export const urlBuilder = {
   shard: (shard: number | string) => `/blocks?shard=${shard}`,
@@ -49,6 +54,13 @@ export const urlBuilder = {
   },
   transactionInPoolDetails: (hash: string) => `/transactions/pool/${hash}`,
   eventDetails: (txHash: string) => `/events/${txHash}`,
+  nodes: (params?: GetNodesType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/nodes/?${urlSearch}`;
+  },
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accounts: (params?: GetAccountsType) => {
     const urlSearch = params
