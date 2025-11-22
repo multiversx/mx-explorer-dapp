@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { formatHerotag } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAdapter, useIsMainnet } from 'hooks';
 import { searchSelector } from 'redux/selectors';
 import { setSearch } from 'redux/slices';
-import { SearchResponseType } from 'types';
+import { SearchResponseType, SortOrderEnum } from 'types';
 import { useSearchSingleResponse } from './useSearchSingleResponse';
 
 export const useSearch = (hash: string) => {
   const dispatch = useDispatch();
+  const isMainnet = useIsMainnet();
   const { searchQuery, isDataReady } = useSelector(searchSelector);
   const {
     getTokens,
@@ -22,6 +23,10 @@ export const useSearch = (hash: string) => {
 
   const searchHash = String(hash).trim();
   const defaultQueryParams = { size: 6 };
+  const accountSorting = {
+    sort: 'transfersLast24h',
+    order: SortOrderEnum.desc
+  };
 
   const fetchResults = async (): Promise<SearchResponseType> => {
     if (searchHash === undefined) {
@@ -64,7 +69,8 @@ export const useSearch = (hash: string) => {
       getAccounts({
         search: searchHash,
         withAssets: true,
-        withTxCount: true
+        withTxCount: true,
+        ...(isMainnet ? accountSorting : {})
       }),
       getUsername(formatHerotag(searchHash))
     ]);

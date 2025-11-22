@@ -59,6 +59,8 @@ export const SearchAccounts = () => {
     return null;
   }
 
+  const showAllRow = searchAccounts.length > MAX_SEARCH_SUGGESTION_COUNT;
+
   const Accounts = () => {
     if (accounts.length === 0) {
       return null;
@@ -71,7 +73,7 @@ export const SearchAccounts = () => {
         {accounts.slice(0, MAX_SEARCH_SUGGESTION_COUNT).map((account) => (
           <SearchAccountRow account={account} key={account.address} />
         ))}
-        {accounts.length > MAX_SEARCH_SUGGESTION_COUNT && (
+        {showAllRow && (
           <SearchAllResults to={urlBuilder.accounts({ search: searchQuery })}>
             All Accounts
           </SearchAllResults>
@@ -100,7 +102,7 @@ export const SearchAccounts = () => {
             </SearchAppRow>
           );
         })}
-        {apps.length > MAX_SEARCH_SUGGESTION_COUNT && (
+        {showAllRow && (
           <SearchAllResults
             to={urlBuilder.applications({ search: searchQuery })}
           >
