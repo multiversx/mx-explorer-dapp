@@ -35,12 +35,13 @@ export const SearchCollections = () => {
   return (
     <div className='search-group search-collections'>
       <div className='search-category'>
-        Collections<div className='ms-auto'>Holders</div>
+        NFT Collections<div className='ms-auto'>Holders</div>
       </div>
       {collections.slice(0, MAX_SEARCH_SUGGESTION_COUNT).map((collection) => {
         const {
           collection: collectionIdentifier,
           assets,
+          type,
           isVerified
         } = collection;
         return (
@@ -49,6 +50,7 @@ export const SearchCollections = () => {
             identifier={collectionIdentifier}
             assets={assets}
             isVerified={isVerified}
+            type={type}
           >
             <div className='ms-auto'>
               {collection.holderCount && (

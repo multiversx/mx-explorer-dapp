@@ -14,7 +14,6 @@ import {
   BlockProgressRing,
   EpochProgressRing
 } from 'widgets';
-import { SearchModal } from 'components/Search/components';
 
 export const HeroHome = () => {
   const isMainnet = useIsMainnet();
@@ -34,7 +33,7 @@ export const HeroHome = () => {
             <h1 className='h2 mb-4 font-headings title'>
               {BRAND_NAME} Blockchain {explorerTitle}
             </h1>
-            <SearchModal />
+            <Search />
           </div>
         </div>
 

@@ -2,13 +2,14 @@ import { ReactNode } from 'react';
 
 import { NetworkLink } from 'components';
 import { urlBuilder } from 'helpers';
-import { TokenAssetType } from 'types';
+import { TokenAssetType, TokenTypeEnum } from 'types';
 
 interface SearchTokenRowType {
   identifier: string;
   name?: string;
   ticker?: string;
   assets?: TokenAssetType;
+  type?: TokenTypeEnum;
   children?: ReactNode;
 }
 
@@ -17,11 +18,16 @@ export const SearchTokenRow = ({
   name,
   ticker,
   assets,
+  type = TokenTypeEnum.FungibleESDT,
   children
 }: SearchTokenRowType) => {
   return (
     <NetworkLink
-      to={urlBuilder.tokenDetails(identifier)}
+      to={
+        type === TokenTypeEnum.MetaESDT
+          ? urlBuilder.tokenMetaEsdtDetails(identifier)
+          : urlBuilder.tokenDetails(identifier)
+      }
       className='search-suggestion selectable'
     >
       <div className='search-text trim text-truncate'>

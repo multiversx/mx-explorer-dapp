@@ -42,12 +42,13 @@ export const SearchTokens = () => {
         Tokens<div className='ms-auto'>Price</div>
       </div>
       {tokens.slice(0, MAX_SEARCH_SUGGESTION_COUNT).map((token) => {
-        const { identifier, assets } = token;
+        const { identifier, assets, type } = token;
         return (
           <SearchTokenRow
             key={identifier}
             identifier={identifier}
             assets={assets}
+            type={type}
           >
             <div className='ms-auto'>
               {token.price && (

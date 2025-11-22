@@ -45,28 +45,8 @@ export const SearchNodeRow = ({ node }: { node?: NodeType }) => {
           </div>
         )}
       </div>
-      {/* <SharedIdentity.Avatar
-        identity={node.identityInfo}
-        className='identity-avatar-md me-1'
-        showTooltip
-      />
-      <NodeOnlineIcon node={node} className='ms-1 me-2' />
-      <div className='d-flex align-items-center'>
-        {node.name && (
-          <div className='truncate-item-lg text-neutral-500' title={node.name}>
-            ({node.name})
-          </div>
-        )}
-        <NodeChangingShardIcon node={node} />
-        <NodeFullHistoryIcon node={node} small={true} />
-        <NodeIssueIcon node={node} />
-      </div> */}
       <div className='ms-auto'>
-        {node.type !== NodeTypeEnum.observer && (
-          <td>
-            <NodeStatus node={node} />
-          </td>
-        )}
+        {node.type !== NodeTypeEnum.observer && <NodeStatus node={node} />}
       </div>
     </NetworkLink>
   );

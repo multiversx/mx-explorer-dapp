@@ -1,46 +1,74 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNavigate, useLocation } from 'react-router-dom';
+import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
-import { NAVIGATION_SEARCH_STATE } from 'appConstants';
-import { useSearch } from 'hooks/useSearch';
+import { useActiveRoute } from 'hooks';
 import { faCircleNotch, faSearch } from 'icons/regular';
+import { searchSelector } from 'redux/selectors';
+import { setSearch } from 'redux/slices';
+import { routes } from 'routes';
 import { WithClassnameType } from 'types';
 
+import { SearchFooter, SearchSuggestions } from './components';
+import { useHandleInput } from './hooks';
+
 export const Search = ({ className }: WithClassnameType) => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [searchHash, setSearchHash] = useState<string>('');
-  const { search, isSearching, searchRoute, setSearchRoute } =
-    useSearch(searchHash);
+  const dispatch = useDispatch();
+  const location = useLocation();
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      search();
-    }
-  };
+  const activeRoute = useActiveRoute();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchHash(e.target.value);
-  };
+  const { searchQuery, isDataReady } = useSelector(searchSelector);
+
+  const ref: any = useRef(null);
+  const inputRef: any = useRef(null);
+
+  const {
+    show,
+    setShow,
+    searchHash,
+    setSearchHash,
+    handleKeyDown,
+    handleChange,
+    handleOnClick
+  } = useHandleInput({ wrapperRef: ref, inputRef });
+
+  const isSearchRoute = activeRoute(routes.query);
 
   useEffect(() => {
-    if (searchRoute) {
-      setSearchRoute('');
-      setSearchHash('');
-      navigate(searchRoute, { state: NAVIGATION_SEARCH_STATE });
+    if (searchQuery && (show || searchHash || isSearchRoute)) {
+      return;
     }
-  }, [searchRoute, pathname]);
+    dispatch(
+      setSearch({ search: {}, searchQuery: '', isDataReady: undefined })
+    );
+  }, [show, searchHash, searchQuery, isSearchRoute]);
+
+  useEffect(() => {
+    if (location.state?.searchQuery) {
+      setSearchHash(location.state.searchQuery);
+      setShow(true);
+      location.state = undefined;
+
+      return;
+    }
+    setShow(false);
+    dispatch(
+      setSearch({ search: {}, searchQuery: '', isDataReady: undefined })
+    );
+  }, [location]);
 
   return (
-    <search>
+    <search className='search' ref={ref}>
       <form
-        className={`main-search w-100 d-flex ${className ?? ''}`}
+        className={classNames('main-search w-100 d-flex', className)}
         noValidate={true}
       >
         <div className='input-group input-group-seamless mb-3'>
           <input
+            ref={inputRef}
             type='text'
             className='form-control text-truncate'
             placeholder='Search for an address, @herotag, transaction/block hash, validator key or token id'
@@ -50,20 +78,18 @@ export const Search = ({ className }: WithClassnameType) => {
             value={searchHash}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            onFocus={() => setShow(true)}
             aria-label='Search for an address, @herotag, transaction/block hash, validator key or token id'
             aria-describedby='search-addon'
           />
           <button
             type='submit'
             className='input-group-text'
-            onClick={(e) => {
-              e.preventDefault();
-              search();
-            }}
+            onClick={handleOnClick}
             data-testid='searchButton'
             aria-label='Search'
           >
-            {isSearching ? (
+            {isDataReady === false ? (
               <FontAwesomeIcon
                 icon={faCircleNotch}
                 spin
@@ -75,6 +101,12 @@ export const Search = ({ className }: WithClassnameType) => {
           </button>
         </div>
       </form>
+      {show && (
+        <div className='search-content'>
+          <SearchSuggestions searchHash={searchHash} />
+          <SearchFooter />
+        </div>
+      )}
     </search>
   );
 };

@@ -29,15 +29,7 @@ export const SearchAccounts = () => {
       ...new Map(merged.map((account) => [account.address, account])).values()
     ];
 
-    unique.sort((a, b) => {
-      return (
-        (a.username ? -1 : 1) ||
-        b.txCount - a.txCount ||
-        new BigNumber(b.balance).minus(a.balance).toNumber()
-      );
-    });
-
-    return unique.reduce(
+    const [splitAccounts, splitApps] = unique.reduce(
       (result, element) => {
         const isApp = isContract(element.address);
         result[isApp ? 1 : 0].push(element);
@@ -45,6 +37,22 @@ export const SearchAccounts = () => {
       },
       [[] as AccountType[], [] as AccountType[]]
     );
+
+    splitAccounts.sort((a, b) => {
+      return (
+        (a.username ? -1 : 1) ||
+        new BigNumber(b.balance).minus(a.balance).toNumber()
+      );
+    });
+
+    splitApps.sort((a, b) => {
+      return (
+        b.txCount - a.txCount ||
+        new BigNumber(b.balance).minus(a.balance).toNumber()
+      );
+    });
+
+    return [splitAccounts, splitApps];
   }, [account, searchAccounts]);
 
   if (searchAccounts.length === 0 && !account) {

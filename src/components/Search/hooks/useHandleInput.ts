@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { useDebounce, useSearch } from 'hooks';
 import { setSearch } from 'redux/slices';
 
-import { handleArrowDown, handleArrowUp, useOutsideClick } from '../helpers';
 import { useGetSearchRedirectRoute } from './useGetSearchRedirectRoute';
-import { useNavigate } from 'react-router-dom';
-import { NAVIGATION_SEARCH_STATE } from 'appConstants';
+import { handleArrowDown, handleArrowUp, useOutsideClick } from '../helpers';
 
 interface HandleInputProps {
   inputRef: any;
@@ -41,7 +40,7 @@ export const useHandleInput = ({ inputRef, wrapperRef }: HandleInputProps) => {
         dispatch(
           setSearch({ search: {}, searchQuery: '', isDataReady: undefined })
         );
-        navigate(redirectRoute, { state: NAVIGATION_SEARCH_STATE });
+        navigate(redirectRoute);
       }
     }
     if (e.key === 'Escape') {
@@ -87,7 +86,7 @@ export const useHandleInput = ({ inputRef, wrapperRef }: HandleInputProps) => {
           isDataReady: undefined
         })
       );
-      navigate(redirectRoute, { state: NAVIGATION_SEARCH_STATE });
+      navigate(redirectRoute);
     }
   };
 
@@ -140,6 +139,7 @@ export const useHandleInput = ({ inputRef, wrapperRef }: HandleInputProps) => {
     show,
     setShow,
     searchHash,
+    setSearchHash,
     handleKeyDown,
     handleChange,
     handleOnClick

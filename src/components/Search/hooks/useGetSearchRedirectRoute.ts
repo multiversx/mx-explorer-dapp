@@ -51,7 +51,7 @@ export const useGetSearchRedirectRoute = () => {
     }
 
     if (miniblock) {
-      return networkRoute(urlBuilder.blockDetails(miniblock.miniBlockHash));
+      return networkRoute(urlBuilder.miniblockDetails(miniblock.miniBlockHash));
     }
 
     if (scResult) {

@@ -26,6 +26,7 @@ export interface SearchSingleResponseType {
 }
 
 export interface SearchResponseType extends SearchSingleResponseType {
+  searchedValue?: string;
   accounts?: AccountType[];
   tokens?: TokenType[];
   collections?: CollectionType[];

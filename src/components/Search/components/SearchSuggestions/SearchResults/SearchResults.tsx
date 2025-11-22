@@ -15,24 +15,6 @@ export const SearchResults = () => {
   const { search, searchQuery } = useSelector(searchSelector);
 
   const hasSearchResults = Object.keys(search).length > 0;
-  // const {
-  //==   account,
-  //==   token,
-  //==   collection,
-  //==   nft,
-  //   node,
-  //   block,
-  //   miniblock,
-  //==   transaction,
-  //==   scResult,
-  //==   transactionInPool,
-  //==   accounts,
-  //==   tokens,
-  //==   collections,
-  //==   nfts
-  // } = search;
-
-  console.log('---search', search);
 
   if (!hasSearchResults) {
     return (

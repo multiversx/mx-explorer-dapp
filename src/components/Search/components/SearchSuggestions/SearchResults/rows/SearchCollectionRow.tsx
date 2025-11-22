@@ -4,13 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NetworkLink, Overlay } from 'components';
 import { urlBuilder } from 'helpers';
 import { faHexagonCheck } from 'icons/solid';
-import { TokenAssetType } from 'types';
+import { NftTypeEnum, TokenAssetType } from 'types';
 
 interface SearchCollectionRowType {
   identifier: string;
   name?: string;
   isVerified?: boolean;
   assets?: TokenAssetType;
+  type?: NftTypeEnum;
   children?: ReactNode;
 }
 
@@ -19,11 +20,16 @@ export const SearchCollectionRow = ({
   name,
   isVerified,
   assets,
+  type,
   children
 }: SearchCollectionRowType) => {
   return (
     <NetworkLink
-      to={urlBuilder.collectionDetails(identifier)}
+      to={
+        type === NftTypeEnum.MetaESDT
+          ? urlBuilder.tokenMetaEsdtDetails(identifier)
+          : urlBuilder.collectionDetails(identifier)
+      }
       key={identifier}
       className='search-suggestion selectable'
     >
