@@ -1,4 +1,6 @@
 import BigNumber from 'bignumber.js';
+
+import { DOCS_RELAYED_VERSION_URL } from 'appConstants';
 import {
   TransactionActionType,
   TransactionActionEnum,
@@ -114,6 +116,26 @@ export const mexUnwrapper = (
   }
 };
 
+export const tooltipUnwrapper = (
+  action: TransactionActionType,
+  options: TransactionUnwrapperType = {}
+): Array<string | TransactionUnwrapperType> => {
+  if (action?.name && action?.description) {
+    return [
+      action.name,
+      {
+        tooltip: action.description,
+        ...(options?.externalLink
+          ? { externalLink: options.externalLink }
+          : {}),
+        ...(options?.isWarning ? { isWarning: options.isWarning } : {})
+      }
+    ];
+  }
+
+  return defaultAction(action);
+};
+
 export const esdtNftUnwrapper = (
   action: TransactionActionType
 ): Array<string | TransactionUnwrapperType> => {
@@ -189,6 +211,13 @@ export const stakeUnwrapper = (
 export const unwrapper = (
   action: TransactionActionType
 ): Array<string | TransactionUnwrapperType> => {
+  if (action.category === TransactionActionCategoryEnum.deprecatedRelayedV1V2) {
+    return tooltipUnwrapper(action, {
+      externalLink: DOCS_RELAYED_VERSION_URL,
+      isWarning: true
+    });
+  }
+
   if (action.arguments) {
     switch (action.category) {
       case TransactionActionCategoryEnum.esdtNft:
@@ -200,7 +229,7 @@ export const unwrapper = (
       default:
         return defaultAction(action);
     }
-  } else {
-    return defaultAction(action);
   }
+
+  return defaultAction(action);
 };
