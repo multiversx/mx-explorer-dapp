@@ -202,36 +202,41 @@ const ActionText = ({
 
     case Boolean(entry.tooltip):
       return (
-        <InfoTooltip
-          title={
-            <>
-              {entry.tooltip}
-              {entry.externalLink && (
-                <>
-                  <br />
-                  <a
-                    href={entry.externalLink}
-                    target='_blank'
-                    rel='noreferrer nofollow noopener'
-                    className='text-underline mt-2'
-                  >
-                    Learn More
-                    <FontAwesomeIcon
-                      icon={faArrowUpRightFromSquare}
-                      size='xs'
-                      className='ms-1'
-                    />
-                  </a>
-                </>
-              )}
-            </>
-          }
-          className='ms-0'
-          iconClassName={classNames({
-            'text-warning': Boolean(entry.isWarning)
-          })}
-          persistent
-        />
+        <>
+          {entry.description && (
+            <span className='me-1'>{entry.description}</span>
+          )}
+          <InfoTooltip
+            title={
+              <>
+                {entry.tooltip}
+                {entry.externalLink && (
+                  <>
+                    <br />
+                    <a
+                      href={entry.externalLink}
+                      target='_blank'
+                      rel='noreferrer nofollow noopener'
+                      className='text-underline mt-2'
+                    >
+                      Learn More
+                      <FontAwesomeIcon
+                        icon={faArrowUpRightFromSquare}
+                        size='xs'
+                        className='ms-1'
+                      />
+                    </a>
+                  </>
+                )}
+              </>
+            }
+            className='ms-0'
+            iconClassName={classNames({
+              'text-warning': Boolean(entry.isWarning)
+            })}
+            persistent
+          />
+        </>
       );
 
     default:

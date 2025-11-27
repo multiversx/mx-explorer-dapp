@@ -1,6 +1,9 @@
 import BigNumber from 'bignumber.js';
 
-import { DOCS_RELAYED_VERSION_URL } from 'appConstants';
+import {
+  DEPRECATED_RELAYED_TX_DESCRIPTION,
+  DOCS_RELAYED_VERSION_URL
+} from 'appConstants';
 import {
   TransactionActionType,
   TransactionActionEnum,
@@ -120,17 +123,21 @@ export const tooltipUnwrapper = (
   action: TransactionActionType,
   options: TransactionUnwrapperType = {}
 ): Array<string | TransactionUnwrapperType> => {
-  if (action?.name && action?.description) {
-    return [
-      action.name,
-      {
-        tooltip: action.description,
-        ...(options?.externalLink
-          ? { externalLink: options.externalLink }
-          : {}),
-        ...(options?.isWarning ? { isWarning: options.isWarning } : {})
-      }
-    ];
+  const description = options?.description || action?.description;
+  if (action?.name && description) {
+    const tooltipOptions = {
+      tooltip: description,
+      ...(options?.externalLink ? { externalLink: options.externalLink } : {}),
+      ...(options?.isWarning ? { isWarning: options.isWarning } : {})
+    };
+    if (options?.description) {
+      const actionText = `${action.name}${
+        action?.description ? `: ${action.description}` : ''
+      }`;
+      return [{ ...tooltipOptions, description: actionText }];
+    }
+
+    return [{ ...tooltipOptions, description: action.name }];
   }
 
   return defaultAction(action);
@@ -213,6 +220,7 @@ export const unwrapper = (
 ): Array<string | TransactionUnwrapperType> => {
   if (action.category === TransactionActionCategoryEnum.deprecatedRelayedV1V2) {
     return tooltipUnwrapper(action, {
+      description: DEPRECATED_RELAYED_TX_DESCRIPTION,
       externalLink: DOCS_RELAYED_VERSION_URL,
       isWarning: true
     });

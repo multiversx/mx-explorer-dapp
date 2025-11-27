@@ -374,6 +374,7 @@ export interface TransactionUnwrapperType {
   value?: string;
   providerName?: string;
   providerAvatar?: string;
+  description?: string;
   tooltip?: string;
   externalLink?: string;
   isWarning?: boolean;
