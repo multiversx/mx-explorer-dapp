@@ -37,7 +37,7 @@ export const useBlockRequests = () => {
         url: '/blocks/c',
         signal,
         timeout,
-        params: getBlocksParams(params)
+        params: getBlocksParams({ isCount: true, ...params })
       }),
 
     /* Miniblocks */
