@@ -5,7 +5,12 @@ export enum NetworkAdapterEnum {
   elastic = 'elastic'
 }
 
-export interface BaseApiType {
+export interface AxiosParamsApiType {
+  signal?: any;
+  timeout?: any;
+}
+
+export interface BaseApiType extends AxiosParamsApiType {
   page?: number;
   size?: number;
   fields?: string;
@@ -19,7 +24,23 @@ export interface SortableApiType extends BaseApiType {
   order?: SortOrderEnum;
 }
 
-export interface GetAccountType {
+export interface GetAccountResourceType extends AxiosParamsApiType {
+  address: string;
+}
+
+export interface GetTokenResourceType extends AxiosParamsApiType {
+  tokenId: string;
+}
+
+export interface GetNftResourceType extends AxiosParamsApiType {
+  identifier: string;
+}
+
+export interface GetCollectionResourceType extends AxiosParamsApiType {
+  collection: string;
+}
+
+export interface GetAccountType extends AxiosParamsApiType {
   address: string;
   withGuardianInfo?: boolean;
   withTxCount?: boolean;
@@ -37,6 +58,12 @@ export interface GetAccountsType extends SortableApiType {
   withTxCount?: boolean;
   withScrCount?: boolean;
   withAssets?: boolean;
+}
+
+export interface GetAccountHistoryType extends AxiosParamsApiType {
+  address: string;
+  identifier?: string;
+  size?: number;
 }
 export interface GetBlocksType extends BaseApiType {
   shard?: number;
@@ -156,12 +183,19 @@ export interface GetProvidersType extends BaseApiType {
   withIdentityInfo?: boolean;
 }
 
+export interface GetRoundsType extends AxiosParamsApiType {
+  validator: string;
+  shard: number;
+  epoch: number;
+}
+
 export type AdapterProviderType = (
   props: AdapterProviderPropsType & { url: string }
 ) => Promise<any>;
 
 export interface AdapterProviderPropsType {
   baseUrl: string;
+  signal?: any;
   proxyUrl?: string;
   metaChainShardId?: number;
   url?: string;

@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ## [[2.3.2](https://github.com/multiversx/mx-explorer-dapp/pull/208)] - 2025-11-27
+
+- [Handle deprecatedRelayedV1V2](https://github.com/multiversx/mx-explorer-dapp/pull/208)
+- [Split Adapter Requests](https://github.com/multiversx/mx-explorer-dapp/pull/207)
+- [Show reserved field on Block Details page](https://github.com/multiversx/mx-explorer-dapp/pull/205)
+- [Add LowLiquidityTooltip on token row](https://github.com/multiversx/mx-explorer-dapp/pull/203)
+- [Show PriceSourceTooltip on tokens in account and on tokens table](https://github.com/multiversx/mx-explorer-dapp/pull/200)
+
 - ## [[2.3.1](https://github.com/multiversx/mx-explorer-dapp/pull/199)] - 2025-10-29
 
 - [Updated Account Token Value display constrains](https://github.com/multiversx/mx-explorer-dapp/pull/198)

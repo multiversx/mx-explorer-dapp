@@ -215,15 +215,22 @@ export function getBlocksParams({
   nonce,
   epoch,
   proposer,
-  withProposerIdentity = true
+  withProposerIdentity = true,
+
+  // not on api
+  isCount = false
 }: GetBlocksType) {
   const params: AdapterProviderPropsType['params'] = {
-    ...getPageParams({ page, size }),
+    ...(isCount
+      ? {}
+      : {
+          ...getPageParams({ page, size }),
+          ...(withProposerIdentity ? { withProposerIdentity } : {}),
+          ...(fields !== undefined ? { fields } : {})
+        }),
     ...(proposer ? { proposer } : {}),
-    ...(withProposerIdentity ? { withProposerIdentity } : {}),
-    ...getShardAndEpochParams(shard, epoch),
     ...(nonce !== undefined ? { nonce } : {}),
-    ...(fields !== undefined ? { fields } : {})
+    ...getShardAndEpochParams(shard, epoch)
   };
 
   return params;
