@@ -202,7 +202,7 @@ const ActionText = ({
 
     case Boolean(entry.tooltip):
       return (
-        <>
+        <span className='d-inline'>
           {entry.description && (
             <span className='me-1'>{entry.description}</span>
           )}
@@ -236,7 +236,7 @@ const ActionText = ({
             })}
             persistent
           />
-        </>
+        </span>
       );
 
     default:
