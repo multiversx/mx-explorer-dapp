@@ -63,7 +63,7 @@ export const useAccountRequests = () => {
         }
       }),
 
-    getAccountsCount: ({ timeout, signal, ...params }: GetAccountsType) =>
+    getAccountsCount: ({ timeout, signal, ...params }: GetAccountsType = {}) =>
       provider({ url: '/accounts/c', timeout, signal, params }),
 
     getAccountTransfers: ({
@@ -86,7 +86,7 @@ export const useAccountRequests = () => {
       timeout,
       signal,
       ...params
-    }: GetTransactionsType) =>
+    }: GetTransactionsType = {}) =>
       provider({
         url: `/accounts/${address}/transfers/c`,
         timeout,
