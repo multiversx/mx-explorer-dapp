@@ -25,7 +25,7 @@ export const useTokenRequests = () => {
         params: getTokensParams(params)
       }),
 
-    getTokensCount: ({ signal, timeout, ...params }: GetTokensType) =>
+    getTokensCount: ({ signal, timeout, ...params }: GetTokensType = {}) =>
       provider({
         url: '/tokens/c',
         signal,

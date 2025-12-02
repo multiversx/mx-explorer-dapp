@@ -26,7 +26,7 @@ export const useValidatorRequests = () => {
         params: getNodeParams(params)
       }),
 
-    getNodesCount: ({ signal, timeout, ...params }: GetNodesType) =>
+    getNodesCount: ({ signal, timeout, ...params }: GetNodesType = {}) =>
       provider({
         url: '/nodes/c',
         signal,
