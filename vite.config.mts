@@ -3,6 +3,7 @@ import path from 'path';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
+import { glslify } from 'vite-plugin-glslify';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -27,6 +28,7 @@ export default () => {
           exportType: 'default'
         }
       }),
+      glslify(),
       ...(shouldUseTSL ? [basicSsl()] : [])
     ],
     resolve: {

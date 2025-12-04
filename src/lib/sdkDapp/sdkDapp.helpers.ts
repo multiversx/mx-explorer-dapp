@@ -8,7 +8,7 @@ export { verifyMessage } from '@multiversx/sdk-dapp/out/providers/DappProvider/h
 export { addressIsValid } from '@multiversx/sdk-dapp/out/utils/validation/addressIsValid';
 export { getDecodedDataField } from '@multiversx/sdk-dapp/out/utils/transactions/getDecodedDataField';
 
-export { isUtf8 } from '@multiversx/sdk-dapp/out/utils/decoders';
+export { isUtf8 } from '@multiversx/sdk-dapp/out/utils/decoders/isUtf8';
 export {
   isHexValidCharacters,
   isHexValidLength

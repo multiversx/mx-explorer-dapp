@@ -528,16 +528,27 @@ $opacities: (
 
 // Primary MultiversX Color Palette
 
-$primary-50: #f0fdfa;
-$primary-100: #ccfbf1;
-$primary-200: #99f6e4;
-$primary-300: #5eead4;
-$primary-400: #23f7dd;
-$primary-500: #0ac2ae;
-$primary-600: #099887;
-$primary-700: #0d786c;
-$primary-800: #115e55;
-$primary-900: #134e48;
+// $primary-50: #f0fdfa;
+// $primary-100: #ccfbf1;
+// $primary-200: #99f6e4;
+// $primary-300: #5eead4;
+// $primary-400: #23f7dd;
+// $primary-500: #0ac2ae;
+// $primary-600: #099887;
+// $primary-700: #0d786c;
+// $primary-800: #115e55;
+// $primary-900: #134e48;
+
+$primary-50: $sky-50;
+$primary-100: $sky-100;
+$primary-200: $sky-200;
+$primary-300: $sky-300;
+$primary-400: $sky-400;
+$primary-500: $sky-500;
+$primary-600: $sky-600;
+$primary-700: $sky-700;
+$primary-800: $sky-800;
+$primary-900: $sky-900;
 
 $primarys: (
   'primary-100': $primary-100,

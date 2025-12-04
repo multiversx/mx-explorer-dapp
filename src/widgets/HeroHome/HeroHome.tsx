@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 
 import { BRAND_NAME } from 'appConstants';
-import { Search, Particles } from 'components';
+import { Search } from 'components';
+import { Particles } from 'components/ParticlesNew';
 import { networks } from 'config';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
