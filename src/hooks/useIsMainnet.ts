@@ -6,5 +6,5 @@ import { NetworkIdEnum } from 'types';
 export const useIsMainnet = () => {
   const { id: activeNetworkId, chainId } = useSelector(activeNetworkSelector);
 
-  return activeNetworkId === NetworkIdEnum.mainnet || chainId === '1';
+  return activeNetworkId === NetworkIdEnum.mainnet && chainId === '1';
 };

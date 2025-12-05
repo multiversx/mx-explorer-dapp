@@ -32,7 +32,7 @@ export const HeroHome = () => {
         <div className='row'>
           <div className='col-lg-6'>
             <h1 className='h2 mb-4 font-headings title'>
-              {BRAND_NAME} Blockchain {explorerTitle}
+              {BRAND_NAME} {explorerTitle}
             </h1>
             <Search />
           </div>
