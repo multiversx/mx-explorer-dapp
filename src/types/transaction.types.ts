@@ -374,6 +374,10 @@ export interface TransactionUnwrapperType {
   value?: string;
   providerName?: string;
   providerAvatar?: string;
+  description?: string;
+  tooltip?: string;
+  externalLink?: string;
+  isWarning?: boolean;
 }
 
 export enum TransactionActionEnum {
@@ -428,7 +432,8 @@ export enum TransactionActionCategoryEnum {
   esdtNft = 'esdtNft',
   mex = 'mex',
   stake = 'stake',
-  scCall = 'scCall'
+  scCall = 'scCall',
+  deprecatedRelayedV1V2 = 'deprecatedRelayedV1V2'
 }
 
 // TRANSACTION OPERATION
