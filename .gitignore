@@ -51,6 +51,7 @@ dist-ssr
 !/src/config.testnet.ts
 !/src/config.mainnet.ts
 !/src/config.multiple.ts
+!/src/config.bon.ts
 /src/interceptors/*
 !/src/interceptors/Interceptor.tsx
 
