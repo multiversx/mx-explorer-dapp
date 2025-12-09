@@ -18,7 +18,6 @@ import {
   useFrame,
   useLoader
 } from '@react-three/fiber';
-import { useControls } from 'leva';
 import * as THREE from 'three';
 import { UAParser } from 'ua-parser-js';
 
