@@ -19,11 +19,10 @@ import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
 import { getPrimaryColor, isValidTokenPrice, stringIsInteger } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
-import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountBalanceHistoryType, TokenType } from 'types';
 
-export const AccountAnalytics = () => {
+export const AccountHistoryChart = () => {
   const { account } = useSelector(accountSelector);
   const { address } = account;
   const [searchParams] = useSearchParams();
@@ -119,31 +118,26 @@ export const AccountAnalytics = () => {
 
   return (
     <div className='card'>
-      <div className='card-header'>
-        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
-          <AccountTabs />
-          <div className='d-flex flex-wrap align-items-center w-100'>
-            Account{' '}
-            <TokenSelectFilter
-              name='token-filter'
-              filter='token'
-              placeholder='Search for a Token'
-              noOptionsMessage='Invalid Identifier'
-              className='account-analytics-token-select mx-2'
-              defaultToken={NATIVE_TOKEN_SEARCH_LABEL}
-              hasShowAllOption={false}
-              isClearable={false}
-            />{' '}
-            Balance{' '}
-            {chartData.length > 1 && (
-              <span className='text-neutral-400 ms-1'>
-                ( from {startDate} to {endDate} )
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
       <div className='card-body px-lg-spacer py-lg-4'>
+        <div className='d-flex flex-wrap align-items-center w-100'>
+          Account{' '}
+          <TokenSelectFilter
+            name='token-filter'
+            filter='token'
+            placeholder='Search for a Token'
+            noOptionsMessage='Invalid Identifier'
+            className='account-analytics-token-select mx-2'
+            defaultToken={NATIVE_TOKEN_SEARCH_LABEL}
+            hasShowAllOption={false}
+            isClearable={false}
+          />{' '}
+          Balance{' '}
+          {chartData.length > 1 && (
+            <span className='text-neutral-400 ms-1'>
+              ( from {startDate} to {endDate} )
+            </span>
+          )}
+        </div>
         <Chart.Body>
           {dataReady === undefined && <Loader />}
           {dataReady === false && (

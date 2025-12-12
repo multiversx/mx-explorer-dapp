@@ -1,0 +1,50 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { MAX_RESULTS } from 'appConstants';
+import { useAdapter } from 'hooks';
+import {
+  accountExtraSelector,
+  accountSelector,
+  activeNetworkSelector
+} from 'redux/selectors';
+import { setAccountExtraTransactions } from 'redux/slices';
+
+export const useGetAccountTransactions = () => {
+  const dispatch = useDispatch();
+  const { account } = useSelector(accountSelector);
+  const { address, txCount } = account;
+  const { accountExtra } = useSelector(accountExtraSelector);
+  const { address: extraAddress, accountTransactions } = accountExtra;
+
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { getAccountTransactions } = useAdapter();
+
+  const fetchAccountTransactionsDetails = () => {
+    getAccountTransactions({
+      address,
+      size: MAX_RESULTS,
+      withUsername: false,
+      fields: ['sender', 'receiver', 'timestamp', 'timestampMs'].join(',')
+    }).then((accountTransactionsData) => {
+      if (!accountTransactionsData.success) {
+        return;
+      }
+
+      dispatch(setAccountExtraTransactions(accountTransactionsData.data));
+    });
+  };
+
+  useEffect(() => {
+    const isExtraAccountReady = address && address === extraAddress;
+    if (
+      !isExtraAccountReady ||
+      accountTransactions.length > 0 ||
+      txCount === 0
+    ) {
+      return;
+    }
+
+    fetchAccountTransactionsDetails();
+  }, [activeNetworkId, address, extraAddress, txCount]);
+};

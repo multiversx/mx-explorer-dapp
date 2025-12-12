@@ -8,7 +8,8 @@ import {
   SliceType,
   RolesType,
   TokenType,
-  CollectionType
+  CollectionType,
+  TransactionType
 } from 'types';
 
 export interface AccountType {
@@ -81,6 +82,7 @@ export interface AccountStakingSliceType {
 export interface AccountExtraSliceType extends SliceType {
   accountExtra: {
     address: string;
+    accountTransactions: TransactionType[];
     firstTransactionDate?: number;
     tokenBalance?: string;
   };

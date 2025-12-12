@@ -5,6 +5,7 @@ export const getInitialAccountExtraState = (): AccountExtraSliceType => {
   return {
     accountExtra: {
       address: '',
+      accountTransactions: [],
       firstTransactionDate: undefined,
       tokenBalance: undefined
     },
@@ -25,12 +26,23 @@ export const accountExtraSlice = createSlice({
         action.payload.accountExtra.firstTransactionDate;
       state.accountExtra.tokenBalance =
         action.payload.accountExtra.tokenBalance;
+      state.accountExtra.accountTransactions =
+        action.payload.accountExtra.accountTransactions;
 
       state.isDataReady = action.payload.isDataReady;
+    },
+    setAccountExtraTransactions: (
+      state: AccountExtraSliceType,
+      action: PayloadAction<
+        AccountExtraSliceType['accountExtra']['accountTransactions']
+      >
+    ) => {
+      state.accountExtra.accountTransactions = action.payload;
     }
   }
 });
 
-export const { setAccountExtra } = accountExtraSlice.actions;
+export const { setAccountExtra, setAccountExtraTransactions } =
+  accountExtraSlice.actions;
 
 export const accountExtraReducer = accountExtraSlice.reducer;

@@ -34,21 +34,28 @@ export const Heatmap = ({
       <g key={weekIndex} transform={transform}>
         {week.map((day, index) => {
           const { date, count } = day;
-          const coord = [0, date.getDay() * VERTICAL_OFFSET] as Coordinate;
+          const sundayBasedDay = date.getUTCDay() === 0 ? 7 : date.getUTCDay();
+          const coord = [0, sundayBasedDay * VERTICAL_OFFSET] as Coordinate;
           const color = generateCountColor(
             count,
             emptyColor,
             baseColor,
             scaleFactor
           );
+          const range = Math.min(0.5, count / 10) * 1000;
 
-          return renderDay(index, coord, color);
+          return renderDay(index, coord, color, range);
         })}
       </g>
     );
   };
 
-  const renderDay = (key: number, coord: Coordinate, color: string) => {
+  const renderDay = (
+    key: number,
+    coord: Coordinate,
+    color: string,
+    range: number
+  ) => {
     const [x, y] = coord;
 
     return (
@@ -60,13 +67,15 @@ export const Heatmap = ({
         ry={SQUARE_RADIUS}
         x={x}
         y={y}
-        fill={color}
+        //className='primary-100'
+        fill={`var(--primary-${range})`}
+        //  fill={color}
       />
     );
   };
 
   return (
-    <svg viewBox='0 0 686 32' className={className} style={style}>
+    <svg viewBox='0 0 686 104' className={className} style={style}>
       <g>{renderYear(startDate)}</g>
     </svg>
   );

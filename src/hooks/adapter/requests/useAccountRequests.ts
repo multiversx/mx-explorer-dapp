@@ -66,6 +66,37 @@ export const useAccountRequests = () => {
     getAccountsCount: ({ timeout, signal, ...params }: GetAccountsType = {}) =>
       provider({ url: '/accounts/c', timeout, signal, params }),
 
+    getAccountTransactions: ({
+      address,
+      timeout,
+      signal,
+      ...params
+    }: GetTransactionsType) =>
+      provider({
+        url: `/accounts/${address}/transactions`,
+        timeout,
+        signal,
+        params: getTransactionsParams({
+          ...params
+        })
+      }),
+
+    getAccountTransactionsCount: ({
+      address,
+      timeout,
+      signal,
+      ...params
+    }: GetTransactionsType = {}) =>
+      provider({
+        url: `/accounts/${address}/transactions/count`,
+        timeout,
+        signal,
+        params: getTransactionsParams({
+          isCount: true,
+          ...params
+        })
+      }),
+
     getAccountTransfers: ({
       address,
       timeout,
