@@ -55,7 +55,7 @@ export const useTransactionRequests = () => {
       signal,
       timeout,
       ...params
-    }: GetTransactionsType) =>
+    }: GetTransactionsType = {}) =>
       provider({
         url: '/transactions/c',
         signal,
@@ -71,7 +71,11 @@ export const useTransactionRequests = () => {
         params: getTransactionsParams(params)
       }),
 
-    getTransfersCount: ({ signal, timeout, ...params }: GetTransactionsType) =>
+    getTransfersCount: ({
+      signal,
+      timeout,
+      ...params
+    }: GetTransactionsType = {}) =>
       provider({
         url: '/transfers/c',
         signal,
@@ -108,7 +112,7 @@ export const useTransactionRequests = () => {
         params: getEventsParams(params)
       }),
 
-    getEventsCount: ({ signal, timeout, ...params }: GetEventsType) =>
+    getEventsCount: ({ signal, timeout, ...params }: GetEventsType = {}) =>
       provider({
         url: '/events/count',
         signal,
@@ -139,7 +143,7 @@ export const useTransactionRequests = () => {
       signal,
       timeout,
       ...params
-    }: GetTransactionsInPoolType) =>
+    }: GetTransactionsInPoolType = {}) =>
       provider({
         url: '/pool/c',
         signal,

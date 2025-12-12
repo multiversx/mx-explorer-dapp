@@ -27,7 +27,7 @@ export const useNftRequests = () => {
         params: getNftsParams({ ...params, includeFlagged: true })
       }),
 
-    getNftsCount: ({ signal, timeout, ...params }: GetNftsType) =>
+    getNftsCount: ({ signal, timeout, ...params }: GetNftsType = {}) =>
       provider({
         url: '/nfts/c',
         signal,

@@ -32,12 +32,12 @@ export const useBlockRequests = () => {
         params: getBlocksParams(params)
       }),
 
-    getBlocksCount: ({ signal, timeout, ...params }: GetBlocksType) =>
+    getBlocksCount: ({ signal, timeout, ...params }: GetBlocksType = {}) =>
       provider({
         url: '/blocks/c',
         signal,
         timeout,
-        params: getBlocksParams(params)
+        params: getBlocksParams({ isCount: true, ...params })
       }),
 
     /* Miniblocks */

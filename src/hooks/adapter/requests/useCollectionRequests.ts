@@ -32,7 +32,11 @@ export const useCollectionRequests = () => {
         params: getCollectionsParams(params)
       }),
 
-    getCollectionsCount: ({ signal, timeout, ...params }: GetCollectionsType) =>
+    getCollectionsCount: ({
+      signal,
+      timeout,
+      ...params
+    }: GetCollectionsType = {}) =>
       provider({
         url: '/collections/c',
         signal,
