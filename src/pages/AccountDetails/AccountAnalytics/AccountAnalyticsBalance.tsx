@@ -22,7 +22,7 @@ import { faChartBar } from 'icons/regular';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import { AccountBalanceHistoryType, TokenType } from 'types';
 
-export const AccountHistoryChart = () => {
+export const AccountAnalyticsBalance = () => {
   const { account } = useSelector(accountSelector);
   const { address } = account;
   const [searchParams] = useSearchParams();

@@ -63,6 +63,12 @@ export const urlBuilder = {
   accountDetailsStaking: (address: string) => `/accounts/${address}/staking`,
   accountDetailsAnalytics: (address: string) =>
     `/accounts/${address}/analytics`,
+  accountDetailsAnalyticsBalance: (address: string) =>
+    `/accounts/${address}/analytics/balance`,
+  accountDetailsAnalyticsTransactions: (address: string) =>
+    `/accounts/${address}/analytics/transactions`,
+  accountDetailsAnalyticsFees: (address: string) =>
+    `/accounts/${address}/analytics/fees`,
   accountDetailsScResults: (address: string) => `/accounts/${address}/results`,
   accountDetailsContracts: (address: string) =>
     `/accounts/${address}/contracts`,
