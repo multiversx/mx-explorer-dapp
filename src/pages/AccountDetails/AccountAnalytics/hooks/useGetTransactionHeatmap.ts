@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+
+import { formatTimestamp } from 'helpers';
 import { accountExtraSelector } from 'redux/selectors';
 import { useGetAccountTransactions } from './useGetAccountTransactions';
 
@@ -17,7 +19,8 @@ export const useGetTransactionHeatmap = () => {
     const map = new Map();
 
     for (const entry of accountTransactions) {
-      const d = new Date(Number(entry.timestamp) * 1000);
+      const formattedTimestamp = formatTimestamp(entry.timestamp);
+      const d = new Date(formattedTimestamp);
 
       const day = new Date(
         Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())

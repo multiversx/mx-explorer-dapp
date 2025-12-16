@@ -40,6 +40,9 @@ export const useShowGlobalStats = () => {
     case activeRoute(accountsRoutes.accountContracts):
     case activeRoute(accountsRoutes.accountStaking):
     case activeRoute(accountsRoutes.accountAnalytics):
+    case activeRoute(accountsRoutes.accountAnalyticsBalance):
+    case activeRoute(accountsRoutes.accountAnalyticsFees):
+    case activeRoute(accountsRoutes.accountAnalyticsTransactions):
     case activeRoute(accountsRoutes.accountCode):
     case activeRoute(accountsRoutes.accountCodeEndpoints):
     case activeRoute(accountsRoutes.accountCodeTypes):

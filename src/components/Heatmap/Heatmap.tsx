@@ -1,82 +1,95 @@
-import {
-  SQUARE_SIZE,
-  SQUARE_RADIUS,
-  VERTICAL_OFFSET
-} from './heatmap.constants';
-import { HeatmapUIType, DateWithCount, Coordinate } from './heatmap.types';
+import moment from 'moment';
+
+import { Overlay } from 'components/Overlay';
+import { formatBigNumber, getStringPlural } from 'helpers';
+
+import { HeatmapUIType, DateWithCountType } from './heatmap.types';
 import {
   generateDays,
   generateWeeks,
-  generateWeekTransform,
-  generateCountColor
+  getPercentileHeatLevel,
+  groupWeeksByMonthOrdered
 } from './helpers/generators';
 
-export const Heatmap = ({
-  startDate,
-  values,
-  emptyColor = [20, 30, 30],
-  baseColor = [0, 128, 0],
-  scaleFactor = 10,
-  className,
-  style
-}: HeatmapUIType) => {
+export const Heatmap = ({ startDate, values }: HeatmapUIType) => {
   const renderYear = (startDate: Date) => {
     const days = generateDays(startDate, values);
     const weeks = generateWeeks(days);
+    const months = groupWeeksByMonthOrdered(weeks);
 
-    return weeks.map((week, index) => renderWeekGroup(week, index));
+    return months.map((month, index) => {
+      return (
+        <div key={index} className='month'>
+          <div className='m-label'>{month.month}</div>
+          <div className='m'>
+            {month.weeks.map((week, index) => renderWeekGroup(week, index))}
+          </div>
+        </div>
+      );
+    });
   };
 
-  const renderWeekGroup = (week: DateWithCount[], weekIndex: number) => {
-    const transform = generateWeekTransform(weekIndex);
-
+  const renderWeekGroup = (week: DateWithCountType[], weekIndex: number) => {
     return (
-      <g key={weekIndex} transform={transform}>
+      <div key={weekIndex} className='w'>
         {week.map((day, index) => {
-          const { date, count } = day;
-          const sundayBasedDay = date.getUTCDay() === 0 ? 7 : date.getUTCDay();
-          const coord = [0, sundayBasedDay * VERTICAL_OFFSET] as Coordinate;
-          const color = generateCountColor(
-            count,
-            emptyColor,
-            baseColor,
-            scaleFactor
-          );
-          const range = Math.min(0.5, count / 10) * 1000;
-
-          return renderDay(index, coord, color, range);
+          const { count } = day;
+          const heat = getPercentileHeatLevel(count, values);
+          return renderDay({ index, day, heat });
         })}
-      </g>
+      </div>
     );
   };
 
-  const renderDay = (
-    key: number,
-    coord: Coordinate,
-    color: string,
-    range: number
-  ) => {
-    const [x, y] = coord;
+  const renderDay = ({
+    index,
+    heat,
+    day
+  }: {
+    index: number;
+    heat: number;
+    day: DateWithCountType;
+  }) => {
+    const { date, count } = day;
+    const dateString = moment.utc(date).format('ddd, MMM DD, YYYY');
 
     return (
-      <rect
-        key={key}
-        width={SQUARE_SIZE}
-        height={SQUARE_SIZE}
-        rx={SQUARE_RADIUS}
-        ry={SQUARE_RADIUS}
-        x={x}
-        y={y}
-        //className='primary-100'
-        fill={`var(--primary-${range})`}
-        //  fill={color}
-      />
+      <Overlay
+        title={
+          <>
+            {formatBigNumber({ value: count })}{' '}
+            {getStringPlural(count, { string: 'transaction' })} on {dateString}
+          </>
+        }
+        key={index}
+        className={`d heat-${heat}`}
+      ></Overlay>
     );
   };
 
   return (
-    <svg viewBox='0 0 686 104' className={className} style={style}>
-      <g>{renderYear(startDate)}</g>
-    </svg>
+    <div className='heatmap'>
+      <div className='y'>
+        <div className='w-label'>
+          <span>Mon</span>
+          <span></span>
+          <span>Wed</span>
+          <span></span>
+          <span>Fri</span>
+          <span></span>
+          <span>Sun</span>
+        </div>
+        {renderYear(startDate)}
+      </div>
+      <div className='ms-auto d-flex gap-2 flex-nowrap mt-3'>
+        <span>Less</span>
+        <div className='d-flex gap-1 y'>
+          {[...Array(6).keys()].map((i) => (
+            <div className={`d heat-${i}`} key={i}></div>
+          ))}
+        </div>
+        <span>More</span>
+      </div>
+    </div>
   );
 };

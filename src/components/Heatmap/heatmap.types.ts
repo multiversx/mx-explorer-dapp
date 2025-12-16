@@ -1,17 +1,11 @@
-export type Coordinate = [number, number];
-export type RGB = [number, number, number];
-
-export interface DateWithCount {
+export interface DateWithCountType {
   date: Date;
   count: number;
 }
 
+export type MonthMap = Record<string, DateWithCountType[][]>;
+
 export interface HeatmapUIType {
   startDate: Date;
-  values: DateWithCount[];
-  emptyColor?: RGB;
-  baseColor?: RGB;
-  scaleFactor?: number;
-  className?: string;
-  style?: React.CSSProperties;
+  values: DateWithCountType[];
 }

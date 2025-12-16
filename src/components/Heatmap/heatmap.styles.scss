@@ -1,0 +1,70 @@
+.heatmap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .m-label,
+  .w-label {
+    font-size: 0.825rem;
+    color: var(--neutral-400);
+  }
+  .w-label {
+    margin-top: 1.625rem;
+    margin-right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    span {
+      height: 1.125rem;
+    }
+  }
+  .m-label {
+    margin-bottom: 0.5rem;
+    height: 1.125rem;
+  }
+  .y {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 3px;
+    .m {
+      display: flex;
+      gap: 3px;
+    }
+    .w {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      .d:first-of-type {
+        margin-top: auto;
+      }
+    }
+    .w + .w {
+      .d:first-of-type {
+        margin-top: unset;
+      }
+    }
+    .d {
+      width: 1.125rem;
+      height: 1.125rem;
+      border: 2px solid var(--neutral-800);
+      border-radius: 0.25rem;
+      &.heat-0 {
+        background: var(--neutral-900);
+      }
+      &.heat-1 {
+        background: var(--primary-200);
+      }
+      &.heat-2 {
+        background: var(--primary-400);
+      }
+      &.heat-3 {
+        background: var(--primary-500);
+      }
+      &.heat-4 {
+        background: var(--primary-700);
+      }
+      &.heat-5 {
+        background: var(--primary-900);
+      }
+    }
+  }
+}

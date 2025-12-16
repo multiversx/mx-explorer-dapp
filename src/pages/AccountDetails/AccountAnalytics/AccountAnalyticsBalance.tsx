@@ -118,8 +118,8 @@ export const AccountAnalyticsBalance = () => {
 
   return (
     <div className='card'>
-      <div className='card-body px-lg-spacer py-lg-4'>
-        <div className='d-flex flex-wrap align-items-center w-100'>
+      <div className='card-body px-lg-spacer'>
+        <div className='d-flex flex-wrap align-items-center w-100 mb-spacer'>
           Account{' '}
           <TokenSelectFilter
             name='token-filter'

@@ -1,5 +1,4 @@
-import { SQUARE_SIZE, HORIZONTAL_OFFSET } from '../heatmap.constants';
-import { RGB, DateWithCount } from '../heatmap.types';
+import { DateWithCountType, MonthMap } from '../heatmap.types';
 
 function normalizeUtcDate(d: Date): Date {
   return new Date(
@@ -24,11 +23,59 @@ function daysInYear(date: Date) {
   return (end - start) / msInDay;
 }
 
+export function getPercentileHeatLevel(
+  count: number,
+  values: DateWithCountType[]
+) {
+  if (!count) {
+    return 0;
+  }
+
+  const sortedCounts = values.map((d) => d.count).sort();
+  const index = sortedCounts.indexOf(count);
+  const percentile = index / sortedCounts.length;
+
+  if (percentile < 0.2) return 1;
+  if (percentile < 0.4) return 2;
+  if (percentile < 0.6) return 3;
+  if (percentile < 0.8) return 4;
+  return 5;
+}
+
+function groupWeeksByMonth(weeks: DateWithCountType[][]) {
+  return weeks.reduce<MonthMap>((acc, week) => {
+    if (week.length === 0) return acc;
+
+    const firstDay = new Date(week[0].date);
+
+    const monthName = firstDay.toLocaleString('en-US', {
+      month: 'long'
+    });
+
+    if (!acc[monthName]) {
+      acc[monthName] = [];
+    }
+
+    acc[monthName].push(week);
+
+    return acc;
+  }, {});
+}
+
+export function groupWeeksByMonthOrdered(weeks: DateWithCountType[][]) {
+  const map = groupWeeksByMonth(weeks);
+
+  return Object.entries(map).map(([month, weeks]) => ({
+    month,
+    weeks
+  }));
+}
+
 export function generateDays(
   startDate: Date,
-  values: DateWithCount[]
-): DateWithCount[] {
-  const days = [] as DateWithCount[];
+  values: DateWithCountType[]
+): DateWithCountType[] {
+  const days = [] as DateWithCountType[];
   const daysInStartDateYear = daysInYear(startDate);
 
   for (let i = 0; i < daysInStartDateYear; i++) {
@@ -58,7 +105,9 @@ export function generateDays(
   return days;
 }
 
-export function generateWeeks(days: DateWithCount[]): DateWithCount[][] {
+export function generateWeeks(
+  days: DateWithCountType[]
+): DateWithCountType[][] {
   const normalized = days
     .map((d) => ({
       date: normalizeUtcDate(new Date(d.date)),
@@ -66,8 +115,8 @@ export function generateWeeks(days: DateWithCount[]): DateWithCount[][] {
     }))
     .sort((a, b) => a.date.valueOf() - b.date.valueOf());
 
-  const weeks = [] as DateWithCount[][];
-  let currentWeek = [] as DateWithCount[];
+  const weeks = [] as DateWithCountType[][];
+  let currentWeek = [] as DateWithCountType[];
 
   for (const day of normalized) {
     currentWeek.push(day);
@@ -84,38 +133,4 @@ export function generateWeeks(days: DateWithCount[]): DateWithCount[][] {
   }
 
   return weeks;
-}
-
-export function generateWeekTransform(weekIndex: number): string {
-  return `translate(${weekIndex * (SQUARE_SIZE + HORIZONTAL_OFFSET)}, 0)`;
-}
-
-function convertRGBToString(rgb: RGB): string {
-  return `rgb(${rgb.join(',')})`;
-}
-
-export function generateCountColor(
-  count: number,
-  emptyColor: RGB,
-  baseColor: RGB,
-  scaleFactor: number
-): string {
-  if (count === 0) {
-    return convertRGBToString(emptyColor);
-  }
-
-  // -contribution-default-bgColor-0: #151b23;
-  // --contribution-default-bgColor-1: #033a16;
-  // --contribution-default-bgColor-2: #196c2e;
-  // --contribution-default-bgColor-3: #2ea043;
-  // --contribution-default-bgColor-4: #56d364;
-
-  const sf = Math.min(1, count / scaleFactor);
-
-  // Darken: move each channel towards 0
-  const color = baseColor.map((channel) =>
-    Math.round(channel * (1 - sf))
-  ) as RGB;
-
-  return convertRGBToString(color);
 }
