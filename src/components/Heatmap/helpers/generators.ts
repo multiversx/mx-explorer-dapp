@@ -1,18 +1,18 @@
 import { DateWithCountType, MonthMap } from '../heatmap.types';
 
-function normalizeUtcDate(d: Date): Date {
+const normalizeUtcDate = (d: Date) => {
   return new Date(
     Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())
   );
-}
+};
 
-function getUTCDateKey(date: Date) {
+const getUTCDateKey = (date: Date) => {
   return `${date.getUTCFullYear()}-${
     date.getUTCMonth() + 1
   }-${date.getUTCDate()}`;
-}
+};
 
-function daysInYear(date: Date) {
+const daysInYear = (date: Date) => {
   const year = date.getUTCFullYear();
 
   const start = new Date(Date.UTC(year, 0, 1)).valueOf();
@@ -21,12 +21,12 @@ function daysInYear(date: Date) {
   const msInDay = 24 * 60 * 60 * 1000;
 
   return (end - start) / msInDay;
-}
+};
 
-export function getPercentileHeatLevel(
+export const getPercentileHeatLevel = (
   count: number,
   values: DateWithCountType[]
-) {
+) => {
   if (!count) {
     return 0;
   }
@@ -40,9 +40,9 @@ export function getPercentileHeatLevel(
   if (percentile < 0.6) return 3;
   if (percentile < 0.8) return 4;
   return 5;
-}
+};
 
-function groupWeeksByMonth(weeks: DateWithCountType[][]) {
+const groupWeeksByMonth = (weeks: DateWithCountType[][]) => {
   return weeks.reduce<MonthMap>((acc, week) => {
     if (week.length === 0) return acc;
 
@@ -60,21 +60,18 @@ function groupWeeksByMonth(weeks: DateWithCountType[][]) {
 
     return acc;
   }, {});
-}
+};
 
-export function groupWeeksByMonthOrdered(weeks: DateWithCountType[][]) {
+export const groupWeeksByMonthOrdered = (weeks: DateWithCountType[][]) => {
   const map = groupWeeksByMonth(weeks);
 
   return Object.entries(map).map(([month, weeks]) => ({
     month,
     weeks
   }));
-}
+};
 
-export function generateDays(
-  startDate: Date,
-  values: DateWithCountType[]
-): DateWithCountType[] {
+export const generateDays = (startDate: Date, values: DateWithCountType[]) => {
   const days = [] as DateWithCountType[];
   const daysInStartDateYear = daysInYear(startDate);
 
@@ -103,11 +100,9 @@ export function generateDays(
   }
 
   return days;
-}
+};
 
-export function generateWeeks(
-  days: DateWithCountType[]
-): DateWithCountType[][] {
+export const generateWeeks = (days: DateWithCountType[]) => {
   const normalized = days
     .map((d) => ({
       date: normalizeUtcDate(new Date(d.date)),
@@ -133,4 +128,4 @@ export function generateWeeks(
   }
 
   return weeks;
-}
+};
