@@ -25,6 +25,8 @@
     display: flex;
     flex-wrap: nowrap;
     gap: 3px;
+    overflow-y: hidden;
+    overflow-x: auto;
     .m {
       display: flex;
       gap: 3px;

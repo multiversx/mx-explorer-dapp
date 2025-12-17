@@ -117,71 +117,69 @@ export const AccountAnalyticsBalance = () => {
   }, [activeNetworkId, searchParams, egldLabel]);
 
   return (
-    <div className='card'>
-      <div className='card-body px-lg-spacer'>
-        <div className='d-flex flex-wrap align-items-center w-100 mb-spacer'>
-          Account{' '}
-          <TokenSelectFilter
-            name='token-filter'
-            filter='token'
-            placeholder='Search for a Token'
-            noOptionsMessage='Invalid Identifier'
-            className='account-analytics-token-select mx-2'
-            defaultToken={NATIVE_TOKEN_SEARCH_LABEL}
-            hasShowAllOption={false}
-            isClearable={false}
-          />{' '}
-          Balance{' '}
-          {chartData.length > 1 && (
-            <span className='text-neutral-400 ms-1'>
-              ( from {startDate} to {endDate} )
-            </span>
-          )}
-        </div>
-        <Chart.Body>
-          {dataReady === undefined && <Loader />}
-          {dataReady === false && (
-            <PageState
-              icon={faChartBar}
-              title='Unable to load balance chart'
-              className='my-auto'
-              titleClassName='mt-0'
-              data-testid='accountChartError'
-            />
-          )}
-          {dataReady === true && (
-            <>
-              {chartData.length > 1 ? (
-                <div className='mx-n4'>
-                  <Chart.Area
-                    config={config}
-                    tooltip={{
-                      dateFormat: 'MMM DD, YYYY HH:mm:ss UTC'
-                    }}
-                  ></Chart.Area>
-                </div>
-              ) : (
-                <PageState
-                  icon={faChartBar}
-                  title={
-                    chartData.length === 0
-                      ? 'No account balance history'
-                      : 'Not enough entries to display the chart'
-                  }
-                  className='my-auto'
-                  titleClassName='mt-0'
-                  data-testid='accountChartSmall'
-                />
-              )}
-            </>
-          )}
-        </Chart.Body>
-        <PageSize
-          className='mt-spacer'
-          defaultSize={100}
-          sizeArray={[100, 200, 500, 1000, 5000]}
-        />
+    <>
+      <div className='d-flex flex-wrap align-items-center w-100 mb-3'>
+        Account{' '}
+        <TokenSelectFilter
+          name='token-filter'
+          filter='token'
+          placeholder='Search for a Token'
+          noOptionsMessage='Invalid Identifier'
+          className='account-analytics-token-select mx-2'
+          defaultToken={NATIVE_TOKEN_SEARCH_LABEL}
+          hasShowAllOption={false}
+          isClearable={false}
+        />{' '}
+        Balance{' '}
+        {chartData.length > 1 && (
+          <span className='text-neutral-400 ms-1'>
+            ( from {startDate} to {endDate} )
+          </span>
+        )}
       </div>
-    </div>
+      <Chart.Body>
+        {dataReady === undefined && <Loader />}
+        {dataReady === false && (
+          <PageState
+            icon={faChartBar}
+            title='Unable to load balance chart'
+            className='my-auto'
+            titleClassName='mt-0'
+            data-testid='accountChartError'
+          />
+        )}
+        {dataReady === true && (
+          <>
+            {chartData.length > 1 ? (
+              <div className='mx-n4'>
+                <Chart.Area
+                  config={config}
+                  tooltip={{
+                    dateFormat: 'MMM DD, YYYY HH:mm:ss UTC'
+                  }}
+                ></Chart.Area>
+              </div>
+            ) : (
+              <PageState
+                icon={faChartBar}
+                title={
+                  chartData.length === 0
+                    ? 'No account balance history'
+                    : 'Not enough entries to display the chart'
+                }
+                className='my-auto'
+                titleClassName='mt-0'
+                data-testid='accountChartSmall'
+              />
+            )}
+          </>
+        )}
+      </Chart.Body>
+      <PageSize
+        className='mt-spacer'
+        defaultSize={100}
+        sizeArray={[100, 200, 500, 1000, 5000]}
+      />
+    </>
   );
 };

@@ -6,6 +6,7 @@ export * from './getColors';
 export * from './getCustomPageName';
 export * from './getDisplayReceiver';
 export * from './getItemsPage';
+export * from './getLongestTxStreak';
 export * from './getNftText';
 export * from './getNodeIcon';
 export * from './getNodeIssue';

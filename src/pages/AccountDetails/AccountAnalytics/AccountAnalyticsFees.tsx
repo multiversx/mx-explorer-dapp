@@ -1,7 +1,30 @@
+import { useSelector } from 'react-redux';
+
+import { Loader, PageState } from 'components';
+import { faChartBar } from 'icons/regular';
+import { accountExtraSelector } from 'redux/selectors';
+
 export const AccountAnalyticsFees = () => {
-  return (
-    <div className='card'>
-      <div className='card-body px-lg-spacer py-lg-4'>Fees</div>
-    </div>
-  );
+  const { accountExtra } = useSelector(accountExtraSelector);
+  const { accountTransactions, accountTransactionsFetched } = accountExtra;
+
+  if (accountTransactionsFetched === undefined) {
+    return <Loader />;
+  }
+
+  if (accountTransactionsFetched === false) {
+    return (
+      <PageState
+        icon={faChartBar}
+        title='Unable to load Account Analytics'
+        isError
+      />
+    );
+  }
+
+  if (accountTransactions.length === 0) {
+    return <PageState icon={faChartBar} title='No Transactions' isError />;
+  }
+
+  return <>Fees</>;
 };

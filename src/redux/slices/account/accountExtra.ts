@@ -1,11 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AccountExtraSliceType } from 'types/account.types';
+import {
+  AccountExtraAnalyticsSliceType,
+  AccountExtraSliceType
+} from 'types/account.types';
 
 export const getInitialAccountExtraState = (): AccountExtraSliceType => {
   return {
     accountExtra: {
       address: '',
       accountTransactions: [],
+      accountTransactionsFetched: undefined,
       firstTransactionDate: undefined,
       tokenBalance: undefined
     },
@@ -26,6 +30,8 @@ export const accountExtraSlice = createSlice({
         action.payload.accountExtra.firstTransactionDate;
       state.accountExtra.tokenBalance =
         action.payload.accountExtra.tokenBalance;
+      state.accountExtra.accountTransactionsFetched =
+        action.payload.accountExtra.accountTransactionsFetched;
       state.accountExtra.accountTransactions =
         action.payload.accountExtra.accountTransactions;
 
@@ -33,11 +39,12 @@ export const accountExtraSlice = createSlice({
     },
     setAccountExtraTransactions: (
       state: AccountExtraSliceType,
-      action: PayloadAction<
-        AccountExtraSliceType['accountExtra']['accountTransactions']
-      >
+      action: PayloadAction<AccountExtraAnalyticsSliceType>
     ) => {
-      state.accountExtra.accountTransactions = action.payload;
+      state.accountExtra.accountTransactions =
+        action.payload.accountTransactions;
+      state.accountExtra.accountTransactionsFetched =
+        action.payload.accountTransactionsFetched;
     }
   }
 });

@@ -79,13 +79,20 @@ export interface AccountStakingSliceType {
   accountStakingFetched: boolean;
 }
 
+export interface AccountExtraAnalyticsSliceType {
+  accountTransactions: TransactionType[];
+  accountTransactionsFetched?: boolean;
+}
+
+export interface AccountExtraBaseSliceType
+  extends AccountExtraAnalyticsSliceType {
+  address: string;
+  firstTransactionDate?: number;
+  tokenBalance?: string;
+}
+
 export interface AccountExtraSliceType extends SliceType {
-  accountExtra: {
-    address: string;
-    accountTransactions: TransactionType[];
-    firstTransactionDate?: number;
-    tokenBalance?: string;
-  };
+  accountExtra: AccountExtraBaseSliceType;
 }
 
 export interface AccountAssetType {

@@ -9,8 +9,15 @@ export const AccountHeatmap = () => {
   }
 
   return (
-    <div className='card'>
-      <div className='card-body px-lg-spacer py-lg-4'>
+    <div className='card border'>
+      <div className='card-header'>
+        <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
+          <h5 className='table-title d-flex align-items-center'>
+            Transaction Heatmap
+          </h5>
+        </div>
+      </div>
+      <div className='card-body py-lg-4'>
         <Heatmap
           startDate={
             new Date(
