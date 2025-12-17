@@ -21,7 +21,7 @@ export const ActivityCards = () => {
       return `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
     })
   );
-  const { streak, startDay, endDay } = getLongestTxStreak(accountTransactions);
+  const { length, startDay, endDay } = getLongestTxStreak(accountTransactions);
 
   return (
     <div className='stats-cards equal-width d-flex flex-row flex-wrap gap-3 mb-spacer'>
@@ -52,19 +52,21 @@ export const ActivityCards = () => {
             className='border'
             title='Longest Streak'
             value={
-              startDay && endDay && streak > 1 ? (
+              startDay && endDay && length > 1 ? (
                 <Overlay
                   title={
                     <>
                       <p className='mb-0'>Started on: {startDay}</p>
-                      <p className='mb-0'>Unitil: {endDay}</p>
+                      <p className='mb-0'>Until: {endDay}</p>
                     </>
                   }
                 >
-                  <FormatNumber value={streak} />
+                  <FormatNumber value={length} /> Days
                 </Overlay>
               ) : (
-                <FormatNumber value={streak} />
+                <>
+                  <FormatNumber value={length} /> Days
+                </>
               )
             }
           />

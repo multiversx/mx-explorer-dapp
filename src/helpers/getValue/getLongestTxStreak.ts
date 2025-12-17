@@ -1,45 +1,45 @@
+import moment from 'moment';
+
 import { formatTimestamp } from 'helpers/formatValue';
 import { TransactionType } from 'types';
 
+const toDayTimestamp = (day: number) => {
+  return moment.utc(day * 86400 * 1000).format('ddd, MMM DD, YYYY');
+};
+
 export const getLongestTxStreak = (transactions: TransactionType[]) => {
   if (transactions.length === 0) {
-    return { streak: 0, startDay: undefined, endDay: undefined };
+    return { length: 0, startDay: null, endDay: null };
   }
 
-  const days = [
-    ...new Set(
-      transactions.map((tx) => {
-        const d = new Date(formatTimestamp(tx.timestamp));
-        return `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
-      })
-    )
-  ];
+  const days: Set<number> = new Set();
+  for (const a of transactions) {
+    days.add(Math.floor(formatTimestamp(a.timestamp) / 1000 / 86400));
+  }
 
-  let maxLength = 1;
-  let maxStart = days[0];
-  let maxEnd = days[0];
+  let maxLen = 0;
+  let maxStart = 0;
 
-  let currentLength = 1;
-  let currentStart = days[0];
+  for (const day of days) {
+    if (!days.has(day - 1)) {
+      let currentDay = day;
+      let length = 1;
 
-  for (let i = 1; i < days.length; i++) {
-    if (days[i] === days[i - 1] + 1) {
-      currentLength++;
-    } else {
-      currentLength = 1;
-      currentStart = days[i];
-    }
+      while (days.has(currentDay + 1)) {
+        currentDay++;
+        length++;
+      }
 
-    if (currentLength > maxLength) {
-      maxLength = currentLength;
-      maxStart = currentStart;
-      maxEnd = days[i];
+      if (length > maxLen) {
+        maxLen = length;
+        maxStart = day;
+      }
     }
   }
 
   return {
-    streak: maxLength,
-    startDay: maxStart,
-    endDay: maxEnd
+    length: maxLen,
+    startDay: toDayTimestamp(maxStart),
+    endDay: toDayTimestamp(maxStart + maxLen - 1)
   };
 };
