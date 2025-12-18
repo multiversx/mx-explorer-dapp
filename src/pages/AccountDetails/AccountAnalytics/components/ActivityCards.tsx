@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { ELLIPSIS } from 'appConstants';
+import { ELLIPSIS, MAX_RESULTS } from 'appConstants';
 import { FormatNumber, Overlay, TimeAgo } from 'components';
 import { formatBigNumber, formatTimestamp, getLongestTxStreak } from 'helpers';
 import { accountExtraSelector, accountSelector } from 'redux/selectors';
@@ -12,8 +12,7 @@ export const ActivityCards = () => {
   const { txCount } = account;
   const { accountTransactions, firstTransactionDate } = accountExtra;
 
-  const canGenerateAnalytics =
-    txCount && accountTransactions.length === txCount;
+  const canGenerateAnalytics = txCount && txCount <= MAX_RESULTS;
 
   const uniqueDays = new Set(
     accountTransactions.map((tx) => {
