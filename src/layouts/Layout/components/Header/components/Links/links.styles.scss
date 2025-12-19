@@ -78,6 +78,12 @@
     &.active {
       --link-color: var(--primary);
       --nav-link-color: var(--primary);
+    }
+  }
+
+  & > .link {
+    &:hover,
+    &.active {
       background-color: var(--black);
       @include media-breakpoint-up(lg) {
         background-color: rgba(black, 0.2);
