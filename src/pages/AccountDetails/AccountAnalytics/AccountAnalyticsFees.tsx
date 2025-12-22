@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { Chart, Loader, PageState } from 'components';
+import { Chart, Loader, PageState, Range } from 'components';
 import { ChartConfigType } from 'components/Chart/helpers/types';
 import { faChartBar } from 'icons/regular';
 import { accountExtraSelector, activeNetworkSelector } from 'redux/selectors';
@@ -46,7 +46,10 @@ export const AccountAnalyticsFees = () => {
 
   return (
     <>
-      <div className='d-flex flex-wrap align-items-center w-100 mb-3'>Fees</div>
+      <div className='d-flex flex-wrap align-items-center w-100 mb-3'>
+        <h5 className='table-title d-flex align-items-center'>Fees</h5>
+        <Range className='ms-auto' />
+      </div>
       <Chart.Body>
         <>
           {processedFeesEntries.length > 1 ? (

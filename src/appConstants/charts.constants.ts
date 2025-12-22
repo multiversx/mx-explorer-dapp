@@ -1,6 +1,6 @@
 import { ChartResolutionType } from 'types';
 
-export const ChartResolution: ChartResolutionType = {
+export const chartResolution: ChartResolutionType = {
   all: {
     label: 'Max',
     range: 'all'

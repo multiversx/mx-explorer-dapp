@@ -53,6 +53,7 @@ export * from './ProgressRing';
 export * from './PropertyPill';
 export * from './ProvidersTable';
 export * from './PulsatingLed';
+export * from './Range';
 export * from './RolesBadges';
 export * from './ScAddressIcon';
 export * from './ScResultsTable';

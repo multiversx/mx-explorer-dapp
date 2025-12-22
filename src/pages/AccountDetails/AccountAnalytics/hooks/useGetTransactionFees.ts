@@ -1,17 +1,25 @@
 import { useMemo } from 'react';
 import { BigNumber } from 'bignumber.js';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
-import { MAX_RESULTS } from 'appConstants';
-import { formatAmount, formatTimestamp } from 'helpers';
+import { chartResolution, MAX_RESULTS } from 'appConstants';
+import { formatAmount, formatTimestamp, getRangeDays } from 'helpers';
 import { useFetchAccountTransactions } from 'hooks';
 import { accountExtraSelector, accountSelector } from 'redux/selectors';
+import { ChartResolutionRangeType } from 'types';
 
 export const useGetTransactionFees = () => {
   const { account } = useSelector(accountSelector);
   const { accountExtra } = useSelector(accountExtraSelector);
   const { txCount } = account;
   const { accountTransactions } = accountExtra;
+
+  const [searchParams] = useSearchParams();
+  const { range } = Object.fromEntries(searchParams);
+  const rangeValue = Object.keys(chartResolution).includes(range)
+    ? range
+    : 'year';
 
   useFetchAccountTransactions();
 
@@ -20,10 +28,21 @@ export const useGetTransactionFees = () => {
       return [];
     }
 
+    const nowMs = Date.now();
     const map = new Map();
+    const rangeMs =
+      getRangeDays(rangeValue as ChartResolutionRangeType) *
+      24 *
+      60 *
+      60 *
+      1000;
 
-    for (const entry of accountTransactions) {
-      const formattedTimestamp = formatTimestamp(entry.timestamp);
+    for (const tx of accountTransactions) {
+      if (range !== 'all' && nowMs - formatTimestamp(tx.timestamp) > rangeMs) {
+        continue;
+      }
+
+      const formattedTimestamp = formatTimestamp(tx.timestamp);
       const d = new Date(formattedTimestamp);
       const day = new Date(
         Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())
@@ -32,7 +51,7 @@ export const useGetTransactionFees = () => {
 
       map.set(
         key,
-        new BigNumber(map.get(key) || 0).plus(entry.fee ?? 0).toString()
+        new BigNumber(map.get(key) || 0).plus(tx.fee ?? 0).toString()
       );
     }
 
@@ -42,7 +61,7 @@ export const useGetTransactionFees = () => {
         timestamp: time,
         value: formatAmount({ input: totalFees })
       }));
-  }, [accountTransactions, txCount]);
+  }, [accountTransactions, txCount, rangeValue]);
 
   return processedFeesEntries;
 };

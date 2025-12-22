@@ -1,11 +1,16 @@
 import { formatTimestamp } from 'helpers/formatValue';
-import { AccountAssetType, TransactionType } from 'types';
+import {
+  AccountAssetType,
+  ChartResolutionRangeType,
+  TransactionType
+} from 'types';
+import { getRangeDays } from './getRangeDays';
 
 interface GetAccountTopNeighborsProps {
   transactions: TransactionType[];
   target: string;
   results?: number;
-  range?: '30' | '90' | '365' | 'all';
+  range?: ChartResolutionRangeType;
 }
 
 export interface NeighborType {
@@ -23,7 +28,7 @@ export const getAccountTopNeighbors = ({
   range = 'all'
 }: GetAccountTopNeighborsProps) => {
   const nowMs = Date.now();
-  const rangeMs = range === 'all' ? 0 : Number(range) * 24 * 60 * 60 * 1000;
+  const rangeMs = getRangeDays(range) * 24 * 60 * 60 * 1000;
 
   const neighbours = {} as Record<string, NeighborType>;
 
