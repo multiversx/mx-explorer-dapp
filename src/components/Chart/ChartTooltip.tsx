@@ -5,6 +5,7 @@ import {
   capitalize,
   formatAmount,
   formatBigNumber,
+  formatTimestamp,
   getColors,
   usdValue
 } from 'helpers';
@@ -55,8 +56,7 @@ export const ChartTooltip = ({
           <span>
             {' '}
             {payload[0]?.payload?.timestamp
-              ? moment
-                  .unix(payload[0].payload.timestamp)
+              ? moment(formatTimestamp(payload[0].payload.timestamp))
                   .utc()
                   .format(dateFormat ?? 'D MMM YYYY')
               : label}

@@ -11,7 +11,7 @@ import {
   CartesianGrid
 } from 'recharts';
 
-import { getColors } from 'helpers';
+import { formatTimestamp, getColors } from 'helpers';
 import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { getChartMergedData } from './helpers/getChartMergedData';
@@ -110,8 +110,7 @@ export const ChartArea = ({
             tickLine={false}
             domain={domain}
             tickFormatter={(tick) =>
-              moment
-                .unix(tick)
+              moment(formatTimestamp(tick))
                 .utc()
                 .format(dateFormat ?? 'D MMM YYYY')
             }

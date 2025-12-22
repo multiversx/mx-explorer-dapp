@@ -16,7 +16,12 @@ import {
   getFrequency
 } from 'components/Chart/helpers/getChartBinnedData';
 import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
-import { getPrimaryColor, isValidTokenPrice, stringIsInteger } from 'helpers';
+import {
+  formatTimestamp,
+  getPrimaryColor,
+  isValidTokenPrice,
+  stringIsInteger
+} from 'helpers';
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
@@ -89,8 +94,12 @@ export const AccountAnalyticsBalance = () => {
       );
       setChartData(normalizedData);
 
-      setStartDate(moment.unix(startTimestamp).utc().format('MMM DD, YYYY'));
-      setEndDate(moment.unix(endTimestamp).utc().format('MMM DD, YYYY'));
+      setStartDate(
+        moment(formatTimestamp(startTimestamp)).utc().format('MMM DD, YYYY')
+      );
+      setEndDate(
+        moment(formatTimestamp(endTimestamp)).utc().format('MMM DD, YYYY')
+      );
     }
 
     setDataReady(accountsHistroySuccess);

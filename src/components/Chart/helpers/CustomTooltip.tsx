@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
-import { formatAmount, usdValue } from 'helpers';
+import { formatAmount, formatTimestamp, usdValue } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
 
 const getTooltipLabel = (label: string) => {
@@ -108,8 +108,7 @@ export const CustomTooltip = ({
         </ul>
         <div className='recharts-tooltip-label'>
           {payload[0]?.payload?.timestamp
-            ? moment
-                .unix(payload[0].payload.timestamp)
+            ? moment(formatTimestamp(payload[0].payload.timestamp))
                 .utc()
                 .format(dateFormat ?? 'D MMM YYYY')
             : label}
