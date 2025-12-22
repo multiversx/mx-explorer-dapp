@@ -4,7 +4,12 @@ import { Loader, PageState } from 'components';
 import { faChartBar } from 'icons/regular';
 import { accountExtraSelector } from 'redux/selectors';
 
-import { AccountHeatmap, ActivityCards } from './components';
+import {
+  AccountHeatmap,
+  AccountNeighbors,
+  ActivityCards,
+  ApplicationActivity
+} from './components';
 
 export const AccountAnalyticsOverview = () => {
   const { accountExtra } = useSelector(accountExtraSelector);
@@ -32,6 +37,14 @@ export const AccountAnalyticsOverview = () => {
     <>
       <ActivityCards />
       <AccountHeatmap />
+      <div className='row mt-spacer'>
+        <div className='col-12 col-lg-6'>
+          <ApplicationActivity />
+        </div>
+        <div className='col-12 col-lg-6'>
+          <AccountNeighbors />
+        </div>
+      </div>
     </>
   );
 };
