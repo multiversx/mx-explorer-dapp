@@ -30,19 +30,19 @@ export const useFetchAccountTransactions = () => {
     getAccountTransactions({
       address,
       size: MAX_RESULTS,
-      withUsername: false,
       fields: [
         'sender',
         'receiver',
         'timestamp',
         'timestampMs',
         'senderAssets',
-        'receiverAssets'
+        'receiverAssets',
+        'fee'
       ].join(',')
     }).then(({ data, success }) => {
       dispatch(
         setAccountExtraTransactions({
-          accountTransactions: data,
+          accountTransactions: data ?? [],
           accountTransactionsFetched: success
         })
       );

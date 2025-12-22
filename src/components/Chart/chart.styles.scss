@@ -84,8 +84,7 @@
 }
 
 .stacked-chart,
-.chart-area,
-.chart-bar {
+.chart-area {
   height: 17rem;
   padding: 0;
   margin-right: -2rem;
@@ -103,6 +102,12 @@
       font-size: 0.75rem;
       fill: var(--neutral-400);
     }
+  }
+}
+
+.chart-bar {
+  .recharts-rectangle.recharts-tooltip-cursor {
+    display: none;
   }
 }
 

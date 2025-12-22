@@ -77,6 +77,7 @@ export const useAccountRequests = () => {
         timeout,
         signal,
         params: getTransactionsParams({
+          withUsername: false,
           ...params
         })
       }),
