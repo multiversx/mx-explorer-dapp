@@ -77,11 +77,7 @@ export const AccountAnalyticsFees = () => {
           ) : (
             <PageState
               icon={faChartBar}
-              title={
-                rangeFees.length === 0
-                  ? 'No account transaction history'
-                  : 'Not enough entries to display the chart'
-              }
+              title='Not enough entries to display the chart'
               className='my-auto'
               titleClassName='mt-0'
               data-testid='accountAnalyticsFeesChart'

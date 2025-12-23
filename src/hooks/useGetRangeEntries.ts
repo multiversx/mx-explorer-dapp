@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { chartResolution } from 'appConstants';
+import { generateDays } from 'components/Heatmap/helpers/generators';
 import { formatTimestamp, getRangeDays } from 'helpers';
 import { ChartDataType, ChartResolutionRangeType } from 'types';
 
@@ -25,9 +26,14 @@ export const useGetRangeEntries = (values: ChartDataType[]) => {
       60 *
       1000;
 
-    return values.filter(
+    const filteredValues = values.filter(
       (day) => nowMs - formatTimestamp(day.timestamp) <= rangeMs
     );
+    if (filteredValues.length > 1) {
+      return generateDays(filteredValues[0].timestamp, filteredValues);
+    }
+
+    return filteredValues;
   }, [values, rangeValue]);
 
   return {
