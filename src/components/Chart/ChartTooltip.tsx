@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+
 import {
   capitalize,
   formatAmount,
@@ -10,7 +11,7 @@ import {
   usdValue
 } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
-import { ChartConfigType } from './helpers/types';
+import { ChartConfigType } from 'types';
 
 export const ChartTooltip = ({
   seriesConfig,

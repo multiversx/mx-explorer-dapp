@@ -1,8 +1,7 @@
 import moment, { Moment, unitOfTime } from 'moment';
 
-import { ChartDataType } from 'components/Chart/helpers/types';
 import { formatAmount, formatTimestamp } from 'helpers';
-import { AccountBalanceHistoryType } from 'types';
+import { AccountBalanceHistoryType, ChartDataType } from 'types';
 
 const getMoment = (timestamp: string | number): Moment => {
   return typeof timestamp === 'number'

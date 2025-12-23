@@ -1,4 +1,4 @@
-import { ChartConfigType } from './types';
+import { ChartConfigType } from 'types';
 
 interface TickRangeType {
   config: Array<ChartConfigType>;

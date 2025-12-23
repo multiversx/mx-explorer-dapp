@@ -12,11 +12,12 @@ import {
 } from 'recharts';
 
 import { formatTimestamp, getColors } from 'helpers';
+import { ChartProps } from 'types';
+
 import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { getChartMergedData } from './helpers/getChartMergedData';
 import { StartEndTick } from './helpers/StartEndTick';
-import { ChartProps } from './helpers/types';
 
 export const ChartLine = ({
   config,
