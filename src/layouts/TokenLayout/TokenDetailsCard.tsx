@@ -14,9 +14,9 @@ import {
   Chart,
   NetworkLink
 } from 'components';
-import { ChartConfigType } from 'components/Chart/helpers/types';
 import { urlBuilder } from 'helpers';
 import { tokenExtraSelector, tokenSelector } from 'redux/selectors';
+import { ChartConfigType } from 'types';
 
 export const TokenDetailsCard = () => {
   const { token } = useSelector(tokenSelector);

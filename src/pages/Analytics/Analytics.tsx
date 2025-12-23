@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { InfoTooltip, Loader, Tabs } from 'components';
-import { ChartListType } from 'components/Chart/helpers/types';
 import { useAdapter, useHasGrowthWidgets, useNetworkRoute } from 'hooks';
 
 import { AnalyticsChart } from 'pages/AnalyticsCompare/AnalyticsChart';
@@ -11,6 +10,7 @@ import { FailedAnalytics } from 'pages/AnalyticsCompare/components/FailedAnalyti
 import { NoAnalytics } from 'pages/AnalyticsCompare/components/NoAnalytics';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
+import { ChartListType } from 'types';
 import { ChartContractsTransactions, MostUsed } from 'widgets';
 
 import { ChartWrapper } from './components/ChartWrapper';

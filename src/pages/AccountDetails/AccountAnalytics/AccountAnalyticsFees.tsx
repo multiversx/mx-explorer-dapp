@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
 
 import { Chart, Loader, PageState, Range } from 'components';
-import { ChartConfigType } from 'components/Chart/helpers/types';
 import { faChartBar } from 'icons/regular';
 import { accountExtraSelector, activeNetworkSelector } from 'redux/selectors';
+import { ChartConfigType } from 'types';
+
 import { useGetTransactionFees } from './hooks';
 
 export const AccountAnalyticsFees = () => {

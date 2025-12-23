@@ -15,7 +15,6 @@ import {
   getNormalizedTimeEntries,
   getFrequency
 } from 'components/Chart/helpers/getChartBinnedData';
-import { ChartDataType, ChartConfigType } from 'components/Chart/helpers/types';
 import {
   formatTimestamp,
   getPrimaryColor,
@@ -25,7 +24,12 @@ import {
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
-import { AccountBalanceHistoryType, TokenType } from 'types';
+import {
+  AccountBalanceHistoryType,
+  ChartDataType,
+  ChartConfigType,
+  TokenType
+} from 'types';
 
 export const AccountAnalyticsBalance = () => {
   const { account } = useSelector(accountSelector);

@@ -3,12 +3,15 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { PageState, Chart, Loader } from 'components';
-import { ChartConfigType, ChartListType } from 'components/Chart/helpers/types';
 import { getColors } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
-import { ChartResolutionRangeType } from 'types';
+import {
+  ChartResolutionRangeType,
+  ChartConfigType,
+  ChartListType
+} from 'types';
 
 import { ChartResolutionSelector } from './components/ChartResolution';
 

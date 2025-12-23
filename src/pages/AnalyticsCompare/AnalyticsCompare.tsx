@@ -9,11 +9,11 @@ import {
 
 import { chartResolution } from 'appConstants';
 import { Loader, Led } from 'components';
-import { ChartListType } from 'components/Chart/helpers/types';
 import { Tabs } from 'components/Tabs';
 import { useAdapter, useHasGrowthWidgets, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
+import { ChartListType } from 'types';
 
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
 import { FailedAnalytics } from './components/FailedAnalytics';
