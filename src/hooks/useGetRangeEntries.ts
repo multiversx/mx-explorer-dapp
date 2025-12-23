@@ -30,5 +30,8 @@ export const useGetRangeEntries = (values: ChartDataType[]) => {
     );
   }, [values, rangeValue]);
 
-  return processedEntries;
+  return {
+    range: rangeValue as ChartResolutionRangeType,
+    values: processedEntries
+  };
 };

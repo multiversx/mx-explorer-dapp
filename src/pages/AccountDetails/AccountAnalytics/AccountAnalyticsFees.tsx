@@ -6,6 +6,7 @@ import { faChartBar } from 'icons/regular';
 import { accountExtraSelector, activeNetworkSelector } from 'redux/selectors';
 import { ChartConfigType } from 'types';
 
+import { AccountFeesCards } from './components';
 import { useGetTransactionFees } from './hooks';
 
 export const AccountAnalyticsFees = () => {
@@ -13,7 +14,7 @@ export const AccountAnalyticsFees = () => {
   const { accountExtra } = useSelector(accountExtraSelector);
   const { accountTransactions, accountTransactionsFetched } = accountExtra;
   const processedFeesEntries = useGetTransactionFees();
-  const rangeFees = useGetRangeEntries(processedFeesEntries);
+  const { values: rangeFees } = useGetRangeEntries(processedFeesEntries);
 
   const config: ChartConfigType[] = [
     {
@@ -49,6 +50,7 @@ export const AccountAnalyticsFees = () => {
 
   return (
     <>
+      <AccountFeesCards />
       <div className='d-flex flex-wrap align-items-center w-100 mb-3'>
         <h5 className='table-title d-flex align-items-center'>Fees</h5>
         <Range className='ms-auto' />

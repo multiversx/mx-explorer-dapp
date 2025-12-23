@@ -6,6 +6,7 @@ import { faChartBar } from 'icons/regular';
 import { accountExtraSelector } from 'redux/selectors';
 import { ChartConfigType } from 'types';
 
+import { AccountTransactionsCards } from './components';
 import { useGetTransactionHeatmap } from './hooks';
 
 export const AccountAnalyticsTransactions = () => {
@@ -13,7 +14,7 @@ export const AccountAnalyticsTransactions = () => {
   const { accountTransactions, accountTransactionsFetched } = accountExtra;
 
   const data = useGetTransactionHeatmap();
-  const rangeTransactions = useGetRangeEntries(data);
+  const { values: rangeTransactions } = useGetRangeEntries(data);
 
   const config: ChartConfigType[] = [
     {
@@ -47,6 +48,7 @@ export const AccountAnalyticsTransactions = () => {
 
   return (
     <>
+      <AccountTransactionsCards />
       <div className='d-flex flex-wrap align-items-center w-100 mb-3'>
         <h5 className='table-title d-flex align-items-center'>Transactions</h5>
         <Range className='ms-auto' />
