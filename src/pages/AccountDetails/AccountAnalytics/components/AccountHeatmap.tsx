@@ -8,6 +8,13 @@ export const AccountHeatmap = () => {
     return null;
   }
 
+  const latestTxStartYear = Date.UTC(
+    new Date(heatmap[heatmap.length - 1].timestamp).getFullYear(),
+    0,
+    1
+  ).valueOf();
+  const currentYearStart = Date.UTC(new Date().getFullYear(), 0, 1).valueOf();
+
   return (
     <div className='card border'>
       <div className='card-header'>
@@ -19,7 +26,7 @@ export const AccountHeatmap = () => {
       </div>
       <div className='card-body py-lg-4'>
         <Heatmap
-          startDate={new Date(new Date().getFullYear(), 0, 1).valueOf()} // current year
+          startDate={Math.max(latestTxStartYear, currentYearStart)}
           values={heatmap}
         />
       </div>
