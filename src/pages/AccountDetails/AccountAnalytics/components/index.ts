@@ -1,3 +1,4 @@
+export * from './AccountAnalyticsTrimmed';
 export * from './AccountFeesCards';
 export * from './AccountHeatmap';
 export * from './AccountNeighbors';

@@ -1,10 +1,20 @@
+import { useSelector } from 'react-redux';
+
+import { MAX_RESULTS } from 'appConstants';
 import { Heatmap } from 'components/Heatmap';
+import { accountSelector } from 'redux/selectors';
 import { useGetTransactionHeatmap } from '../hooks';
 
 export const AccountHeatmap = () => {
+  const { account } = useSelector(accountSelector);
+  const { txCount } = account;
   const heatmap = useGetTransactionHeatmap();
 
   if (!heatmap?.[0]?.timestamp) {
+    return null;
+  }
+
+  if (txCount > MAX_RESULTS) {
     return null;
   }
 

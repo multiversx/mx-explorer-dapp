@@ -1,17 +1,24 @@
 import { useSelector } from 'react-redux';
 
+import { MAX_RESULTS } from 'appConstants';
 import { Chart, Loader, PageState, Range } from 'components';
 import { useGetRangeEntries } from 'hooks';
 import { faChartBar } from 'icons/regular';
-import { accountExtraSelector, activeNetworkSelector } from 'redux/selectors';
+import {
+  accountExtraSelector,
+  accountSelector,
+  activeNetworkSelector
+} from 'redux/selectors';
 import { ChartConfigType } from 'types';
 
-import { AccountFeesCards } from './components';
+import { AccountAnalyticsTrimmed, AccountFeesCards } from './components';
 import { useGetTransactionFees } from './hooks';
 
 export const AccountAnalyticsFees = () => {
   const { egldLabel } = useSelector(activeNetworkSelector);
+  const { account } = useSelector(accountSelector);
   const { accountExtra } = useSelector(accountExtraSelector);
+  const { txCount } = account;
   const { accountTransactions, accountTransactionsFetched } = accountExtra;
   const processedFeesEntries = useGetTransactionFees();
   const { values: rangeFees } = useGetRangeEntries(processedFeesEntries);
@@ -50,10 +57,11 @@ export const AccountAnalyticsFees = () => {
 
   return (
     <>
+      <AccountAnalyticsTrimmed />
       <AccountFeesCards />
       <div className='d-flex flex-wrap align-items-center w-100 mb-3'>
         <h5 className='table-title d-flex align-items-center'>Fees</h5>
-        <Range className='ms-auto' />
+        {txCount <= MAX_RESULTS && <Range className='ms-auto' />}
       </div>
       <Chart.Body>
         <>

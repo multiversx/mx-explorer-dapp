@@ -1,17 +1,23 @@
 import { useSelector } from 'react-redux';
 
+import { MAX_RESULTS } from 'appConstants';
 import { Chart, Loader, PageState, Range } from 'components';
 import { useGetRangeEntries } from 'hooks';
 import { faChartBar } from 'icons/regular';
-import { accountExtraSelector } from 'redux/selectors';
+import { accountExtraSelector, accountSelector } from 'redux/selectors';
 import { ChartConfigType } from 'types';
 
-import { AccountTransactionsCards } from './components';
+import {
+  AccountAnalyticsTrimmed,
+  AccountTransactionsCards
+} from './components';
 import { useGetTransactionHeatmap } from './hooks';
 
 export const AccountAnalyticsTransactions = () => {
   const { accountExtra } = useSelector(accountExtraSelector);
+  const { account } = useSelector(accountSelector);
   const { accountTransactions, accountTransactionsFetched } = accountExtra;
+  const { txCount } = account;
 
   const data = useGetTransactionHeatmap();
   const { values: rangeTransactions } = useGetRangeEntries(data);
@@ -48,10 +54,11 @@ export const AccountAnalyticsTransactions = () => {
 
   return (
     <>
+      <AccountAnalyticsTrimmed />
       <AccountTransactionsCards />
       <div className='d-flex flex-wrap align-items-center w-100 mb-3'>
         <h5 className='table-title d-flex align-items-center'>Transactions</h5>
-        <Range className='ms-auto' />
+        {txCount <= MAX_RESULTS && <Range className='ms-auto' />}
       </div>
       <Chart.Body>
         <>

@@ -5,6 +5,7 @@ import { faChartBar } from 'icons/regular';
 import { accountExtraSelector } from 'redux/selectors';
 
 import {
+  AccountAnalyticsTrimmed,
   AccountHeatmap,
   AccountNeighbors,
   ActivityCards,
@@ -37,6 +38,7 @@ export const AccountAnalyticsOverview = () => {
     <>
       <ActivityCards />
       <AccountHeatmap />
+      <AccountAnalyticsTrimmed />
       <div className='row mt-spacer'>
         <div className='col-12 col-lg-6'>
           <ApplicationActivity />
