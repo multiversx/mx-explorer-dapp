@@ -19,11 +19,7 @@ export const AccountHeatmap = () => {
       </div>
       <div className='card-body py-lg-4'>
         <Heatmap
-          startDate={
-            new Date(
-              'Mon Jan 01 2025 02:00:00 GMT+0200 (Eastern European Standard Time)'
-            )
-          }
+          startDate={new Date(new Date().getFullYear(), 0, 1).valueOf()} // current year
           values={heatmap}
         />
       </div>

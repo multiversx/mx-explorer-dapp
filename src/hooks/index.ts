@@ -16,6 +16,7 @@ export * from './useGetHrp';
 export * from './useGetNativeTokenDetails';
 export * from './useGetNetworkChangeLink';
 export * from './useGetNodesCategoryCount';
+export * from './useGetRangeEntries';
 export * from './useGetShardText';
 export * from './useGetEpochRemainingTime';
 export * from './useGetRemainingTime';

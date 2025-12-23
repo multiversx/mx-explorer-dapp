@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { MAX_RESULTS } from 'appConstants';
 import { formatTimestamp } from 'helpers';
 import { useFetchAccountTransactions } from 'hooks';
 import { accountExtraSelector, accountSelector } from 'redux/selectors';
@@ -15,21 +14,15 @@ export const useGetTransactionHeatmap = () => {
   useFetchAccountTransactions();
 
   const processedHeatmapEntries = useMemo(() => {
-    if (accountTransactions.length === 0 || txCount > MAX_RESULTS) {
-      return [];
-    }
-
     const map = new Map();
 
     for (const entry of accountTransactions) {
-      const formattedTimestamp = formatTimestamp(entry.timestamp);
-      const d = new Date(formattedTimestamp);
+      const d = new Date(formatTimestamp(entry.timestamp));
       const day = new Date(
         Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())
-      );
-      const key = day.getTime();
+      ).valueOf();
 
-      map.set(key, (map.get(key) || 0) + 1);
+      map.set(day, (map.get(day) || 0) + 1);
     }
 
     return [...map.entries()]

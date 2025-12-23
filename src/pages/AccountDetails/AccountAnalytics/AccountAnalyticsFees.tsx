@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import { Chart, Loader, PageState, Range } from 'components';
+import { useGetRangeEntries } from 'hooks';
 import { faChartBar } from 'icons/regular';
 import { accountExtraSelector, activeNetworkSelector } from 'redux/selectors';
 import { ChartConfigType } from 'types';
@@ -12,13 +13,14 @@ export const AccountAnalyticsFees = () => {
   const { accountExtra } = useSelector(accountExtraSelector);
   const { accountTransactions, accountTransactionsFetched } = accountExtra;
   const processedFeesEntries = useGetTransactionFees();
+  const rangeFees = useGetRangeEntries(processedFeesEntries);
 
   const config: ChartConfigType[] = [
     {
       id: 'fees',
       label: 'fees',
       gradient: 'defaultGradient',
-      data: processedFeesEntries,
+      data: rangeFees,
       showUsdValue: true,
       yAxisConfig: {
         currency: egldLabel,
@@ -53,7 +55,7 @@ export const AccountAnalyticsFees = () => {
       </div>
       <Chart.Body>
         <>
-          {processedFeesEntries.length > 1 ? (
+          {rangeFees.length > 1 ? (
             <div className='mx-n4'>
               <Chart.Bar
                 config={config}
@@ -66,13 +68,13 @@ export const AccountAnalyticsFees = () => {
             <PageState
               icon={faChartBar}
               title={
-                processedFeesEntries.length === 0
+                rangeFees.length === 0
                   ? 'No account transaction history'
                   : 'Not enough entries to display the chart'
               }
               className='my-auto'
               titleClassName='mt-0'
-              data-testid='accountChartSmall'
+              data-testid='accountAnalyticsFeesChart'
             />
           )}
         </>
