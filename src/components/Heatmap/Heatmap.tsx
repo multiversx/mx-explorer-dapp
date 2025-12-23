@@ -1,9 +1,10 @@
 import moment from 'moment';
 
-import { Overlay } from 'components/Overlay';
+import { Overlay } from 'components';
 import { formatBigNumber, getStringPlural } from 'helpers';
+import { ChartDataType } from 'types';
 
-import { HeatmapUIType, DateWithCountType } from './heatmap.types';
+import { HeatmapUIType } from './heatmap.types';
 import {
   generateDays,
   generateWeeks,
@@ -12,7 +13,7 @@ import {
 } from './helpers/generators';
 
 export const Heatmap = ({ startDate, values }: HeatmapUIType) => {
-  const renderYear = (startDate: Date) => {
+  const renderYear = (startDate: number) => {
     const days = generateDays(startDate, values);
     const weeks = generateWeeks(days);
     const months = groupWeeksByMonthOrdered(weeks);
@@ -29,12 +30,12 @@ export const Heatmap = ({ startDate, values }: HeatmapUIType) => {
     });
   };
 
-  const renderWeekGroup = (week: DateWithCountType[], weekIndex: number) => {
+  const renderWeekGroup = (week: ChartDataType[], weekIndex: number) => {
     return (
       <div key={weekIndex} className='w'>
         {week.map((day, index) => {
-          const { count } = day;
-          const heat = getPercentileHeatLevel(count, values);
+          const { value } = day;
+          const heat = getPercentileHeatLevel(value, values);
           return renderDay({ index, day, heat });
         })}
       </div>
@@ -48,17 +49,17 @@ export const Heatmap = ({ startDate, values }: HeatmapUIType) => {
   }: {
     index: number;
     heat: number;
-    day: DateWithCountType;
+    day: ChartDataType;
   }) => {
-    const { date, count } = day;
-    const dateString = moment.utc(date).format('ddd, MMM DD, YYYY');
+    const { timestamp, value } = day;
+    const dateString = moment(timestamp).utc().format('ddd, MMM DD, YYYY');
 
     return (
       <Overlay
         title={
           <>
-            {formatBigNumber({ value: count })}{' '}
-            {getStringPlural(count, { string: 'transaction' })} on {dateString}
+            {formatBigNumber({ value })}{' '}
+            {getStringPlural(value, { string: 'transaction' })} on {dateString}
           </>
         }
         key={index}

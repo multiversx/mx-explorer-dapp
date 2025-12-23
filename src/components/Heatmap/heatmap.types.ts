@@ -1,11 +1,8 @@
-export interface DateWithCountType {
-  date: Date;
-  count: number;
-}
+import { ChartDataType } from 'types';
 
-export type MonthMap = Record<string, DateWithCountType[][]>;
+export type MonthMap = Record<string, ChartDataType[][]>;
 
 export interface HeatmapUIType {
-  startDate: Date;
-  values: DateWithCountType[];
+  startDate: number;
+  values: ChartDataType[];
 }

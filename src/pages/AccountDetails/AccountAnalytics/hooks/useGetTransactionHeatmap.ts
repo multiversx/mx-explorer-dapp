@@ -34,9 +34,9 @@ export const useGetTransactionHeatmap = () => {
 
     return [...map.entries()]
       .sort(([a], [b]) => a - b)
-      .map(([time, count]) => ({
-        date: new Date(time),
-        count
+      .map(([timestamp, value]) => ({
+        timestamp,
+        value
       }));
   }, [accountTransactions, txCount]);
 

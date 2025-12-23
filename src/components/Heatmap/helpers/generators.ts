@@ -1,18 +1,22 @@
-import { DateWithCountType, MonthMap } from '../heatmap.types';
+import { ChartDataType } from 'types';
+import { MonthMap } from '../heatmap.types';
 
-const normalizeUtcDate = (d: Date) => {
+const normalizeUtcDate = (timestamp: number) => {
+  const date = new Date(timestamp);
   return new Date(
-    Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())
-  );
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+  ).valueOf();
 };
 
-const getUTCDateKey = (date: Date) => {
+const getUTCDateKey = (timestamp: number) => {
+  const date = new Date(timestamp);
   return `${date.getUTCFullYear()}-${
     date.getUTCMonth() + 1
   }-${date.getUTCDate()}`;
 };
 
-const daysInYear = (date: Date) => {
+const daysInYear = (timestamp: number) => {
+  const date = new Date(timestamp);
   const year = date.getUTCFullYear();
 
   const start = new Date(Date.UTC(year, 0, 1)).valueOf();
@@ -24,14 +28,15 @@ const daysInYear = (date: Date) => {
 };
 
 export const getPercentileHeatLevel = (
-  count: number,
-  values: DateWithCountType[]
+  value: number | string,
+  values: ChartDataType[]
 ) => {
+  const count = Number(value);
   if (!count) {
     return 0;
   }
 
-  const sortedCounts = values.map((d) => d.count).sort();
+  const sortedCounts = values.map((d) => Number(d.value)).sort();
   const index = sortedCounts.indexOf(count);
   const percentile = index / sortedCounts.length;
 
@@ -42,11 +47,11 @@ export const getPercentileHeatLevel = (
   return 5;
 };
 
-const groupWeeksByMonth = (weeks: DateWithCountType[][]) => {
+const groupWeeksByMonth = (weeks: ChartDataType[][]) => {
   return weeks.reduce<MonthMap>((acc, week) => {
     if (week.length === 0) return acc;
 
-    const firstDay = new Date(week[0].date);
+    const firstDay = new Date(week[0].timestamp);
 
     const monthName = firstDay.toLocaleString('en-US', {
       month: 'long'
@@ -62,7 +67,7 @@ const groupWeeksByMonth = (weeks: DateWithCountType[][]) => {
   }, {});
 };
 
-export const groupWeeksByMonthOrdered = (weeks: DateWithCountType[][]) => {
+export const groupWeeksByMonthOrdered = (weeks: ChartDataType[][]) => {
   const map = groupWeeksByMonth(weeks);
 
   return Object.entries(map).map(([month, weeks]) => ({
@@ -71,53 +76,56 @@ export const groupWeeksByMonthOrdered = (weeks: DateWithCountType[][]) => {
   }));
 };
 
-export const generateDays = (startDate: Date, values: DateWithCountType[]) => {
-  const days = [] as DateWithCountType[];
-  const daysInStartDateYear = daysInYear(startDate);
+export const generateDays = (
+  startTimestamp: number,
+  entries: ChartDataType[]
+) => {
+  const days = [] as ChartDataType[];
+  const daysInStartDateYear = daysInYear(startTimestamp);
 
   for (let i = 0; i < daysInStartDateYear; i++) {
-    const currentDate = new Date(startDate);
+    const currentDate = new Date(startTimestamp);
     const date = {
-      date: normalizeUtcDate(
-        new Date(currentDate.setUTCDate(currentDate.getUTCDate() + i))
+      timestamp: normalizeUtcDate(
+        new Date(currentDate.setUTCDate(currentDate.getUTCDate() + i)).valueOf()
       ),
-      count: 0
+      value: 0
     };
     days.push(date);
   }
 
-  for (const value of values) {
-    const { date, count } = value;
+  for (const entry of entries) {
+    const { timestamp, value } = entry;
 
     const index = days.findIndex(
-      (day) => getUTCDateKey(day.date) === getUTCDateKey(date)
+      (day) => getUTCDateKey(day.timestamp) === getUTCDateKey(timestamp)
     );
 
     if (index !== -1) {
       const day = days[index];
-      days[index] = { ...day, count };
+      days[index] = { ...day, value };
     }
   }
 
   return days;
 };
 
-export const generateWeeks = (days: DateWithCountType[]) => {
+export const generateWeeks = (days: ChartDataType[]) => {
   const normalized = days
     .map((d) => ({
-      date: normalizeUtcDate(new Date(d.date)),
-      count: d.count
+      timestamp: normalizeUtcDate(d.timestamp),
+      value: d.value
     }))
-    .sort((a, b) => a.date.valueOf() - b.date.valueOf());
+    .sort((a, b) => a.timestamp - b.timestamp);
 
-  const weeks = [] as DateWithCountType[][];
-  let currentWeek = [] as DateWithCountType[];
+  const weeks = [] as ChartDataType[][];
+  let currentWeek = [] as ChartDataType[];
 
   for (const day of normalized) {
     currentWeek.push(day);
 
     // Sunday = end of week (UTC)
-    if (day.date.getUTCDay() === 0) {
+    if (new Date(day.timestamp).getUTCDay() === 0) {
       weeks.push(currentWeek);
       currentWeek = [];
     }

@@ -4,7 +4,7 @@ import { useGetTransactionHeatmap } from '../hooks';
 export const AccountHeatmap = () => {
   const heatmap = useGetTransactionHeatmap();
 
-  if (!heatmap?.[0]?.date) {
+  if (!heatmap?.[0]?.timestamp) {
     return null;
   }
 
