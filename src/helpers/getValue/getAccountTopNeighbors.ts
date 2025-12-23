@@ -4,6 +4,7 @@ import {
   ChartResolutionRangeType,
   TransactionType
 } from 'types';
+import { getDisplayReceiver } from './getDisplayReceiver';
 import { getRangeDays } from './getRangeDays';
 
 interface GetAccountTopNeighborsProps {
@@ -38,20 +39,19 @@ export const getAccountTopNeighbors = ({
     }
 
     if (tx.sender === target) {
-      const addr = tx.receiver;
-
-      if (!neighbours[addr]) {
-        neighbours[addr] = {
-          address: addr,
+      const { receiver, receiverAssets } = getDisplayReceiver(tx);
+      if (!neighbours[receiver]) {
+        neighbours[receiver] = {
+          address: receiver,
           sent: 0,
           received: 0,
           total: 0,
-          assets: tx?.receiverAssets
+          assets: receiverAssets
         };
       }
 
-      neighbours[addr].sent += 1;
-      neighbours[addr].total += 1;
+      neighbours[receiver].sent += 1;
+      neighbours[receiver].total += 1;
     } else if (tx.receiver === target) {
       const addr = tx.sender;
 

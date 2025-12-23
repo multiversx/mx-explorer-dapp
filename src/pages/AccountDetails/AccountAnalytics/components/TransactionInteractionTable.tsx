@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 
-import { AccountLink } from 'components';
+import { AccountLink, ColSpanWrapper, PageState } from 'components';
 import { formatBigNumber, NeighborType } from 'helpers';
+import { faExchangeAlt } from 'icons/regular';
 import { AccountAssetType, WithClassnameType } from 'types';
 
 interface TransactionInteractionTableUIType extends WithClassnameType {
@@ -15,10 +16,6 @@ export const TransactionInteractionTable = ({
   showSentAndReceived = true,
   interactions
 }: TransactionInteractionTableUIType) => {
-  if (interactions.length === 0) {
-    return null;
-  }
-
   return (
     <div className='card border h-100'>
       <div className='card-header'>
@@ -44,32 +41,44 @@ export const TransactionInteractionTable = ({
               </tr>
             </thead>
             <tbody data-testid='neighborTable'>
-              {interactions.map((interaction, i) => (
-                <tr key={interaction.address} className='text-lh-24'>
-                  <td>{i + 1}</td>
-                  <td>
-                    <AccountLink
-                      address={interaction.address}
-                      assets={interaction?.assets as AccountAssetType}
-                      data-testid={`interactionLink${i}`}
-                      linkClassName='text-primary-200'
-                    />
-                  </td>
-                  {showSentAndReceived && (
-                    <>
-                      <td className='text-center'>
-                        {formatBigNumber({ value: interaction.received })}
+              {interactions.length === 0 ? (
+                <ColSpanWrapper colSpan={showSentAndReceived ? 5 : 3}>
+                  <PageState
+                    icon={faExchangeAlt}
+                    title='No transactions'
+                    className='py-spacer my-auto'
+                  />
+                </ColSpanWrapper>
+              ) : (
+                <>
+                  {interactions.map((interaction, i) => (
+                    <tr key={interaction.address} className='text-lh-24'>
+                      <td>{i + 1}</td>
+                      <td>
+                        <AccountLink
+                          address={interaction.address}
+                          assets={interaction?.assets as AccountAssetType}
+                          data-testid={`interactionLink${i}`}
+                          linkClassName='text-primary-200'
+                        />
                       </td>
+                      {showSentAndReceived && (
+                        <>
+                          <td className='text-center'>
+                            {formatBigNumber({ value: interaction.received })}
+                          </td>
+                          <td className='text-center'>
+                            {formatBigNumber({ value: interaction.sent })}
+                          </td>
+                        </>
+                      )}
                       <td className='text-center'>
-                        {formatBigNumber({ value: interaction.sent })}
+                        {formatBigNumber({ value: interaction.total })}
                       </td>
-                    </>
-                  )}
-                  <td className='text-center'>
-                    {formatBigNumber({ value: interaction.total })}
-                  </td>
-                </tr>
-              ))}
+                    </tr>
+                  ))}
+                </>
+              )}
             </tbody>
           </table>
         </div>

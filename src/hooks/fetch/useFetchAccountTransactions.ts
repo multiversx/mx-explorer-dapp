@@ -30,6 +30,7 @@ export const useFetchAccountTransactions = () => {
     getAccountTransactions({
       address,
       size: MAX_RESULTS,
+      withUsername: false,
       fields: [
         'sender',
         'receiver',
@@ -37,7 +38,8 @@ export const useFetchAccountTransactions = () => {
         'timestampMs',
         'senderAssets',
         'receiverAssets',
-        'fee'
+        'fee',
+        'action'
       ].join(',')
     }).then(({ data, success }) => {
       dispatch(

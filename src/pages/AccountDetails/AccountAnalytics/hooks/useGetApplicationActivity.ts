@@ -1,7 +1,11 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { getAccountTopNeighbors, isContract } from 'helpers';
+import {
+  getAccountTopNeighbors,
+  getDisplayReceiver,
+  isContract
+} from 'helpers';
 import { useFetchAccountTransactions } from 'hooks';
 import { accountExtraSelector, accountSelector } from 'redux/selectors';
 
@@ -15,7 +19,7 @@ export const useGetApplicationActivity = () => {
 
   const applicationActivity = useMemo(() => {
     const filteredTransactions = accountTransactions.filter((transaction) =>
-      isContract(transaction.receiver)
+      isContract(getDisplayReceiver(transaction).receiver)
     );
 
     return getAccountTopNeighbors({
