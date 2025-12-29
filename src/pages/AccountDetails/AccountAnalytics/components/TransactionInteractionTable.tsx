@@ -20,7 +20,7 @@ export const TransactionInteractionTable = ({
     <div className='card border h-100'>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-          <p className='h5 table-title text-capitalize'>{title}</p>
+          <div className='h5 table-title text-capitalize w-100'>{title}</div>
         </div>
       </div>
 

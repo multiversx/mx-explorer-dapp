@@ -11,12 +11,20 @@ import {
 export interface RangeUIType extends WithClassnameType {
   maxSize?: number;
   defaultRange?: ChartResolutionRangeType;
+  prefix?: string;
+  clearParams?: boolean;
 }
 
-export const Range = ({ defaultRange = 'year', className }: RangeUIType) => {
+export const Range = ({
+  defaultRange = 'year',
+  prefix = '',
+  clearParams,
+  className
+}: RangeUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
-  const { range, ...rest } = params;
+  const dynamicParam = `${prefix}${prefix ? 'Range' : 'range'}`;
+  const { [dynamicParam]: range, ...rest } = params;
 
   const defaultValue = Object.keys(chartResolution).includes(range)
     ? range
@@ -28,8 +36,8 @@ export const Range = ({ defaultRange = 'year', className }: RangeUIType) => {
     }
 
     const nextUrlParams = {
-      ...rest,
-      range: String(resolution.range)
+      ...(clearParams ? {} : { ...rest }),
+      [dynamicParam]: String(resolution.range)
     };
     setSearchParams(nextUrlParams);
   };

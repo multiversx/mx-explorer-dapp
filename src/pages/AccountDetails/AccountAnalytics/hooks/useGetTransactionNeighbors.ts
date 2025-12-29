@@ -8,8 +8,13 @@ import {
 } from 'helpers';
 import { useFetchAccountTransactions } from 'hooks';
 import { accountExtraSelector, accountSelector } from 'redux/selectors';
+import { ChartResolutionRangeType } from 'types';
 
-export const useGetTransactionNeighbors = () => {
+export const useGetTransactionNeighbors = ({
+  range
+}: {
+  range: ChartResolutionRangeType;
+}) => {
   const { account } = useSelector(accountSelector);
   const { accountExtra } = useSelector(accountExtraSelector);
   const { address } = account;
@@ -24,9 +29,10 @@ export const useGetTransactionNeighbors = () => {
 
     return getAccountTopNeighbors({
       transactions: filteredTransactions,
-      target: address
+      target: address,
+      range
     });
-  }, [accountTransactions, address]);
+  }, [accountTransactions, address, range]);
 
   return neighbours;
 };
