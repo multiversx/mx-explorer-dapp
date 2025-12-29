@@ -1,6 +1,8 @@
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Range } from 'components';
+import { accountSelector } from 'redux/selectors';
 import { ChartResolutionRangeType } from 'types';
 
 import { TransactionInteractionTable } from './TransactionInteractionTable';
@@ -8,6 +10,8 @@ import { useGetApplicationActivity } from '../hooks';
 
 export const ApplicationActivity = () => {
   const prefix = 'app';
+  const { account } = useSelector(accountSelector);
+  const { address } = account;
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const { [`${prefix}Range`]: range } = params;
@@ -26,6 +30,7 @@ export const ApplicationActivity = () => {
       }
       showSentAndReceived={false}
       interactions={topNeighbors}
+      address={address}
     />
   );
 };

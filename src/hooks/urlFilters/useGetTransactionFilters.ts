@@ -29,6 +29,7 @@ export const useGetTransactionFilters = () => {
     receiverShard,
     sender: getParam(TransactionFiltersEnum.sender),
     receiver: getParam(TransactionFiltersEnum.receiver),
+    senderOrReceiver: getParam(TransactionFiltersEnum.senderOrReceiver),
     before: getParam(TransactionFiltersEnum.before, { checkIsInteger: true }),
     after: getParam(TransactionFiltersEnum.after, { checkIsInteger: true }),
     status: checkStatus(status),

@@ -1,20 +1,25 @@
 import { ReactNode } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 import { AccountLink, ColSpanWrapper, PageState } from 'components';
-import { formatBigNumber, NeighborType } from 'helpers';
-import { faExchangeAlt } from 'icons/regular';
+import { formatBigNumber, NeighborType, urlBuilder } from 'helpers';
+import { faExchangeAlt, faEye } from 'icons/regular';
 import { AccountAssetType, WithClassnameType } from 'types';
 
 interface TransactionInteractionTableUIType extends WithClassnameType {
   title: ReactNode;
   interactions: NeighborType[];
+  address?: string;
   showSentAndReceived?: boolean;
 }
 
 export const TransactionInteractionTable = ({
   title,
-  showSentAndReceived = true,
-  interactions
+  interactions,
+  address,
+  showSentAndReceived = true
 }: TransactionInteractionTableUIType) => {
   return (
     <div className='card border h-100'>
@@ -26,7 +31,7 @@ export const TransactionInteractionTable = ({
 
       <div className='card-body'>
         <div className='table-wrapper animated-list'>
-          <table className='table trim-size mb-0'>
+          <table className='table trim-size mb-0 interaction-table'>
             <thead>
               <tr>
                 <th>#</th>
@@ -52,8 +57,27 @@ export const TransactionInteractionTable = ({
               ) : (
                 <>
                   {interactions.map((interaction, i) => (
-                    <tr key={interaction.address} className='text-lh-24'>
-                      <td>{i + 1}</td>
+                    <tr
+                      key={interaction.address}
+                      className={classNames('text-lh-24 preview-row', {
+                        'has-preview': Boolean(address)
+                      })}
+                    >
+                      <td>
+                        <span className='index'>{i + 1}</span>
+                        {address && (
+                          <Link
+                            to={urlBuilder.accountDetails(address, {
+                              senderOrReceiver: interaction.address
+                            })}
+                            className={
+                              'btn btn-sm btn-xs btn-dark preview-button'
+                            }
+                          >
+                            <FontAwesomeIcon icon={faEye} size='xs' />
+                          </Link>
+                        )}
+                      </td>
                       <td>
                         <AccountLink
                           address={interaction.address}

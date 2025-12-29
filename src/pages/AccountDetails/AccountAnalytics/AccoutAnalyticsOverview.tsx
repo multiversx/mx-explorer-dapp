@@ -40,7 +40,7 @@ export const AccountAnalyticsOverview = () => {
       <AccountHeatmap />
       <AccountAnalyticsTrimmed />
       <div className='row mt-spacer'>
-        <div className='col-12 col-lg-6'>
+        <div className='col-12 col-lg-6 mb-spacer mb-lg-0'>
           <ApplicationActivity />
         </div>
         <div className='col-12 col-lg-6'>
