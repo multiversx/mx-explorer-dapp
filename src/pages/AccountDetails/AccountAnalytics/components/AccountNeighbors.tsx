@@ -21,12 +21,7 @@ export const AccountNeighbors = () => {
       title={
         <div className='d-flex align-items-center justify-content-between'>
           <span>Top Neighbors</span>
-          <Range
-            prefix={prefix}
-            defaultRange='all'
-            className='ms-auto'
-            clearParams
-          />
+          <Range prefix={prefix} className='ms-auto' clearParams />
         </div>
       }
       interactions={topNeighbors}

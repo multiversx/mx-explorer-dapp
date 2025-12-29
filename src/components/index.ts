@@ -76,6 +76,7 @@ export * from './TransactionsTable';
 export * from './TransactionStatus';
 export * from './Trim';
 export * from './ValidatorMap';
+export * from './Year';
 
 export * from '../widgets/HeroNodes';
 

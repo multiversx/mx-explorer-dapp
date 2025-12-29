@@ -21,12 +21,7 @@ export const ApplicationActivity = () => {
       title={
         <div className='d-flex align-items-center justify-content-between'>
           <span>App Activity</span>
-          <Range
-            prefix={prefix}
-            defaultRange='all'
-            className='ms-auto'
-            clearParams
-          />
+          <Range prefix={prefix} className='ms-auto' clearParams />
         </div>
       }
       showSentAndReceived={false}

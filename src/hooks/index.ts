@@ -18,6 +18,7 @@ export * from './useGetNetworkChangeLink';
 export * from './useGetNodesCategoryCount';
 export * from './useGetRangeEntries';
 export * from './useGetShardText';
+export * from './useGetYearParams';
 export * from './useGetEpochRemainingTime';
 export * from './useGetRemainingTime';
 export * from './useHasGrowthWidgets';
