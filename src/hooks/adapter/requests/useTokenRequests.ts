@@ -14,8 +14,8 @@ export const useTokenRequests = () => {
   return {
     /* Tokens */
 
-    getToken: (tokenId: string, { signal, timeout }: AxiosParamsApiType = {}) =>
-      provider({ url: `/tokens/${tokenId}`, signal, timeout }),
+    getToken: (token: string, { signal, timeout }: AxiosParamsApiType = {}) =>
+      provider({ url: `/tokens/${token}`, signal, timeout }),
 
     getTokens: ({ signal, timeout, ...params }: GetTokensType) =>
       provider({
@@ -34,13 +34,13 @@ export const useTokenRequests = () => {
       }),
 
     getTokenTransactions: ({
-      tokenId,
+      token,
       signal,
       timeout,
       ...params
     }: GetTransactionsType & GetTokenResourceType) =>
       provider({
-        url: `/tokens/${tokenId}/transactions`,
+        url: `/tokens/${token}/transactions`,
         signal,
         timeout,
         params: getTransactionsParams({
@@ -49,13 +49,13 @@ export const useTokenRequests = () => {
       }),
 
     getTokenTransactionsCount: ({
-      tokenId,
+      token,
       signal,
       timeout,
       ...params
     }: GetTransactionsType & GetTokenResourceType) =>
       provider({
-        url: `/tokens/${tokenId}/transactions/c`,
+        url: `/tokens/${token}/transactions/c`,
         signal,
         timeout,
         params: getTransactionsParams({
@@ -65,13 +65,13 @@ export const useTokenRequests = () => {
       }),
 
     getTokenTransfers: ({
-      tokenId,
+      token,
       signal,
       timeout,
       ...params
     }: GetTransactionsType & GetTokenResourceType) =>
       provider({
-        url: `/tokens/${tokenId}/transfers`,
+        url: `/tokens/${token}/transfers`,
         signal,
         timeout,
         params: getTransactionsParams({
@@ -80,13 +80,13 @@ export const useTokenRequests = () => {
       }),
 
     getTokenTransfersCount: ({
-      tokenId,
+      token,
       signal,
       timeout,
       ...params
     }: GetTransactionsType & GetTokenResourceType) =>
       provider({
-        url: `/tokens/${tokenId}/transfers/c`,
+        url: `/tokens/${token}/transfers/c`,
         signal,
         timeout,
         params: getTransactionsParams({
@@ -96,32 +96,28 @@ export const useTokenRequests = () => {
       }),
 
     getTokenAccounts: ({
-      tokenId,
+      token,
       signal,
       timeout,
       ...params
     }: GetTokensType & GetTokenResourceType) =>
       provider({
-        url: `/tokens/${tokenId}/accounts`,
+        url: `/tokens/${token}/accounts`,
         signal,
         timeout,
         params: getTokensParams({ ...params })
       }),
 
-    getTokenAccountsCount: ({
-      tokenId,
-      signal,
-      timeout
-    }: GetTokenResourceType) =>
+    getTokenAccountsCount: ({ token, signal, timeout }: GetTokenResourceType) =>
       provider({
-        url: `/tokens/${tokenId}/accounts/count`,
+        url: `/tokens/${token}/accounts/count`,
         signal,
         timeout
       }),
 
-    getTokenSupply: ({ tokenId, signal, timeout }: GetTokenResourceType) =>
+    getTokenSupply: ({ token, signal, timeout }: GetTokenResourceType) =>
       provider({
-        url: `/tokens/${tokenId}/supply`,
+        url: `/tokens/${token}/supply`,
         signal,
         timeout
       })

@@ -12,7 +12,7 @@ export interface FetchTransactionsProps
   hasMaxTransactionsSize?: boolean;
 }
 
-interface TransactionsWebsocketResponseType {
+export interface TransactionsWebsocketResponseType {
   transactions: TransactionType[];
   transactionsCount: number;
 }
