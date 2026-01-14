@@ -1,50 +1,46 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ELLIPSIS, MAX_TRANSACTIONS_PAGE_SIZE } from 'appConstants';
+import { ELLIPSIS } from 'appConstants';
 import { useGetPage, useGetTransactionFilters } from 'hooks';
-import { transactionsSelector } from 'redux/selectors';
-import { setTransactions } from 'redux/slices';
+import { customTransfersSelector } from 'redux/selectors';
+import { setCustomTransfers } from 'redux/slices';
 import { TransactionType } from 'types';
 import { FetchApiDataProps, useFetchApiData } from './useFetchApiData';
 
-export interface FetchTransactionsProps
+export interface FetchCustomTransfersProps
   extends Omit<FetchApiDataProps, 'onApiData'> {
-  hasMaxTransactionsSize?: boolean;
   uuid?: string;
 }
 
-export interface TransactionsWebsocketResponseType {
-  transactions: TransactionType[];
-  transactionsCount: number;
+export interface CustomTransfersWebsocketResponseType {
+  transfers: TransactionType[];
+  timestampMs: number;
 }
 
-export const useFetchTransactions = (props: FetchTransactionsProps) => {
+export const useFetchCustomTransfers = (props: FetchCustomTransfersProps) => {
   const dispatch = useDispatch();
   const transactionFilters = useGetTransactionFilters();
   const { page, size } = useGetPage();
 
-  const { hasMaxTransactionsSize, dataCountPromise, filters, websocketConfig } =
-    props;
+  const { dataCountPromise, filters, websocketConfig } = props;
 
   const { transactions, transactionsCount, isDataReady, isRefreshPaused } =
-    useSelector(transactionsSelector);
+    useSelector(customTransfersSelector);
 
-  const maxTransactionsSize =
-    hasMaxTransactionsSize && size > MAX_TRANSACTIONS_PAGE_SIZE
-      ? MAX_TRANSACTIONS_PAGE_SIZE
-      : size;
-
-  const onWebsocketData = (event: TransactionsWebsocketResponseType) => {
+  const onWebsocketData = (event: CustomTransfersWebsocketResponseType) => {
     if (!event) {
       return;
     }
 
-    const { transactions, transactionsCount } = event;
+    console.log('-------event', event);
+
+    const { transfers } = event;
     dispatch(
-      setTransactions({
-        transactions,
-        transactionsCount,
-        isWebsocket: true,
+      setCustomTransfers({
+        transactions: transfers,
+        transactionsCount: ELLIPSIS,
+        size,
+        isWebsocket: false, // keep api, only latest updates fetched fron ws
         isDataReady: true
       })
     );
@@ -53,10 +49,11 @@ export const useFetchTransactions = (props: FetchTransactionsProps) => {
   const onApiData = (response: any[]) => {
     const [transactionsData, transactionsCountData] = response;
     dispatch(
-      setTransactions({
+      setCustomTransfers({
         transactions: transactionsData.data ?? [],
         transactionsCount: transactionsCountData?.data ?? ELLIPSIS,
         isWebsocket: false,
+        size,
         isDataReady:
           transactionsData.success &&
           Boolean(!dataCountPromise || transactionsCountData?.success)
@@ -68,18 +65,16 @@ export const useFetchTransactions = (props: FetchTransactionsProps) => {
     ...props,
     filters: {
       page,
-      size: maxTransactionsSize,
+      size,
       ...transactionFilters,
       ...filters
     },
-    websocketConfig: {
-      withUsername: true,
-      ...websocketConfig
-    },
+    websocketConfig,
     onWebsocketData,
     onApiData,
     urlParams: transactionFilters,
-    isRefreshPaused
+    isRefreshPaused,
+    isCustomUpdate: true
   });
 
   return {
