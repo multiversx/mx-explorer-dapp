@@ -35,18 +35,12 @@ export const customTransfersSlice = createSlice({
       const updated = new Map<string, UITransactionType>();
       const result: UITransactionType[] = [];
 
-      console.info(
-        '------existing',
-        existing.map((ex) => ex.txHash)
-      );
-
-      for (const tx of existing) updated.set(tx.txHash, tx);
-      for (const tx of incoming) updated.set(tx.txHash, { ...tx, isNew: true });
-
-      console.info(
-        '------incoming',
-        incoming.map((ex) => ex.txHash)
-      );
+      for (const tx of existing) {
+        updated.set(tx.txHash, tx);
+      }
+      for (const tx of incoming) {
+        updated.set(tx.txHash, { ...tx, isNew: true });
+      }
 
       for (const tx of incoming) {
         if (!existingSet.has(tx.txHash)) {
@@ -59,11 +53,8 @@ export const customTransfersSlice = createSlice({
       }
 
       const trimmedTransactions = result.slice(0, action.payload.size);
-      console.info(
-        '------result',
-        trimmedTransactions.map((ex) => ex.txHash)
-      );
 
+      state.uuid = action.payload.uuid;
       state.transactions = trimmedTransactions;
 
       if (action.payload.transactionsCount !== ELLIPSIS) {
@@ -72,7 +63,6 @@ export const customTransfersSlice = createSlice({
 
       state.isDataReady = action.payload.isDataReady;
       state.isWebsocket = action.payload.isWebsocket;
-      state.uuid = action.payload.uuid;
     },
     pauseCustomTransferRefresh: (state: TransactionSliceType) => {
       state.isRefreshPaused = true;

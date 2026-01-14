@@ -65,7 +65,10 @@ export function useRegisterWebsocketListener({
 
     if (!hasSubscription) {
       websocket.emit(subscriptionName, websocketConfig, (response: any) => {
-        console.info(`New Websocket Subscription ${subscriptionName}`);
+        console.info(
+          `New Websocket Subscription ${subscriptionName}`,
+          response
+        );
         if (response?.status !== 'success') {
           websocketSubscriptions.delete(subscription);
           websocketPendingSubscriptions.delete(subscription);
@@ -78,7 +81,15 @@ export function useRegisterWebsocketListener({
     }
 
     websocket.on(event, (response: any) => {
-      if (document.hidden) {
+      const isStatsEvent = event === WebsocketEventsEnum.statsUpdate;
+      const isCustomEvent = [
+        WebsocketEventsEnum.customTransactionUpdate,
+        WebsocketEventsEnum.customTransferUpdate,
+        WebsocketEventsEnum.customEventUpdate
+      ].includes(event);
+
+      // avoid battery/ram usage on bg on general events, keep specific ones and stats
+      if (document.hidden && !(isStatsEvent || isCustomEvent)) {
         return;
       }
 
@@ -86,16 +97,8 @@ export function useRegisterWebsocketListener({
         websocketPendingSubscriptions.delete(subscription);
         websocketActiveSubscriptions.add(subscription);
       }
-      if (
-        // TODO -  temp
-        ![
-          'transactionUpdate',
-          'blocksUpdate',
-          'poolUpdate',
-          'statsUpdate',
-          'eventsUpdate'
-        ].includes(event)
-      ) {
+      // TODO - Temp
+      if (isCustomEvent) {
         console.info(`Client ${event}:`, response);
       }
       onWebsocketEvent(response);
