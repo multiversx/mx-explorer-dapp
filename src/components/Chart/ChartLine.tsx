@@ -1,3 +1,4 @@
+import { JSXElementConstructor, memo, ReactElement } from 'react';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import moment from 'moment';
@@ -16,7 +17,7 @@ import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { getChartMergedData } from './helpers/getChartMergedData';
 import { StartEndTick } from './helpers/StartEndTick';
-import { ChartProps } from './helpers/types';
+import { ChartProps, MergedChartDataType } from './helpers/types';
 
 export const ChartLine = ({
   config,
@@ -47,6 +48,34 @@ export const ChartLine = ({
     'muted',
     'primary'
   ]);
+
+  const ChartContainer = memo(
+    ({
+      children,
+      data,
+      width,
+      height
+    }: {
+      children: ReactElement<unknown, string | JSXElementConstructor<any>>;
+      data: MergedChartDataType[];
+      width?: string | number;
+      height?: string | number;
+    }) => {
+      if (width && height) {
+        return (
+          <LineChart data={data} width={Number(width)} height={Number(height)}>
+            {children}
+          </LineChart>
+        );
+      }
+
+      return (
+        <ResponsiveContainer width={width ?? '100%'} height={height ?? '100%'}>
+          <LineChart data={data}>{children}</LineChart>
+        </ResponsiveContainer>
+      );
+    }
+  );
 
   const gradientOffset = () => {
     const fistValue = new BigNumber(chartData?.[0]?.value ?? '0');
@@ -82,8 +111,8 @@ export const ChartLine = ({
         'has-only-start-end-tick': hasOnlyStartEndTick
       })}
     >
-      <ResponsiveContainer width={width ?? '100%'} height={height ?? '100%'}>
-        <LineChart data={chartData}>
+      <ChartContainer width={width} height={height} data={chartData}>
+        <>
           <defs>
             <linearGradient id='transparent' x1='0' y1='0' x2='0' y2='1'>
               <stop offset='100%' stopColor='transparent' stopOpacity={0} />
@@ -190,8 +219,8 @@ export const ChartLine = ({
               }
             />
           )}
-        </LineChart>
-      </ResponsiveContainer>
+        </>
+      </ChartContainer>
     </div>
   );
 };
