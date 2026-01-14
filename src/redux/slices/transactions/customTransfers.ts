@@ -1,20 +1,33 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ELLIPSIS } from 'appConstants';
+import { ELLIPSIS, PAGE_SIZE } from 'appConstants';
 import {
+  CustomTransfersSliceType,
   TransactionSliceType,
-  TransactionType,
   UITransactionType
 } from 'types';
 import { getInitialTransactionsState } from './transactions';
 
+export const getInitialCustomTransfersState = (): CustomTransfersSliceType => {
+  return {
+    ...getInitialTransactionsState(),
+    uuid: undefined,
+    size: PAGE_SIZE
+  };
+};
+
 export const customTransfersSlice = createSlice({
   name: 'customTransfersSlice',
-  initialState: getInitialTransactionsState(),
+  initialState: getInitialCustomTransfersState(),
   reducers: {
     setCustomTransfers: (
-      state: TransactionSliceType,
-      action: PayloadAction<TransactionSliceType & { size: number }>
+      state: CustomTransfersSliceType,
+      action: PayloadAction<CustomTransfersSliceType>
     ) => {
+      if (state.uuid && state.uuid !== action.payload.uuid) {
+        state.transactions = [];
+        state.transactionsCount = ELLIPSIS;
+      }
+
       const existing = state.transactions;
       const incoming = action.payload.transactions;
 
@@ -22,7 +35,7 @@ export const customTransfersSlice = createSlice({
       const updated = new Map<string, UITransactionType>();
       const result: UITransactionType[] = [];
 
-      console.log(
+      console.info(
         '------existing',
         existing.map((ex) => ex.txHash)
       );
@@ -30,7 +43,7 @@ export const customTransfersSlice = createSlice({
       for (const tx of existing) updated.set(tx.txHash, tx);
       for (const tx of incoming) updated.set(tx.txHash, { ...tx, isNew: true });
 
-      console.log(
+      console.info(
         '------incoming',
         incoming.map((ex) => ex.txHash)
       );
@@ -45,12 +58,13 @@ export const customTransfersSlice = createSlice({
         result.push(updated.get(tx.txHash)!);
       }
 
-      console.log(
+      const trimmedTransactions = result.slice(0, action.payload.size);
+      console.info(
         '------result',
-        result.map((ex) => ex.txHash)
+        trimmedTransactions.map((ex) => ex.txHash)
       );
 
-      state.transactions = result.slice(0, action.payload.size);
+      state.transactions = trimmedTransactions;
 
       if (action.payload.transactionsCount !== ELLIPSIS) {
         state.transactionsCount = action.payload.transactionsCount;
@@ -58,6 +72,7 @@ export const customTransfersSlice = createSlice({
 
       state.isDataReady = action.payload.isDataReady;
       state.isWebsocket = action.payload.isWebsocket;
+      state.uuid = action.payload.uuid;
     },
     pauseCustomTransferRefresh: (state: TransactionSliceType) => {
       state.isRefreshPaused = true;

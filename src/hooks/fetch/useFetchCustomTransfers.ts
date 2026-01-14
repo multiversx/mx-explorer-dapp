@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
@@ -27,39 +28,45 @@ export const useFetchCustomTransfers = (props: FetchCustomTransfersProps) => {
   const { transactions, transactionsCount, isDataReady, isRefreshPaused } =
     useSelector(customTransfersSelector);
 
-  const onWebsocketData = (event: CustomTransfersWebsocketResponseType) => {
-    if (!event) {
-      return;
-    }
+  const onWebsocketData = useCallback(
+    (event: CustomTransfersWebsocketResponseType) => {
+      if (!event) {
+        return;
+      }
 
-    console.log('-------event', event);
+      const { transfers } = event;
+      dispatch(
+        setCustomTransfers({
+          transactions: transfers,
+          transactionsCount: ELLIPSIS,
+          size,
+          uuid: props.uuid,
+          isWebsocket: false, // keep api, only latest updates fetched fron ws
+          isDataReady: true
+        })
+      );
+    },
+    [props]
+  );
 
-    const { transfers } = event;
-    dispatch(
-      setCustomTransfers({
-        transactions: transfers,
-        transactionsCount: ELLIPSIS,
-        size,
-        isWebsocket: false, // keep api, only latest updates fetched fron ws
-        isDataReady: true
-      })
-    );
-  };
-
-  const onApiData = (response: any[]) => {
-    const [transactionsData, transactionsCountData] = response;
-    dispatch(
-      setCustomTransfers({
-        transactions: transactionsData.data ?? [],
-        transactionsCount: transactionsCountData?.data ?? ELLIPSIS,
-        isWebsocket: false,
-        size,
-        isDataReady:
-          transactionsData.success &&
-          Boolean(!dataCountPromise || transactionsCountData?.success)
-      })
-    );
-  };
+  const onApiData = useCallback(
+    (response: any[]) => {
+      const [transactionsData, transactionsCountData] = response;
+      dispatch(
+        setCustomTransfers({
+          transactions: transactionsData.data ?? [],
+          transactionsCount: transactionsCountData?.data ?? ELLIPSIS,
+          isWebsocket: false,
+          size,
+          uuid: props.uuid,
+          isDataReady:
+            transactionsData.success &&
+            Boolean(!dataCountPromise || transactionsCountData?.success)
+        })
+      );
+    },
+    [props]
+  );
 
   const { fetchData, dataChanged } = useFetchApiData({
     ...props,
