@@ -280,7 +280,7 @@ export interface TransactionSliceType extends SliceType {
   transactionsCount: number | typeof ELLIPSIS;
 }
 
-export interface CustomTransfersSliceType extends TransactionSliceType {
+export interface CustomTransactionSliceType extends TransactionSliceType {
   size: number;
   uuid?: string;
 }

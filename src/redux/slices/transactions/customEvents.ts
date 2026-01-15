@@ -1,25 +1,42 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ELLIPSIS } from 'appConstants';
-import { EventsSliceType, UIEventType } from 'types';
+import { ELLIPSIS, PAGE_SIZE } from 'appConstants';
+import { processListUpdates } from 'helpers';
+import { CustomEventsSliceType, EventsSliceType } from 'types';
 import { getInitialEventsState } from './events';
+
+export const getInitialCustomEventsState = (): CustomEventsSliceType => {
+  return {
+    ...getInitialEventsState(),
+    uuid: undefined,
+    size: PAGE_SIZE
+  };
+};
 
 export const customEventsSlice = createSlice({
   name: 'customEventsSlice',
-  initialState: getInitialEventsState(),
+  initialState: getInitialCustomEventsState(),
   reducers: {
     setCustomEvents: (
-      state: EventsSliceType,
-      action: PayloadAction<EventsSliceType>
+      state: CustomEventsSliceType,
+      action: PayloadAction<CustomEventsSliceType>
     ) => {
-      const existingHashes = state.events.map(
-        (event: UIEventType) => event.txHash
-      );
-      const newEvents = action.payload.events.map((event: UIEventType) => ({
-        ...event,
-        isNew: !existingHashes.includes(event.txHash)
-      }));
+      if (state.uuid && state.uuid !== action.payload.uuid) {
+        state.events = [];
+        state.eventsCount = ELLIPSIS;
+      }
 
-      state.events = newEvents;
+      const existing = state.events;
+      const incoming = action.payload.events;
+
+      const trimmedEvents = processListUpdates({
+        existing,
+        incoming,
+        uniqueKey: 'txHash',
+        size: action.payload.size
+      });
+
+      state.uuid = action.payload.uuid;
+      state.events = trimmedEvents;
 
       if (action.payload.eventsCount !== ELLIPSIS) {
         state.eventsCount = action.payload.eventsCount;

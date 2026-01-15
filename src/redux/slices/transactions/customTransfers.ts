@@ -1,24 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ELLIPSIS, PAGE_SIZE } from 'appConstants';
 import { processListUpdates } from 'helpers';
-import { CustomTransfersSliceType, TransactionSliceType } from 'types';
+import { CustomTransactionSliceType, TransactionSliceType } from 'types';
 import { getInitialTransactionsState } from './transactions';
 
-export const getInitialCustomTransfersState = (): CustomTransfersSliceType => {
-  return {
-    ...getInitialTransactionsState(),
-    uuid: undefined,
-    size: PAGE_SIZE
+export const getInitialCustomTransfersState =
+  (): CustomTransactionSliceType => {
+    return {
+      ...getInitialTransactionsState(),
+      uuid: undefined,
+      size: PAGE_SIZE
+    };
   };
-};
 
 export const customTransfersSlice = createSlice({
   name: 'customTransfersSlice',
   initialState: getInitialCustomTransfersState(),
   reducers: {
     setCustomTransfers: (
-      state: CustomTransfersSliceType,
-      action: PayloadAction<CustomTransfersSliceType>
+      state: CustomTransactionSliceType,
+      action: PayloadAction<CustomTransactionSliceType>
     ) => {
       if (state.uuid && state.uuid !== action.payload.uuid) {
         state.transactions = [];
@@ -45,10 +46,10 @@ export const customTransfersSlice = createSlice({
       state.isDataReady = action.payload.isDataReady;
       state.isWebsocket = action.payload.isWebsocket;
     },
-    pauseCustomTransferRefresh: (state: TransactionSliceType) => {
+    pauseCustomTransfersRefresh: (state: TransactionSliceType) => {
       state.isRefreshPaused = true;
     },
-    resumeCustomTtransferRefresh: (state: TransactionSliceType) => {
+    resumeCustomTransfersRefresh: (state: TransactionSliceType) => {
       state.isRefreshPaused = false;
     }
   }
@@ -56,8 +57,8 @@ export const customTransfersSlice = createSlice({
 
 export const {
   setCustomTransfers,
-  pauseCustomTransferRefresh,
-  resumeCustomTtransferRefresh
+  pauseCustomTransfersRefresh,
+  resumeCustomTransfersRefresh
 } = customTransfersSlice.actions;
 
 export const customTransfersReducer = customTransfersSlice.reducer;
