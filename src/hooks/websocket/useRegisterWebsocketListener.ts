@@ -48,6 +48,13 @@ export function useRegisterWebsocketListener({
     const hasActiveSubscription =
       websocketActiveSubscriptions.has(subscription);
 
+    const isStatsEvent = event === WebsocketEventsEnum.statsUpdate;
+    const isCustomEvent = [
+      WebsocketEventsEnum.customTransactionUpdate,
+      WebsocketEventsEnum.customTransferUpdate,
+      WebsocketEventsEnum.customEventUpdate
+    ].includes(event);
+
     if (
       !websocket ||
       !websocket?.active ||
@@ -81,13 +88,6 @@ export function useRegisterWebsocketListener({
     }
 
     websocket.on(event, (response: any) => {
-      const isStatsEvent = event === WebsocketEventsEnum.statsUpdate;
-      const isCustomEvent = [
-        WebsocketEventsEnum.customTransactionUpdate,
-        WebsocketEventsEnum.customTransferUpdate,
-        WebsocketEventsEnum.customEventUpdate
-      ].includes(event);
-
       // avoid battery/ram usage on bg on general events, keep specific ones and stats
       if (document.hidden && !(isStatsEvent || isCustomEvent)) {
         return;
@@ -106,7 +106,7 @@ export function useRegisterWebsocketListener({
 
     return () => {
       websocket?.off(event);
-      if (uuid) {
+      if (!isStatsEvent) {
         websocket.emit(
           `un${subscriptionName}`,
           websocketConfig,

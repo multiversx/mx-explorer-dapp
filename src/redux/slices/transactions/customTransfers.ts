@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ELLIPSIS, PAGE_SIZE } from 'appConstants';
-import {
-  CustomTransfersSliceType,
-  TransactionSliceType,
-  UITransactionType
-} from 'types';
+import { processListUpdates } from 'helpers';
+import { CustomTransfersSliceType, TransactionSliceType } from 'types';
 import { getInitialTransactionsState } from './transactions';
 
 export const getInitialCustomTransfersState = (): CustomTransfersSliceType => {
@@ -31,28 +28,12 @@ export const customTransfersSlice = createSlice({
       const existing = state.transactions;
       const incoming = action.payload.transactions;
 
-      const existingSet = new Set(existing.map((tx) => tx.txHash));
-      const updated = new Map<string, UITransactionType>();
-      const result: UITransactionType[] = [];
-
-      for (const tx of existing) {
-        updated.set(tx.txHash, tx);
-      }
-      for (const tx of incoming) {
-        updated.set(tx.txHash, { ...tx, isNew: true });
-      }
-
-      for (const tx of incoming) {
-        if (!existingSet.has(tx.txHash)) {
-          result.push(updated.get(tx.txHash)!);
-        }
-      }
-
-      for (const tx of existing) {
-        result.push(updated.get(tx.txHash)!);
-      }
-
-      const trimmedTransactions = result.slice(0, action.payload.size);
+      const trimmedTransactions = processListUpdates({
+        existing,
+        incoming,
+        uniqueKey: 'txHash',
+        size: action.payload.size
+      });
 
       state.uuid = action.payload.uuid;
       state.transactions = trimmedTransactions;
