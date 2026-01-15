@@ -29,7 +29,8 @@ export const AccountTransactions = () => {
     subscription: WebsocketSubcriptionsEnum.subscribeCustomTransfers,
     event: WebsocketEventsEnum.customTransferUpdate,
     filters: {
-      address
+      address,
+      withTxsRelayedByAddress: true
     },
     websocketConfig: { address }
   });
