@@ -88,8 +88,11 @@ export function useRegisterWebsocketListener({
     }
 
     websocket.on(event, (response: any) => {
-      // avoid battery/ram usage on bg on general events, keep specific ones and stats
-      if (document.hidden && !(isStatsEvent || isCustomEvent)) {
+      if (
+        typeof document !== 'undefined' &&
+        document.hidden &&
+        !(isStatsEvent || isCustomEvent)
+      ) {
         return;
       }
 

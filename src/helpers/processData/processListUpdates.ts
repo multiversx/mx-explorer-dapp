@@ -31,6 +31,9 @@ export const processListUpdates = ({
   }
 
   for (const entry of existing) {
+    if (entry[uniqueKey] === undefined) {
+      continue;
+    }
     result.push(updated.get(entry[uniqueKey])!);
   }
 

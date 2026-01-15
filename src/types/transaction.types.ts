@@ -281,7 +281,6 @@ export interface TransactionSliceType extends SliceType {
 }
 
 export interface CustomTransactionSliceType extends TransactionSliceType {
-  size: number;
   uuid?: string;
 }
 

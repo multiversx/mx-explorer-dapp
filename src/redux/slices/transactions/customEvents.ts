@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ELLIPSIS, PAGE_SIZE } from 'appConstants';
+import { ELLIPSIS } from 'appConstants';
 import { processListUpdates } from 'helpers';
 import { CustomEventsSliceType, EventsSliceType } from 'types';
 import { getInitialEventsState } from './events';
@@ -7,8 +7,7 @@ import { getInitialEventsState } from './events';
 export const getInitialCustomEventsState = (): CustomEventsSliceType => {
   return {
     ...getInitialEventsState(),
-    uuid: undefined,
-    size: PAGE_SIZE
+    uuid: undefined
   };
 };
 
@@ -18,7 +17,7 @@ export const customEventsSlice = createSlice({
   reducers: {
     setCustomEvents: (
       state: CustomEventsSliceType,
-      action: PayloadAction<CustomEventsSliceType>
+      action: PayloadAction<CustomEventsSliceType & { size: number }>
     ) => {
       if (state.uuid && state.uuid !== action.payload.uuid) {
         state.events = [];

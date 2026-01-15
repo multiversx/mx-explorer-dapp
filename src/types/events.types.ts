@@ -25,7 +25,6 @@ export interface EventsSliceType extends SliceType {
 }
 
 export interface CustomEventsSliceType extends EventsSliceType {
-  size: number;
   uuid?: string;
 }
 

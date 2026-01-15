@@ -35,18 +35,27 @@ export const useFetchCustomTransfers = (props: FetchCustomTransfersProps) => {
       }
 
       const { transfers } = event;
-      dispatch(
-        setCustomTransfers({
-          transactions: transfers,
-          transactionsCount: ELLIPSIS,
-          size,
-          uuid: props.uuid,
-          isWebsocket: false, // keep api, only latest updates fetched fron ws
-          isDataReady: true
-        })
-      );
+      try {
+        const transfersCount =
+          transactionsCount !== ELLIPSIS
+            ? transactionsCount + transfers.length
+            : ELLIPSIS;
+
+        dispatch(
+          setCustomTransfers({
+            transactions: transfers,
+            transactionsCount: transfersCount,
+            size,
+            uuid: props.uuid,
+            isWebsocket: false, // keep api, only latest updates fetched fron ws
+            isDataReady: true
+          })
+        );
+      } catch {
+        // do nothing
+      }
     },
-    [props]
+    [size, props.uuid, transactionsCount]
   );
 
   const onApiData = useCallback(
@@ -65,7 +74,7 @@ export const useFetchCustomTransfers = (props: FetchCustomTransfersProps) => {
         })
       );
     },
-    [props]
+    [size, props.uuid, dataCountPromise]
   );
 
   const { fetchData, dataChanged } = useFetchApiData({

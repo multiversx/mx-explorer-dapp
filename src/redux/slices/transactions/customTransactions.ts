@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ELLIPSIS, PAGE_SIZE } from 'appConstants';
+import { ELLIPSIS } from 'appConstants';
 import { processListUpdates } from 'helpers';
 import { CustomTransactionSliceType, TransactionSliceType } from 'types';
 import { getInitialTransactionsState } from './transactions';
@@ -8,8 +8,7 @@ export const getInitialCustomTransactionsState =
   (): CustomTransactionSliceType => {
     return {
       ...getInitialTransactionsState(),
-      uuid: undefined,
-      size: PAGE_SIZE
+      uuid: undefined
     };
   };
 
@@ -19,7 +18,7 @@ export const customTransactionsSlice = createSlice({
   reducers: {
     setCustomTransactions: (
       state: CustomTransactionSliceType,
-      action: PayloadAction<CustomTransactionSliceType>
+      action: PayloadAction<CustomTransactionSliceType & { size: number }>
     ) => {
       if (state.uuid && state.uuid !== action.payload.uuid) {
         state.transactions = [];
