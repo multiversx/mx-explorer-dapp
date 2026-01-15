@@ -13,7 +13,7 @@ export const ChartLineContainer = memo(
   ({ children, data, width, height }: ChartLineContainerUIType) => {
     if (typeof width === 'number' && typeof height === 'number') {
       return (
-        <LineChart data={data} width={Number(width)} height={Number(height)}>
+        <LineChart data={data} width={width} height={height}>
           {children}
         </LineChart>
       );
