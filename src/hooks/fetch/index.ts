@@ -12,5 +12,6 @@ export * from './useFetchNodesVersions';
 export * from './useFetchShards';
 export * from './useFetchStats';
 export * from './useFetchTransactions';
+export * from './useFetchCustomTransfers';
 export * from './useFetchTransactionsInPool';
 export * from './useFetchWebsocketConfig';

@@ -10,9 +10,10 @@ import { FetchApiDataProps, useFetchApiData } from './useFetchApiData';
 export interface FetchTransactionsProps
   extends Omit<FetchApiDataProps, 'onApiData'> {
   hasMaxTransactionsSize?: boolean;
+  uuid?: string;
 }
 
-interface TransactionsWebsocketResponseType {
+export interface TransactionsWebsocketResponseType {
   transactions: TransactionType[];
   transactionsCount: number;
 }
