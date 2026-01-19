@@ -44,7 +44,7 @@ export const SearchTokenRow = ({
             <div className='text-truncate'>
               {name ? (
                 <>
-                  {name} ({ticker})
+                  {ticker} {name !== ticker && `(${name})`}
                 </>
               ) : (
                 <>{identifier}</>
