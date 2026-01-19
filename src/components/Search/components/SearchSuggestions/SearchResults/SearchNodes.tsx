@@ -1,13 +1,12 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { FormatNumber } from 'components';
-import { searchSelector } from 'redux/selectors';
-import { SearchCollectionRow } from './rows/SearchCollectionRow';
 import { MAX_SEARCH_SUGGESTION_COUNT } from 'appConstants';
 import { urlBuilder } from 'helpers';
-import { SearchAllResults } from './SearchAllResults';
+import { searchSelector } from 'redux/selectors';
+
 import { SearchNodeRow } from './rows/SearchNodeRow';
+import { SearchAllResults } from './SearchAllResults';
 
 export const SearchNodes = () => {
   const { search, searchQuery } = useSelector(searchSelector);

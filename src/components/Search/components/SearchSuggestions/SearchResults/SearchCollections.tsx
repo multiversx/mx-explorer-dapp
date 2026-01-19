@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
+import { MAX_SEARCH_SUGGESTION_COUNT } from 'appConstants';
 import { FormatNumber } from 'components';
+import { urlBuilder } from 'helpers';
 import { searchSelector } from 'redux/selectors';
 import { SearchCollectionRow } from './rows/SearchCollectionRow';
-import { MAX_SEARCH_SUGGESTION_COUNT } from 'appConstants';
-import { urlBuilder } from 'helpers';
 import { SearchAllResults } from './SearchAllResults';
 
 export const SearchCollections = () => {
