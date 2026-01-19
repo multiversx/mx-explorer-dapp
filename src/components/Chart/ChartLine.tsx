@@ -1,19 +1,10 @@
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import moment from 'moment';
-import {
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Line,
-  LineChart,
-  Tooltip,
-  CartesianGrid
-} from 'recharts';
+import { XAxis, YAxis, Line, Tooltip, CartesianGrid } from 'recharts';
 
 import { formatTimestamp, getColors } from 'helpers';
-import { ChartProps } from 'types';
-
+import { ChartLineContainer } from './ChartLineContainer';
 import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { getChartMergedData } from './helpers/getChartMergedData';
@@ -83,8 +74,8 @@ export const ChartLine = ({
         'has-only-start-end-tick': hasOnlyStartEndTick
       })}
     >
-      <ResponsiveContainer width={width ?? '100%'} height={height ?? '100%'}>
-        <LineChart data={chartData}>
+      <ChartLineContainer width={width} height={height} data={chartData}>
+        <>
           <defs>
             <linearGradient id='transparent' x1='0' y1='0' x2='0' y2='1'>
               <stop offset='100%' stopColor='transparent' stopOpacity={0} />
@@ -190,8 +181,8 @@ export const ChartLine = ({
               }
             />
           )}
-        </LineChart>
-      </ResponsiveContainer>
+        </>
+      </ChartLineContainer>
     </div>
   );
 };
