@@ -11,13 +11,21 @@ export const useGetNodeFilters = () => {
     status: getParam(NodeFiltersEnum.status),
     type: getParam(NodeFiltersEnum.type),
     identity: getParam(NodeFiltersEnum.identity),
-    shard: getParam(NodeFiltersEnum.shard, true),
-    online: getParam(NodeFiltersEnum.online),
+    shard: getParam(NodeFiltersEnum.shard, { checkIsInteger: true }),
     issues: getParam(NodeFiltersEnum.issues),
     fullHistory: getParam(NodeFiltersEnum.fullHistory),
-    isQualified: getParam(NodeFiltersEnum.isQualified),
-    isAuctioned: getParam(NodeFiltersEnum.isAuctioned),
-    isAuctionDangerZone: getParam(NodeFiltersEnum.isAuctionDangerZone)
+    online: getParam(NodeFiltersEnum.online, {
+      checkIsBoolean: true
+    }),
+    isQualified: getParam(NodeFiltersEnum.isQualified, {
+      checkIsBoolean: true
+    }),
+    isAuctioned: getParam(NodeFiltersEnum.isAuctioned, {
+      checkIsBoolean: true
+    }),
+    isAuctionDangerZone: getParam(NodeFiltersEnum.isAuctionDangerZone, {
+      checkIsBoolean: true
+    })
   };
 
   return cleanUrlFilters(filters);

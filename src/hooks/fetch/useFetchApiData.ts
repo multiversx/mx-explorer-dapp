@@ -22,7 +22,9 @@ export interface FetchApiDataProps {
   event?: WebsocketEventsEnum;
   websocketConfig?: Record<string, any>;
   urlParams?: Record<string, any>;
+  uuid?: string;
   isRefreshPaused?: boolean;
+  isCustomUpdate?: boolean;
 }
 
 export const useFetchApiData = ({
@@ -35,6 +37,8 @@ export const useFetchApiData = ({
   event,
   websocketConfig = {},
   urlParams = {},
+  uuid = '',
+  isCustomUpdate,
   isRefreshPaused = false
 }: FetchApiDataProps) => {
   const { page, size } = useGetPage();
@@ -61,7 +65,11 @@ export const useFetchApiData = ({
   useRegisterWebsocketListener({
     subscription,
     event,
-    config: { from: 0, size: PAGE_SIZE, ...websocketConfig },
+    uuid,
+    config: {
+      ...(isCustomUpdate ? {} : { from: 0, size: PAGE_SIZE }),
+      ...websocketConfig
+    },
     onWebsocketEvent,
     isPaused
   });

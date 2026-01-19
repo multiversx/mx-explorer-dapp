@@ -8,7 +8,8 @@ import {
   FormatAmount,
   Sort,
   LowLiquidityTooltip,
-  FormatUSD
+  FormatUSD,
+  PriceSourceTooltip
 } from 'components';
 import { urlBuilder } from 'helpers';
 import { useGetSort, useGetSearch, useIsNativeTokenSearched } from 'hooks';
@@ -122,11 +123,14 @@ export const TokensTable = ({
                   <td>{token.name}</td>
                   <td>
                     {token.price && (
-                      <FormatUSD
-                        value={token.price}
-                        usd={1}
-                        showPrefix={false}
-                      />
+                      <>
+                        <FormatUSD
+                          value={token.price}
+                          usd={1}
+                          showPrefix={false}
+                        />
+                        <PriceSourceTooltip token={token} />
+                      </>
                     )}
                   </td>
                   <td>

@@ -6,7 +6,9 @@ import {
   useState
 } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { Anchor, Dropdown } from 'react-bootstrap';
+
 import { CopyButton } from 'components';
 import { faExclamationTriangle } from 'icons/regular';
 import {
@@ -23,6 +25,7 @@ export interface DataDecodeUIType extends WithClassnameType {
   setDecodeMethod?: Dispatch<SetStateAction<DecodeMethodEnum>>;
   identifier?: string;
   anchoredContent?: ReactNode;
+  hasDecode?: boolean;
 }
 
 export const DataDecode = ({
@@ -31,7 +34,8 @@ export const DataDecode = ({
   initialDecodeMethod,
   setDecodeMethod,
   identifier,
-  anchoredContent
+  anchoredContent,
+  hasDecode = true
 }: DataDecodeUIType) => {
   const defaultDecodeMethod =
     initialDecodeMethod &&
@@ -76,74 +80,79 @@ export const DataDecode = ({
 
   return (
     <div
-      className={`position-relative data-decode mt-1 ${
-        hasOverflow ? '' : 'overflow-hidden'
-      }`}
+      className={classNames('position-relative data-decode mt-1', {
+        'overflow-hidden': !hasOverflow,
+        'has-decode': hasDecode
+      })}
     >
-      <div className={`form-control textarea ${className ? className : ''}`}>
+      <div className={classNames('form-control textarea', className)}>
         {anchoredContent ? anchoredContent : displayValue}
       </div>
       {value && value !== 'N/A' && (
         <div className='d-flex button-holder'>
           <CopyButton text={displayValue} className='copy-button' />
-          <Dropdown
-            className='position-absolute'
-            onSelect={handleSelect}
-            onToggle={(e) => {
-              setHasOverflow(e);
-            }}
-          >
-            <Dropdown.Toggle
-              variant='dark'
-              size='sm'
-              className={
-                'text-capitalize py-1 d-flex align-items-center justify-content-between btn-dark-alt'
-              }
-              id='decode'
+          {hasDecode && (
+            <Dropdown
+              className='position-absolute'
+              onSelect={handleSelect}
+              onToggle={(e) => {
+                setHasOverflow(e);
+              }}
             >
-              <span className='me-2'>{activeKey.replace('/', '')}</span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu
-              style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}
-            >
-              <Dropdown.Item
-                as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
-                eventKey={DecodeMethodEnum.raw}
-                className={activeKey === DecodeMethodEnum.raw ? 'active' : ''}
+              <Dropdown.Toggle
+                variant='dark'
+                size='sm'
+                className={
+                  'text-capitalize py-1 d-flex align-items-center justify-content-between btn-dark-alt'
+                }
+                id='decode'
               >
-                Raw
-              </Dropdown.Item>
-              <Dropdown.Item
-                as={Anchor}
-                eventKey={DecodeMethodEnum.text}
-                className={activeKey === DecodeMethodEnum.text ? 'active' : ''}
+                <span className='me-2'>{activeKey.replace('/', '')}</span>
+              </Dropdown.Toggle>
+              <Dropdown.Menu
+                style={{ marginTop: '0.35rem', marginBottom: '0.35rem' }}
               >
-                Text
-              </Dropdown.Item>
-              {value.length < MAX_DECODE_TX_DATA_LENGTH && (
-                <>
-                  <Dropdown.Item
-                    as={Anchor}
-                    eventKey={DecodeMethodEnum.decimal}
-                    className={
-                      activeKey === DecodeMethodEnum.decimal ? 'active' : ''
-                    }
-                  >
-                    Decimal
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    as={Anchor}
-                    eventKey={DecodeMethodEnum.smart}
-                    className={
-                      activeKey === DecodeMethodEnum.smart ? 'active' : ''
-                    }
-                  >
-                    Smart
-                  </Dropdown.Item>
-                </>
-              )}
-            </Dropdown.Menu>
-          </Dropdown>
+                <Dropdown.Item
+                  as={Anchor} // This is needed due to issues between threejs, react-bootstrap and typescript, what a time to be alive: https://github.com/react-bootstrap/react-bootstrap/issues/6283
+                  eventKey={DecodeMethodEnum.raw}
+                  className={activeKey === DecodeMethodEnum.raw ? 'active' : ''}
+                >
+                  Raw
+                </Dropdown.Item>
+                <Dropdown.Item
+                  as={Anchor}
+                  eventKey={DecodeMethodEnum.text}
+                  className={
+                    activeKey === DecodeMethodEnum.text ? 'active' : ''
+                  }
+                >
+                  Text
+                </Dropdown.Item>
+                {value.length < MAX_DECODE_TX_DATA_LENGTH && (
+                  <>
+                    <Dropdown.Item
+                      as={Anchor}
+                      eventKey={DecodeMethodEnum.decimal}
+                      className={
+                        activeKey === DecodeMethodEnum.decimal ? 'active' : ''
+                      }
+                    >
+                      Decimal
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      as={Anchor}
+                      eventKey={DecodeMethodEnum.smart}
+                      className={
+                        activeKey === DecodeMethodEnum.smart ? 'active' : ''
+                      }
+                    >
+                      Smart
+                    </Dropdown.Item>
+                  </>
+                )}
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
         </div>
       )}
       {validationWarnings.length

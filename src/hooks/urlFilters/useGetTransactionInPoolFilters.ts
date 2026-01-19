@@ -13,12 +13,12 @@ export const useGetTransactionInPoolFilters = () => {
   const getParam = getUrlParam(searchParams);
 
   const senderShard =
-    getParam(TransactionFiltersEnum.senderShard, true) ??
-    getParam('sendershard', true);
+    getParam(TransactionFiltersEnum.senderShard, { checkIsInteger: true }) ??
+    getParam('sendershard', { checkIsInteger: true });
 
   const receiverShard =
-    getParam(TransactionFiltersEnum.receiverShard, true) ??
-    getParam('receivershard', true);
+    getParam(TransactionFiltersEnum.receiverShard, { checkIsInteger: true }) ??
+    getParam('receivershard', { checkIsInteger: true });
 
   const type = checkType(
     searchParams.get('type') ? String(searchParams.get('type')) : ''

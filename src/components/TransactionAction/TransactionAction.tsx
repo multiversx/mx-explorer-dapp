@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
 import DefaultAvatar from 'assets/img/default-avatar.svg';
@@ -7,9 +9,11 @@ import {
   AccountLink,
   FormatAmount,
   TransactionActionBlock,
-  NftBadge
+  NftBadge,
+  InfoTooltip
 } from 'components';
 import { addressIsBech32, urlBuilder } from 'helpers';
+import { faArrowUpRightFromSquare } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 import {
   NftTypeEnum,
@@ -193,6 +197,45 @@ const ActionText = ({
             )}
             {entry.providerName}
           </NetworkLink>
+        </span>
+      );
+
+    case Boolean(entry.tooltip):
+      return (
+        <span className='d-inline'>
+          {entry.description && (
+            <span className='me-1'>{entry.description}</span>
+          )}
+          <InfoTooltip
+            title={
+              <>
+                {entry.tooltip}
+                {entry.externalLink && (
+                  <>
+                    <br />
+                    <a
+                      href={entry.externalLink}
+                      target='_blank'
+                      rel='noreferrer nofollow noopener'
+                      className='text-underline mt-2'
+                    >
+                      Learn More
+                      <FontAwesomeIcon
+                        icon={faArrowUpRightFromSquare}
+                        size='xs'
+                        className='ms-1'
+                      />
+                    </a>
+                  </>
+                )}
+              </>
+            }
+            className='ms-0'
+            iconClassName={classNames({
+              'text-warning': Boolean(entry.isWarning)
+            })}
+            persistent
+          />
         </span>
       );
 

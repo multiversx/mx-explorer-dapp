@@ -24,6 +24,7 @@ export interface BlockType {
   gasPenalized: number;
   maxGasLimit: number;
   proposerIdentity?: IdentityType;
+  reserved?: string;
 }
 
 export interface UIBlockType extends BlockType {

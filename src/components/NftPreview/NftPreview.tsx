@@ -83,50 +83,52 @@ export const NftPreview = ({ token }: { token: NftType }) => {
     <div className='nft-details d-flex flex-column text-start'>
       <ul className='list-unstyled mb-0'>
         {token.uris.map((uri, i) => {
-          if (uri !== null && uri !== undefined) {
-            const link = Buffer.from(String(uri), 'base64').toString();
-            const { stringWithLinks, found } = scamFlag(link, token.scamInfo);
+          if (!uri) {
+            return null;
+          }
 
-            return (
-              <li key={i}>
-                <FontAwesomeIcon
-                  icon={faCaretRight}
-                  size='xs'
-                  className='text-neutral-400 me-2'
-                />
-                {link.startsWith(
-                  'https://ipfs.io/ipfs/'
-                ) /* && token.isWhitelistedStorage === true */ ? (
-                  <ModalLink
-                    href={found ? stringWithLinks : link}
-                    target='_blank'
-                    rel='noreferrer nofollow noopener'
-                    className='text-break-all'
-                  >
-                    <Thumbnail link={found ? '' : link} token={token} index={i}>
-                      {found ? stringWithLinks : link}
+          const link = Buffer.from(String(uri), 'base64').toString();
+          const { stringWithLinks, found } = scamFlag(link, token.scamInfo);
+
+          return (
+            <li key={i}>
+              <FontAwesomeIcon
+                icon={faCaretRight}
+                size='xs'
+                className='text-neutral-400 me-2'
+              />
+              {link.startsWith(
+                'https://ipfs.io/ipfs/'
+              ) /* && token.isWhitelistedStorage === true */ ? (
+                <ModalLink
+                  href={found ? stringWithLinks : link}
+                  target='_blank'
+                  rel='noreferrer nofollow noopener'
+                  className='text-break-all'
+                >
+                  <Thumbnail link={found ? '' : link} token={token} index={i}>
+                    {found ? stringWithLinks : link}
+                  </Thumbnail>
+                </ModalLink>
+              ) : (
+                <span className='text-break'>
+                  {found ? (
+                    <Anchorme
+                      linkComponent={ModalLink}
+                      target='_blank'
+                      rel='noreferrer nofollow noopener'
+                    >
+                      {stringWithLinks}
+                    </Anchorme>
+                  ) : (
+                    <Thumbnail link={link} token={token} index={i}>
+                      <span>{link}</span>
                     </Thumbnail>
-                  </ModalLink>
-                ) : (
-                  <span className='text-break'>
-                    {found ? (
-                      <Anchorme
-                        linkComponent={ModalLink}
-                        target='_blank'
-                        rel='noreferrer nofollow noopener'
-                      >
-                        {stringWithLinks}
-                      </Anchorme>
-                    ) : (
-                      <Thumbnail link={link} token={token} index={i}>
-                        <span>{link}</span>
-                      </Thumbnail>
-                    )}
-                  </span>
-                )}
-              </li>
-            );
-          } else return null;
+                  )}
+                </span>
+              )}
+            </li>
+          );
         })}
       </ul>
       {/* {token.isWhitelistedStorage === false && (

@@ -17,12 +17,14 @@ import { ScamInfoType, WithClassnameType } from 'types';
 
 export interface DataFieldUIType extends WithClassnameType {
   data?: string;
+  title?: string;
   scamInfo?: ScamInfoType;
   skipDataScamCheck?: boolean;
 }
 
 export const DataField = ({
   data,
+  title = 'Input Data',
   scamInfo,
   skipDataScamCheck
 }: DataFieldUIType) => {
@@ -74,7 +76,7 @@ export const DataField = ({
   );
 
   return (
-    <DetailItem title='Input Data' className='data-field'>
+    <DetailItem title={title} className='data-field'>
       <DataDecode
         value={value}
         initialDecodeMethod={!id ? dataDecode : DecodeMethodEnum.raw}
