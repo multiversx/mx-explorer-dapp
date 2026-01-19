@@ -26,7 +26,7 @@ export const TokenHolderDetailsCard = () => {
   const [accountTokenDetails, setAccountTokenDetails] = useState<TokenType>();
 
   const filterAddress = sender || receiver;
-  const address = String(filterAddress);
+  const address = filterAddress ? String(filterAddress) : '';
   const usdValue = accountTokenDetails?.valueUsd ?? ZERO;
 
   const fetchAccountTokens = async () => {

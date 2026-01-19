@@ -3,7 +3,10 @@ export enum WebsocketSubcriptionsEnum {
   subscribeBlocks = 'subscribeBlocks',
   subscribePool = 'subscribePool',
   subscribeStats = 'subscribeStats',
-  subscribeEvents = 'subscribeEvents'
+  subscribeEvents = 'subscribeEvents',
+  subscribeCustomTransactions = 'subscribeCustomTransactions',
+  subscribeCustomTransfers = 'subscribeCustomTransfers',
+  subscribeCustomEvents = 'subscribeCustomEvents'
 }
 
 export enum WebsocketEventsEnum {
@@ -15,5 +18,8 @@ export enum WebsocketEventsEnum {
   blocksUpdate = 'blocksUpdate',
   poolUpdate = 'poolUpdate',
   statsUpdate = 'statsUpdate',
-  eventsUpdate = 'eventsUpdate'
+  eventsUpdate = 'eventsUpdate',
+  customTransactionUpdate = 'customTransactionUpdate',
+  customTransferUpdate = 'customTransferUpdate',
+  customEventUpdate = 'customEventUpdate'
 }

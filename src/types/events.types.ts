@@ -24,6 +24,10 @@ export interface EventsSliceType extends SliceType {
   eventsCount: number | typeof ELLIPSIS;
 }
 
+export interface CustomEventsSliceType extends EventsSliceType {
+  uuid?: string;
+}
+
 export enum TransactionEventIdentifiersEnum {
   ESDTNFTTransfer = 'ESDTNFTTransfer',
   ESDTNFTBurn = 'ESDTNFTBurn',
