@@ -37,5 +37,6 @@ export const processListUpdates = ({
     result.push(updated.get(entry[uniqueKey])!);
   }
 
+  // keep the resulting set the same size as the page size prop
   return result.slice(0, size);
 };

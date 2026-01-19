@@ -72,10 +72,12 @@ export function useRegisterWebsocketListener({
 
     if (!hasSubscription) {
       websocket.emit(subscriptionName, websocketConfig, (response: any) => {
-        // console.info(
-        //   `New Websocket Subscription ${subscriptionName}`,
-        //   response
-        // );
+        if (import.meta.env.DEV) {
+          console.info(
+            `New Websocket Subscription ${subscriptionName}`,
+            response
+          );
+        }
         if (response?.status !== 'success') {
           websocketSubscriptions.delete(subscription);
           websocketPendingSubscriptions.delete(subscription);
@@ -100,9 +102,6 @@ export function useRegisterWebsocketListener({
         websocketPendingSubscriptions.delete(subscription);
         websocketActiveSubscriptions.add(subscription);
       }
-      // if (isCustomEvent) {
-      //   console.info(`Client ${event}:`, response);
-      // }
       onWebsocketEvent(response);
     });
 
@@ -111,13 +110,15 @@ export function useRegisterWebsocketListener({
       if (!isStatsEvent) {
         websocket.emit(
           `un${subscriptionName}`,
-          websocketConfig
-          // (response: any) => {
-          //   console.info(
-          //     `Unsubscribe Subscription ${subscriptionName}`,
-          //     response
-          //   );
-          // }
+          websocketConfig,
+          (response: any) => {
+            if (import.meta.env.DEV) {
+              console.info(
+                `Unsubscribe Subscription ${subscriptionName}`,
+                response
+              );
+            }
+          }
         );
         websocketPendingSubscriptions.delete(subscription);
         websocketSubscriptions.delete(subscription);
