@@ -11,7 +11,7 @@ import { setSearch } from 'redux/slices';
 import { routes } from 'routes';
 import { WithClassnameType } from 'types';
 
-import { SearchFooter, SearchSuggestions } from './components';
+import { SearchSuggestions } from './components';
 import { useHandleInput } from './hooks';
 
 export const Search = ({ className }: WithClassnameType) => {
@@ -101,12 +101,7 @@ export const Search = ({ className }: WithClassnameType) => {
           </button>
         </div>
       </form>
-      {show && (
-        <div className='search-content'>
-          <SearchSuggestions searchHash={searchHash} />
-          <SearchFooter />
-        </div>
-      )}
+      {show && <SearchSuggestions searchHash={searchHash} />}
     </search>
   );
 };

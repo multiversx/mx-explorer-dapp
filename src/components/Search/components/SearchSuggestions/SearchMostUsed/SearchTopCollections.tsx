@@ -31,6 +31,7 @@ export const SearchTopCollections = () => {
               key={identifier}
               identifier={identifier}
               assets={extraInfo?.assets}
+              name={extraInfo?.name}
               isVerified={extraInfo?.isVerified}
             >
               <div className='ms-auto'>{formatBigNumber({ value })}</div>

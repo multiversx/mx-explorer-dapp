@@ -12,9 +12,9 @@ import { SearchAllResults } from '../SearchAllResults';
 export const SearchAppsCategory = ({ apps }: { apps: AccountType[] }) => {
   const { search, searchQuery } = useSelector(searchSelector);
   const { accounts: totalSearchAccounts = [] } = search;
-  const showAllRow = apps.length > MAX_SEARCH_SUGGESTION_COUNT;
+  const showAllRow = totalSearchAccounts.length > MAX_SEARCH_SUGGESTION_COUNT;
 
-  if (totalSearchAccounts.length === 0) {
+  if (apps.length === 0) {
     return null;
   }
 
