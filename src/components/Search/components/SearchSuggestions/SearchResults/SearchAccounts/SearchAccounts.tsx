@@ -43,6 +43,7 @@ export const SearchAccounts = () => {
 
     splitApps.sort((a, b) => {
       return (
+        (a.assets ? -1 : 1) ||
         b.txCount - a.txCount ||
         new BigNumber(b.balance).minus(a.balance).toNumber()
       );
