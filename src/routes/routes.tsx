@@ -63,6 +63,7 @@ export const searchRoutes = {
 };
 
 export const routes = {
+  home: '/',
   ...accountsRoutes,
   ...applicationsRoutes,
   ...analyticsRoutes,
@@ -79,13 +80,13 @@ export const routes = {
 
 const mainRoutes: TitledRouteObject[] = [
   {
-    path: '/',
+    path: routes.home,
     title: '',
     Component: Layout,
     children: [
       { path: '*', title: 'Not Found', Component: PageNotFound },
       {
-        path: '/',
+        path: routes.home,
         title: '',
         Component: Home
       },

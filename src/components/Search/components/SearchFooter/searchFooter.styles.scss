@@ -1,0 +1,35 @@
+.search-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  font-family: var(--headings-font-family);
+  color: var(--neutral-500);
+  background-color: var(--neutral-850);
+  .key-action {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    .key-hint {
+      font-size: 0.75rem;
+      min-width: 1.563rem;
+      padding: 0.125rem 0.5rem;
+      text-align: center;
+      font-family: $font-family-monospace;
+      color: var(--neutral-300);
+      background-color: var(--neutral-750);
+      border-radius: 0.25rem;
+    }
+  }
+  .key-separator {
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    width: 1px;
+    height: 0.825rem;
+    background-color: var(--neutral-600);
+  }
+}

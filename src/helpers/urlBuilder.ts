@@ -3,6 +3,7 @@ import {
   GetTokensType,
   GetCollectionsType,
   GetAccountsType,
+  GetNodesType,
   GetTransactionsType
 } from 'types';
 
@@ -54,6 +55,13 @@ export const urlBuilder = {
   },
   transactionInPoolDetails: (hash: string) => `/transactions/pool/${hash}`,
   eventDetails: (txHash: string) => `/events/${txHash}`,
+  nodes: (params?: GetNodesType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/nodes/?${urlSearch}`;
+  },
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accounts: (params?: GetAccountsType) => {
     const urlSearch = params
@@ -155,6 +163,13 @@ export const urlBuilder = {
     `/collections/${identifier}/roles`,
   collectionDetailsTransactions: (identifier: string) =>
     `/collections/${identifier}/transactions`,
+  nfts: (params?: GetCollectionsType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/nfts/?${urlSearch}`;
+  },
   nftDetails: (identifier: string) => `/nfts/${identifier}`,
   nftDetailsTransactions: (identifier: string) =>
     `/nfts/${identifier}/transactions`,
