@@ -1,31 +1,44 @@
 import { useEffect } from 'react';
-import { Navigate, useLocation, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Navigate, useParams } from 'react-router-dom';
 
-import { NAVIGATION_SEARCH_STATE } from 'appConstants';
 import { PageState, Loader } from 'components';
-import { useSearch, useNetworkRoute } from 'hooks';
+import { useGetSearchRedirectRoute } from 'components/Search/hooks';
+import { useSearch } from 'hooks';
 import { faSearch } from 'icons/regular';
+import { searchSelector } from 'redux/selectors';
+
+import { routes } from 'routes';
 
 export const HashSearch = () => {
   const { hash: query } = useParams() as any;
-  const location = useLocation();
-  const networkRoute = useNetworkRoute();
-  const notFoundRoute = networkRoute(`/search/${query}`);
-  const { search, isSearching, searchRoute } = useSearch(query);
+
+  const redirectRoute = useGetSearchRedirectRoute();
+  const { search } = useSearch(query);
+  const {
+    search: searchResults,
+    searchQuery,
+    isDataReady
+  } = useSelector(searchSelector);
+
+  const hasSearchResults = Object.keys(searchResults).length > 0;
 
   useEffect(() => {
-    if (location.state !== NAVIGATION_SEARCH_STATE) {
-      location.state = undefined;
-      search();
-    }
-  }, [query, location]);
+    search();
+  }, [query]);
 
-  if (isSearching) {
+  if (!isDataReady) {
     return <Loader />;
   }
 
-  if (searchRoute && searchRoute !== notFoundRoute) {
-    return <Navigate to={searchRoute} />;
+  if (searchQuery) {
+    if (redirectRoute) {
+      return <Navigate to={redirectRoute} />;
+    }
+
+    if (hasSearchResults) {
+      return <Navigate to={routes.home} state={{ searchQuery }} />;
+    }
   }
 
   return (
