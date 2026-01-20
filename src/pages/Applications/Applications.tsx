@@ -82,7 +82,7 @@ export const Applications = () => {
     Promise.all([
       getAccounts({
         page,
-        name: search,
+        search,
         isSmartContract: true,
         withOwnerAssets: true,
         withDeployInfo: true,
@@ -90,7 +90,7 @@ export const Applications = () => {
         ...(is24hCountAvailable ? { size } : { size: minSize }),
         ...sort
       }),
-      getAccountsCount({ isSmartContract: true, name: search })
+      getAccountsCount({ isSmartContract: true, search })
     ])
       .then(([applicationsData, applicationsCountData]) => {
         if (applicationsData.success && applicationsCountData.success) {
