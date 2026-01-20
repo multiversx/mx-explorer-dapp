@@ -7,13 +7,13 @@ import {
   useSearchParams
 } from 'react-router-dom';
 
-import { ChartResolution } from 'appConstants';
+import { chartResolution } from 'appConstants';
 import { Loader, Led } from 'components';
-import { ChartListType } from 'components/Chart/helpers/types';
 import { Tabs } from 'components/Tabs';
 import { useAdapter, useHasGrowthWidgets, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
+import { ChartListType } from 'types';
 
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
 import { FailedAnalytics } from './components/FailedAnalytics';
@@ -97,7 +97,7 @@ export const AnalyticsCompare = () => {
     setNewQueryParameters({
       [FIRST_SERIES_ID]: selectedPills[0].id,
       [SECOND_SERIES_ID]: selectedPills[1].id,
-      [RANGE]: searchParams.get(RANGE) ?? ChartResolution['month'].range
+      [RANGE]: searchParams.get(RANGE) ?? chartResolution['month'].range
     });
   }, [selectedPills]);
 

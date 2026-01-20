@@ -2,13 +2,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Chart, Loader, PageState } from 'components';
-import { ChartConfigType } from 'components/Chart/helpers/types';
 import { getPrimaryColor, isValidTokenPrice } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faCoins } from 'icons/regular';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { ChartResolutionSelector } from 'pages/AnalyticsCompare/AnalyticsChart/components/ChartResolution';
-
 import {
   activeNetworkSelector,
   tokenExtraSelector,
@@ -16,6 +14,7 @@ import {
 } from 'redux/selectors';
 import {
   ChartResolutionRangeType,
+  ChartConfigType,
   ExchangePriceRangeEnum,
   GrowthChartDataType
 } from 'types';

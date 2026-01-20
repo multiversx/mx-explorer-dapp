@@ -14,12 +14,14 @@ import {
   Symbols
 } from 'recharts';
 import { Props } from 'recharts/types/component/DefaultLegendContent';
+
+import { formatTimestamp, getColors } from 'helpers';
+import { ChartComposedProps, ChartConfigType } from 'types';
+
 import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
-import { ChartComposedProps, ChartConfigType } from './helpers/types';
 import { useChartComposedData } from './hooks/useChartComposedData';
-import { getColors } from 'helpers';
 
 export const ChartComposed = ({
   seriesConfig,
@@ -191,8 +193,7 @@ export const ChartComposed = ({
             tickLine={false}
             domain={chartData.map((x) => x.timestamp)}
             tickFormatter={(tick) =>
-              moment
-                .unix(tick)
+              moment(formatTimestamp(tick))
                 .utc()
                 .format(dateFormat ?? 'D MMM')
             }

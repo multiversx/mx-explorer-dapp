@@ -1,12 +1,13 @@
-import { Fragment, useMemo } from 'react';
+import { useMemo } from 'react';
 import classNames from 'classnames';
 import { SingleValue } from 'react-select';
 
-import { ChartResolution } from 'appConstants';
+import { chartResolution } from 'appConstants';
 import { Select, SelectOptionType } from 'components';
 import {
   ChartResolutionRangeType,
-  ChartResolutionSelectorPropsType
+  ChartResolutionSelectorPropsType,
+  WithClassnameType
 } from 'types';
 
 import styles from './styles.module.scss';
@@ -15,46 +16,47 @@ export const ChartResolutionSelector = ({
   value,
   onChange,
   hasDayOption = false,
-  isResponsive = false
-}: ChartResolutionSelectorPropsType) => {
+  isResponsive = false,
+  className
+}: ChartResolutionSelectorPropsType & WithClassnameType) => {
   const options: SelectOptionType[] = [
     ...(hasDayOption
       ? [
           {
             label: '24h',
-            value: ChartResolution['day'].range
+            value: chartResolution['day'].range
           }
         ]
       : []),
     {
       label: '7d',
-      value: ChartResolution['week'].range
+      value: chartResolution['week'].range
     },
     {
       label: '30d',
-      value: ChartResolution['month'].range
+      value: chartResolution['month'].range
     },
     {
       label: '365d',
-      value: ChartResolution['year'].range
+      value: chartResolution['year'].range
     },
     {
       label: 'Max',
-      value: ChartResolution['all'].range
+      value: chartResolution['all'].range
     }
   ];
 
   const dropdownValue = useMemo(() => {
     if (!value) {
       return {
-        label: ChartResolution['month'].label,
-        value: ChartResolution['month'].range
+        label: chartResolution['month'].label,
+        value: chartResolution['month'].range
       };
     }
 
     return {
-      label: ChartResolution[value].label,
-      value: ChartResolution[value].range
+      label: chartResolution[value].label,
+      value: chartResolution[value].range
     };
   }, [value]);
 
@@ -63,44 +65,24 @@ export const ChartResolutionSelector = ({
   ) => {
     const value: ChartResolutionRangeType =
       (option?.value as ChartResolutionRangeType) ??
-      ChartResolution['month'].range;
+      chartResolution['month'].range;
 
-    const activeResolution = ChartResolution[value];
+    const activeResolution = chartResolution[value];
 
     onChange?.(activeResolution);
   };
 
   return (
-    <Fragment>
-      <div
-        className={classNames(styles.select, {
-          [styles.responsive]: isResponsive
-        })}
-      >
-        <Select
-          options={options}
-          onChange={onChangeHandler}
-          value={dropdownValue}
-        />
-      </div>
-
-      <div
-        className={classNames(styles.resolutions, {
-          [styles.responsive]: isResponsive
-        })}
-      >
-        {options.map((option) => (
-          <div
-            key={option.label}
-            onClick={() => onChangeHandler(option)}
-            className={classNames(styles.resolution, {
-              [styles.active]: option.value === dropdownValue.value
-            })}
-          >
-            {option.label}
-          </div>
-        ))}
-      </div>
-    </Fragment>
+    <div
+      className={classNames(styles.select, className, {
+        [styles.responsive]: isResponsive
+      })}
+    >
+      <Select
+        options={options}
+        onChange={onChangeHandler}
+        value={dropdownValue}
+      />
+    </div>
   );
 };

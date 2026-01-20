@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+import { formatBigNumber } from 'helpers';
+
 export function dhms(ms: number) {
   const days = Math.floor(ms / (24 * 60 * 60 * 1000));
   const daysms = ms % (24 * 60 * 60 * 1000);
@@ -17,7 +19,7 @@ export function dhms(ms: number) {
   if (secs > 1) secsString = secs + ' secs';
   if (mins > 1) minsString = mins + ' mins';
   if (hrs > 1) hrsString = hrs + ' hrs';
-  if (days > 1) daysString = days + ' days';
+  if (days > 1) daysString = formatBigNumber({ value: days }) + ' days';
 
   if (days >= 1) return daysString + ' ' + hrsString;
   if (hrs >= 1) {

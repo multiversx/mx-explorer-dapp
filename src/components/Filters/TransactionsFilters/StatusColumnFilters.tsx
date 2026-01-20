@@ -15,8 +15,14 @@ export const StatusColumnFilters = ({
   inactiveFilters?: TransactionFiltersEnum[];
 }) => {
   const [searchParams] = useSearchParams();
-  const { status, hashes, miniBlockHash, relayer, isRelayed } =
-    Object.fromEntries(searchParams);
+  const {
+    status,
+    hashes,
+    miniBlockHash,
+    relayer,
+    isRelayed,
+    senderOrReceiver
+  } = Object.fromEntries(searchParams);
 
   const existingHashesValues: SelectFilterType['options'] = useMemo(() => {
     if (!hashes) {
@@ -45,7 +51,8 @@ export const StatusColumnFilters = ({
     TransactionFiltersEnum.miniBlockHash,
     TransactionFiltersEnum.isRelayed,
     TransactionFiltersEnum.hashes,
-    TransactionFiltersEnum.relayer
+    TransactionFiltersEnum.relayer,
+    TransactionFiltersEnum.senderOrReceiver
   ].every((filter) => inactiveFilters.includes(filter));
 
   const isActive =
@@ -53,6 +60,7 @@ export const StatusColumnFilters = ({
     miniBlockHash !== undefined ||
     isRelayed !== undefined ||
     relayer !== undefined ||
+    senderOrReceiver !== undefined ||
     hashes !== undefined;
 
   if (allInactive) {
@@ -132,6 +140,20 @@ export const StatusColumnFilters = ({
                     name='relayer-filter'
                     filter={TransactionFiltersEnum.relayer}
                     placeholder='Relayer'
+                    validation='address'
+                  />
+                </div>
+              )}
+
+              {!inactiveFilters.includes(
+                TransactionFiltersEnum.senderOrReceiver
+              ) && (
+                <div className='filter-block'>
+                  <div className='mb-1'>Sender or Receiver</div>
+                  <SearchFilter
+                    name='sender-receiver-filter'
+                    filter={TransactionFiltersEnum.senderOrReceiver}
+                    placeholder='Sender or Receiver'
                     validation='address'
                   />
                 </div>

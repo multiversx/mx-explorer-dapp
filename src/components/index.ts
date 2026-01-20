@@ -53,6 +53,7 @@ export * from './ProgressRing';
 export * from './PropertyPill';
 export * from './ProvidersTable';
 export * from './PulsatingLed';
+export * from './Range';
 export * from './RolesBadges';
 export * from './ScAddressIcon';
 export * from './ScResultsTable';
@@ -75,6 +76,7 @@ export * from './TransactionsTable';
 export * from './TransactionStatus';
 export * from './Trim';
 export * from './ValidatorMap';
+export * from './Year';
 
 export * from '../widgets/HeroNodes';
 

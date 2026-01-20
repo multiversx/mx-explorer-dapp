@@ -39,7 +39,12 @@ export const AccountTabs = () => {
     {
       tabLabel: 'Analytics',
       tabTo: urlBuilder.accountDetailsAnalytics(address),
-      activationRoutes: [accountsRoutes.accountAnalytics]
+      activationRoutes: [
+        accountsRoutes.accountAnalytics,
+        accountsRoutes.accountAnalyticsBalance,
+        accountsRoutes.accountAnalyticsFees,
+        accountsRoutes.accountAnalyticsTransactions
+      ]
     },
     {
       tabLabel: 'Smart Contracts',

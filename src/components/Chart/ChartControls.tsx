@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import { ControlType } from './helpers/types';
+import { ControlType } from 'types';
 
 export const ChartControls = ({ controls }: { controls: ControlType[] }) => (
   <div

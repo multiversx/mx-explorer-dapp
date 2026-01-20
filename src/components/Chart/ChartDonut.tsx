@@ -5,10 +5,10 @@ import { ResponsiveContainer, PieChart, Pie, Sector, Cell } from 'recharts';
 
 import { FormatUSD } from 'components';
 import { usdValue } from 'helpers';
-
 import { economicsSelector, activeNetworkSelector } from 'redux/selectors';
+import { ChartProps } from 'types';
+
 import { getProviderColor } from './helpers/getEntryColor';
-import { ChartProps } from './helpers/types';
 
 const RenderActiveShape = (props: any) => {
   const { egldLabel } = useSelector(activeNetworkSelector);

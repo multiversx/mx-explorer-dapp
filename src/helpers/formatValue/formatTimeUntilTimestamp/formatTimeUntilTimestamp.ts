@@ -6,6 +6,7 @@ import {
   TimeGroupLabelEnum,
   TimeGroupType
 } from './formatTimeUntilTimestamp.types';
+import { formatTimestamp } from '../formatTimestamp';
 
 export const formatTimeUntilTimestamp = ({
   timestamp,
@@ -13,7 +14,7 @@ export const formatTimeUntilTimestamp = ({
   showZeroDecimal = true,
   showHourZeroDecimal = false
 }: FormatTimeUntilTimestampPropsType): TimeGroupType[] => {
-  const targetTimestamp = moment.unix(timestamp);
+  const targetTimestamp = moment(formatTimestamp(timestamp));
   const presentTimestamp = moment().unix();
   const timestampDifference =
     targetTimestamp.valueOf() / 1000 - presentTimestamp;

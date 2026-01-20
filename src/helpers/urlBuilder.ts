@@ -3,7 +3,8 @@ import {
   GetTokensType,
   GetCollectionsType,
   GetAccountsType,
-  GetNodesType
+  GetNodesType,
+  GetTransactionsType
 } from 'types';
 
 export const urlBuilder = {
@@ -69,12 +70,24 @@ export const urlBuilder = {
 
     return `/accounts/?${urlSearch}`;
   },
-  accountDetails: (address: string) => `/accounts/${address}`,
+  accountDetails: (address: string, params?: GetTransactionsType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/accounts/${address}${urlSearch ? `/?${urlSearch}` : ''}`;
+  },
   accountDetailsTokens: (address: string) => `/accounts/${address}/tokens`,
   accountDetailsNfts: (address: string) => `/accounts/${address}/nfts`,
   accountDetailsStaking: (address: string) => `/accounts/${address}/staking`,
   accountDetailsAnalytics: (address: string) =>
     `/accounts/${address}/analytics`,
+  accountDetailsAnalyticsBalance: (address: string) =>
+    `/accounts/${address}/analytics/balance`,
+  accountDetailsAnalyticsTransactions: (address: string) =>
+    `/accounts/${address}/analytics/transactions`,
+  accountDetailsAnalyticsFees: (address: string) =>
+    `/accounts/${address}/analytics/fees`,
   accountDetailsScResults: (address: string) => `/accounts/${address}/results`,
   accountDetailsContracts: (address: string) =>
     `/accounts/${address}/contracts`,
