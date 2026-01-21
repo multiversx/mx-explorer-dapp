@@ -282,6 +282,7 @@ export interface TransactionSliceType extends SliceType {
 
 export interface CustomTransactionSliceType extends TransactionSliceType {
   uuid?: string;
+  clearExisting?: boolean;
 }
 
 export interface TransactionInPoolSliceType extends SliceType {

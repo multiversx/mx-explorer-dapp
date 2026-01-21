@@ -66,6 +66,7 @@ export const useFetchCustomTransfers = (props: FetchCustomTransfersProps) => {
           transactions: transactionsData.data ?? [],
           transactionsCount: transactionsCountData?.data ?? ELLIPSIS,
           isWebsocket: false,
+          clearExisting: true,
           size,
           uuid: props.uuid,
           isDataReady:
