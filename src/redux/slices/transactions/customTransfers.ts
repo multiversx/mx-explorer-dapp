@@ -20,7 +20,10 @@ export const customTransfersSlice = createSlice({
       state: CustomTransactionSliceType,
       action: PayloadAction<CustomTransactionSliceType & { size: number }>
     ) => {
-      if (state.uuid && state.uuid !== action.payload.uuid) {
+      if (
+        action.payload.clearExisting ||
+        (state.uuid && state.uuid !== action.payload.uuid)
+      ) {
         state.transactions = [];
         state.transactionsCount = ELLIPSIS;
       }
