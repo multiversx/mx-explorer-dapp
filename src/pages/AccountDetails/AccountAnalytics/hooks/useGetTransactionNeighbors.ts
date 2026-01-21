@@ -11,9 +11,11 @@ import { accountExtraSelector, accountSelector } from 'redux/selectors';
 import { ChartResolutionRangeType } from 'types';
 
 export const useGetTransactionNeighbors = ({
-  range
+  range,
+  filterApps = true
 }: {
   range: ChartResolutionRangeType;
+  filterApps?: boolean;
 }) => {
   const { account } = useSelector(accountSelector);
   const { accountExtra } = useSelector(accountExtraSelector);
@@ -23,16 +25,24 @@ export const useGetTransactionNeighbors = ({
   useFetchAccountTransactions();
 
   const neighbours = useMemo(() => {
-    const filteredTransactions = accountTransactions.filter(
-      (transaction) => !isContract(getDisplayReceiver(transaction).receiver)
-    );
+    if (filterApps) {
+      const filteredTransactions = accountTransactions.filter(
+        (transaction) => !isContract(getDisplayReceiver(transaction).receiver)
+      );
+
+      return getAccountTopNeighbors({
+        transactions: filteredTransactions,
+        target: address,
+        range
+      });
+    }
 
     return getAccountTopNeighbors({
-      transactions: filteredTransactions,
+      transactions: accountTransactions,
       target: address,
       range
     });
-  }, [accountTransactions, address, range]);
+  }, [accountTransactions, address, range, filterApps]);
 
   return neighbours;
 };

@@ -9,8 +9,8 @@ import { ChartResolutionRangeType } from 'types';
 import { TransactionInteractionTable } from './TransactionInteractionTable';
 import { useGetTransactionNeighbors } from '../hooks';
 
-export const AccountNeighbors = () => {
-  const prefix = 'neighbors';
+export const AppUsers = () => {
+  const prefix = 'topUsers';
   const { account } = useSelector(accountSelector);
   const { address, txCount } = account;
   const [searchParams] = useSearchParams();
@@ -18,14 +18,15 @@ export const AccountNeighbors = () => {
   const { [`${prefix}Range`]: range } = params;
 
   const topNeighbors = useGetTransactionNeighbors({
-    range: range as ChartResolutionRangeType
+    range: range as ChartResolutionRangeType,
+    filterApps: false
   });
 
   return (
     <TransactionInteractionTable
       title={
         <div className='d-flex align-items-center justify-content-between'>
-          <span>Top Neighbors</span>
+          <span>Top Users</span>
           {txCount <= MAX_RESULTS && (
             <Range prefix={prefix} className='ms-auto' clearParams />
           )}
@@ -33,6 +34,7 @@ export const AccountNeighbors = () => {
       }
       interactions={topNeighbors}
       address={address}
+      showSentAndReceived={false}
     />
   );
 };
