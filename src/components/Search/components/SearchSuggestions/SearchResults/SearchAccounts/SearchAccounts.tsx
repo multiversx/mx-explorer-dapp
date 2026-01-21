@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { isContract } from '@multiversx/sdk-dapp';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
+import { isContract } from 'helpers';
 import { useGetSearchQueryType } from 'hooks/search/useGetSearchQueryType';
 import { searchSelector } from 'redux/selectors';
 import { AccountType } from 'types';
