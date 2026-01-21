@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
 import DefaultImage from 'assets/img/default.svg';
@@ -27,9 +27,11 @@ import { isContract, urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faExclamationTriangle } from 'icons/regular';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+import { getInitialAccountExtraState, setAccountExtra } from 'redux/slices';
 import { AccountUpgradeType } from 'types';
 
 export const ApplicationDetailsCard = () => {
+  const dispatch = useDispatch();
   const { account } = useSelector(accountSelector);
   const {
     address,
@@ -65,6 +67,19 @@ export const ApplicationDetailsCard = () => {
       }
       if (upgradeData.success && (upgradeData.data ?? []).length > 0) {
         setAccountLatestUpgrade(upgradeData.data[0]);
+      }
+      if (account.deployedAt) {
+        const accountExtraDetails = getInitialAccountExtraState().accountExtra;
+        dispatch(
+          setAccountExtra({
+            accountExtra: {
+              ...accountExtraDetails,
+              address,
+              firstTransactionDate: account.deployedAt
+            },
+            isDataReady: true
+          })
+        );
       }
     });
   };
