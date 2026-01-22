@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Account Analytics](https://github.com/multiversx/mx-explorer-dapp/pull/212)
+- [Search Suggestions](https://github.com/multiversx/mx-explorer-dapp/pull/211)
+
+- ## [[2.3.3](https://github.com/multiversx/mx-explorer-dapp/pull/213)] - 2026-01-22
+
+- [Websocket Transfers](https://github.com/multiversx/mx-explorer-dapp/pull/210)
+
 - ## [[2.3.2](https://github.com/multiversx/mx-explorer-dapp/pull/208)] - 2025-11-27
 
 - [Handle deprecatedRelayedV1V2](https://github.com/multiversx/mx-explorer-dapp/pull/208)
