@@ -1,0 +1,53 @@
+.nft-asset-card {
+  background-color: var(--card-bg);
+  border: $card-border-width solid var(--card-border-color);
+  border-radius: $card-border-radius;
+  max-width: 100%;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+
+  &-shadow {
+    box-shadow: $card-box-shadow;
+    height: 100%;
+    position: absolute;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    z-index: -2;
+  }
+
+  &:hover {
+    background-color: var(--card-bg-hover);
+    border-color: var(--card-hover-border-color);
+
+    .asset-card-shadow {
+      box-shadow: $card-box-shadow-hover;
+    }
+  }
+
+  &.is-sft {
+    &::before,
+    &::after {
+      background-color: inherit;
+      border: $card-border-width solid var(--card-border-color);
+      border-color: inherit;
+      border-radius: $card-border-radius;
+      bottom: -6px;
+      content: '';
+      height: 30px;
+      left: 50%;
+      pointer-events: none;
+      position: absolute;
+      transform: translateX(-50%);
+      width: 95%;
+      z-index: -1;
+    }
+
+    &::after {
+      bottom: -10px;
+      box-shadow: $card-box-shadow;
+      width: 87%;
+      z-index: -2;
+    }
+  }
+}
