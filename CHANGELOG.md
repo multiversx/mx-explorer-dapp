@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Account Analytics](https://github.com/multiversx/mx-explorer-dapp/pull/212)
 - [Search Suggestions](https://github.com/multiversx/mx-explorer-dapp/pull/211)
 
+- ## [[2.3.4](https://github.com/multiversx/mx-explorer-dapp/pull/215)] - 2026-01-26
+
+- [Fix token holders fetch param](https://github.com/multiversx/mx-explorer-dapp/pull/214)
+
 - ## [[2.3.3](https://github.com/multiversx/mx-explorer-dapp/pull/213)] - 2026-01-22
 
 - [Websocket Transfers](https://github.com/multiversx/mx-explorer-dapp/pull/210)

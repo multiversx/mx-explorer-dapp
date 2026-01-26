@@ -20,7 +20,7 @@ export const TokenDetailsLockedAccounts = () => {
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
   const fetchTokenLockedAccounts = () => {
-    getTokenSupply({ tokenId: identifier }).then(({ data, success }) => {
+    getTokenSupply({ token: identifier }).then(({ data, success }) => {
       if (success && data?.lockedAccounts) {
         setTokenLockedAccounts(data.lockedAccounts);
       }

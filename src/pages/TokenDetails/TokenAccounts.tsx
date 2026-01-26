@@ -31,8 +31,8 @@ export const TokenDetailsAccounts = () => {
 
   const fetchAccounts = () => {
     Promise.all([
-      getTokenAccounts({ tokenId: identifier, page, size }),
-      getTokenAccountsCount({ tokenId: identifier })
+      getTokenAccounts({ token: identifier, page, size }),
+      getTokenAccountsCount({ token: identifier })
     ]).then(([tokenAccountsData, tokenAccountsCountData]) => {
       if (tokenAccountsData.success && tokenAccountsCountData.success) {
         setAccounts(tokenAccountsData.data);
