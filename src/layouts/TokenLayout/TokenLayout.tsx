@@ -77,7 +77,7 @@ export const TokenLayout = () => {
   }
 
   if (failed) {
-    return <FailedTokenDetails tokenId={identifier} />;
+    return <FailedTokenDetails tokenIdentifier={identifier} />;
   }
 
   if (loading) {
