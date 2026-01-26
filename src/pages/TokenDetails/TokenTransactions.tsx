@@ -17,7 +17,7 @@ export const TokenTransactions = () => {
   const { getTokenTransfers, getTokenTransfersCount } = useAdapter();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { hash: tokenId } = useParams();
+  const { hash: tokenIdentifier } = useParams();
 
   const {
     fetchTransactions,
@@ -26,20 +26,20 @@ export const TokenTransactions = () => {
     isDataReady,
     dataChanged
   } = useFetchCustomTransfers({
-    uuid: tokenId,
+    uuid: tokenIdentifier,
     dataPromise: getTokenTransfers,
     dataCountPromise: getTokenTransfersCount,
     subscription: WebsocketSubcriptionsEnum.subscribeCustomTransfers,
     event: WebsocketEventsEnum.customTransferUpdate,
     filters: {
-      token: tokenId
+      token: tokenIdentifier
     },
-    websocketConfig: { token: tokenId }
+    websocketConfig: { token: tokenIdentifier }
   });
 
   useEffect(() => {
     fetchTransactions();
-  }, [activeNetworkId, tokenId]);
+  }, [activeNetworkId, tokenIdentifier]);
 
   useEffect(() => {
     fetchTransactions(Boolean(searchParams.toString()));
@@ -51,7 +51,7 @@ export const TokenTransactions = () => {
         <div className='col-12'>
           <TransactionsTable
             transactions={transactions}
-            token={tokenId}
+            token={tokenIdentifier}
             totalTransactions={totalTransactions}
             title={<TokenTabs />}
             dataChanged={dataChanged}
