@@ -9,11 +9,9 @@ export interface NftListUIType extends WithClassnameType {
 export const NftList = ({ nfts, type }: NftListUIType) => {
   return (
     <div className='nft-list'>
-      <div className='nft-list-wrapper'>
-        {nfts.map((nft) => (
-          <NftAssetCard nft={nft} key={`${nft.name}-${nft.identifier}`} />
-        ))}
-      </div>
+      {nfts.map((nft) => (
+        <NftAssetCard nft={nft} key={`${nft.name}-${nft.identifier}`} />
+      ))}
     </div>
   );
 };

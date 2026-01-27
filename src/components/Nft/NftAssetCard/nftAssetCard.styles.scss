@@ -1,81 +1,26 @@
 .nft-card {
-  border-radius: 16px;
-  background-color: var(--body-bg);
-  transition: var(--transition);
+  display: inherit;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 240px;
-  cursor: pointer;
-  margin: 0 auto;
-
-  @media (min-width: 576px) {
-    margin: 0;
-    width: calc(50% - 8px);
-  }
-
-  @media (min-width: 992px) {
-    width: calc(50% - 8px);
-  }
-
-  @media (min-width: 1200px) {
-    width: calc(25% - 24px);
-  }
+  transition: color 200ms ease;
+  background-color: var(--neutral-800);
+  border-radius: 1rem;
 
   &:hover {
-    background-color: var(--action-bg);
+    background-color: var(--neutral-850);
   }
 
   .nft-card-top-header {
-    align-items: center;
+    position: relative;
     display: flex;
-    flex-flow: row wrap;
+    flex-wrap: wrap;
     gap: 0.25rem;
     justify-content: space-between;
-    left: 12px;
+    align-items: center;
     overflow: hidden;
     position: absolute;
-    top: 12px;
-    width: calc(100% - 24px);
-  }
-
-  .nft-card-label {
-    .badge {
-      width: calc(4px + 32px);
-
-      &:before {
-        padding: 1px;
-        mask:
-          linear-gradient(var(--white) 0 0) content-box,
-          linear-gradient(var(--white) 0 0);
-        -webkit-mask:
-          linear-gradient(var(--white) 0 0) content-box,
-          linear-gradient(var(--white) 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        pointer-events: none;
-        border: none;
-        opacity: 1;
-      }
-    }
-
-    &.semifungible .badge:before {
-      background: linear-gradient(
-        to right,
-        var(--yellow-800),
-        var(--yellow-600)
-      );
-    }
-
-    &.nonfungible .badge:before {
-      background: linear-gradient(
-        to right,
-        var(--orange-900),
-        var(--amber-700)
-      );
-    }
+    left: 0.75rem;
+    top: 0.75rem;
+    width: calc(100% - 1.5rem);
   }
 
   .nft-card-supply {
@@ -99,87 +44,24 @@
       .nft-card-supply-balance,
       .nft-card-supply-total {
         max-width: 72px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
       }
     }
   }
 
   .nft-card-details {
-    width: calc(100% - 16px);
+    width: calc(100% - 1rem);
+    max-width: 14rem;
+    margin: auto;
     background-color: var(--neutral-850);
-    margin-top: calc(32px * -1);
-    margin-bottom: 8px;
-    border-radius: 12px;
+    margin-top: calc(2rem * -1);
+    margin-bottom: 0.5rem;
+    border-radius: 0.75rem;
     line-height: 1;
-    padding: 12px;
+    padding: 0.75rem;
     position: relative;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 4px 12px 0px rgba(var(--intense-bg), 0.35);
-    gap: 8px;
-
-    .nft-card-details-name {
-      font-size: 16px;
-      color: var(--action-color);
-      white-space: nowrap;
-      overflow: hidden;
-      line-height: 1.25;
-      text-overflow: ellipsis;
-    }
-
-    .nft-card-details-collection {
-      font-size: 12px;
-      color: var(--placeholder-color);
-      white-space: nowrap;
-      overflow: hidden;
-      line-height: 16px;
-      text-overflow: ellipsis;
-      padding-right: 40px;
-    }
-
-    .nft-card-details-send-tooltip {
-      position: absolute;
-      z-index: 1;
-      right: 12px;
-      bottom: 12px;
-
-      .nft-card-details-send {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        &:hover {
-          &:before {
-            background-color: var(--primary);
-          }
-
-          .nft-card-details-send-icon {
-            color: var(--body-bg);
-          }
-        }
-
-        &:before {
-          position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          transition: var(--transition);
-          background-color: var(--teal-950);
-          right: 0;
-          content: '';
-          border-radius: 50%;
-        }
-
-        .nft-card-details-send-icon {
-          color: var(--primary);
-          z-index: 1;
-        }
-      }
-    }
+    box-shadow: 0px 4px 0.75rem 0px rgba(var(--intense-bg), 0.35);
+    gap: 0.5rem;
   }
 }

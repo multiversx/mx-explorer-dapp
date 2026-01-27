@@ -2,7 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { Loader, Pager, PageSize, PageState, NftTable } from 'components';
+import {
+  Loader,
+  Pager,
+  PageSize,
+  PageState,
+  NftTable,
+  NftList
+} from 'components';
 import { getNftText } from 'helpers';
 import { useAdapter, useGetPage, useGetSearch } from 'hooks';
 import { faUser } from 'icons/regular';
@@ -70,7 +77,7 @@ export const CollectionNfts = () => {
         {showCollectionNfts ? (
           <>
             <div className='card-body'>
-              <NftTable nfts={collectionNfts} type={type} />
+              <NftList nfts={collectionNfts} type={type} />
             </div>
             <div className='card-footer table-footer'>
               <PageSize />

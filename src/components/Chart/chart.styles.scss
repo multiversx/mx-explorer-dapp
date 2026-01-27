@@ -24,8 +24,8 @@
     }
 
     .dot {
-      width: 12px;
-      height: 12px;
+      width: 0.75rem;
+      height: 0.75rem;
       margin-right: 15px;
       border-radius: 50%;
     }
@@ -66,7 +66,7 @@
       background-color: rgba(var(--primary), 0.1);
       border-radius: 4px;
       color: var(--primary);
-      font-size: 12px;
+      font-size: 0.75rem;
       padding: 10px 15px;
       cursor: pointer;
       text-transform: capitalize;
@@ -126,7 +126,7 @@
   outline: none !important;
   color: var(--neutral-400);
   background-color: var(--card-bg);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 400;
   text-align: center;
   .custom-tooltip,
@@ -149,7 +149,7 @@
       padding-bottom: 0;
       .item-value {
         font-weight: 400;
-        font-size: 12px;
+        font-size: 0.75rem;
         margin-bottom: 0;
       }
     }
@@ -218,7 +218,7 @@
     span {
       font-family: 'Roobert SemiBold';
       font-weight: 600;
-      font-size: 12px;
+      font-size: 0.75rem;
     }
   }
 
@@ -230,7 +230,7 @@
 
       .item-label {
         font-weight: 400;
-        font-size: 12px;
+        font-size: 0.75rem;
       }
 
       .item-value {

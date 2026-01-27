@@ -2,8 +2,6 @@ export * from './NftAssetCard';
 export * from './NftBadge';
 export * from './NftBlock';
 export * from './NftCardImage';
-export * from './NftCardPreloader';
-export * from './NftCardPreloader';
 export * from './NftList';
 export * from './NftPreview';
 export * from './NftTable';

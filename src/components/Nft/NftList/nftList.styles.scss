@@ -1,22 +1,17 @@
 .nft-list {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
 
-  .nft-list-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    gap: 16px;
+  @include media-breakpoint-up(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-    @media (min-width: 576px) {
-      flex-direction: row;
-      justify-content: flex-start;
-    }
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 
-    @media (min-width: 1200px) {
-      gap: 32px;
-    }
+  @include media-breakpoint-up(xxl) {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
