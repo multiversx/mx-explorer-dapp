@@ -11,7 +11,8 @@ import {
   CollectionBlock,
   FormatAmount,
   NftBadge,
-  NetworkLink
+  NetworkLink,
+  NftList
 } from 'components';
 import { isProof, urlBuilder } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
@@ -86,61 +87,7 @@ export const AccountNfts = () => {
           )}
 
           {dataReady === true && accountNfts.length > 0 && (
-            <>
-              {accountNfts.map((nft) => {
-                return (
-                  <DetailItem
-                    title={<CollectionBlock nft={nft} />}
-                    key={nft.identifier}
-                  >
-                    <div className='d-flex align-items-center'>
-                      {nft.balance !== undefined && (
-                        <div className='me-1'>
-                          {nft.decimals ? (
-                            <FormatAmount
-                              showLabel={false}
-                              showSymbol={false}
-                              value={nft.balance ? nft.balance : '0'}
-                              decimals={nft.decimals}
-                            />
-                          ) : (
-                            Number(nft.balance).toLocaleString('en')
-                          )}
-                        </div>
-                      )}
-                      <div className='d-flex text-truncate'>
-                        <NetworkLink
-                          to={urlBuilder.nftDetails(nft.identifier)}
-                          className={`d-flex text-truncate ${
-                            nft?.assets?.svgUrl ? 'side-link' : ''
-                          }`}
-                        >
-                          <div className='d-flex align-items-center symbol text-truncate'>
-                            {nft?.assets?.svgUrl && (
-                              <img
-                                src={nft.assets.svgUrl}
-                                className='side-icon me-1'
-                                alt=''
-                                role='presentation'
-                              />
-                            )}
-                            <div className='text-truncate'>
-                              {nft.identifier}
-                            </div>
-                          </div>
-                        </NetworkLink>
-                      </div>
-                      <NftBadge
-                        type={nft.type}
-                        subType={nft.subType}
-                        isProof={isProof(nft)}
-                        className='ms-2'
-                      />
-                    </div>
-                  </DetailItem>
-                );
-              })}
-            </>
+            <NftList nfts={accountNfts} />
           )}
         </div>
       </div>

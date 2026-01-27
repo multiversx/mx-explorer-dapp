@@ -77,7 +77,7 @@ export const CollectionNfts = () => {
         {showCollectionNfts ? (
           <>
             <div className='card-body'>
-              <NftList nfts={collectionNfts} type={type} />
+              <NftList nfts={collectionNfts} />
             </div>
             <div className='card-footer table-footer'>
               <PageSize />

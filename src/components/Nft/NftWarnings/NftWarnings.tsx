@@ -24,7 +24,18 @@ export const NftWarnings = ({
 
   const handleNsfwVisibilityToggle = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
+    if (nft.scamInfo) {
+      event.preventDefault();
+      return true;
+    }
     onNsfwVisibilityToggle(event);
+  };
+
+  const handlePropagation = (event: MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    return true;
   };
 
   if (!nft.scamInfo && !nft.isNsfw) {
@@ -34,10 +45,14 @@ export const NftWarnings = ({
   return (
     <div
       className={classNames('nft-warnings', className)}
-      onClick={(event) => event.stopPropagation()}
+      onClick={handleNsfwVisibilityToggle}
     >
       {Boolean(nft.isNsfw) && (
-        <div className='nft-warning'>
+        <div
+          className={classNames('nft-warning', {
+            'cursor-pointer': nft.scamInfo
+          })}
+        >
           <Overlay
             className='nft-warning-tooltip'
             title={
@@ -46,21 +61,18 @@ export const NftWarnings = ({
                 : `${nsfwWarningMessage}. You can manually toggle it back on.`
             }
           >
-            <div className='badge badge-outline badge-outline-green-alt text-truncate mw-inherit'>
+            <div className='badge badge-outline badge-outline-orange nft-warning-badge'>
               <div className='nft-warning-badge-wrapper'>
                 <div
                   className={classNames('nft-warning-badge-text', {
                     enabled: !isNsfwHidden
                   })}
                 >
-                  Nsfw
+                  NSFW
                 </div>
 
                 {!nft.scamInfo && (
-                  <div
-                    className='nft-warning-badge-toggle'
-                    onClick={handleNsfwVisibilityToggle}
-                  >
+                  <div className='nft-warning-badge-toggle'>
                     <FontAwesomeIcon
                       icon={isNsfwHidden ? faEyeSlash : faEye}
                       className={classNames('nft-warning-badge-toggle-icon', {
@@ -76,14 +88,14 @@ export const NftWarnings = ({
       )}
 
       {Boolean(nft.scamInfo) && (
-        <div className='nft-warning'>
+        <div className='nft-warning' onClick={handlePropagation}>
           <Overlay
             className='nft-warning-tooltip'
-            title={`This ${typeLabel} has been flagged as scam! Sending is unavailable.`}
+            title={`This ${typeLabel} has been flagged as scam.`}
           >
-            <div className='badge badge-outline badge-outline-green-alt text-truncate mw-inherit nft-warning-badge'>
+            <div className='badge badge-outline badge-outline-orange nft-warning-badge'>
               <div className='nft-warning-badge-wrapper'>
-                <div className='nft-warning-badge-text'>Scam</div>
+                <div className='nft-warning-badge-text'>SCAM</div>
               </div>
             </div>
           </Overlay>

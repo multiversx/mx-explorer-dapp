@@ -1,12 +1,11 @@
 import { NftAssetCard } from 'components';
-import { NftType, NftTypeEnum, WithClassnameType } from 'types';
+import { NftType, WithClassnameType } from 'types';
 
 export interface NftListUIType extends WithClassnameType {
   nfts: NftType[];
-  type: NftTypeEnum;
 }
 
-export const NftList = ({ nfts, type }: NftListUIType) => {
+export const NftList = ({ nfts }: NftListUIType) => {
   return (
     <div className='nft-list'>
       {nfts.map((nft) => (

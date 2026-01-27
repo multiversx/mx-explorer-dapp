@@ -13,6 +13,7 @@
     .nft-warning-tooltip {
       display: flex;
       flex-direction: column;
+      user-select: none;
 
       .tooltip-content {
         max-width: 240px;
@@ -28,10 +29,9 @@
           display: flex;
           white-space: nowrap;
           user-select: none;
-          gap: 4px;
+          gap: 0.5rem;
 
           .nft-warning-badge-text {
-            cursor: default;
             color: var(--red-400);
 
             &.enabled {
