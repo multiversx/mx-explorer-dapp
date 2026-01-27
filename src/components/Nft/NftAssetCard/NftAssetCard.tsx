@@ -28,9 +28,7 @@ export const NftAssetCard = ({ nft }: NftAssetCardUIType) => {
   return (
     <NetworkLink
       to={urlBuilder.nftDetails(nft.identifier)}
-      className={`d-flex text-truncate ${
-        nft.assets?.svgUrl ? 'side-link' : ''
-      }`}
+      className='nft-card'
     >
       <NftCardImage nft={nft} isNsfwHidden={isNsfwHidden} />
 

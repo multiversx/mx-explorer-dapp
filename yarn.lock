@@ -805,7 +805,21 @@
     "@fortawesome/react-fontawesome" "0.2.0"
     classnames "2.3.2"
 
-"@multiversx/sdk-dapp-ui@0.1.13", "@multiversx/sdk-dapp-ui@>=0.1.13 <0.2.0", "@multiversx/sdk-dapp-ui@^0.x":
+"@multiversx/sdk-dapp-ui@0.1.17", "@multiversx/sdk-dapp-ui@>=0.1.15 <0.2.0":
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-ui/-/sdk-dapp-ui-0.1.17.tgz#79a7bd16a6a345243b476b587615c09819271191"
+  integrity sha512-doaSrAovbo+6GWr0d8wdY79VwFT6AeAcLdM30+h0w4LrW34D4Hso2u09aW8DVW9sJ3a4UbNFZ2zWWDMnca+O8g==
+  dependencies:
+    "@stencil/core" "4.38.1"
+    "@stencil/react-output-target" "1.2.0"
+    "@stencil/vue-output-target" "0.11.8"
+    classnames ">=2.5.1"
+    lodash.capitalize "^4.2.1"
+    lodash.inrange "^3.3.0"
+    lodash.range "^3.2.0"
+    qrcode ">=1.5.4"
+
+"@multiversx/sdk-dapp-ui@^0.x":
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-ui/-/sdk-dapp-ui-0.1.13.tgz#8dd622733844e35fd54457c06089033a1d2003ee"
   integrity sha512-aiOvcf791vVAqBsqdDNxHe4bPQR9ECuq81eNKETOvYoLDk2PKXN1mSyRh8s5jO6IxwstgoVvnNHDw5cj8FRUCA==
@@ -824,10 +838,10 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-utils/-/sdk-dapp-utils-3.0.2.tgz#3315ac9da202bac534374585565df8935da4c2f7"
   integrity sha512-x2b2Gz5j0mDPUV2UK0fyDideGq/tfznvFJUJIJUMfKRy9Frni26UXZuQXCN4ngs344fd+8XoJOeviNV6cXSFdw==
 
-"@multiversx/sdk-dapp@5.6.5":
-  version "5.6.5"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp/-/sdk-dapp-5.6.5.tgz#d5af9955e7f31640e4badc5e4d4a84472a440fdf"
-  integrity sha512-lQX+3/DcdXcv9lM/zBXbT6YPJ/gojdZ6IpUMD/jlrT41TH/718MMg7ggTNpa8DV3dWfm6fi6eUBLabpXdJSBQw==
+"@multiversx/sdk-dapp@5.6.8":
+  version "5.6.8"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp/-/sdk-dapp-5.6.8.tgz#545046a52f7c10c63352b06944003158886943f0"
+  integrity sha512-0QXPszksS6hZlc+10ryaNSM90akSXJABrvY2Eq5Gtx9R4MO1aS6bYnjiMutFd2wTnzr+dU8l1gcxNa4QML+Ozw==
   dependencies:
     "@lifeomic/axios-fetch" "3.0.1"
     "@multiversx/sdk-extension-provider" "5.1.2"
@@ -848,7 +862,7 @@
     socket.io-client "4.7.5"
     zustand "4.4.7"
   optionalDependencies:
-    "@multiversx/sdk-dapp-ui" ">=0.1.13 <0.2.0"
+    "@multiversx/sdk-dapp-ui" ">=0.1.15 <0.2.0"
 
 "@multiversx/sdk-extension-provider@5.1.2":
   version "5.1.2"
