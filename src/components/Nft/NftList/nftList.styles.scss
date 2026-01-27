@@ -1,0 +1,22 @@
+.nft-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  flex: 1;
+
+  .nft-list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (min-width: 576px) {
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    @media (min-width: 1200px) {
+      gap: 32px;
+    }
+  }
+}
