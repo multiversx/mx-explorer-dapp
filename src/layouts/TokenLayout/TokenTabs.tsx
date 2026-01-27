@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { Tabs } from 'components/Tabs';
+import { Tabs } from 'components';
 import { urlBuilder } from 'helpers';
 import { useHasExchangeData } from 'hooks';
 import { tokenExtraSelector, tokenSelector } from 'redux/selectors';

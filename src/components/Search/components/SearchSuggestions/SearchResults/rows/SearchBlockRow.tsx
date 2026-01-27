@@ -1,8 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { BlockGasUsed } from 'components/BlockGasUsed';
-import { NetworkLink } from 'components/Links';
-import { Trim } from 'components/Trim';
+import { BlockGasUsed, NetworkLink, Trim } from 'components';
 import { urlBuilder } from 'helpers';
 import { searchSelector } from 'redux/selectors';
 

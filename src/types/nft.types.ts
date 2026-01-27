@@ -79,6 +79,8 @@ export interface NftType {
   };
   scamInfo?: ScamInfoType;
   isVerified?: boolean;
+  isNsfw?: boolean;
+  isScam?: boolean;
 }
 
 export interface NftAccountType {

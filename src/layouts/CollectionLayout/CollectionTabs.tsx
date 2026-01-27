@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { Tabs } from 'components/Tabs';
+import { Tabs } from 'components';
 import { urlBuilder, getNftText } from 'helpers';
 import { collectionSelector } from 'redux/selectors';
 import { collectionRoutes, tokensRoutes } from 'routes';

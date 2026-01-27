@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { NetworkLink } from 'components/Links';
-import { Trim } from 'components/Trim';
+import { NetworkLink, Trim } from 'components';
 import { urlBuilder } from 'helpers';
 import { searchSelector } from 'redux/selectors';
 

@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Tabs } from 'components/Tabs';
+import { Tabs } from 'components';
 import { urlBuilder } from 'helpers';
 
 export const ProviderTabs = () => {
