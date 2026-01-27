@@ -1,10 +1,11 @@
 .nft-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1rem;
+  grid-gap: 0.5rem;
 
   @include media-breakpoint-up(md) {
     grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
   }
 
   @include media-breakpoint-up(lg) {

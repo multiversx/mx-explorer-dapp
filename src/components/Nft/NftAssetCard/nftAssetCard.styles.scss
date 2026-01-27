@@ -53,7 +53,7 @@
     max-width: 14rem;
     margin: auto;
     background-color: var(--neutral-850);
-    margin-top: calc(2rem * -1);
+    margin-top: -2rem;
     margin-bottom: 0.5rem;
     border-radius: 0.75rem;
     line-height: 1;
@@ -61,7 +61,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 4px 0.75rem 0px rgba(var(--intense-bg), 0.35);
+    box-shadow: 0px 4px 0.75rem 0px rgba(var(--neutral-850), 0.35);
     gap: 0.5rem;
   }
 }
