@@ -52,7 +52,7 @@ export const NftAssetCard = ({ nft }: NftAssetCardUIType) => {
 
       <div className='nft-card-details'>
         <div className='nft-card-details-name text-truncate text-neutral-100'>
-          {nft.name} fsdifosdifnd fnf dd i viafa v efn iv inv
+          {nft.name}
         </div>
         <div className='nft-card-details-collection text-neutral-400 small'>
           {nft.collection}
