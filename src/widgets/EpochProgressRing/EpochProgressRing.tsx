@@ -13,7 +13,7 @@ export const EpochProgressRing = ({
   showTime = true,
   className
 }: EpochRingType) => {
-  const { epoch, epochPercentage, epochTimeRemaining, roundsLeft } =
+  const { epoch, epochPercentage, epochTimeRemaining, roundsLeft, isReady } =
     useFetchEpochProgress();
 
   return (
@@ -22,13 +22,13 @@ export const EpochProgressRing = ({
         <div className='label' data-testid='currentEpoch'>
           Epoch
           <br />
-          {formatBigNumber({ value: epoch, showEllipsisIfZero: true })}
+          {formatBigNumber({ value: epoch, showEllipsisIfZero: !isReady })}
         </div>
         <div
           className={classNames('description', { 'cursor-context': showTime })}
           {...(showTime ? { title: epochTimeRemaining } : {})}
         >
-          {formatBigNumber({ value: roundsLeft, showEllipsisIfZero: true })}{' '}
+          {formatBigNumber({ value: roundsLeft, showEllipsisIfZero: !isReady })}{' '}
           Rounds Left
         </div>
       </ProgressRing>
