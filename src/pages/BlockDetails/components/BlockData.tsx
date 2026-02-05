@@ -17,7 +17,12 @@ import {
 } from 'components';
 import { formatDate, formatSize, urlBuilder } from 'helpers';
 import { useIsSovereign } from 'hooks';
-import { faChevronLeft, faChevronRight, faClock } from 'icons/regular';
+import {
+  faChevronLeft,
+  faChevronRight,
+  faClock,
+  faArrowUpRightFromSquare
+} from 'icons/regular';
 import { UIBlockType } from 'types';
 
 function decodeHex(hex: string) {
@@ -258,17 +263,54 @@ export const BlockData = ({ block }: { block: UIBlockType }) => {
             {isFirstBlock ? (
               <span className='text-neutral-400'>N/A</span>
             ) : block.prevHash ? (
-              <NetworkLink
-                className='trim-wrapper'
-                to={`/blocks/${block.prevHash}`}
-              >
-                <Trim text={block.prevHash} />
-              </NetworkLink>
+              <>
+                <NetworkLink
+                  className='trim-wrapper'
+                  to={urlBuilder.blockDetails(block.prevHash)}
+                >
+                  <Trim text={block.prevHash} />
+                </NetworkLink>
+                <CopyButton text={block.prevHash} />
+                <NetworkLink
+                  to={urlBuilder.blockDetails(block.prevHash)}
+                  className='side-action'
+                  target='_blank'
+                  rel='noreferrer nofollow noopener'
+                >
+                  <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                </NetworkLink>
+              </>
             ) : (
               <span className='text-neutral-400'>N/A</span>
             )}
           </div>
         </DetailItem>
+        {block.lastExecutionResultHash && (
+          <DetailItem title='Last Execution Result Hash'>
+            <div className='d-flex align-items-center'>
+              <NetworkLink
+                className='trim-wrapper'
+                to={urlBuilder.blockDetails(block.lastExecutionResultHash)}
+              >
+                <Trim text={block.lastExecutionResultHash} />
+              </NetworkLink>
+              <CopyButton text={block.lastExecutionResultHash} />
+              <NetworkLink
+                to={urlBuilder.blockDetails(block.lastExecutionResultHash)}
+                className='side-action'
+                target='_blank'
+                rel='noreferrer nofollow noopener'
+              >
+                <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+              </NetworkLink>
+            </div>
+          </DetailItem>
+        )}
+        {block.lastExecutionResultNonce && (
+          <DetailItem title='Last Result Nonce'>
+            {block.lastExecutionResultNonce}
+          </DetailItem>
+        )}
         <DetailItem title='Public Keys Bitmap'>
           {block.pubKeyBitmap ? (
             <Trim text={block.pubKeyBitmap} />
