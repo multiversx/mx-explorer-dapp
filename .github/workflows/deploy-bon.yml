@@ -1,0 +1,53 @@
+name: deploy-bon
+
+on:
+  push:
+    branches: [battle-of-nodes-deploy]
+  repository_dispatch:
+    types: deploy-bon
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: battle-of-nodes-deploy
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - name: Setup yarn
+        run: npm install -g yarn
+      - run: npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}"
+      - run: yarn install --frozen-lockfile
+      - run: yarn run prepare-pro-icons
+      - run: yarn run build-bon
+        env:
+          CI: false
+          VITE_APP_DEFAULT_HOSTNAME: explorer.battleofnodes.com
+          VITE_APP_INTERNAL_NETWORKS: ${{ secrets.INTERNAL_NETWORK_LIST }}
+          VITE_APP_MARKERS_API_URL: ${{ secrets.MARKERS_API_URL }}
+          VITE_APP_VERSION_URL: ${{ secrets.APP_VERSION_URL }}
+          VITE_APP_WALLETCONNECT_ID: ${{ secrets.WALLETCONNECT_ID }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-east-1'
+      - name: Deploy to S3 bucket
+        run: aws s3 sync ./build/ s3://${{ secrets.AWS_S3_BUCKET_BON }} --delete --endpoint-url ${{ secrets.AWS_R2_ENDPOINT }}
+      - name: No-cache index.html
+        run: aws s3 cp s3://${{ secrets.AWS_S3_BUCKET_BON }}/index.html s3://${{ secrets.AWS_S3_BUCKET_BON }}/index.html --endpoint-url ${{ secrets.AWS_R2_ENDPOINT }} --metadata-directive REPLACE --cache-control max-age=0 --content-type "text/html"
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_ICON_EMOJI: ':globe_with_meridians:'
+          SLACK_USERNAME: ${{ secrets.AWS_S3_BUCKET_BON }}
+          SLACK_MESSAGE: ${{ secrets.AWS_S3_BUCKET_BON }}
+          SLACK_FOOTER: ''
+          MSG_MINIMAL: true
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
