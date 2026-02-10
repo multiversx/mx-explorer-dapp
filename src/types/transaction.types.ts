@@ -280,6 +280,11 @@ export interface TransactionSliceType extends SliceType {
   transactionsCount: number | typeof ELLIPSIS;
 }
 
+export interface CustomTransactionSliceType extends TransactionSliceType {
+  uuid?: string;
+  clearExisting?: boolean;
+}
+
 export interface TransactionInPoolSliceType extends SliceType {
   transactionsInPool: UITransactionInPoolType[];
   transactionsInPoolCount: number | typeof ELLIPSIS;

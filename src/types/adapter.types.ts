@@ -29,7 +29,7 @@ export interface GetAccountResourceType extends AxiosParamsApiType {
 }
 
 export interface GetTokenResourceType extends AxiosParamsApiType {
-  tokenId: string;
+  token: string;
 }
 
 export interface GetNftResourceType extends AxiosParamsApiType {

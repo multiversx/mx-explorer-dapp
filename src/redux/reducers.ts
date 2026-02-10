@@ -35,7 +35,10 @@ import {
   eventsReducer,
   transactionsReducer,
   transactionsInPoolReducer,
-  transactionOverviewReducer
+  transactionOverviewReducer,
+  customEventsReducer,
+  customTransactionsReducer,
+  customTransfersReducer
 } from './slices/transactions';
 
 import {
@@ -78,6 +81,9 @@ export const customIgnoredSlices = {
   accountStaking: accountStakingReducer,
   blocks: blocksReducer,
   collection: collectionReducer,
+  customEvents: customEventsReducer,
+  customTransactions: customTransactionsReducer,
+  customTransfers: customTransfersReducer,
   economics: economicsReducer,
   events: eventsReducer,
   general: generalReducer,
