@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
 import { ProgressRing } from 'components';
-import { formatBigNumber } from 'helpers';
+import { formatBigNumber, getStringPlural } from 'helpers';
 import { useFetchEpochProgress } from 'hooks';
 import { WithClassnameType } from 'types';
 
@@ -13,7 +13,7 @@ export const EpochProgressRing = ({
   showTime = true,
   className
 }: EpochRingType) => {
-  const { epoch, epochPercentage, epochTimeRemaining, roundsLeft } =
+  const { epoch, epochPercentage, epochTimeRemaining, roundsLeft, isReady } =
     useFetchEpochProgress();
 
   return (
@@ -22,14 +22,17 @@ export const EpochProgressRing = ({
         <div className='label' data-testid='currentEpoch'>
           Epoch
           <br />
-          {formatBigNumber({ value: epoch, showEllipsisIfZero: true })}
+          {formatBigNumber({ value: epoch, showEllipsisIfZero: !isReady })}
         </div>
         <div
           className={classNames('description', { 'cursor-context': showTime })}
           {...(showTime ? { title: epochTimeRemaining } : {})}
         >
-          {formatBigNumber({ value: roundsLeft, showEllipsisIfZero: true })}{' '}
-          Rounds Left
+          {formatBigNumber({ value: roundsLeft, showEllipsisIfZero: !isReady })}{' '}
+          {getStringPlural(roundsLeft, {
+            string: 'Round'
+          })}{' '}
+          Left
         </div>
       </ProgressRing>
     </div>
