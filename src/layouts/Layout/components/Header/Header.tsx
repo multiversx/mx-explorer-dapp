@@ -76,14 +76,10 @@ export const Header = memo((props: HeaderPropsType) => {
           className='logo'
           aria-label={`${BRAND_NAME} Explorer`}
         >
-          {isMainnet ? (
-            <MultiversXLogo />
-          ) : (
-            <span className='header-symbol'>
-              <MultiversXSymbol />
-              <span className='header-title'>{explorerTitle}</span>
-            </span>
-          )}
+          <span className='header-symbol'>
+            <MultiversXSymbol />
+            <span className='header-title'>Battle of Nodes Explorer</span>
+          </span>
         </NetworkLink>
       </div>
 
