@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 
 import { ProgressRing } from 'components';
-import { formatBigNumber } from 'helpers';
+import { formatBigNumber, getStringPlural } from 'helpers';
 import { useFetchEpochProgress } from 'hooks';
 import { WithClassnameType } from 'types';
 
 export const EpochHeroPill = ({ className }: WithClassnameType) => {
-  const { epoch, epochPercentage, epochTimeRemaining, roundsLeft } =
+  const { epoch, epochPercentage, epochTimeRemaining, roundsLeft, isReady } =
     useFetchEpochProgress();
 
   return (
@@ -18,11 +18,15 @@ export const EpochHeroPill = ({ className }: WithClassnameType) => {
     >
       <div className='d-flex flex-column lext-left me-3'>
         <div className='label' data-testid='currentEpoch'>
-          Epoch {formatBigNumber({ value: epoch, showEllipsisIfZero: true })}
+          Epoch{' '}
+          {formatBigNumber({ value: epoch, showEllipsisIfZero: !isReady })}
         </div>
         <div className='description cursor-context' title={epochTimeRemaining}>
-          {formatBigNumber({ value: roundsLeft, showEllipsisIfZero: true })}{' '}
-          Rounds Left
+          {formatBigNumber({ value: roundsLeft, showEllipsisIfZero: !isReady })}{' '}
+          {getStringPlural(roundsLeft, {
+            string: 'Round'
+          })}{' '}
+          Left
         </div>
       </div>
       <ProgressRing progress={epochPercentage} size={32} />

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
@@ -21,34 +21,97 @@ export const useFetchEpochProgress = () => {
   const { epochPercentage, epochTimeRemaining } = stats;
   const { epoch, refreshRate, roundsPerEpoch, roundsPassed } = unprocessed;
 
-  const [oldTestnetId, setOldTestnetId] = useState(activeNetworkId);
-  const [isNewState, setIsNewState] = useState<boolean>(true);
-  const [hasCallMade, setHasCallMade] = useState<boolean>(false);
-  const [epochRoundsLeft, setEpochRoundsLeft] = useState<number>(0);
+  const hasCallMadeRef = useRef<boolean>(false);
 
-  const refreshInterval =
+  const rawRefreshInterval =
     refreshRate || initialNetworkRefreshRate || REFRESH_RATE;
-  const refreshIntervalSec = new BigNumber(refreshInterval).dividedBy(1000);
 
-  const stepInterval = getProgressStepInterval(refreshInterval);
-  const stepProgressSec = stepInterval.dividedBy(1000);
+  const [epochRoundsLeft, setEpochRoundsLeft] = useState<number>(0);
+  const [effectiveRefreshInterval, setEffectiveRefreshInterval] =
+    useState(rawRefreshInterval);
+
+  const refreshIntervalSec = useMemo(
+    () => new BigNumber(effectiveRefreshInterval).dividedBy(1000),
+    [effectiveRefreshInterval]
+  );
+
+  const stepInterval = useMemo(
+    () => getProgressStepInterval(effectiveRefreshInterval),
+    [effectiveRefreshInterval]
+  );
+
+  const stepProgressSec = useMemo(
+    () => stepInterval.dividedBy(1000),
+    [stepInterval]
+  );
 
   const [roundTimeProgress, setRoundTimeProgress] = useState(
     new BigNumber(stepProgressSec)
   );
 
-  const updateStats = () => {
-    if (!refreshInterval) {
-      return;
-    }
-    setIsNewState(oldTestnetId !== activeNetworkId);
-    if (isNewState) {
-      startRoundTime();
+  const roundProgress = useMemo(
+    () => roundTimeProgress.times(100).dividedBy(refreshIntervalSec),
+    [roundTimeProgress, refreshIntervalSec]
+  );
+
+  const roundsLeft = useMemo(() => {
+    if (epochRoundsLeft) {
+      return epochRoundsLeft;
     }
 
-    if (roundTimeProgress.isEqualTo(refreshIntervalSec) && !hasCallMade) {
+    // add one in order to take into account the css animation and the api call sync on the first run
+    return new BigNumber(roundsPerEpoch).minus(roundsPassed).plus(1).toNumber();
+  }, [epochRoundsLeft, roundsPerEpoch, roundsPassed]);
+
+  useEffect(() => {
+    if (!rawRefreshInterval) {
+      return;
+    }
+    setEffectiveRefreshInterval((prev) =>
+      rawRefreshInterval < prev ? rawRefreshInterval : prev
+    );
+  }, [rawRefreshInterval]);
+
+  // Reset on network change
+  useEffect(() => {
+    setEffectiveRefreshInterval(rawRefreshInterval);
+    setRoundTimeProgress(new BigNumber(stepProgressSec));
+    hasCallMadeRef.current = false;
+    setEpochRoundsLeft(0);
+  }, [activeNetworkId]);
+
+  useEffect(() => {
+    if (!effectiveRefreshInterval) {
+      return;
+    }
+
+    const intervalRoundTime = setInterval(() => {
+      if (!document.hidden) {
+        setRoundTimeProgress((prev) =>
+          prev.isGreaterThanOrEqualTo(refreshIntervalSec)
+            ? new BigNumber(stepProgressSec)
+            : prev.plus(stepProgressSec)
+        );
+      }
+    }, stepInterval.toNumber());
+
+    return () => clearInterval(intervalRoundTime);
+  }, [effectiveRefreshInterval]);
+
+  useEffect(() => {
+    if (!effectiveRefreshInterval || !roundTimeProgress || !timestamp) {
+      return;
+    }
+
+    if (
+      roundTimeProgress.isGreaterThanOrEqualTo(refreshIntervalSec) &&
+      !hasCallMadeRef.current
+    ) {
+      hasCallMadeRef.current = true;
+
       fetchStats().then(({ success }) => {
         if (!success) {
+          hasCallMadeRef.current = false;
           return;
         }
 
@@ -59,7 +122,6 @@ export const useFetchEpochProgress = () => {
           return;
         }
 
-        setHasCallMade(true);
         setEpochRoundsLeft((existingRound) => {
           if (!existingRound) {
             return roundsLeft;
@@ -75,49 +137,10 @@ export const useFetchEpochProgress = () => {
           return existingRound;
         });
       });
-    } else {
-      setHasCallMade(false);
+    } else if (roundTimeProgress.isLessThan(refreshIntervalSec)) {
+      hasCallMadeRef.current = false;
     }
-  };
-
-  const startRoundTime = () => {
-    if (!refreshInterval) {
-      return;
-    }
-    const intervalRoundTime = setInterval(() => {
-      if (!document.hidden) {
-        setRoundTimeProgress((roundTimeProgress) =>
-          roundTimeProgress.isEqualTo(refreshIntervalSec)
-            ? new BigNumber(stepProgressSec)
-            : roundTimeProgress.plus(stepProgressSec)
-        );
-      }
-    }, stepInterval.toNumber());
-    return () => clearInterval(intervalRoundTime);
-  };
-
-  useEffect(() => {
-    setOldTestnetId(activeNetworkId);
-  }, [activeNetworkId]);
-
-  useEffect(() => {
-    if (refreshInterval && roundTimeProgress && timestamp) {
-      updateStats();
-    }
-  }, [timestamp, roundTimeProgress, refreshInterval]);
-
-  const roundProgress = roundTimeProgress
-    .times(100)
-    .dividedBy(refreshIntervalSec ?? 1);
-
-  const roundsLeft = useMemo(() => {
-    if (epochRoundsLeft) {
-      return epochRoundsLeft;
-    }
-
-    // add one in order to take into account the css animation and the api call sync on the first run
-    return new BigNumber(roundsPerEpoch).minus(roundsPassed).plus(1).toNumber();
-  }, [epochRoundsLeft, roundsPerEpoch, roundsPassed]);
+  }, [timestamp, roundTimeProgress]);
 
   return {
     isReady: isDataReady,
