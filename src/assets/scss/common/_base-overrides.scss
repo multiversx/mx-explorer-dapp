@@ -43,3 +43,8 @@ input:is(:-webkit-autofill, :-webkit-autofill:focus) {
     background-color 600000s 0s,
     color 600000s 0s;
 }
+
+// nav transitions
+@view-transition {
+  navigation: auto;
+}
