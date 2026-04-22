@@ -31,11 +31,18 @@ npm run lint               # eslint src --max-warnings 0
 
 # E2E tests (Cypress, runs against integration-explorer.multiversx.com)
 node scripts/cypress.ts    # or: npm run cy:run
+# Tests hit the remote integration env — no local backend needs to be running.
 ```
 
 `src/config/index.ts` **must exist** before starting. The `start-*` scripts create it automatically via the `copy-*-config` step, but if you run `npm run start` directly you need it manually.
 
 HTTPS is enabled by default (self-signed cert via `@vitejs/plugin-basic-ssl`). Set `VITE_APP_USE_HTTPS=false` to disable.
+
+Env vars are read from `.env` / `.env.development`. Keys prefixed `VITE_APP_*` are exposed to the client (e.g. `VITE_APP_USE_HTTPS`, `VITE_APP_CACHE_BUST`, `VITE_APP_SHARE_PREFIX`, `VITE_APP_GA_ID`).
+
+### Branches & deploys
+
+- PRs target the `development` branch (not `main`).
 
 ---
 
