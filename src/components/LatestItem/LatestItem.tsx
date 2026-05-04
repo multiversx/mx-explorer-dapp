@@ -1,4 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import classNames from 'classnames';
+import { useSelector } from 'react-redux';
+import { activeNetworkSelector } from 'redux/selectors';
 
 export const LatestItem = ({
   children,
@@ -12,10 +15,15 @@ export const LatestItem = ({
   totalItems: number;
 }) => {
   const ref = useRef(null);
+  const { refreshRate } = useSelector(activeNetworkSelector);
+  const isSupernova = refreshRate === 600;
   const [internalIsNew, setInternalIsNew] = useState<boolean | undefined>();
-  const expandDuration = 600;
-  const totalAnimationTime = totalItems * expandDuration;
-  const itemAnimationDelay = totalAnimationTime - expandDuration * index;
+
+  const itemAnimationDelay = useMemo(() => {
+    const expandDuration = isSupernova ? 100 : 600;
+    const totalAnimationTime = totalItems * expandDuration;
+    return totalAnimationTime - expandDuration * index;
+  }, [refreshRate, totalItems, isSupernova]);
 
   useEffect(() => {
     if (isNew) {
@@ -30,9 +38,11 @@ export const LatestItem = ({
   return (
     <div
       ref={ref}
-      className={`latest-item ${index > 4 ? 'hide-sm' : ''} ${
-        isNew && internalIsNew === undefined ? 'isNew' : ''
-      }`}
+      className={classNames('latest-item', {
+        'hide-sm': index > 4,
+        isNew: isNew && internalIsNew === undefined,
+        fast: isSupernova
+      })}
     >
       {children}
     </div>

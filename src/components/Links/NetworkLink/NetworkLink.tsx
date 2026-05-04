@@ -43,6 +43,7 @@ export const NetworkLink = ({
   return (
     <Link
       {...props}
+      viewTransition
       preventScrollReset={preventScrollReset}
       data-testid={dataTestId}
     >
