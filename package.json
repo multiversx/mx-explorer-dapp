@@ -137,5 +137,11 @@
     ">0.2%",
     "not dead",
     "not op_mini all"
-  ]
+  ],
+  "peerDependencies": {
+    "@fortawesome/pro-duotone-svg-icons": "6.7.2",
+    "@fortawesome/pro-light-svg-icons": "6.7.2",
+    "@fortawesome/pro-regular-svg-icons": "6.7.2",
+    "@fortawesome/pro-solid-svg-icons": "6.7.2"
+  }
 }

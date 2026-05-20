@@ -23,6 +23,18 @@ importers:
       '@fortawesome/free-solid-svg-icons':
         specifier: 6.7.2
         version: 6.7.2
+      '@fortawesome/pro-duotone-svg-icons':
+        specifier: 6.7.2
+        version: 6.7.2
+      '@fortawesome/pro-light-svg-icons':
+        specifier: 6.7.2
+        version: 6.7.2
+      '@fortawesome/pro-regular-svg-icons':
+        specifier: 6.7.2
+        version: 6.7.2
+      '@fortawesome/pro-solid-svg-icons':
+        specifier: 6.7.2
+        version: 6.7.2
       '@fortawesome/react-fontawesome':
         specifier: 3.3.1
         version: 3.3.1(@fortawesome/fontawesome-svg-core@6.7.2)(react@18.2.0)
@@ -446,6 +458,22 @@ packages:
 
   '@fortawesome/free-solid-svg-icons@6.7.2':
     resolution: {integrity: sha512-GsBrnOzU8uj0LECDfD5zomZJIjrPhIlWU82AHwa2s40FKH+kcxQaBvBo3Z4TxyZHIyX8XTDxsyA33/Vx9eFuQA==}
+    engines: {node: '>=6'}
+
+  '@fortawesome/pro-duotone-svg-icons@6.7.2':
+    resolution: {integrity: sha512-XEQ95M7PLz2QbOGgAxRnxPr5wrkDEJI6+KCF6l/dOtZte27m1biZJadDCP4k7mBXn8/YznZTY4ujMiqy865dng==}
+    engines: {node: '>=6'}
+
+  '@fortawesome/pro-light-svg-icons@6.7.2':
+    resolution: {integrity: sha512-LeUnJCKlVG0oQwTW3oADJq3rkmnSDTg95RWdP46dCQ8pXOaw/8wzhN0XzZ2s/MqE48FNAX7E/XEqs0qMnrTZDA==}
+    engines: {node: '>=6'}
+
+  '@fortawesome/pro-regular-svg-icons@6.7.2':
+    resolution: {integrity: sha512-cJolK4K/s56mHAqOyno24SmjviHqSqG9ZfckBKCpWjJlgDexi61EfET5wWbmmEot6/BqasFjw9S6tudFQUL/PQ==}
+    engines: {node: '>=6'}
+
+  '@fortawesome/pro-solid-svg-icons@6.7.2':
+    resolution: {integrity: sha512-SY2aP8d7uBlg1rNYznA9w9SVnnQhu3x/C7CCKQYcOGOC1YtPPHgIJhxKGbSzm6RkeJs1HVEfAkORX3J0XB5K9Q==}
     engines: {node: '>=6'}
 
   '@fortawesome/react-fontawesome@0.2.0':
@@ -5296,6 +5324,22 @@ snapshots:
     optional: true
 
   '@fortawesome/free-solid-svg-icons@6.7.2':
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.7.2
+
+  '@fortawesome/pro-duotone-svg-icons@6.7.2':
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.7.2
+
+  '@fortawesome/pro-light-svg-icons@6.7.2':
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.7.2
+
+  '@fortawesome/pro-regular-svg-icons@6.7.2':
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.7.2
+
+  '@fortawesome/pro-solid-svg-icons@6.7.2':
     dependencies:
       '@fortawesome/fontawesome-common-types': 6.7.2
 
