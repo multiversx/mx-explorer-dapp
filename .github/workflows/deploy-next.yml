@@ -22,7 +22,9 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Setup Icons
-        run: npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}"
+        run: |
+          npm config set @fortawesome:registry https://npm.fontawesome.com/
+          npm config set //npm.fontawesome.com/:_authToken ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Prepare Icons
