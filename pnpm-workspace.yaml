@@ -1,0 +1,10 @@
+allowBuilds:
+  '@fortawesome/fontawesome-common-types': true
+  '@fortawesome/fontawesome-svg-core': true
+  '@fortawesome/free-solid-svg-icons': true
+  '@parcel/watcher': true
+  '@swc/core': true
+  cypress: true
+  esbuild: true
+  keccak: true
+  protobufjs: true
