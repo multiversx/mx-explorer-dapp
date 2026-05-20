@@ -13,28 +13,28 @@ MultiversX Blockchain Explorer — a React + Redux Toolkit SPA for browsing the 
 ## Commands
 
 ```bash
-yarn                       # install dependencies (uses yarn, not npm/pnpm)
+pnpm install   # install dependencies (uses pnpm, not npm/yarn)
 
 # Dev — must pick a network config before starting:
 cp src/config/config.devnet.ts src/config/index.ts
-npm run start-devnet       # copies config + starts dev server → https://localhost:3002
+pnpm run start-devnet       # copies config + starts dev server → https://localhost:3002
 
-npm run start-mainnet      # mainnet
-npm run start-testnet      # testnet
+pnpm run start-mainnet      # mainnet
+pnpm run start-testnet      # testnet
 
 # Build
-npm run build-devnet
-npm run build-mainnet
+pnpm run build-devnet
+pnpm run build-mainnet
 
 # Lint (zero warnings policy)
-npm run lint               # eslint src --max-warnings 0
+pnpm run lint               # eslint src --max-warnings 0
 
 # E2E tests (Cypress, runs against integration-explorer.multiversx.com)
-node scripts/cypress.ts    # or: npm run cy:run
+node scripts/cypress.ts    # or: pnpm run cy:run
 # Tests hit the remote integration env — no local backend needs to be running.
 ```
 
-`src/config/index.ts` **must exist** before starting. The `start-*` scripts create it automatically via the `copy-*-config` step, but if you run `npm run start` directly you need it manually.
+`src/config/index.ts` **must exist** before starting. The `start-*` scripts create it automatically via the `copy-*-config` step, but if you run `pnpm run start` directly you need it manually.
 
 HTTPS is enabled by default (self-signed cert via `@vitejs/plugin-basic-ssl`). Set `VITE_APP_USE_HTTPS=false` to disable.
 
@@ -105,7 +105,7 @@ Key slices:
 
 ### Icons
 
-Free FontAwesome icons are used by default (`npm run prepare-free-icons`, run automatically by `yarn` via `prepare`). Pro icons require a FontAwesome npm token. Icon sets live in `src/icons/` with a generated `index.ts` per variant.
+Free FontAwesome icons are used by default (`pnpm run prepare-free-icons`, run automatically by `pnpm` via `prepare`). Pro icons require a FontAwesome npm token — install them with `pnpm run prepare-pro-icons`. Icon sets live in `src/icons/` with a generated `index.ts` per variant.
 
 ---
 

@@ -5,8 +5,6 @@ import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import svgr from 'vite-plugin-svgr';
-import tsconfigPaths from 'vite-tsconfig-paths';
-
 // https://vitejs.dev/config/
 (dns as any).setDefaultResultOrder('verbatim');
 
@@ -17,7 +15,6 @@ export default () => {
   return defineConfig({
     plugins: [
       react(),
-      tsconfigPaths(),
       nodePolyfills({
         globals: { Buffer: true, global: true, process: true }
       }),
@@ -30,6 +27,7 @@ export default () => {
       ...(shouldUseTSL ? [basicSsl()] : [])
     ],
     resolve: {
+      tsconfigPaths: true,
       alias: {
         '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap')
       }
@@ -42,9 +40,9 @@ export default () => {
             'legacy-js-api',
             'import',
             'global-builtin',
-            'mixed-decls',
             'abs-percent',
-            'color-functions'
+            'color-functions',
+            'if-function'
           ]
         }
       }
