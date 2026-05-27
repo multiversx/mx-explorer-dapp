@@ -57,6 +57,7 @@ export * from './Range';
 export * from './RolesBadges';
 export * from './ScAddressIcon';
 export * from './ScResultsTable';
+export * from './SdkDappWrapper';
 export * from './Search';
 export * from './Select';
 export * from './ShardList';
