@@ -36,7 +36,7 @@ export const TransactionsInPool = () => {
     dataPromise: getTransactionsInPool,
     dataCountPromise: getTransactionsInPoolCount,
     filters: { ...rest, type },
-    config: { type },
+    websocketConfig: { type },
     subscription: WebsocketSubcriptionsEnum.subscribePool,
     event: WebsocketEventsEnum.poolUpdate
   });
