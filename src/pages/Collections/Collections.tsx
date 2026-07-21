@@ -34,7 +34,7 @@ export const Collections = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const isMainnet = useIsMainnet();
   const activeRoute = useActiveRoute();
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const { search } = useGetSearch();
   const { search: searchLocation, pathname } = useLocation();
   const { getCollections, getCollectionsCount } = useAdapter();
@@ -67,6 +67,7 @@ export const Collections = () => {
         search,
         page,
         size,
+        searchAfter,
         type,
         ...(isMainnet
           ? { sort: CollectionSortEnum.verifiedAndHolderCount }
@@ -156,6 +157,7 @@ export const Collections = () => {
                     total={totalCollections}
                     show={collections.length > 0}
                     className='d-flex ms-auto me-auto me-sm-0'
+                    items={collections}
                   />
                 </div>
               </div>
@@ -222,7 +224,11 @@ export const Collections = () => {
 
               <div className='card-footer table-footer'>
                 <PageSize />
-                <Pager total={totalCollections} show={collections.length > 0} />
+                <Pager
+                  total={totalCollections}
+                  show={collections.length > 0}
+                  items={collections}
+                />
               </div>
             </div>
           </div>

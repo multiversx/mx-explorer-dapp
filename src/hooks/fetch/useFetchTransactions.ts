@@ -21,7 +21,7 @@ export interface TransactionsWebsocketResponseType {
 export const useFetchTransactions = (props: FetchTransactionsProps) => {
   const dispatch = useDispatch();
   const transactionFilters = useGetTransactionFilters();
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
 
   const { hasMaxTransactionsSize, dataCountPromise, filters, websocketConfig } =
     props;
@@ -69,6 +69,7 @@ export const useFetchTransactions = (props: FetchTransactionsProps) => {
     filters: {
       page,
       size: maxTransactionsSize,
+      searchAfter,
       ...transactionFilters,
       ...filters
     },

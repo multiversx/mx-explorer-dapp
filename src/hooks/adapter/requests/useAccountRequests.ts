@@ -153,6 +153,7 @@ export const useAccountRequests = () => {
       address,
       page,
       size,
+      searchAfter,
       timeout,
       signal
     }: BaseApiType & GetAccountResourceType) =>
@@ -160,7 +161,7 @@ export const useAccountRequests = () => {
         url: `/accounts/${address}/contracts`,
         timeout,
         signal,
-        params: getPageParams({ page, size })
+        params: getPageParams({ page, size, searchAfter })
       }),
 
     getAccountContractsCount: (
@@ -261,6 +262,7 @@ export const useAccountRequests = () => {
       type,
       page,
       size,
+      searchAfter,
       timeout,
       signal
     }: BaseApiType & GetAccountResourceType & { type: AccountRolesTypeEnum }) =>
@@ -268,7 +270,7 @@ export const useAccountRequests = () => {
         url: `/accounts/${address}/roles/${type}`,
         timeout,
         signal,
-        params: getPageParams({ page, size })
+        params: getPageParams({ page, size, searchAfter })
       }),
 
     getAccountRolesCount: ({
