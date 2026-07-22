@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ## [[2.3.5](https://github.com/multiversx/mx-explorer-dapp/pull/219)] - 2026-05-04
+
+- [600ms updates, avoid cached api/websocket updates](https://github.com/multiversx/mx-explorer-dapp/pull/218)
+
 - ## [[2.3.4](https://github.com/multiversx/mx-explorer-dapp/pull/215)] - 2026-01-26
 
 - [Fix token holders fetch param](https://github.com/multiversx/mx-explorer-dapp/pull/214)

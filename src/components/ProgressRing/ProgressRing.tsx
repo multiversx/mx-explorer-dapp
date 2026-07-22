@@ -1,3 +1,4 @@
+import { memo, useMemo } from 'react';
 import classNames from 'classnames';
 import { WithClassnameType } from 'types';
 
@@ -11,7 +12,7 @@ export interface ProgressRingType extends WithClassnameType {
   children?: React.ReactNode;
 }
 
-export const ProgressRing = ({
+const ProgressRingBase = ({
   progress = 0,
   size = 24,
   trackWidth = 3,
@@ -22,10 +23,8 @@ export const ProgressRing = ({
   className
 }: ProgressRingType) => {
   const center = size / 2;
-  const radius =
-    center - (trackWidth > indicatorWidth ? trackWidth : indicatorWidth);
-
-  const dashArray = 2 * Math.PI * radius;
+  const radius = center - Math.max(trackWidth, indicatorWidth);
+  const dashArray = useMemo(() => 2 * Math.PI * radius, [radius]);
   const dashOffset = dashArray * ((100 - progress) / 100);
 
   const showLabel = size > 80 && children;
@@ -74,3 +73,5 @@ export const ProgressRing = ({
     </div>
   );
 };
+
+export const ProgressRing = memo(ProgressRingBase);

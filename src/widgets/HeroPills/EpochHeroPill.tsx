@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
 import { ProgressRing } from 'components';
-import { formatBigNumber } from 'helpers';
+import { formatBigNumber, getStringPlural } from 'helpers';
 import { useFetchEpochProgress } from 'hooks';
 import { WithClassnameType } from 'types';
 
@@ -23,7 +23,10 @@ export const EpochHeroPill = ({ className }: WithClassnameType) => {
         </div>
         <div className='description cursor-context' title={epochTimeRemaining}>
           {formatBigNumber({ value: roundsLeft, showEllipsisIfZero: !isReady })}{' '}
-          Rounds Left
+          {getStringPlural(roundsLeft, {
+            string: 'Round'
+          })}{' '}
+          Left
         </div>
       </div>
       <ProgressRing progress={epochPercentage} size={32} />
