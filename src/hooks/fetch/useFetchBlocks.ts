@@ -15,7 +15,7 @@ interface BlocksWebsocketResponseType {
 export const useFetchBlocks = (props: Omit<FetchApiDataProps, 'onApiData'>) => {
   const dispatch = useDispatch();
   const blockFilters = useGetBlockFilters();
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const { dataCountPromise, filters, websocketConfig } = props;
 
   const { blocks, blocksCount, isDataReady, isRefreshPaused } =
@@ -57,6 +57,7 @@ export const useFetchBlocks = (props: Omit<FetchApiDataProps, 'onApiData'>) => {
     filters: {
       page,
       size,
+      searchAfter,
       ...blockFilters,
       ...filters
     },

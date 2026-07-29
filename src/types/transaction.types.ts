@@ -43,6 +43,7 @@ export interface TransactionType {
   results?: TransactionSCResultType[];
   operations?: TransactionOperationType[];
   innerTransactions?: TransactionInnerType[];
+  searchAfter?: string;
 }
 
 // TRANSACTION SC RESULTS
@@ -65,6 +66,7 @@ export interface TransactionSCResultType {
   senderAssets?: AccountAssetType;
   receiverAssets?: AccountAssetType;
   miniBlockHash?: string;
+  searchAfter?: string;
 }
 
 export interface TransactionSCResultLogType {

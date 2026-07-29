@@ -1,16 +1,17 @@
-import { Fragment } from 'react';
+import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router-dom';
 
 import { ELLIPSIS, PAGE_SIZE, MAX_RESULTS } from 'appConstants';
 import { stringIsInteger, formatOrdinals } from 'helpers';
+import { useGetCursorHistory } from 'hooks';
 import {
   faAngleLeft,
   faAngleRight,
   faAnglesLeft,
   faAnglesRight
 } from 'icons/solid';
-import { pagerHelper } from './helpers/pagerHelper';
+import { generatePaginationArray, pagerHelper } from './helpers/pagerHelper';
 
 export interface PagerUIType {
   total?: number | typeof ELLIPSIS;
@@ -19,6 +20,7 @@ export interface PagerUIType {
   showFirstAndLast?: boolean;
   className?: string;
   hasTestId?: boolean;
+  items?: { searchAfter?: string }[];
 }
 
 export const Pager = ({
@@ -27,47 +29,123 @@ export const Pager = ({
   itemsPerPage = PAGE_SIZE,
   showFirstAndLast,
   className = '',
-  hasTestId = true
+  hasTestId = true,
+  items = []
 }: PagerUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
+  const { getCursor, setCursor } = useGetCursorHistory();
 
-  const { page, size, ...rest } = params;
+  const nextCursor = items[items.length - 1]?.searchAfter;
+  const itemsCount = items.length;
+
+  const { page, size, searchAfter, ...rest } = params;
   const processedSize = stringIsInteger(String(size))
     ? parseInt(String(size))
     : itemsPerPage;
 
   const processedTotal = total !== ELLIPSIS ? Math.min(total, MAX_RESULTS) : 0;
 
-  const { processedPage, lastPage, end, paginationArray } = pagerHelper({
+  const {
+    processedPage,
+    lastPage,
+    end,
+    lastOffsetPage,
+    isCursorMode,
+    paginationArray
+  } = pagerHelper({
     total: processedTotal,
     itemsPerPage: processedSize,
     page: Number(page)
   });
 
+  const hasResultsPastCeiling = total === ELLIPSIS || total > MAX_RESULTS;
+  const isCursorNext =
+    processedPage >= lastOffsetPage &&
+    Boolean(nextCursor) &&
+    hasResultsPastCeiling;
+  const isLastCursorPage = isCursorMode && itemsCount < processedSize;
+
+  const baseUrlParams = { ...rest, ...(size ? { size } : {}) };
+  const previousCursor = getCursor(processedPage - 1);
+  const previousPage = processedPage - 1;
+
   const nextUrlParams = {
-    ...params,
-    page: `${processedPage + 1}`
+    ...baseUrlParams,
+    page: `${processedPage + 1}`,
+    ...(isCursorNext && nextCursor ? { searchAfter: nextCursor } : {})
   };
 
   const firstUrlParams = {
     ...rest
   };
   const prevUrlParams = {
-    ...params,
-    page: `${processedPage - 1}`
+    ...baseUrlParams,
+    page: `${previousPage}`,
+    ...(previousPage > lastOffsetPage && previousCursor
+      ? { searchAfter: previousCursor }
+      : {})
   };
+
   const lastUrlParams = {
-    ...params,
+    ...baseUrlParams,
     page: `${lastPage}`
   };
 
-  const updatePage = (nextUrlParams: any) => {
-    setSearchParams(nextUrlParams);
+  const offsetPages =
+    isCursorNext && !paginationArray.includes(processedPage + 1)
+      ? [...paginationArray, processedPage + 1]
+      : paginationArray;
+
+  const pages = isCursorMode
+    ? generatePaginationArray({
+        currentPage: processedPage,
+        totalPages: processedPage + (nextCursor ? 1 : 0)
+      })
+    : offsetPages;
+
+  const getPageUrlParams = (page: number) => {
+    if (page <= lastOffsetPage) {
+      return { ...baseUrlParams, page: `${page}` };
+    }
+    if (page === processedPage + 1 && nextCursor) {
+      return { ...baseUrlParams, page: `${page}`, searchAfter: nextCursor };
+    }
+    const cursor = getCursor(page);
+
+    return cursor
+      ? { ...baseUrlParams, page: `${page}`, searchAfter: cursor }
+      : undefined;
   };
 
-  const leftBtnActive = processedPage !== 1;
-  const rightBtnsActive = end < processedTotal;
+  const updatePage = (urlParams: Record<string, string>) => {
+    setSearchParams(urlParams);
+  };
+
+  useEffect(() => {
+    if (isCursorMode && searchAfter) {
+      setCursor(processedPage, searchAfter);
+    }
+  }, [isCursorMode, searchAfter, processedPage]);
+
+  useEffect(() => {
+    if (isCursorMode && itemsCount && !nextCursor) {
+      setSearchParams(
+        { ...rest, page: `${lastOffsetPage}` },
+        { replace: true }
+      );
+    }
+  }, [isCursorMode, nextCursor, itemsCount, lastOffsetPage]);
+
+  const canGoPrevious = isCursorMode
+    ? previousPage <= lastOffsetPage || Boolean(previousCursor)
+    : processedPage !== 1;
+  const canGoNext = isCursorMode
+    ? Boolean(nextCursor) && !isLastCursorPage
+    : total === ELLIPSIS || end < processedTotal || isCursorNext;
+
+  const leftBtnActive = canGoPrevious;
+  const rightBtnsActive = canGoNext;
 
   return show ? (
     <div className={`pager ${className}`}>
@@ -99,7 +177,7 @@ export const Pager = ({
             </>
           )}
 
-          {processedPage === 1 ? (
+          {!canGoPrevious ? (
             <div
               className='btn btn-pager previous-btn'
               aria-label='No Previous Page'
@@ -127,33 +205,31 @@ export const Pager = ({
         </div>
 
         <div className='d-flex align-items-center page-holder'>
-          {paginationArray.map((page, index) => {
-            const currentUrlParams = {
-              ...params,
-              page: String(page)
-            };
+          {pages.map((page, index) => {
+            if (page === ELLIPSIS) {
+              return <span key={`ellipsis-${index}`}>{ELLIPSIS}</span>;
+            }
+
+            const pageNumber = Number(page);
+            const isActive = pageNumber === processedPage;
+            const pageUrlParams = getPageUrlParams(pageNumber);
 
             return (
-              <Fragment key={`${page}-${index}`}>
-                {page !== ELLIPSIS ? (
-                  <button
-                    type='button'
-                    className={`btn btn-pager page-btn ${
-                      page === processedPage ? 'active' : ''
-                    }`}
-                    aria-label={`${formatOrdinals(Number(page))} Page`}
-                    onClick={() => {
-                      if (page !== processedPage) {
-                        updatePage(currentUrlParams);
-                      }
-                    }}
-                  >
-                    {page}
-                  </button>
-                ) : (
-                  <span>...</span>
-                )}
-              </Fragment>
+              <button
+                key={`${page}-${index}`}
+                type='button'
+                className={`btn btn-pager page-btn ${isActive ? 'active' : ''}`}
+                aria-label={`${formatOrdinals(pageNumber)} Page`}
+                {...(isActive ? { 'aria-current': 'page' as const } : {})}
+                disabled={!isActive && !pageUrlParams}
+                onClick={() => {
+                  if (!isActive && pageUrlParams) {
+                    updatePage(pageUrlParams);
+                  }
+                }}
+              >
+                {page}
+              </button>
             );
           })}
         </div>
@@ -163,7 +239,7 @@ export const Pager = ({
             rightBtnsActive ? '' : 'inactive'
           }`}
         >
-          {total === ELLIPSIS || end < processedTotal ? (
+          {canGoNext ? (
             <button
               type='button'
               className='btn btn-pager next-btn'
@@ -189,7 +265,7 @@ export const Pager = ({
 
           {showFirstAndLast && (
             <>
-              {!isNaN(lastPage) && end < processedTotal ? (
+              {!isCursorMode && !isNaN(lastPage) && end < processedTotal ? (
                 <button
                   type='button'
                   className='btn btn-pager'

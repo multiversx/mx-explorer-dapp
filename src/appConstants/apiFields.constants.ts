@@ -19,7 +19,8 @@ export const TRANSACTIONS_TABLE_FIELDS = [
   'guardianSignature',
   'relayer',
   'isRelayed',
-  'relayedVersion'
+  'relayedVersion',
+  'searchAfter'
 ];
 
 export const IDENTITIES_FIELDS = [
@@ -80,7 +81,8 @@ export const BLOCKS_FIELDS = [
   'gasPenalized',
   'maxGasLimit',
   'proposer',
-  'proposerIdentity'
+  'proposerIdentity',
+  'searchAfter'
 ];
 
 export const LATEST_BLOCKS_FIELDS = [

@@ -1,5 +1,6 @@
 export * from './addressIsBech32';
 export * from './isContract';
+export * from './isCursorPage';
 export * from './isEgldToken';
 export * from './isEllipsisActive';
 export * from './isHash';

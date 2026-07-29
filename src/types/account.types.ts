@@ -38,6 +38,7 @@ export interface AccountType {
   activeGuardianServiceUid?: string;
   ownerAssets?: AccountAssetType;
   transfersLast24h?: number;
+  searchAfter?: string;
 }
 
 export interface AccountSliceType extends SliceType {

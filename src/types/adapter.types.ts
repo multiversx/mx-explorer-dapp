@@ -17,6 +17,8 @@ export interface BaseApiType extends AxiosParamsApiType {
   extract?: string;
   // not on api
   isCount?: boolean;
+  // cursor taken from the last item of the previous response
+  searchAfter?: string;
 }
 
 export interface SortableApiType extends BaseApiType {
@@ -249,6 +251,7 @@ export interface AdapterProviderPropsType {
     withScrCount?: boolean;
     withIdentityInfo?: boolean;
     owner?: string;
+    searchAfter?: string;
   };
   timeout: number;
   timestamp?: number;
