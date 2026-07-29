@@ -255,6 +255,7 @@ export function getProviderParams({
 export function getTokensParams({
   page,
   size,
+  searchAfter,
   sort,
   order,
   fields,
@@ -275,7 +276,7 @@ export function getTokensParams({
     ...(isCount
       ? {}
       : {
-          ...getPageParams({ page, size }),
+          ...getPageParams({ page, size, searchAfter }),
           ...(sort !== undefined ? { sort } : {}),
           ...(order !== undefined ? { order } : {}),
           ...(fields !== undefined ? { fields } : {}),

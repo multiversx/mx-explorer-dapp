@@ -33,6 +33,9 @@ describe('searchAfter cursor pagination', () => {
     cy.wait('@txs').its('request.url').should('include', 'from=9975');
     cy.get('[data-testid="transactionsTable"] tr').should('have.length.gt', 1);
 
+    // the cursor is already in hand at the wall, so 401 is a live page button
+    cy.get('[aria-label="401st Page"]').first().should('not.be.disabled');
+
     firstTxHash().then((hashAtWall) => {
       cy.get('[data-testid="nextPageButton"]').first().click();
 
@@ -141,6 +144,32 @@ describe('searchAfter cursor pagination', () => {
           .invoke('text')
           .should('not.equal', nonceAtWall);
       });
+  });
+
+  it('crosses the wall on accounts too', () => {
+    cy.intercept('GET', 'https://devnet-api.multiversx.com/accounts?*').as(
+      'accounts'
+    );
+    cy.visit('/devnet/accounts?page=400');
+    cy.wait('@accounts').its('request.url').should('include', 'from=9975');
+
+    const firstAddress = () =>
+      cy
+        .get('[data-testid="accountsTable"] tr', { timeout: CURSOR_TIMEOUT })
+        .first()
+        .invoke('text');
+
+    firstAddress().then((addressAtWall) => {
+      cy.get('[data-testid="nextPageButton"]').first().click();
+
+      cy.url().should('include', 'page=401');
+      cy.wait('@accounts').then(({ request }) => {
+        expect(request.url).to.include('searchAfter=');
+        expect(request.url).to.not.include('from=');
+      });
+
+      firstAddress().should('not.equal', addressAtWall);
+    });
   });
 
   it('ignores a cursor left in the url once page falls back below the ceiling', () => {

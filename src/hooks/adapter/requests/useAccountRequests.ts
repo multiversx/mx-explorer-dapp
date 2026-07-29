@@ -41,6 +41,7 @@ export const useAccountRequests = () => {
       signal,
       page,
       size,
+      searchAfter,
       isSmartContract,
       withOwnerAssets = false,
       withDeployInfo = false,
@@ -53,7 +54,7 @@ export const useAccountRequests = () => {
         timeout,
         signal,
         params: {
-          ...getPageParams({ page, size }),
+          ...getPageParams({ page, size, searchAfter }),
           ...(isSmartContract !== undefined ? { isSmartContract } : {}),
           ...(withOwnerAssets ? { withOwnerAssets } : {}),
           ...(withDeployInfo ? { withDeployInfo } : {}),

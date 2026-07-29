@@ -92,12 +92,17 @@ export const Pager = ({
     page: `${lastPage}`
   };
 
+  const offsetPages =
+    isCursorNext && !paginationArray.includes(processedPage + 1)
+      ? [...paginationArray, processedPage + 1]
+      : paginationArray;
+
   const pages = isCursorMode
     ? generatePaginationArray({
         currentPage: processedPage,
         totalPages: processedPage + (nextCursor ? 1 : 0)
       })
-    : paginationArray;
+    : offsetPages;
 
   const getPageUrlParams = (page: number) => {
     if (page <= lastOffsetPage) {
