@@ -27,6 +27,7 @@ export interface BlockType {
   reserved?: string;
   lastExecutionResultHash?: string;
   lastExecutionResultNonce?: number;
+  searchAfter?: string;
 }
 
 export interface UIBlockType extends BlockType {

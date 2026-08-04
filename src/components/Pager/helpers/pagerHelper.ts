@@ -1,4 +1,5 @@
 import { ELLIPSIS } from 'appConstants';
+import { getLastOffsetPage, isCursorPage } from 'helpers';
 import { stringIsInteger } from 'lib';
 
 interface PagerHelperType {
@@ -7,7 +8,7 @@ interface PagerHelperType {
   page: number;
 }
 
-const generatePaginationArray = ({
+export const generatePaginationArray = ({
   currentPage,
   totalPages
 }: {
@@ -56,12 +57,20 @@ export const pagerHelper = ({ total, itemsPerPage, page }: PagerHelperType) => {
     totalPages: !isNaN(lastPage) ? lastPage : processedPage
   });
 
+  const lastOffsetPage = getLastOffsetPage(itemsPerPage);
+  const isCursorMode = isCursorPage({
+    page: processedPage,
+    size: itemsPerPage
+  });
+
   return {
     processedPage,
     start,
     end,
     last,
     lastPage,
+    lastOffsetPage,
+    isCursorMode,
     paginationArray
   };
 };

@@ -63,7 +63,11 @@ export const BlocksTable = ({
                 </span>
               )}
             </h5>
-            <Pager total={totalBlocks} show={blocks.length > 0} />
+            <Pager
+              total={totalBlocks}
+              show={blocks.length > 0}
+              items={blocks}
+            />
           </div>
         </div>
 
@@ -195,7 +199,7 @@ export const BlocksTable = ({
 
         <div className='card-footer table-footer'>
           <PageSize />
-          <Pager total={totalBlocks} show={blocks.length > 0} />
+          <Pager total={totalBlocks} show={blocks.length > 0} items={blocks} />
         </div>
       </div>
     </div>
