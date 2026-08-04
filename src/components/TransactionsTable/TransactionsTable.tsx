@@ -65,6 +65,7 @@ export const TransactionsTable = ({
               total={totalTransactions}
               show={transactions.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
+              items={transactions}
             />
           </div>
         </div>
@@ -137,7 +138,11 @@ export const TransactionsTable = ({
 
         <div className='card-footer table-footer'>
           <PageSize maxSize={MAX_TRANSACTIONS_PAGE_SIZE} />
-          <Pager total={totalTransactions} show={transactions.length > 0} />
+          <Pager
+            total={totalTransactions}
+            show={transactions.length > 0}
+            items={transactions}
+          />
         </div>
       </div>
     </div>

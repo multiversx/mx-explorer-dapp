@@ -76,6 +76,7 @@ export interface TokenLockedAccountType {
   name: string;
   balance: string;
   assets?: AccountAssetType;
+  searchAfter?: string;
 }
 
 export interface TokenSupplyType {

@@ -56,7 +56,7 @@ export const Applications = () => {
 
   const sort = useGetSort();
   const { search } = useGetSearch();
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
 
   const [accounts, setAccounts] = useState<AccountType[]>([]);
@@ -82,6 +82,7 @@ export const Applications = () => {
     Promise.all([
       getAccounts({
         page,
+        searchAfter,
         search,
         isSmartContract: true,
         withOwnerAssets: true,
@@ -141,6 +142,7 @@ export const Applications = () => {
                     itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
                     show={accounts.length > 0}
                     className='d-flex ms-auto me-auto me-sm-0'
+                    items={accounts}
                   />
                 </div>
               </div>
@@ -291,6 +293,7 @@ export const Applications = () => {
                   total={totalAccounts}
                   itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
                   show={accounts.length > 0}
+                  items={accounts}
                 />
               </div>
             </div>

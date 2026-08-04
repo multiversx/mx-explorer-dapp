@@ -39,7 +39,7 @@ export const ProviderLayout = () => {
   const fetchProvider = async () => {
     if (address) {
       const { data, success } = await getProvider({ address });
-      if (success && data) {
+      if (success && data?.identity) {
         const identityDetails = await getIdentity(data.identity);
         if (identityDetails.success) {
           setIdentity(identityDetails.data);
