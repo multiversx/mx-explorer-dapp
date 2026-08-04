@@ -177,5 +177,6 @@ export const urlBuilder = {
   providerDetails: (address: string) => `/providers/${address}`,
   providerDetailsTransactions: (address: string) =>
     `/providers/${address}/transactions`,
-  miniblockDetails: (hash: string) => `/miniblocks/${hash}`
+  miniblockDetails: (hash: string) => `/miniblocks/${hash}`,
+  search: (hash: string) => `/search/${hash}`
 };

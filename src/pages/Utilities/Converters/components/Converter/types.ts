@@ -7,6 +7,7 @@ export interface ConverterValidate {
 }
 
 export interface ConverterType {
+  name: string;
   title: string;
   label: string;
   identifier: string;

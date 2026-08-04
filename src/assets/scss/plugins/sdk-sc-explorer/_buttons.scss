@@ -26,6 +26,7 @@
     }
   }
   &-login-button-wrapper {
+    width: 100%;
     gap: 0.5rem;
     &-text {
       font-size: 0.875rem;
@@ -51,6 +52,7 @@
   &-interaction-form-button {
     margin-top: 1.75rem;
   }
+  &-deploy-upgrade-file-form-button,
   &-interaction-modal-form-button,
   &-transaction-panel-button {
     display: flex;

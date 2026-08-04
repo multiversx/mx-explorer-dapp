@@ -82,32 +82,40 @@ export const SmartContractInteraction = () => {
 
   return (
     <div className='smart-contract-interaction page-content container'>
-      <h1 className='mb-4'>Smart Contract Interaction</h1>
-      <SdkDappWrapper>
-        <ScExplorerContainer
-          accountConsumerHandlers={{ useGetLoginInfo, useGetAccountInfo }}
-          networkConfig={{ environment, apiAddress }}
-          customClassNames={customClassNames}
-          icons={icons}
-          activeSection={VerifiedContractTabsEnum.loadAbi}
-          config={{
-            canMutate: false,
-            canLoadAbi: true,
-            canDeploy: false,
-            canUpgrade: false,
-            canDisplayContractDetails: false,
-            ...(extraRequestHeaders
-              ? {
-                  loginParams: {
-                    nativeAuth: {
-                      extraRequestHeaders
+      <div className={'page-hero card card-lg card-black mb-3'}>
+        <div className='card-header'>
+          <h2 className='title mb-0 text-capitalize'>
+            Smart Contract Interaction
+          </h2>
+        </div>
+        <div className='card-body'>
+          <SdkDappWrapper>
+            <ScExplorerContainer
+              accountConsumerHandlers={{ useGetLoginInfo, useGetAccountInfo }}
+              networkConfig={{ environment, apiAddress }}
+              customClassNames={customClassNames}
+              icons={icons}
+              activeSection={VerifiedContractTabsEnum.loadAbi}
+              config={{
+                canMutate: false,
+                canLoadAbi: true,
+                canDeploy: true,
+                canUpgrade: true,
+                canDisplayContractDetails: true,
+                ...(extraRequestHeaders
+                  ? {
+                      loginParams: {
+                        nativeAuth: {
+                          extraRequestHeaders
+                        }
+                      }
                     }
-                  }
-                }
-              : {})
-          }}
-        />
-      </SdkDappWrapper>
+                  : {})
+              }}
+            />
+          </SdkDappWrapper>
+        </div>
+      </div>
     </div>
   );
 };
