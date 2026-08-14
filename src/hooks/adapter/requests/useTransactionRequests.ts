@@ -88,12 +88,12 @@ export const useTransactionRequests = () => {
     getScResult: (hash: string, { signal, timeout }: AxiosParamsApiType = {}) =>
       provider({ url: `/results/${hash}`, signal, timeout }),
 
-    getScResults: ({ page, size, signal, timeout }: BaseApiType) =>
+    getScResults: ({ page, size, searchAfter, signal, timeout }: BaseApiType) =>
       provider({
         url: '/results',
         signal,
         timeout,
-        params: getPageParams({ page, size })
+        params: getPageParams({ page, size, searchAfter })
       }),
 
     getScResultsCount: ({ signal, timeout }: AxiosParamsApiType = {}) =>

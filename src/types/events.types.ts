@@ -13,6 +13,7 @@ export interface EventType {
   txOrder: number;
   order: number;
   timestamp: number;
+  searchAfter?: string;
 }
 
 export interface UIEventType extends EventType {

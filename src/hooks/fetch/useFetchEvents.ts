@@ -15,7 +15,7 @@ interface EventsWebsocketResponseType {
 export const useFetchEvents = (props: Omit<FetchApiDataProps, 'onApiData'>) => {
   const dispatch = useDispatch();
   const eventFilters = useGetEventFilters();
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const { dataCountPromise, filters } = props;
 
   const { events, eventsCount, isDataReady, isRefreshPaused } =
@@ -57,6 +57,7 @@ export const useFetchEvents = (props: Omit<FetchApiDataProps, 'onApiData'>) => {
     filters: {
       page,
       size,
+      searchAfter,
       ...eventFilters,
       ...filters
     },

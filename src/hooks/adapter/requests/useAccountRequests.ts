@@ -41,6 +41,7 @@ export const useAccountRequests = () => {
       signal,
       page,
       size,
+      searchAfter,
       isSmartContract,
       withOwnerAssets = false,
       withDeployInfo = false,
@@ -53,7 +54,7 @@ export const useAccountRequests = () => {
         timeout,
         signal,
         params: {
-          ...getPageParams({ page, size }),
+          ...getPageParams({ page, size, searchAfter }),
           ...(isSmartContract !== undefined ? { isSmartContract } : {}),
           ...(withOwnerAssets ? { withOwnerAssets } : {}),
           ...(withDeployInfo ? { withDeployInfo } : {}),
@@ -153,6 +154,7 @@ export const useAccountRequests = () => {
       address,
       page,
       size,
+      searchAfter,
       timeout,
       signal
     }: BaseApiType & GetAccountResourceType) =>
@@ -160,7 +162,7 @@ export const useAccountRequests = () => {
         url: `/accounts/${address}/contracts`,
         timeout,
         signal,
-        params: getPageParams({ page, size })
+        params: getPageParams({ page, size, searchAfter })
       }),
 
     getAccountContractsCount: (
@@ -261,6 +263,7 @@ export const useAccountRequests = () => {
       type,
       page,
       size,
+      searchAfter,
       timeout,
       signal
     }: BaseApiType & GetAccountResourceType & { type: AccountRolesTypeEnum }) =>
@@ -268,7 +271,7 @@ export const useAccountRequests = () => {
         url: `/accounts/${address}/roles/${type}`,
         timeout,
         signal,
-        params: getPageParams({ page, size })
+        params: getPageParams({ page, size, searchAfter })
       }),
 
     getAccountRolesCount: ({

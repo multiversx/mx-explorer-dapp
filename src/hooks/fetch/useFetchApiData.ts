@@ -41,13 +41,16 @@ export const useFetchApiData = ({
   isCustomUpdate,
   isRefreshPaused = false
 }: FetchApiDataProps) => {
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const [dataChanged, setDataChanged] = useState(false);
 
   let isCalled = false;
 
   const hasUrlParams =
-    Object.keys(urlParams).length > 0 || page !== 1 || size !== PAGE_SIZE;
+    Object.keys(urlParams).length > 0 ||
+    page !== 1 ||
+    size !== PAGE_SIZE ||
+    searchAfter !== undefined;
 
   const isPaused = Boolean(hasUrlParams || isRefreshPaused);
 

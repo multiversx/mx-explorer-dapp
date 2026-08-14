@@ -46,6 +46,7 @@ export const EventsTable = ({
               total={totalEvents}
               show={events.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
+              items={events}
             />
           </div>
         </div>
@@ -104,7 +105,7 @@ export const EventsTable = ({
 
         <div className='card-footer table-footer'>
           <PageSize />
-          <Pager total={totalEvents} show={events.length > 0} />
+          <Pager total={totalEvents} show={events.length > 0} items={events} />
         </div>
       </div>
     </div>

@@ -30,8 +30,14 @@ npm run build-mainnet
 npm run lint               # eslint src --max-warnings 0
 
 # E2E tests (Cypress, runs against integration-explorer.multiversx.com)
-node scripts/cypress.ts    # or: npm run cy:run
+node scripts/cypress.ts    # or: npm run cy:run — full suite + mochawesome report
+
+# Single spec / single test (bypasses the report wrapper):
+npx cypress run --spec cypress/e2e/Search/Search.cy.ts
+npx cypress open           # interactive runner
 ```
+
+Cypress hits the deployed `baseUrl` in `cypress.config.ts`, not your local dev server — no local build is needed to run E2E, but a network connection is.
 
 `src/config/index.ts` **must exist** before starting. The `start-*` scripts create it automatically via the `copy-*-config` step, but if you run `npm run start` directly you need it manually.
 
@@ -45,7 +51,7 @@ HTTPS is enabled by default (self-signed cert via `@vitejs/plugin-basic-ssl`). S
 
 `src/index.tsx` → `App.tsx` wraps the app in Redux `<Provider>` + `<PersistGate>` + `<Interceptor>`.
 
-Routes are defined in `src/routes/routes.tsx` using React Router v6 `createBrowserRouter`. Every network has its routes prefixed with `/:network/` (e.g. `/devnet/blocks/...`). `generateNetworkRoutes` in `src/routes/helpers/` iterates `networks` from config and wraps routes per network. The `Layout` component (`src/layouts/Layout/`) is the shell that renders the header, hero stats widgets, and footer around page content.
+The router itself is created in `src/App.tsx` with React Router v7 `createBrowserRouter`; the route definitions it consumes live in `src/routes/routes.tsx`. Every network has its routes prefixed with `/:network/` (e.g. `/devnet/blocks/...`). `generateNetworkRoutes` in `src/routes/helpers/` iterates `networks` from config and wraps routes per network. The `Layout` component (`src/layouts/Layout/`) is the shell that renders the header, hero stats widgets, and footer around page content.
 
 ### Network Configuration
 
