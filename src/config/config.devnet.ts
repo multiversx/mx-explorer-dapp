@@ -17,7 +17,8 @@ export const networks: NetworkType[] = [
     explorerAddress: 'https://devnet-explorer.multiversx.com',
     nftExplorerAddress: 'https://devnet.xspotlight.com',
     apiAddress: 'https://devnet-api.multiversx.com',
-    updatesWebsocketUrl: 'https://devnet-socket-api.multiversx.com'
+    updatesWebsocketUrl: 'https://devnet-socket-api.multiversx.com',
+    refreshRate: 600
   },
 
   // Saved Custom Network Configs
