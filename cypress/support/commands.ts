@@ -46,19 +46,35 @@ Cypress.Commands.add('coveredElementHandler', (selector) => {
   });
 });
 
+// Clicks a pager page button and waits for the pager to re-render with that
+// page active. Without this the next command can click a button still holding
+// the previous render's handler, sending the app to the wrong page.
+const goToPage = (ordinal: string) => {
+  cy.get(`[aria-label="${ordinal} Page"]`).first().click();
+  cy.get(`[aria-label="${ordinal} Page"]`)
+    .first()
+    .should('have.attr', 'aria-current', 'page');
+};
+
 Cypress.Commands.add('paginationHandler', (route) => {
   cy.get('header').invoke('css', {
     display: 'none'
   });
-  cy.get('[aria-label="2nd Page"]').first().click();
+  goToPage('2nd');
   cy.checkUrl('page=2');
-  cy.get('[aria-label="3rd Page"]').first().click();
+  goToPage('3rd');
   cy.checkUrl('page=3');
-  cy.get('[aria-label="1st Page"]').first().click();
+  goToPage('1st');
+
   cy.contains('button', 'Next').last().click();
   cy.checkUrl('page=2');
+  cy.get('[aria-label="2nd Page"]')
+    .first()
+    .should('have.attr', 'aria-current', 'page');
+
   cy.contains('button', 'Prev').click();
   cy.checkUrl(route);
+  cy.url().should(AssertionEnum.notInclude, 'page=');
 });
 
 Cypress.Commands.add('checkTableHead', (payload: string[]) => {
