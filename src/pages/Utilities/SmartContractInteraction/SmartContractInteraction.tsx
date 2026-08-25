@@ -30,6 +30,8 @@ import {
 import { useGetEnvironment } from 'pages/AccountDetails/AccountVerifiedContract/hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 
+import '@multiversx/sdk-dapp-sc-explorer/out/styles.css';
+
 const customClassNames = {
   cardClassName: 'card card-black',
   cardHeaderClassName: 'card-header',

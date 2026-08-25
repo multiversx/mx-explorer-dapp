@@ -8,3 +8,5 @@ allowBuilds:
   esbuild: false
   keccak: false
   protobufjs: false
+minimumReleaseAgeExclude:
+  - '@multiversx/*'
