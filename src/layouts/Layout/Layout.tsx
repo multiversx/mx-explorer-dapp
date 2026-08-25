@@ -10,7 +10,6 @@ import {
   useLoopManager,
   useCheckVersion,
   useGetURLNetwork,
-  useInitDatadog,
   useInitWebsocket,
   useSetBrowserClassNames,
   useSetDappConfig,
@@ -35,7 +34,6 @@ export const Layout = () => {
 
   useLoopManager();
   useCheckVersion();
-  useInitDatadog();
   useInitWebsocket();
   useSetDappConfig();
   useSetBrowserClassNames();
