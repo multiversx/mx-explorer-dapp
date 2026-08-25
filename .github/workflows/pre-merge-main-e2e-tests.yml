@@ -40,6 +40,9 @@ jobs:
           CI: false
           VITE_APP_MARKERS_API_URL: ${{ secrets.MARKERS_API_URL }}
           VITE_APP_VERSION_URL: ${{ secrets.APP_VERSION_URL }}
+      - name: Block robots on integration deploy
+        run: |
+          printf 'User-agent: *\nDisallow: /\n' > ./build/robots.txt
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
