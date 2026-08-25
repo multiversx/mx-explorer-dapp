@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Account Analytics](https://github.com/multiversx/mx-explorer-dapp/pull/212)
 - [Search Suggestions](https://github.com/multiversx/mx-explorer-dapp/pull/211)
 
+- ## [[2.3.6](https://github.com/multiversx/mx-explorer-dapp/pull/222)] - 2026-08-14
+
+- [searchAAfter feature](https://github.com/multiversx/mx-explorer-dapp/pull/221)
+
 - ## [[2.3.5](https://github.com/multiversx/mx-explorer-dapp/pull/219)] - 2026-05-04
 
 - [600ms updates, avoid cached api/websocket updates](https://github.com/multiversx/mx-explorer-dapp/pull/218)
