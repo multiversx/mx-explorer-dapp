@@ -52,7 +52,7 @@
     "three": "0.184.0",
     "three-stdlib": "2.36.1",
     "ua-parser-js": "1.0.41",
-    "yup": "0.32.11"
+    "yup": "1.7.1"
   },
   "scripts": {
     "start": "cross-env VITE_APP_CACHE_BUST=$(git rev-parse --short HEAD || echo 'local') vite",

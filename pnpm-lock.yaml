@@ -147,8 +147,8 @@ importers:
         specifier: 1.0.41
         version: 1.0.41
       yup:
-        specifier: 0.32.11
-        version: 0.32.11
+        specifier: 1.7.1
+        version: 1.7.1
     devDependencies:
       '@types/file-saver':
         specifier: 2.0.7
@@ -3363,9 +3363,6 @@ packages:
   nanoassert@1.1.0:
     resolution: {integrity: sha512-C40jQ3NzfkP53NsO8kEOFd79p4b9kDXQMwgiY1z8ZwrDZgUyom0AHwGegF4Dm99L+YoYhuaB0ceerUcXmqr1rQ==}
 
-  nanoclone@0.2.1:
-    resolution: {integrity: sha512-wynEP02LmIbLpcYw8uBKpcfF6dmg2vcpKqxeH5UcoKEYdExslsdUA4ugFauuaeYdTB76ez6gJW8XAZ6CgkXYxA==}
-
   nanoid@3.3.18:
     resolution: {integrity: sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -4794,10 +4791,6 @@ packages:
 
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
-    engines: {node: '>=10'}
-
-  yup@0.32.11:
-    resolution: {integrity: sha512-Z2Fe1bn+eLstG8DRR6FTavGD+MeAwyfmouhHsIUgaADz8jvFKbO/fXc2trJKZg+5EBjh4gGm3iU/t3onKlXHIg==}
     engines: {node: '>=10'}
 
   yup@1.7.1:
@@ -8572,8 +8565,6 @@ snapshots:
 
   nanoassert@1.1.0: {}
 
-  nanoclone@0.2.1: {}
-
   nanoid@3.3.18: {}
 
   natural-compare@1.4.0: {}
@@ -10144,16 +10135,6 @@ snapshots:
       fd-slicer: 1.1.0
 
   yocto-queue@0.1.0: {}
-
-  yup@0.32.11:
-    dependencies:
-      '@babel/runtime': 7.29.7
-      '@types/lodash': 4.17.25
-      lodash: 4.18.1
-      lodash-es: 4.18.1
-      nanoclone: 0.2.1
-      property-expr: 2.0.6
-      toposort: 2.0.2
 
   yup@1.7.1:
     dependencies:
