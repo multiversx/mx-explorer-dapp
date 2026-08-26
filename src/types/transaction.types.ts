@@ -137,7 +137,8 @@ export enum TransactionFiltersEnum {
   transactionsInPoolType = 'type',
   hashes = 'hashes',
   isRelayed = 'isRelayed',
-  relayer = 'relayer'
+  relayer = 'relayer',
+  address = 'address'
 }
 
 // Avoid issues with differences between methods and actions
