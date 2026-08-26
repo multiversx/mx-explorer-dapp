@@ -19,6 +19,7 @@ export const networks: NetworkType[] = [
     explorerAddress: 'START_EXPLORER_ADDRESS_STOP',
     nftExplorerAddress: 'START_NFT_EXPLORER_ADDRESS_STOP',
     isSovereign: 'START_IS_SOVEREIGN_STOP',
+    accessToken: 'START_IS_ACCESSTOKEN_STOP',
     apiAddress: 'START_API_ADDRESS_STOP'
   },
 

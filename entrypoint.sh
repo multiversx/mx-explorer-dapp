@@ -36,9 +36,35 @@ if [ -n "$START_API_ADDRESS_STOP" ]; then
 fi
 
 if [ -n "$START_IS_SOVEREIGN_STOP" ]; then
+  # normalizează la true/false
+  case "$(printf '%s' "$START_IS_SOVEREIGN_STOP" | tr '[:upper:]' '[:lower:]')" in
+    1|true|yes|y|on)       START_IS_SOVEREIGN_STOP=true ;;
+    0|false|no|n|off|"")   START_IS_SOVEREIGN_STOP=false ;;
+    *)                     START_IS_SOVEREIGN_STOP=true ;;
+  esac
+
   echo "IS Sovereign defined: ${START_IS_SOVEREIGN_STOP}, replacing in config"
-  find /usr/share/nginx/html/ -type f -exec sed -i 's|START_IS_SOVEREIGN_STOP|'${START_IS_SOVEREIGN_STOP}'|g' {} +
+  find /usr/share/nginx/html/ -type f -exec sed -i \
+    -e "s|'START_IS_SOVEREIGN_STOP'|${START_IS_SOVEREIGN_STOP}|g" \
+    -e "s|\"START_IS_SOVEREIGN_STOP\"|${START_IS_SOVEREIGN_STOP}|g" \
+    -e "s|START_IS_SOVEREIGN_STOP|${START_IS_SOVEREIGN_STOP}|g" {} +
 fi
+
+if [ -n "$START_IS_ACCESSTOKEN_STOP" ]; then
+  # normalizează la true/false
+  case "$(printf '%s' "$START_IS_ACCESSTOKEN_STOP" | tr '[:upper:]' '[:lower:]')" in
+    1|true|yes|y|on)       START_IS_ACCESSTOKEN_STOP=true ;;
+    0|false|no|n|off|"")   START_IS_ACCESSTOKEN_STOP=false ;;
+    *)                     START_IS_ACCESSTOKEN_STOP=true ;;
+  esac
+
+  echo "IS Sovereign defined: ${START_IS_ACCESSTOKEN_STOP}, replacing in config"
+  find /usr/share/nginx/html/ -type f -exec sed -i \
+    -e "s|'START_IS_ACCESSTOKEN_STOP'|${START_IS_ACCESSTOKEN_STOP}|g" \
+    -e "s|\"START_IS_ACCESSTOKEN_STOP\"|${START_IS_ACCESSTOKEN_STOP}|g" \
+    -e "s|START_IS_ACCESSTOKEN_STOP|${START_IS_ACCESSTOKEN_STOP}|g" {} +
+fi
+
 
 # FIX NGINX 
 sed -i '/location \/ {/,/}/d' /etc/nginx/conf.d/default.conf
