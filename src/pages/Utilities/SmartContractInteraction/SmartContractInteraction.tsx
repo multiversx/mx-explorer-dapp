@@ -47,6 +47,8 @@ const customClassNames = {
   buttonClassName: 'btn btn-sm',
   buttonPrimaryClassName: 'btn-primary',
   buttonSecondaryClassName: 'btn-dark',
+  badgeActiveClassName: 'badge-outline badge-rounded badge-property active',
+  badgeInactiveClassName: 'badge-outline badge-rounded badge-property inactive',
   inputClassName: 'form-control',
   inputInvalidClassName: 'is-invalid',
   inputInvalidFeedbackClassName: 'invalid-feedback',
@@ -99,11 +101,13 @@ export const SmartContractInteraction = () => {
               icons={icons}
               activeSection={VerifiedContractTabsEnum.loadAbi}
               config={{
-                canMutate: false,
+                canMutate: true,
                 canLoadAbi: true,
                 canDeploy: true,
                 canUpgrade: true,
                 canDisplayContractDetails: true,
+                hasViewInExplorer: false,
+                hasGeneralLogin: true,
                 ...(extraRequestHeaders
                   ? {
                       loginParams: {

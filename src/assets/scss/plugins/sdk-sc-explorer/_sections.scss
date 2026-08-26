@@ -23,6 +23,11 @@
       column-gap: 1rem;
       row-gap: 0.5rem;
     }
+    .#{$package-name}-badge {
+      svg {
+        margin-right: 0.25rem;
+      }
+    }
     .#{$package-name}-card-item {
       @include media-breakpoint-up(md) {
         flex-basis: 48%;

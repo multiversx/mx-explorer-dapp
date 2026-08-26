@@ -18,7 +18,7 @@
     "@fortawesome/react-fontawesome": "3.5.0",
     "@multiversx/sdk-core": "15.4.1",
     "@multiversx/sdk-dapp": "5.7.2",
-    "@multiversx/sdk-dapp-sc-explorer": "0.0.8-alpha.0",
+    "@multiversx/sdk-dapp-sc-explorer": "0.0.8-beta.0",
     "@multiversx/sdk-dapp-ui": "0.1.26",
     "@multiversx/sdk-dapp-utils": "3.1.0",
     "@number-flow/react": "0.6.0",
