@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
@@ -10,7 +9,7 @@ import {
 import {
   activeNetworkSelector,
   refreshSelector,
-  statsSelector
+  statsRefreshRateSelector
 } from 'redux/selectors';
 import { triggerRefresh } from 'redux/slices';
 
@@ -18,8 +17,7 @@ export const useLoopManager = () => {
   const intervalRef = useRef<any>(null);
 
   const { timestamp } = useSelector(refreshSelector);
-  const { unprocessed } = useSelector(statsSelector);
-  const { refreshRate: statsRefreshRate } = unprocessed;
+  const statsRefreshRate = useSelector(statsRefreshRateSelector);
 
   const { refreshRate: initialNetworkRefreshRate, updatesWebsocketUrl } =
     useSelector(activeNetworkSelector);
@@ -45,11 +43,16 @@ export const useLoopManager = () => {
 
   const dispatch = useDispatch();
 
+  // The interval is only re-created when `refreshRate` changes, so `timestamp`
+  // has to be read through a ref — captured directly it goes stale on the first
+  // tick, which made the `withinInterval` skip below dead code and fired a
+  // global refresh on every tick regardless of what the websocket had delivered.
+  const timestampRef = useRef(timestamp);
+  timestampRef.current = timestamp;
+
   const setLoopInterval = () => {
     intervalRef.current = setInterval(() => {
-      const withinInterval = moment()
-        .subtract(refreshRate, 'ms')
-        .isBefore(timestamp);
+      const withinInterval = Date.now() - refreshRate < timestampRef.current;
 
       if (!document.hidden && !withinInterval) {
         dispatch(triggerRefresh());
