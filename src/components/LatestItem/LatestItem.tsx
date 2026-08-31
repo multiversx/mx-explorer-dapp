@@ -26,13 +26,17 @@ export const LatestItem = ({
   }, [refreshRate, totalItems, isSupernova]);
 
   useEffect(() => {
-    if (isNew) {
-      setTimeout(() => {
-        if (ref.current !== null) {
-          setInternalIsNew(false);
-        }
-      }, itemAnimationDelay);
+    if (!isNew) {
+      return;
     }
+
+    const timeoutId = setTimeout(() => {
+      if (ref.current !== null) {
+        setInternalIsNew(false);
+      }
+    }, itemAnimationDelay);
+
+    return () => clearTimeout(timeoutId);
   }, [isNew, itemAnimationDelay]);
 
   return (
