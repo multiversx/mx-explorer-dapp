@@ -1,33 +1,28 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import classNames from 'classnames';
+
 import { WithClassnameType } from 'types';
 
-export interface ProgressRingType extends WithClassnameType {
-  progress: number;
+export interface SweepRingType extends WithClassnameType {
+  durationMs: number;
   size?: number;
   trackWidth?: number;
   indicatorWidth?: number;
   hasBg?: boolean;
-  isSubSecond?: boolean;
-  noTransition?: boolean;
   children?: React.ReactNode;
 }
 
-const ProgressRingBase = ({
-  progress = 0,
+const SweepRingBase = ({
+  durationMs,
   size = 24,
   trackWidth = 3,
   indicatorWidth = 3,
   hasBg = false,
-  isSubSecond,
-  noTransition,
   children,
   className
-}: ProgressRingType) => {
+}: SweepRingType) => {
   const center = size / 2;
   const radius = center - Math.max(trackWidth, indicatorWidth);
-  const dashArray = useMemo(() => 2 * Math.PI * radius, [radius]);
-  const dashOffset = dashArray * ((100 - progress) / 100);
 
   const showLabel = size > 80 && children;
 
@@ -35,16 +30,20 @@ const ProgressRingBase = ({
     <div
       className={classNames(
         'progress-ring-wrapper',
+        'sweep-ring',
         { 'has-bg': hasBg },
-        { 'sub-second': isSubSecond },
         className
       )}
-      style={{ width: size, height: size }}
+      style={
+        {
+          width: size,
+          height: size,
+          '--sweep-duration': `${durationMs}ms`
+        } as React.CSSProperties
+      }
     >
       <svg
-        className={classNames('progress-ring', {
-          'no-transition': noTransition || progress === 0
-        })}
+        className='progress-ring'
         style={{ width: size, height: size, minWidth: size, minHeight: size }}
       >
         <circle
@@ -64,8 +63,9 @@ const ProgressRingBase = ({
           r={radius}
           stroke='rgba(0,0,0,0.4)'
           strokeWidth={indicatorWidth}
-          strokeDasharray={dashArray}
-          strokeDashoffset={dashOffset}
+          pathLength={100}
+          strokeDasharray={100}
+          strokeDashoffset={100}
           strokeLinecap='round'
         />
       </svg>
@@ -75,4 +75,4 @@ const ProgressRingBase = ({
   );
 };
 
-export const ProgressRing = memo(ProgressRingBase);
+export const SweepRing = memo(SweepRingBase);
