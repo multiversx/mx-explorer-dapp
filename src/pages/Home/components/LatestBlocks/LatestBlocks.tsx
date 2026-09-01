@@ -25,10 +25,11 @@ import {
 interface LatestBlocksListType {
   blocks: UIBlockType[];
   isDataReady: boolean | undefined;
+  refreshRate?: number;
 }
 
 const LatestBlocksList = memo(
-  ({ blocks, isDataReady }: LatestBlocksListType) => (
+  ({ blocks, isDataReady, refreshRate }: LatestBlocksListType) => (
     <div className='card card-lg card-black'>
       {isDataReady === undefined && <Loader data-testid='blocksLoader' />}
       {isDataReady === false && <FailedBlocks />}
@@ -56,6 +57,7 @@ const LatestBlocksList = memo(
                   key={block.hash}
                   isNew={block.isNew}
                   index={i + 1}
+                  refreshRate={refreshRate}
                 >
                   <div className='latest-item-card p-4'>
                     <div className='d-flex align-items-center justify-content-between mb-3'>
@@ -108,7 +110,9 @@ const LatestBlocksList = memo(
 
 export const LatestBlocks = () => {
   const { timestamp } = useSelector(refreshSelector);
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+  const { id: activeNetworkId, refreshRate } = useSelector(
+    activeNetworkSelector
+  );
   const { getBlocks } = useAdapter();
 
   const previousBlocksRef = useRef<UIBlockType[]>([]);
@@ -139,5 +143,11 @@ export const LatestBlocks = () => {
 
   useEffect(fetchBlocks, [activeNetworkId, timestamp]);
 
-  return <LatestBlocksList blocks={blocks} isDataReady={isDataReady} />;
+  return (
+    <LatestBlocksList
+      blocks={blocks}
+      isDataReady={isDataReady}
+      refreshRate={refreshRate}
+    />
+  );
 };

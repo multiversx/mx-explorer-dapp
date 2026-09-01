@@ -24,7 +24,7 @@ import {
   getTransactionStatusIconAndColor
 } from 'helpers';
 import { useAdapter, useFetchTransactions, useIsSovereign } from 'hooks';
-import { refreshSelector } from 'redux/selectors';
+import { networkRefreshRateSelector, refreshSelector } from 'redux/selectors';
 import {
   UITransactionType,
   WebsocketEventsEnum,
@@ -34,10 +34,11 @@ import {
 interface LatestTransactionsListType {
   transactions: UITransactionType[];
   isDataReady: boolean | undefined;
+  refreshRate?: number;
 }
 
 const LatestTransactionsList = memo(
-  ({ transactions, isDataReady }: LatestTransactionsListType) => (
+  ({ transactions, isDataReady, refreshRate }: LatestTransactionsListType) => (
     <div className='card card-lg card-black latest-transactions'>
       {isDataReady === undefined && <Loader data-testid='transactionsLoader' />}
       {isDataReady === false && <FailedTransactions />}
@@ -67,6 +68,7 @@ const LatestTransactionsList = memo(
                     key={transaction.txHash}
                     isNew={transaction.isNew}
                     index={i + 1}
+                    refreshRate={refreshRate}
                   >
                     <div
                       className={`latest-item-card p-4 status-${
@@ -169,6 +171,7 @@ const LatestTransactionsList = memo(
 export const LatestTransactions = () => {
   const isSovereign = useIsSovereign();
   const { timestamp } = useSelector(refreshSelector);
+  const refreshRate = useSelector(networkRefreshRateSelector);
   const { getTransactions } = useAdapter();
 
   const previousTransactionsRef = useRef<UITransactionType[]>([]);
@@ -204,6 +207,7 @@ export const LatestTransactions = () => {
     <LatestTransactionsList
       transactions={transactions}
       isDataReady={isDataReady}
+      refreshRate={refreshRate}
     />
   );
 };

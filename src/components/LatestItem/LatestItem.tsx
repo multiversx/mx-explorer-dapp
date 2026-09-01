@@ -1,29 +1,33 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
-import { activeNetworkSelector } from 'redux/selectors';
+
+import { SUPERNOVA_REFRESH_RATE } from 'appConstants';
+
+export interface LatestItemUIType {
+  children: React.ReactNode;
+  isNew: boolean | undefined;
+  index: number;
+  totalItems: number;
+
+  refreshRate?: number;
+}
 
 export const LatestItem = ({
   children,
   isNew,
   index,
-  totalItems
-}: {
-  children: React.ReactNode;
-  isNew: boolean | undefined;
-  index: number;
-  totalItems: number;
-}) => {
+  totalItems,
+  refreshRate
+}: LatestItemUIType) => {
   const ref = useRef(null);
-  const { refreshRate } = useSelector(activeNetworkSelector);
-  const isSupernova = refreshRate === 600;
+  const isSupernova = refreshRate === SUPERNOVA_REFRESH_RATE;
   const [internalIsNew, setInternalIsNew] = useState<boolean | undefined>();
 
   const itemAnimationDelay = useMemo(() => {
     const expandDuration = isSupernova ? 100 : 600;
     const totalAnimationTime = totalItems * expandDuration;
     return totalAnimationTime - expandDuration * index;
-  }, [refreshRate, totalItems, isSupernova]);
+  }, [totalItems, index, isSupernova]);
 
   useEffect(() => {
     if (!isNew) {

@@ -5,6 +5,11 @@ import { ELLIPSIS, MAX_DISPLAY_ZERO_DECIMALS, ZERO } from 'appConstants';
 import { FormatAmountUIType, Overlay } from 'components';
 import { DIGITS } from 'config';
 
+const NUMBER_FLOW_TRANSFORM_TIMING = {
+  duration: 400,
+  easing: 'ease-out'
+};
+
 export interface FormatDisplayValueUIType
   extends Omit<FormatAmountUIType, 'value'> {
   formattedValue: string | number;
@@ -142,6 +147,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
               format={{
                 maximumFractionDigits: digits
               }}
+              transformTiming={NUMBER_FLOW_TRANSFORM_TIMING}
             />
           ) : (
             <DisplayValue />
@@ -156,6 +162,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
               format={{
                 maximumFractionDigits: digits
               }}
+              transformTiming={NUMBER_FLOW_TRANSFORM_TIMING}
             />
           ) : (
             <DisplayValue />
