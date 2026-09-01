@@ -48,6 +48,16 @@ export const useGetSearchQueryType = () => {
       isErdAddress = erdAddress.getHrp() === DEFAULT_HRP;
     } catch {}
 
+    const isProbableSearch =
+      isAccount ||
+      isValidHash ||
+      isNode ||
+      isToken ||
+      isUsername ||
+      isNativeToken ||
+      isErdAddress ||
+      isPubKeyAccount;
+
     return {
       isAccount,
       isValidHash,
@@ -56,7 +66,8 @@ export const useGetSearchQueryType = () => {
       isUsername,
       isNativeToken,
       isErdAddress,
-      isPubKeyAccount
+      isPubKeyAccount,
+      isProbableSearch
     };
   };
 

@@ -6,4 +6,5 @@ export * from './nativeTokenLayout';
 export * from './nftLayout';
 export * from './tokenLayout';
 export * from './transactionsLayout';
+export * from './utilitiesLayout';
 export * from './validatorLayout';

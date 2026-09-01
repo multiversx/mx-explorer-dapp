@@ -40,7 +40,7 @@ export const TransactionPreviewPanel = ({
   const checkRefetch = () => {
     const isTxStatusPending = Boolean(
       transaction.status &&
-        transaction.status?.toLowerCase() === TransactionApiStatusEnum.pending
+      transaction.status?.toLowerCase() === TransactionApiStatusEnum.pending
     );
     if (isTxStatusPending || transaction.pendingResults) {
       fetchTransaction();

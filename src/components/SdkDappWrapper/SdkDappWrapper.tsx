@@ -3,9 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { Loader } from 'components';
 import { initApp, InitAppType } from 'lib';
+import { useGetEnvironment } from 'pages/AccountDetails/AccountVerifiedContract/hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-
-import { useGetEnvironment } from './hooks';
 
 export const SdkDappWrapper = ({ children }: { children: ReactNode }) => {
   const environment = useGetEnvironment();

@@ -12,7 +12,8 @@ import {
   analyticsRoutes,
   routes,
   transactionsInPoolRoutes,
-  eventsRoutes
+  eventsRoutes,
+  utilitiesRoutes
 } from 'routes';
 
 export const useShowGlobalStats = () => {
@@ -77,6 +78,8 @@ export const useShowGlobalStats = () => {
     case activeRoute(validatorsRoutes.providerDetails):
     case activeRoute(validatorsRoutes.providerTransactions):
     case activeRoute(validatorsRoutes.nodeDetails):
+    case activeRoute(utilitiesRoutes.converters):
+    case activeRoute(utilitiesRoutes.smartContractInteraction):
       return false;
   }
 

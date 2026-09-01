@@ -1,8 +1,10 @@
 // Base Logic
+.trim:not(.mvx:max-w-full) {
+  max-width: 100%;
+}
 
 .trim {
   display: flex;
-  max-width: 100%;
   overflow: hidden;
   position: relative;
   white-space: nowrap;

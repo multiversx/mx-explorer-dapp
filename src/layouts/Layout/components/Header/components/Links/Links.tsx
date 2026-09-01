@@ -26,7 +26,8 @@ import {
   nftRoutes,
   collectionRoutes,
   analyticsRoutes,
-  eventsRoutes
+  eventsRoutes,
+  utilitiesRoutes
 } from 'routes';
 
 import { LinksPropsType, MenuLinkType } from './types';
@@ -142,6 +143,26 @@ export const Links = (props: LinksPropsType) => {
       to: analyticsRoutes.analytics,
       show: isAdapterAPI && isMainnet && hasGrowthWidgets,
       activeRoutes: Object.values(analyticsRoutes)
+    },
+    {
+      label: 'Utilities',
+      show: true,
+      to: utilitiesRoutes.converters,
+      activeRoutes: Object.values(utilitiesRoutes),
+      subRoutes: [
+        {
+          label: 'Converters',
+          show: true,
+          to: utilitiesRoutes.converters,
+          activeRoutes: [utilitiesRoutes.converters]
+        },
+        {
+          label: 'Smart Contract Interaction',
+          show: true,
+          to: utilitiesRoutes.smartContractInteraction,
+          activeRoutes: [utilitiesRoutes.smartContractInteraction]
+        }
+      ]
     }
   ].filter((link) => link.show);
 

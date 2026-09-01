@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Loader, PageState } from 'components';
+import { Loader, PageState, SdkDappWrapper } from 'components';
 import { useNetworkRoute, useIsMainnet } from 'hooks';
 import { faClone } from 'icons/regular';
 import {
@@ -37,7 +37,6 @@ import { WithClassnameType } from 'types';
 
 import { getVerifiedContractSectionUrl } from './helpers';
 import { useGetActiveSection, useGetEnvironment } from './hooks';
-import { SdkDappWrapper } from './SdkDappWrapper';
 
 export interface AccountVerifiedContractUIType extends WithClassnameType {
   contract?: VerifiedContractType;
