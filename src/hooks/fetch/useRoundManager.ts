@@ -46,7 +46,7 @@ export const useRoundManager = () => {
       }
       hasCallMadeRef.current = true;
 
-      fetchStats().then(({ success }) => {
+      fetchStats({ skipBrowserCache: true }).then(({ success }) => {
         hasCallMadeRef.current = false;
 
         if (!success) {
