@@ -1,14 +1,16 @@
 // REACT DATEPICKER
 
-$datepicker__background-color: var(
-  --neutral-900
-); // popup header bg, hover on cell, hover over selected range
-$datepicker__header-color: var(--body-color); // popup header text
-$datepicker__text-color: var(--body-color);
-$datepicker__muted-color: #a3a3a3;
-$datepicker__selected-color: $primary-400;
-
-@import './../../../../node_modules/react-datepicker/src/stylesheets/datepicker.scss';
+// react-datepicker >= 7 ships its stylesheet as a Sass module, so its palette is
+// configured through `@use ... with (...)` rather than globals + `@import`.
+@use './../../../../node_modules/react-datepicker/src/stylesheets/variables' as
+  datepicker-variables with (
+    $datepicker__background-color: var(--neutral-900),
+    $datepicker__header-color: var(--body-color),
+    $datepicker__text-color: var(--body-color),
+    $datepicker__muted-color: #a3a3a3,
+    $datepicker__selected-color: $primary-400
+  );
+@use './../../../../node_modules/react-datepicker/src/stylesheets/datepicker';
 
 .transactions-datepicker {
   #dates-dropdown {

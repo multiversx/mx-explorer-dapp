@@ -1,5 +1,6 @@
 import { Provider } from 'react-redux';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router';
+import { RouterProvider } from 'react-router/dom';
 
 import { Interceptor } from 'interceptors';
 import { store } from 'redux/store';
