@@ -6,14 +6,13 @@ import { FormatNumber, InfoTooltip } from 'components';
 import { formatBigNumber } from 'helpers';
 import { useGetNewAccountsToday, useHasGrowthWidgets } from 'hooks';
 import { faCircleBolt } from 'icons/solid';
-import { activeNetworkSelector, statsSelector } from 'redux/selectors';
+import { activeNetworkSelector, statsAccountsSelector } from 'redux/selectors';
 import { StatsCard } from 'widgets';
 
 export const AccountsStatsCard = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const { refreshRate } = useSelector(activeNetworkSelector);
-  const { unprocessed } = useSelector(statsSelector);
-  const { accounts } = unprocessed;
+  const accounts = useSelector(statsAccountsSelector);
 
   const newAccountsToday = useGetNewAccountsToday();
   const isAnimated = Boolean(

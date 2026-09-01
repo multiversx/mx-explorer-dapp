@@ -1,6 +1,7 @@
+import { lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
 
-import { SdkDappWrapper } from 'components';
+import { Loader, SdkDappWrapper } from 'components';
 import { faClone } from 'icons/regular';
 import {
   faAngleDown,
@@ -22,7 +23,6 @@ import {
 } from 'icons/solid';
 import { getHeaders } from 'interceptors';
 import {
-  ScExplorerContainer,
   useGetAccountInfo,
   useGetLoginInfo,
   VerifiedContractTabsEnum
@@ -31,6 +31,12 @@ import { useGetEnvironment } from 'pages/AccountDetails/AccountVerifiedContract/
 import { activeNetworkSelector } from 'redux/selectors';
 
 import '@multiversx/sdk-dapp-sc-explorer/out/styles.css';
+
+const ScExplorerContainer = lazy(() =>
+  import('@multiversx/sdk-dapp-sc-explorer/out/containers/ScExplorerContainer').then(
+    (module) => ({ default: module.ScExplorerContainer })
+  )
+);
 
 const customClassNames = {
   cardClassName: 'card card-black',
@@ -94,31 +100,33 @@ export const SmartContractInteraction = () => {
         </div>
         <div className='card-body'>
           <SdkDappWrapper>
-            <ScExplorerContainer
-              accountConsumerHandlers={{ useGetLoginInfo, useGetAccountInfo }}
-              networkConfig={{ environment, apiAddress }}
-              customClassNames={customClassNames}
-              icons={icons}
-              activeSection={VerifiedContractTabsEnum.loadAbi}
-              config={{
-                canMutate: true,
-                canLoadAbi: true,
-                canDeploy: true,
-                canUpgrade: true,
-                canDisplayContractDetails: true,
-                hasViewInExplorer: false,
-                hasGeneralLogin: true,
-                ...(extraRequestHeaders
-                  ? {
-                      loginParams: {
-                        nativeAuth: {
-                          extraRequestHeaders
+            <Suspense fallback={<Loader />}>
+              <ScExplorerContainer
+                accountConsumerHandlers={{ useGetLoginInfo, useGetAccountInfo }}
+                networkConfig={{ environment, apiAddress }}
+                customClassNames={customClassNames}
+                icons={icons}
+                activeSection={VerifiedContractTabsEnum.loadAbi}
+                config={{
+                  canMutate: true,
+                  canLoadAbi: true,
+                  canDeploy: true,
+                  canUpgrade: true,
+                  canDisplayContractDetails: true,
+                  hasViewInExplorer: false,
+                  hasGeneralLogin: true,
+                  ...(extraRequestHeaders
+                    ? {
+                        loginParams: {
+                          nativeAuth: {
+                            extraRequestHeaders
+                          }
                         }
                       }
-                    }
-                  : {})
-              }}
-            />
+                    : {})
+                }}
+              />
+            </Suspense>
           </SdkDappWrapper>
         </div>
       </div>

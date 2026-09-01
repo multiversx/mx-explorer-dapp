@@ -11,6 +11,7 @@ export * from './widgets';
 
 export * from './useCustomNetwork';
 export * from './useDebounce';
+export * from './useWindowResize';
 export * from './useGetExplorerTitle';
 export * from './useGetHash';
 export * from './useGetHrp';

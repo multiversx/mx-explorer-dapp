@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { Navbar, NavDropdown } from 'react-bootstrap';
+import { Dropdown, Nav, Navbar } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
@@ -188,22 +188,20 @@ export const Links = (props: LinksPropsType) => {
 
   return (
     <>
-      <Navbar collapseOnSelect className='links navbar-nav mt-0' role='menubar'>
+      <Navbar collapseOnSelect className='links navbar-nav mt-0'>
         {links.map((link) => {
           if (link.subRoutes) {
             const show = openDropdowns[link.label];
             return (
-              <li
+              <div
                 key={`dropdown-${link.label}`}
                 className={classNames('link dropdown-wrapper', {
                   active: getIsLinkActive(link) || show
                 })}
-                role='presentation'
               >
                 <NetworkLink
                   to={link.to}
                   onClick={onClick}
-                  role='menuitem'
                   className={classNames('link nav-link has-dropdown', {
                     active: getIsLinkActive(link) || show
                   })}
@@ -212,13 +210,10 @@ export const Links = (props: LinksPropsType) => {
                 >
                   {link.label}
                 </NetworkLink>
-                <NavDropdown
-                  className={classNames('link', {
+                <Dropdown
+                  className={classNames('link nav-item', {
                     active: getIsLinkActive(link)
                   })}
-                  id={`dropdown-${link.label}`}
-                  title={<FontAwesomeIcon icon={faAngleDown} size='sm' />}
-                  renderMenuOnMount={true}
                   show={show}
                   onMouseEnter={() => setDropdownOpen(link.label, true)}
                   onMouseLeave={() => setDropdownOpen(link.label, false)}
@@ -226,23 +221,32 @@ export const Links = (props: LinksPropsType) => {
                     toggleDropdown(link.label);
                   }}
                 >
-                  {link.subRoutes.map((subroute) => {
-                    return (
-                      <NavDropdown.Item
-                        as={Link}
-                        key={subroute.label}
-                        to={networkRoute(subroute.to)}
-                        className={classNames({
-                          active: getIsLinkActive(subroute, true)
-                        })}
-                        onClick={onClick}
-                      >
-                        {subroute.label}
-                      </NavDropdown.Item>
-                    );
-                  })}
-                </NavDropdown>
-              </li>
+                  <Dropdown.Toggle
+                    as={Nav.Link}
+                    id={`dropdown-${link.label}`}
+                    aria-label={`${link.label} submenu`}
+                  >
+                    <FontAwesomeIcon icon={faAngleDown} size='sm' />
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu renderOnMount={true}>
+                    {link.subRoutes.map((subroute) => {
+                      return (
+                        <Dropdown.Item
+                          as={Link}
+                          key={subroute.label}
+                          to={networkRoute(subroute.to)}
+                          className={classNames({
+                            active: getIsLinkActive(subroute, true)
+                          })}
+                          onClick={onClick}
+                        >
+                          {subroute.label}
+                        </Dropdown.Item>
+                      );
+                    })}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             );
           }
 
@@ -254,7 +258,6 @@ export const Links = (props: LinksPropsType) => {
               className={classNames('link nav-link', {
                 active: getIsLinkActive(link)
               })}
-              role='menuitem'
             >
               {link.label}
             </NetworkLink>

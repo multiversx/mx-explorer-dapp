@@ -56,14 +56,15 @@ export const statsSlice = createSlice({
       state: StatsSliceType,
       action: PayloadAction<StatsActionType>
     ) => {
+      const extraStats = getExtraStats(action.payload.stats);
       const {
         epochPercentage,
         epochTotalTime,
         epochTimeElapsed,
         epochTimeRemaining
-      } = getExtraStats(action.payload.stats);
+      } = extraStats;
 
-      const processedStats = processStats(action.payload.stats);
+      const processedStats = processStats(action.payload.stats, extraStats);
 
       state.isDataReady = action.payload.isDataReady;
       state.isWebsocket = action.payload.isWebsocket;

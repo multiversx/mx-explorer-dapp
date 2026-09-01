@@ -74,7 +74,7 @@ export const Header = memo((props: HeaderPropsType) => {
         <NetworkLink
           to='/'
           className='logo'
-          aria-label={`${BRAND_NAME} Explorer`}
+          aria-label={`${BRAND_NAME} ${explorerTitle}`}
         >
           {isMainnet ? (
             <MultiversXLogo />

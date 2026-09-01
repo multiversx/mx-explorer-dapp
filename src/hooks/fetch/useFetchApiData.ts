@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import {
   PAGE_SIZE,
@@ -44,7 +44,7 @@ export const useFetchApiData = ({
   const { page, size, searchAfter } = useGetPage();
   const [dataChanged, setDataChanged] = useState(false);
 
-  let isCalled = false;
+  const isFetchingRef = useRef(false);
 
   const hasUrlParams =
     Object.keys(urlParams).length > 0 ||
@@ -79,7 +79,7 @@ export const useFetchApiData = ({
 
   const fetchData = useCallback(
     (paramsChange = false) => {
-      if (isCalled) {
+      if (isFetchingRef.current) {
         return;
       }
 
@@ -95,7 +95,7 @@ export const useFetchApiData = ({
         return;
       }
 
-      isCalled = true;
+      isFetchingRef.current = true;
 
       if (hasUrlParams && paramsChange) {
         setDataChanged(true);
@@ -111,8 +111,8 @@ export const useFetchApiData = ({
       Promise.all(promises)
         .then(onApiData)
         .finally(() => {
+          isFetchingRef.current = false;
           if (paramsChange) {
-            isCalled = false;
             setDataChanged(false);
           }
         });
@@ -122,7 +122,6 @@ export const useFetchApiData = ({
       websocketActiveSubscriptions,
       subscription,
       hasUrlParams,
-      isCalled,
       isRefreshPaused,
       onApiData
     ]

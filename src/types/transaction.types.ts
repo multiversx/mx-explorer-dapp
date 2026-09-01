@@ -138,7 +138,8 @@ export enum TransactionFiltersEnum {
   transactionsInPoolType = 'type',
   hashes = 'hashes',
   isRelayed = 'isRelayed',
-  relayer = 'relayer'
+  relayer = 'relayer',
+  address = 'address'
 }
 
 // Avoid issues with differences between methods and actions
@@ -168,6 +169,7 @@ export enum TransactionMethodsEnum {
   enterFarmAndLockRewardsProxy = 'enterFarmAndLockRewardsProxy',
   exitFarm = 'exitFarm',
   exitFarmProxy = 'exitFarmProxy',
+  // eslint-disable-next-line  @typescript-eslint/no-duplicate-enum-values
   claimRewards = 'claimRewards',
   claimRewardsProxy = 'claimRewardsProxy',
   compoundRewards = 'compoundRewards',
@@ -414,6 +416,7 @@ export enum TransactionActionEnum {
   enterFarmAndLockRewardsProxy = 'enterFarmAndLockRewardsProxy',
   exitFarm = 'exitFarm',
   exitFarmProxy = 'exitFarmProxy',
+  // eslint-disable-next-line  @typescript-eslint/no-duplicate-enum-values
   claimRewards = 'claimRewards',
   claimRewardsProxy = 'claimRewardsProxy',
   compoundRewards = 'compoundRewards',

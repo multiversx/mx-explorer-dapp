@@ -7,12 +7,18 @@ const api: AdapterProviderType = ({
   url,
   params,
   timeout,
-  signal
+  signal,
+  headers
 }) => {
   if (!baseUrl) {
     return Promise.resolve();
   }
-  return axios.get(`${baseUrl}${url}`, { params, timeout, signal });
+  return axios.get(`${baseUrl}${url}`, {
+    params,
+    timeout,
+    signal,
+    headers
+  });
 };
 
 export const apiAdapter = {

@@ -11,6 +11,7 @@ import {
   useCheckVersion,
   useGetURLNetwork,
   useInitWebsocket,
+  useRoundManager,
   useSetBrowserClassNames,
   useSetDappConfig,
   useTempStorageNotification
@@ -33,6 +34,7 @@ export const Layout = () => {
   const { fetchStats } = useFetchStats();
 
   useLoopManager();
+  useRoundManager();
   useCheckVersion();
   useInitWebsocket();
   useSetDappConfig();

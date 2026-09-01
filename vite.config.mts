@@ -50,7 +50,8 @@ export default () => {
     build: {
       outDir: 'build',
       cssMinify: true,
-      minify: true
+      minify: true,
+      chunkSizeWarningLimit: 1000
     },
     server: {
       port: 3002,

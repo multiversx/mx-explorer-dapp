@@ -14,7 +14,7 @@ export const CollectionLayout = () => {
   const dispatch = useDispatch();
   const { getCollection } = useAdapter();
   const { hash: collection } = useParams();
-  const { firstPageRefreshTrigger } = useGetPage();
+  const { poolingFirstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { collectionState } = useSelector(collectionSelector);
 
@@ -34,7 +34,7 @@ export const CollectionLayout = () => {
 
   useEffect(() => {
     fetchCollectionDetails();
-  }, [firstPageRefreshTrigger, activeNetworkId, collection]);
+  }, [poolingFirstPageRefreshTrigger, activeNetworkId, collection]);
 
   const loading =
     isDataReady === undefined ||

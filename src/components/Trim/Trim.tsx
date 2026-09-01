@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
-import { useDebounce } from 'hooks';
+import { useDebounce, useWindowResize } from 'hooks';
 import { WithClassnameType } from 'types';
 
 interface TrimUIType extends WithClassnameType {
@@ -13,25 +13,13 @@ export const Trim = ({
   className,
   'data-testid': dataTestId = ''
 }: TrimUIType) => {
-  const [debounce, setDebounce] = useState(0);
-
   const [overflow, setOverflow] = useState(false);
-  const trimRef = useRef(document.createElement('span'));
-  const hiddenTextRef = useRef(document.createElement('span'));
-  const debounceTracker = useDebounce(debounce, 300);
 
-  const listener = () => {
-    setDebounce(debounce + 1);
-  };
+  const trimRef = useRef<HTMLSpanElement>(null);
+  const hiddenTextRef = useRef<HTMLSpanElement>(null);
 
-  const effect = () => {
-    window.addEventListener('resize', listener);
-    return () => {
-      window.removeEventListener('resize', listener);
-    };
-  };
-
-  useEffect(effect, [debounce]);
+  const resizeCount = useWindowResize();
+  const debouncedResize = useDebounce(resizeCount, 300);
 
   useEffect(() => {
     if (trimRef.current && hiddenTextRef.current) {
@@ -39,7 +27,7 @@ export const Trim = ({
         hiddenTextRef.current.offsetWidth - trimRef.current.offsetWidth;
       setOverflow(diff > 1);
     }
-  }, [debounceTracker]);
+  }, [debouncedResize, text]);
 
   return (
     <span

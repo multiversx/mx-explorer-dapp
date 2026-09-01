@@ -2,12 +2,12 @@ import classNames from 'classnames';
 
 import { ProgressRing } from 'components';
 import { formatBigNumber, getStringPlural } from 'helpers';
-import { useFetchEpochProgress } from 'hooks';
+import { useEpochProgress } from 'hooks';
 import { WithClassnameType } from 'types';
 
 export const EpochHeroPill = ({ className }: WithClassnameType) => {
   const { epoch, epochPercentage, epochTimeRemaining, roundsLeft, isReady } =
-    useFetchEpochProgress();
+    useEpochProgress();
 
   return (
     <div
@@ -29,7 +29,7 @@ export const EpochHeroPill = ({ className }: WithClassnameType) => {
           Left
         </div>
       </div>
-      <ProgressRing progress={epochPercentage} size={32} />
+      <ProgressRing progress={Number(epochPercentage.toFixed(2))} size={32} />
     </div>
   );
 };

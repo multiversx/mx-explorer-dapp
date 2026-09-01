@@ -67,6 +67,7 @@ export const PageSize = ({
         options={options}
         onChange={onChangeHandler}
         defaultValue={{ label: currentSize, value: currentSize }}
+        aria-label='Records per page'
       />{' '}
       records
     </div>
