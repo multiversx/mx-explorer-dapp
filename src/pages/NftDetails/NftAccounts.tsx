@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router';
 
 import { Loader, Pager, PageSize, AccountLink, PageState } from 'components';
 import { useAdapter, useGetPage } from 'hooks';

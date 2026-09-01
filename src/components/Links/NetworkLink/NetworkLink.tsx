@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import { getSubdomainNetwork } from 'helpers';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
@@ -43,7 +43,6 @@ export const NetworkLink = ({
   return (
     <Link
       {...props}
-      viewTransition
       preventScrollReset={preventScrollReset}
       data-testid={dataTestId}
     >

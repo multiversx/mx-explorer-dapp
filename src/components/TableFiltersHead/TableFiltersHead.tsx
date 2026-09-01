@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { capitalize, getNodeStatusDisplay } from 'helpers';
 import { useGetShardText } from 'hooks';

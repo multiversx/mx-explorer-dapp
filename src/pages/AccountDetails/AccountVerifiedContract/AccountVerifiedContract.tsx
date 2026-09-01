@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { Loader, PageState, SdkDappWrapper } from 'components';
 import { useNetworkRoute, useIsMainnet } from 'hooks';

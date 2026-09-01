@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { Dropdown, Nav, Navbar } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router';
 
 import { NetworkLink } from 'components';
 import { isContract, addressIsBech32 } from 'helpers';

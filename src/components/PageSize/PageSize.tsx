@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { SingleValue } from 'react-select';
 
 import { PAGE_SIZE, MAX_RESULTS } from 'appConstants';

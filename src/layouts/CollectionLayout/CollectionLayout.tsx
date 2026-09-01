@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, Outlet } from 'react-router-dom';
+import { useParams, Outlet } from 'react-router';
 
 import { Loader } from 'components';
 import { useAdapter, useGetPage } from 'hooks';

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { PageState } from 'components';
 import { analytics } from 'helpers';
 import { useGetHrp } from 'hooks';

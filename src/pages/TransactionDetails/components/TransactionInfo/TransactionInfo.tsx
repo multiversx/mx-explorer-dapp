@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Tab, Nav } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { LoadingDots } from 'components';
 import { urlBuilder, getTransactionStatusIconAndColor } from 'helpers';

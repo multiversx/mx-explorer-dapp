@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { useActiveRoute } from 'hooks';
 import { faCircleNotch, faSearch } from 'icons/regular';
@@ -24,6 +24,7 @@ export const Search = ({ className }: WithClassnameType) => {
 
   const ref: any = useRef(null);
   const inputRef: any = useRef(null);
+  const consumedLocationRef = useRef<unknown>(null);
 
   const {
     show,
@@ -47,10 +48,13 @@ export const Search = ({ className }: WithClassnameType) => {
   }, [show, searchHash, searchQuery, isSearchRoute]);
 
   useEffect(() => {
-    if (location.state?.searchQuery) {
+    if (
+      location.state?.searchQuery &&
+      consumedLocationRef.current !== location
+    ) {
+      consumedLocationRef.current = location;
       setSearchHash(location.state.searchQuery);
       setShow(true);
-      location.state = undefined;
 
       return;
     }

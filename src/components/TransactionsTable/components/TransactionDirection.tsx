@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { TransactionDirectionBadge } from 'components';
 import { getTransactionDirection } from 'helpers';
