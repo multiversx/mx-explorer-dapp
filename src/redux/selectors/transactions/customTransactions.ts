@@ -1,11 +1,7 @@
-import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 
 const stateSelector = (state: RootState) => {
   return state.customTransactions;
 };
 
-export const customTransactionsSelector = createSelector(
-  stateSelector,
-  (state) => state
-);
+export const customTransactionsSelector = stateSelector;

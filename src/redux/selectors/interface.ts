@@ -5,10 +5,7 @@ const stateSelector = (state: RootState) => {
   return state.interface;
 };
 
-export const interfaceSelector = createSelector(
-  stateSelector,
-  (state) => state
-);
+export const interfaceSelector = stateSelector;
 
 export const explorerOriginSelector = createSelector(
   stateSelector,

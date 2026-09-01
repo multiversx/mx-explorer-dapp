@@ -1,11 +1,7 @@
-import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 
 const stateSelector = (state: RootState) => {
   return state.pageHeadersAccountsStats;
 };
 
-export const pageHeadersAccountsStatsSelector = createSelector(
-  stateSelector,
-  (state) => state
-);
+export const pageHeadersAccountsStatsSelector = stateSelector;
