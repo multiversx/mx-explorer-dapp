@@ -49,8 +49,7 @@
     "recharts": "3.10.1",
     "redux-persist": "6.0.0",
     "socket.io-client": "4.8.3",
-    "three": "0.184.0",
-    "three-stdlib": "2.36.1",
+    "three": "0.185.1",
     "ua-parser-js": "1.0.41",
     "yup": "1.7.1"
   },
