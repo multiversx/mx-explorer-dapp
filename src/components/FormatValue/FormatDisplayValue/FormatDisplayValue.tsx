@@ -10,8 +10,10 @@ const NUMBER_FLOW_TRANSFORM_TIMING = {
   easing: 'ease-out'
 };
 
-export interface FormatDisplayValueUIType
-  extends Omit<FormatAmountUIType, 'value'> {
+export interface FormatDisplayValueUIType extends Omit<
+  FormatAmountUIType,
+  'value'
+> {
   formattedValue: string | number;
   completeValue: string | number;
   symbol?: React.ReactNode;
@@ -52,7 +54,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
   const valueParts = String(formattedValue).split('.');
   const isZero = Number(completeValue) === 0;
   const displayLabel = label ?? token ?? egldLabel;
-  const canAnimate = isAnimated && !isNaN(Number(completeValue));
+  const canAnimate = isAnimated && !isNaN(Number(completeValue)) && false;
 
   const DisplayValue = () => {
     if (hideLessThanOne) {
