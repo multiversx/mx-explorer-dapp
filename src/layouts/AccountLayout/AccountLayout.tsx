@@ -23,7 +23,7 @@ export const AccountLayout = () => {
   const { getAccount } = useAdapter();
   const { fetchAccountStakingDetails } = useFetchAccountStakingDetails();
   const { hash: address } = useParams();
-  const { firstPageRefreshTrigger } = useGetPage();
+  const { poolingFirstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { account } = useSelector(accountSelector);
 
@@ -57,7 +57,7 @@ export const AccountLayout = () => {
 
   useEffect(() => {
     fetchBalanceAndCount();
-  }, [firstPageRefreshTrigger, activeNetworkId, address]);
+  }, [poolingFirstPageRefreshTrigger, activeNetworkId, address]);
 
   const loading =
     isDataReady === undefined || (address && account.address !== address);

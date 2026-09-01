@@ -168,6 +168,7 @@ export enum TransactionMethodsEnum {
   enterFarmAndLockRewardsProxy = 'enterFarmAndLockRewardsProxy',
   exitFarm = 'exitFarm',
   exitFarmProxy = 'exitFarmProxy',
+  // eslint-disable-next-line  @typescript-eslint/no-duplicate-enum-values
   claimRewards = 'claimRewards',
   claimRewardsProxy = 'claimRewardsProxy',
   compoundRewards = 'compoundRewards',
@@ -414,6 +415,7 @@ export enum TransactionActionEnum {
   enterFarmAndLockRewardsProxy = 'enterFarmAndLockRewardsProxy',
   exitFarm = 'exitFarm',
   exitFarmProxy = 'exitFarmProxy',
+  // eslint-disable-next-line  @typescript-eslint/no-duplicate-enum-values
   claimRewards = 'claimRewards',
   claimRewardsProxy = 'claimRewardsProxy',
   compoundRewards = 'compoundRewards',

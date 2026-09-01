@@ -99,7 +99,7 @@ export const Switcher = () => {
         className='btn-unstyled control'
         aria-haspopup='true'
         aria-controls='network-switch-menu'
-        aria-label='Change Network'
+        aria-label={`${activeNetworkName} - Change Network`}
       >
         <div className='value text-truncate'>{activeNetworkName}</div>
         <FontAwesomeIcon

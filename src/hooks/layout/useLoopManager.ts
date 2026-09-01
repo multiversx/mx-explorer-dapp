@@ -1,25 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
-  POOLING_REFRESH_RATE,
   POOLING_REFRESH_RATE_LIMIT,
-  REFRESH_RATE
+  REFRESH_RATE,
+  POOLING_REFRESH_RATE
 } from 'appConstants';
 import {
   activeNetworkSelector,
-  refreshSelector,
-  statsSelector
+  refreshTimestampSelector,
+  statsRefreshRateSelector
 } from 'redux/selectors';
-import { triggerRefresh } from 'redux/slices';
+import { triggerRefresh, triggerPoolingRefresh } from 'redux/slices';
 
 export const useLoopManager = () => {
   const intervalRef = useRef<any>(null);
 
-  const { timestamp } = useSelector(refreshSelector);
-  const { unprocessed } = useSelector(statsSelector);
-  const { refreshRate: statsRefreshRate } = unprocessed;
+  const timestamp = useSelector(refreshTimestampSelector);
+  const statsRefreshRate = useSelector(statsRefreshRateSelector);
 
   const { refreshRate: initialNetworkRefreshRate, updatesWebsocketUrl } =
     useSelector(activeNetworkSelector);
@@ -45,11 +43,12 @@ export const useLoopManager = () => {
 
   const dispatch = useDispatch();
 
+  const timestampRef = useRef(timestamp);
+  timestampRef.current = timestamp;
+
   const setLoopInterval = () => {
     intervalRef.current = setInterval(() => {
-      const withinInterval = moment()
-        .subtract(refreshRate, 'ms')
-        .isBefore(timestamp);
+      const withinInterval = Date.now() - refreshRate < timestampRef.current;
 
       if (!document.hidden && !withinInterval) {
         dispatch(triggerRefresh());
@@ -76,4 +75,16 @@ export const useLoopManager = () => {
   }, [statsRefreshRate, refreshRate, updatesWebsocketUrl]);
 
   useEffect(setLoopInterval, [refreshRate]);
+
+  const poolingRefreshRate = Math.max(POOLING_REFRESH_RATE, refreshRate);
+
+  useEffect(() => {
+    const poolingIntervalId = setInterval(() => {
+      if (!document.hidden) {
+        dispatch(triggerPoolingRefresh());
+      }
+    }, poolingRefreshRate);
+
+    return () => clearInterval(poolingIntervalId);
+  }, [poolingRefreshRate, dispatch]);
 };

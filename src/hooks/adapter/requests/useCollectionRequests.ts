@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import {
   AxiosParamsApiType,
   GetTransactionsType,
@@ -16,120 +18,123 @@ import { useAdapterConfig } from '../useAdapterConfig';
 export const useCollectionRequests = () => {
   const { provider } = useAdapterConfig();
 
-  return {
-    /* Collections */
+  return useMemo(
+    () => ({
+      /* Collections */
 
-    getCollection: (
-      collection: string,
-      { signal, timeout }: AxiosParamsApiType = {}
-    ) => provider({ url: `/collections/${collection}`, signal, timeout }),
+      getCollection: (
+        collection: string,
+        { signal, timeout }: AxiosParamsApiType = {}
+      ) => provider({ url: `/collections/${collection}`, signal, timeout }),
 
-    getCollections: ({ signal, timeout, ...params }: GetCollectionsType) =>
-      provider({
-        url: '/collections',
+      getCollections: ({ signal, timeout, ...params }: GetCollectionsType) =>
+        provider({
+          url: '/collections',
+          signal,
+          timeout,
+          params: getCollectionsParams(params)
+        }),
+
+      getCollectionsCount: ({
         signal,
         timeout,
-        params: getCollectionsParams(params)
-      }),
+        ...params
+      }: GetCollectionsType = {}) =>
+        provider({
+          url: '/collections/c',
+          signal,
+          timeout,
+          params: getCollectionsParams({ isCount: true, ...params })
+        }),
 
-    getCollectionsCount: ({
-      signal,
-      timeout,
-      ...params
-    }: GetCollectionsType = {}) =>
-      provider({
-        url: '/collections/c',
+      getCollectionNfts: ({
+        collection,
         signal,
         timeout,
-        params: getCollectionsParams({ isCount: true, ...params })
-      }),
+        ...params
+      }: GetCollectionsType & GetCollectionResourceType) =>
+        provider({
+          url: `/collections/${collection}/nfts`,
+          signal,
+          timeout,
+          params: getNftsParams({ ...params })
+        }),
 
-    getCollectionNfts: ({
-      collection,
-      signal,
-      timeout,
-      ...params
-    }: GetCollectionsType & GetCollectionResourceType) =>
-      provider({
-        url: `/collections/${collection}/nfts`,
+      getCollectionNftsCount: ({
+        collection,
         signal,
         timeout,
-        params: getNftsParams({ ...params })
-      }),
+        ...params
+      }: GetCollectionsType & GetCollectionResourceType) =>
+        provider({
+          url: `/collections/${collection}/nfts/count`,
+          signal,
+          timeout,
+          params: getNftsParams({ isCount: true, ...params })
+        }),
 
-    getCollectionNftsCount: ({
-      collection,
-      signal,
-      timeout,
-      ...params
-    }: GetCollectionsType & GetCollectionResourceType) =>
-      provider({
-        url: `/collections/${collection}/nfts/count`,
+      getCollectionTransactions: ({
+        identifier,
         signal,
         timeout,
-        params: getNftsParams({ isCount: true, ...params })
-      }),
+        ...params
+      }: GetTransactionsType & GetNftResourceType) =>
+        provider({
+          url: `/collections/${identifier}/transactions`,
+          signal,
+          timeout,
+          params: getTransactionsParams({
+            ...params
+          })
+        }),
 
-    getCollectionTransactions: ({
-      identifier,
-      signal,
-      timeout,
-      ...params
-    }: GetTransactionsType & GetNftResourceType) =>
-      provider({
-        url: `/collections/${identifier}/transactions`,
+      getCollectionTransactionsCount: ({
+        identifier,
         signal,
         timeout,
-        params: getTransactionsParams({
-          ...params
+        ...params
+      }: GetTransactionsType & GetNftResourceType) =>
+        provider({
+          url: `/collections/${identifier}/transactions/count`,
+          signal,
+          timeout,
+          params: getTransactionsParams({
+            isCount: true,
+            ...params
+          })
+        }),
+
+      getCollectionTransfers: ({
+        identifier,
+        signal,
+        timeout,
+        ...params
+      }: GetTransactionsType & GetNftResourceType) =>
+        provider({
+          url: `/collections/${identifier}/transfers`,
+          signal,
+          timeout,
+          params: getTransactionsParams({
+            ...params
+          })
+        }),
+
+      getCollectionTransfersCount: ({
+        identifier,
+        signal,
+        timeout,
+        ...params
+      }: GetTransactionsType & GetNftResourceType) =>
+        provider({
+          url: `/collections/${identifier}/transfers/count`,
+          signal,
+          timeout,
+          params: getTransactionsParams({
+            isCount: true,
+            ...params
+          })
         })
-      }),
-
-    getCollectionTransactionsCount: ({
-      identifier,
-      signal,
-      timeout,
-      ...params
-    }: GetTransactionsType & GetNftResourceType) =>
-      provider({
-        url: `/collections/${identifier}/transactions/count`,
-        signal,
-        timeout,
-        params: getTransactionsParams({
-          isCount: true,
-          ...params
-        })
-      }),
-
-    getCollectionTransfers: ({
-      identifier,
-      signal,
-      timeout,
-      ...params
-    }: GetTransactionsType & GetNftResourceType) =>
-      provider({
-        url: `/collections/${identifier}/transfers`,
-        signal,
-        timeout,
-        params: getTransactionsParams({
-          ...params
-        })
-      }),
-
-    getCollectionTransfersCount: ({
-      identifier,
-      signal,
-      timeout,
-      ...params
-    }: GetTransactionsType & GetNftResourceType) =>
-      provider({
-        url: `/collections/${identifier}/transfers/count`,
-        signal,
-        timeout,
-        params: getTransactionsParams({
-          isCount: true,
-          ...params
-        })
-      })
-  };
+    }),
+    [provider]
+  );
 };

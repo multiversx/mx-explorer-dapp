@@ -13,15 +13,19 @@ export const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-export const withPageTitle =
-  (title: string, Component: React.ComponentType, preventScroll?: boolean) =>
-  () => {
+export const withPageTitle = (
+  title: string,
+  Component: React.ComponentType,
+  preventScroll?: boolean
+) => {
+  const Memoized = memo(() => (
+    <ScrollToTop>
+      <Component />
+    </ScrollToTop>
+  ));
+
+  return () => {
     const dispatch = useDispatch();
-    const Memoized = memo(() => (
-      <ScrollToTop>
-        <Component />
-      </ScrollToTop>
-    ));
 
     useEffect(() => {
       dispatch(
@@ -33,3 +37,4 @@ export const withPageTitle =
 
     return preventScroll ? <Component /> : <Memoized />;
   };
+};

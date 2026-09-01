@@ -18,7 +18,7 @@ export const TokenLayout = () => {
   const dispatch = useDispatch();
   const { getToken, getExchangeTokenPriceHistory } = useAdapter();
   const { hash: identifier = '' } = useParams();
-  const { firstPageRefreshTrigger } = useGetPage();
+  const { poolingFirstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
   const { tokenExtra } = useSelector(tokenExtraSelector);
 
@@ -67,7 +67,12 @@ export const TokenLayout = () => {
     if (!isNativeToken) {
       fetchTokenDetails();
     }
-  }, [firstPageRefreshTrigger, activeNetworkId, identifier, isNativeToken]);
+  }, [
+    poolingFirstPageRefreshTrigger,
+    activeNetworkId,
+    identifier,
+    isNativeToken
+  ]);
 
   const loading = isDataReady === undefined;
   const failed = isDataReady === false;

@@ -1,7 +1,7 @@
+export * from './useEpochProgress';
 export * from './useFetchAccountStakingDetails';
 export * from './useFetchBlocks';
 export * from './useFetchEconomics';
-export * from './useFetchEpochProgress';
 export * from './useFetchEvents';
 export * from './useFetchStake';
 export * from './useFetchMarkers';
@@ -15,3 +15,5 @@ export * from './useFetchTransactions';
 export * from './useFetchCustomTransfers';
 export * from './useFetchTransactionsInPool';
 export * from './useFetchWebsocketConfig';
+export * from './useRoundManager';
+export * from './useRoundTicker';
