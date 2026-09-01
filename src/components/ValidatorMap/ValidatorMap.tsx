@@ -50,7 +50,7 @@ const MarkerToolTip = ({
   city,
   validators
 }: {
-  children: React.ReactNode;
+  children: React.ReactElement;
   city: string;
   validators: number;
 }) => (
@@ -64,7 +64,7 @@ const MarkerToolTip = ({
       </Tooltip>
     )}
   >
-    <>{children}</>
+    {children}
   </OverlayTrigger>
 );
 
