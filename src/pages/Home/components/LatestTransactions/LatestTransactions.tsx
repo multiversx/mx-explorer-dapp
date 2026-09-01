@@ -24,7 +24,10 @@ import {
   getTransactionStatusIconAndColor
 } from 'helpers';
 import { useAdapter, useFetchTransactions, useIsSovereign } from 'hooks';
-import { networkRefreshRateSelector, refreshSelector } from 'redux/selectors';
+import {
+  networkRefreshRateSelector,
+  refreshTimestampSelector
+} from 'redux/selectors';
 import {
   UITransactionType,
   WebsocketEventsEnum,
@@ -170,7 +173,7 @@ const LatestTransactionsList = memo(
 
 export const LatestTransactions = () => {
   const isSovereign = useIsSovereign();
-  const { timestamp } = useSelector(refreshSelector);
+  const timestamp = useSelector(refreshTimestampSelector);
   const refreshRate = useSelector(networkRefreshRateSelector);
   const { getTransactions } = useAdapter();
 

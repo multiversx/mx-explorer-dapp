@@ -11,7 +11,7 @@ import {
   useNetworkRoute
 } from 'hooks';
 import { faExchangeAlt } from 'icons/regular';
-import { refreshSelector } from 'redux/selectors';
+import { refreshTimestampSelector } from 'redux/selectors';
 import { transactionsRoutes } from 'routes';
 import { TransactionType, TransactionApiStatusEnum } from 'types';
 
@@ -25,7 +25,7 @@ export const TransactionDetails = () => {
   const activeRoute = useActiveRoute();
   const { id, order } = useGetTransactionUrlHashParams();
 
-  const { timestamp } = useSelector(refreshSelector);
+  const timestamp = useSelector(refreshTimestampSelector);
   const { getTransaction, getScResult } = useAdapter();
 
   const [transaction, setTransaction] = useState<TransactionType | undefined>();

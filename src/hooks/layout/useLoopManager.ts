@@ -2,21 +2,21 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
-  POOLING_REFRESH_RATE,
   POOLING_REFRESH_RATE_LIMIT,
-  REFRESH_RATE
+  REFRESH_RATE,
+  POOLING_REFRESH_RATE
 } from 'appConstants';
 import {
   activeNetworkSelector,
-  refreshSelector,
+  refreshTimestampSelector,
   statsRefreshRateSelector
 } from 'redux/selectors';
-import { triggerRefresh } from 'redux/slices';
+import { triggerRefresh, triggerPoolingRefresh } from 'redux/slices';
 
 export const useLoopManager = () => {
   const intervalRef = useRef<any>(null);
 
-  const { timestamp } = useSelector(refreshSelector);
+  const timestamp = useSelector(refreshTimestampSelector);
   const statsRefreshRate = useSelector(statsRefreshRateSelector);
 
   const { refreshRate: initialNetworkRefreshRate, updatesWebsocketUrl } =
@@ -43,10 +43,6 @@ export const useLoopManager = () => {
 
   const dispatch = useDispatch();
 
-  // The interval is only re-created when `refreshRate` changes, so `timestamp`
-  // has to be read through a ref — captured directly it goes stale on the first
-  // tick, which made the `withinInterval` skip below dead code and fired a
-  // global refresh on every tick regardless of what the websocket had delivered.
   const timestampRef = useRef(timestamp);
   timestampRef.current = timestamp;
 
@@ -79,4 +75,16 @@ export const useLoopManager = () => {
   }, [statsRefreshRate, refreshRate, updatesWebsocketUrl]);
 
   useEffect(setLoopInterval, [refreshRate]);
+
+  const poolingRefreshRate = Math.max(POOLING_REFRESH_RATE, refreshRate);
+
+  useEffect(() => {
+    const poolingIntervalId = setInterval(() => {
+      if (!document.hidden) {
+        dispatch(triggerPoolingRefresh());
+      }
+    }, poolingRefreshRate);
+
+    return () => clearInterval(poolingIntervalId);
+  }, [poolingRefreshRate, dispatch]);
 };

@@ -24,7 +24,7 @@ export const NftLayout = () => {
   const networkRoute = useNetworkRoute();
   const { getNft } = useAdapter();
   const { hash: identifier } = useParams();
-  const { firstPageRefreshTrigger } = useGetPage();
+  const { poolingFirstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { nftState } = useSelector(nftSelector);
 
@@ -48,7 +48,7 @@ export const NftLayout = () => {
 
   useEffect(() => {
     fetchNftDetails();
-  }, [firstPageRefreshTrigger, activeNetworkId, identifier]);
+  }, [poolingFirstPageRefreshTrigger, activeNetworkId, identifier]);
 
   const loading =
     isDataReady === undefined ||

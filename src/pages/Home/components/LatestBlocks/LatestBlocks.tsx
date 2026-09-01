@@ -14,7 +14,10 @@ import { FailedBlocks } from 'components/BlocksTable/components/FailedBlocks';
 import { NoBlocks } from 'components/BlocksTable/components/NoBlocks';
 import { formatLatestEntries, urlBuilder } from 'helpers';
 import { useAdapter, useFetchBlocks } from 'hooks';
-import { activeNetworkSelector, refreshSelector } from 'redux/selectors';
+import {
+  activeNetworkSelector,
+  refreshTimestampSelector
+} from 'redux/selectors';
 import { blocksRoutes } from 'routes';
 import {
   UIBlockType,
@@ -109,7 +112,7 @@ const LatestBlocksList = memo(
 );
 
 export const LatestBlocks = () => {
-  const { timestamp } = useSelector(refreshSelector);
+  const timestamp = useSelector(refreshTimestampSelector);
   const { id: activeNetworkId, refreshRate } = useSelector(
     activeNetworkSelector
   );
