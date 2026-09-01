@@ -21,6 +21,7 @@ interface PropsType {
   timeout?: AdapterProviderPropsType['timeout'];
   timestamp?: AdapterProviderPropsType['timestamp'];
   signal?: AdapterProviderPropsType['signal'];
+  headers?: AdapterProviderPropsType['headers'];
 }
 
 async function wrap(asyncRequest: () => Promise<ApiAdapterResponseType>) {

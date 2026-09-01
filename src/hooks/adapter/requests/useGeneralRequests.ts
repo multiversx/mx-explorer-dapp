@@ -9,8 +9,13 @@ export const useGeneralRequests = () => {
 
   return useMemo(
     () => ({
-      getStats: ({ signal, timeout }: AxiosParamsApiType = {}) =>
-        provider({ url: '/stats', signal, timeout }),
+      getStats: ({ signal, timeout, headers }: AxiosParamsApiType = {}) =>
+        provider({
+          url: '/stats',
+          signal,
+          timeout,
+          headers
+        }),
 
       getStake: ({ signal, timeout }: AxiosParamsApiType = {}) =>
         provider({ url: '/stake', signal, timeout }),
