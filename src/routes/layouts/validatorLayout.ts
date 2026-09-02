@@ -1,16 +1,3 @@
-import { NodesLayout } from 'layouts/NodesLayout';
-import { ProviderLayout } from 'layouts/ProviderLayout';
-import { Identities } from 'pages/Identities';
-import { IdentityDetails } from 'pages/IdentityDetails';
-import { NodeDetails } from 'pages/NodeDetails';
-import { Nodes } from 'pages/Nodes';
-import { NodesAuctionList } from 'pages/NodesAuctionList';
-import { NodesQueue } from 'pages/NodesQueue';
-import { NodesStatistics } from 'pages/NodesStatistics';
-import { ProviderDetails } from 'pages/ProviderDetails';
-import { ProviderTransactions } from 'pages/ProviderDetails/ProviderTransactions';
-import { Providers } from 'pages/Providers';
-
 import { TitledRouteObject } from '../routes';
 
 export const validatorsRoutes = {
@@ -29,119 +16,148 @@ export const validatorsRoutes = {
 export const validatorLayout: TitledRouteObject[] = [
   {
     path: validatorsRoutes.identities,
-    Component: NodesLayout,
+    lazyComponent: () =>
+      import('layouts/NodesLayout').then((module) => module.NodesLayout),
     preventScroll: true,
     children: [
       {
         path: validatorsRoutes.identities,
         title: 'Validators',
         preventScroll: true,
-        Component: Identities
+        lazyComponent: () =>
+          import('pages/Identities').then((module) => module.Identities)
       }
     ]
   },
   {
     path: validatorsRoutes.identityDetails,
-    Component: NodesLayout,
+    lazyComponent: () =>
+      import('layouts/NodesLayout').then((module) => module.NodesLayout),
     children: [
       {
         path: validatorsRoutes.identityDetails,
         title: 'Validator Details',
-        Component: IdentityDetails
+        lazyComponent: () =>
+          import('pages/IdentityDetails').then(
+            (module) => module.IdentityDetails
+          )
       }
     ]
   },
   {
     path: validatorsRoutes.statistics,
     preventScroll: true,
-    Component: NodesLayout,
+    lazyComponent: () =>
+      import('layouts/NodesLayout').then((module) => module.NodesLayout),
     children: [
       {
         path: validatorsRoutes.statistics,
         title: 'Nodes Statistics',
         preventScroll: true,
-        Component: NodesStatistics
+        lazyComponent: () =>
+          import('pages/NodesStatistics').then(
+            (module) => module.NodesStatistics
+          )
       }
     ]
   },
   {
     path: validatorsRoutes.queue,
     preventScroll: true,
-    Component: NodesLayout,
+    lazyComponent: () =>
+      import('layouts/NodesLayout').then((module) => module.NodesLayout),
     children: [
       {
         path: validatorsRoutes.queue,
         title: 'Nodes Queue',
         preventScroll: true,
-        Component: NodesQueue
+        lazyComponent: () =>
+          import('pages/NodesQueue').then((module) => module.NodesQueue)
       }
     ]
   },
   {
     path: validatorsRoutes.auctionList,
     preventScroll: true,
-    Component: NodesLayout,
+    lazyComponent: () =>
+      import('layouts/NodesLayout').then((module) => module.NodesLayout),
     children: [
       {
         path: validatorsRoutes.auctionList,
         title: 'Auction List',
         preventScroll: true,
-        Component: NodesAuctionList
+        lazyComponent: () =>
+          import('pages/NodesAuctionList').then(
+            (module) => module.NodesAuctionList
+          )
       }
     ]
   },
   {
     path: validatorsRoutes.nodes,
     preventScroll: true,
-    Component: NodesLayout,
+    lazyComponent: () =>
+      import('layouts/NodesLayout').then((module) => module.NodesLayout),
     children: [
       {
         path: validatorsRoutes.nodes,
         title: 'Nodes',
         preventScroll: true,
-        Component: Nodes
+        lazyComponent: () =>
+          import('pages/Nodes').then((module) => module.Nodes)
       }
     ]
   },
   {
     path: validatorsRoutes.nodeDetails,
-    Component: NodesLayout,
+    lazyComponent: () =>
+      import('layouts/NodesLayout').then((module) => module.NodesLayout),
     children: [
       {
         path: validatorsRoutes.nodeDetails,
         title: 'Node Details',
-        Component: NodeDetails
+        lazyComponent: () =>
+          import('pages/NodeDetails').then((module) => module.NodeDetails)
       }
     ]
   },
   {
     path: validatorsRoutes.providers,
     preventScroll: true,
-    Component: NodesLayout,
+    lazyComponent: () =>
+      import('layouts/NodesLayout').then((module) => module.NodesLayout),
     children: [
       {
         path: validatorsRoutes.providers,
         title: 'Providers',
         preventScroll: true,
-        Component: Providers
+        lazyComponent: () =>
+          import('pages/Providers').then((module) => module.Providers)
       }
     ]
   },
   {
     path: validatorsRoutes.providerDetails,
-    Component: ProviderLayout,
+    lazyComponent: () =>
+      import('layouts/ProviderLayout').then((module) => module.ProviderLayout),
     children: [
       {
         path: validatorsRoutes.providerDetails,
         title: 'Provider Details',
         preventScroll: true,
-        Component: ProviderDetails
+        lazyComponent: () =>
+          import('pages/ProviderDetails').then(
+            (module) => module.ProviderDetails
+          )
       },
       {
         path: validatorsRoutes.providerTransactions,
         title: 'Provider Transactions',
         preventScroll: true,
-        Component: ProviderTransactions
+        lazyComponent: () =>
+          import('pages/ProviderDetails/ProviderTransactions').then(
+            (module) => module.ProviderTransactions
+          )
       }
     ]
   }

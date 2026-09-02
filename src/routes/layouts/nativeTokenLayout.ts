@@ -1,9 +1,5 @@
 import { networks } from 'config';
 
-import { NativeTokenLayout } from 'layouts/NativeTokenLayout';
-import { NativeTokenAccounts } from 'pages/NativeToken/NativeTokenAccounts';
-import { NativeTokenTransactions } from 'pages/NativeToken/NativeTokenTransactions';
-
 import { TitledRouteObject } from '../routes';
 
 export const nativeTokenLayout: TitledRouteObject[] = [];
@@ -26,19 +22,28 @@ networks.forEach((network) => {
   nativeTokenLayout.push({
     path: networkPath,
     preventScroll: true,
-    Component: NativeTokenLayout,
+    lazyComponent: () =>
+      import('layouts/NativeTokenLayout').then(
+        (module) => module.NativeTokenLayout
+      ),
     children: [
       {
         path: networkPath,
         title: network.egldLabel,
         preventScroll: true,
-        Component: NativeTokenTransactions
+        lazyComponent: () =>
+          import('pages/NativeToken/NativeTokenTransactions').then(
+            (module) => module.NativeTokenTransactions
+          )
       },
       {
         path: `${networkPath}/accounts`,
         title: 'Holders',
         preventScroll: true,
-        Component: NativeTokenAccounts
+        lazyComponent: () =>
+          import('pages/NativeToken/NativeTokenAccounts').then(
+            (module) => module.NativeTokenAccounts
+          )
       }
     ]
   });

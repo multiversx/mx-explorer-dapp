@@ -11,13 +11,21 @@ export const wrapRoutes = (routes: TitledRouteObject[]): RouteObject[] =>
         wrapRoutes(route.children);
       }
 
-      route.Component = route.Component
-        ? withPageTitle(
-            route.title ?? '',
-            route.Component,
-            route?.preventScroll
-          )
-        : route.Component;
+      const title = route.title ?? '';
+      const { preventScroll, lazyComponent } = route;
+
+      if (lazyComponent) {
+        // resolved once by react-router on first match, then cached
+        route.lazy = async () => ({
+          Component: withPageTitle(title, await lazyComponent(), preventScroll)
+        });
+
+        delete route['lazyComponent'];
+      } else {
+        route.Component = route.Component
+          ? withPageTitle(title, route.Component, preventScroll)
+          : route.Component;
+      }
 
       delete route['title'];
 

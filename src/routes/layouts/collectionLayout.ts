@@ -1,9 +1,3 @@
-import { CollectionLayout } from 'layouts/CollectionLayout';
-import { CollectionAssets } from 'pages/CollectionDetails/CollectionAssets';
-import { CollectionRoles } from 'pages/CollectionDetails/CollectionRoles';
-import { CollectionTransactions } from 'pages/CollectionDetails/CollectionTransactions';
-import { Collections } from 'pages/Collections';
-
 import { TitledRouteObject } from '../routes';
 
 export const collectionRoutes = {
@@ -20,42 +14,57 @@ export const collectionLayout: TitledRouteObject[] = [
     path: collectionRoutes.collections,
     title: 'NFTs',
     preventScroll: true,
-    Component: Collections
+    lazyComponent: () =>
+      import('pages/Collections').then((module) => module.Collections)
   },
   {
     path: collectionRoutes.collectionsNft,
     title: 'NFT Collections',
     preventScroll: true,
-    Component: Collections
+    lazyComponent: () =>
+      import('pages/Collections').then((module) => module.Collections)
   },
   {
     path: collectionRoutes.collectionsSft,
     title: 'SFT Collections',
     preventScroll: true,
-    Component: Collections
+    lazyComponent: () =>
+      import('pages/Collections').then((module) => module.Collections)
   },
   {
     path: collectionRoutes.collectionDetails,
-    Component: CollectionLayout,
+    lazyComponent: () =>
+      import('layouts/CollectionLayout').then(
+        (module) => module.CollectionLayout
+      ),
     preventScroll: true,
     children: [
       {
         path: collectionRoutes.collectionDetails,
         title: 'Collection Details',
         preventScroll: true,
-        Component: CollectionAssets
+        lazyComponent: () =>
+          import('pages/CollectionDetails/CollectionAssets').then(
+            (module) => module.CollectionAssets
+          )
       },
       {
         path: collectionRoutes.collectionDetailsTransactions,
         title: 'Collection Transactions',
         preventScroll: true,
-        Component: CollectionTransactions
+        lazyComponent: () =>
+          import('pages/CollectionDetails/CollectionTransactions').then(
+            (module) => module.CollectionTransactions
+          )
       },
       {
         path: collectionRoutes.collectionDetailsRoles,
         title: 'Collection Roles',
         preventScroll: true,
-        Component: CollectionRoles
+        lazyComponent: () =>
+          import('pages/CollectionDetails/CollectionRoles').then(
+            (module) => module.CollectionRoles
+          )
       }
     ]
   }

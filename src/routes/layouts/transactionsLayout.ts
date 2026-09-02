@@ -1,8 +1,3 @@
-import { TransactionDetails } from 'pages/TransactionDetails';
-import { TransactionInPoolDetails } from 'pages/TransactionInPoolDetails';
-import { Transactions } from 'pages/Transactions';
-import { TransactionsInPool } from 'pages/TransactionsInPool';
-
 import { TitledRouteObject } from '../routes';
 
 export const transactionsInPoolRoutes = {
@@ -21,21 +16,31 @@ export const transactionsLayout: TitledRouteObject[] = [
   {
     path: transactionsRoutes.transactions,
     title: 'Transactions',
-    Component: Transactions
+    lazyComponent: () =>
+      import('pages/Transactions').then((module) => module.Transactions)
   },
   {
     path: transactionsRoutes.transactionDetails,
     title: 'Transaction Details',
-    Component: TransactionDetails
+    lazyComponent: () =>
+      import('pages/TransactionDetails').then(
+        (module) => module.TransactionDetails
+      )
   },
   {
     path: transactionsInPoolRoutes.transactionsInPool,
     title: 'Transactions In Pool',
-    Component: TransactionsInPool
+    lazyComponent: () =>
+      import('pages/TransactionsInPool').then(
+        (module) => module.TransactionsInPool
+      )
   },
   {
     path: transactionsInPoolRoutes.transactionsInPoolDetails,
     title: 'Transaction In Pool Details',
-    Component: TransactionInPoolDetails
+    lazyComponent: () =>
+      import('pages/TransactionInPoolDetails').then(
+        (module) => module.TransactionInPoolDetails
+      )
   }
 ];

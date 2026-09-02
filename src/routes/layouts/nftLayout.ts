@@ -1,9 +1,3 @@
-import { NftLayout } from 'layouts/NftLayout';
-import { NftDetails } from 'pages/NftDetails';
-import { NftAccounts } from 'pages/NftDetails/NftAccounts';
-import { NftTransactions } from 'pages/NftDetails/NftTransactions';
-import { Nfts } from 'pages/Nfts';
-
 import { TitledRouteObject } from '../routes';
 
 export const nftRoutes = {
@@ -17,30 +11,38 @@ export const nftLayout: TitledRouteObject[] = [
   {
     path: nftRoutes.nfts,
     title: 'NFTs',
-    Component: Nfts
+    lazyComponent: () => import('pages/Nfts').then((module) => module.Nfts)
   },
   {
     path: nftRoutes.nftDetails,
     preventScroll: true,
-    Component: NftLayout,
+    lazyComponent: () =>
+      import('layouts/NftLayout').then((module) => module.NftLayout),
     children: [
       {
         path: nftRoutes.nftDetails,
         title: 'NFT Details',
         preventScroll: true,
-        Component: NftDetails
+        lazyComponent: () =>
+          import('pages/NftDetails').then((module) => module.NftDetails)
       },
       {
         path: nftRoutes.nftDetailsTransactions,
         title: 'NFT Transactions',
         preventScroll: true,
-        Component: NftTransactions
+        lazyComponent: () =>
+          import('pages/NftDetails/NftTransactions').then(
+            (module) => module.NftTransactions
+          )
       },
       {
         path: nftRoutes.nftDetailsAccounts,
         title: 'NFT Holders',
         preventScroll: true,
-        Component: NftAccounts
+        lazyComponent: () =>
+          import('pages/NftDetails/NftAccounts').then(
+            (module) => module.NftAccounts
+          )
       }
     ]
   }

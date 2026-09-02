@@ -1,8 +1,3 @@
-import { MiniBlockLayout } from 'layouts/MiniBlockLayout';
-import { BlockDetails } from 'pages/BlockDetails';
-import { Blocks } from 'pages/Blocks';
-import { MiniBlockDetails } from 'pages/MiniBlockDetails';
-
 import { TitledRouteObject } from '../routes';
 
 export const blocksRoutes = {
@@ -15,21 +10,28 @@ export const blockLayout: TitledRouteObject[] = [
   {
     path: blocksRoutes.blocks,
     title: 'Blocks',
-    Component: Blocks
+    lazyComponent: () => import('pages/Blocks').then((module) => module.Blocks)
   },
   {
     path: blocksRoutes.blocksDetails,
     title: 'Block Details',
-    Component: BlockDetails
+    lazyComponent: () =>
+      import('pages/BlockDetails').then((module) => module.BlockDetails)
   },
   {
     path: blocksRoutes.miniBlockDetails,
-    Component: MiniBlockLayout,
+    lazyComponent: () =>
+      import('layouts/MiniBlockLayout').then(
+        (module) => module.MiniBlockLayout
+      ),
     children: [
       {
         path: blocksRoutes.miniBlockDetails,
         title: 'Miniblock Details',
-        Component: MiniBlockDetails
+        lazyComponent: () =>
+          import('pages/MiniBlockDetails').then(
+            (module) => module.MiniBlockDetails
+          )
       }
     ]
   }

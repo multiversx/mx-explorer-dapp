@@ -1,12 +1,9 @@
+import { ComponentType } from 'react';
 import cloneDeep from 'lodash.clonedeep';
 import { NonIndexRouteObject } from 'react-router-dom';
 
 import { networks } from 'config';
 import { Layout } from 'layouts/Layout';
-import { Analytics } from 'pages/Analytics';
-import { AnalyticsCompare } from 'pages/AnalyticsCompare';
-import { EmptySearch } from 'pages/EmptySearch';
-import { HashSearch } from 'pages/HashSearch';
 import { Home } from 'pages/Home';
 import { PageNotFound } from 'pages/PageNotFound';
 
@@ -49,6 +46,12 @@ export {
 export interface TitledRouteObject extends NonIndexRouteObject {
   title?: string;
   preventScroll?: boolean;
+  /**
+   * Code-split page component. Declared instead of `Component` so the page's
+   * chunk is only fetched when the route is matched; `wrapRoutes` converts it
+   * into react-router's `lazy` field.
+   */
+  lazyComponent?: () => Promise<ComponentType>;
   children?: TitledRouteObject[];
 }
 
@@ -92,22 +95,28 @@ const mainRoutes: TitledRouteObject[] = [
       {
         path: analyticsRoutes.analytics,
         title: 'Analytics',
-        Component: Analytics
+        lazyComponent: () =>
+          import('pages/Analytics').then((module) => module.Analytics)
       },
       {
         path: analyticsRoutes.compare,
         title: 'Analytics',
-        Component: AnalyticsCompare
+        lazyComponent: () =>
+          import('pages/AnalyticsCompare').then(
+            (module) => module.AnalyticsCompare
+          )
       },
       {
         path: searchRoutes.index,
         title: 'Search',
-        Component: EmptySearch
+        lazyComponent: () =>
+          import('pages/EmptySearch').then((module) => module.EmptySearch)
       },
       {
         path: searchRoutes.query,
         title: 'Search',
-        Component: HashSearch
+        lazyComponent: () =>
+          import('pages/HashSearch').then((module) => module.HashSearch)
       },
       ...accountLayout,
       ...blockLayout,

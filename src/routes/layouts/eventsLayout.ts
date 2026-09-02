@@ -1,6 +1,3 @@
-import { EventDetails } from 'pages/EventDetails';
-import { Events } from 'pages/Events';
-
 import { TitledRouteObject } from '../routes';
 
 export const eventsRoutes = {
@@ -12,11 +9,12 @@ export const eventsLayout: TitledRouteObject[] = [
   {
     path: eventsRoutes.events,
     title: 'Events',
-    Component: Events
+    lazyComponent: () => import('pages/Events').then((module) => module.Events)
   },
   {
     path: eventsRoutes.eventDetails,
     title: 'Event Details',
-    Component: EventDetails
+    lazyComponent: () =>
+      import('pages/EventDetails').then((module) => module.EventDetails)
   }
 ];

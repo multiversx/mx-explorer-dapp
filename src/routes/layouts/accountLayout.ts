@@ -1,19 +1,3 @@
-import { AccountLayout } from 'layouts/AccountLayout';
-import { AccountAnalytics } from 'pages/AccountDetails/AccountAnalytics';
-import { AccountContractCode } from 'pages/AccountDetails/AccountContractCode';
-import { AccountContracts } from 'pages/AccountDetails/AccountContracts';
-import { AccountNfts } from 'pages/AccountDetails/AccountNfts';
-import { AccountNodes } from 'pages/AccountDetails/AccountNodes';
-import { AccountCollectionRoles } from 'pages/AccountDetails/AccountRoles/AccountCollectionRoles';
-import { AccountTokenRoles } from 'pages/AccountDetails/AccountRoles/AccountTokenRoles';
-import { AccountStaking } from 'pages/AccountDetails/AccountStaking';
-import { AccountTokensTable } from 'pages/AccountDetails/AccountTokensTable';
-import { AccountTransactions } from 'pages/AccountDetails/AccountTransactions';
-import { AccountUpgrades } from 'pages/AccountDetails/AccountUpgrades';
-import { OldRouteRedirect } from 'pages/AccountDetails/OldRouteRedirect';
-import { Accounts } from 'pages/Accounts';
-import { Applications } from 'pages/Applications';
-
 import { TitledRouteObject } from '../routes';
 
 export const accountsRoutes = {
@@ -48,88 +32,127 @@ export const accountLayout: TitledRouteObject[] = [
   {
     path: accountsRoutes.oldAccountDetails,
     title: 'Account Details',
-    Component: OldRouteRedirect
+    lazyComponent: () =>
+      import('pages/AccountDetails/OldRouteRedirect').then(
+        (module) => module.OldRouteRedirect
+      )
   },
   {
     path: accountsRoutes.accounts,
     title: 'Accounts',
-    Component: Accounts
+    lazyComponent: () =>
+      import('pages/Accounts').then((module) => module.Accounts)
   },
   {
     path: applicationsRoutes.applications,
     title: 'Applications',
-    Component: Applications
+    lazyComponent: () =>
+      import('pages/Applications').then((module) => module.Applications)
   },
   {
     path: accountsRoutes.accountDetails,
     preventScroll: true,
-    Component: AccountLayout,
+    lazyComponent: () =>
+      import('layouts/AccountLayout').then((module) => module.AccountLayout),
     children: [
       {
         path: accountsRoutes.accountDetails,
         title: 'Account Details',
         preventScroll: true,
-        Component: AccountTransactions
+        lazyComponent: () =>
+          import('pages/AccountDetails/AccountTransactions').then(
+            (module) => module.AccountTransactions
+          )
       },
       {
         path: accountsRoutes.accountCode,
         title: 'Smart Contract Code',
         preventScroll: true,
-        Component: AccountContractCode
+        lazyComponent: () =>
+          import('pages/AccountDetails/AccountContractCode').then(
+            (module) => module.AccountContractCode
+          )
       },
       {
         path: accountsRoutes.accountUpgrades,
         title: 'Smart Contract Upgrades',
         preventScroll: true,
-        Component: AccountUpgrades
+        lazyComponent: () =>
+          import('pages/AccountDetails/AccountUpgrades').then(
+            (module) => module.AccountUpgrades
+          )
       },
       {
         path: accountsRoutes.accountTokens,
         title: 'Account Tokens',
         preventScroll: true,
-        Component: AccountTokensTable
+        lazyComponent: () =>
+          import('pages/AccountDetails/AccountTokensTable').then(
+            (module) => module.AccountTokensTable
+          )
       },
       {
         path: accountsRoutes.accountNfts,
         title: 'Account NFTs',
         preventScroll: true,
-        Component: AccountNfts
+        lazyComponent: () =>
+          import('pages/AccountDetails/AccountNfts').then(
+            (module) => module.AccountNfts
+          )
       },
       {
         path: accountsRoutes.accountStaking,
         title: 'Account Staking Details',
         preventScroll: true,
-        Component: AccountStaking
+        lazyComponent: () =>
+          import('pages/AccountDetails/AccountStaking').then(
+            (module) => module.AccountStaking
+          )
       },
       {
         path: accountsRoutes.accountAnalytics,
         title: 'Account Analytics',
         preventScroll: true,
-        Component: AccountAnalytics
+        lazyComponent: () =>
+          import('pages/AccountDetails/AccountAnalytics').then(
+            (module) => module.AccountAnalytics
+          )
       },
       {
         path: accountsRoutes.accountContracts,
         title: 'Smart Contracts',
         preventScroll: true,
-        Component: AccountContracts
+        lazyComponent: () =>
+          import('pages/AccountDetails/AccountContracts').then(
+            (module) => module.AccountContracts
+          )
       },
       {
         path: accountsRoutes.accountNodes,
         title: 'Nodes',
         preventScroll: true,
-        Component: AccountNodes
+        lazyComponent: () =>
+          import('pages/AccountDetails/AccountNodes').then(
+            (module) => module.AccountNodes
+          )
       },
       {
         path: accountsRoutes.accountRolesTokens,
         title: 'Token Roles',
         preventScroll: true,
-        Component: AccountTokenRoles
+        lazyComponent: () =>
+          import('pages/AccountDetails/AccountRoles/AccountTokenRoles').then(
+            (module) => module.AccountTokenRoles
+          )
       },
       {
         path: accountsRoutes.accountRolesCollections,
         title: 'Collection Roles',
         preventScroll: true,
-        Component: AccountCollectionRoles
+        lazyComponent: () =>
+          import(
+            'pages/AccountDetails/AccountRoles/AccountCollectionRoles'
+          ).then((module) => module.AccountCollectionRoles)
       }
     ]
   }

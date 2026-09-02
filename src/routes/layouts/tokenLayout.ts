@@ -1,18 +1,3 @@
-import { CollectionLayout } from 'layouts/CollectionLayout';
-import { NftLayout } from 'layouts/NftLayout';
-import { TokenLayout } from 'layouts/TokenLayout';
-import { CollectionRoles } from 'pages/CollectionDetails/CollectionRoles';
-import { CollectionTransactions } from 'pages/CollectionDetails/CollectionTransactions';
-import { NftAccounts } from 'pages/NftDetails/NftAccounts';
-import { NftTransactions } from 'pages/NftDetails/NftTransactions';
-import { TokenDetailsAccounts } from 'pages/TokenDetails/TokenAccounts';
-import { TokenDetailsAnalytics } from 'pages/TokenDetails/TokenDetailsAnalytics';
-import { TokenDetailsLockedAccounts } from 'pages/TokenDetails/TokenLockedAccounts';
-import { TokenDetailsRoles } from 'pages/TokenDetails/TokenRoles';
-import { TokenTransactions } from 'pages/TokenDetails/TokenTransactions';
-import { Tokens } from 'pages/Tokens';
-import { TokensMeta } from 'pages/TokensMeta';
-
 import { TitledRouteObject } from '../routes';
 
 export const tokensRoutes = {
@@ -35,49 +20,67 @@ export const tokenLayout: TitledRouteObject[] = [
     path: tokensRoutes.tokensMeta,
     title: 'Meta-ESDT Tokens',
     preventScroll: true,
-    Component: TokensMeta
+    lazyComponent: () =>
+      import('pages/TokensMeta').then((module) => module.TokensMeta)
   },
   {
     path: tokensRoutes.tokensMetaEsdt,
     title: 'Meta-ESDT Tokens',
     preventScroll: true,
-    Component: TokensMeta
+    lazyComponent: () =>
+      import('pages/TokensMeta').then((module) => module.TokensMeta)
   },
   {
     path: tokensRoutes.tokensMetaEsdtDetails,
     preventScroll: true,
-    Component: CollectionLayout,
+    lazyComponent: () =>
+      import('layouts/CollectionLayout').then(
+        (module) => module.CollectionLayout
+      ),
     children: [
       {
         path: tokensRoutes.tokensMetaEsdtDetails,
         title: 'Meta-ESDT Transactions',
         preventScroll: true,
-        Component: CollectionTransactions
+        lazyComponent: () =>
+          import('pages/CollectionDetails/CollectionTransactions').then(
+            (module) => module.CollectionTransactions
+          )
       },
       {
         path: tokensRoutes.tokensMetaEsdtDetailsRoles,
         title: 'Meta-ESDT Roles',
         preventScroll: true,
-        Component: CollectionRoles
+        lazyComponent: () =>
+          import('pages/CollectionDetails/CollectionRoles').then(
+            (module) => module.CollectionRoles
+          )
       }
     ]
   },
   {
     path: tokensRoutes.tokensProofDetails,
     preventScroll: true,
-    Component: NftLayout,
+    lazyComponent: () =>
+      import('layouts/NftLayout').then((module) => module.NftLayout),
     children: [
       {
         path: tokensRoutes.tokensProofDetails,
         title: 'Proof Transactions',
         preventScroll: true,
-        Component: NftTransactions
+        lazyComponent: () =>
+          import('pages/NftDetails/NftTransactions').then(
+            (module) => module.NftTransactions
+          )
       },
       {
         path: tokensRoutes.tokensProofDetailsAccounts,
         title: 'Proof Holders',
         preventScroll: true,
-        Component: NftAccounts
+        lazyComponent: () =>
+          import('pages/NftDetails/NftAccounts').then(
+            (module) => module.NftAccounts
+          )
       }
     ]
   },
@@ -85,42 +88,58 @@ export const tokenLayout: TitledRouteObject[] = [
     path: tokensRoutes.tokens,
     title: 'Tokens',
     preventScroll: true,
-    Component: Tokens
+    lazyComponent: () => import('pages/Tokens').then((module) => module.Tokens)
   },
   {
     path: tokensRoutes.tokenDetails,
     preventScroll: true,
-    Component: TokenLayout,
+    lazyComponent: () =>
+      import('layouts/TokenLayout').then((module) => module.TokenLayout),
     children: [
       {
         path: tokensRoutes.tokenDetails,
         title: 'Token Details',
         preventScroll: true,
-        Component: TokenTransactions
+        lazyComponent: () =>
+          import('pages/TokenDetails/TokenTransactions').then(
+            (module) => module.TokenTransactions
+          )
       },
       {
         path: tokensRoutes.tokenDetailsAccounts,
         title: 'Token Holders',
         preventScroll: true,
-        Component: TokenDetailsAccounts
+        lazyComponent: () =>
+          import('pages/TokenDetails/TokenAccounts').then(
+            (module) => module.TokenDetailsAccounts
+          )
       },
       {
         path: tokensRoutes.tokenDetailsLockedAccounts,
         title: 'Locked Token Accounts',
         preventScroll: true,
-        Component: TokenDetailsLockedAccounts
+        lazyComponent: () =>
+          import('pages/TokenDetails/TokenLockedAccounts').then(
+            (module) => module.TokenDetailsLockedAccounts
+          )
       },
       {
         path: tokensRoutes.tokenDetailsRoles,
         title: 'Token Roles',
         preventScroll: true,
-        Component: TokenDetailsRoles
+        lazyComponent: () =>
+          import('pages/TokenDetails/TokenRoles').then(
+            (module) => module.TokenDetailsRoles
+          )
       },
       {
         path: tokensRoutes.tokenDetailsAnalytics,
         title: 'Token Analytics',
         preventScroll: true,
-        Component: TokenDetailsAnalytics
+        lazyComponent: () =>
+          import('pages/TokenDetails/TokenDetailsAnalytics').then(
+            (module) => module.TokenDetailsAnalytics
+          )
       }
     ]
   }
