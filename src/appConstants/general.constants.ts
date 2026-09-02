@@ -38,6 +38,9 @@ export const NEW_VERSION_NOTIFICATION = 'newExplorerVersion';
 export const NAVIGATION_SEARCH_STATE = 'fromSearch';
 export const CURSOR_HISTORY_STORAGE_KEY = 'explorerCursors';
 
+export const MAX_CACHED_TRANSACTION_DETAILS = 100;
+export const MAX_CACHED_NODE_DETAILS = 100;
+
 export const MAX_CURSOR_HISTORY_PAGES = 500;
 export const MAX_CURSOR_HISTORY_LISTS = 5;
 
