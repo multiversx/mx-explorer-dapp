@@ -24,6 +24,7 @@ import {
 } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
 import {
+  useAbortSignal,
   useAdapter,
   useGetPage,
   useGetSort,
@@ -58,6 +59,7 @@ export const Applications = () => {
   const { search } = useGetSearch();
   const { page, size, searchAfter } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
 
   const [accounts, setAccounts] = useState<AccountType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -79,6 +81,8 @@ export const Applications = () => {
 
   const fetchApplications = () => {
     setDataChanged(true);
+    const signal = getAbortSignal();
+
     Promise.all([
       getAccounts({
         page,
@@ -89,11 +93,16 @@ export const Applications = () => {
         withDeployInfo: true,
         ...(is24hCountAvailable ? {} : { withScrCount: true }),
         ...(is24hCountAvailable ? { size } : { size: minSize }),
-        ...sort
+        ...sort,
+        signal
       }),
-      getAccountsCount({ isSmartContract: true, search })
+      getAccountsCount({ isSmartContract: true, search, signal })
     ])
       .then(([applicationsData, applicationsCountData]) => {
+        if (signal.aborted) {
+          return;
+        }
+
         if (applicationsData.success && applicationsCountData.success) {
           setAccounts(applicationsData.data);
           setTotalAccounts(applicationsCountData.data);

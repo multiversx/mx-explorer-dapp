@@ -12,7 +12,7 @@ import {
   Trim,
   AccountLink
 } from 'components';
-import { useGetPage, useAdapter } from 'hooks';
+import { useGetPage, useAbortSignal, useAdapter } from 'hooks';
 import { faCode } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
@@ -28,6 +28,7 @@ export const AccountContracts = () => {
   const { page, size } = useGetPage();
 
   const { getAccountContracts, getAccountContractsCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
 
   const { hash: address } = useParams() as any;
 
@@ -38,14 +39,21 @@ export const AccountContracts = () => {
   const [accountContractsCount, setAccountContractsCount] = useState(0);
 
   const fetchAccountContracts = () => {
+    const signal = getAbortSignal();
+
     Promise.all([
       getAccountContracts({
         page,
         size,
-        address
+        address,
+        signal
       }),
-      getAccountContractsCount(address)
+      getAccountContractsCount(address, { signal })
     ]).then(([accountContractsData, accountContractsCountData]) => {
+      if (signal.aborted) {
+        return;
+      }
+
       if (ref.current !== null) {
         if (accountContractsData.success && accountContractsCountData.success) {
           setAccountContracts(accountContractsData.data);
