@@ -6,6 +6,7 @@ export const useScollInView = () => {
   );
 
   const scrollableElements = useRef<HTMLElement[]>([]);
+  const observerRef = useRef<IntersectionObserver | undefined>(undefined);
   const dispersionIndexes = scrollableElements.current.map((_, index) => index);
 
   const shouldDisplayArrow = (index: number) =>
@@ -18,11 +19,31 @@ export const useScollInView = () => {
   const showRightInViewArrow = shouldDisplayArrow(lastElementIndex);
 
   const handleElementReference = (element: HTMLElement | null) => {
-    if (!element || scrollableElements.current.includes(element)) {
+    if (!element) {
+      const connectedElements: HTMLElement[] = [];
+
+      scrollableElements.current.forEach((scrollableElement) => {
+        if (scrollableElement.isConnected) {
+          connectedElements.push(scrollableElement);
+
+          return;
+        }
+
+        observerRef.current?.unobserve(scrollableElement);
+      });
+
+      scrollableElements.current = connectedElements;
+
+      return;
+    }
+
+    if (scrollableElements.current.includes(element)) {
       return;
     }
 
     scrollableElements.current.push(element);
+    // Elements added after the first paint were never observed before.
+    observerRef.current?.observe(element);
   };
 
   const handleScrollIntoView = (elementIndex: number) => {
@@ -90,7 +111,9 @@ export const useScollInView = () => {
         .filter(filterIntersections)
         .map(processIndexFromEntry);
 
-      const cumulatedIndexes = currentIndexesInView.concat(newInViewIndexes);
+      const cumulatedIndexes = Array.from(
+        new Set(currentIndexesInView.concat(newInViewIndexes))
+      );
       const updatedElementInViewIndexes = cumulatedIndexes.filter(
         (index) => !newOutViewIndexes.includes(index)
       );
@@ -107,13 +130,17 @@ export const useScollInView = () => {
       }),
     [scrollableElements]
   );
+  observerRef.current = observer;
 
   useEffect(() => {
     scrollableElements.current.forEach((scrollableElement) => {
       observer.observe(scrollableElement);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      scrollableElements.current = [];
+    };
   }, []);
 
   return {
