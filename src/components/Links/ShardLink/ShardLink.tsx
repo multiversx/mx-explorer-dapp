@@ -61,7 +61,7 @@ export const ShardLink = ({
   const isHighlighted =
     !isTouch && hasHighlight && highlightedText === shardHighlightKey;
 
-  const ShardDisplay = ({ className }: WithClassnameType) => {
+  const renderShardDisplay = ({ className }: WithClassnameType) => {
     if (!hasLink) {
       return (
         <span
@@ -109,10 +109,10 @@ export const ShardLink = ({
   if (hasParanthesis) {
     return (
       <span className={classNames('text-neutral-400', className)}>
-        (<ShardDisplay className='' />)
+        ({renderShardDisplay({})})
       </span>
     );
   }
 
-  return <ShardDisplay className={classNames(className)} />;
+  return renderShardDisplay({ className });
 };

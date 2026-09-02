@@ -74,7 +74,7 @@ export const HeroDetailsCard = ({
     }
   }, [seoDetails, isMainnet]);
 
-  const Icon = ({ className }: WithClassnameType) => (
+  const renderIcon = ({ className }: WithClassnameType) => (
     <span
       className={classNames('hero-details-card-logo', className, {
         'default-image': !icon && !iconComponent,
@@ -114,7 +114,7 @@ export const HeroDetailsCard = ({
             'mb-3': !hasStatCards
           })}
         >
-          <Icon className='d-none d-md-flex col-md-3' />
+          {renderIcon({ className: 'd-none d-md-flex col-md-3' })}
 
           <div className='hero-details-card-overview d-flex flex-column flex-fill col-9'>
             {title && (
@@ -126,7 +126,7 @@ export const HeroDetailsCard = ({
                 })}
               >
                 <div className='d-flex align-items-center'>
-                  <Icon className='d-md-none' />
+                  {renderIcon({ className: 'd-md-none' })}
                   <h1
                     className={classNames('mb-0', {
                       'has-content': Boolean(titleContent || isVerified)

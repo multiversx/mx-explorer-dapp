@@ -49,11 +49,7 @@ export const EventIdentifierBadge = ({
     }
   }, []);
 
-  const TransactionIdentifierText = ({
-    children
-  }: {
-    children: React.ReactNode;
-  }) => {
+  const renderTransactionIdentifierText = (children: React.ReactNode) => {
     return (
       <span>
         {filteredIdentifier !== identifier ? (
@@ -73,10 +69,10 @@ export const EventIdentifierBadge = ({
     );
   };
 
-  const TransactionIdentifierBadge = () => {
+  const renderTransactionIdentifierBadge = () => {
     return (
       <div className='d-inline-block'>
-        <TransactionIdentifierText>
+        {renderTransactionIdentifierText(
           <span
             className={classNames(
               'badge badge-outline badge-outline-primary-alt',
@@ -97,20 +93,22 @@ export const EventIdentifierBadge = ({
               {identifier}
             </div>
           </span>
-        </TransactionIdentifierText>
+        )}
       </div>
     );
   };
 
   return isTextTruncated ? (
     <Overlay
-      title={<>{isTextTruncated && <p className='mb-0'>{identifier}</p>}</>}
+      title={() => (
+        <>{isTextTruncated && <p className='mb-0'>{identifier}</p>}</>
+      )}
       className='method-tooltip'
       persistent
     >
-      <TransactionIdentifierBadge />
+      {renderTransactionIdentifierBadge()}
     </Overlay>
   ) : (
-    <TransactionIdentifierBadge />
+    renderTransactionIdentifierBadge()
   );
 };

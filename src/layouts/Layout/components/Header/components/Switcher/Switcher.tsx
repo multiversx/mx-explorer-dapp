@@ -31,7 +31,7 @@ export const Switcher = () => {
       });
   }, [networks]);
 
-  const LinksList = () => {
+  const renderLinksList = () => {
     return (
       <div className='network-list'>
         {links.length > 0 ? (
@@ -115,11 +115,9 @@ export const Switcher = () => {
       >
         <div className='network-switch-list'>
           {hasExtraNetworks ? (
-            <CustomNetworkMenu>
-              <LinksList />
-            </CustomNetworkMenu>
+            <CustomNetworkMenu>{renderLinksList()}</CustomNetworkMenu>
           ) : (
-            <LinksList />
+            renderLinksList()
           )}
         </div>
       </Dropdown.Menu>

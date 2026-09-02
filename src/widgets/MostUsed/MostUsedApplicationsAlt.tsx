@@ -83,7 +83,7 @@ export const MostUsedApplications = ({
                 if (i >= size) {
                   return null;
                 }
-                const TitleLink = () => (
+                const titleLink = (
                   <NetworkLink
                     to={
                       addressIsBech32(contract.key)
@@ -103,7 +103,7 @@ export const MostUsedApplications = ({
                 return (
                   <TopCard
                     size={getCardSize(i)}
-                    title={<TitleLink />}
+                    title={titleLink}
                     icon={
                       contract.extraInfo?.assets?.svgUrl ||
                       contract.extraInfo?.assets?.pngUrl

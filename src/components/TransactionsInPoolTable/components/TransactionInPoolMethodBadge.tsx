@@ -25,7 +25,7 @@ export const TransactionInPoolMethodBadge = ({
   const showTooltip = isTextTruncated;
   const transactionInPoolMethodText = transaction?.function || 'Transfer';
 
-  const TransactionMethodBadge = () => {
+  const renderTransactionMethodBadge = () => {
     return (
       <div className='d-inline-block'>
         <span className={classNames('badge badge-outline badge-outline-green')}>
@@ -42,19 +42,19 @@ export const TransactionInPoolMethodBadge = ({
 
   return showTooltip ? (
     <Overlay
-      title={
+      title={() => (
         <>
           {isTextTruncated && (
             <p className='mb-0'>{transactionInPoolMethodText}</p>
           )}
         </>
-      }
+      )}
       className='method-tooltip'
       persistent
     >
-      <TransactionMethodBadge />
+      {renderTransactionMethodBadge()}
     </Overlay>
   ) : (
-    <TransactionMethodBadge />
+    renderTransactionMethodBadge()
   );
 };
