@@ -20,7 +20,13 @@ interface FetchStatsType {
   skipBrowserCache?: boolean;
 }
 
-export const useFetchStats = () => {
+interface UseFetchStatsOptionsType {
+  registerWebsocketListener?: boolean;
+}
+
+export const useFetchStats = ({
+  registerWebsocketListener = false
+}: UseFetchStatsOptionsType = {}) => {
   const dispatch = useDispatch();
   const { getStats } = useAdapter();
   const { stats, isWebsocket } = useSelector(statsSelector);
@@ -53,8 +59,12 @@ export const useFetchStats = () => {
   };
 
   useRegisterWebsocketListener({
-    subscription: WebsocketSubcriptionsEnum.subscribeStats,
-    event: WebsocketEventsEnum.statsUpdate,
+    ...(registerWebsocketListener
+      ? {
+          subscription: WebsocketSubcriptionsEnum.subscribeStats,
+          event: WebsocketEventsEnum.statsUpdate
+        }
+      : {}),
     onWebsocketEvent
   });
 

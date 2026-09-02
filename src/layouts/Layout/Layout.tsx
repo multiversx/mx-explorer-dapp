@@ -31,7 +31,7 @@ export const Layout = () => {
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
 
   const fetchEconomics = useFetchEconomics();
-  const { fetchStats } = useFetchStats();
+  const { fetchStats } = useFetchStats({ registerWebsocketListener: true });
 
   useLoopManager();
   useRoundManager();
