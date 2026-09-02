@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   activeNetworkSelector,
-  refreshTimestampSelector,
   statsRoundsPassedSelector,
   statsRoundsPerEpochSelector
 } from 'redux/selectors';
@@ -15,7 +14,6 @@ import { useRoundDuration, useSyncRoundDuration } from './useRoundTicker';
 export const useRoundManager = () => {
   const dispatch = useDispatch();
   const { fetchStats } = useFetchStats();
-  const timestamp = useSelector(refreshTimestampSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const roundsPerEpoch = useSelector(statsRoundsPerEpochSelector);
   const roundsPassed = useSelector(statsRoundsPassedSelector);
@@ -83,5 +81,5 @@ export const useRoundManager = () => {
     }, roundDuration);
 
     return () => clearInterval(intervalId);
-  }, [dispatch, fetchStats, timestamp, roundDuration]);
+  }, [dispatch, fetchStats, roundDuration]);
 };

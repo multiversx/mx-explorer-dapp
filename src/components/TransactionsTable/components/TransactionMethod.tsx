@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { Overlay } from 'components';
 import { getTransactionMethod, isEllipsisActive, isTouchDevice } from 'helpers';
-import { interfaceSelector } from 'redux/selectors';
+import { highlightedTextSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices';
 import { UITransactionType } from 'types';
 
@@ -20,7 +20,7 @@ export const TransactionMethod = ({
 }: TransactionMethodType) => {
   const badgeTextRef = useRef(null);
   const dispatch = useDispatch();
-  const { highlightedText } = useSelector(interfaceSelector);
+  const highlightedText = useSelector(highlightedTextSelector);
   const [searchParams, setSearchParams] = useSearchParams();
   const [isTextTruncated, setIsTextTruncated] = useState(false);
   const { function: filteredFunction } = Object.fromEntries(searchParams);

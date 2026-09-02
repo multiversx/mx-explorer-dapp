@@ -1,13 +1,14 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 
 import {
   websocketActiveSubscriptions,
   websocketConnection
 } from 'appConstants';
 import { useAdapter, useRegisterWebsocketListener } from 'hooks';
-import { statsSelector } from 'redux/selectors';
+import { statsIsWebsocketSelector, statsSelector } from 'redux/selectors';
 import { setStats } from 'redux/slices';
+import { RootState } from 'redux/store';
 import {
   StatsType,
   WebsocketEventsEnum,
@@ -29,7 +30,8 @@ export const useFetchStats = ({
 }: UseFetchStatsOptionsType = {}) => {
   const dispatch = useDispatch();
   const { getStats } = useAdapter();
-  const { stats, isWebsocket } = useSelector(statsSelector);
+  const isWebsocket = useSelector(statsIsWebsocketSelector);
+  const store = useStore<RootState>();
 
   const getStatsOnce = ({ skipBrowserCache }: FetchStatsType = {}) => {
     if (currentRequest) {
@@ -91,7 +93,7 @@ export const useFetchStats = ({
           WebsocketSubcriptionsEnum.subscribeStats
         )
       ) {
-        return { data: stats, success: true };
+        return { data: statsSelector(store.getState()).stats, success: true };
       }
 
       return await fetchApiStats({ skipBrowserCache });
@@ -99,5 +101,5 @@ export const useFetchStats = ({
     [isWebsocket, websocketActiveSubscriptions, websocketConnection]
   );
 
-  return { stats, fetchStats };
+  return { fetchStats };
 };

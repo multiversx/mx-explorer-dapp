@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { NetworkLink, ShardSpan } from 'components';
 import { isTouchDevice, urlBuilder } from 'helpers';
-import { useFetchShards, useIsSovereign, useGetShardText } from 'hooks';
-import { interfaceSelector, shardsSelector } from 'redux/selectors';
+import { useIsSovereign, useGetShardText } from 'hooks';
+import { highlightedTextSelector, shardsSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices';
 import { WithClassnameType } from 'types';
 
@@ -29,9 +29,7 @@ export const ShardLink = ({
   const isSovereign = useIsSovereign();
   const getShardText = useGetShardText();
   const shards = useSelector(shardsSelector);
-  const { highlightedText } = useSelector(interfaceSelector);
-
-  useFetchShards();
+  const highlightedText = useSelector(highlightedTextSelector);
 
   if (shard === undefined) {
     return <span className='text-neutral-400'>N/A</span>;
