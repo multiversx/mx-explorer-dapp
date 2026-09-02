@@ -61,7 +61,7 @@ export const HeroDetailsCard = ({
 
   useEffect(() => {
     if (seoDetails?.completeDetails && isMainnet) {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         dispatch(
           setMetaTags({
             pageDetails: seoDetails?.title,
@@ -69,6 +69,8 @@ export const HeroDetailsCard = ({
           })
         );
       });
+
+      return () => clearTimeout(timeoutId);
     }
   }, [seoDetails, isMainnet]);
 
