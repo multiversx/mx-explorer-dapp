@@ -7,6 +7,7 @@ import { NotificationsBar, NetworkReady, MetaTags } from 'components';
 import {
   useFetchStats,
   useFetchEconomics,
+  useFetchShards,
   useLoopManager,
   useCheckVersion,
   useGetURLNetwork,
@@ -32,6 +33,8 @@ export const Layout = () => {
 
   const fetchEconomics = useFetchEconomics();
   const { fetchStats } = useFetchStats({ registerWebsocketListener: true });
+
+  useFetchShards();
 
   useLoopManager();
   useRoundManager();
