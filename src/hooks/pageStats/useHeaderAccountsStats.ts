@@ -26,7 +26,7 @@ export const useHeaderAccountsStats = ({
   const { getGrowthHeaders } = useAdapter();
 
   const getHeadersAccounts = async () => {
-    if (Object.keys(headersAccounts).length !== 0) {
+    if (headersAccounts.usersStaking !== undefined) {
       return headersAccounts;
     }
 
@@ -58,7 +58,7 @@ export const useHeaderAccountsStats = ({
   }, [hasGrowthWidgets, isEnabled]);
 
   useEffect(() => {
-    if (statsAccounts === 0) {
+    if (!isEnabled || statsAccounts === 0) {
       return;
     }
 
@@ -67,7 +67,7 @@ export const useHeaderAccountsStats = ({
         new BigNumber(statsAccounts).toFormat(0)
       )
     );
-  }, [statsAccounts, dispatch]);
+  }, [statsAccounts, isEnabled, dispatch]);
 
   return {
     title: 'Accounts',
