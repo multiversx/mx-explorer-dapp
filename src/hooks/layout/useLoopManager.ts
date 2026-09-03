@@ -8,7 +8,6 @@ import {
 } from 'appConstants';
 import {
   activeNetworkSelector,
-  refreshTimestampSelector,
   statsRefreshRateSelector
 } from 'redux/selectors';
 import { triggerRefresh, triggerPoolingRefresh } from 'redux/slices';
@@ -16,7 +15,6 @@ import { triggerRefresh, triggerPoolingRefresh } from 'redux/slices';
 export const useLoopManager = () => {
   const intervalRef = useRef<any>(null);
 
-  const timestamp = useSelector(refreshTimestampSelector);
   const statsRefreshRate = useSelector(statsRefreshRateSelector);
 
   const { refreshRate: initialNetworkRefreshRate, updatesWebsocketUrl } =
@@ -43,14 +41,14 @@ export const useLoopManager = () => {
 
   const dispatch = useDispatch();
 
-  const timestampRef = useRef(timestamp);
-  timestampRef.current = timestamp;
+  const lastRefreshRef = useRef(0);
 
   const setLoopInterval = () => {
     intervalRef.current = setInterval(() => {
-      const withinInterval = Date.now() - refreshRate < timestampRef.current;
+      const withinInterval = Date.now() - refreshRate < lastRefreshRef.current;
 
       if (!document.hidden && !withinInterval) {
+        lastRefreshRef.current = Date.now();
         dispatch(triggerRefresh());
       }
     }, refreshRate);

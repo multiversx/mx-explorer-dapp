@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { MAX_CACHED_NODE_DETAILS } from 'appConstants';
 import { processNodesOverview } from 'helpers';
 import {
   NodesOverviewSliceType,
@@ -29,10 +30,20 @@ export const nodesOverviewSlice = createSlice({
       state: NodesOverviewSliceType,
       action: PayloadAction<NodesOverviewAddSliceType>
     ) => {
-      state.nodeDetails = {
-        ...state.nodeDetails,
-        [action.payload.nodeDetails.bls]: action.payload.nodeDetails
-      };
+      const { bls } = action.payload.nodeDetails;
+      const nodeDetails = state.nodeDetails ?? {};
+
+      delete nodeDetails[bls];
+      nodeDetails[bls] = action.payload.nodeDetails;
+
+      const keys = Object.keys(nodeDetails);
+      if (keys.length > MAX_CACHED_NODE_DETAILS) {
+        keys
+          .slice(0, keys.length - MAX_CACHED_NODE_DETAILS)
+          .forEach((key) => delete nodeDetails[key]);
+      }
+
+      state.nodeDetails = nodeDetails;
     }
   }
 });

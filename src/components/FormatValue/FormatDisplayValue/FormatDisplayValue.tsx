@@ -10,15 +10,22 @@ const NUMBER_FLOW_TRANSFORM_TIMING = {
   easing: 'ease-out'
 };
 
-export interface FormatDisplayValueUIType extends Omit<
-  FormatAmountUIType,
-  'value'
-> {
+const numberFlowFormats: Record<number, { maximumFractionDigits: number }> = {};
+const getNumberFlowFormat = (digits: number) => {
+  if (!numberFlowFormats[digits]) {
+    numberFlowFormats[digits] = { maximumFractionDigits: digits };
+  }
+
+  return numberFlowFormats[digits];
+};
+
+export interface FormatDisplayValueUIType
+  extends Omit<FormatAmountUIType, 'value'> {
   formattedValue: string | number;
   completeValue: string | number;
   symbol?: React.ReactNode;
   label?: React.ReactNode;
-  details?: React.ReactNode;
+  details?: React.ReactNode | (() => React.ReactNode);
   hideLessThanOne?: boolean;
   showTooltipSymbol?: boolean;
   showTooltipLabel?: boolean;
@@ -56,7 +63,7 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
   const displayLabel = label ?? token ?? egldLabel;
   const canAnimate = isAnimated && !isNaN(Number(completeValue)) && false;
 
-  const DisplayValue = () => {
+  const renderDisplayValue = () => {
     if (hideLessThanOne) {
       return <span className='am'>{'< 1'}</span>;
     }
@@ -99,11 +106,49 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     );
   };
 
+  const renderValue = () => {
+    if (canAnimate) {
+      return (
+        <NumberFlow
+          value={Number(completeValue)}
+          locales='en-US'
+          format={getNumberFlowFormat(digits)}
+          transformTiming={NUMBER_FLOW_TRANSFORM_TIMING}
+        />
+      );
+    }
+
+    return renderDisplayValue();
+  };
+
   const showCompleteValue =
     completeValue !== formattedValue &&
     String(completeValue).length > String(formattedValue).length &&
     !isZero;
   const displayTooltip = showTooltip && (details || showCompleteValue);
+
+  const renderTooltipTitle = () => (
+    <>
+      {showCompleteValue && (
+        <>
+          {showSymbol && showTooltipSymbol && symbol && <>{symbol}</>}
+          {completeValue}
+          {showLabel && showTooltipLabel && displayLabel && (
+            <>
+              {spacedLabel && <>&nbsp;</>}
+              {displayLabel}
+            </>
+          )}
+        </>
+      )}
+      {details ? (
+        <>
+          {showCompleteValue && <br />}
+          {typeof details === 'function' ? details() : details}
+        </>
+      ) : null}
+    </>
+  );
 
   if (isZero && showEllipsisIfZero) {
     return <span className={classNames(className, 'fam')}>{ELLIPSIS}</span>;
@@ -116,60 +161,11 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     >
       {showSymbol && symbol && <>{symbol}</>}
       {displayTooltip ? (
-        <Overlay
-          title={
-            <>
-              {showCompleteValue && (
-                <>
-                  {showSymbol && showTooltipSymbol && symbol && <>{symbol}</>}
-                  {completeValue}
-                  {showLabel && showTooltipLabel && displayLabel && (
-                    <>
-                      {spacedLabel && <>&nbsp;</>}
-                      {displayLabel}
-                    </>
-                  )}
-                </>
-              )}
-              {details ? (
-                <>
-                  {showCompleteValue && <br />}
-                  {details}
-                </>
-              ) : null}
-            </>
-          }
-          persistent
-          truncate
-        >
-          {canAnimate ? (
-            <NumberFlow
-              value={Number(completeValue)}
-              locales='en-US'
-              format={{
-                maximumFractionDigits: digits
-              }}
-              transformTiming={NUMBER_FLOW_TRANSFORM_TIMING}
-            />
-          ) : (
-            <DisplayValue />
-          )}
+        <Overlay title={renderTooltipTitle} persistent truncate>
+          {renderValue()}
         </Overlay>
       ) : (
-        <>
-          {canAnimate ? (
-            <NumberFlow
-              value={Number(completeValue)}
-              locales='en-US'
-              format={{
-                maximumFractionDigits: digits
-              }}
-              transformTiming={NUMBER_FLOW_TRANSFORM_TIMING}
-            />
-          ) : (
-            <DisplayValue />
-          )}
-        </>
+        <>{renderValue()}</>
       )}
       {showLabel && displayLabel && !canAnimate && (
         <>

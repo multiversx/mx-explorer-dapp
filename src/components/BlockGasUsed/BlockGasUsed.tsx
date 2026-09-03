@@ -1,34 +1,35 @@
+import { memo } from 'react';
 import BigNumber from 'bignumber.js';
 
 import { PercentageBar } from 'components';
 import { BlockType } from 'types';
 
-export const BlockGasUsed = ({ block }: { block: BlockType }) => {
+export const BlockGasUsed = memo(({ block }: { block: BlockType }) => {
   const gasUsedBn = new BigNumber(block.gasConsumed)
     .minus(block.gasRefunded)
     .minus(block.gasPenalized);
 
+  const hasGasUsed =
+    gasUsedBn.isGreaterThan(0) &&
+    new BigNumber(block.maxGasLimit).isGreaterThan(0);
+
+  const percentBn = hasGasUsed
+    ? gasUsedBn.dividedBy(block.maxGasLimit).times(100)
+    : undefined;
+  const percentLabel = percentBn ? `${percentBn.toFormat(2)}%` : '0%';
+
   return (
     <>
-      {gasUsedBn.isGreaterThan(0) &&
-      new BigNumber(block.maxGasLimit).isGreaterThan(0) ? (
+      {percentBn ? (
         <>
           <div className='text-end mb-1'>
             {gasUsedBn.toFormat()}{' '}
-            <span className='text-neutral-400'>
-              ({gasUsedBn.dividedBy(block.maxGasLimit).times(100).toFormat(2)}%)
-            </span>
+            <span className='text-neutral-400'>({percentLabel})</span>
           </div>
           <PercentageBar
             overallPercent={0}
-            fillPercent={gasUsedBn
-              .dividedBy(block.maxGasLimit)
-              .times(100)
-              .toNumber()}
-            fillPercentLabel={`${gasUsedBn
-              .dividedBy(block.maxGasLimit)
-              .times(100)
-              .toFormat(2)}%`}
+            fillPercent={percentBn.toNumber()}
+            fillPercentLabel={percentLabel}
             type='small'
           />
         </>
@@ -47,4 +48,4 @@ export const BlockGasUsed = ({ block }: { block: BlockType }) => {
       )}
     </>
   );
-};
+});

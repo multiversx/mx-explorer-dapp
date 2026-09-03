@@ -7,7 +7,11 @@ import { pageHeadersCollectionsStatsSelector } from 'redux/selectors';
 import { setPageHeaderCollectionsStats } from 'redux/slices';
 import { HeadersCollectionsType } from 'types/headerStats.types';
 
-export const useHeadersCollectionsStats = () => {
+import { PageStatsOptionsType } from './types';
+
+export const useHeadersCollectionsStats = ({
+  isEnabled = true
+}: PageStatsOptionsType = {}) => {
   const headersCollections = useSelector(pageHeadersCollectionsStatsSelector);
 
   const hasGrowthWidgets = useHasGrowthWidgets();
@@ -44,10 +48,10 @@ export const useHeadersCollectionsStats = () => {
   };
 
   useEffect(() => {
-    if (hasGrowthWidgets) {
+    if (hasGrowthWidgets && isEnabled) {
       getHeadersCollections();
     }
-  }, [hasGrowthWidgets]);
+  }, [hasGrowthWidgets, isEnabled]);
 
   return {
     title: 'Collections',

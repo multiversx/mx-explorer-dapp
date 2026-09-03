@@ -5,7 +5,12 @@ import { Navigate, Outlet, useParams } from 'react-router-dom';
 import { NATIVE_TOKEN_IDENTIFIER } from 'appConstants';
 import { Loader } from 'components';
 import { isEgldToken } from 'helpers';
-import { useAdapter, useGetPage, useHasExchangeData } from 'hooks';
+import {
+  useAbortSignal,
+  useAdapter,
+  useGetPage,
+  useHasExchangeData
+} from 'hooks';
 import { activeNetworkSelector, tokenExtraSelector } from 'redux/selectors';
 import { setToken, setTokenExtra } from 'redux/slices';
 import { ExchangePriceRangeEnum } from 'types';
@@ -17,6 +22,7 @@ import { TokenHolderDetailsCard } from './TokenHolderDetailsCard';
 export const TokenLayout = () => {
   const dispatch = useDispatch();
   const { getToken, getExchangeTokenPriceHistory } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const { hash: identifier = '' } = useParams();
   const { poolingFirstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId, egldLabel } = useSelector(activeNetworkSelector);
@@ -34,13 +40,18 @@ export const TokenLayout = () => {
 
   const fetchTokenDetails = () => {
     if (identifier) {
+      const signal = getAbortSignal();
       const promises = [
-        getToken(identifier),
+        getToken(identifier, { signal }),
         ...(hasExchangeData && tokenExtra.identifier !== identifier
-          ? [getExchangeTokenPriceHistory({ identifier })]
+          ? [getExchangeTokenPriceHistory({ identifier, signal })]
           : [])
       ];
       Promise.all(promises).then((response) => {
+        if (signal.aborted) {
+          return;
+        }
+
         const [tokenData, tokenPriceHistoryData] = response;
 
         if (tokenData.success && tokenData.data) {

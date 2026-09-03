@@ -16,11 +16,22 @@ import { initializeWebsocketConnection } from './initializeWebsocketConnection';
  * ```
  */
 export const websocketManager = {
-  closeConnectionRef: undefined as (() => void) | undefined
+  closeConnectionRef: undefined as (() => void) | undefined,
+  connectedUrl: undefined as string | undefined
 };
 
 export async function registerWebsocketListener(websocketUrl: string) {
+  if (
+    websocketManager.connectedUrl &&
+    websocketManager.connectedUrl !== websocketUrl
+  ) {
+    websocketManager.closeConnectionRef?.();
+    websocketManager.closeConnectionRef = undefined;
+    websocketManager.connectedUrl = undefined;
+  }
+
   const { closeConnection } = await initializeWebsocketConnection(websocketUrl);
 
   websocketManager.closeConnectionRef = closeConnection;
+  websocketManager.connectedUrl = websocketUrl;
 }

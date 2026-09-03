@@ -1,4 +1,4 @@
-import { useState, MouseEvent, useEffect, memo } from 'react';
+import { useState, MouseEvent, useEffect, useRef, memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
@@ -21,6 +21,17 @@ export const Header = memo((props: HeaderPropsType) => {
 
   const [menuActive, setMenuActive] = useState(false);
   const [ecosystemMenuActive, setEcosystemMenuActive] = useState(false);
+  const menuToggleTimeoutRef = useRef<
+    ReturnType<typeof setTimeout> | undefined
+  >(undefined);
+
+  useEffect(() => {
+    return () => {
+      if (menuToggleTimeoutRef.current) {
+        clearTimeout(menuToggleTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const onMenuToggle = (event: MouseEvent) => {
     if (window.innerWidth <= 768) {
@@ -29,7 +40,7 @@ export const Header = memo((props: HeaderPropsType) => {
 
     event.preventDefault();
     setEcosystemMenuActive(false);
-    setTimeout(
+    menuToggleTimeoutRef.current = setTimeout(
       () => setMenuActive((menuActive) => !menuActive),
       ecosystemMenuActive ? 400 : 0
     );
@@ -39,7 +50,7 @@ export const Header = memo((props: HeaderPropsType) => {
     event.preventDefault();
     setMenuActive(false);
 
-    setTimeout(
+    menuToggleTimeoutRef.current = setTimeout(
       () => {
         if (window.innerWidth <= 768) {
           onExpand(!ecosystemMenuActive);

@@ -50,7 +50,7 @@ export const NodeQualification = ({
   const showDangerZone =
     (isAuctionDangerZone && isQualified) || notQualifiedAuctionValidators;
 
-  const NodeStatusComponent = () => {
+  const renderNodeStatus = () => {
     if (auctionQualified) {
       return (
         <>
@@ -89,7 +89,7 @@ export const NodeQualification = ({
 
   return (
     <div className={classNames('d-flex align-items-center gap-2', className)}>
-      <NodeStatusComponent />
+      {renderNodeStatus()}
     </div>
   );
 };

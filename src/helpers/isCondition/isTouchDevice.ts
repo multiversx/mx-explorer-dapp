@@ -1,4 +1,6 @@
-export const isTouchDevice = () => {
+let cachedIsTouchDevice: boolean | undefined;
+
+const detectTouchDevice = () => {
   try {
     if (window.PointerEvent && 'maxTouchPoints' in navigator) {
       if (navigator.maxTouchPoints > 0) {
@@ -21,4 +23,12 @@ export const isTouchDevice = () => {
   }
 
   return false;
+};
+
+export const isTouchDevice = () => {
+  if (cachedIsTouchDevice === undefined) {
+    cachedIsTouchDevice = detectTouchDevice();
+  }
+
+  return cachedIsTouchDevice;
 };

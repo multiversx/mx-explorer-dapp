@@ -7,13 +7,23 @@ const AnimationCanvas = lazy(() =>
   }))
 );
 
+function releaseContext(context: RenderingContext | null) {
+  const loseContext = (context as WebGLRenderingContext | null)?.getExtension?.(
+    'WEBGL_lose_context'
+  );
+
+  loseContext?.loseContext();
+}
+
 function isWebGLAvailable() {
   try {
     const canvas = document.createElement('canvas');
-    return !!(
-      window.WebGLRenderingContext &&
-      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
-    );
+    const context =
+      canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+    releaseContext(context);
+
+    return !!(window.WebGLRenderingContext && context);
   } catch (e) {
     return false;
   }
@@ -22,7 +32,11 @@ function isWebGLAvailable() {
 function isWebGL2Available() {
   try {
     const canvas = document.createElement('canvas');
-    return !!(window.WebGL2RenderingContext && canvas.getContext('webgl2'));
+    const context = canvas.getContext('webgl2');
+
+    releaseContext(context);
+
+    return !!(window.WebGL2RenderingContext && context);
   } catch (e) {
     return false;
   }
