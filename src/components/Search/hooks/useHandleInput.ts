@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { useDebounce, useSearch } from 'hooks';
 import { setSearch } from 'redux/slices';

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { ELLIPSIS } from 'appConstants';
 import { Loader, NetworkLink, Pager, PageSize, TableSearch } from 'components';

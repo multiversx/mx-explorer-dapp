@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { Pager, TableSearch } from 'components';
 import { TokenTypeEnum } from 'types';

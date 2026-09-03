@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router';
 
 import { NODE_STATUS_PREVIEW_FIELDS, MAX_RESULTS } from 'appConstants';
 import { Loader, Pager, PageSize, PageState, ProvidersTable } from 'components';

@@ -5,8 +5,7 @@ import { ExpandRow } from 'components';
 import { AuctionListBaseRow } from './AuctionListBaseRow';
 import { ExpandRowConfigType, AuctionListBaseRowUIType } from './types';
 
-export interface NodesAuctionListExpandRowUIType
-  extends AuctionListBaseRowUIType {
+export interface NodesAuctionListExpandRowUIType extends AuctionListBaseRowUIType {
   expandRowConfig: ExpandRowConfigType;
   colSpan?: number;
 }

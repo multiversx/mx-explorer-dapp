@@ -128,7 +128,7 @@ export const ChartDonut = ({ config }: ChartProps) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
   const { unprocessed } = useSelector(economicsSelector);
   const chartData = config[0].data;
-  const previousActiveIndex = useRef<number | undefined>();
+  const previousActiveIndex = useRef<number | undefined>(undefined);
   const [activeIndex, setActiveIndex] = useState<number | undefined>(0);
 
   const onPieEnter = (_: any, index: number) => {
@@ -163,7 +163,6 @@ export const ChartDonut = ({ config }: ChartProps) => {
       <ResponsiveContainer width='100%' height='100%'>
         <PieChart>
           <Pie
-            activeIndex={activeIndex}
             activeShape={<RenderActiveShape />}
             data={chartData}
             cx='50%'

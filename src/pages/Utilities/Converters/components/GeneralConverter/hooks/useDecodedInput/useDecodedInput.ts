@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
 
-import { DecodeMethodEnum, getDecodedDataField } from 'lib';
-
 import { decoders, hexDecoders } from '../../helpers';
 import { DecodedChunkType, DecodedResultType, DecoderType } from '../../types';
 

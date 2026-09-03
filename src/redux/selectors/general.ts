@@ -5,7 +5,7 @@ const stateSelector = (state: RootState) => {
   return state.general;
 };
 
-export const generalSelector = createSelector(stateSelector, (state) => state);
+export const generalSelector = stateSelector;
 
 export const shardsSelector = createSelector(
   stateSelector,

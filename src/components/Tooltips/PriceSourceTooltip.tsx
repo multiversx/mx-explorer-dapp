@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useMatch } from 'react-router-dom';
+import { useMatch } from 'react-router';
 
 import { InfoTooltip, ModalLink } from 'components';
 import { useGetSort, useNetworkRoute } from 'hooks';

@@ -18,6 +18,8 @@ export const networks: NetworkType[] = [
     walletAddress: 'START_WALLET_ADDRESS_STOP',
     explorerAddress: 'START_EXPLORER_ADDRESS_STOP',
     nftExplorerAddress: 'START_NFT_EXPLORER_ADDRESS_STOP',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     isSovereign: 'START_IS_SOVEREIGN_STOP',
     apiAddress: 'START_API_ADDRESS_STOP'
   },

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { Dropdown, Nav, Navbar } from 'react-bootstrap';
+import { Dropdown, Navbar } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router';
 
 import { NetworkLink } from 'components';
 import { isContract, addressIsBech32 } from 'helpers';
@@ -222,9 +222,9 @@ export const Links = (props: LinksPropsType) => {
                   }}
                 >
                   <Dropdown.Toggle
-                    as={Nav.Link}
                     id={`dropdown-${link.label}`}
                     aria-label={`${link.label} submenu`}
+                    className='nav-link btn btn-link-unstyled'
                   >
                     <FontAwesomeIcon icon={faAngleDown} size='sm' />
                   </Dropdown.Toggle>

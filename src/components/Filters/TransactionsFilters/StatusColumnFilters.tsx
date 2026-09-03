@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { SelectFilter, SelectFilterType, SearchFilter } from 'components';
 import { capitalize, truncateMiddle } from 'helpers';

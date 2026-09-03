@@ -28,6 +28,7 @@ export default () => {
     ],
     resolve: {
       tsconfigPaths: true,
+      dedupe: ['react', 'react-dom'],
       alias: {
         '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap')
       }

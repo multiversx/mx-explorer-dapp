@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { InfoTooltip, Loader, Tabs } from 'components';
 import { useAdapter, useHasGrowthWidgets, useNetworkRoute } from 'hooks';

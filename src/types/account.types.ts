@@ -85,8 +85,7 @@ export interface AccountExtraAnalyticsSliceType {
   accountTransactionsFetched?: boolean;
 }
 
-export interface AccountExtraBaseSliceType
-  extends AccountExtraAnalyticsSliceType {
+export interface AccountExtraBaseSliceType extends AccountExtraAnalyticsSliceType {
   address: string;
   firstTransactionDate?: number;
   tokenBalance?: string;
