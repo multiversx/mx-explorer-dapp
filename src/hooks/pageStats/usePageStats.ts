@@ -41,10 +41,42 @@ export const usePageStats = () => {
   );
   const pageHeadersTokens = useSelector(pageHeaderTokensStatsSelector);
 
-  const { title: headersBlocksTitle } = useHeadersBlocksStats();
-  const { title: headerCollectionsTitle } = useHeadersCollectionsStats();
-  const { title: headersTokensTitle } = useHeadersTokensStats();
-  const { title: headersAccountsTitle } = useHeaderAccountsStats();
+  const activeCategory = useMemo(() => {
+    switch (true) {
+      case activeRoute(blocksRoutes.blocks):
+      case activeRoute(applicationsRoutes.applications):
+        return 'blocks';
+
+      case activeRoute(accountsRoutes.accounts):
+        return 'accounts';
+
+      case activeRoute(tokensRoutes.tokens):
+      case activeRoute(tokensRoutes.tokensMeta):
+      case activeRoute(tokensRoutes.tokensMetaEsdt):
+        return 'tokens';
+
+      case activeRoute(collectionRoutes.collections):
+      case activeRoute(collectionRoutes.collectionsNft):
+      case activeRoute(collectionRoutes.collectionsSft):
+        return 'collections';
+
+      default:
+        return undefined;
+    }
+  }, [activeRoute]);
+
+  const { title: headersBlocksTitle } = useHeadersBlocksStats({
+    isEnabled: activeCategory === 'blocks'
+  });
+  const { title: headerCollectionsTitle } = useHeadersCollectionsStats({
+    isEnabled: activeCategory === 'collections'
+  });
+  const { title: headersTokensTitle } = useHeadersTokensStats({
+    isEnabled: activeCategory === 'tokens'
+  });
+  const { title: headersAccountsTitle } = useHeaderAccountsStats({
+    isEnabled: activeCategory === 'accounts'
+  });
 
   const getData = (
     category: string,

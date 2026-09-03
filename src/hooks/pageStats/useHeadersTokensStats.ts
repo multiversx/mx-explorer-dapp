@@ -12,7 +12,11 @@ import {
 } from 'redux/slices';
 import { HeadersTokensType } from 'types/headerStats.types';
 
-export const useHeadersTokensStats = () => {
+import { PageStatsOptionsType } from './types';
+
+export const useHeadersTokensStats = ({
+  isEnabled = true
+}: PageStatsOptionsType = {}) => {
   const headersTokens = useSelector(pageHeaderTokensStatsSelector);
   const { unprocessed } = useSelector(economicsSelector);
 
@@ -54,10 +58,10 @@ export const useHeadersTokensStats = () => {
   };
 
   useEffect(() => {
-    if (hasGrowthWidgets) {
+    if (hasGrowthWidgets && isEnabled) {
       getHeadersTokens();
     }
-  }, []);
+  }, [hasGrowthWidgets, isEnabled]);
 
   useEffect(() => {
     dispatch(
