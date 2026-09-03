@@ -5,7 +5,7 @@ import {
   useLocation,
   useNavigate,
   useSearchParams
-} from 'react-router-dom';
+} from 'react-router';
 
 import { chartResolution } from 'appConstants';
 import { Loader, Led, Tabs } from 'components';

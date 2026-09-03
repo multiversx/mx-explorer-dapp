@@ -5,7 +5,7 @@ const stateSelector = (state: RootState) => {
   return state.stats;
 };
 
-export const statsSelector = createSelector(stateSelector, (state) => state);
+export const statsSelector = stateSelector;
 
 export const statsIsDataReadySelector = createSelector(
   stateSelector,

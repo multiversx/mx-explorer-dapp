@@ -30,8 +30,8 @@ export const TransactionActionNft = ({
     token?.value !== undefined
       ? token.value
       : transactionActionValue !== undefined
-      ? transactionActionValue
-      : undefined;
+        ? transactionActionValue
+        : undefined;
 
   const tokenInfo = (
     <div className='d-flex align-items-center symbol text-truncate'>

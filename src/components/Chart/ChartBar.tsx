@@ -31,13 +31,11 @@ export const ChartBar = ({
   height = 448,
   hasOnlyStartEndTick,
   hasAxis = true,
-  hasGrid = true,
-  hasDot = true,
   hasCursor = true,
   hasTooltip = true,
   className
 }: ChartProps) => {
-  const [focusBar, setFocusBar] = useState<any>(null);
+  const [focusBar, setFocusBar] = useState<number | null>(null);
 
   const chartData = getChartMergedData({ config, data, filter, category });
   const seriesConfig = config.length > 0 ? config[0] : null;
@@ -62,8 +60,8 @@ export const ChartBar = ({
         <BarChart
           data={chartData}
           onMouseMove={(state) => {
-            if (state.isTooltipActive) {
-              setFocusBar(state.activeTooltipIndex);
+            if (state.isTooltipActive && state.activeTooltipIndex != null) {
+              setFocusBar(Number(state.activeTooltipIndex));
             } else {
               setFocusBar(null);
             }
@@ -122,7 +120,6 @@ export const ChartBar = ({
               ? { tick: <StartEndTick dateformat={dateFormat} /> }
               : {})}
             {...(hasOnlyStartEndTick ? { interval: 0 } : {})}
-            {...(chartData.length > 3 ? { scale: 'time' } : {})}
             hide={!hasAxis}
             dy={15}
           />
@@ -150,7 +147,7 @@ export const ChartBar = ({
           {config.map((chartConfig) => {
             const chartGradient = chartConfig.gradient
               ? `url(#${chartConfig.gradient})`
-              : chartConfig.fill ?? primary;
+              : (chartConfig.fill ?? primary);
             return (
               <Bar
                 dataKey={chartConfig.id}

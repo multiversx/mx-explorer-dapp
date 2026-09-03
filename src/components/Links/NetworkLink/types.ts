@@ -1,5 +1,5 @@
 import { ReactNode, MouseEvent } from 'react';
-import { LinkProps } from 'react-router-dom';
+import { LinkProps } from 'react-router';
 
 import { WithClassnameType } from 'types';
 

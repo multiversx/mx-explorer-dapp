@@ -28,6 +28,7 @@ pnpm run build-mainnet
 
 # Lint (zero warnings policy)
 pnpm run lint               # eslint src --max-warnings 0
+pnpm run type-check         # tsc --noEmit (not run by `build`, which is vite-only)
 
 # E2E tests (Cypress, runs against integration-explorer.multiversx.com)
 node scripts/cypress.ts    # or: npm run cy:run — full suite + mochawesome report
@@ -38,6 +39,19 @@ npx cypress open           # interactive runner
 ```
 
 Cypress hits the deployed `baseUrl` in `cypress.config.ts`, not your local dev server — no local build is needed to run E2E, but a network connection is.
+
+To run the same specs against a **local** build instead (the only way an upgrade
+gets exercised before it ships), use `cypress.local.config.ts`:
+
+```bash
+pnpm run build-devnet   # specs are devnet-specific (DEVNET_API, "Devnet Explorer")
+pnpm run preview-http   # serves build/ on http://localhost:3002
+pnpm run cy:local
+```
+
+The 5 `Search` specs that search-then-navigate fail against a local server: they
+race the 600ms input debounce plus the API round-trip. They fail identically on
+pre-upgrade code, so treat them as a harness limitation, not a regression.
 
 `src/config/index.ts` **must exist** before starting. The `start-*` scripts create it automatically via the `copy-*-config` step, but if you run `npm run start` directly you need it manually.
 
@@ -57,7 +71,7 @@ Env vars are read from `.env` / `.env.development`. Keys prefixed `VITE_APP_*` a
 
 `src/index.tsx` mounts `<HelmetProvider>` → `App.tsx`. The root route element (`ProviderApp` in `src/App.tsx`) wraps the tree in Redux `<Provider>` + `<Interceptor>`.
 
-The router itself is created in `src/App.tsx` with React Router v7 `createBrowserRouter`; the route definitions it consumes live in `src/routes/routes.tsx`. Every network has its routes prefixed with `/:network/` (e.g. `/devnet/blocks/...`). `generateNetworkRoutes` in `src/routes/helpers/` iterates `networks` from config and wraps routes per network. The `Layout` component (`src/layouts/Layout/`) is the shell that renders the header, hero stats widgets, and footer around page content.
+The router itself is created in `src/App.tsx` with React Router v8 `createBrowserRouter` (imported from `react-router`; `RouterProvider` comes from `react-router/dom`, and the `react-router-dom` package no longer exists); the route definitions it consumes live in `src/routes/routes.tsx`. Every network has its routes prefixed with `/:network/` (e.g. `/devnet/blocks/...`). `generateNetworkRoutes` in `src/routes/helpers/` iterates `networks` from config and wraps routes per network. The `Layout` component (`src/layouts/Layout/`) is the shell that renders the header, hero stats widgets, and footer around page content.
 
 ### Network Configuration
 

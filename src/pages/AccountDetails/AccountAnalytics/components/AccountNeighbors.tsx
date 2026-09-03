@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { MAX_RESULTS } from 'appConstants';
 import { Range } from 'components';

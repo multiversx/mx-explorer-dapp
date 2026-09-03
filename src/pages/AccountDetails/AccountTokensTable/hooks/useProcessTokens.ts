@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router';
 
 import { isValidAccountTokenValue, getTotalTokenUsdValue } from 'helpers';
 import { useGetSearch, useGetSort } from 'hooks';

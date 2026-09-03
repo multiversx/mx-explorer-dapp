@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 
 import { Loader, PageState } from 'components';
 import { useHasGrowthWidgets } from 'hooks';

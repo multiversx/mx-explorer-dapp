@@ -20,6 +20,7 @@ export * from './getPrimaryColor';
 export * from './getProgressStepInterval';
 export * from './getProofHash';
 export * from './getRangeDays';
+export * from './getRangeEntries';
 export * from './getRangeText';
 export * from './getStringPlural';
 export * from './getSubdomainNetwork';

@@ -38,7 +38,7 @@ export const ChartTooltip = ({
 }) => {
   const { isDataReady, unprocessed } = useSelector(economicsSelector);
 
-  const stackedLabelColor = getColors(['white']);
+  const [stackedLabelColor] = getColors(['white']);
 
   const formattedTotalValueStacked = new BigNumber(
     totalValueStacked ?? '0'
@@ -118,7 +118,7 @@ export const ChartTooltip = ({
                 <span
                   style={{
                     color:
-                      payload.length > 1 ? entry.color : color ?? entry.color
+                      payload.length > 1 ? entry.color : (color ?? entry.color)
                   }}
                   className='item-value'
                 >

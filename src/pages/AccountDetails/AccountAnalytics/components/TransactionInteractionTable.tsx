@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import { AccountLink, ColSpanWrapper, PageState } from 'components';
 import { formatBigNumber, NeighborType, urlBuilder } from 'helpers';

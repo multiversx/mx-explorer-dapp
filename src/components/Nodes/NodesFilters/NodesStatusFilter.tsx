@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { Anchor, Dropdown } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { faFilter } from 'icons/regular';
 import { faFilter as faFilterSolid } from 'icons/solid';

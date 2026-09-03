@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router';
 
 import { PageState, Loader } from 'components';
 import { useGetSearchRedirectRoute } from 'components/Search/hooks';

@@ -29,7 +29,7 @@ export const AuctionListRow = ({
 
   const hasExpand = Boolean(
     expandRowConfig?.qualifiedExpandPosition ||
-      expandRowConfig?.notQualifiedExpandPosition
+    expandRowConfig?.notQualifiedExpandPosition
   );
 
   return (

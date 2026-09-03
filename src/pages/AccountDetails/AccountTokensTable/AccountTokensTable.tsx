@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { ZERO, MAX_RESULTS, ACCOUNT_TOKENS_FIELDS } from 'appConstants';
 import {

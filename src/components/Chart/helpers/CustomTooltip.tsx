@@ -80,8 +80,8 @@ export const CustomTooltip = ({
                 {getTooltipLabel(entry.name)
                   ? `${getTooltipLabel(entry.name)}: `
                   : customLabel
-                  ? `${getTooltipLabel(customLabel)}: `
-                  : ''}
+                    ? `${getTooltipLabel(customLabel)}: `
+                    : ''}
                 <span
                   style={{ color: payload.length > 1 ? entry.color : '' }}
                   className='item-value'

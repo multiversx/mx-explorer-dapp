@@ -1,10 +1,11 @@
+import { ChartComposedProps, ChartProps } from 'types';
+
 import { ChartBody } from './ChartBody';
 import { ChartControls } from './ChartControls';
 import { ChartHeading } from './ChartHeading';
 import { ChartMetrics } from './ChartMetrics';
 import { ChartOptions } from './ChartOptions';
 import { lazyChart } from './helpers/lazyChart';
-import { ChartComposedProps, ChartProps } from './helpers/types';
 
 const ChartArea = lazyChart<ChartProps>(() =>
   import('./ChartArea').then((module) => ({ default: module.ChartArea }))

@@ -1,9 +1,9 @@
 import { SocialIcons } from 'components';
 import { TokenAssetType } from 'types';
 
-import { DetailItem, DetailItemType } from './DetailItem';
+import { DetailItem, DetailItemUIType } from './DetailItem';
 
-export interface SocialDetailItemType extends DetailItemType {
+export interface SocialDetailItemUIType extends DetailItemUIType {
   assets: TokenAssetType;
 }
 
@@ -11,7 +11,7 @@ export const SocialDetailItem = ({
   title,
   assets,
   ...props
-}: SocialDetailItemType) => {
+}: SocialDetailItemUIType) => {
   const mergedAssets = {
     ...(assets?.website
       ? {

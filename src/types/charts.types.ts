@@ -173,8 +173,7 @@ export interface ChartComposedConfigType {
 }
 
 export interface ChartComposedProps
-  extends ChartComposedConfigType,
-    StackedChartConfig {
+  extends ChartComposedConfigType, StackedChartConfig {
   seriesConfig: ChartConfigType[];
   size?: ChartSizeEnum;
   hasOnlyStartEndTick?: boolean;

@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Anchor, Dropdown } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { NetworkLink } from 'components';
 import { useActiveRoute, useNetworkRoute } from 'hooks';

@@ -1,8 +1,7 @@
-import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 const stateSelector = (state: RootState) => {
   return state.metaTags;
 };
 
-export const metaTagsSelector = createSelector(stateSelector, (state) => state);
+export const metaTagsSelector = stateSelector;

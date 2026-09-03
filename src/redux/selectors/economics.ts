@@ -5,10 +5,7 @@ const stateSelector = (state: RootState) => {
   return state.economics;
 };
 
-export const economicsSelector = createSelector(
-  stateSelector,
-  (state) => state
-);
+export const economicsSelector = stateSelector;
 
 export const usdPriceSelector = createSelector(
   stateSelector,

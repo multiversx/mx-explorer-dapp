@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { cleanUrlFilters, getUrlParam } from 'helpers';
 import { TransactionFiltersEnum } from 'types';
