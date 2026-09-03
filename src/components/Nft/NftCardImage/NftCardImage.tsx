@@ -36,7 +36,7 @@ export const NftCardImage = ({ nft, isNsfwHidden }: NftCardImagePropsType) => {
       <div className='nft-card-image'>
         <ImageWithFallback
           src={nftMedia}
-          className='logo-img'
+          className='nft-card-image-source'
           alt={`${nft.name} ${badgeLabel} Image`}
         />
       </div>
