@@ -127,7 +127,9 @@ export function useRegisterWebsocketListener({
         return;
       }
 
-      websocket.off(currentEntry.event, currentEntry.handler);
+      const currentWebsocket = websocketConnection.instance ?? websocket;
+
+      currentWebsocket.off(currentEntry.event, currentEntry.handler);
       websocketEventListeners.delete(subscription);
 
       websocketActiveSubscriptions.delete(subscription);
@@ -136,7 +138,7 @@ export function useRegisterWebsocketListener({
         return;
       }
 
-      websocket.emit(
+      currentWebsocket.emit(
         `un${subscriptionName}`,
         websocketConfig,
         (response: any) => {

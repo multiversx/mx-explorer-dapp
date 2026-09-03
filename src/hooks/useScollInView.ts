@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 
 export const useScollInView = () => {
   const [elementsIndexesInView, setElementsIndexesInView] = useState<number[]>(
@@ -122,23 +122,20 @@ export const useScollInView = () => {
     });
   };
 
-  const observer = useMemo(
-    () =>
-      new IntersectionObserver(updateElementInViewStatus, {
-        threshold: 1,
-        rootMargin: '100% 0% 100% 0%'
-      }),
-    [scrollableElements]
-  );
-  observerRef.current = observer;
-
   useEffect(() => {
+    const observer = new IntersectionObserver(updateElementInViewStatus, {
+      threshold: 1,
+      rootMargin: '100% 0% 100% 0%'
+    });
+    observerRef.current = observer;
+
     scrollableElements.current.forEach((scrollableElement) => {
       observer.observe(scrollableElement);
     });
 
     return () => {
       observer.disconnect();
+      observerRef.current = undefined;
       scrollableElements.current = [];
     };
   }, []);
