@@ -39,9 +39,8 @@ export const TransactionDetails = () => {
       let originalTxHash = data?.originalTxHash;
 
       if (!success && !data) {
-        const { data: scData, success: scSuccess } = await getScResult(
-          transactionId
-        );
+        const { data: scData, success: scSuccess } =
+          await getScResult(transactionId);
         if (scSuccess) {
           originalTxHash = scData?.originalTxHash;
         }

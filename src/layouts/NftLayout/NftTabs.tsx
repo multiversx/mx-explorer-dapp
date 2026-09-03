@@ -13,8 +13,8 @@ export const NftTabs = () => {
 
   const showOverview = Boolean(
     type &&
-      type !== NftTypeEnum.MetaESDT &&
-      (metadata?.attributes || (rarities && Object.keys(rarities).length > 0))
+    type !== NftTypeEnum.MetaESDT &&
+    (metadata?.attributes || (rarities && Object.keys(rarities).length > 0))
   );
 
   const tabs = [

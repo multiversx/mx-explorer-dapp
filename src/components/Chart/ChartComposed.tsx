@@ -1,4 +1,3 @@
-/* eslint-disable import/order */
 import { Fragment, useState } from 'react';
 import moment from 'moment';
 import {
@@ -110,7 +109,7 @@ export const ChartComposed = ({
             ...styleRest,
             margin: 5,
             color: `${active ? secondary : color}`,
-            borderColor: `${active ? secondary : borderColor ?? color}`
+            borderColor: `${active ? secondary : (borderColor ?? color)}`
           };
 
           return (

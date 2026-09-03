@@ -38,7 +38,7 @@ export const TransactionMethod = ({
 
   const showDescription = Boolean(
     transaction.action?.description &&
-      transaction.action.description !== 'Transfer'
+    transaction.action.description !== 'Transfer'
   );
   const showTooltip = showDescription || isTextTruncated;
 

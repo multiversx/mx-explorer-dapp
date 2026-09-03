@@ -13,9 +13,8 @@ import {
   ChartListType
 } from 'types';
 
-import { ChartResolutionSelector } from './components/ChartResolution';
-
 import { RANGE } from '../constants';
+import { ChartResolutionSelector } from './components/ChartResolution';
 
 export interface AnalyticsStackedChartDataType {
   value: string;

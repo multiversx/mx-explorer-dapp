@@ -69,11 +69,11 @@ export const sortProviders = ({
           const aNnodes =
             a.identityInfo?.validators !== undefined
               ? a.identityInfo.validators
-              : a.numNodes ?? 0;
+              : (a.numNodes ?? 0);
           const bNnodes =
             b.identityInfo?.validators !== undefined
               ? b.identityInfo.validators
-              : b.numNodes ?? 0;
+              : (b.numNodes ?? 0);
 
           return aNnodes > bNnodes ? sortParams[0] : sortParams[1];
         });

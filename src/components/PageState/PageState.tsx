@@ -39,7 +39,7 @@ export const PageState = ({
 }: PageStateType) => (
   <div
     className={classNames('text-center py-spacer my-auto', className)}
-    data-testid={dataTestId ?? isError ? 'errorScreen' : ''}
+    data-testid={(dataTestId ?? isError) ? 'errorScreen' : ''}
   >
     <div className='my-spacer'>
       {symbol ? (

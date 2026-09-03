@@ -27,8 +27,8 @@ export const LockedTokenAddressIcon = ({
         const validAddress = addressIsBech32(account)
           ? account
           : addressIsBech32(lockedAccounts[account])
-          ? lockedAccounts[account]
-          : '';
+            ? lockedAccounts[account]
+            : '';
 
         return validAddress === address;
       }

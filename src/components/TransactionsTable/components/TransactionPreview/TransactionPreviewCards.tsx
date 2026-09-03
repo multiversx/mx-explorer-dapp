@@ -95,7 +95,7 @@ export const TransactionPreviewCards = ({
         </PreviewPanelCard>
         {Boolean(
           transaction.gasLimit !== undefined &&
-            transaction.gasUsed !== undefined
+          transaction.gasUsed !== undefined
         ) && (
           <PreviewPanelCard title='Gas Info' featured fullWidth>
             <div className='d-flex flex-column'>
@@ -138,7 +138,7 @@ export const TransactionPreviewCards = ({
               </div>
               {Boolean(
                 transaction.fee !== undefined &&
-                  transaction.gasUsed !== undefined
+                transaction.gasUsed !== undefined
               ) && (
                 <div>
                   Transaction Fee:{' '}
