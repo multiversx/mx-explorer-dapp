@@ -4,6 +4,7 @@ import moment from 'moment';
 import { XAxis, YAxis, Line, Tooltip, CartesianGrid } from 'recharts';
 
 import { formatTimestamp, getColors } from 'helpers';
+import { ChartProps } from 'types';
 import { ChartLineContainer } from './ChartLineContainer';
 import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
