@@ -29,7 +29,7 @@ export const useHeadersTokensStats = ({
   );
 
   const getHeadersTokens = async (): Promise<HeadersTokensType> => {
-    if (Object.keys(headersTokens).length !== 0) {
+    if (headersTokens.totalTokens !== undefined) {
       return headersTokens;
     }
 
@@ -64,6 +64,10 @@ export const useHeadersTokensStats = ({
   }, [hasGrowthWidgets, isEnabled]);
 
   useEffect(() => {
+    if (!isEnabled) {
+      return;
+    }
+
     dispatch(
       setPageHeaderBlocksStatsEcosystemMarketCap(
         ecosystemMarketCap.isGreaterThan(0)
@@ -71,7 +75,7 @@ export const useHeadersTokensStats = ({
           : ELLIPSIS
       )
     );
-  }, [ecosystemMarketCap]);
+  }, [ecosystemMarketCap, isEnabled]);
 
   return {
     title: 'Tokens',

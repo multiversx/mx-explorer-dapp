@@ -24,7 +24,7 @@ export const useHeadersBlocksStats = ({
   const { getGrowthHeaders } = useAdapter();
 
   const getHeadersBlocks = async (): Promise<HeadersBlocksType> => {
-    if (Object.keys(headersBlocks).length !== 0) {
+    if (headersBlocks.totalApplicationsDeployed !== undefined) {
       return headersBlocks;
     }
 
@@ -58,12 +58,16 @@ export const useHeadersBlocksStats = ({
   }, [hasGrowthWidgets, isEnabled]);
 
   useEffect(() => {
+    if (!isEnabled) {
+      return;
+    }
+
     dispatch(
       setPageHeaderBlocksStatsBlockHeight(
         new BigNumber(statsBlocks).toFormat(0)
       )
     );
-  }, [statsBlocks, dispatch]);
+  }, [statsBlocks, isEnabled, dispatch]);
 
   return {
     title: 'Blocks',

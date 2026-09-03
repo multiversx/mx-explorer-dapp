@@ -19,7 +19,7 @@ export const useHeadersCollectionsStats = ({
   const { getGrowthHeaders } = useAdapter();
 
   const getHeadersCollections = async (): Promise<HeadersCollectionsType> => {
-    if (Object.keys(headersCollections).length !== 0) {
+    if (headersCollections.totalCollections !== undefined) {
       return headersCollections;
     }
 
