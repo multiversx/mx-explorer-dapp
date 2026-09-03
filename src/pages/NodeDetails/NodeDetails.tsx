@@ -201,6 +201,7 @@ export const NodeDetails = () => {
                                 <BlocksTable
                                   blocks={blocks.data}
                                   shard={undefined}
+                                  totalBlocks={blocks.data.length}
                                 />
                               </div>
                             </>

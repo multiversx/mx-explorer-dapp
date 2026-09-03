@@ -1,7 +1,6 @@
 import { io } from 'socket.io-client';
 
 import {
-  WEBSOCKET_MESSAGE_DELAY,
   WEBSOCKET_RECONNECTION_ATTEMPTS,
   WEBSOCKET_RETRY_INTERVAL,
   WEBSOCKET_TIMEOUT,
@@ -17,10 +16,7 @@ import { WebsocketEventsEnum } from 'types';
 
 import { websocketStatusStore } from './websocketStatusStore';
 
-type TimeoutType = ReturnType<typeof setTimeout> | null;
-
 export async function initializeWebsocketConnection(websocketUrl: string) {
-  let messageTimeout: TimeoutType = null;
   const isWebsocketInactive = isUpdatesWebsocketInactive();
 
   // Update socket status in store for status subscription
@@ -40,15 +36,6 @@ export async function initializeWebsocketConnection(websocketUrl: string) {
     websocketEventListeners.clear();
   };
 
-  const handleMessageReceived = (message: string) => {
-    if (messageTimeout) {
-      clearTimeout(messageTimeout);
-    }
-    messageTimeout = setTimeout(() => {
-      console.info('Websocket Message:', message);
-    }, WEBSOCKET_MESSAGE_DELAY);
-  };
-
   const closeConnection = () => {
     const instance = websocketConnection.instance;
     if (instance) {
@@ -62,10 +49,6 @@ export async function initializeWebsocketConnection(websocketUrl: string) {
 
     updateSocketStatus(WebsocketConnectionStatusEnum.NOT_INITIALIZED);
     websocketConnection.instance = null;
-
-    if (messageTimeout) {
-      clearTimeout(messageTimeout);
-    }
   };
 
   const initializeConnection = async () => {

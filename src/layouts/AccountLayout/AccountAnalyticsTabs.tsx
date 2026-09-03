@@ -2,12 +2,11 @@ import { useSelector } from 'react-redux';
 
 import { Tabs } from 'components/Tabs';
 import { urlBuilder } from 'helpers';
-import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+import { accountSelector } from 'redux/selectors';
 import { accountsRoutes } from 'routes';
 
 export const AccountAnalyticsTabs = () => {
   const { account } = useSelector(accountSelector);
-  const { egldLabel } = useSelector(activeNetworkSelector);
   const { address } = account;
 
   const tabs = [

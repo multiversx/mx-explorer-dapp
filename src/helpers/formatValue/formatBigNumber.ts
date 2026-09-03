@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 
 import { ELLIPSIS, ZERO } from 'appConstants';
 import { DIGITS } from 'config';
-import { stringIsFloat } from 'helpers';
+import { stringIsFloat } from 'lib';
 
 export interface FormatBigNumberType {
   value: string | number | BigNumber | undefined | typeof ELLIPSIS;

@@ -1,6 +1,6 @@
-import { DetailItem, DetailItemType } from './DetailItem';
+import { DetailItem, DetailItemUIType } from './DetailItem';
 
-export interface DescriptionDetailItemType extends DetailItemType {
+export interface DescriptionDetailItemUIType extends DetailItemUIType {
   description: string;
 }
 
@@ -8,7 +8,7 @@ export const DescriptionDetailItem = ({
   title,
   description,
   ...props
-}: DescriptionDetailItemType) => {
+}: DescriptionDetailItemUIType) => {
   return (
     <DetailItem title={title || 'Description'} {...props}>
       {description}

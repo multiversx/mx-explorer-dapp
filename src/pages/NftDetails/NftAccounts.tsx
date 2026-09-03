@@ -71,7 +71,7 @@ export const NftAccounts = () => {
                     </tr>
                   </thead>
                   <tbody data-testid='accountsTable'>
-                    {accounts.map((account, i) => (
+                    {accounts.map((account) => (
                       <tr key={account.address}>
                         <td>
                           <AccountLink

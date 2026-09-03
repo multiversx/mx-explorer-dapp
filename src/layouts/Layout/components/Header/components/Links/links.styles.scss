@@ -20,6 +20,12 @@
       // --nav-link-padding-y: 0;
       --nav-link-padding-x: 0;
       width: auto;
+      &:focus-visible {
+        box-shadow: none;
+      }
+      &:hover {
+        background-color: transparent;
+      }
     }
     .dropdown-toggle {
       margin-left: 0.375rem;

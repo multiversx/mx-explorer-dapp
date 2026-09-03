@@ -7,11 +7,13 @@ import { TransactionDirectionEnum, UITransactionType } from 'types';
 export interface TransactionDirectionType {
   transaction: UITransactionType;
   address?: string;
+  hasHighlight?: boolean;
 }
 
 export const TransactionDirection = ({
   transaction,
-  address
+  address,
+  hasHighlight
 }: TransactionDirectionType) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -82,7 +84,10 @@ export const TransactionDirection = ({
   return (
     <div className='d-inline-block'>
       {renderTransactionDirectionWrapper(
-        <TransactionDirectionBadge direction={direction} hasHighlight />
+        <TransactionDirectionBadge
+          direction={direction}
+          hasHighlight={hasHighlight}
+        />
       )}
     </div>
   );
