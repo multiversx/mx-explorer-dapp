@@ -6393,7 +6393,7 @@ property-information@^5.0.0:
   dependencies:
     xtend "^4.0.0"
 
-protobufjs@^8.8.0:
+protobufjs@8.8.0:
   version "8.8.0"
   resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-8.8.0.tgz#7ed071d94b6755f63cc9936ecd82e4deac7cf624"
   integrity sha512-N3xhQ5yyBx3vQq4gubBfASzYhJGNzeDbjqBpu61g7UVylsN/qyffU96TKWD3GbbLOKF82VGNRNvv1+BFgE31Eg==
