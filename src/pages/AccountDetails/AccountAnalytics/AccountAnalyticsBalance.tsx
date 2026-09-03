@@ -15,14 +15,10 @@ import {
   getNormalizedTimeEntries,
   getFrequency
 } from 'components/Chart/helpers/getChartBinnedData';
-import {
-  formatTimestamp,
-  getPrimaryColor,
-  isValidTokenPrice,
-  stringIsInteger
-} from 'helpers';
+import { formatTimestamp, getPrimaryColor, isValidTokenPrice } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
+import { stringIsInteger } from 'lib';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import {
   AccountBalanceHistoryType,

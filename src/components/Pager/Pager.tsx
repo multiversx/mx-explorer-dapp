@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSearchParams } from 'react-router';
 
 import { ELLIPSIS, PAGE_SIZE, MAX_RESULTS } from 'appConstants';
-import { stringIsInteger, formatOrdinals } from 'helpers';
+import { formatOrdinals } from 'helpers';
 import { useGetCursorHistory } from 'hooks';
 import {
   faAngleLeft,
@@ -11,6 +11,7 @@ import {
   faAnglesLeft,
   faAnglesRight
 } from 'icons/solid';
+import { stringIsInteger } from 'lib';
 import { generatePaginationArray, pagerHelper } from './helpers/pagerHelper';
 
 export interface PagerUIType {
