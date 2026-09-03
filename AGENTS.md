@@ -13,29 +13,41 @@ MultiversX Blockchain Explorer — a React + Redux Toolkit SPA for browsing the 
 ## Commands
 
 ```bash
-yarn                       # install dependencies (uses yarn, not npm/pnpm)
+pnpm install   # install dependencies (uses pnpm, not npm/yarn)
 
 # Dev — must pick a network config before starting:
 cp src/config/config.devnet.ts src/config/index.ts
-npm run start-devnet       # copies config + starts dev server → https://localhost:3002
+pnpm run start-devnet       # copies config + starts dev server → https://localhost:3002
 
-npm run start-mainnet      # mainnet
-npm run start-testnet      # testnet
+pnpm run start-mainnet      # mainnet
+pnpm run start-testnet      # testnet
 
 # Build
-npm run build-devnet
-npm run build-mainnet
+pnpm run build-devnet
+pnpm run build-mainnet
 
 # Lint (zero warnings policy)
-npm run lint               # eslint src --max-warnings 0
+pnpm run lint               # eslint src --max-warnings 0
 
 # E2E tests (Cypress, runs against integration-explorer.multiversx.com)
-node scripts/cypress.ts    # or: npm run cy:run
+node scripts/cypress.ts    # or: npm run cy:run — full suite + mochawesome report
+
+# Single spec / single test (bypasses the report wrapper):
+npx cypress run --spec cypress/e2e/Search/Search.cy.ts
+npx cypress open           # interactive runner
 ```
+
+Cypress hits the deployed `baseUrl` in `cypress.config.ts`, not your local dev server — no local build is needed to run E2E, but a network connection is.
 
 `src/config/index.ts` **must exist** before starting. The `start-*` scripts create it automatically via the `copy-*-config` step, but if you run `npm run start` directly you need it manually.
 
 HTTPS is enabled by default (self-signed cert via `@vitejs/plugin-basic-ssl`). Set `VITE_APP_USE_HTTPS=false` to disable.
+
+Env vars are read from `.env` / `.env.development`. Keys prefixed `VITE_APP_*` are exposed to the client (e.g. `VITE_APP_USE_HTTPS`, `VITE_APP_CACHE_BUST`, `VITE_APP_SHARE_PREFIX`, `VITE_APP_GA_ID`).
+
+### Branches & deploys
+
+- PRs target the `development` branch (not `main`).
 
 ---
 
@@ -43,9 +55,9 @@ HTTPS is enabled by default (self-signed cert via `@vitejs/plugin-basic-ssl`). S
 
 ### Entry & Routing
 
-`src/index.tsx` → `App.tsx` wraps the app in Redux `<Provider>` + `<PersistGate>` + `<Interceptor>`.
+`src/index.tsx` mounts `<HelmetProvider>` → `App.tsx`. The root route element (`ProviderApp` in `src/App.tsx`) wraps the tree in Redux `<Provider>` + `<Interceptor>`.
 
-Routes are defined in `src/routes/routes.tsx` using React Router v6 `createBrowserRouter`. Every network has its routes prefixed with `/:network/` (e.g. `/devnet/blocks/...`). `generateNetworkRoutes` in `src/routes/helpers/` iterates `networks` from config and wraps routes per network. The `Layout` component (`src/layouts/Layout/`) is the shell that renders the header, hero stats widgets, and footer around page content.
+The router itself is created in `src/App.tsx` with React Router v7 `createBrowserRouter`; the route definitions it consumes live in `src/routes/routes.tsx`. Every network has its routes prefixed with `/:network/` (e.g. `/devnet/blocks/...`). `generateNetworkRoutes` in `src/routes/helpers/` iterates `networks` from config and wraps routes per network. The `Layout` component (`src/layouts/Layout/`) is the shell that renders the header, hero stats widgets, and footer around page content.
 
 ### Network Configuration
 
@@ -67,7 +79,9 @@ When the network config includes `updatesWebsocketUrl`, a Socket.IO connection i
 
 ### Redux Store
 
-`src/redux/store.ts` configures Redux Toolkit + `redux-persist` (localStorage). The root reducer is in `src/redux/reducers.ts`. All slices in `customIgnoredSlices` are excluded from persistence (they refetch on load). Selectors use `reselect` and live in `src/redux/selectors/`.
+`src/redux/store.ts` is a plain Redux Toolkit `configureStore` with no middleware overrides. The root reducer is in `src/redux/reducers.ts`. Selectors use `reselect` and live in `src/redux/selectors/`.
+
+**There is no persistence.** Nothing is written to localStorage by the store and state is rebuilt from the API on every load. `redux-persist` is still listed in `package.json` but is never imported anywhere in `src/`. The names in `reducers.ts` are leftovers from a persistence setup that was removed: `customIgnoredSlices` is simply every slice in the app, `asyncIgnoredSlices` is an empty object, and the exported `ignoredSliceNames` has no remaining callers. Treat all three as vestigial rather than as a persistence allow/deny list.
 
 Key slices:
 
@@ -98,7 +112,7 @@ Key slices:
 
 ### Icons
 
-Free FontAwesome icons are used by default (`npm run prepare-free-icons`, run automatically by `yarn` via `prepare`). Pro icons require a FontAwesome npm token. Icon sets live in `src/icons/` with a generated `index.ts` per variant.
+Free FontAwesome icons are used by default (`pnpm run prepare-free-icons`, run automatically by `pnpm` via `prepare`). Pro icons require a FontAwesome npm token — install them with `pnpm run prepare-pro-icons`. Icon sets live in `src/icons/` with a generated `index.ts` per variant.
 
 ---
 

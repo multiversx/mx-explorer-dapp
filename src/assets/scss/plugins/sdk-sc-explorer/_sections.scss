@@ -4,11 +4,41 @@
 
 .#{$package-name} {
   // Build Info
-  &-contract-build {
+  &-contract-build,
+  &-contract-details {
     display: flex;
     flex-direction: column;
+    .#{$package-name}-card-body {
+      --card-spacer-x: 0;
+      --card-spacer-y: 0;
+    }
   }
 
+  // ContractDetails
+  &-contract-details {
+    &-properties-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      column-gap: 1rem;
+      row-gap: 0.5rem;
+    }
+    .#{$package-name}-badge {
+      svg {
+        margin-right: 0.25rem;
+      }
+    }
+    .#{$package-name}-card-item {
+      @include media-breakpoint-up(md) {
+        flex-basis: 48%;
+      }
+      &-value {
+        svg[data-icon='file-lines'] {
+          color: var(--primary);
+        }
+      }
+    }
+  }
   // Endpoints
   &-endpoint-output {
     .#{$package-name}-panel-content {
@@ -60,6 +90,7 @@
   }
   &-about-panel {
     margin-top: 1rem;
+    margin-bottom: 1rem;
   }
   &-about-panel-content {
     padding: 0.625rem 1rem;
@@ -67,6 +98,33 @@
     background-color: var(--neutral-900);
     p {
       margin-bottom: 0;
+    }
+  }
+
+  // Load ABI
+  &-deploy-upgrade-file-form,
+  &-contract-load-abi-form {
+    &-fields {
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    &-code-container {
+      margin-top: 1.5rem;
+      .#{$package-name}-code {
+        max-height: 20rem;
+        overflow-y: auto;
+      }
+    }
+  }
+
+  // Deploy/Upgrade Contract
+  &-deploy-upgrade-file-form {
+    .#{$package-name}-form-action-wrapper {
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .#{$package-name}-dropzone {
+      margin-bottom: 1.5rem;
     }
   }
 
@@ -79,6 +137,54 @@
       row-gap: 0.5rem;
       margin-top: 1.5rem;
       margin-bottom: 1.5rem;
+      &-label {
+        cursor: pointer;
+        user-select: none;
+        display: block;
+        position: relative;
+        padding-left: 1.25rem;
+        font-size: 0.875rem;
+        input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+        }
+        &:hover
+          input
+          ~ .#{$package-name}-interaction-modal-form-code-metadata-checkmark {
+          background-color: var(--text);
+        }
+        input:checked
+          ~ .#{$package-name}-interaction-modal-form-code-metadata-checkmark {
+          background-color: var(--link);
+        }
+        input:checked
+          ~ .#{$package-name}-interaction-modal-form-code-metadata-checkmark:after {
+          display: block;
+        }
+      }
+      &-checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 1rem;
+        width: 1rem;
+        background-color: var(--text);
+        &:after {
+          content: '';
+          left: 0.375rem;
+          top: 0px;
+          width: 0.25rem;
+          height: 0.625rem;
+          border: solid var(--body);
+          border-width: 0 0.125rem 0.125rem 0;
+          transform: rotate(45deg);
+          position: absolute;
+          display: none;
+        }
+      }
     }
   }
 }

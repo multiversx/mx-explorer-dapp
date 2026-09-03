@@ -81,6 +81,7 @@ export interface NftType {
   isVerified?: boolean;
   isNsfw?: boolean;
   isScam?: boolean;
+  searchAfter?: string;
 }
 
 export interface NftAccountType {

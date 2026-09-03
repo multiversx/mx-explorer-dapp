@@ -16,13 +16,13 @@ This project was bootstrapped with [Vite](https://vitejs.dev/guide/).
 ## Requirements
 
 - a `git` client installed
-- `nodejs` (v20.19.4 LTS), `npm` and `yarn` installed
+- `nodejs` (v20.19.4 LTS) and `pnpm` (v11.1.2+) installed
 - optional, but useful: an IDE (Visual Code for example)
 
 ## Quick start
 
-1. run `yarn` in the project directory.
-2. run `npm run start-devnet` fot the `Devnet` network.
+1. run `pnpm install` in the project directory.
+2. run `pnpm run start-devnet` for the `Devnet` network.
 3. optionally make edits to `networks` or other configurations found in newly created `index.ts` in the `src/config` folder.
 
 - One can use any of the existing network setups by running one of the `npm run start-*` scripts available in the `package.json` file.

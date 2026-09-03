@@ -8,6 +8,7 @@ export * from './getCustomPageName';
 export * from './getDisplayReceiver';
 export * from './getItemsPage';
 export * from './getLongestTxStreak';
+export * from './getLastOffsetPage';
 export * from './getNftText';
 export * from './getNodeIcon';
 export * from './getNodeIssue';

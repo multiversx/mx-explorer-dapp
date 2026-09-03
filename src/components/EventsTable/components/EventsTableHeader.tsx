@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import {
-  FromColumnFilters,
+  AddressColumnFilters,
   AgeColumnFilters,
   IdentifierColumnFilters,
   ShardFilter,
@@ -32,7 +32,7 @@ export const EventsTableHeader = ({
           <ShardFilter text={isSovereign ? 'Chain' : 'Shard'} />
         </th>
         <th scope='col' className='hash-xxl'>
-          Address <FromColumnFilters inactiveFilters={inactiveFilters} />
+          Address <AddressColumnFilters inactiveFilters={inactiveFilters} />
         </th>
         <th
           scope='col'

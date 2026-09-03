@@ -24,6 +24,7 @@ import {
 } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
 import {
+  useAbortSignal,
   useAdapter,
   useGetPage,
   useGetSort,
@@ -56,8 +57,9 @@ export const Applications = () => {
 
   const sort = useGetSort();
   const { search } = useGetSearch();
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
 
   const [accounts, setAccounts] = useState<AccountType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -79,20 +81,28 @@ export const Applications = () => {
 
   const fetchApplications = () => {
     setDataChanged(true);
+    const signal = getAbortSignal();
+
     Promise.all([
       getAccounts({
         page,
+        searchAfter,
         search,
         isSmartContract: true,
         withOwnerAssets: true,
         withDeployInfo: true,
         ...(is24hCountAvailable ? {} : { withScrCount: true }),
         ...(is24hCountAvailable ? { size } : { size: minSize }),
-        ...sort
+        ...sort,
+        signal
       }),
-      getAccountsCount({ isSmartContract: true, search })
+      getAccountsCount({ isSmartContract: true, search, signal })
     ])
       .then(([applicationsData, applicationsCountData]) => {
+        if (signal.aborted) {
+          return;
+        }
+
         if (applicationsData.success && applicationsCountData.success) {
           setAccounts(applicationsData.data);
           setTotalAccounts(applicationsCountData.data);
@@ -141,6 +151,7 @@ export const Applications = () => {
                     itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
                     show={accounts.length > 0}
                     className='d-flex ms-auto me-auto me-sm-0'
+                    items={accounts}
                   />
                 </div>
               </div>
@@ -291,6 +302,7 @@ export const Applications = () => {
                   total={totalAccounts}
                   itemsPerPage={is24hCountAvailable ? PAGE_SIZE : minSize}
                   show={accounts.length > 0}
+                  items={accounts}
                 />
               </div>
             </div>

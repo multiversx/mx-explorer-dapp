@@ -12,7 +12,11 @@ import {
 } from 'redux/slices';
 import { HeadersTokensType } from 'types/headerStats.types';
 
-export const useHeadersTokensStats = () => {
+import { PageStatsOptionsType } from './types';
+
+export const useHeadersTokensStats = ({
+  isEnabled = true
+}: PageStatsOptionsType = {}) => {
   const headersTokens = useSelector(pageHeaderTokensStatsSelector);
   const { unprocessed } = useSelector(economicsSelector);
 
@@ -25,7 +29,7 @@ export const useHeadersTokensStats = () => {
   );
 
   const getHeadersTokens = async (): Promise<HeadersTokensType> => {
-    if (Object.keys(headersTokens).length !== 0) {
+    if (headersTokens.totalTokens !== undefined) {
       return headersTokens;
     }
 
@@ -54,12 +58,16 @@ export const useHeadersTokensStats = () => {
   };
 
   useEffect(() => {
-    if (hasGrowthWidgets) {
+    if (hasGrowthWidgets && isEnabled) {
       getHeadersTokens();
     }
-  }, []);
+  }, [hasGrowthWidgets, isEnabled]);
 
   useEffect(() => {
+    if (!isEnabled) {
+      return;
+    }
+
     dispatch(
       setPageHeaderBlocksStatsEcosystemMarketCap(
         ecosystemMarketCap.isGreaterThan(0)
@@ -67,7 +75,7 @@ export const useHeadersTokensStats = () => {
           : ELLIPSIS
       )
     );
-  }, [ecosystemMarketCap]);
+  }, [ecosystemMarketCap, isEnabled]);
 
   return {
     title: 'Tokens',

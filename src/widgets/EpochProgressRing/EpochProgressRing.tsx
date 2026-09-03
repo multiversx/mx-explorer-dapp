@@ -2,7 +2,7 @@ import classNames from 'classnames';
 
 import { ProgressRing } from 'components';
 import { formatBigNumber, getStringPlural } from 'helpers';
-import { useFetchEpochProgress } from 'hooks';
+import { useEpochProgress } from 'hooks';
 import { WithClassnameType } from 'types';
 
 export interface EpochRingType extends WithClassnameType {
@@ -14,11 +14,15 @@ export const EpochProgressRing = ({
   className
 }: EpochRingType) => {
   const { epoch, epochPercentage, epochTimeRemaining, roundsLeft, isReady } =
-    useFetchEpochProgress();
+    useEpochProgress();
 
   return (
     <div className={classNames('epoch-progress-ring', className)}>
-      <ProgressRing progress={epochPercentage} size={140} hasBg>
+      <ProgressRing
+        progress={Number(epochPercentage.toFixed(2))}
+        size={140}
+        hasBg
+      >
         <div className='label' data-testid='currentEpoch'>
           Epoch
           <br />

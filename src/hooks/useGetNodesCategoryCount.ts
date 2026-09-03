@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
@@ -22,6 +23,42 @@ export const useGetNodesCategoryCount = ({
     nodesOverviewSelector
   );
 
+  const overviewCounts = useMemo(() => {
+    if (!isNodesOverviewFetched || nodes.length === 0) {
+      return undefined;
+    }
+
+    let validatorNodes = 0;
+    let auctionValidatorNodes = 0;
+    let queuedNodes = 0;
+    let observerNodes = 0;
+
+    for (const node of nodes) {
+      const isValidator = node.type === NodeTypeEnum.validator;
+
+      if (isValidator) {
+        validatorNodes++;
+        if (node.status === NodeStatusEnum.auction || node.auctionQualified) {
+          auctionValidatorNodes++;
+        }
+        if (node.status === NodeStatusEnum.queued) {
+          queuedNodes++;
+        }
+      }
+      if (node.type === NodeTypeEnum.observer) {
+        observerNodes++;
+      }
+    }
+
+    return {
+      totalNodes: nodes.length,
+      totalValidatorNodes: validatorNodes,
+      auctionValidators: auctionValidatorNodes,
+      queueSize: queuedNodes,
+      totalObservers: observerNodes
+    };
+  }, [nodes, isNodesOverviewFetched]);
+
   if (showGlobalValues) {
     return {
       totalNodes,
@@ -32,33 +69,5 @@ export const useGetNodesCategoryCount = ({
     };
   }
 
-  if (isNodesOverviewFetched && nodes.length > 0) {
-    const overviewTotal = nodes.length;
-    const overviewValidatorNodes = nodes.filter(
-      (node) => node.type === NodeTypeEnum.validator
-    ).length;
-    const overviewAuctionValidators = nodes.filter(
-      (node) =>
-        (node.status === NodeStatusEnum.auction || node.auctionQualified) &&
-        node.type === NodeTypeEnum.validator
-    ).length;
-    const overviewQueueSize = nodes.filter(
-      (node) =>
-        node.status === NodeStatusEnum.queued &&
-        node.type === NodeTypeEnum.validator
-    ).length;
-    const overviewTotalObservers = nodes.filter(
-      (node) => node.type === NodeTypeEnum.observer
-    ).length;
-
-    return {
-      totalNodes: overviewTotal,
-      totalValidatorNodes: overviewValidatorNodes,
-      auctionValidators: overviewAuctionValidators,
-      queueSize: overviewQueueSize,
-      totalObservers: overviewTotalObservers
-    };
-  }
-
-  return {};
+  return overviewCounts ?? {};
 };

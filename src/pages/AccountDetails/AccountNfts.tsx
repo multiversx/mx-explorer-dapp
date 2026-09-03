@@ -15,7 +15,7 @@ import {
   NftList
 } from 'components';
 import { isProof, urlBuilder } from 'helpers';
-import { useAdapter, useGetPage } from 'hooks';
+import { useAbortSignal, useAdapter, useGetPage } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
@@ -31,6 +31,7 @@ export const AccountNfts = () => {
   const { txCount } = account;
 
   const { getAccountNfts, getAccountNftsCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
 
   const { hash: address } = useParams() as any;
 
@@ -39,15 +40,22 @@ export const AccountNfts = () => {
   const [accountNftsCount, setAccountNftsCount] = useState(0);
 
   const fetchAccountNfts = () => {
+    const signal = getAbortSignal();
+
     Promise.all([
       getAccountNfts({
         page,
         size,
         address,
-        excludeMetaESDT: true
+        excludeMetaESDT: true,
+        signal
       }),
-      getAccountNftsCount({ address, excludeMetaESDT: true })
+      getAccountNftsCount({ address, excludeMetaESDT: true, signal })
     ]).then(([accountNftsData, accountNftsCountData]) => {
+      if (signal.aborted) {
+        return;
+      }
+
       if (ref.current !== null) {
         if (accountNftsData.success && accountNftsCountData.success) {
           setAccountNfts(accountNftsData.data);

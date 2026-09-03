@@ -24,7 +24,7 @@ export const CollectionNfts = () => {
   const { collectionState } = useSelector(collectionSelector);
   const { type } = collectionState;
   const { getCollectionNfts, getCollectionNftsCount } = useAdapter();
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const { search } = useGetSearch();
 
   const { hash: collection } = useParams() as any;
@@ -40,6 +40,7 @@ export const CollectionNfts = () => {
           search,
           page,
           size,
+          searchAfter,
           collection,
           ...(type === NftTypeEnum.NonFungibleESDT ? { withOwner: true } : {}),
           ...(type === NftTypeEnum.SemiFungibleESDT ? { withSupply: true } : {})
@@ -71,6 +72,7 @@ export const CollectionNfts = () => {
               total={totalCollectionNfts}
               show={collectionNfts.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
+              items={collectionNfts}
             />
           </div>
         </div>
@@ -84,6 +86,7 @@ export const CollectionNfts = () => {
               <Pager
                 total={totalCollectionNfts}
                 show={collectionNfts.length > 0}
+                items={collectionNfts}
               />
             </div>
           </>

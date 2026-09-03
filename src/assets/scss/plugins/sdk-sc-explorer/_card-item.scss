@@ -37,9 +37,22 @@
         white-space: nowrap;
       }
       mvx-copy-button {
-        margin-left: 0.5rem;
-        svg[data-icon='clone'] {
-          color: var(--body-color);
+        margin-left: 0.25rem;
+        svg[data-icon='copy'] {
+          color: var(--neutral-500);
+          &:hover {
+            color: var(--primary);
+          }
+        }
+      }
+      mvx-explorer-link {
+        margin-left: 0.25rem;
+        svg[data-icon='arrow-up-right-from-square'] {
+          width: 0.825rem;
+          color: var(--neutral-500) !important;
+          &:hover {
+            color: var(--primary);
+          }
         }
       }
     }

@@ -8,12 +8,12 @@ import {
 } from 'appConstants';
 import { useNotifications } from 'hooks';
 import { faTimes } from 'icons/light';
-import { interfaceSelector } from 'redux/selectors';
+import { notificationsSelector } from 'redux/selectors';
 import { NotificationType } from 'types';
 
 export const NotificationsBar = () => {
   const { removeNotification } = useNotifications();
-  const { notifications } = useSelector(interfaceSelector);
+  const notifications = useSelector(notificationsSelector);
 
   const sortedByPriorityAsc = notifications
     .sort((a: any, b: any) => a.priority - b.priority)

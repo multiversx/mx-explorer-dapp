@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { METACHAIN_SHARD_ID, TIMEOUT } from 'appConstants';
@@ -20,6 +21,7 @@ interface PropsType {
   timeout?: AdapterProviderPropsType['timeout'];
   timestamp?: AdapterProviderPropsType['timestamp'];
   signal?: AdapterProviderPropsType['signal'];
+  headers?: AdapterProviderPropsType['headers'];
 }
 
 async function wrap(asyncRequest: () => Promise<ApiAdapterResponseType>) {
@@ -44,33 +46,35 @@ export const useAdapterConfig = () => {
     apiAddress
   } = useSelector(activeNetworkSelector);
 
-  const providers = {
-    api: {
-      baseUrl: apiAddress || '',
-      proxyUrl: apiAddress || '',
-      ...apiAdapter
-    },
-    elastic: {
-      baseUrl: elasticUrl || '',
-      proxyUrl: nodeUrl || '',
-      ...elasticAdapter
-    }
-  };
+  return useMemo(() => {
+    const providers = {
+      api: {
+        baseUrl: apiAddress || '',
+        proxyUrl: apiAddress || '',
+        ...apiAdapter
+      },
+      elastic: {
+        baseUrl: elasticUrl || '',
+        proxyUrl: nodeUrl || '',
+        ...elasticAdapter
+      }
+    };
 
-  const adapter = networkAdapter as NetworkAdapterEnum;
+    const adapter = networkAdapter as NetworkAdapterEnum;
 
-  const { provider } = providers[adapter];
+    const { provider } = providers[adapter];
 
-  const providerProps = {
-    metaChainShardId: METACHAIN_SHARD_ID,
-    timeout: TIMEOUT,
-    ...providers[adapter]
-  };
+    const providerProps = {
+      metaChainShardId: METACHAIN_SHARD_ID,
+      timeout: TIMEOUT,
+      ...providers[adapter]
+    };
 
-  const basicProps: PropsType & { url: string } = { url: '' };
+    const basicProps: PropsType & { url: string } = { url: '' };
 
-  return {
-    provider: (props = basicProps) =>
-      wrap(() => provider({ ...providerProps, ...props }))
-  };
+    return {
+      provider: (props = basicProps) =>
+        wrap(() => provider({ ...providerProps, ...props }))
+    };
+  }, [apiAddress, elasticUrl, nodeUrl, networkAdapter]);
 };

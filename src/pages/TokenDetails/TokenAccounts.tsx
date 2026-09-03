@@ -14,7 +14,7 @@ export const TokenDetailsAccounts = () => {
   const { token } = useSelector(tokenSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const { getTokenAccounts, getTokenAccountsCount } = useAdapter();
 
   const {
@@ -31,7 +31,7 @@ export const TokenDetailsAccounts = () => {
 
   const fetchAccounts = () => {
     Promise.all([
-      getTokenAccounts({ token: identifier, page, size }),
+      getTokenAccounts({ token: identifier, page, size, searchAfter }),
       getTokenAccountsCount({ token: identifier })
     ]).then(([tokenAccountsData, tokenAccountsCountData]) => {
       if (tokenAccountsData.success && tokenAccountsCountData.success) {

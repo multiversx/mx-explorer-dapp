@@ -19,9 +19,11 @@ export const NativeTokenLayout = () => {
   const failed = isDataReady === false;
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       window.scrollTo(0, 0);
     });
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   if (loading) {

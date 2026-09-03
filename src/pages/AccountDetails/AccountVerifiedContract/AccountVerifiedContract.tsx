@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Loader, PageState } from 'components';
+import { Loader, PageState, SdkDappWrapper } from 'components';
 import { useNetworkRoute, useIsMainnet } from 'hooks';
 import { faClone } from 'icons/regular';
 import {
@@ -26,7 +26,6 @@ import {
 } from 'icons/solid';
 import { getHeaders } from 'interceptors';
 import {
-  ScExplorerContainer,
   useGetAccountInfo,
   useGetLoginInfo,
   VerifiedContractTabsEnum,
@@ -37,7 +36,14 @@ import { WithClassnameType } from 'types';
 
 import { getVerifiedContractSectionUrl } from './helpers';
 import { useGetActiveSection, useGetEnvironment } from './hooks';
-import { SdkDappWrapper } from './SdkDappWrapper';
+
+import '@multiversx/sdk-dapp-sc-explorer/out/styles.css';
+
+const ScExplorerContainer = lazy(() =>
+  import('@multiversx/sdk-dapp-sc-explorer/out/containers/ScExplorerContainer').then(
+    (module) => ({ default: module.ScExplorerContainer })
+  )
+);
 
 export interface AccountVerifiedContractUIType extends WithClassnameType {
   contract?: VerifiedContractType;
@@ -133,38 +139,40 @@ export const AccountVerifiedContract = ({
       {isDataReady === true && contract && (
         <div>
           <SdkDappWrapper>
-            <ScExplorerContainer
-              smartContract={{
-                verifiedContract: contract,
-                deployedContractDetails: account
-              }}
-              accountConsumerHandlers={{
-                useGetLoginInfo,
-                useGetAccountInfo
-              }}
-              networkConfig={{ environment, apiAddress }}
-              customClassNames={customClassNames}
-              icons={icons}
-              className='mx-4'
-              activeSection={activeSection}
-              setActiveSection={setActiveSection}
-              config={{
-                canMutate: !isMainnet,
-                canLoadAbi: false,
-                canDeploy: false,
-                canUpgrade: false,
-                canDisplayContractDetails: false,
-                ...(extraRequestHeaders
-                  ? {
-                      loginParams: {
-                        nativeAuth: {
-                          extraRequestHeaders
+            <Suspense fallback={<Loader />}>
+              <ScExplorerContainer
+                smartContract={{
+                  verifiedContract: contract,
+                  deployedContractDetails: account
+                }}
+                accountConsumerHandlers={{
+                  useGetLoginInfo,
+                  useGetAccountInfo
+                }}
+                networkConfig={{ environment, apiAddress }}
+                customClassNames={customClassNames}
+                icons={icons}
+                className='mx-4'
+                activeSection={activeSection}
+                setActiveSection={setActiveSection}
+                config={{
+                  canMutate: !isMainnet,
+                  canLoadAbi: false,
+                  canDeploy: false,
+                  canUpgrade: false,
+                  canDisplayContractDetails: false,
+                  ...(extraRequestHeaders
+                    ? {
+                        loginParams: {
+                          nativeAuth: {
+                            extraRequestHeaders
+                          }
                         }
                       }
-                    }
-                  : {})
-              }}
-            />
+                    : {})
+                }}
+              />
+            </Suspense>
           </SdkDappWrapper>
         </div>
       )}

@@ -7,8 +7,8 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies
-RUN yarn install --frozen-lockfile
-RUN yarn copy-placeholder-config & yarn build
+RUN pnpm install --frozen-lockfile
+RUN pnpm run copy-placeholder-config & pnpm build
 
 # Production image
 FROM nginx:alpine

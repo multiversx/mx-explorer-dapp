@@ -14,7 +14,7 @@ import { urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faSearch, faArrowUpRightFromSquare } from 'icons/regular';
 import { TransactionErrorDisplay } from 'pages/TransactionDetails/components';
-import { refreshSelector } from 'redux/selectors';
+import { refreshTimestampSelector } from 'redux/selectors';
 import { addTransactionDetails } from 'redux/slices';
 import { TransactionApiStatusEnum, TransactionType } from 'types';
 
@@ -26,7 +26,7 @@ export const TransactionPreviewPanel = ({
   transaction: TransactionType;
 }) => {
   const dispatch = useDispatch();
-  const { timestamp } = useSelector(refreshSelector);
+  const timestamp = useSelector(refreshTimestampSelector);
   const { getTransaction } = useAdapter();
 
   const fetchTransaction = async () => {
@@ -40,7 +40,7 @@ export const TransactionPreviewPanel = ({
   const checkRefetch = () => {
     const isTxStatusPending = Boolean(
       transaction.status &&
-        transaction.status?.toLowerCase() === TransactionApiStatusEnum.pending
+      transaction.status?.toLowerCase() === TransactionApiStatusEnum.pending
     );
     if (isTxStatusPending || transaction.pendingResults) {
       fetchTransaction();

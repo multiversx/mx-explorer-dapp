@@ -6,6 +6,7 @@ export * from './widgets';
 export * from './blocks';
 export * from './collection';
 export * from './economics';
+export * from './epochProgress';
 export * from './general';
 export * from './interface';
 export * from './markers';

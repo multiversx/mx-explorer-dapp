@@ -30,6 +30,8 @@ import {
   transactionsLayout,
   transactionsRoutes,
   transactionsInPoolRoutes,
+  utilitiesLayout,
+  utilitiesRoutes,
   validatorLayout,
   validatorsRoutes
 } from './layouts';
@@ -44,6 +46,7 @@ export {
   tokensRoutes,
   transactionsRoutes,
   transactionsInPoolRoutes,
+  utilitiesRoutes,
   validatorsRoutes
 };
 export interface TitledRouteObject extends NonIndexRouteObject {
@@ -75,6 +78,7 @@ export const routes = {
   ...transactionsRoutes,
   ...transactionsInPoolRoutes,
   ...tokensRoutes,
+  ...utilitiesRoutes,
   ...validatorsRoutes
 };
 
@@ -117,6 +121,7 @@ const mainRoutes: TitledRouteObject[] = [
       ...nftLayout,
       ...tokenLayout,
       ...transactionsLayout,
+      ...utilitiesLayout,
       ...validatorLayout,
       ...nativeTokenLayout
     ]

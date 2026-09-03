@@ -21,7 +21,7 @@ export interface CustomTransfersWebsocketResponseType {
 export const useFetchCustomTransfers = (props: FetchCustomTransfersProps) => {
   const dispatch = useDispatch();
   const transactionFilters = useGetTransactionFilters();
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
 
   const { dataCountPromise, filters, websocketConfig } = props;
 
@@ -83,6 +83,7 @@ export const useFetchCustomTransfers = (props: FetchCustomTransfersProps) => {
     filters: {
       page,
       size,
+      searchAfter,
       ...transactionFilters,
       ...filters
     },

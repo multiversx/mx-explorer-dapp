@@ -1,0 +1,12 @@
+allowBuilds:
+  '@fortawesome/fontawesome-common-types': false
+  '@fortawesome/fontawesome-svg-core': false
+  '@fortawesome/free-solid-svg-icons': false
+  '@parcel/watcher': false
+  '@swc/core': false
+  cypress: false
+  esbuild: false
+  keccak: false
+  protobufjs: false
+minimumReleaseAgeExclude:
+  - '@multiversx/*'

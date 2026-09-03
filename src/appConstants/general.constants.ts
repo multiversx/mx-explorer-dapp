@@ -6,6 +6,8 @@ export const ALL_SHARDS_SHARD_ID = 4294967280;
 
 export const TIMEOUT = 10000;
 export const REFRESH_RATE = 6000;
+
+export const SUPERNOVA_REFRESH_RATE = 600;
 export const POOLING_REFRESH_RATE_LIMIT = 1000;
 export const POOLING_REFRESH_RATE = 3000;
 export const LONG_POOLING_REFRESH_RATE = 60 * 1000;
@@ -36,6 +38,13 @@ export const TEMP_LOCAL_NOTIFICATION_DISMISSED = 'barnardGovernance';
 export const CUSTOM_NETWORK_ID = 'custom-network';
 export const NEW_VERSION_NOTIFICATION = 'newExplorerVersion';
 export const NAVIGATION_SEARCH_STATE = 'fromSearch';
+export const CURSOR_HISTORY_STORAGE_KEY = 'explorerCursors';
+
+export const MAX_CACHED_TRANSACTION_DETAILS = 100;
+export const MAX_CACHED_NODE_DETAILS = 100;
+
+export const MAX_CURSOR_HISTORY_PAGES = 500;
+export const MAX_CURSOR_HISTORY_LISTS = 5;
 
 export const SC_INIT_CHARACTERS_LENGTH = 13;
 

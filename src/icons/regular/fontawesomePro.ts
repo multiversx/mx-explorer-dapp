@@ -1,4 +1,3 @@
-/* eslint-disable import/order */
 import {
   faAngleDown,
   faAngleLeft,

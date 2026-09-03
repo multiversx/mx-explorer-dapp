@@ -1,6 +1,7 @@
 export enum AssertionEnum {
   contain = 'contain',
   include = 'include',
+  notInclude = 'not.include',
   beChecked = 'be.checked',
   exist = 'exist'
 }

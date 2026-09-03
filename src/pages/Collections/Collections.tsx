@@ -16,6 +16,7 @@ import {
   ColSpanWrapper
 } from 'components';
 import {
+  useAbortSignal,
   useAdapter,
   useGetSearch,
   useGetPage,
@@ -34,10 +35,11 @@ export const Collections = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const isMainnet = useIsMainnet();
   const activeRoute = useActiveRoute();
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const { search } = useGetSearch();
   const { search: searchLocation, pathname } = useLocation();
   const { getCollections, getCollectionsCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const pageHeadersCollections = useSelector(
     pageHeadersCollectionsStatsSelector
   );
@@ -62,18 +64,26 @@ export const Collections = () => {
 
   const fetchCollections = () => {
     const type = getCollectionType();
+    const signal = getAbortSignal();
+
     Promise.all([
       getCollections({
         search,
         page,
         size,
+        searchAfter,
         type,
         ...(isMainnet
           ? { sort: CollectionSortEnum.verifiedAndHolderCount }
-          : {})
+          : {}),
+        signal
       }),
-      getCollectionsCount({ search, type })
+      getCollectionsCount({ search, type, signal })
     ]).then(([collectionsData, count]) => {
+      if (signal.aborted) {
+        return;
+      }
+
       if (collectionsData.success) {
         setCollections(collectionsData.data);
         setTotalCollections(count.data);
@@ -156,6 +166,7 @@ export const Collections = () => {
                     total={totalCollections}
                     show={collections.length > 0}
                     className='d-flex ms-auto me-auto me-sm-0'
+                    items={collections}
                   />
                 </div>
               </div>
@@ -222,7 +233,11 @@ export const Collections = () => {
 
               <div className='card-footer table-footer'>
                 <PageSize />
-                <Pager total={totalCollections} show={collections.length > 0} />
+                <Pager
+                  total={totalCollections}
+                  show={collections.length > 0}
+                  items={collections}
+                />
               </div>
             </div>
           </div>

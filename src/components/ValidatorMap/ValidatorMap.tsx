@@ -1,11 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Marker
+  ComposableMap as _ComposableMap,
+  Geographies as _Geographies,
+  Geography as _Geography,
+  Marker as _Marker
 } from 'react-simple-maps';
+
+const ComposableMap = _ComposableMap as any;
+const Geographies = _Geographies as any;
+const Geography = _Geography as any;
+const Marker = _Marker as any;
 import { MarkerType, WithClassnameType } from 'types';
 import countries from './countries100m.json';
 
@@ -65,6 +70,9 @@ const MarkerToolTip = ({
 
 export const ValidatorMap = ({ markers, className }: ValidatorMapType) => {
   const ref = useRef(null);
+  const pulseTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
   const [localMarkers, setLocalMarkers] = useState<MarkerType[]>([]);
   const [pulse, setPulse] = useState(0);
   const [pulseMarker, setPulseMarker] = useState<MarkerType | undefined>();
@@ -87,10 +95,16 @@ export const ValidatorMap = ({ markers, className }: ValidatorMapType) => {
 
       setPulseMarker(newPulseMarker);
 
-      setTimeout(() => {
+      pulseTimeoutRef.current = setTimeout(() => {
         setPulseMarker(undefined);
       }, 800);
     }
+
+    return () => {
+      if (pulseTimeoutRef.current) {
+        clearTimeout(pulseTimeoutRef.current);
+      }
+    };
   };
 
   useEffect(chooseMarker, [pulse]);

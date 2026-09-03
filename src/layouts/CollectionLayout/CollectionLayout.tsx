@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Outlet } from 'react-router-dom';
 
 import { Loader } from 'components';
-import { useAdapter, useGetPage } from 'hooks';
+import { useAbortSignal, useAdapter, useGetPage } from 'hooks';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
 import { setCollection } from 'redux/slices';
 
@@ -13,8 +13,9 @@ import { FailedCollectionDetails } from './FailedCollectionDetails';
 export const CollectionLayout = () => {
   const dispatch = useDispatch();
   const { getCollection } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const { hash: collection } = useParams();
-  const { firstPageRefreshTrigger } = useGetPage();
+  const { poolingFirstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { collectionState } = useSelector(collectionSelector);
 
@@ -22,7 +23,13 @@ export const CollectionLayout = () => {
 
   const fetchCollectionDetails = () => {
     if (collection) {
-      getCollection(collection).then(({ success, data }) => {
+      const signal = getAbortSignal();
+
+      getCollection(collection, { signal }).then(({ success, data }) => {
+        if (signal.aborted) {
+          return;
+        }
+
         if (success && data) {
           dispatch(setCollection({ isDataReady: true, collectionState: data }));
         }
@@ -34,7 +41,7 @@ export const CollectionLayout = () => {
 
   useEffect(() => {
     fetchCollectionDetails();
-  }, [firstPageRefreshTrigger, activeNetworkId, collection]);
+  }, [poolingFirstPageRefreshTrigger, activeNetworkId, collection]);
 
   const loading =
     isDataReady === undefined ||

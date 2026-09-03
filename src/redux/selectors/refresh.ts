@@ -1,11 +1,16 @@
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 const stateSelector = (state: RootState) => {
   return state.refresh;
 };
 
-export const refreshSelector = createSelector(
+export const refreshTimestampSelector = createSelector(
   stateSelector,
-  (state) => state.refresh
+  (state) => state.refresh.timestamp
+);
+
+export const poolingRefreshTimestampSelector = createSelector(
+  stateSelector,
+  (state) => state.refresh.poolingTimestamp
 );

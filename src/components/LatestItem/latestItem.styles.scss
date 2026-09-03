@@ -28,6 +28,12 @@
     white-space: nowrap;
     opacity: 1;
 
+    &.fast {
+      transition:
+        0.3s max-width ease-in-out,
+        0.6s opacity ease-in-out;
+    }
+
     @include media-breakpoint-up(md) {
       &.isNew {
         max-width: 0;
