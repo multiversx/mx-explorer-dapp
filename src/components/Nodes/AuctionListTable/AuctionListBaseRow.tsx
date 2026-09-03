@@ -121,7 +121,7 @@ export const AuctionListBaseRow = ({
   const formattedDroppedValidators =
     droppedValidators ?? computedDroppedValidators;
 
-  const IdentityName = () => {
+  const renderIdentityName = () => {
     if (name) {
       return <>{name.length > 70 ? <Trim text={name} /> : name}</>;
     }
@@ -160,7 +160,7 @@ export const AuctionListBaseRow = ({
                 to={identityLink}
                 className='trim-wrapper trim-size-xl font-headings-regular'
               >
-                <IdentityName />
+                {renderIdentityName()}
                 {details && (
                   <span className='text-neutral-400 ms-1'>({details})</span>
                 )}

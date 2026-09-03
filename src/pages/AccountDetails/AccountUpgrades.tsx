@@ -11,7 +11,7 @@ import {
   AccountLink
 } from 'components';
 import { isContract } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAbortSignal, useAdapter } from 'hooks';
 import { faCode } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
@@ -25,6 +25,7 @@ export const AccountUpgrades = () => {
   const { txCount } = account;
 
   const { getAccountUpgrades } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const { hash: address } = useParams() as any;
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -33,14 +34,22 @@ export const AccountUpgrades = () => {
 
   const fetchAccountUpgrades = () => {
     if (isContract(address)) {
-      getAccountUpgrades({ address, size: 100 }).then(({ success, data }) => {
-        if (ref.current !== null) {
-          setDataReady(success);
-          if (success && data !== undefined) {
-            setAccountUpgrades(data);
+      const signal = getAbortSignal();
+
+      getAccountUpgrades({ address, size: 100, signal }).then(
+        ({ success, data }) => {
+          if (signal.aborted) {
+            return;
+          }
+
+          if (ref.current !== null) {
+            setDataReady(success);
+            if (success && data !== undefined) {
+              setAccountUpgrades(data);
+            }
           }
         }
-      });
+      );
     }
   };
 

@@ -9,6 +9,7 @@ export * from './useActiveRoute';
 export * from './websocket';
 export * from './widgets';
 
+export * from './useAbortSignal';
 export * from './useCustomNetwork';
 export * from './useDebounce';
 export * from './useWindowResize';

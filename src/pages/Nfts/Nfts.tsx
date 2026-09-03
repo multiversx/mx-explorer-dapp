@@ -13,7 +13,7 @@ import {
   ColSpanWrapper
 } from 'components';
 import { isProof, urlBuilder } from 'helpers';
-import { useAdapter, useGetSearch, useGetPage } from 'hooks';
+import { useAbortSignal, useAdapter, useGetSearch, useGetPage } from 'hooks';
 import { NftType } from 'types';
 
 import { FailedNfts } from './components/FailedNfts';
@@ -24,6 +24,7 @@ export const Nfts = () => {
   const { search } = useGetSearch();
   const { page, size } = useGetPage();
   const { getNfts, getNftsCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
 
   const [nfts, setNfts] = useState<NftType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -31,11 +32,16 @@ export const Nfts = () => {
 
   const fetchNfts = () => {
     const type = 'SemiFungibleESDT,NonFungibleESDT';
+    const signal = getAbortSignal();
 
     Promise.all([
-      getNfts({ search, page, size, type }),
-      getNftsCount({ search, type })
+      getNfts({ search, page, size, type, signal }),
+      getNftsCount({ search, type, signal })
     ]).then(([nftsData, count]) => {
+      if (signal.aborted) {
+        return;
+      }
+
       if (nftsData.success) {
         setNfts(nftsData.data);
         setTotalNfts(count.data);

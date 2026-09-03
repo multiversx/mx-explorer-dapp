@@ -69,7 +69,7 @@ Env vars are read from `.env` / `.env.development`. Keys prefixed `VITE_APP_*` a
 
 ### Entry & Routing
 
-`src/index.tsx` → `App.tsx` wraps the app in Redux `<Provider>` + `<Interceptor>`.
+`src/index.tsx` mounts `<HelmetProvider>` → `App.tsx`. The root route element (`ProviderApp` in `src/App.tsx`) wraps the tree in Redux `<Provider>` + `<Interceptor>`.
 
 The router itself is created in `src/App.tsx` with React Router v8 `createBrowserRouter` (imported from `react-router`; `RouterProvider` comes from `react-router/dom`, and the `react-router-dom` package no longer exists); the route definitions it consumes live in `src/routes/routes.tsx`. Every network has its routes prefixed with `/:network/` (e.g. `/devnet/blocks/...`). `generateNetworkRoutes` in `src/routes/helpers/` iterates `networks` from config and wraps routes per network. The `Layout` component (`src/layouts/Layout/`) is the shell that renders the header, hero stats widgets, and footer around page content.
 
@@ -93,7 +93,9 @@ When the network config includes `updatesWebsocketUrl`, a Socket.IO connection i
 
 ### Redux Store
 
-`src/redux/store.ts` configures Redux Toolkit (`configureStore`, no custom middleware). The root reducer is in `src/redux/reducers.ts`. Despite the name, `customIgnoredSlices` is simply where every slice is registered — nothing is persisted (`redux-persist` is a leftover dependency with no imports). Selectors use `reselect` and live in `src/redux/selectors/`.
+`src/redux/store.ts` is a plain Redux Toolkit `configureStore` with no middleware overrides. The root reducer is in `src/redux/reducers.ts`. Selectors use `reselect` and live in `src/redux/selectors/`.
+
+**There is no persistence.** Nothing is written to localStorage by the store and state is rebuilt from the API on every load. `redux-persist` is still listed in `package.json` but is never imported anywhere in `src/`. The names in `reducers.ts` are leftovers from a persistence setup that was removed: `customIgnoredSlices` is simply every slice in the app, `asyncIgnoredSlices` is an empty object, and the exported `ignoredSliceNames` has no remaining callers. Treat all three as vestigial rather than as a persistence allow/deny list.
 
 Key slices:
 

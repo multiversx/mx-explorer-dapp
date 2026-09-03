@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router';
 
 import { Overlay } from 'components';
 import { getTransactionMethod, isEllipsisActive, isTouchDevice } from 'helpers';
-import { interfaceSelector } from 'redux/selectors';
+import { highlightedTextSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices';
 import { UITransactionType } from 'types';
 
@@ -19,6 +19,8 @@ export const TransactionMethod = ({
   hasHighlight
 }: TransactionMethodType) => {
   const badgeTextRef = useRef(null);
+  const dispatch = useDispatch();
+  const highlightedText = useSelector(highlightedTextSelector);
   const [searchParams, setSearchParams] = useSearchParams();
   const [isTextTruncated, setIsTextTruncated] = useState(false);
   const { function: filteredFunction } = Object.fromEntries(searchParams);
@@ -53,11 +55,7 @@ export const TransactionMethod = ({
     setSearchParams(nextUrlParams);
   };
 
-  const TransactionMethodText = ({
-    children
-  }: {
-    children: React.ReactNode;
-  }) => {
+  const renderTransactionMethodText = (children: React.ReactNode) => {
     return (
       <span>
         {!['transaction', 'transfer', filteredFunction].includes(
@@ -79,17 +77,14 @@ export const TransactionMethod = ({
     );
   };
 
-  const TransactionMethodBadge = () => {
-    const dispatch = useDispatch();
-    const { highlightedText } = useSelector(interfaceSelector);
-
+  const renderTransactionMethodBadge = () => {
     const isTouch = isTouchDevice();
     const isHighlightBadge =
       !isTouch && hasHighlight && highlightedText === transactionMethodText;
 
     return (
       <div className='d-inline-block'>
-        <TransactionMethodText>
+        {renderTransactionMethodText(
           <span
             className={classNames('badge badge-outline badge-outline-green', {
               'badge-outline-highlight': isHighlightBadge
@@ -110,14 +105,14 @@ export const TransactionMethod = ({
               {transactionMethodText}
             </div>
           </span>
-        </TransactionMethodText>
+        )}
       </div>
     );
   };
 
   return showTooltip ? (
     <Overlay
-      title={
+      title={() => (
         <>
           {isTextTruncated && (
             <p className={classNames({ 'mb-0': !showDescription })}>
@@ -128,13 +123,13 @@ export const TransactionMethod = ({
             <p className='mb-0'>{transaction.action?.description}</p>
           )}
         </>
-      }
+      )}
       className='method-tooltip'
       persistent
     >
-      <TransactionMethodBadge />
+      {renderTransactionMethodBadge()}
     </Overlay>
   ) : (
-    <TransactionMethodBadge />
+    renderTransactionMethodBadge()
   );
 };

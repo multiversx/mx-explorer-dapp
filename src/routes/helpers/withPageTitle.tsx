@@ -5,9 +5,11 @@ import { setMetaTags } from 'redux/slices';
 
 export const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       window.scrollTo(0, 0);
     });
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return <>{children}</>;

@@ -4,7 +4,12 @@ import { Outlet, useParams } from 'react-router';
 
 import { Loader } from 'components';
 import { addressIsBech32, isContract } from 'helpers';
-import { useAdapter, useGetPage, useFetchAccountStakingDetails } from 'hooks';
+import {
+  useAbortSignal,
+  useAdapter,
+  useGetPage,
+  useFetchAccountStakingDetails
+} from 'hooks';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
 import {
   setAccount,
@@ -21,6 +26,7 @@ import { FailedAccount } from './FailedAccount';
 export const AccountLayout = () => {
   const dispatch = useDispatch();
   const { getAccount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const { fetchAccountStakingDetails } = useFetchAccountStakingDetails();
   const { hash: address } = useParams();
   const { poolingFirstPageRefreshTrigger } = useGetPage();
@@ -31,12 +37,19 @@ export const AccountLayout = () => {
 
   const fetchBalanceAndCount = () => {
     if (address) {
+      const signal = getAbortSignal();
+
       getAccount({
         address,
         withGuardianInfo: true,
         withAssets: true,
-        withTxCount: true
+        withTxCount: true,
+        signal
       }).then(({ success, data }) => {
+        if (signal.aborted) {
+          return;
+        }
+
         if (success && data) {
           dispatch(setAccount({ isDataReady: true, account: data }));
         }

@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router';
 
 import { isTouchDevice } from 'helpers';
 import { useGetTransactionInPoolFilters } from 'hooks';
-import { interfaceSelector } from 'redux/selectors';
+import { highlightedTextSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices';
 import { TransactionInPoolTypeEnum } from 'types';
 
@@ -18,7 +18,7 @@ export const TransactionInPoolTypeBadge = ({
   hasHighlight
 }: TransactionInPoolTypeBadgeUIType) => {
   const dispatch = useDispatch();
-  const { highlightedText } = useSelector(interfaceSelector);
+  const highlightedText = useSelector(highlightedTextSelector);
   const { type: filteredType } = useGetTransactionInPoolFilters();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -38,7 +38,7 @@ export const TransactionInPoolTypeBadge = ({
     setSearchParams(nextUrlParams);
   };
 
-  const TransactionTypeText = ({ children }: { children: React.ReactNode }) => {
+  const renderTransactionTypeText = (children: React.ReactNode) => {
     return (
       <span>
         {filteredType !== type ? (
@@ -60,7 +60,7 @@ export const TransactionInPoolTypeBadge = ({
 
   return (
     <div className='d-inline-block'>
-      <TransactionTypeText>
+      {renderTransactionTypeText(
         <span
           className={classNames(
             'badge badge-outline badge-outline-primary-alt',
@@ -81,7 +81,7 @@ export const TransactionInPoolTypeBadge = ({
             {type}
           </div>
         </span>
-      </TransactionTypeText>
+      )}
     </div>
   );
 };

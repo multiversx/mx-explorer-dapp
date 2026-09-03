@@ -8,7 +8,7 @@ export const useScrollToTransactionSection = (
   const { id } = useGetTransactionUrlHashParams();
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       if (id && ref?.current && ref.current !== null) {
         ref.current.scrollIntoView({
           behavior: 'smooth',
@@ -17,5 +17,7 @@ export const useScrollToTransactionSection = (
         });
       }
     }, 200);
+
+    return () => clearTimeout(timeoutId);
   }, [id]);
 };
