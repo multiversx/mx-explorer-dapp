@@ -26,6 +26,7 @@ import {
 } from 'icons/solid';
 import { getHeaders } from 'interceptors';
 import {
+  SdkDappAccountType,
   useGetAccountInfo,
   useGetLoginInfo,
   VerifiedContractTabsEnum,
@@ -143,7 +144,7 @@ export const AccountVerifiedContract = ({
               <ScExplorerContainer
                 smartContract={{
                   verifiedContract: contract,
-                  deployedContractDetails: account
+                  deployedContractDetails: account as SdkDappAccountType
                 }}
                 accountConsumerHandlers={{
                   useGetLoginInfo,
