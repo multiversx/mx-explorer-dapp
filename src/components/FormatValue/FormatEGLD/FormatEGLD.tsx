@@ -72,7 +72,7 @@ export const FormatEGLD = (props: FormatEGLDUIType) => {
         : {})}
       {...(showUsdValueTooltip
         ? {
-            details: (
+            details: () => (
               <>
                 {usd ? '' : 'Current '}
                 USD Value:{' '}

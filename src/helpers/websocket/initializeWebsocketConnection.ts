@@ -8,11 +8,14 @@ import {
   WebsocketConnectionStatusEnum,
   websocketActiveSubscriptions,
   websocketConnection,
+  websocketEventListeners,
   websocketPendingSubscriptions,
   websocketSubscriptions
 } from 'appConstants';
 import { isUpdatesWebsocketInactive } from 'helpers';
-import { WebsocketEventsEnum, WebsocketSubcriptionsEnum } from 'types';
+import { WebsocketEventsEnum } from 'types';
+
+import { websocketStatusStore } from './websocketStatusStore';
 
 type TimeoutType = ReturnType<typeof setTimeout> | null;
 
@@ -22,7 +25,7 @@ export async function initializeWebsocketConnection(websocketUrl: string) {
 
   // Update socket status in store for status subscription
   const updateSocketStatus = (status: WebsocketConnectionStatusEnum) => {
-    websocketConnection.status = status;
+    websocketStatusStore.setStatus(status);
     console.info('Websocket Status:', status);
   };
 
@@ -30,9 +33,11 @@ export async function initializeWebsocketConnection(websocketUrl: string) {
     websocketSubscriptions.clear();
     websocketPendingSubscriptions.clear();
     websocketActiveSubscriptions.clear();
-    Object.values(WebsocketSubcriptionsEnum).forEach(
-      (sub) => websocketConnection.instance?.off(sub)
-    );
+
+    websocketEventListeners.forEach(({ event, handler }) => {
+      websocketConnection.instance?.off(event, handler);
+    });
+    websocketEventListeners.clear();
   };
 
   const handleMessageReceived = (message: string) => {

@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 import { TEMP_LOCAL_NOTIFICATION_DISMISSED } from 'appConstants';
 import { storage } from 'helpers';
 import { useNotifications, useIsMainnet } from 'hooks';
-import { interfaceSelector } from 'redux/selectors';
+import { notificationsSelector } from 'redux/selectors';
 
 export const useTempStorageNotification = () => {
-  const { notifications } = useSelector(interfaceSelector);
+  const notifications = useSelector(notificationsSelector);
   const { addNotification } = useNotifications();
   const isMainnet = useIsMainnet();
 

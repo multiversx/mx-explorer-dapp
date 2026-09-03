@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   PAGE_SIZE,
@@ -45,6 +45,13 @@ export const useFetchApiData = ({
   const [dataChanged, setDataChanged] = useState(false);
 
   const isFetchingRef = useRef(false);
+  const abortControllerRef = useRef<AbortController | undefined>(undefined);
+
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
+  }, []);
 
   const hasUrlParams =
     Object.keys(urlParams).length > 0 ||
@@ -85,7 +92,6 @@ export const useFetchApiData = ({
 
       if (subscription && websocketActiveSubscriptions.has(subscription)) {
         if (Boolean(hasUrlParams || isRefreshPaused)) {
-          websocketConnection?.instance?.off(event);
           websocketActiveSubscriptions.delete(subscription);
         }
         return;
@@ -101,17 +107,33 @@ export const useFetchApiData = ({
         setDataChanged(true);
       }
 
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
+      const { signal } = controller;
+
       const promises = [
         dataPromise({
-          ...filters
+          ...filters,
+          signal
         }),
-        ...(dataCountPromise ? [dataCountPromise({ ...filters })] : [])
+        ...(dataCountPromise ? [dataCountPromise({ ...filters, signal })] : [])
       ];
 
       Promise.all(promises)
-        .then(onApiData)
+        .then((response) => {
+          if (signal.aborted) {
+            return;
+          }
+
+          onApiData(response);
+        })
         .finally(() => {
           isFetchingRef.current = false;
+
+          if (signal.aborted) {
+            return;
+          }
+
           if (paramsChange) {
             setDataChanged(false);
           }

@@ -6,31 +6,16 @@ import { useAdapter } from 'hooks';
 import { getInitialNodesOverviewState, setNodesOverview } from 'redux/slices';
 import { GetNodesType } from 'types';
 
-let currentRequest: any = null;
+import { createSingleFlight } from './helpers';
+
+const singleFlight = createSingleFlight<any>();
 
 export const useFetchNodesOverview = (config: GetNodesType) => {
   const dispatch = useDispatch();
   const { getNodes } = useAdapter();
 
-  const getNodesOverviewOnce = () => {
-    if (currentRequest) {
-      return currentRequest;
-    }
-
-    const requestPromise = new Promise(async (resolve, reject) => {
-      try {
-        const response = await getNodes(config);
-        resolve(response);
-      } catch (error) {
-        reject(error);
-      } finally {
-        currentRequest = null;
-      }
-    });
-
-    currentRequest = requestPromise;
-    return requestPromise;
-  };
+  const getNodesOverviewOnce = () =>
+    singleFlight(JSON.stringify(config), () => getNodes(config));
 
   const fetchNodesOverview = async () => {
     const { data, success } = await getNodesOverviewOnce();
