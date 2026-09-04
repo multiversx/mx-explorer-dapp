@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import classNames from 'classnames';
 
-import { WithClassnameType } from 'types/sdkDapp/sdkDapp.types';
+import { WithClassnameType } from 'types';
 
 type PreloaderPropsType = WithClassnameType & PropsWithChildren;
 
