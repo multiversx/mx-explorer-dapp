@@ -1,6 +1,7 @@
 export * from './useGetBlockFilters';
 export * from './useGetCursorHistory';
 export * from './useGetEventFilters';
+export * from './useGetNftDisplay';
 export * from './useGetNodeFilters';
 export * from './useGetPage';
 export * from './useGetSearch';

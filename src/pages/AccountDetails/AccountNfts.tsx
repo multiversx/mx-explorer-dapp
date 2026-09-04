@@ -1,31 +1,33 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import {
-  DetailItem,
   Loader,
   Pager,
   PageSize,
   PageState,
-  CollectionBlock,
-  FormatAmount,
-  NftBadge,
-  NetworkLink
+  AccountNftTable,
+  NftDisplayToggle,
+  NftList
 } from 'components';
-import { isProof, urlBuilder } from 'helpers';
-import { useAbortSignal, useAdapter, useGetPage } from 'hooks';
+import {
+  useAbortSignal,
+  useAdapter,
+  useGetNftDisplay,
+  useGetPage
+} from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
-import { NftType } from 'types';
+import { NftDisplayEnum, NftType } from 'types';
 
 export const AccountNfts = () => {
   const ref = useRef(null);
   const { page, size } = useGetPage();
+  const { nftDisplay } = useGetNftDisplay();
 
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const [searchParams] = useSearchParams();
   const { account } = useSelector(accountSelector);
   const { txCount } = account;
 
@@ -67,23 +69,33 @@ export const AccountNfts = () => {
 
   useEffect(() => {
     fetchAccountNfts();
-  }, [txCount, activeNetworkId, address, searchParams]);
+  }, [txCount, activeNetworkId, address, page, size]);
+
+  const showAccountNfts = dataReady === true && accountNfts.length > 0;
+  const isTableDisplay = nftDisplay === NftDisplayEnum.table;
 
   return (
     <div className='card' ref={ref}>
       <div className='card-header'>
         <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
           <AccountTabs />
-          {dataReady === true && accountNfts.length > 0 && (
-            <Pager
-              total={accountNftsCount}
-              show={accountNfts.length > 0}
-              className='d-flex ms-auto me-auto me-sm-0'
-            />
+          {showAccountNfts && (
+            <div className='d-flex align-items-center flex-wrap gap-3 ms-auto me-auto me-sm-0'>
+              <NftDisplayToggle />
+              <Pager
+                total={accountNftsCount}
+                show={accountNfts.length > 0}
+                className='d-flex'
+              />
+            </div>
           )}
         </div>
       </div>
-      <div className='card-body pt-0 px-lg-spacer py-lg-4'>
+      <div
+        className={
+          isTableDisplay ? 'card-body' : 'card-body pt-0 px-lg-spacer py-lg-4'
+        }
+      >
         <div className='px-0'>
           {dataReady === undefined && <Loader data-testid='nftsLoader' />}
           {dataReady === false && (
@@ -93,67 +105,16 @@ export const AccountNfts = () => {
             <PageState icon={faCoins} title='No NFTs' />
           )}
 
-          {dataReady === true && accountNfts.length > 0 && (
-            <>
-              {accountNfts.map((nft) => {
-                return (
-                  <DetailItem
-                    title={<CollectionBlock nft={nft} />}
-                    key={nft.identifier}
-                  >
-                    <div className='d-flex align-items-center'>
-                      {nft.balance !== undefined && (
-                        <div className='me-1'>
-                          {nft.decimals ? (
-                            <FormatAmount
-                              showLabel={false}
-                              showSymbol={false}
-                              value={nft.balance ? nft.balance : '0'}
-                              decimals={nft.decimals}
-                            />
-                          ) : (
-                            Number(nft.balance).toLocaleString('en')
-                          )}
-                        </div>
-                      )}
-                      <div className='d-flex text-truncate'>
-                        <NetworkLink
-                          to={urlBuilder.nftDetails(nft.identifier)}
-                          className={`d-flex text-truncate ${
-                            nft?.assets?.svgUrl ? 'side-link' : ''
-                          }`}
-                        >
-                          <div className='d-flex align-items-center symbol text-truncate'>
-                            {nft?.assets?.svgUrl && (
-                              <img
-                                src={nft.assets.svgUrl}
-                                className='side-icon me-1'
-                                alt=''
-                                role='presentation'
-                              />
-                            )}
-                            <div className='text-truncate'>
-                              {nft.identifier}
-                            </div>
-                          </div>
-                        </NetworkLink>
-                      </div>
-                      <NftBadge
-                        type={nft.type}
-                        subType={nft.subType}
-                        isProof={isProof(nft)}
-                        className='ms-2'
-                      />
-                    </div>
-                  </DetailItem>
-                );
-              })}
-            </>
-          )}
+          {showAccountNfts &&
+            (isTableDisplay ? (
+              <AccountNftTable nfts={accountNfts} />
+            ) : (
+              <NftList nfts={accountNfts} />
+            ))}
         </div>
       </div>
 
-      {dataReady === true && accountNfts.length > 0 && (
+      {showAccountNfts && (
         <div className='card-footer table-footer'>
           <PageSize />
           <Pager total={accountNftsCount} show={accountNfts.length > 0} />

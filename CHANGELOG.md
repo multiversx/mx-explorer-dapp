@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [NFT Display](https://github.com/multiversx/mx-explorer-dapp/pull/230)
 - [React v19](https://github.com/multiversx/mx-explorer-dapp/pull/229)
 - [Explorer Utils](https://github.com/multiversx/mx-explorer-dapp/pull/226)
 - [Account Analytics](https://github.com/multiversx/mx-explorer-dapp/pull/212)

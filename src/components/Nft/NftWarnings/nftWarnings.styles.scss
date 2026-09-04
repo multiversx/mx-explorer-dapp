@@ -1,0 +1,58 @@
+.nft-warnings {
+  position: absolute;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  right: 0.75rem;
+  bottom: calc(64px + 20px);
+
+  .nft-warning {
+    display: flex;
+    flex-direction: column;
+
+    .nft-warning-tooltip {
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+
+      .tooltip-content {
+        max-width: 240px;
+      }
+
+      .nft-warning-badge {
+        display: flex;
+        flex-direction: column;
+        text-transform: uppercase;
+
+        .nft-warning-badge-wrapper {
+          align-items: center;
+          display: flex;
+          white-space: nowrap;
+          user-select: none;
+          gap: 0.5rem;
+
+          .nft-warning-badge-text {
+            color: var(--red-400);
+
+            &.enabled {
+              color: var(--body-color);
+            }
+          }
+
+          .nft-warning-badge-toggle {
+            cursor: pointer;
+            width: 0.75rem;
+
+            .nft-warning-badge-toggle-icon {
+              color: var(--red-400);
+
+              &.enabled {
+                color: var(--body-color);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

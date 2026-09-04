@@ -1,5 +1,5 @@
 import { ShardSpan } from 'components';
-import { ProgressRing } from 'components/ProgressRing';
+import { ProgressRing } from 'components';
 import { ShardType } from 'types';
 import { computeShardStatus } from '../helpers/computeShardStatus';
 

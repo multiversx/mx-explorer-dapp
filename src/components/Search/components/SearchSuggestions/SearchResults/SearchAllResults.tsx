@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { NetworkLink } from 'components/Links';
+import { NetworkLink } from 'components';
 
 export const SearchAllResults = ({
   to,

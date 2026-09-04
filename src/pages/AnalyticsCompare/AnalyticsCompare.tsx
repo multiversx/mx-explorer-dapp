@@ -8,8 +8,7 @@ import {
 } from 'react-router';
 
 import { chartResolution } from 'appConstants';
-import { Loader, Led } from 'components';
-import { Tabs } from 'components/Tabs';
+import { Loader, Led, Tabs } from 'components';
 import { useAdapter, useHasGrowthWidgets, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
