@@ -1,7 +1,5 @@
 import { MouseEvent, useState } from 'react';
 
-import classNames from 'classnames';
-
 import { NetworkLink, NftBadge } from 'components';
 import { formatBigNumber, urlBuilder } from 'helpers';
 import { ZERO } from 'lib';
