@@ -14,6 +14,11 @@ export enum NftSubtypeEnum {
   DynamicMetaESDT = 'DynamicMetaESDT'
 }
 
+export enum NftDisplayEnum {
+  list = 'list',
+  table = 'table'
+}
+
 export interface NftType {
   identifier: string;
   collection: string;

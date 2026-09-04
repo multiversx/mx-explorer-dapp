@@ -1,31 +1,32 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import {
   Loader,
   Pager,
   PageSize,
   PageState,
+  NftDisplayToggle,
   NftTable,
   NftList
 } from 'components';
 import { getNftText } from 'helpers';
-import { useAdapter, useGetPage, useGetSearch } from 'hooks';
+import { useAdapter, useGetNftDisplay, useGetPage, useGetSearch } from 'hooks';
 import { faUser } from 'icons/regular';
 import { CollectionTabs } from 'layouts/CollectionLayout/CollectionTabs';
 import { activeNetworkSelector, collectionSelector } from 'redux/selectors';
-import { NftType, NftTypeEnum } from 'types';
+import { NftDisplayEnum, NftType, NftTypeEnum } from 'types';
 
 export const CollectionNfts = () => {
   const ref = useRef(null);
-  const [searchParams] = useSearchParams();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { collectionState } = useSelector(collectionSelector);
   const { type } = collectionState;
   const { getCollectionNfts, getCollectionNftsCount } = useAdapter();
   const { page, size, searchAfter } = useGetPage();
   const { search } = useGetSearch();
+  const { nftDisplay } = useGetNftDisplay();
 
   const { hash: collection } = useParams() as any;
 
@@ -58,9 +59,10 @@ export const CollectionNfts = () => {
 
   useEffect(() => {
     fetchCollectionNfts();
-  }, [activeNetworkId, searchParams]);
+  }, [activeNetworkId, collection, search, page, size, searchAfter]);
 
   const showCollectionNfts = dataReady === true && collectionNfts.length > 0;
+  const isTableDisplay = nftDisplay === NftDisplayEnum.table;
 
   return (
     <div ref={ref}>
@@ -68,18 +70,25 @@ export const CollectionNfts = () => {
         <div className='card-header'>
           <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap gap-3'>
             <CollectionTabs />
-            <Pager
-              total={totalCollectionNfts}
-              show={collectionNfts.length > 0}
-              className='d-flex ms-auto me-auto me-sm-0'
-              items={collectionNfts}
-            />
+            <div className='d-flex align-items-center flex-wrap gap-3 ms-auto me-auto me-sm-0'>
+              {showCollectionNfts && <NftDisplayToggle />}
+              <Pager
+                total={totalCollectionNfts}
+                show={collectionNfts.length > 0}
+                className='d-flex'
+                items={collectionNfts}
+              />
+            </div>
           </div>
         </div>
         {showCollectionNfts ? (
           <>
             <div className='card-body'>
-              <NftList nfts={collectionNfts} />
+              {isTableDisplay ? (
+                <NftTable nfts={collectionNfts} type={type} />
+              ) : (
+                <NftList nfts={collectionNfts} />
+              )}
             </div>
             <div className='card-footer table-footer'>
               <PageSize />
