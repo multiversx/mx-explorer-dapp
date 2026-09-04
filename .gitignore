@@ -75,3 +75,4 @@ dist-ssr
 cypress/reports/
 cypress/screenshots/
 cypress/videos/
+failed-specs.txt
