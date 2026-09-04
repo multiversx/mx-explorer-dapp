@@ -62,10 +62,10 @@ export const MostUsedApplications = ({
         >
           <div className='card-header'>
             <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-              <h5>
+              <h3 className='h5'>
                 Most Used Applications{' '}
                 <span className='text-neutral-500 ms-1'>(daily)</span>
-              </h5>
+              </h3>
               {showDashboardLink && (
                 <NetworkLink
                   to={applicationsRoutes.applications}
@@ -83,7 +83,7 @@ export const MostUsedApplications = ({
                 if (i >= size) {
                   return null;
                 }
-                const TitleLink = () => (
+                const titleLink = (
                   <NetworkLink
                     to={
                       addressIsBech32(contract.key)
@@ -103,7 +103,7 @@ export const MostUsedApplications = ({
                 return (
                   <TopCard
                     size={getCardSize(i)}
-                    title={<TitleLink />}
+                    title={titleLink}
                     icon={
                       contract.extraInfo?.assets?.svgUrl ||
                       contract.extraInfo?.assets?.pngUrl

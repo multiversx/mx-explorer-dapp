@@ -5,23 +5,29 @@ import { setMetaTags } from 'redux/slices';
 
 export const ScrollToTop = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       window.scrollTo(0, 0);
     });
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return <>{children}</>;
 };
 
-export const withPageTitle =
-  (title: string, Component: React.ComponentType, preventScroll?: boolean) =>
-  () => {
+export const withPageTitle = (
+  title: string,
+  Component: React.ComponentType,
+  preventScroll?: boolean
+) => {
+  const Memoized = memo(() => (
+    <ScrollToTop>
+      <Component />
+    </ScrollToTop>
+  ));
+
+  return () => {
     const dispatch = useDispatch();
-    const Memoized = memo(() => (
-      <ScrollToTop>
-        <Component />
-      </ScrollToTop>
-    ));
 
     useEffect(() => {
       dispatch(
@@ -33,3 +39,4 @@ export const withPageTitle =
 
     return preventScroll ? <Component /> : <Memoized />;
   };
+};

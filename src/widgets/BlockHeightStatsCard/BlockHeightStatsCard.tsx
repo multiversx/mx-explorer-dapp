@@ -4,15 +4,14 @@ import { useSelector } from 'react-redux';
 
 import { ELLIPSIS, POOLING_REFRESH_RATE_LIMIT } from 'appConstants';
 import { FormatNumber } from 'components';
-import { activeNetworkSelector, statsSelector } from 'redux/selectors';
+import { activeNetworkSelector, statsBlocksSelector } from 'redux/selectors';
 import { pageHeadersBlocksStatsSelector } from 'redux/selectors';
 import { StatsCard } from 'widgets';
 
 export const BlockHeightStatsCard = () => {
   const { refreshRate } = useSelector(activeNetworkSelector);
-  const { unprocessed } = useSelector(statsSelector);
   const { blockHeight } = useSelector(pageHeadersBlocksStatsSelector);
-  const { blocks: statsBlocks } = unprocessed;
+  const statsBlocks = useSelector(statsBlocksSelector);
 
   const higherRef = useRef<number>(0);
 

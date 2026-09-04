@@ -57,7 +57,7 @@ export const useGetRemainingTime = ({
     return () => {
       clearInterval(interval);
     };
-  }, [time, timestamp, timeExpired]);
+  }, [timestamp, timeExpired]);
 
   useEffect(updateTimer, [updateTimer]);
   useEffect(initializeAsyncTimer, [initializeAsyncTimer]);

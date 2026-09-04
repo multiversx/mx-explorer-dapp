@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ## [[2.3.7](https://github.com/multiversx/mx-explorer-dapp/pull/228)] - 2026-09-03
+
+- [Performance improvements pt2](https://github.com/multiversx/mx-explorer-dapp/pull/227)
+- [Supernova performance improvements](https://github.com/multiversx/mx-explorer-dapp/pull/225)
+
 - ## [[2.3.6](https://github.com/multiversx/mx-explorer-dapp/pull/222)] - 2026-08-14
 
 - [searchAAfter feature](https://github.com/multiversx/mx-explorer-dapp/pull/221)

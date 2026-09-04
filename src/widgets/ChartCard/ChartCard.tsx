@@ -41,6 +41,9 @@ export const ChartCard = ({
               options={filters}
               onChange={onChange}
               defaultValue={defaultFilterValue}
+              aria-label={
+                typeof title === 'string' ? `${title} interval` : 'Interval'
+              }
             />
           </div>
         )}

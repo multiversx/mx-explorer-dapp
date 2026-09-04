@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
@@ -13,6 +13,33 @@ import { PriceStatisticsLabelEnum, StatisticType, TrendEnum } from 'types';
 
 import { ChartCard, ChartRoot } from '../ChartCard';
 
+const FILTERS: SelectOptionType[] = [
+  { label: '7d', value: 'price7d' },
+  { label: '30d', value: 'price30d' },
+  { label: '365d', value: 'price365d' },
+  { label: 'All', value: 'priceAll' }
+];
+
+const TREND_ICONS = new Map([
+  [TrendEnum.up, faCircleUp],
+  [TrendEnum.down, faCircleDown],
+  [TrendEnum.neutral, faCircleMinus]
+]);
+
+const INITIAL_FILTER = 'price30d';
+const DEFAULT_FILTER_VALUE = FILTERS.find(
+  (filter) => filter.value === INITIAL_FILTER
+);
+
+const priceFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 2,
+  minimumFractionDigits: 2
+});
+
+const formatPriceTooltip = (option: any) => priceFormatter.format(option.value);
+
 export const ChartPrice = () => {
   const {
     currentPrice,
@@ -26,54 +53,36 @@ export const ChartPrice = () => {
     isDataReady
   } = useSelector(growthPriceSelector);
 
-  const filters: SelectOptionType[] = [
-    {
-      label: '7d',
-      value: 'price7d'
-    },
-    {
-      label: '30d',
-      value: 'price30d'
-    },
-    {
-      label: '365d',
-      value: 'price365d'
-    },
-    {
-      label: 'All',
-      value: 'priceAll'
-    }
-  ];
+  const statistics: StatisticType[] = useMemo(
+    () => [
+      { label: PriceStatisticsLabelEnum.MarketCap, value: marketCap },
+      { label: PriceStatisticsLabelEnum.Volume24h, value: volume24h }
+    ],
+    [marketCap, volume24h]
+  );
 
-  const statistics: StatisticType[] = [
-    { label: PriceStatisticsLabelEnum.MarketCap, value: marketCap },
-    { label: PriceStatisticsLabelEnum.Volume24h, value: volume24h }
-  ];
+  const dataMap = useMemo(() => {
+    const price365d = priceAll.slice(priceAll.length - 365, priceAll.length);
 
-  const price365d = priceAll.slice(priceAll.length - 365, priceAll.length);
-  const dataMap = new Map([
-    ['price7d', price7d],
-    ['price30d', price30d],
-    ['price365d', price365d],
-    ['priceAll', priceAll]
-  ]);
+    return new Map([
+      ['price7d', price7d],
+      ['price30d', price30d],
+      ['price365d', price365d],
+      ['priceAll', priceAll]
+    ]);
+  }, [price7d, price30d, priceAll]);
 
-  const trendIcon = new Map([
-    [TrendEnum.up, faCircleUp],
-    [TrendEnum.down, faCircleDown],
-    [TrendEnum.neutral, faCircleMinus]
-  ]);
+  const dataMapRef = useRef(dataMap);
+  dataMapRef.current = dataMap;
 
-  const initialFilter = 'price30d';
-  const primary = getPrimaryColor();
+  const primary = useMemo(() => getPrimaryColor(), []);
 
-  const defaultValue = filters.find((filter) => filter.value === initialFilter);
-  const [data, setData] = useState(dataMap.get(initialFilter));
+  const [data, setData] = useState(() => dataMap.get(INITIAL_FILTER));
 
   const handleChange = useCallback(
     (option: SingleValue<SelectOptionType>) => {
       if (option && option.value && isDataReady) {
-        setData(dataMap.get(String(option.value)));
+        setData(dataMapRef.current.get(String(option.value)));
       }
     },
     [isDataReady]
@@ -81,7 +90,7 @@ export const ChartPrice = () => {
 
   const onInitialLoad = useCallback(() => {
     if (isDataReady) {
-      setData(dataMap.get(initialFilter));
+      setData(dataMapRef.current.get(INITIAL_FILTER));
     }
   }, [isDataReady]);
 
@@ -92,15 +101,15 @@ export const ChartPrice = () => {
     <ChartCard
       title='Current Price'
       value={currentPrice}
-      filters={filters}
-      defaultFilterValue={defaultValue}
+      filters={FILTERS}
+      defaultFilterValue={DEFAULT_FILTER_VALUE}
       onChange={handleChange}
       className='chart-price'
       statistics={statistics}
       subtitle={
         <span className={classNames('chart-card-change', priceChangeTrend)}>
           <FontAwesomeIcon
-            icon={trendIcon.get(priceChangeTrend) || faCircleMinus}
+            icon={TREND_ICONS.get(priceChangeTrend) || faCircleMinus}
             className='icon'
           />
 
@@ -113,14 +122,7 @@ export const ChartPrice = () => {
         height={75}
         color={primary}
         identifier='priceGradient'
-        tooltipFormatter={(option: any) =>
-          new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            maximumFractionDigits: 2,
-            minimumFractionDigits: 2
-          }).format(option.value)
-        }
+        tooltipFormatter={formatPriceTooltip}
       />
     </ChartCard>
   );

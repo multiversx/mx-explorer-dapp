@@ -11,7 +11,9 @@ import {
   ApiAdapterResponseType
 } from 'types';
 
-let currentRequest: any = null;
+import { createSingleFlight } from './helpers';
+
+const singleFlight = createSingleFlight<any>();
 
 export const useFetchAccountStakingDetails = () => {
   const dispatch = useDispatch();
@@ -23,29 +25,14 @@ export const useFetchAccountStakingDetails = () => {
     getIdentity
   } = useAdapter();
 
-  const getAccountStakingDetailsOnce = ({ address }: { address: string }) => {
-    if (currentRequest) {
-      return currentRequest;
-    }
-
-    const requestPromise = new Promise(async (resolve, reject) => {
-      try {
-        const response = await Promise.all([
-          getAccountDelegation(address),
-          getAccountStake(address),
-          getAccountDelegationLegacy(address)
-        ]);
-        resolve(response);
-      } catch (error) {
-        reject(error);
-      } finally {
-        currentRequest = null;
-      }
-    });
-
-    currentRequest = requestPromise;
-    return requestPromise;
-  };
+  const getAccountStakingDetailsOnce = ({ address }: { address: string }) =>
+    singleFlight(address, () =>
+      Promise.all([
+        getAccountDelegation(address),
+        getAccountStake(address),
+        getAccountDelegationLegacy(address)
+      ])
+    );
 
   const fetchAccountStakingDetails = async ({
     address

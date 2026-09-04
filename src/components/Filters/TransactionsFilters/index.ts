@@ -1,3 +1,4 @@
+export * from './AddressColumnFilters';
 export * from './AgeColumnFilters';
 export * from './DirectionColumnFilters';
 export * from './FromColumnFilters';
