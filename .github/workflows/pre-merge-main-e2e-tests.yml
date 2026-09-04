@@ -71,17 +71,25 @@ jobs:
         run: npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}"
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Resolve previous attempt
+        id: previous-attempt
+        if: ${{ github.run_attempt > 1 }}
+        env:
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: echo "number=$((RUN_ATTEMPT - 1))" >> "$GITHUB_OUTPUT"
       - name: Download failed specs from previous attempt
         if: ${{ github.run_attempt > 1 }}
         continue-on-error: true
         uses: actions/download-artifact@v4
         with:
-          name: failed-specs-attempt-${{ github.run_attempt - 1 }}
+          name: failed-specs-attempt-${{ steps.previous-attempt.outputs.number }}
       - name: Select specs to run
         id: select-specs
+        env:
+          PREVIOUS_ATTEMPT: ${{ steps.previous-attempt.outputs.number }}
         run: |
           if [ -s failed-specs.txt ]; then
-            echo "Re-running only the specs that failed on attempt $(( ${{ github.run_attempt }} - 1 )):"
+            echo "Re-running only the specs that failed on attempt $PREVIOUS_ATTEMPT:"
             cat failed-specs.txt
             echo "spec=$(paste -sd, failed-specs.txt)" >> "$GITHUB_OUTPUT"
           else
