@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import {
   useAccountRequests,
   useAnalyticsRequests,
@@ -23,34 +25,48 @@ export const useAdapter = () => {
   const transactionsRequests = useTransactionRequests();
   const validatorRequests = useValidatorRequests();
 
-  return {
-    ...generalRequests,
+  return useMemo(
+    () => ({
+      ...generalRequests,
 
-    /* Blocks */
-    ...blockRequests,
+      /* Blocks */
+      ...blockRequests,
 
-    /* Transactions */
-    ...transactionsRequests,
+      /* Transactions */
+      ...transactionsRequests,
 
-    /* Account */
-    ...accountRequests,
+      /* Account */
+      ...accountRequests,
 
-    /* Validators */
-    ...validatorRequests,
+      /* Validators */
+      ...validatorRequests,
 
-    /* Tokens */
-    ...tokenRequests,
+      /* Tokens */
+      ...tokenRequests,
 
-    /* Collections */
-    ...collectionRequests,
+      /* Collections */
+      ...collectionRequests,
 
-    /* NFTs */
-    ...nftRequests,
+      /* NFTs */
+      ...nftRequests,
 
-    /* Growth / Analytics */
-    ...analyticsRequests,
+      /* Growth / Analytics */
+      ...analyticsRequests,
 
-    /* Extra Requests: xExchange, etc */
-    ...extraRequests
-  };
+      /* Extra Requests: xExchange, etc */
+      ...extraRequests
+    }),
+    [
+      generalRequests,
+      blockRequests,
+      transactionsRequests,
+      accountRequests,
+      validatorRequests,
+      tokenRequests,
+      collectionRequests,
+      nftRequests,
+      analyticsRequests,
+      extraRequests
+    ]
+  );
 };

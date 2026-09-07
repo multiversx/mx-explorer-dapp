@@ -7,36 +7,23 @@ import { useAdapter } from 'hooks';
 import { setNodesIdentities } from 'redux/slices';
 import { SortableApiType } from 'types';
 
-let currentRequest: any = null;
+import { createSingleFlight } from './helpers';
+
+const singleFlight = createSingleFlight<any>();
 
 export const useFetchNodesIdentities = (sortParams?: SortableApiType) => {
   const dispatch = useDispatch();
   const { getIdentities } = useAdapter();
   const { sort, order } = sortParams ?? {};
 
-  const getNodesIdentitiesOnce = () => {
-    if (currentRequest) {
-      return currentRequest;
-    }
-
-    const requestPromise = new Promise(async (resolve, reject) => {
-      try {
-        const response = await getIdentities({
-          fields: IDENTITIES_FIELDS.join(','),
-          sort,
-          order
-        });
-        resolve(response);
-      } catch (error) {
-        reject(error);
-      } finally {
-        currentRequest = null;
-      }
-    });
-
-    currentRequest = requestPromise;
-    return requestPromise;
-  };
+  const getNodesIdentitiesOnce = () =>
+    singleFlight(`${sort}_${order}`, () =>
+      getIdentities({
+        fields: IDENTITIES_FIELDS.join(','),
+        sort,
+        order
+      })
+    );
 
   const fetchNodesIdentities = async () => {
     const { data, success } = await getNodesIdentitiesOnce();
@@ -57,5 +44,5 @@ export const useFetchNodesIdentities = (sortParams?: SortableApiType) => {
 
   useEffect(() => {
     fetchNodesIdentities();
-  }, []);
+  }, [sort, order]);
 };

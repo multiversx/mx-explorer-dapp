@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
@@ -13,6 +13,17 @@ export const useGetEpochRemainingTime = () => {
   } = useSelector(statsSelector);
 
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const refreshTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    return () => {
+      if (refreshTimeoutRef.current) {
+        clearTimeout(refreshTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const { epoch } = stats;
 
@@ -23,7 +34,7 @@ export const useGetEpochRemainingTime = () => {
   const remainingTime = useGetRemainingTime({
     timeData: currentTimestamp,
     onCountdownEnd: () => {
-      setTimeout(() => {
+      refreshTimeoutRef.current = setTimeout(() => {
         setRefreshTrigger(moment().unix());
         return;
       }, 500);

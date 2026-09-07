@@ -81,6 +81,7 @@ export const ChartResolutionSelector = ({
           options={options}
           onChange={onChangeHandler}
           value={dropdownValue}
+          aria-label='Chart resolution'
         />
       </div>
 

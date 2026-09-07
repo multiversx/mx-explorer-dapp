@@ -23,3 +23,14 @@ export const websocketConnection: {
 export const websocketSubscriptions = new Set();
 export const websocketPendingSubscriptions = new Set();
 export const websocketActiveSubscriptions = new Set();
+
+export interface WebsocketEventListenerType {
+  event: string;
+  handler: (response: any) => void;
+  listeners: Set<{ current: (response: any) => void }>;
+}
+
+export const websocketEventListeners = new Map<
+  string,
+  WebsocketEventListenerType
+>();

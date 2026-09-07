@@ -11,6 +11,7 @@ export interface SelectPropsType {
   value?: SelectOptionType;
   onChange: (option: SingleValue<SelectOptionType>) => void;
   defaultValue?: SelectOptionType;
+  'aria-label'?: string;
 }
 
 const Control: typeof components.Control = (props) => (

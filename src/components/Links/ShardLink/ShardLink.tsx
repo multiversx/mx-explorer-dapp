@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { NetworkLink, ShardSpan } from 'components';
 import { isTouchDevice, urlBuilder } from 'helpers';
-import { useFetchShards, useIsSovereign, useGetShardText } from 'hooks';
-import { interfaceSelector, shardsSelector } from 'redux/selectors';
+import { useIsSovereign, useGetShardText } from 'hooks';
+import { highlightedTextSelector, shardsSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices';
 import { WithClassnameType } from 'types';
 
@@ -29,9 +29,7 @@ export const ShardLink = ({
   const isSovereign = useIsSovereign();
   const getShardText = useGetShardText();
   const shards = useSelector(shardsSelector);
-  const { highlightedText } = useSelector(interfaceSelector);
-
-  useFetchShards();
+  const highlightedText = useSelector(highlightedTextSelector);
 
   if (shard === undefined) {
     return <span className='text-neutral-400'>N/A</span>;
@@ -61,7 +59,7 @@ export const ShardLink = ({
   const isHighlighted =
     !isTouch && hasHighlight && highlightedText === shardHighlightKey;
 
-  const ShardDisplay = ({ className }: WithClassnameType) => {
+  const renderShardDisplay = ({ className }: WithClassnameType) => {
     if (!hasLink) {
       return (
         <span
@@ -109,10 +107,10 @@ export const ShardLink = ({
   if (hasParanthesis) {
     return (
       <span className={classNames('text-neutral-400', className)}>
-        (<ShardDisplay className='' />)
+        ({renderShardDisplay({})})
       </span>
     );
   }
 
-  return <ShardDisplay className={classNames(className)} />;
+  return renderShardDisplay({ className });
 };

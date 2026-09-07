@@ -23,7 +23,8 @@ import {
   useGetPage,
   useFetchStake,
   useGetSearch,
-  useFetchNodesOverview
+  useFetchNodesOverview,
+  useAbortSignal
 } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
@@ -40,6 +41,7 @@ export const AccountNodes = () => {
   const { search } = useGetSearch();
   const nodeFilters = useGetNodeFilters();
   const { getNodes, getNodesCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const { hash: address } = useParams();
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -52,16 +54,28 @@ export const AccountNodes = () => {
 
   const fetchAccountNodes = () => {
     setDataReady(undefined);
+    const signal = getAbortSignal();
+
     Promise.all([
       getNodes({
         ...nodeFilters,
         search,
         page,
         size,
-        owner: address
+        owner: address,
+        signal
       }),
-      getNodesCount({ ...nodeFilters, owner: address, withIdentityInfo: true })
+      getNodesCount({
+        ...nodeFilters,
+        owner: address,
+        withIdentityInfo: true,
+        signal
+      })
     ]).then(([accountNodesData, accountNodesCountData]) => {
+      if (signal.aborted) {
+        return;
+      }
+
       if (accountNodesData.success && accountNodesCountData.success) {
         setAccountNodes(accountNodesData.data);
         setAccountNodesCount(accountNodesCountData.data);

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
@@ -7,7 +7,7 @@ import { SingleValue } from 'react-select';
 import { SelectOptionType } from 'components';
 import { getPrimaryColor } from 'helpers';
 import { useFetchGrowthStaking } from 'hooks';
-import { growthStakingSelector, activeNetworkSelector } from 'redux/selectors';
+import { growthStakingSelector, egldLabelSelector } from 'redux/selectors';
 import {
   StatisticType,
   StakingStatisticsLabelEnum,
@@ -15,6 +15,18 @@ import {
 } from 'types';
 
 import { ChartCard, ChartRoot } from '../ChartCard';
+
+const FILTERS: SelectOptionType[] = [
+  { label: '7d', value: 'totalStaked7d' },
+  { label: '30d', value: 'totalStaked30d' },
+  { label: '365d', value: 'totalStaked365d' },
+  { label: 'All', value: 'totalStakedAll' }
+];
+
+const INITIAL_FILTER = 'totalStaked30d';
+const DEFAULT_FILTER_VALUE = FILTERS.find(
+  (filter) => filter.value === INITIAL_FILTER
+);
 
 export const ChartStake = ({ className }: WithClassnameType) => {
   const {
@@ -28,64 +40,51 @@ export const ChartStake = ({ className }: WithClassnameType) => {
     totalStakedAll,
     isDataReady
   } = useSelector(growthStakingSelector);
-  const { egldLabel } = useSelector(activeNetworkSelector);
+  const egldLabel = useSelector(egldLabelSelector);
 
-  const filters: SelectOptionType[] = [
-    {
-      label: '7d',
-      value: 'totalStaked7d'
-    },
-    {
-      label: '30d',
-      value: 'totalStaked30d'
-    },
-    {
-      label: '365d',
-      value: 'totalStaked365d'
-    },
-    {
-      label: 'All',
-      value: 'totalStakedAll'
-    }
-  ];
-
-  const statistics: StatisticType[] = [
-    {
-      label: StakingStatisticsLabelEnum.CirculatingSupply,
-      value: circulatingSupply
-    },
-    {
-      label: StakingStatisticsLabelEnum.UsersStaking,
-      value: usersStaking
-    },
-    {
-      label: StakingStatisticsLabelEnum.AverageAPR,
-      value: averageAPR
-    }
-  ];
-
-  const totalStaked365d = totalStakedAll.slice(
-    totalStakedAll.length - 365,
-    totalStakedAll.length
+  const statistics: StatisticType[] = useMemo(
+    () => [
+      {
+        label: StakingStatisticsLabelEnum.CirculatingSupply,
+        value: circulatingSupply
+      },
+      {
+        label: StakingStatisticsLabelEnum.UsersStaking,
+        value: usersStaking
+      },
+      {
+        label: StakingStatisticsLabelEnum.AverageAPR,
+        value: averageAPR
+      }
+    ],
+    [circulatingSupply, usersStaking, averageAPR]
   );
 
-  const dataMap = new Map([
-    ['totalStaked7d', totalStaked7d],
-    ['totalStaked30d', totalStaked30d],
-    ['totalStaked365d', totalStaked365d],
-    ['totalStakedAll', totalStakedAll]
-  ]);
+  const dataMap = useMemo(() => {
+    const totalStaked365d = totalStakedAll.slice(
+      totalStakedAll.length - 365,
+      totalStakedAll.length
+    );
 
-  const initialFilter = 'totalStaked30d';
-  const primary = getPrimaryColor();
+    return new Map([
+      ['totalStaked7d', totalStaked7d],
+      ['totalStaked30d', totalStaked30d],
+      ['totalStaked365d', totalStaked365d],
+      ['totalStakedAll', totalStakedAll]
+    ]);
+  }, [totalStaked7d, totalStaked30d, totalStakedAll]);
 
-  const defaultValue = filters.find((filter) => filter.value === initialFilter);
-  const [data, setData] = useState(dataMap.get(initialFilter));
+  const dataMapRef = useRef(dataMap);
+  dataMapRef.current = dataMap;
+
+  const primary = useMemo(() => getPrimaryColor(), []);
+
+  const [data, setData] = useState(() => dataMap.get(INITIAL_FILTER));
 
   const handleChange = useCallback(
     (option: SingleValue<SelectOptionType>) => {
       if (option && option.value && isDataReady) {
-        setData(dataMap.get(String(option.value)));
+        setData(dataMapRef.current.get(String(option.value)));
       }
     },
     [isDataReady]
@@ -93,9 +92,14 @@ export const ChartStake = ({ className }: WithClassnameType) => {
 
   const onInitialLoad = useCallback(() => {
     if (isDataReady) {
-      setData(dataMap.get(initialFilter));
+      setData(dataMapRef.current.get(INITIAL_FILTER));
     }
   }, [isDataReady]);
+
+  const tooltipFormatter = useCallback(
+    (option: any) => `${new BigNumber(option.value).toFormat(0)} ${egldLabel}`,
+    [egldLabel]
+  );
 
   useFetchGrowthStaking();
   useEffect(onInitialLoad, [onInitialLoad]);
@@ -108,8 +112,8 @@ export const ChartStake = ({ className }: WithClassnameType) => {
           {totalStaked} {egldLabel} <span>({stakingPercentage})</span>
         </>
       }
-      filters={filters}
-      defaultFilterValue={defaultValue}
+      filters={FILTERS}
+      defaultFilterValue={DEFAULT_FILTER_VALUE}
       onChange={handleChange}
       className={classNames('chart-stake', className)}
       statistics={statistics}
@@ -119,9 +123,7 @@ export const ChartStake = ({ className }: WithClassnameType) => {
         height={75}
         color={primary}
         identifier='delegationGradient'
-        tooltipFormatter={(option: any) =>
-          `${new BigNumber(option.value).toFormat(0)} ${egldLabel}`
-        }
+        tooltipFormatter={tooltipFormatter}
       />
     </ChartCard>
   );

@@ -241,6 +241,9 @@ export const ChartContractsTransactions = ({
               options={filters}
               onChange={onChange}
               defaultValue={defaultValue}
+              aria-label={
+                typeof title === 'string' ? `${title} interval` : 'Interval'
+              }
             />
           </div>
         </div>

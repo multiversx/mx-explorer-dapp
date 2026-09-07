@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { isTouchDevice } from 'helpers';
-import { interfaceSelector } from 'redux/selectors';
+import { highlightedTextSelector } from 'redux/selectors';
 import { setHighlightedText } from 'redux/slices';
 import {
   TransactionDirectionDisplayEnum,
@@ -36,7 +36,7 @@ export const TransactionDirectionBadge = ({
   hasHighlight?: boolean;
 } & WithClassnameType) => {
   const dispatch = useDispatch();
-  const { highlightedText } = useSelector(interfaceSelector);
+  const highlightedText = useSelector(highlightedTextSelector);
 
   const isTouch = isTouchDevice();
   const isHighlightBadge =

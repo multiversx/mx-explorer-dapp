@@ -53,7 +53,7 @@ export const TokenLink = ({ token }: { token: TokenType }) => {
     );
   }
 
-  const TokenComponent = () => (
+  const tokenComponent = (
     <span className='d-flex align-items-center gap-1 text-truncate'>
       {(token.assets?.svgUrl || token.assets?.pngUrl) && (
         <img
@@ -79,10 +79,10 @@ export const TokenLink = ({ token }: { token: TokenType }) => {
             {token.type === TokenTypeEnum.MetaESDT &&
             detailsIdentifier !== token.identifier ? (
               <Overlay title={token.identifier} truncate>
-                <TokenComponent />
+                {tokenComponent}
               </Overlay>
             ) : (
-              <TokenComponent />
+              tokenComponent
             )}
           </>
         ) : (

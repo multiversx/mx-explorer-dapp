@@ -26,7 +26,7 @@ export const TableWrapper = ({
   useEffect(() => {
     setIsHidden(false);
     if (!dataChanged) {
-      hide();
+      return hide();
     }
   }, [dataChanged]);
 

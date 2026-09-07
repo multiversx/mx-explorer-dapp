@@ -9,6 +9,7 @@ export interface ProgressRingType extends WithClassnameType {
   indicatorWidth?: number;
   hasBg?: boolean;
   isSubSecond?: boolean;
+  noTransition?: boolean;
   children?: React.ReactNode;
 }
 
@@ -19,6 +20,7 @@ const ProgressRingBase = ({
   indicatorWidth = 3,
   hasBg = false,
   isSubSecond,
+  noTransition,
   children,
   className
 }: ProgressRingType) => {
@@ -40,10 +42,9 @@ const ProgressRingBase = ({
       style={{ width: size, height: size }}
     >
       <svg
-        className={`progress-ring progress-${String(progress).replace(
-          '.',
-          ''
-        )}`}
+        className={classNames('progress-ring', {
+          'no-transition': noTransition || progress === 0
+        })}
         style={{ width: size, height: size, minWidth: size, minHeight: size }}
       >
         <circle

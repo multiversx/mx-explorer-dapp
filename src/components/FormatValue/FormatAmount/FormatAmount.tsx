@@ -122,7 +122,7 @@ export const FormatAmount = (props: FormatAmountUIType) => {
         : {})}
       {...(showUsdValueTooltip
         ? {
-            details: (
+            details: () => (
               <>
                 {usd ? '' : 'Current '}
                 USD Value:{' '}

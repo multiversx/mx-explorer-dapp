@@ -59,11 +59,7 @@ export const TransactionDirection = ({
     }
   };
 
-  const TransactionDirectionWrapper = ({
-    children
-  }: {
-    children: React.ReactNode;
-  }) => {
+  const renderTransactionDirectionWrapper = (children: React.ReactNode) => {
     return (
       <>
         {isClickable ? (
@@ -85,9 +81,9 @@ export const TransactionDirection = ({
 
   return (
     <div className='d-inline-block'>
-      <TransactionDirectionWrapper>
+      {renderTransactionDirectionWrapper(
         <TransactionDirectionBadge direction={direction} hasHighlight />
-      </TransactionDirectionWrapper>
+      )}
     </div>
   );
 };

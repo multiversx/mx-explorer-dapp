@@ -1,24 +1,36 @@
+import { LONG_POOLING_REFRESH_RATE } from 'appConstants';
 import { useAdapter } from 'hooks';
 
-const cache = new Map();
-const promises = new Map();
+interface CacheEntryType {
+  response: any;
+  timestamp: number;
+}
+
+const CACHE_TTL = LONG_POOLING_REFRESH_RATE;
+
+const cache = new Map<string, CacheEntryType>();
+const promises = new Map<string, Promise<any>>();
 
 export const useFetchGrowthWidgetOnce = () => {
   const { getGrowthWidget } = useAdapter();
 
   const fetchGrowthWidgetOnce = (path: string) => {
-    if (cache.has(path)) {
-      return cache.get(path);
+    const cached = cache.get(path);
+
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+      return Promise.resolve(cached.response);
     }
 
-    if (promises.has(path)) {
-      return promises.get(path);
+    const pending = promises.get(path);
+
+    if (pending) {
+      return pending;
     }
 
     const requestPromise = new Promise(async (resolve, reject) => {
       try {
         const response = await getGrowthWidget(path);
-        cache.set(path, response);
+        cache.set(path, { response, timestamp: Date.now() });
         resolve(response);
       } catch (error) {
         reject(error);

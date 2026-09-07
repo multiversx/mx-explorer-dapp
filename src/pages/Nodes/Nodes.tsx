@@ -12,6 +12,7 @@ import {
   NodesHeader
 } from 'components';
 import {
+  useAbortSignal,
   useAdapter,
   useGetNodeFilters,
   useGetPage,
@@ -26,6 +27,7 @@ import { NodeType } from 'types';
 export const Nodes = () => {
   const [searchParams] = useSearchParams();
   const { getNodes, getNodesCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const { search } = useGetSearch();
   const { page, size } = useGetPage();
   const nodeFilters = useGetNodeFilters();
@@ -40,6 +42,8 @@ export const Nodes = () => {
 
   const fetchNodes = () => {
     setDataReady(undefined);
+    const signal = getAbortSignal();
+
     Promise.all([
       getNodes({
         ...nodeFilters,
@@ -47,10 +51,15 @@ export const Nodes = () => {
         search,
         page,
         size,
-        withIdentityInfo: true
+        withIdentityInfo: true,
+        signal
       }),
-      getNodesCount({ ...nodeFilters, ...sort, search })
+      getNodesCount({ ...nodeFilters, ...sort, search, signal })
     ]).then(([nodesData, count]) => {
+      if (signal.aborted) {
+        return;
+      }
+
       setNodes(nodesData.data);
       setTotalNodes(count.data);
 

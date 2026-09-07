@@ -8,7 +8,7 @@ import {
   SortProviderFieldEnum
 } from 'components/ProvidersTable/helpers';
 import { partitionBy } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAbortSignal, useAdapter } from 'hooks';
 import { faCode } from 'icons/regular';
 import { NodesTabs } from 'layouts/NodesLayout/NodesTabs';
 import { activeNetworkSelector } from 'redux/selectors';
@@ -17,6 +17,7 @@ import { ProviderType, SortOrderEnum } from 'types';
 export const Providers = () => {
   const ref = useRef(null);
   const { getProviders } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -27,10 +28,17 @@ export const Providers = () => {
 
   const fetchProviders = () => {
     setDataReady(undefined);
+    const signal = getAbortSignal();
+
     getProviders({
       fields: PROVIDERS_FIELDS.join(','),
-      withIdentityInfo: true
+      withIdentityInfo: true,
+      signal
     }).then((providersData) => {
+      if (signal.aborted) {
+        return;
+      }
+
       if (providersData.success) {
         if (providersData.data.length > 0) {
           const [activeProviders, inactiveProviders] = partitionBy(

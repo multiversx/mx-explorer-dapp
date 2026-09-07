@@ -16,6 +16,7 @@ import {
   ColSpanWrapper
 } from 'components';
 import {
+  useAbortSignal,
   useAdapter,
   useGetSearch,
   useGetPage,
@@ -38,6 +39,7 @@ export const Collections = () => {
   const { search } = useGetSearch();
   const { search: searchLocation, pathname } = useLocation();
   const { getCollections, getCollectionsCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const pageHeadersCollections = useSelector(
     pageHeadersCollectionsStatsSelector
   );
@@ -62,6 +64,8 @@ export const Collections = () => {
 
   const fetchCollections = () => {
     const type = getCollectionType();
+    const signal = getAbortSignal();
+
     Promise.all([
       getCollections({
         search,
@@ -71,10 +75,15 @@ export const Collections = () => {
         type,
         ...(isMainnet
           ? { sort: CollectionSortEnum.verifiedAndHolderCount }
-          : {})
+          : {}),
+        signal
       }),
-      getCollectionsCount({ search, type })
+      getCollectionsCount({ search, type, signal })
     ]).then(([collectionsData, count]) => {
+      if (signal.aborted) {
+        return;
+      }
+
       if (collectionsData.success) {
         setCollections(collectionsData.data);
         setTotalCollections(count.data);

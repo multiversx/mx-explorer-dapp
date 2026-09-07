@@ -23,6 +23,11 @@
     }
     .dropdown-toggle {
       margin-left: 0.375rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.125rem;
+      min-height: 1.5rem;
       &.show {
         svg.fa-angle-down {
           transform: rotateZ(180deg);

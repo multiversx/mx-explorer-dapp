@@ -15,6 +15,7 @@ import {
 } from 'components';
 import { urlBuilder } from 'helpers';
 import {
+  useAbortSignal,
   useAdapter,
   useGetSearch,
   useActiveRoute,
@@ -37,6 +38,7 @@ export const TokensMeta = () => {
   const { search } = useGetSearch();
   const { page, size } = useGetPage();
   const { getCollections, getCollectionsCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const pageHeadersTokens = useSelector(pageHeaderTokensStatsSelector);
 
   const [metaCollections, setMetaCollections] = useState<CollectionType[]>([]);
@@ -47,11 +49,16 @@ export const TokensMeta = () => {
 
   const fetchMetaCollections = () => {
     const type = 'MetaESDT';
+    const signal = getAbortSignal();
 
     Promise.all([
-      getCollections({ search, page, size, type }),
-      getCollectionsCount({ search, type })
+      getCollections({ search, page, size, type, signal }),
+      getCollectionsCount({ search, type, signal })
     ]).then(([collectionsData, count]) => {
+      if (signal.aborted) {
+        return;
+      }
+
       if (collectionsData.success) {
         setMetaCollections(collectionsData.data);
         setTotalMetaCollections(count.data);

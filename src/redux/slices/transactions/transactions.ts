@@ -20,15 +20,30 @@ export const transactionsSlice = createSlice({
       state: TransactionSliceType,
       action: PayloadAction<TransactionSliceType>
     ) => {
-      const existingHashes = state.transactions.map((b) => b.txHash);
-      const newTransactions = action.payload.transactions.map(
-        (transaction) => ({
-          ...transaction,
-          isNew: !existingHashes.includes(transaction.txHash)
-        })
+      const previousByHash = new Map(
+        state.transactions.map((transaction) => [
+          transaction.txHash,
+          transaction
+        ])
       );
+      const newTransactions = action.payload.transactions.map((transaction) => {
+        const previous = previousByHash.get(transaction.txHash);
+        const next = { ...transaction, isNew: !previous };
 
-      state.transactions = newTransactions;
+        return previous && JSON.stringify(previous) === JSON.stringify(next)
+          ? previous
+          : next;
+      });
+
+      const isUnchanged =
+        newTransactions.length === state.transactions.length &&
+        newTransactions.every(
+          (transaction, index) => transaction === state.transactions[index]
+        );
+
+      if (!isUnchanged) {
+        state.transactions = newTransactions;
+      }
 
       if (action.payload.transactionsCount !== ELLIPSIS) {
         state.transactionsCount = action.payload.transactionsCount;

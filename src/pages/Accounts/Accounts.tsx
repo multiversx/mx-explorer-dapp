@@ -15,6 +15,7 @@ import {
   ColSpanWrapper
 } from 'components';
 import {
+  useAbortSignal,
   useAdapter,
   useGetPage,
   useGetSearch,
@@ -38,6 +39,7 @@ export const Accounts = () => {
   const { search } = useGetSearch();
   const { page, size, searchAfter } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
 
   const [accounts, setAccounts] = useState<AccountType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -49,17 +51,24 @@ export const Accounts = () => {
 
   const fetchAccounts = () => {
     setDataChanged(true);
+    const signal = getAbortSignal();
+
     Promise.all([
       getAccounts({
         page,
         size,
         searchAfter,
         search,
-        ...sort
+        ...sort,
+        signal
       }),
-      getAccountsCount({ search })
+      getAccountsCount({ search, signal })
     ])
       .then(([accountsData, accountsCountData]) => {
+        if (signal.aborted) {
+          return;
+        }
+
         if (accountsData.success && accountsCountData.success) {
           setAccounts(accountsData.data);
           setTotalAccounts(accountsCountData.data);

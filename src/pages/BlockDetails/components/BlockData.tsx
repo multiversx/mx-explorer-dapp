@@ -54,9 +54,11 @@ export const BlockData = ({ block }: { block: UIBlockType }) => {
 
   // Fixes Trim re-render bug
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       window.dispatchEvent(new Event('resize'));
     }, 0);
+
+    return () => clearTimeout(timeoutId);
   }, [expanded]);
 
   return (

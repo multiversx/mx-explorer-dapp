@@ -6,7 +6,10 @@ import { FormatNumber } from 'components';
 import { formatBigNumber } from 'helpers';
 import { useGetNewTransactionsToday, useHasGrowthWidgets } from 'hooks';
 import { faCirclePlus } from 'icons/solid';
-import { activeNetworkSelector, statsSelector } from 'redux/selectors';
+import {
+  activeNetworkSelector,
+  statsTransactionsSelector
+} from 'redux/selectors';
 import { StatsCard } from 'widgets';
 
 export const TransactionsStatsCard = ({
@@ -16,8 +19,7 @@ export const TransactionsStatsCard = ({
 }) => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const { refreshRate } = useSelector(activeNetworkSelector);
-  const { unprocessed } = useSelector(statsSelector);
-  const { transactions } = unprocessed;
+  const transactions = useSelector(statsTransactionsSelector);
 
   const newTransactionsToday = useGetNewTransactionsToday();
 

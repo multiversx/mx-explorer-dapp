@@ -15,7 +15,7 @@ import {
   LowLiquidityTooltip
 } from 'components';
 import { isValidAccountTokenValue } from 'helpers';
-import { useAdapter, useGetPage } from 'hooks';
+import { useAbortSignal, useAdapter, useGetPage } from 'hooks';
 import { faCoins } from 'icons/solid';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
@@ -31,6 +31,7 @@ export const AccountTokens = () => {
   const { page, size } = useGetPage();
 
   const { getAccountTokens, getAccountTokensCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
 
   const { hash: address } = useParams() as any;
 
@@ -39,15 +40,22 @@ export const AccountTokens = () => {
   const [accountTokensCount, setAccountTokensCount] = useState(0);
 
   const fetchAccountTokens = () => {
+    const signal = getAbortSignal();
+
     Promise.all([
       getAccountTokens({
         page,
         size,
         address,
-        includeMetaESDT: true
+        includeMetaESDT: true,
+        signal
       }),
-      getAccountTokensCount({ address, includeMetaESDT: true })
+      getAccountTokensCount({ address, includeMetaESDT: true, signal })
     ]).then(([accountTokensData, accountTokensCountData]) => {
+      if (signal.aborted) {
+        return;
+      }
+
       if (ref.current !== null) {
         if (accountTokensData.success && accountTokensCountData.success) {
           setAccountTokens(accountTokensData.data);

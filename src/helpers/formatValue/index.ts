@@ -1,4 +1,5 @@
 export * from './formatAmount';
+export * from './formatClockDuration';
 export * from './formatDate';
 export * from './formatHerotag';
 export * from './formatLatestEntries';

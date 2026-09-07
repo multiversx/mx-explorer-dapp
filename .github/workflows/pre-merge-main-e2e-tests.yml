@@ -2,6 +2,7 @@ name: Cypress Tests
 on:
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   Slack-Notification:
@@ -22,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -36,6 +39,9 @@ jobs:
           CI: false
           VITE_APP_MARKERS_API_URL: ${{ secrets.MARKERS_API_URL }}
           VITE_APP_VERSION_URL: ${{ secrets.APP_VERSION_URL }}
+      - name: Block robots on integration deploy
+        run: |
+          printf 'User-agent: *\nDisallow: /\n' > ./build/robots.txt
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:

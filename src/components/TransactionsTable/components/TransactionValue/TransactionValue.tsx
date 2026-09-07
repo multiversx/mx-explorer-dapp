@@ -11,7 +11,7 @@ const MultipleTokensBadge = ({
 }: {
   transactionTokens: any[];
 }) => {
-  const Tooltip = () => (
+  const renderTooltip = () => (
     <div className='py-2 px-1'>
       {transactionTokens.map((transactionToken, index) => (
         <div
@@ -29,7 +29,7 @@ const MultipleTokensBadge = ({
   );
 
   return (
-    <Overlay title={<Tooltip />} className='multiple-tokens' persistent>
+    <Overlay title={renderTooltip} className='multiple-tokens' persistent>
       <FontAwesomeIcon icon={faLayerPlus} className='ms-1 text-neutral-400' />
     </Overlay>
   );

@@ -84,6 +84,7 @@ export const SelectFilter = ({
     <Creatable
       options={options}
       name={name}
+      aria-label={name}
       data-testid={name}
       className={`styled-select ${className}`}
       classNamePrefix='styled-select'
@@ -124,6 +125,7 @@ export const SelectFilter = ({
     <Select
       options={options}
       name={name}
+      aria-label={name}
       data-testid={name}
       className={`styled-select ${className}`}
       classNamePrefix='styled-select'

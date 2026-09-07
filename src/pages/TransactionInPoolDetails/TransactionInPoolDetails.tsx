@@ -6,7 +6,7 @@ import { Loader, NetworkLink, PageState } from 'components';
 import { isHash, urlBuilder } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faExchangeAlt } from 'icons/regular';
-import { refreshSelector } from 'redux/selectors';
+import { refreshTimestampSelector } from 'redux/selectors';
 import {
   TransactionType,
   TransactionSCResultType,
@@ -19,7 +19,7 @@ import { TransactionInPoolInfo } from './components';
 export const TransactionInPoolDetails = () => {
   const params: any = useParams();
   const { hash: transactionId } = params;
-  const { timestamp } = useSelector(refreshSelector);
+  const timestamp = useSelector(refreshTimestampSelector);
   const { getTransaction, getScResult, getTransactionInPool } = useAdapter();
 
   const [processedTransaction, setProcessedTransaction] = useState<

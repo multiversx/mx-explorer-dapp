@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { MAX_CACHED_TRANSACTION_DETAILS } from 'appConstants';
 import {
   TransactionOverviewSliceType,
   TransactionOverviewAddSliceType
@@ -21,11 +22,20 @@ export const transactionOverviewSlice = createSlice({
       state: TransactionOverviewSliceType,
       action: PayloadAction<TransactionOverviewAddSliceType>
     ) => {
-      state.transactionsDetails = {
-        ...state.transactionsDetails,
-        [action.payload.transactionDetails.txHash]:
-          action.payload.transactionDetails
-      };
+      const { txHash } = action.payload.transactionDetails;
+      const transactionsDetails = state.transactionsDetails ?? {};
+
+      delete transactionsDetails[txHash];
+      transactionsDetails[txHash] = action.payload.transactionDetails;
+
+      const keys = Object.keys(transactionsDetails);
+      if (keys.length > MAX_CACHED_TRANSACTION_DETAILS) {
+        keys
+          .slice(0, keys.length - MAX_CACHED_TRANSACTION_DETAILS)
+          .forEach((key) => delete transactionsDetails[key]);
+      }
+
+      state.transactionsDetails = transactionsDetails;
     }
   }
 });

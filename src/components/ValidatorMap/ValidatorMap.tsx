@@ -65,6 +65,9 @@ const MarkerToolTip = ({
 
 export const ValidatorMap = ({ markers, className }: ValidatorMapType) => {
   const ref = useRef(null);
+  const pulseTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
   const [localMarkers, setLocalMarkers] = useState<MarkerType[]>([]);
   const [pulse, setPulse] = useState(0);
   const [pulseMarker, setPulseMarker] = useState<MarkerType | undefined>();
@@ -87,10 +90,16 @@ export const ValidatorMap = ({ markers, className }: ValidatorMapType) => {
 
       setPulseMarker(newPulseMarker);
 
-      setTimeout(() => {
+      pulseTimeoutRef.current = setTimeout(() => {
         setPulseMarker(undefined);
       }, 800);
     }
+
+    return () => {
+      if (pulseTimeoutRef.current) {
+        clearTimeout(pulseTimeoutRef.current);
+      }
+    };
   };
 
   useEffect(chooseMarker, [pulse]);

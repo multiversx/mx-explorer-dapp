@@ -12,6 +12,11 @@ export const defaultNetworkSelector = createSelector(stateSelector, (state) => {
   return state.defaultNetwork;
 });
 
+export const networkRefreshRateSelector = createSelector(
+  stateSelector,
+  (state) => state.activeNetwork.refreshRate
+);
+
 export const egldLabelSelector = createSelector(
   stateSelector,
   (state) => state.activeNetwork.egldLabel

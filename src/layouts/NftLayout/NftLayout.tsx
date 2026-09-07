@@ -5,6 +5,7 @@ import { useParams, Outlet, Navigate } from 'react-router-dom';
 import { Loader } from 'components';
 import {
   useActiveRoute,
+  useAbortSignal,
   useAdapter,
   useGetPage,
   useIsMainnet,
@@ -23,8 +24,9 @@ export const NftLayout = () => {
   const activeRoute = useActiveRoute();
   const networkRoute = useNetworkRoute();
   const { getNft } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const { hash: identifier } = useParams();
-  const { firstPageRefreshTrigger } = useGetPage();
+  const { poolingFirstPageRefreshTrigger } = useGetPage();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const { nftState } = useSelector(nftSelector);
 
@@ -36,7 +38,13 @@ export const NftLayout = () => {
 
   const fetchNftDetails = () => {
     if (identifier) {
-      getNft(identifier).then(({ success, data }) => {
+      const signal = getAbortSignal();
+
+      getNft(identifier, { signal }).then(({ success, data }) => {
+        if (signal.aborted) {
+          return;
+        }
+
         if (success && data) {
           dispatch(setNft({ isDataReady: true, nftState: data }));
         }
@@ -48,7 +56,7 @@ export const NftLayout = () => {
 
   useEffect(() => {
     fetchNftDetails();
-  }, [firstPageRefreshTrigger, activeNetworkId, identifier]);
+  }, [poolingFirstPageRefreshTrigger, activeNetworkId, identifier]);
 
   const loading =
     isDataReady === undefined ||

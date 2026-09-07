@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios';
 import { SortOrderEnum, TransactionInPoolTypeEnum } from 'types';
 
 export enum NetworkAdapterEnum {
@@ -8,6 +9,7 @@ export enum NetworkAdapterEnum {
 export interface AxiosParamsApiType {
   signal?: any;
   timeout?: any;
+  headers?: AxiosRequestConfig['headers'];
 }
 
 export interface BaseApiType extends AxiosParamsApiType {
@@ -255,6 +257,7 @@ export interface AdapterProviderPropsType {
   };
   timeout: number;
   timestamp?: number;
+  headers?: AxiosRequestConfig['headers'];
 }
 
 export type ApiAdapterResponseType =

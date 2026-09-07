@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
-import moment from 'moment';
 
 import { ELLIPSIS } from 'appConstants';
+import { formatClockDuration } from 'helpers/formatValue/formatClockDuration';
 import { StatsType } from 'types/stats.types';
 
 export const getExtraStats = (data: StatsType) => {
@@ -25,8 +25,16 @@ export const getExtraStats = (data: StatsType) => {
   };
 };
 
-export const processStats = (data: StatsType) => {
-  const { check, epochPercentage } = getExtraStats(data);
+export type ExtraStatsType = ReturnType<typeof getExtraStats>;
+
+export const processStats = (data: StatsType, extraStats?: ExtraStatsType) => {
+  const {
+    check,
+    epochPercentage,
+    epochTotalTime,
+    epochTimeElapsed,
+    epochTimeRemaining
+  } = extraStats ?? getExtraStats(data);
 
   return {
     shards: new BigNumber(data.shards).toFormat(),
@@ -37,20 +45,10 @@ export const processStats = (data: StatsType) => {
     refreshRate: data.refreshRate,
     epoch: data.epoch,
     epochPercentage,
-    epochTotalTime: check
-      ? moment
-          .utc(data.refreshRate * data.roundsPerEpoch)
-          .format('H[h] mm[m] ss[s]')
-      : ELLIPSIS,
-    epochTimeElapsed: check
-      ? moment
-          .utc(data.refreshRate * data.roundsPassed)
-          .format('H[h] mm[m] ss[s]')
-      : ELLIPSIS,
+    epochTotalTime: check ? formatClockDuration(epochTotalTime) : ELLIPSIS,
+    epochTimeElapsed: check ? formatClockDuration(epochTimeElapsed) : ELLIPSIS,
     epochTimeRemaining: check
-      ? moment
-          .utc(data.refreshRate * (data.roundsPerEpoch - data.roundsPassed))
-          .format('H[h] mm[m] ss[s]')
+      ? formatClockDuration(epochTimeRemaining)
       : ELLIPSIS,
     roundsPerEpoch: data.roundsPerEpoch,
     roundsPassed: data.roundsPassed

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { activeNetworkSelector } from 'redux/selectors';
@@ -9,42 +10,45 @@ export const useAnalyticsRequests = () => {
   const { growthApi } = useSelector(activeNetworkSelector);
   const { provider } = useAdapterConfig();
 
-  return {
-    // Growth Charts
+  return useMemo(
+    () => ({
+      // Growth Charts
 
-    getAnalyticsChart: (
-      url: string,
-      { signal, timeout }: AxiosParamsApiType = {}
-    ) => provider({ baseUrl: growthApi, url, signal, timeout }),
+      getAnalyticsChart: (
+        url: string,
+        { signal, timeout }: AxiosParamsApiType = {}
+      ) => provider({ baseUrl: growthApi, url, signal, timeout }),
 
-    getAnalyticsChartList: ({ signal, timeout }: AxiosParamsApiType = {}) =>
-      provider({
-        baseUrl: growthApi,
-        url: '/explorer/analytics',
-        signal,
-        timeout
-      }),
+      getAnalyticsChartList: ({ signal, timeout }: AxiosParamsApiType = {}) =>
+        provider({
+          baseUrl: growthApi,
+          url: '/explorer/analytics',
+          signal,
+          timeout
+        }),
 
-    getGrowthWidget: (
-      url: string,
-      { signal, timeout }: AxiosParamsApiType = {}
-    ) =>
-      provider({
-        baseUrl: `${growthApi}/explorer/widgets`,
-        url,
-        signal,
-        timeout
-      }),
+      getGrowthWidget: (
+        url: string,
+        { signal, timeout }: AxiosParamsApiType = {}
+      ) =>
+        provider({
+          baseUrl: `${growthApi}/explorer/widgets`,
+          url,
+          signal,
+          timeout
+        }),
 
-    getGrowthHeaders: (
-      url: string,
-      { signal, timeout }: AxiosParamsApiType = {}
-    ) =>
-      provider({
-        baseUrl: `${growthApi}/explorer/headers`,
-        url,
-        signal,
-        timeout
-      })
-  };
+      getGrowthHeaders: (
+        url: string,
+        { signal, timeout }: AxiosParamsApiType = {}
+      ) =>
+        provider({
+          baseUrl: `${growthApi}/explorer/headers`,
+          url,
+          signal,
+          timeout
+        })
+    }),
+    [provider, growthApi]
+  );
 };
