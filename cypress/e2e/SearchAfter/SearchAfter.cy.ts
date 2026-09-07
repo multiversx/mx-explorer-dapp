@@ -3,11 +3,11 @@
 // cursor requests take longer
 const CURSOR_TIMEOUT = 15000;
 
-const firstTxHash = () =>
+const firstTxHref = () =>
   cy
     .get('[data-testid="transactionLink"]', { timeout: CURSOR_TIMEOUT })
     .first()
-    .invoke('text');
+    .invoke('attr', 'href');
 
 const visitTransactions = (query: string) => {
   cy.intercept('GET', 'https://devnet-api.multiversx.com/transactions?*').as(
@@ -36,7 +36,7 @@ describe('searchAfter cursor pagination', () => {
     // the cursor is already in hand at the wall, so 401 is a live page button
     cy.get('[aria-label="401st Page"]').first().should('not.be.disabled');
 
-    firstTxHash().then((hashAtWall) => {
+    firstTxHref().then((txAtWall) => {
       cy.get('[data-testid="nextPageButton"]').first().click();
 
       cy.url().should('include', 'page=401');
@@ -49,7 +49,7 @@ describe('searchAfter cursor pagination', () => {
       });
 
       // page 401 must be new rows, not a repeat of the wall or of page 1
-      firstTxHash().should('not.equal', hashAtWall);
+      firstTxHref().should('not.equal', txAtWall);
     });
   });
 
@@ -61,17 +61,17 @@ describe('searchAfter cursor pagination', () => {
     cy.url().should('include', 'page=401');
     cy.wait('@txs');
 
-    firstTxHash().then((hashAt401) => {
+    firstTxHref().then((txAt401) => {
       cy.get('[data-testid="nextPageButton"]').first().click();
       cy.url().should('include', 'page=402');
       cy.wait('@txs', { timeout: CURSOR_TIMEOUT });
-      firstTxHash().should('not.equal', hashAt401);
+      firstTxHref().should('not.equal', txAt401);
 
       // back to 401 using the cursor remembered on the way out
       cy.get('[data-testid="previousPageButton"]').first().click();
       cy.url().should('include', 'page=401');
       cy.wait('@txs', { timeout: CURSOR_TIMEOUT });
-      firstTxHash().should('equal', hashAt401);
+      firstTxHref().should('equal', txAt401);
     });
   });
 
@@ -155,9 +155,11 @@ describe('searchAfter cursor pagination', () => {
 
     const firstAddress = () =>
       cy
-        .get('[data-testid="accountsTable"] tr', { timeout: CURSOR_TIMEOUT })
+        .get('[data-testid="accountsTable"] tr a[href*="/accounts/"]', {
+          timeout: CURSOR_TIMEOUT
+        })
         .first()
-        .invoke('text');
+        .invoke('attr', 'href');
 
     firstAddress().then((addressAtWall) => {
       cy.get('[data-testid="nextPageButton"]').first().click();
