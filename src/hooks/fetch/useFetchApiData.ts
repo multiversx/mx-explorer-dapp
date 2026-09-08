@@ -145,7 +145,8 @@ export const useFetchApiData = ({
       subscription,
       hasUrlParams,
       isRefreshPaused,
-      onApiData
+      onApiData,
+      filters
     ]
   );
 
