@@ -65,7 +65,7 @@ const HeroHomeLayout = ({ background, aside }: HeroHomeLayoutType) => {
               </div>
             </div>
             <div className='col-lg-4 d-flex flex-column align-items-center align-items-lg-end justify-content-end mt-3 mt-lg-0 gap-3'>
-              <div className='d-flex flex-row gap-spacer gap-lg-2'>
+              <div className='d-flex flex-row gap-spacer gap-lg-2 align-items-end'>
                 <BlockProgressRing />
                 <EpochProgressRing />
               </div>

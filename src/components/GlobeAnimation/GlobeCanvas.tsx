@@ -12,7 +12,7 @@ import { GlobeEventType } from './helpers/buildGlobeEvent';
 import { latLngToVector3 } from './helpers/latLngToVector3';
 import { HoveredMarkerType } from './types';
 
-const CAMERA_DISTANCE = 3.7;
+const CAMERA_DISTANCE = 3.3;
 const INITIAL_VIEW_LATITUDE = 22;
 const INITIAL_VIEW_LONGITUDE = 15;
 

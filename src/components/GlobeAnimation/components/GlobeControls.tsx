@@ -3,8 +3,8 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera, Vector3 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-const IDLE_RESUME_DELAY = 3000;
-const MIN_DISTANCE = 3.2;
+const IDLE_RESUME_DELAY = 1000;
+const MIN_DISTANCE = 2.4;
 const MAX_DISTANCE = 5;
 const HIT_RADIUS_FACTOR = 1.08;
 
