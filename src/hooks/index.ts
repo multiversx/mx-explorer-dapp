@@ -27,6 +27,7 @@ export * from './useGetRemainingTime';
 export * from './useHasGrowthWidgets';
 export * from './useHasExchangeData';
 export * from './useIsAuctionNodeDropped';
+export * from './useIsCanvasActive';
 export * from './useIsDevnet';
 export * from './useIsMainnet';
 export * from './useIsNativeTokenSearched';

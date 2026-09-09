@@ -19,6 +19,7 @@ export * from './EventsTable';
 export * from './ExpandRow';
 export * from './Filters';
 export * from './FormatValue';
+export * from './GlobeAnimation';
 export * from './HeroDetailsCard';
 export * from './IdentityBlock';
 export * from './ImageWithFallback';

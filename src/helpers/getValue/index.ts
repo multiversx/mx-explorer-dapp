@@ -22,6 +22,7 @@ export * from './getProofHash';
 export * from './getRangeDays';
 export * from './getRangeEntries';
 export * from './getRangeText';
+export * from './getSkipAnimation';
 export * from './getStringPlural';
 export * from './getSubdomainNetwork';
 export * from './getTotalTokenUsdValue';
