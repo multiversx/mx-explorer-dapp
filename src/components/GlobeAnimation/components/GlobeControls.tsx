@@ -37,7 +37,7 @@ export const GlobeControls = () => {
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.6;
+    controls.autoRotateSpeed = -0.92;
 
     if (isCoarsePointer()) {
       controls.touches.ONE = null;
