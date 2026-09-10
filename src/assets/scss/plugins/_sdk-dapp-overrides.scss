@@ -523,19 +523,6 @@
   padding: 0 0 2rem !important;
 }
 
-a .dapp-core-component__trim-styles__right span,
-a .dapp-core-component__trim-styles__left span,
-a .dapp-core-component__trim-styles__ellipsis {
-  color: var(--primary) !important;
-}
-
-.dapp-core-component__trim-styles__trim.overflow
-  .dapp-core-component__trim-styles__ellipsis {
-  display: block;
-}
-.dapp-core-component__trim-styles__trim {
-  max-width: unset !important;
-}
 .dapp-custom-toast {
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
@@ -564,13 +551,6 @@ a .dapp-core-component__trim-styles__ellipsis {
 
 //------------existing ----------------//
 
-.dapp-core-component__trim-styles__trim.overflow
-  .dapp-core-component__trim-styles__ellipsis {
-  display: block;
-}
-.dapp-core-component__trim-styles__trim {
-  max-width: unset !important;
-}
 .dapp-core-component__copyButton-styles__copy {
   svg[data-icon='check'] {
     color: var(--primary);

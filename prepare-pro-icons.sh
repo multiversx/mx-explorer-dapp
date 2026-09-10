@@ -3,7 +3,7 @@
 packages='@fortawesome/pro-duotone-svg-icons@6.7.2 @fortawesome/pro-light-svg-icons@6.7.2 @fortawesome/pro-regular-svg-icons@6.7.2 @fortawesome/pro-solid-svg-icons@6.7.2'
 if [[ "$(npm list $packages)" =~ "empty" ]]; then
     echo "Installing $packages ..."
-    yarn add $packages --registry https://npm.fontawesome.com/ --peer --no-lockfile
+    pnpm add $packages --registry https://npm.fontawesome.com/ --save-peer --lockfile-only=false
 else
     echo "Required packages are already installed: $packages"
 fi

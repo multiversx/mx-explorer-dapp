@@ -1,4 +1,4 @@
-import { useMatch } from 'react-router-dom';
+import { useMatch } from 'react-router';
 
 import { useNetworkRoute } from 'hooks';
 import { VerifiedContractTabsEnum } from 'lib';

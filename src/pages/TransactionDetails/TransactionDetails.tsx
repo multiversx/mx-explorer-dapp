@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router';
 
 import { Loader, PageState } from 'components';
 import { isHash, urlBuilder } from 'helpers';
@@ -39,9 +39,8 @@ export const TransactionDetails = () => {
       let originalTxHash = data?.originalTxHash;
 
       if (!success && !data) {
-        const { data: scData, success: scSuccess } = await getScResult(
-          transactionId
-        );
+        const { data: scData, success: scSuccess } =
+          await getScResult(transactionId);
         if (scSuccess) {
           originalTxHash = scData?.originalTxHash;
         }

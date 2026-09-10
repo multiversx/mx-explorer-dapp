@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-
 import { PAGE_SIZE } from 'appConstants';
 import { AccountRolesTypeEnum, GetAccountType } from 'types';
 import {
@@ -73,6 +72,38 @@ export const useAccountRequests = () => {
         ...params
       }: GetAccountsType = {}) =>
         provider({ url: '/accounts/c', timeout, signal, params }),
+
+      getAccountTransactions: ({
+        address,
+        timeout,
+        signal,
+        ...params
+      }: GetTransactionsType) =>
+        provider({
+          url: `/accounts/${address}/transactions`,
+          timeout,
+          signal,
+          params: getTransactionsParams({
+            withUsername: false,
+            ...params
+          })
+        }),
+
+      getAccountTransactionsCount: ({
+        address,
+        timeout,
+        signal,
+        ...params
+      }: GetTransactionsType = {}) =>
+        provider({
+          url: `/accounts/${address}/transactions/count`,
+          timeout,
+          signal,
+          params: getTransactionsParams({
+            isCount: true,
+            ...params
+          })
+        }),
 
       getAccountTransfers: ({
         address,

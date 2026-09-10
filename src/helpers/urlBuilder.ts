@@ -1,5 +1,11 @@
 import { TransactionDecodeParamsType } from 'hooks';
-import { GetTokensType, GetCollectionsType, GetAccountsType } from 'types';
+import {
+  GetTokensType,
+  GetCollectionsType,
+  GetAccountsType,
+  GetNodesType,
+  GetTransactionsType
+} from 'types';
 
 export const urlBuilder = {
   shard: (shard: number | string) => `/blocks?shard=${shard}`,
@@ -49,6 +55,13 @@ export const urlBuilder = {
   },
   transactionInPoolDetails: (hash: string) => `/transactions/pool/${hash}`,
   eventDetails: (txHash: string) => `/events/${txHash}`,
+  nodes: (params?: GetNodesType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/nodes/?${urlSearch}`;
+  },
   nodeDetails: (publicKey: string) => `/nodes/${publicKey}`,
   accounts: (params?: GetAccountsType) => {
     const urlSearch = params
@@ -57,12 +70,24 @@ export const urlBuilder = {
 
     return `/accounts/?${urlSearch}`;
   },
-  accountDetails: (address: string) => `/accounts/${address}`,
+  accountDetails: (address: string, params?: GetTransactionsType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/accounts/${address}${urlSearch ? `/?${urlSearch}` : ''}`;
+  },
   accountDetailsTokens: (address: string) => `/accounts/${address}/tokens`,
   accountDetailsNfts: (address: string) => `/accounts/${address}/nfts`,
   accountDetailsStaking: (address: string) => `/accounts/${address}/staking`,
   accountDetailsAnalytics: (address: string) =>
     `/accounts/${address}/analytics`,
+  accountDetailsAnalyticsBalance: (address: string) =>
+    `/accounts/${address}/analytics/balance`,
+  accountDetailsAnalyticsTransactions: (address: string) =>
+    `/accounts/${address}/analytics/transactions`,
+  accountDetailsAnalyticsFees: (address: string) =>
+    `/accounts/${address}/analytics/fees`,
   accountDetailsScResults: (address: string) => `/accounts/${address}/results`,
   accountDetailsContracts: (address: string) =>
     `/accounts/${address}/contracts`,
@@ -138,6 +163,13 @@ export const urlBuilder = {
     `/collections/${identifier}/roles`,
   collectionDetailsTransactions: (identifier: string) =>
     `/collections/${identifier}/transactions`,
+  nfts: (params?: GetCollectionsType) => {
+    const urlSearch = params
+      ? new URLSearchParams(params as Record<string, string>).toString()
+      : '';
+
+    return `/nfts/?${urlSearch}`;
+  },
   nftDetails: (identifier: string) => `/nfts/${identifier}`,
   nftDetailsTransactions: (identifier: string) =>
     `/nfts/${identifier}/transactions`,
@@ -145,5 +177,6 @@ export const urlBuilder = {
   providerDetails: (address: string) => `/providers/${address}`,
   providerDetailsTransactions: (address: string) =>
     `/providers/${address}/transactions`,
-  miniblockDetails: (hash: string) => `/miniblocks/${hash}`
+  miniblockDetails: (hash: string) => `/miniblocks/${hash}`,
+  search: (hash: string) => `/search/${hash}`
 };

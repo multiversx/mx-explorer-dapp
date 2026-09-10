@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { Tabs } from 'components/Tabs';
+import { Tabs } from 'components';
 import { useIsMainnet } from 'hooks';
 import { stakeSelector } from 'redux/selectors';
 import { validatorsRoutes } from 'routes';

@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import {

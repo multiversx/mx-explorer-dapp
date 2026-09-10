@@ -128,6 +128,7 @@ export enum TransactionFiltersEnum {
   receiverShard = 'receiverShard',
   sender = 'sender',
   receiver = 'receiver',
+  senderOrReceiver = 'senderOrReceiver',
   method = 'function',
   before = 'before',
   after = 'after',

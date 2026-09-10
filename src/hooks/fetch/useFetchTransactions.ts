@@ -7,8 +7,10 @@ import { setTransactions } from 'redux/slices';
 import { TransactionType } from 'types';
 import { FetchApiDataProps, useFetchApiData } from './useFetchApiData';
 
-export interface FetchTransactionsProps
-  extends Omit<FetchApiDataProps, 'onApiData'> {
+export interface FetchTransactionsProps extends Omit<
+  FetchApiDataProps,
+  'onApiData'
+> {
   hasMaxTransactionsSize?: boolean;
   uuid?: string;
 }

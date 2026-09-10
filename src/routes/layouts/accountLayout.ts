@@ -1,5 +1,10 @@
-import { AccountLayout } from 'layouts/AccountLayout';
-import { AccountAnalytics } from 'pages/AccountDetails/AccountAnalytics';
+import { AccountLayout, AccountAnalyticsLayout } from 'layouts/AccountLayout';
+import {
+  AccountAnalyticsOverview,
+  AccountAnalyticsBalance,
+  AccountAnalyticsTransactions,
+  AccountAnalyticsFees
+} from 'pages/AccountDetails/AccountAnalytics';
 import { AccountContractCode } from 'pages/AccountDetails/AccountContractCode';
 import { AccountContracts } from 'pages/AccountDetails/AccountContracts';
 import { AccountNfts } from 'pages/AccountDetails/AccountNfts';
@@ -24,6 +29,9 @@ export const accountsRoutes = {
   accountContracts: '/accounts/:hash/contracts',
   accountStaking: '/accounts/:hash/staking',
   accountAnalytics: '/accounts/:hash/analytics',
+  accountAnalyticsBalance: '/accounts/:hash/analytics/balance',
+  accountAnalyticsTransactions: '/accounts/:hash/analytics/transactions',
+  accountAnalyticsFees: '/accounts/:hash/analytics/fees',
   accountUpgrades: '/accounts/:hash/upgrades',
   accountCode: '/accounts/:hash/code/*',
   accountCodeConstructor: '/accounts/:hash/code/contract-constructor',
@@ -105,7 +113,33 @@ export const accountLayout: TitledRouteObject[] = [
         path: accountsRoutes.accountAnalytics,
         title: 'Account Analytics',
         preventScroll: true,
-        Component: AccountAnalytics
+        Component: AccountAnalyticsLayout,
+        children: [
+          {
+            path: accountsRoutes.accountAnalytics,
+            title: 'Account Analytics',
+            preventScroll: true,
+            Component: AccountAnalyticsOverview
+          },
+          {
+            path: accountsRoutes.accountAnalyticsBalance,
+            title: 'Account Analytics - Balance',
+            preventScroll: true,
+            Component: AccountAnalyticsBalance
+          },
+          {
+            path: accountsRoutes.accountAnalyticsTransactions,
+            title: 'Account Analytics - Transactions',
+            preventScroll: true,
+            Component: AccountAnalyticsTransactions
+          },
+          {
+            path: accountsRoutes.accountAnalyticsFees,
+            title: 'Account Analytics - Fees',
+            preventScroll: true,
+            Component: AccountAnalyticsFees
+          }
+        ]
       },
       {
         path: accountsRoutes.accountContracts,

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { PAGE_SIZE } from 'appConstants';
 import { isCursorPage } from 'helpers';

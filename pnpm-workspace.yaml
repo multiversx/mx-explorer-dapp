@@ -1,0 +1,8 @@
+allowBuilds:
+  '@parcel/watcher': false
+  cypress: true
+  keccak: false
+  protobufjs: false
+  unrs-resolver: false
+minimumReleaseAgeExclude:
+  - '@multiversx/*'

@@ -1,5 +1,5 @@
 # Use the official Node.js image
-FROM node:20 AS build
+FROM node:24 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -7,8 +7,8 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies
-RUN yarn install --frozen-lockfile
-RUN yarn copy-placeholder-config & yarn build
+RUN pnpm install --frozen-lockfile
+RUN pnpm run copy-placeholder-config & pnpm build
 
 # Production image
 FROM nginx:alpine

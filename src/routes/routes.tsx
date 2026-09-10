@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash.clonedeep';
-import { NonIndexRouteObject } from 'react-router-dom';
+import { NonIndexRouteObject } from 'react-router';
 
 import { networks } from 'config';
 import { Layout } from 'layouts/Layout';
@@ -30,6 +30,8 @@ import {
   transactionsLayout,
   transactionsRoutes,
   transactionsInPoolRoutes,
+  utilitiesLayout,
+  utilitiesRoutes,
   validatorLayout,
   validatorsRoutes
 } from './layouts';
@@ -44,6 +46,7 @@ export {
   tokensRoutes,
   transactionsRoutes,
   transactionsInPoolRoutes,
+  utilitiesRoutes,
   validatorsRoutes
 };
 export interface TitledRouteObject extends NonIndexRouteObject {
@@ -63,6 +66,7 @@ export const searchRoutes = {
 };
 
 export const routes = {
+  home: '/',
   ...accountsRoutes,
   ...applicationsRoutes,
   ...analyticsRoutes,
@@ -74,18 +78,19 @@ export const routes = {
   ...transactionsRoutes,
   ...transactionsInPoolRoutes,
   ...tokensRoutes,
+  ...utilitiesRoutes,
   ...validatorsRoutes
 };
 
 const mainRoutes: TitledRouteObject[] = [
   {
-    path: '/',
+    path: routes.home,
     title: '',
     Component: Layout,
     children: [
       { path: '*', title: 'Not Found', Component: PageNotFound },
       {
-        path: '/',
+        path: routes.home,
         title: '',
         Component: Home
       },
@@ -116,6 +121,7 @@ const mainRoutes: TitledRouteObject[] = [
       ...nftLayout,
       ...tokenLayout,
       ...transactionsLayout,
+      ...utilitiesLayout,
       ...validatorLayout,
       ...nativeTokenLayout
     ]

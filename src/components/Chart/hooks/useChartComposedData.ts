@@ -1,6 +1,8 @@
 import { useCallback, useMemo } from 'react';
+
+import { ChartComposedConfigType, MergedChartDataType } from 'types';
+
 import { getChartMergedData } from '../helpers/getChartMergedData';
-import { ChartComposedConfigType, MergedChartDataType } from '../helpers/types';
 
 export const useChartComposedData = ({
   seriesConfig

@@ -1,4 +1,4 @@
-import { DateFilterEnum } from './types';
+import { DateFilterEnum } from 'types';
 
 export const formatChartFilters = ({
   data,

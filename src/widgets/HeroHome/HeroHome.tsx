@@ -1,8 +1,16 @@
+import { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 
 import { BRAND_NAME } from 'appConstants';
-import { Search, Particles } from 'components';
+import {
+  GlobeAnimation,
+  GlobeProposerCard,
+  Search,
+  Particles,
+  useGlobeFeed
+} from 'components';
 import { networks } from 'config';
+import { getSkipAnimation } from 'helpers';
 import { useIsMainnet } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { NetworkIdEnum } from 'types';
@@ -15,7 +23,12 @@ import {
   EpochProgressRing
 } from 'widgets';
 
-export const HeroHome = () => {
+interface HeroHomeLayoutType {
+  background: ReactNode;
+  aside?: ReactNode;
+}
+
+const HeroHomeLayout = ({ background, aside }: HeroHomeLayoutType) => {
   const isMainnet = useIsMainnet();
   const { id, name } = useSelector(activeNetworkSelector);
   const explorerTitle =
@@ -26,7 +39,7 @@ export const HeroHome = () => {
 
   return (
     <div className='hero-home card card-lg card-black'>
-      <Particles />
+      {background}
       <div className='card-body d-flex flex-column justify-content-between'>
         <div className='row'>
           <div className='col-lg-6'>
@@ -51,13 +64,44 @@ export const HeroHome = () => {
                 )}
               </div>
             </div>
-            <div className='col-lg-4 d-flex flex-row align-items-end justify-content-center justify-content-lg-end mt-3 mt-lg-0 gap-spacer gap-lg-2'>
-              <BlockProgressRing />
-              <EpochProgressRing />
+            <div className='col-lg-4 d-flex flex-column align-items-center align-items-lg-end justify-content-end mt-3 mt-lg-0 gap-3'>
+              <div className='d-flex flex-row gap-spacer gap-lg-2 align-items-end'>
+                <BlockProgressRing />
+                <EpochProgressRing />
+              </div>
+              {aside}
             </div>
           </div>
         </div>
       </div>
     </div>
+  );
+};
+
+const GlobeHeroHome = () => {
+  const { markers, activeBlock, event } = useGlobeFeed();
+
+  return (
+    <HeroHomeLayout
+      background={<GlobeAnimation markers={markers} event={event} />}
+      aside={
+        <GlobeProposerCard
+          key={activeBlock?.hash}
+          block={activeBlock}
+          isLocationMatched={event?.isMatched}
+        />
+      }
+    />
+  );
+};
+
+export const HeroHome = () => {
+  const isMainnet = useIsMainnet();
+  const showGlobe = isMainnet && !getSkipAnimation();
+
+  return showGlobe ? (
+    <GlobeHeroHome />
+  ) : (
+    <HeroHomeLayout background={<Particles />} />
   );
 };

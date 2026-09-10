@@ -42,6 +42,21 @@
       display: flex;
       align-items: center;
       gap: 1rem;
+
+      mvx-explorer-link {
+        display: flex;
+        align-items: center;
+
+        .fa-arrow-up-right-from-square {
+          display: none;
+        }
+        a {
+          margin-left: 0.5rem;
+          padding: 0;
+          border: 0;
+          text-decoration: none;
+        }
+      }
     }
   }
   &-panel-mode {

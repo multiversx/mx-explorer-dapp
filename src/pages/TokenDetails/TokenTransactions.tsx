@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router';
 
 import { TransactionsTable } from 'components';
 import { useAdapter, useFetchCustomTransfers } from 'hooks';

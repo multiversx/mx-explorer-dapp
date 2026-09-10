@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Anchorme } from 'react-anchorme';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import { DetailItem, ModalLink, DataDecode } from 'components';

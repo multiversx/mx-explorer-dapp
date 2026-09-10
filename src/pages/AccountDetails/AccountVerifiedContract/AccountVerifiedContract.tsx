@@ -1,8 +1,8 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
-import { Loader, PageState } from 'components';
+import { Loader, PageState, SdkDappWrapper } from 'components';
 import { useNetworkRoute, useIsMainnet } from 'hooks';
 import { faClone } from 'icons/regular';
 import {
@@ -26,6 +26,7 @@ import {
 } from 'icons/solid';
 import { getHeaders } from 'interceptors';
 import {
+  SdkDappAccountType,
   useGetAccountInfo,
   useGetLoginInfo,
   VerifiedContractTabsEnum,
@@ -36,12 +37,13 @@ import { WithClassnameType } from 'types';
 
 import { getVerifiedContractSectionUrl } from './helpers';
 import { useGetActiveSection, useGetEnvironment } from './hooks';
-import { SdkDappWrapper } from './SdkDappWrapper';
+
+import '@multiversx/sdk-dapp-sc-explorer/out/styles.css';
 
 const ScExplorerContainer = lazy(() =>
-  import(
-    '@multiversx/sdk-dapp-sc-explorer/out/containers/ScExplorerContainer'
-  ).then((module) => ({ default: module.ScExplorerContainer }))
+  import('@multiversx/sdk-dapp-sc-explorer/out/containers/ScExplorerContainer').then(
+    (module) => ({ default: module.ScExplorerContainer })
+  )
 );
 
 export interface AccountVerifiedContractUIType extends WithClassnameType {
@@ -142,7 +144,7 @@ export const AccountVerifiedContract = ({
               <ScExplorerContainer
                 smartContract={{
                   verifiedContract: contract,
-                  deployedContractDetails: account
+                  deployedContractDetails: account as SdkDappAccountType
                 }}
                 accountConsumerHandlers={{
                   useGetLoginInfo,

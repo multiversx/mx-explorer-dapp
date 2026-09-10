@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Navigate, useParams, Outlet } from 'react-router-dom';
+import { Navigate, useParams, Outlet } from 'react-router';
 
 import { Loader } from 'components';
 import { isHash } from 'helpers';

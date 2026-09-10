@@ -1,0 +1,83 @@
+.globe-animation {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+
+  canvas {
+    display: block;
+    outline: none;
+  }
+
+  .globe-tooltip {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+    transform: translate(-50%, calc(-100% - 0.75rem));
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    background-color: var(--neutral-800);
+    color: var(--neutral-200);
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+}
+
+.globe-proposer-card {
+  position: relative;
+  width: 100%;
+  max-width: 26rem;
+  min-height: 5.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  background-color: var(--neutral-900);
+  animation: globe-proposer-card-in 0.5s ease-out;
+
+  &:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 1px;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      rgba(var(--primary-rgb), 1) 0%,
+      transparent 75%
+    );
+  }
+
+  &.is-empty {
+    display: flex;
+    align-items: center;
+  }
+
+  .globe-proposer-identity {
+    min-width: 0;
+
+    .side-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+    }
+  }
+}
+
+@keyframes globe-proposer-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -9,14 +9,10 @@ import {
   ImageWithFallback,
   Overlay
 } from 'components';
-import {
-  getPercentage,
-  stringIsFloat,
-  urlBuilder,
-  getValidLink
-} from 'helpers';
+import { getPercentage, urlBuilder, getValidLink } from 'helpers';
 import { faExternalLink, faLeaf, faReceipt, faInfinity } from 'icons/regular';
 import { faBadgeCheck } from 'icons/solid';
+import { stringIsFloat } from 'lib';
 import { ProviderType } from 'types';
 
 const minDelegation = '1000000000000000000';

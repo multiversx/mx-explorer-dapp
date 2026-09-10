@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { FormatAmount, TransactionActionBlock, Overlay } from 'components';
 import { getTransactionTokens } from 'helpers';

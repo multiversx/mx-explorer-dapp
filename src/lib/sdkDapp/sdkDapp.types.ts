@@ -1,5 +1,6 @@
 export type { InitAppType } from '@multiversx/sdk-dapp/out/methods/initApp/initApp.types';
 export type { NetworkType as NetworkConfigType } from '@multiversx/sdk-dapp/out/types/network.types';
+export type { AccountType as SdkDappAccountType } from '@multiversx/sdk-dapp/out/types/account.types';
 export type {
   DecodedDisplayType,
   TransactionTokensType

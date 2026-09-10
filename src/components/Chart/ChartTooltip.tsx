@@ -1,15 +1,17 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+
 import {
   capitalize,
   formatAmount,
   formatBigNumber,
+  formatTimestamp,
   getColors,
   usdValue
 } from 'helpers';
 import { economicsSelector } from 'redux/selectors';
-import { ChartConfigType } from './helpers/types';
+import { ChartConfigType } from 'types';
 
 export const ChartTooltip = ({
   seriesConfig,
@@ -36,7 +38,7 @@ export const ChartTooltip = ({
 }) => {
   const { isDataReady, unprocessed } = useSelector(economicsSelector);
 
-  const stackedLabelColor = getColors(['white']);
+  const [stackedLabelColor] = getColors(['white']);
 
   const formattedTotalValueStacked = new BigNumber(
     totalValueStacked ?? '0'
@@ -55,8 +57,7 @@ export const ChartTooltip = ({
           <span>
             {' '}
             {payload[0]?.payload?.timestamp
-              ? moment
-                  .unix(payload[0].payload.timestamp)
+              ? moment(formatTimestamp(payload[0].payload.timestamp))
                   .utc()
                   .format(dateFormat ?? 'D MMM YYYY')
               : label}
@@ -117,7 +118,7 @@ export const ChartTooltip = ({
                 <span
                   style={{
                     color:
-                      payload.length > 1 ? entry.color : color ?? entry.color
+                      payload.length > 1 ? entry.color : (color ?? entry.color)
                   }}
                   className='item-value'
                 >
