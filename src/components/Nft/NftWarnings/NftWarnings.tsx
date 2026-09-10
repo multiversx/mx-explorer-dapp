@@ -1,9 +1,9 @@
 import { MouseEvent } from 'react';
-import { faEye, faEyeSlash } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { Overlay } from 'components';
+import { faEye, faEyeSlash } from 'icons/solid';
 import { NftType, NftTypeEnum, WithClassnameType } from 'types';
 
 interface NftWarningsPropsType extends WithClassnameType {

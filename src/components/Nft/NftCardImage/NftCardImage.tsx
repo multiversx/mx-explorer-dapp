@@ -1,8 +1,8 @@
-import { faHexagonVerticalNft } from '@fortawesome/pro-regular-svg-icons';
-import { faEyeSlash } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ImageWithFallback } from 'components';
+import { faHexagonVerticalNft } from 'icons/regular';
+import { faEyeSlash } from 'icons/solid';
 import { NftType, NftTypeEnum } from 'types';
 
 interface NftCardImagePropsType {

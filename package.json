@@ -137,5 +137,19 @@
     "@fortawesome/pro-light-svg-icons": "6.7.2",
     "@fortawesome/pro-regular-svg-icons": "6.7.2",
     "@fortawesome/pro-solid-svg-icons": "6.7.2"
+  },
+  "peerDependenciesMeta": {
+    "@fortawesome/pro-duotone-svg-icons": {
+      "optional": true
+    },
+    "@fortawesome/pro-light-svg-icons": {
+      "optional": true
+    },
+    "@fortawesome/pro-regular-svg-icons": {
+      "optional": true
+    },
+    "@fortawesome/pro-solid-svg-icons": {
+      "optional": true
+    }
   }
 }
