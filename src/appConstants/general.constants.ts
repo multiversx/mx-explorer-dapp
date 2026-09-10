@@ -5,7 +5,7 @@ export const MAIN_SHARD_ID = 4294967293;
 export const ALL_SHARDS_SHARD_ID = 4294967280;
 
 export const TIMEOUT = 10000;
-export const REFRESH_RATE = 6000;
+export const REFRESH_RATE = 600;
 
 export const SUPERNOVA_REFRESH_RATE = 600;
 export const POOLING_REFRESH_RATE_LIMIT = 1000;
