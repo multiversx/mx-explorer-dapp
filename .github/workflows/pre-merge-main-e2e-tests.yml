@@ -18,7 +18,7 @@ jobs:
           SLACK_TITLE: 'Cypress'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
-  build-and-deploy:
+  cypress-run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -58,68 +58,14 @@ jobs:
         run: aws s3 sync ./build/ s3://${{ secrets.AWS_S3_BUCKET_INTEGRATION }} --delete
       - name: No-cache index.html
         run: aws s3 cp s3://${{ secrets.AWS_S3_BUCKET_INTEGRATION }}/index.html s3://${{ secrets.AWS_S3_BUCKET_INTEGRATION }}/index.html --metadata-directive REPLACE --cache-control max-age=0,no-cache,no-store,must-revalidate --content-type text/html --acl public-read
-
-  cypress-run:
-    needs: build-and-deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Use Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-      - name: Install pnpm
-        run: npm install -g pnpm
-      - name: Setup Icons
-        run: |
-          npm config set @fortawesome:registry https://npm.fontawesome.com/
-          npm config set //npm.fontawesome.com/:_authToken ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Resolve previous attempt
-        id: previous-attempt
-        if: ${{ github.run_attempt > 1 }}
-        env:
-          RUN_ATTEMPT: ${{ github.run_attempt }}
-        run: echo "number=$((RUN_ATTEMPT - 1))" >> "$GITHUB_OUTPUT"
-      - name: Download failed specs from previous attempt
-        if: ${{ github.run_attempt > 1 }}
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: failed-specs-attempt-${{ steps.previous-attempt.outputs.number }}
-      - name: Select specs to run
-        id: select-specs
-        env:
-          PREVIOUS_ATTEMPT: ${{ steps.previous-attempt.outputs.number }}
-        run: |
-          if [ -s failed-specs.txt ]; then
-            echo "Re-running only the specs that failed on attempt $PREVIOUS_ATTEMPT:"
-            cat failed-specs.txt
-            echo "spec=$(paste -sd, failed-specs.txt)" >> "$GITHUB_OUTPUT"
-          else
-            echo 'No previous failures recorded, running the full suite.'
-          fi
       - name: Cypress run
-        uses: cypress-io/github-action@v4
-        with:
-          command: pnpm cy:run
-        env:
-          E2E_SPEC: ${{ steps.select-specs.outputs.spec }}
-      - name: Uploading failed specs
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: failed-specs-attempt-${{ github.run_attempt }}
-          path: failed-specs.txt
-          if-no-files-found: ignore
+        uses: cypress-io/github-action@v7
       - name: Uploading artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: cypress-execution-report-attempt-${{ github.run_attempt }}
+          name: cypress-execution-report
           path: |
-            mochawesome-report/mochawesome.html
-            cypress/screenshots
-            cypress/videos
+            /home/runner/work/mx-explorer-dapp/mx-explorer-dapp/mochawesome-report/mochawesome.html
+            /home/runner/work/mx-explorer-dapp/mx-explorer-dapp/cypress/screenshots
+            /home/runner/work/mx-explorer-dapp/mx-explorer-dapp/cypress/videos
