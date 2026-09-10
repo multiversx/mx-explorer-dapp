@@ -1,8 +1,6 @@
 name: deploy-testnet
 
 on:
-  push:
-    branches: [development]
   repository_dispatch:
     types: deploy-testnet
   workflow_dispatch:

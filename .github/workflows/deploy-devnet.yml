@@ -1,8 +1,6 @@
 name: deploy-devnet
 
 on:
-  push:
-    branches: [development]
   repository_dispatch:
     types: deploy-devnet
   workflow_dispatch:
