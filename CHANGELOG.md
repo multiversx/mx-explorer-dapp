@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- ## [[2.4.0](https://github.com/multiversx/mx-explorer-dapp/pull/234)] - 2026-09-10
+- ## [[2.4.0](https://github.com/multiversx/mx-explorer-dapp/pull/235)] - 2026-09-10
 
+- [Deploy Actions](https://github.com/multiversx/mx-explorer-dapp/pull/234)
 - [Hero Animation](https://github.com/multiversx/mx-explorer-dapp/pull/232)
 - [NFT Display](https://github.com/multiversx/mx-explorer-dapp/pull/230)
 - [React v19](https://github.com/multiversx/mx-explorer-dapp/pull/229)
