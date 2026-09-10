@@ -6,7 +6,10 @@ import { useNavigate } from 'react-router';
 import { useDebounce, useSearch } from 'hooks';
 import { setSearch } from 'redux/slices';
 
-import { useGetSearchRedirectRoute } from './useGetSearchRedirectRoute';
+import {
+  useGetRedirectRoute,
+  useGetSearchRedirectRoute
+} from './useGetSearchRedirectRoute';
 import { handleArrowDown, handleArrowUp, useOutsideClick } from '../helpers';
 
 interface HandleInputProps {
@@ -25,6 +28,7 @@ export const useHandleInput = ({ inputRef, wrapperRef }: HandleInputProps) => {
 
   const onDebounceInputChange = useDebounce(searchHash, 600);
 
+  const getRedirectRoute = useGetRedirectRoute();
   const redirectRoute = useGetSearchRedirectRoute();
 
   useEffect(
@@ -32,16 +36,22 @@ export const useHandleInput = ({ inputRef, wrapperRef }: HandleInputProps) => {
     [onDebounceInputChange]
   );
 
+  const submitSearch = async () => {
+    const results = await search();
+    const route = results ? getRedirectRoute(results) : redirectRoute;
+
+    if (route) {
+      dispatch(
+        setSearch({ search: {}, searchQuery: '', isDataReady: undefined })
+      );
+      navigate(route);
+    }
+  };
+
   const handleKeyDown = async (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      await search();
-      if (redirectRoute) {
-        dispatch(
-          setSearch({ search: {}, searchQuery: '', isDataReady: undefined })
-        );
-        navigate(redirectRoute);
-      }
+      await submitSearch();
     }
     if (e.key === 'Escape') {
       e.preventDefault();
@@ -76,18 +86,7 @@ export const useHandleInput = ({ inputRef, wrapperRef }: HandleInputProps) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    search();
-
-    if (redirectRoute) {
-      dispatch(
-        setSearch({
-          search: {},
-          searchQuery: '',
-          isDataReady: undefined
-        })
-      );
-      navigate(redirectRoute);
-    }
+    submitSearch();
   };
 
   const handleDebouncedChange = (value: string) => {
