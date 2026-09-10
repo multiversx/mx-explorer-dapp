@@ -1,6 +1,6 @@
 allowBuilds:
   '@parcel/watcher': false
-  cypress: false
+  cypress: true
   keccak: false
   protobufjs: false
   unrs-resolver: false
