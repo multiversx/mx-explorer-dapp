@@ -1,23 +1,19 @@
 import { useSelector } from 'react-redux';
 
 import { Loader, PageState } from 'components';
-import { isContract } from 'helpers';
+
 import { faChartBar } from 'icons/regular';
 import { accountExtraSelector } from 'redux/selectors';
 
 import {
   AccountAnalyticsTrimmed,
   AccountHeatmap,
-  AccountNeighbors,
-  ActivityCards,
-  ApplicationActivity,
-  AppUsers
+  ActivityCards
 } from './components';
 
 export const AccountAnalyticsOverview = () => {
   const { accountExtra } = useSelector(accountExtraSelector);
-  const { accountTransactions, accountTransactionsFetched, address } =
-    accountExtra;
+  const { accountTransactions, accountTransactionsFetched } = accountExtra;
 
   if (accountTransactionsFetched === undefined) {
     return <Loader />;
@@ -42,24 +38,6 @@ export const AccountAnalyticsOverview = () => {
       <ActivityCards />
       <AccountHeatmap />
       <AccountAnalyticsTrimmed />
-      <div className='row mt-spacer'>
-        {isContract(address) ? (
-          <>
-            <div className='col-12 col-lg-6'>
-              <AppUsers />
-            </div>
-          </>
-        ) : (
-          <>
-            <div className='col-12 col-lg-6 mb-spacer mb-lg-0'>
-              <ApplicationActivity />
-            </div>
-            <div className='col-12 col-lg-6'>
-              <AccountNeighbors />
-            </div>
-          </>
-        )}
-      </div>
     </>
   );
 };
