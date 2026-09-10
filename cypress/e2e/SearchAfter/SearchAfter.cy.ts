@@ -54,12 +54,20 @@ describe('searchAfter cursor pagination', () => {
   });
 
   it('walks forward then back across cursor pages', () => {
+    let txAtWall: string;
+
     visitTransactions('?page=400');
     cy.wait('@txs');
+    firstTxHref().then((href) => {
+      txAtWall = String(href);
+    });
 
     cy.get('[data-testid="nextPageButton"]').first().click();
     cy.url().should('include', 'page=401');
     cy.wait('@txs');
+    firstTxHref().should((href) => {
+      expect(String(href)).to.not.equal(txAtWall);
+    });
 
     firstTxHref().then((txAt401) => {
       cy.get('[data-testid="nextPageButton"]').first().click();
