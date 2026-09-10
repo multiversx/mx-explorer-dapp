@@ -129,27 +129,28 @@ export const networkBaseSchema = object({
 export const adapterSchema = object({
   extrasApi: string().when('accessToken', {
     is: true,
-    then: string().required()
+    then: (currentSchema) => currentSchema.required()
   }),
   adapter: string().defined().oneOf(['api', 'elastic']),
   apiAddress: string().when('adapter', {
     is: 'api',
-    then: string().required()
+    then: (currentSchema) => currentSchema.required()
   }),
   growthApi: string().when('adapter', {
     is: 'api',
-    then: string().when('id', {
-      is: 'mainnet',
-      then: string().required()
-    })
+    then: (currentSchema) =>
+      currentSchema.when('id', {
+        is: 'mainnet',
+        then: (nestedSchema) => nestedSchema.required()
+      })
   }),
   elasticUrl: string().when('adapter', {
     is: 'elastic',
-    then: string().required()
+    then: (currentSchema) => currentSchema.required()
   }),
   proxyUrl: string().when('adapter', {
     is: 'elastic',
-    then: string().required()
+    then: (currentSchema) => currentSchema.required()
   })
 }).required();
 

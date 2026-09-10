@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { NATIVE_TOKEN_SEARCH_LABEL } from 'appConstants';
 import { TransactionsTable } from 'components';

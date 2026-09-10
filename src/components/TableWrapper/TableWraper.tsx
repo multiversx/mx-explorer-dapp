@@ -10,7 +10,7 @@ export const TableWrapper = ({
   dataChanged = false,
   children
 }: TableWrapperType) => {
-  const timeoutRef = useRef<any>();
+  const timeoutRef = useRef<any>(undefined);
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
   const hide = () => {

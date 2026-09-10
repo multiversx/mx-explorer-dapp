@@ -19,8 +19,10 @@ const getNumberFlowFormat = (digits: number) => {
   return numberFlowFormats[digits];
 };
 
-export interface FormatDisplayValueUIType
-  extends Omit<FormatAmountUIType, 'value'> {
+export interface FormatDisplayValueUIType extends Omit<
+  FormatAmountUIType,
+  'value'
+> {
   formattedValue: string | number;
   completeValue: string | number;
   symbol?: React.ReactNode;

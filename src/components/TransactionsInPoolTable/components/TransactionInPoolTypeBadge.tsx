@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { isTouchDevice } from 'helpers';
 import { useGetTransactionInPoolFilters } from 'hooks';

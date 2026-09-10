@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
+
 import { formatAmount, formatBigNumber } from 'helpers';
-import { ChartAxisType } from './types';
+import { ChartAxisType } from 'types';
 
 export const formatYAxis = ({
   tick: tickValue,

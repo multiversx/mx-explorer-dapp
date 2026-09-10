@@ -1,6 +1,8 @@
 import moment from 'moment';
+
+import { formatTimestamp } from 'helpers';
+import { ChartDataType } from 'types';
 import { getFrequency, getIntervalDates } from './getChartBinnedData';
-import { ChartDataType } from './types';
 
 export const getTimeTicks = (data: ChartDataType[], total: number) => {
   const frequency = getFrequency(data);
@@ -16,8 +18,7 @@ export const getTimeTicks = (data: ChartDataType[], total: number) => {
 
   for (let i = 1; i < total - 1; i++) {
     current = Number(
-      moment
-        .unix(current)
+      moment(formatTimestamp(current))
         .add(i * velocity, frequency)
         .format('X')
     );

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router';
 
 import {
   CURSOR_HISTORY_STORAGE_KEY,

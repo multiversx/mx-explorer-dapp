@@ -1,12 +1,12 @@
 import { JSXElementConstructor, memo, ReactElement } from 'react';
 import { ResponsiveContainer, LineChart } from 'recharts';
-import { MergedChartDataType } from './helpers/types';
+import { MergedChartDataType } from 'types';
 
 interface ChartLineContainerUIType {
   children: ReactElement<unknown, string | JSXElementConstructor<any>>;
   data: MergedChartDataType[];
-  width?: string | number;
-  height?: string | number;
+  width?: number | `${number}%`;
+  height?: number | `${number}%`;
 }
 
 export const ChartLineContainer = memo(

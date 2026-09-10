@@ -188,3 +188,43 @@ a > .cursor-context {
     display: none;
   }
 }
+
+.btn-xs {
+  --btn-padding-y: 0.125rem;
+  --btn-padding-x: 0.5rem;
+}
+
+.interaction-table {
+  tr {
+    th:first-of-type {
+      padding-left: 0.75rem;
+    }
+  }
+  .preview-row.has-preview {
+    td:first-of-type {
+      padding-left: 0;
+      text-align: center;
+    }
+    .index,
+    .preview-button {
+      width: 1.75rem;
+      height: 1.625rem;
+      margin-top: -1.125rem;
+      margin-bottom: -1.125rem;
+    }
+    .index {
+      display: inline-block;
+    }
+    .preview-button {
+      display: none;
+    }
+    &:hover {
+      .index {
+        display: none;
+      }
+      .preview-button {
+        display: inline-block;
+      }
+    }
+  }
+}

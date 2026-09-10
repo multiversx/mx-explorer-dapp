@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { PROVIDERS_FIELDS } from 'appConstants';
-import { ProvidersTable, Loader, PageState, ExpandRow } from 'components';
+import { ProvidersTable, Loader, PageState } from 'components';
 import {
   sortProviders,
   SortProviderFieldEnum

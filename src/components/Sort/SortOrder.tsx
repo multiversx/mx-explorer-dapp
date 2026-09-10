@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { faSort, faSortDown, faSortUp } from 'icons/duotone';
 import { SortOrderEnum, TableFilterUIType } from 'types';

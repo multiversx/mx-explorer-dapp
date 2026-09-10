@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { cleanUrlFilters, getUrlParam } from 'helpers';
 import { TransactionApiStatusEnum, TransactionFiltersEnum } from 'types';
@@ -29,6 +29,7 @@ export const useGetTransactionFilters = () => {
     receiverShard,
     sender: getParam(TransactionFiltersEnum.sender),
     receiver: getParam(TransactionFiltersEnum.receiver),
+    senderOrReceiver: getParam(TransactionFiltersEnum.senderOrReceiver),
     before: getParam(TransactionFiltersEnum.before, { checkIsInteger: true }),
     after: getParam(TransactionFiltersEnum.after, { checkIsInteger: true }),
     status: checkStatus(status),

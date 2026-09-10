@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 import { FormatAmountUIType } from 'components';
 import { DIGITS } from 'config';
-import { formatAmount, stringIsFloat, formatBigNumber } from 'helpers';
+import { formatAmount, formatBigNumber } from 'helpers';
+import { stringIsFloat } from 'lib';
 import { economicsSelector } from 'redux/selectors';
 import { FormatDisplayValue } from '../FormatDisplayValue';
 

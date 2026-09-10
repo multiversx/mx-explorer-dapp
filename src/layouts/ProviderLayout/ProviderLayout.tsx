@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, Outlet } from 'react-router-dom';
+import { useParams, Outlet } from 'react-router';
 
 import { NODE_STATUS_PREVIEW_FIELDS, MAX_RESULTS } from 'appConstants';
 import { Loader, NodesOverview, PageState, SharedIdentity } from 'components';

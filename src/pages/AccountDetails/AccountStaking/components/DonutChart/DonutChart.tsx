@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 
 import { FormatAmount, FormatUSD, Chart } from 'components';
-import { ChartConfigType } from 'components/Chart/helpers/types';
 import { DECIMALS } from 'config';
 import { accountStakingSelector } from 'redux/selectors';
+import { ChartConfigType } from 'types';
 
 import { prepareChartData } from './helpers/prepareChartData';
 

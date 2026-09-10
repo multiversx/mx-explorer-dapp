@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { Overlay } from 'components';
 import { isEllipsisActive, isTouchDevice } from 'helpers';

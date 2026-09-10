@@ -18,6 +18,7 @@ export * from './network.types';
 export * from './nft.types';
 export * from './node.types';
 export * from './nodesVersions.types';
+export * from './search.types';
 export * from './stake.types';
 export * from './stats.types';
 export * from './token.types';

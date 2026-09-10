@@ -1,5 +1,6 @@
 import moment from 'moment';
-import { ChartDataType } from './types';
+
+import { ChartDataType } from 'types';
 
 export const formatDataCharts = (
   data: { value: number; time: string }[]

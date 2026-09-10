@@ -11,6 +11,18 @@
   &-select {
     border-radius: 1rem;
   }
+  &-input-group {
+    color: var(--primary);
+    &-append-icon {
+      top: auto !important;
+      bottom: auto !important;
+      align-self: center;
+      svg {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+      }
+    }
+  }
   &-input-group-append.input-group-text {
     top: 0;
     padding: 0.438rem;

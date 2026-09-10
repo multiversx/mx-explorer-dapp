@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ## [[2.4.0](https://github.com/multiversx/mx-explorer-dapp/pull/234)] - 2026-09-10
+
+- [Hero Animation](https://github.com/multiversx/mx-explorer-dapp/pull/232)
+- [NFT Display](https://github.com/multiversx/mx-explorer-dapp/pull/230)
+- [React v19](https://github.com/multiversx/mx-explorer-dapp/pull/229)
+- [Explorer Utils](https://github.com/multiversx/mx-explorer-dapp/pull/226)
+- [Account Analytics](https://github.com/multiversx/mx-explorer-dapp/pull/212)
+- [Search Suggestions](https://github.com/multiversx/mx-explorer-dapp/pull/211)
+
 - ## [[2.3.7](https://github.com/multiversx/mx-explorer-dapp/pull/228)] - 2026-09-03
 
 - [Performance improvements pt2](https://github.com/multiversx/mx-explorer-dapp/pull/227)

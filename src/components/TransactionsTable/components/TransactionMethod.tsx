@@ -1,7 +1,7 @@
 import { useRef, useState, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { Overlay } from 'components';
 import { getTransactionMethod, isEllipsisActive, isTouchDevice } from 'helpers';
@@ -38,7 +38,7 @@ export const TransactionMethod = ({
 
   const showDescription = Boolean(
     transaction.action?.description &&
-      transaction.action.description !== 'Transfer'
+    transaction.action.description !== 'Transfer'
   );
   const showTooltip = showDescription || isTextTruncated;
 

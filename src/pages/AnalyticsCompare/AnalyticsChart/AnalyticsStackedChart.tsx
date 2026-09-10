@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { PageState, Chart, Loader } from 'components';
-import { ChartConfigType, ChartListType } from 'components/Chart/helpers/types';
 import { getColors } from 'helpers';
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
-import { ChartResolutionRangeType } from 'types';
-
-import { ChartResolutionSelector } from './components/ChartResolution';
+import {
+  ChartResolutionRangeType,
+  ChartConfigType,
+  ChartListType
+} from 'types';
 
 import { RANGE } from '../constants';
+import { ChartResolutionSelector } from './components/ChartResolution';
 
 export interface AnalyticsStackedChartDataType {
   value: string;

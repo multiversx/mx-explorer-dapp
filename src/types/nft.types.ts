@@ -14,6 +14,11 @@ export enum NftSubtypeEnum {
   DynamicMetaESDT = 'DynamicMetaESDT'
 }
 
+export enum NftDisplayEnum {
+  list = 'list',
+  table = 'table'
+}
+
 export interface NftType {
   identifier: string;
   collection: string;
@@ -79,6 +84,8 @@ export interface NftType {
   };
   scamInfo?: ScamInfoType;
   isVerified?: boolean;
+  isNsfw?: boolean;
+  isScam?: boolean;
   searchAfter?: string;
 }
 

@@ -3,8 +3,8 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, Dot } from 'recharts';
 
 import { ChartSimpleTooltip } from 'components/Chart/ChartSimpleTooltip';
 import { ChartTooltip } from 'components/Chart/ChartTooltip';
-import { ChartConfigType } from 'components/Chart/helpers/types';
 import { getPrimaryColor } from 'helpers';
+import { ChartConfigType } from 'types';
 
 import { ChartAreaPropsType } from './types';
 

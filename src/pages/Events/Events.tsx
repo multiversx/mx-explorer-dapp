@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { EventsTable } from 'components';
 import { useAdapter, useGetPage, useFetchEvents } from 'hooks';

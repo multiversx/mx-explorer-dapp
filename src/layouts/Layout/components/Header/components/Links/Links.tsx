@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { Dropdown, Nav, Navbar } from 'react-bootstrap';
+import { Dropdown, Navbar } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router';
 
 import { NetworkLink } from 'components';
 import { isContract, addressIsBech32 } from 'helpers';
@@ -26,7 +26,8 @@ import {
   nftRoutes,
   collectionRoutes,
   analyticsRoutes,
-  eventsRoutes
+  eventsRoutes,
+  utilitiesRoutes
 } from 'routes';
 
 import { LinksPropsType, MenuLinkType } from './types';
@@ -142,6 +143,26 @@ export const Links = (props: LinksPropsType) => {
       to: analyticsRoutes.analytics,
       show: isAdapterAPI && isMainnet && hasGrowthWidgets,
       activeRoutes: Object.values(analyticsRoutes)
+    },
+    {
+      label: 'Utilities',
+      show: true,
+      to: utilitiesRoutes.converters,
+      activeRoutes: Object.values(utilitiesRoutes),
+      subRoutes: [
+        {
+          label: 'Converters',
+          show: true,
+          to: utilitiesRoutes.converters,
+          activeRoutes: [utilitiesRoutes.converters]
+        },
+        {
+          label: 'Smart Contract Interaction',
+          show: true,
+          to: utilitiesRoutes.smartContractInteraction,
+          activeRoutes: [utilitiesRoutes.smartContractInteraction]
+        }
+      ]
     }
   ].filter((link) => link.show);
 
@@ -201,9 +222,9 @@ export const Links = (props: LinksPropsType) => {
                   }}
                 >
                   <Dropdown.Toggle
-                    as={Nav.Link}
                     id={`dropdown-${link.label}`}
                     aria-label={`${link.label} submenu`}
+                    className='nav-link btn btn-link-unstyled'
                   >
                     <FontAwesomeIcon icon={faAngleDown} size='sm' />
                   </Dropdown.Toggle>

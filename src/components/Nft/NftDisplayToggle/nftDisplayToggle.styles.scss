@@ -1,0 +1,34 @@
+.nft-display-toggle {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.75rem;
+  background-color: var(--neutral-800);
+  padding: 0.25rem;
+  gap: 0.25rem;
+
+  .nft-display-toggle-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 200ms ease;
+    cursor: pointer;
+    line-height: 1;
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    color: var(--primary-200);
+    border-radius: 0.5rem;
+    background-color: transparent;
+
+    &:hover {
+      color: var(--neutral-100);
+      background-color: var(--neutral-700);
+    }
+
+    &.active {
+      color: var(--neutral-100);
+      background-color: var(--black);
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+}

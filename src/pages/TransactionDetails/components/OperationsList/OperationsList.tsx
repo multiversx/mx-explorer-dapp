@@ -85,7 +85,7 @@ const OperationBlock = ({
   operation: TransactionOperationType;
   action?: string;
   isFullSize?: boolean;
-  direction?: TransactionDirectionEnum;
+  direction?: TransactionDirectionEnum | null;
   isFirst?: boolean;
 }) => {
   let operationAssets;

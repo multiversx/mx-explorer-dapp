@@ -17,6 +17,8 @@ const schema = object({
 
 const MARKERS_RETRY_DELAY = 1500;
 
+let isFetching = false;
+
 export const useFetchMarkers = () => {
   const dispatch = useDispatch();
   const markerUrl = import.meta.env.VITE_APP_MARKERS_API_URL;
@@ -24,10 +26,11 @@ export const useFetchMarkers = () => {
   const { isDataReady } = useSelector(markersSelector);
 
   useEffect(() => {
-    if (isDataReady || !markerUrl) {
+    if (isDataReady || !markerUrl || isFetching) {
       return;
     }
 
+    isFetching = true;
     const controller = new AbortController();
     let retryTimeoutId: ReturnType<typeof setTimeout> | undefined;
 
@@ -44,10 +47,14 @@ export const useFetchMarkers = () => {
                 () => fetchMarkers(true),
                 MARKERS_RETRY_DELAY
               );
+            } else {
+              isFetching = false;
             }
 
             return;
           }
+
+          isFetching = false;
 
           schema
             .validate((data as any)[Object.keys(data)[0]], { strict: true })
@@ -71,6 +78,7 @@ export const useFetchMarkers = () => {
     return () => {
       controller.abort();
       clearTimeout(retryTimeoutId);
+      isFetching = false;
     };
   }, []);
 };

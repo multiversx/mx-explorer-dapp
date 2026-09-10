@@ -10,10 +10,10 @@ export const isValidTokenPrice = ({
 }: TokenType) => {
   return Boolean(
     price &&
-      marketCap &&
-      (!isLowLiquidity ||
-        new BigNumber(marketCap).isLessThan(
-          LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
-        ))
+    marketCap &&
+    (!isLowLiquidity ||
+      new BigNumber(marketCap).isLessThan(
+        LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
+      ))
   );
 };

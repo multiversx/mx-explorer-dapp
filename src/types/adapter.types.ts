@@ -9,13 +9,13 @@ export enum NetworkAdapterEnum {
 export interface AxiosParamsApiType {
   signal?: any;
   timeout?: any;
+  fields?: string;
   headers?: AxiosRequestConfig['headers'];
 }
 
 export interface BaseApiType extends AxiosParamsApiType {
   page?: number;
   size?: number;
-  fields?: string;
   extract?: string;
   // not on api
   isCount?: boolean;

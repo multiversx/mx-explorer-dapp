@@ -12,5 +12,3 @@ export * from './isUpdatesWebsocketInactive';
 export * from './isUtf8';
 export * from './isValidAccountTokenValue';
 export * from './isValidTokenPrice';
-export * from './stringIsFloat';
-export * from './stringIsInteger';

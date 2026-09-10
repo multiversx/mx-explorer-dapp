@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
+
+import { formatTimestamp } from 'helpers';
 import styles from './styles.module.scss';
 
 export const ChartSimpleTooltip = (props: any) => {
@@ -22,7 +24,9 @@ export const ChartSimpleTooltip = (props: any) => {
       <div className={styles.wrapper}>
         {item?.payload?.timestamp ? (
           <span className={styles.date}>
-            {moment.unix(item.payload.timestamp).utc().format('MMM DD, YYYY')}
+            {moment(formatTimestamp(item.payload.timestamp))
+              .utc()
+              .format('MMM DD, YYYY')}
           </span>
         ) : (
           ''

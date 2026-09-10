@@ -26,8 +26,8 @@ export const NodeStatusCategory = ({
   const filteredNodes = nodes.filter((node) => {
     const isNotExcluded = Boolean(
       excludedStatuses &&
-        excludedStatuses.length > 0 &&
-        !excludedStatuses.includes(node.status)
+      excludedStatuses.length > 0 &&
+      !excludedStatuses.includes(node.status)
     );
     const isRequiredStatus = status && status === node.status;
 

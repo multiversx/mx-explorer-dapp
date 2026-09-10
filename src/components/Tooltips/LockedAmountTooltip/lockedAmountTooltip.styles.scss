@@ -1,10 +1,10 @@
 .locked-amount-tooltip {
-  --tooltip-opacity: 1;
-  --tooltip-bg: var(--card-bg);
+  --bs-tooltip-opacity: 1;
+  --bs-tooltip-bg: var(--card-bg);
 
   .tooltip-arrow {
     &::before {
-      --tooltip-bg: var(--border-color);
+      --bs-tooltip-bg: var(--border-color);
     }
   }
   .tooltip-inner {

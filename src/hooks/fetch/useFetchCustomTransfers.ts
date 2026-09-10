@@ -8,8 +8,10 @@ import { setCustomTransfers } from 'redux/slices';
 import { TransactionType } from 'types';
 import { FetchApiDataProps, useFetchApiData } from './useFetchApiData';
 
-export interface FetchCustomTransfersProps
-  extends Omit<FetchApiDataProps, 'onApiData'> {
+export interface FetchCustomTransfersProps extends Omit<
+  FetchApiDataProps,
+  'onApiData'
+> {
   uuid?: string;
 }
 

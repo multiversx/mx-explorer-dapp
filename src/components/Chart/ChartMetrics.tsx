@@ -1,4 +1,4 @@
-import { MetricType } from './helpers/types';
+import { MetricType } from 'types';
 
 export const ChartMetrics = ({ metrics }: { metrics: MetricType[] }) => {
   return (
