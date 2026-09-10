@@ -1,11 +1,9 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera, Vector3 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const IDLE_RESUME_DELAY = 1000;
-const MIN_DISTANCE = 2.4;
-const MAX_DISTANCE = 5;
 const HIT_RADIUS_FACTOR = 1.08;
 
 const isCoarsePointer = () =>
@@ -13,10 +11,7 @@ const isCoarsePointer = () =>
 
 export const GlobeControls = () => {
   const { camera, gl, size } = useThree();
-  const controls = useMemo(
-    () => new OrbitControls(camera, gl.domElement),
-    [camera, gl]
-  );
+  const controlsRef = useRef<OrbitControls | null>(null);
 
   useEffect(() => {
     if (!(camera instanceof PerspectiveCamera)) {
@@ -28,11 +23,11 @@ export const GlobeControls = () => {
   }, [camera, size.width, size.height]);
 
   useEffect(() => {
+    const controls = new OrbitControls(camera, gl.domElement);
+    controlsRef.current = controls;
+
     controls.enablePan = false;
-    controls.enableZoom = true;
-    controls.zoomSpeed = 0.6;
-    controls.minDistance = MIN_DISTANCE;
-    controls.maxDistance = MAX_DISTANCE;
+    controls.enableZoom = false;
     controls.rotateSpeed = 0.5;
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
@@ -83,7 +78,7 @@ export const GlobeControls = () => {
       controls.enabled = isEnabled;
       gl.domElement.style.cursor = isEnabled ? 'grab' : '';
     };
-    const gatedEvents = ['pointermove', 'pointerdown', 'wheel'] as const;
+    const gatedEvents = ['pointermove', 'pointerdown'] as const;
 
     controls.addEventListener('start', onStart);
     controls.addEventListener('end', onEnd);
@@ -99,11 +94,12 @@ export const GlobeControls = () => {
         gl.domElement.removeEventListener(type, gateControls, true);
       });
       controls.dispose();
+      controlsRef.current = null;
     };
-  }, [controls, camera, gl]);
+  }, [camera, gl]);
 
   useFrame(() => {
-    controls.update();
+    controlsRef.current?.update();
   });
 
   return null;
