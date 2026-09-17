@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix Epoch Remaining Time](https://github.com/multiversx/mx-explorer-dapp/pull/236)
+
 - ## [[2.4.0](https://github.com/multiversx/mx-explorer-dapp/pull/235)] - 2026-09-10
 
 - [Deploy Actions](https://github.com/multiversx/mx-explorer-dapp/pull/234)

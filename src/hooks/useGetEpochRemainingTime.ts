@@ -28,7 +28,7 @@ export const useGetEpochRemainingTime = () => {
   const { epoch } = stats;
 
   const currentTimestamp = useMemo(
-    () => moment().unix() + unprocessedEpochTimeRemaining / 1000,
+    () => Math.round(moment().unix() + unprocessedEpochTimeRemaining / 1000),
     [refreshTrigger]
   );
   const remainingTime = useGetRemainingTime({
