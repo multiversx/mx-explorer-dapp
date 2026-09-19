@@ -5,14 +5,14 @@ import { ResponsiveContainer, PieChart, Pie, Sector, Cell } from 'recharts';
 
 import { FormatUSD } from 'components';
 import { usdValue } from 'helpers';
-
 import { economicsSelector, activeNetworkSelector } from 'redux/selectors';
+import { ChartProps } from 'types';
+
 import { getProviderColor } from './helpers/getEntryColor';
-import { ChartProps } from './helpers/types';
 
 const RenderActiveShape = (props: any) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
-  const { isFetched, unprocessed } = useSelector(economicsSelector);
+  const { isDataReady, unprocessed } = useSelector(economicsSelector);
 
   const RADIAN = Math.PI / 180;
 
@@ -103,7 +103,7 @@ const RenderActiveShape = (props: any) => {
       >
         {payload.displayValue ?? new BigNumber(value).toFormat()} {egldLabel}
       </text>
-      {isFetched && (
+      {isDataReady && (
         <text
           x={ex + (cos >= 0 ? 1 : -1) * 12}
           y={ey}
@@ -128,7 +128,7 @@ export const ChartDonut = ({ config }: ChartProps) => {
   const { egldLabel } = useSelector(activeNetworkSelector);
   const { unprocessed } = useSelector(economicsSelector);
   const chartData = config[0].data;
-  const previousActiveIndex = useRef<number | undefined>();
+  const previousActiveIndex = useRef<number | undefined>(undefined);
   const [activeIndex, setActiveIndex] = useState<number | undefined>(0);
 
   const onPieEnter = (_: any, index: number) => {
@@ -163,7 +163,6 @@ export const ChartDonut = ({ config }: ChartProps) => {
       <ResponsiveContainer width='100%' height='100%'>
         <PieChart>
           <Pie
-            activeIndex={activeIndex}
             activeShape={<RenderActiveShape />}
             data={chartData}
             cx='50%'

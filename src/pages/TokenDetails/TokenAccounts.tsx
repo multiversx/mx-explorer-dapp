@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
-import { LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD } from 'appConstants';
 import { AccountsTable } from 'components';
+import { isValidTokenPrice } from 'helpers';
 import { useAdapter, useGetPage } from 'hooks';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
 import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
@@ -15,15 +14,13 @@ export const TokenDetailsAccounts = () => {
   const { token } = useSelector(tokenSelector);
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const { getTokenAccounts, getTokenAccountsCount } = useAdapter();
 
   const {
     identifier,
     price,
-    marketCap,
     supply,
-    isLowLiquidity,
     decimals,
     accounts: totalAccounts
   } = token;
@@ -34,8 +31,8 @@ export const TokenDetailsAccounts = () => {
 
   const fetchAccounts = () => {
     Promise.all([
-      getTokenAccounts({ tokenId: identifier, page, size }),
-      getTokenAccountsCount({ tokenId: identifier })
+      getTokenAccounts({ token: identifier, page, size, searchAfter }),
+      getTokenAccountsCount({ token: identifier })
     ]).then(([tokenAccountsData, tokenAccountsCountData]) => {
       if (tokenAccountsData.success && tokenAccountsCountData.success) {
         setAccounts(tokenAccountsData.data);
@@ -51,14 +48,7 @@ export const TokenDetailsAccounts = () => {
     fetchAccounts();
   }, [activeNetworkId, totalAccounts, searchParams, identifier]);
 
-  const showValue = Boolean(
-    price &&
-      marketCap &&
-      (!isLowLiquidity ||
-        new BigNumber(marketCap).isLessThan(
-          LOW_LIQUIDITY_MARKET_CAP_DISPLAY_TRESHOLD
-        ))
-  );
+  const showValue = isValidTokenPrice(token);
 
   return (
     <AccountsTable

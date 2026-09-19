@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { MAX_TRANSACTIONS_PAGE_SIZE } from 'appConstants';
 import {
   Pager,
@@ -28,14 +30,26 @@ export const TransactionsTable = ({
       Live Transactions <MethodList />
     </h5>
   ),
-  showDirectionCol = false,
-  showLockedAccounts = false,
-  dataChanged = false,
-  isScResultsTable = false,
+  showDirectionCol,
+  showLockedAccounts,
+  dataChanged,
+  isScResultsTable,
+  hasPauseButton,
+  hasTxPreviewBtn = true,
   isDataReady,
   inactiveFilters = [TransactionFiltersEnum.isRelayed]
 }: TransactionTableType) => {
-  const colSpan = showDirectionCol ? 8 : 7;
+  const colSpan = useMemo(() => {
+    let colspan = 7;
+    if (showDirectionCol) {
+      colspan++;
+    }
+    if (hasTxPreviewBtn) {
+      colspan++;
+    }
+
+    return colspan;
+  }, [showDirectionCol, hasTxPreviewBtn]);
 
   return (
     <div
@@ -51,6 +65,7 @@ export const TransactionsTable = ({
               total={totalTransactions}
               show={transactions.length > 0}
               className='d-flex ms-auto me-auto me-sm-0'
+              items={transactions}
             />
           </div>
         </div>
@@ -64,9 +79,12 @@ export const TransactionsTable = ({
               <Header
                 transactions={transactions}
                 totalTransactions={totalTransactions}
+                address={address}
                 showDirectionCol={showDirectionCol}
                 showLockedAccounts={showLockedAccounts}
                 inactiveFilters={inactiveFilters}
+                hasPauseButton={hasPauseButton}
+                hasTxPreviewBtn={hasTxPreviewBtn}
               />
               <tbody>
                 {isDataReady === undefined && (
@@ -96,6 +114,7 @@ export const TransactionsTable = ({
                             token={token}
                             showDirectionCol={showDirectionCol}
                             showLockedAccounts={showLockedAccounts}
+                            hasTxPreviewBtn={hasTxPreviewBtn}
                           />
                         ))}
                       </>
@@ -119,7 +138,11 @@ export const TransactionsTable = ({
 
         <div className='card-footer table-footer'>
           <PageSize maxSize={MAX_TRANSACTIONS_PAGE_SIZE} />
-          <Pager total={totalTransactions} show={transactions.length > 0} />
+          <Pager
+            total={totalTransactions}
+            show={transactions.length > 0}
+            items={transactions}
+          />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
-import { getUrlParam } from 'helpers';
+import { cleanUrlFilters, getUrlParam } from 'helpers';
 import { TransactionApiStatusEnum, TransactionFiltersEnum } from 'types';
 
 const checkStatus = (status: string) =>
@@ -17,20 +17,21 @@ export const useGetTransactionFilters = () => {
     : '';
 
   const senderShard =
-    getParam(TransactionFiltersEnum.senderShard, true) ??
-    getParam('sendershard', true);
+    getParam(TransactionFiltersEnum.senderShard, { checkIsInteger: true }) ??
+    getParam('sendershard', { checkIsInteger: true });
 
   const receiverShard =
-    getParam(TransactionFiltersEnum.receiverShard, true) ??
-    getParam('receivershard', true);
+    getParam(TransactionFiltersEnum.receiverShard, { checkIsInteger: true }) ??
+    getParam('receivershard', { checkIsInteger: true });
 
-  return {
+  const filters = {
     senderShard,
     receiverShard,
     sender: getParam(TransactionFiltersEnum.sender),
     receiver: getParam(TransactionFiltersEnum.receiver),
-    before: getParam(TransactionFiltersEnum.before, true),
-    after: getParam(TransactionFiltersEnum.after, true),
+    senderOrReceiver: getParam(TransactionFiltersEnum.senderOrReceiver),
+    before: getParam(TransactionFiltersEnum.before, { checkIsInteger: true }),
+    after: getParam(TransactionFiltersEnum.after, { checkIsInteger: true }),
     status: checkStatus(status),
     miniBlockHash: getParam(TransactionFiltersEnum.miniBlockHash),
     method: getParam(TransactionFiltersEnum.method),
@@ -39,4 +40,6 @@ export const useGetTransactionFilters = () => {
     relayer: getParam(TransactionFiltersEnum.relayer),
     isRelayed: getParam(TransactionFiltersEnum.isRelayed)
   };
+
+  return cleanUrlFilters(filters);
 };

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { CUSTOM_NETWORK_ID } from 'appConstants';
+import { CUSTOM_NETWORK_ID, DEFAULT_HRP, REFRESH_RATE } from 'appConstants';
 import { hasExtraNetworks } from 'config';
 import { cookie } from 'helpers/cookie';
 import { storage } from 'helpers/storage';
@@ -41,6 +41,8 @@ export const getStorageCustomNetworks = (): NetworkType[] => {
           ...(!network?.adapter ? { adapter: NetworkAdapterEnum.api } : {}),
           ...(!network?.egldLabel ? { egldLabel: 'xEGLD' } : {}),
           ...(!network?.chainId ? { chainId: 'T' } : {}),
+          ...(!network?.hrp ? { hrp: DEFAULT_HRP } : {}),
+          ...(!network?.refreshRate ? { refreshRate: REFRESH_RATE } : {}),
           isCustom: true
         };
       });

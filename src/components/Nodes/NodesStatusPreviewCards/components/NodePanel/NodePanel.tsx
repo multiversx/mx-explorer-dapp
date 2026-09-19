@@ -29,7 +29,7 @@ export const NodePanel = ({
           <span>Node</span>
           <NodeOnlineState node={node} />
         </div>
-        <div className='node-bls d-flex align-items-center gap-2'>
+        <div className='preview-small preview-hash d-flex align-items-center gap-2'>
           <NodeChangingShardIcon node={node} />
           <NodeIssueIcon node={node} />
           <Trim text={node.bls} />

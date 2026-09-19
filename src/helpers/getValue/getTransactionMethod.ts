@@ -5,27 +5,32 @@ import {
 } from 'types';
 
 export const getTransactionMethod = (transaction: UITransactionType) => {
-  let transactionAction = 'transaction';
-  if (
-    transaction.action &&
-    transaction.action.name &&
-    transaction.action.category
-  ) {
+  const transactionAction = 'transaction';
+
+  if (transaction?.function) {
+    return transaction.function;
+  }
+
+  if (transaction.action?.name && transaction.action?.category) {
+    if (
+      transaction.action.category ===
+      TransactionActionCategoryEnum.deprecatedRelayedV1V2
+    ) {
+      return transactionAction;
+    }
+
+    if (transaction.action.arguments?.functionName) {
+      return transaction.action.arguments?.functionName;
+    }
+
     if (
       transaction.action.category === TransactionActionCategoryEnum.esdtNft &&
       transaction.action.name === TransactionActionEnum.transfer
     ) {
-      transactionAction = 'transaction';
-    } else {
-      transactionAction = transaction.action.name;
+      return transactionAction;
     }
 
-    if (transaction.action.arguments?.functionName) {
-      transactionAction = transaction.action.arguments?.functionName;
-    }
-  }
-  if (transaction?.function) {
-    transactionAction = transaction.function;
+    return transaction.action.name;
   }
 
   return transactionAction;

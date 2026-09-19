@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react';
 import moment from 'moment';
-import DatePicker from 'react-datepicker';
-import { useSearchParams } from 'react-router-dom';
+import DatePickerBase from 'react-datepicker';
+
+const DatePicker = DatePickerBase as any;
+import { useSearchParams } from 'react-router';
 
 export const timestampToDate = (timestamp: number | undefined) => {
   return timestamp ? moment.unix(timestamp).toDate() : null;

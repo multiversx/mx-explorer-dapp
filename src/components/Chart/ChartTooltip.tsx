@@ -1,9 +1,17 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { capitalize, formatAmount, getColors, usdValue } from 'helpers';
+
+import {
+  capitalize,
+  formatAmount,
+  formatBigNumber,
+  formatTimestamp,
+  getColors,
+  usdValue
+} from 'helpers';
 import { economicsSelector } from 'redux/selectors';
-import { ChartConfigType } from './helpers/types';
+import { ChartConfigType } from 'types';
 
 export const ChartTooltip = ({
   seriesConfig,
@@ -28,9 +36,9 @@ export const ChartTooltip = ({
   stackedLabel?: string;
   totalValueStacked?: string | number;
 }) => {
-  const { isFetched, unprocessed } = useSelector(economicsSelector);
+  const { isDataReady, unprocessed } = useSelector(economicsSelector);
 
-  const stackedLabelColor = getColors(['white']);
+  const [stackedLabelColor] = getColors(['white']);
 
   const formattedTotalValueStacked = new BigNumber(
     totalValueStacked ?? '0'
@@ -38,7 +46,7 @@ export const ChartTooltip = ({
     ? new BigNumber(totalValueStacked ?? '0').toFormat()
     : new BigNumber(totalValueStacked ?? '0').toFormat(2);
 
-  if (active && payload && payload.length && isFetched) {
+  if (active && payload && payload.length && isDataReady) {
     const data = payload.sort(
       (alpha: any, beta: any) => beta.value - alpha.value
     );
@@ -49,8 +57,7 @@ export const ChartTooltip = ({
           <span>
             {' '}
             {payload[0]?.payload?.timestamp
-              ? moment
-                  .unix(payload[0].payload.timestamp)
+              ? moment(formatTimestamp(payload[0].payload.timestamp))
                   .utc()
                   .format(dateFormat ?? 'D MMM YYYY')
               : label}
@@ -111,14 +118,12 @@ export const ChartTooltip = ({
                 <span
                   style={{
                     color:
-                      payload.length > 1 ? entry.color : color ?? entry.color
+                      payload.length > 1 ? entry.color : (color ?? entry.color)
                   }}
                   className='item-value'
                 >
                   {currentSeries?.yAxisConfig?.currency === '$' ? '$' : ''}
-                  {currentSeries?.yAxisConfig?.currency === '$'
-                    ? new BigNumber(displayValue).toFormat(2)
-                    : new BigNumber(displayValue).toFormat()}
+                  {formatBigNumber({ value: displayValue })}
                   {currentSeries?.yAxisConfig?.currency &&
                   currentSeries?.yAxisConfig?.currency !== '$'
                     ? ` ${currentSeries?.yAxisConfig?.currency}`
@@ -130,7 +135,7 @@ export const ChartTooltip = ({
                   <p className='text-neutral-400 small mb-0'>
                     {usdValue({
                       amount: displayValue,
-                      usd: unprocessed.price,
+                      usd: currentSeries?.price ?? unprocessed.price,
                       showPrefix: true
                     })}
                   </p>

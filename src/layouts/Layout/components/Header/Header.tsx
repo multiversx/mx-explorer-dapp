@@ -1,10 +1,10 @@
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent, useEffect, useRef, memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { BRAND_NAME } from 'appConstants';
-import { ReactComponent as MultiversXLogo } from 'assets/img/logo-full.svg';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/symbol.svg';
+import MultiversXLogo from 'assets/img/logo-full.svg';
+import MultiversXSymbol from 'assets/img/symbol.svg';
 import { NetworkLink } from 'components';
 import { useIsMainnet, useGetExplorerTitle } from 'hooks';
 import { faGrid, faGrid2 } from 'icons/solid';
@@ -13,7 +13,7 @@ import { Links } from './components/Links';
 import { Switcher } from './components/Switcher';
 import { HeaderPropsType } from './types';
 
-export const Header = (props: HeaderPropsType) => {
+export const Header = memo((props: HeaderPropsType) => {
   const isMainnet = useIsMainnet();
   const explorerTitle = useGetExplorerTitle();
 
@@ -21,6 +21,17 @@ export const Header = (props: HeaderPropsType) => {
 
   const [menuActive, setMenuActive] = useState(false);
   const [ecosystemMenuActive, setEcosystemMenuActive] = useState(false);
+  const menuToggleTimeoutRef = useRef<
+    ReturnType<typeof setTimeout> | undefined
+  >(undefined);
+
+  useEffect(() => {
+    return () => {
+      if (menuToggleTimeoutRef.current) {
+        clearTimeout(menuToggleTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const onMenuToggle = (event: MouseEvent) => {
     if (window.innerWidth <= 768) {
@@ -29,7 +40,7 @@ export const Header = (props: HeaderPropsType) => {
 
     event.preventDefault();
     setEcosystemMenuActive(false);
-    setTimeout(
+    menuToggleTimeoutRef.current = setTimeout(
       () => setMenuActive((menuActive) => !menuActive),
       ecosystemMenuActive ? 400 : 0
     );
@@ -39,7 +50,7 @@ export const Header = (props: HeaderPropsType) => {
     event.preventDefault();
     setMenuActive(false);
 
-    setTimeout(
+    menuToggleTimeoutRef.current = setTimeout(
       () => {
         if (window.innerWidth <= 768) {
           onExpand(!ecosystemMenuActive);
@@ -74,7 +85,7 @@ export const Header = (props: HeaderPropsType) => {
         <NetworkLink
           to='/'
           className='logo'
-          aria-label={`${BRAND_NAME} Explorer`}
+          aria-label={`${BRAND_NAME} ${explorerTitle}`}
         >
           {isMainnet ? (
             <MultiversXLogo />
@@ -130,4 +141,4 @@ export const Header = (props: HeaderPropsType) => {
       </div>
     </header>
   );
-};
+});

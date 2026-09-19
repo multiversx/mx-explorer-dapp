@@ -1,3 +1,12 @@
+export enum AccountStakingSortingEnum {
+  staked = 'staked',
+  undelegated = 'undelegated',
+  rewards = 'rewards',
+  name = 'name',
+  filled = 'filled',
+  apr = 'apr'
+}
+
 export interface AccountUndelegationType {
   amount: string;
   seconds: number;

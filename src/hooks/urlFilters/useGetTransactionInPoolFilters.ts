@@ -1,6 +1,6 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
-import { getUrlParam } from 'helpers';
+import { cleanUrlFilters, getUrlParam } from 'helpers';
 import { TransactionInPoolTypeEnum, TransactionFiltersEnum } from 'types';
 
 const checkType = (type: string) =>
@@ -12,21 +12,28 @@ export const useGetTransactionInPoolFilters = () => {
   const [searchParams] = useSearchParams();
   const getParam = getUrlParam(searchParams);
 
-  const type = searchParams.get('type') ? String(searchParams.get('type')) : '';
-
   const senderShard =
-    getParam(TransactionFiltersEnum.senderShard, true) ??
-    getParam('sendershard', true);
+    getParam(TransactionFiltersEnum.senderShard, { checkIsInteger: true }) ??
+    getParam('sendershard', { checkIsInteger: true });
 
   const receiverShard =
-    getParam(TransactionFiltersEnum.receiverShard, true) ??
-    getParam('receivershard', true);
+    getParam(TransactionFiltersEnum.receiverShard, { checkIsInteger: true }) ??
+    getParam('receivershard', { checkIsInteger: true });
 
-  return {
+  const type = checkType(
+    searchParams.get('type') ? String(searchParams.get('type')) : ''
+  );
+
+  const sender = getParam(TransactionFiltersEnum.sender);
+  const receiver = getParam(TransactionFiltersEnum.receiver);
+
+  const filters = {
     senderShard,
     receiverShard,
-    type: checkType(type),
-    sender: getParam(TransactionFiltersEnum.sender),
-    receiver: getParam(TransactionFiltersEnum.receiver)
+    type,
+    sender,
+    receiver
   };
+
+  return cleanUrlFilters(filters);
 };

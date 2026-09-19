@@ -1,4 +1,11 @@
-import { RolesType, SliceType, AccountAssetType, NftSubtypeEnum } from 'types';
+import {
+  RolesType,
+  SliceType,
+  AccountAssetType,
+  NftSubtypeEnum,
+  GrowthChartDataType,
+  ExchangePriceRangeEnum
+} from 'types';
 
 export interface TokenType {
   type: TokenTypeEnum;
@@ -39,6 +46,14 @@ export interface TokenSliceType extends SliceType {
   token: TokenType;
 }
 
+export interface TokenExtraSliceType extends SliceType {
+  tokenExtra: {
+    identifier: string;
+    range: ExchangePriceRangeEnum;
+    priceHistory: GrowthChartDataType[];
+  };
+}
+
 export enum TokenTypeEnum {
   FungibleESDT = 'FungibleESDT',
   MetaESDT = 'MetaESDT'
@@ -61,6 +76,7 @@ export interface TokenLockedAccountType {
   name: string;
   balance: string;
   assets?: AccountAssetType;
+  searchAfter?: string;
 }
 
 export interface TokenSupplyType {

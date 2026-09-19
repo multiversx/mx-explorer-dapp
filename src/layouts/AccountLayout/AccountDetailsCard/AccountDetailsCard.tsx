@@ -18,7 +18,7 @@ import {
   formatHerotag,
   formatBigNumber,
   getTotalTokenUsdValue,
-  isValidTokenValue
+  isValidAccountTokenValue
 } from 'helpers';
 import { useAdapter, useIsSovereign } from 'hooks';
 import { faClock, faExclamationTriangle } from 'icons/regular';
@@ -98,7 +98,7 @@ export const AccountDetailsCard = () => {
         accountTokensCountData,
         accountNftsCountData
       ]) => {
-        const isFetched =
+        const isDataReady =
           accountTransfersData.success || accountTokensValueData.success;
         const accountExtraDetails = getInitialAccountExtraState().accountExtra;
 
@@ -114,7 +114,7 @@ export const AccountDetailsCard = () => {
         }
         if (accountTokensValueData.success) {
           const validTokenValues = accountTokensValueData.data.filter(
-            (token: TokenType) => isValidTokenValue(token)
+            (token: TokenType) => isValidAccountTokenValue(token)
           );
           const tokenBalance = getTotalTokenUsdValue(validTokenValues);
           accountExtraDetails.tokenBalance = tokenBalance;
@@ -122,7 +122,7 @@ export const AccountDetailsCard = () => {
         dispatch(
           setAccountExtra({
             accountExtra: { ...accountExtraDetails, address },
-            isFetched
+            isDataReady
           })
         );
         if (accountTokensCountData.success) {

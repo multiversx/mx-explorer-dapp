@@ -3,7 +3,7 @@ import { MarkersSliceType } from 'types/markers.types';
 
 export const getInitialMarkersState = (): MarkersSliceType => {
   return {
-    isFetched: false,
+    isDataReady: false,
     markers: []
   };
 };
@@ -16,7 +16,7 @@ export const markersSlice = createSlice({
       state: MarkersSliceType,
       action: PayloadAction<MarkersSliceType>
     ) => {
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
       state.markers = action.payload.markers;
     }
   }

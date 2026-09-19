@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faClone } from 'icons/regular';
 
@@ -15,6 +15,17 @@ export const CopyButton = ({ text, icon, className = '' }: CopyButtonType) => {
     default: true,
     success: false
   });
+  const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    return () => {
+      if (resetTimeoutRef.current) {
+        clearTimeout(resetTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleCopyToClipboard = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -26,7 +37,7 @@ export const CopyButton = ({ text, icon, className = '' }: CopyButtonType) => {
       success: await copyTextToClipboard(noSpaces)
     });
 
-    setTimeout(() => {
+    resetTimeoutRef.current = setTimeout(() => {
       setCopyResut({
         default: true,
         success: false

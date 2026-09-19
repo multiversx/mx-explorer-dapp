@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios';
 import { SortOrderEnum, TransactionInPoolTypeEnum } from 'types';
 
 export enum NetworkAdapterEnum {
@@ -5,13 +6,21 @@ export enum NetworkAdapterEnum {
   elastic = 'elastic'
 }
 
-export interface BaseApiType {
+export interface AxiosParamsApiType {
+  signal?: any;
+  timeout?: any;
+  fields?: string;
+  headers?: AxiosRequestConfig['headers'];
+}
+
+export interface BaseApiType extends AxiosParamsApiType {
   page?: number;
   size?: number;
-  fields?: string;
   extract?: string;
   // not on api
   isCount?: boolean;
+  // cursor taken from the last item of the previous response
+  searchAfter?: string;
 }
 
 export interface SortableApiType extends BaseApiType {
@@ -19,7 +28,23 @@ export interface SortableApiType extends BaseApiType {
   order?: SortOrderEnum;
 }
 
-export interface GetAccountType {
+export interface GetAccountResourceType extends AxiosParamsApiType {
+  address: string;
+}
+
+export interface GetTokenResourceType extends AxiosParamsApiType {
+  token: string;
+}
+
+export interface GetNftResourceType extends AxiosParamsApiType {
+  identifier: string;
+}
+
+export interface GetCollectionResourceType extends AxiosParamsApiType {
+  collection: string;
+}
+
+export interface GetAccountType extends AxiosParamsApiType {
   address: string;
   withGuardianInfo?: boolean;
   withTxCount?: boolean;
@@ -38,8 +63,15 @@ export interface GetAccountsType extends SortableApiType {
   withScrCount?: boolean;
   withAssets?: boolean;
 }
+
+export interface GetAccountHistoryType extends AxiosParamsApiType {
+  address: string;
+  identifier?: string;
+  size?: number;
+}
 export interface GetBlocksType extends BaseApiType {
   shard?: number;
+  nonce?: number;
   epoch?: number;
   proposer?: string;
   withProposerIdentity?: boolean;
@@ -140,10 +172,25 @@ export interface GetTransactionsInPoolType extends SortableApiType {
   type?: TransactionInPoolTypeEnum;
 }
 
+export interface GetEventsType extends BaseApiType {
+  address?: string;
+  identifier?: string;
+  txHash?: string;
+  shard?: number;
+  before?: number;
+  after?: number;
+}
+
 export interface GetProvidersType extends BaseApiType {
   identity?: string;
   providers?: string;
   withIdentityInfo?: boolean;
+}
+
+export interface GetRoundsType extends AxiosParamsApiType {
+  validator: string;
+  shard: number;
+  epoch: number;
 }
 
 export type AdapterProviderType = (
@@ -152,6 +199,7 @@ export type AdapterProviderType = (
 
 export interface AdapterProviderPropsType {
   baseUrl: string;
+  signal?: any;
   proxyUrl?: string;
   metaChainShardId?: number;
   url?: string;
@@ -205,9 +253,11 @@ export interface AdapterProviderPropsType {
     withScrCount?: boolean;
     withIdentityInfo?: boolean;
     owner?: string;
+    searchAfter?: string;
   };
   timeout: number;
   timestamp?: number;
+  headers?: AxiosRequestConfig['headers'];
 }
 
 export type ApiAdapterResponseType =

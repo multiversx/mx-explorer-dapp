@@ -3,12 +3,12 @@ import { RefObject, useEffect } from 'react';
 import { useGetTransactionUrlHashParams } from 'hooks';
 
 export const useScrollToTransactionSection = (
-  ref?: RefObject<HTMLDivElement>
+  ref?: RefObject<HTMLDivElement | null>
 ) => {
   const { id } = useGetTransactionUrlHashParams();
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       if (id && ref?.current && ref.current !== null) {
         ref.current.scrollIntoView({
           behavior: 'smooth',
@@ -17,5 +17,7 @@ export const useScrollToTransactionSection = (
         });
       }
     }, 200);
+
+    return () => clearTimeout(timeoutId);
   }, [id]);
 };

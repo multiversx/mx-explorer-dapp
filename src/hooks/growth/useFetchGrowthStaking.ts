@@ -1,45 +1,47 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { processGrowthStaking } from 'helpers';
-import { useAdapter, useHasGrowthWidgets } from 'hooks';
-import { growthStakingSelector } from 'redux/selectors';
-import { setGrowthStaking } from 'redux/slices/growthStaking';
+import { useHasGrowthWidgets } from 'hooks';
+import { setGrowthStaking } from 'redux/slices';
+import { useFetchGrowthWidgetOnce } from './useFetchGrowthWidgetOnce';
 
 export const useFetchGrowthStaking = () => {
-  const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
-  const { isFetched } = useSelector(growthStakingSelector);
-  const { getGrowthWidget } = useAdapter();
+  const hasGrowthWidgets = useHasGrowthWidgets();
+  const fetchGrowthWidgetOnce = useFetchGrowthWidgetOnce();
 
-  const fetchGrowthStaking = () => {
-    if (!isFetched) {
-      getGrowthWidget('/staking').then(({ data, success }) => {
-        if (data && success) {
-          const processedGrowthStaking = processGrowthStaking(data);
-          const { totalStaked7d, totalStaked30d, totalStakedAll, ...rest } =
-            data;
+  const fetchGrowthStaking = async () => {
+    const { data, success } = await fetchGrowthWidgetOnce('/staking');
 
-          dispatch(
-            setGrowthStaking({
-              ...processedGrowthStaking,
+    if (data && success) {
+      const processedGrowthStaking = processGrowthStaking(data);
+      const { totalStaked7d, totalStaked30d, totalStakedAll, ...rest } = data;
 
-              totalStaked7d: data.totalStaked7d,
-              totalStaked30d: data.totalStaked30d,
-              totalStakedAll: data.totalStakedAll,
+      dispatch(
+        setGrowthStaking({
+          ...processedGrowthStaking,
 
-              unprocessed: rest,
-              isFetched: success
-            })
-          );
-        }
-      });
+          totalStaked7d: data.totalStaked7d,
+          totalStaked30d: data.totalStaked30d,
+          totalStakedAll: data.totalStakedAll,
+
+          unprocessed: rest,
+          isDataReady: success
+        })
+      );
     }
+
+    return { data, success };
   };
 
   useEffect(() => {
-    if (hasGrowthWidgets) {
-      fetchGrowthStaking();
+    if (!hasGrowthWidgets) {
+      return;
     }
+
+    fetchGrowthStaking();
   }, [hasGrowthWidgets]);
+
+  return fetchGrowthStaking;
 };

@@ -1,3 +1,4 @@
+export * from './processBlocks';
 export * from './processEconomics';
 export * from './processStake';
 export * from './processGrowthEconomics';
@@ -6,6 +7,7 @@ export * from './processGrowthPrice';
 export * from './processGrowthSearch';
 export * from './processGrowthStaking';
 export * from './processGrowthTransactions';
+export * from './processListUpdates';
 export * from './processNodesIdentities';
 export * from './processNodesOverview';
 export * from './processNodesVersions';

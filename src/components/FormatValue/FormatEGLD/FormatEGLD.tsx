@@ -6,7 +6,8 @@ import { ELLIPSIS } from 'appConstants';
 import { NativeTokenSymbol } from 'components';
 import { FormatAmountUIType, FormatUSD } from 'components';
 import { DIGITS } from 'config';
-import { formatBigNumber, stringIsFloat, isEgldToken } from 'helpers';
+import { formatBigNumber, isEgldToken } from 'helpers';
+import { stringIsFloat } from 'lib';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
 
 import { FormatDisplayValue } from '../FormatDisplayValue';
@@ -19,7 +20,7 @@ export interface FormatEGLDUIType extends Omit<FormatAmountUIType, 'value'> {
 
 export const FormatEGLD = (props: FormatEGLDUIType) => {
   const { egldLabel = '' } = useSelector(activeNetworkSelector);
-  const { isFetched, unprocessed } = useSelector(economicsSelector);
+  const { isDataReady, unprocessed } = useSelector(economicsSelector);
   const {
     value,
     usd,
@@ -49,7 +50,7 @@ export const FormatEGLD = (props: FormatEGLDUIType) => {
   const showUsdValueTooltip =
     !bNValue.isZero() &&
     showUsdValue &&
-    ((isFetched && unprocessed.price) || usd);
+    ((isDataReady && unprocessed.price) || usd);
 
   return (
     <FormatDisplayValue
@@ -72,7 +73,7 @@ export const FormatEGLD = (props: FormatEGLDUIType) => {
         : {})}
       {...(showUsdValueTooltip
         ? {
-            details: (
+            details: () => (
               <>
                 {usd ? '' : 'Current '}
                 USD Value:{' '}

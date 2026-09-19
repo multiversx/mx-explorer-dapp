@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useAdapter } from 'hooks';
 import { generalSelector } from 'redux/selectors';
-import { setShards } from 'redux/slices/general';
+import { setShards } from 'redux/slices';
 
 let currentRequest: any = null;
 

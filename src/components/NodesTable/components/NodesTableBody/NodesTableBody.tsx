@@ -94,9 +94,9 @@ export const NodesTableBody = ({
       {nodes.map((nodeData, index) => {
         const hasTresholdRow = Boolean(
           showTresholdRow &&
-            thresholdIndex &&
-            index === thresholdIndex &&
-            hasNoFilters
+          thresholdIndex &&
+          index === thresholdIndex &&
+          hasNoFilters
         );
 
         if (statistics) {

@@ -1,4 +1,4 @@
-import { Address } from '@multiversx/sdk-core/out';
+import { Address } from 'lib';
 
 export const isContract = (initiator: string | undefined) => {
   if (!initiator) {

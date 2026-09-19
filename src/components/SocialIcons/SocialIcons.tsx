@@ -18,8 +18,8 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { ReactComponent as CoinGecko } from 'assets/img/logos/coingecko.svg';
-import { ReactComponent as CoinMarketCap } from 'assets/img/logos/coinmarketcap.svg';
+import CoinGecko from 'assets/img/logos/coingecko.svg';
+import CoinMarketCap from 'assets/img/logos/coinmarketcap.svg';
 import { Overlay } from 'components';
 import { faGlobe, faEnvelope, faPencil, faFileAlt } from 'icons/regular';
 import { faUsers } from 'icons/solid';

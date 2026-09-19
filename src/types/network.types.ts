@@ -1,9 +1,10 @@
-import { NetworkType as NetworkConfigType } from '@multiversx/sdk-dapp/types/network.types';
+import { NetworkConfigType } from 'lib';
 import { NetworkAdapterEnum } from './adapter.types';
 
 export interface NetworkType extends Partial<NetworkConfigType> {
   adapter: NetworkAdapterEnum | string; // temporary, will be restricted on a future network adapter overhaul
   hrp?: string;
+  refreshRate?: number;
   theme?: string;
   default?: boolean;
   accessToken?: boolean;
@@ -11,7 +12,10 @@ export interface NetworkType extends Partial<NetworkConfigType> {
   growthApi?: string;
   elasticUrl?: string;
   proxyUrl?: string;
+  updatesWebsocketUrl?: string;
   nftExplorerAddress?: string;
+  hasWebsocket?: boolean;
+  hasExchangeData?: boolean;
   isSovereign?: boolean;
   isCustom?: boolean;
 }
@@ -36,4 +40,5 @@ export interface DappNetworkConfigType {
   apiAddress: string;
   explorerAddress: string;
   chainId: string;
+  refreshRate?: number;
 }

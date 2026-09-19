@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 
-import { Tabs } from 'components/Tabs';
+import { Tabs } from 'components';
 import { urlBuilder } from 'helpers';
 import { faBadgeCheck } from 'icons/solid';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
@@ -39,7 +39,12 @@ export const AccountTabs = () => {
     {
       tabLabel: 'Analytics',
       tabTo: urlBuilder.accountDetailsAnalytics(address),
-      activationRoutes: [accountsRoutes.accountAnalytics]
+      activationRoutes: [
+        accountsRoutes.accountAnalytics,
+        accountsRoutes.accountAnalyticsBalance,
+        accountsRoutes.accountAnalyticsFees,
+        accountsRoutes.accountAnalyticsTransactions
+      ]
     },
     {
       tabLabel: 'Smart Contracts',

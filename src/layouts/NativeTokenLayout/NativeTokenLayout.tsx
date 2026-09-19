@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 
 import { Loader, PageState } from 'components';
 import { useHasGrowthWidgets } from 'hooks';
@@ -13,15 +13,17 @@ import { NativeTokenDetailsCard } from './NativeTokenDetailsCard';
 export const NativeTokenLayout = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
   const { egldLabel } = useSelector(activeNetworkSelector);
-  const { isFetched } = useSelector(economicsSelector);
+  const { isDataReady } = useSelector(economicsSelector);
 
-  const loading = isFetched === undefined;
-  const failed = isFetched === false;
+  const loading = isDataReady === undefined;
+  const failed = isDataReady === false;
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       window.scrollTo(0, 0);
     });
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   if (loading) {

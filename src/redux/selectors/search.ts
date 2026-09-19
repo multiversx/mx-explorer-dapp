@@ -1,0 +1,7 @@
+import { RootState } from '../store';
+
+const stateSelector = (state: RootState) => {
+  return state.search;
+};
+
+export const searchSelector = stateSelector;

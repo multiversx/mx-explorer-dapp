@@ -11,7 +11,7 @@ import { MostUsedTokens } from './MostUsedTokens';
 export const MostUsed = () => {
   const hasGrowthWidgets = useHasGrowthWidgets();
 
-  const { isFetched, dailyMostTransactedNFTs, dailyMostTransactedTokens } =
+  const { isDataReady, dailyMostTransactedNFTs, dailyMostTransactedTokens } =
     useSelector(growthMostUsedSelector);
 
   useFetchGrowthMostUsed();
@@ -20,7 +20,7 @@ export const MostUsed = () => {
     return null;
   }
 
-  if (!isFetched) {
+  if (!isDataReady) {
     return <Loader />;
   }
 

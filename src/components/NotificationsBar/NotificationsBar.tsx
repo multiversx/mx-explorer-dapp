@@ -8,12 +8,12 @@ import {
 } from 'appConstants';
 import { useNotifications } from 'hooks';
 import { faTimes } from 'icons/light';
-import { interfaceSelector } from 'redux/selectors';
+import { notificationsSelector } from 'redux/selectors';
 import { NotificationType } from 'types';
 
 export const NotificationsBar = () => {
   const { removeNotification } = useNotifications();
-  const { notifications } = useSelector(interfaceSelector);
+  const notifications = useSelector(notificationsSelector);
 
   const sortedByPriorityAsc = notifications
     .sort((a: any, b: any) => a.priority - b.priority)
@@ -57,14 +57,13 @@ export const NotificationsBar = () => {
               {notification.id === TEMP_LOCAL_NOTIFICATION_DISMISSED && (
                 <div className='w-100'>
                   <a
-                    href='https://governance.multiversx.com/proposal/erd1qqqqqqqqqqqqqpgqfn2mu8l0dte34eqh6qtgmpjpxpkhunccrl4sy2sp07/1'
+                    href='https://governance.multiversx.com/proposal/erd1qqqqqqqqqqqqqpgqfn2mu8l0dte34eqh6qtgmpjpxpkhunccrl4sy2sp07/2'
                     target='_blank'
                     rel='noreferrer nofollow noopener'
                     className='text-black'
                   >
                     <u>
-                      Governance Vote LIVE: Andromeda Protocol Upgrade. Vote
-                      now!
+                      Governance Vote LIVE: Barnard Protocol Upgrade. Vote now!
                     </u>
                   </a>
                 </div>

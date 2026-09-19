@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router';
 
 import { TransactionsTable } from 'components';
 import { useAdapter, useFetchTransactions } from 'hooks';
@@ -9,11 +9,10 @@ import { activeNetworkSelector } from 'redux/selectors';
 import { TransactionFiltersEnum } from 'types';
 
 export const NftTransactions = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
+  const { getNftTransfers, getNftTransfersCount } = useAdapter();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
-  const { getNftTransfers, getNftTransfersCount } = useAdapter();
   const { hash: identifier } = useParams();
 
   const {
@@ -22,14 +21,16 @@ export const NftTransactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getNftTransfers, getNftTransfersCount, {
-    identifier
+  } = useFetchTransactions({
+    dataPromise: getNftTransfers,
+    dataCountPromise: getNftTransfersCount,
+    filters: {
+      identifier
+    }
   });
 
   useEffect(() => {
-    if (ref.current !== null) {
-      fetchTransactions();
-    }
+    fetchTransactions();
   }, [activeNetworkId, identifier]);
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export const NftTransactions = () => {
   }, [searchParams]);
 
   return (
-    <div ref={ref} className='card p-0'>
+    <div className='card p-0'>
       <div className='row'>
         <div className='col-12'>
           <TransactionsTable

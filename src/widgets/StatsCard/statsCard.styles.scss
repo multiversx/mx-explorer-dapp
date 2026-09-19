@@ -16,6 +16,16 @@
     text-wrap: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    &.has-animation {
+      margin-top: -0.438rem;
+    }
+  }
+  .stats-card-content {
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+    &.has-animation {
+      margin-top: 0.313rem;
+    }
   }
 }
 
@@ -33,5 +43,15 @@
   .stats-card-value {
     font-size: 1.125rem;
     font-weight: 500;
+  }
+}
+
+.stats-cards {
+  &.equal-width {
+    @include media-breakpoint-up(xl) {
+      .stats-card {
+        flex-basis: 0;
+      }
+    }
   }
 }

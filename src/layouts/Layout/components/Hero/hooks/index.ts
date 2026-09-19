@@ -10,7 +10,10 @@ import {
   collectionRoutes,
   nftRoutes,
   analyticsRoutes,
-  routes
+  routes,
+  transactionsInPoolRoutes,
+  eventsRoutes,
+  utilitiesRoutes
 } from 'routes';
 
 export const useShowGlobalStats = () => {
@@ -38,6 +41,9 @@ export const useShowGlobalStats = () => {
     case activeRoute(accountsRoutes.accountContracts):
     case activeRoute(accountsRoutes.accountStaking):
     case activeRoute(accountsRoutes.accountAnalytics):
+    case activeRoute(accountsRoutes.accountAnalyticsBalance):
+    case activeRoute(accountsRoutes.accountAnalyticsFees):
+    case activeRoute(accountsRoutes.accountAnalyticsTransactions):
     case activeRoute(accountsRoutes.accountCode):
     case activeRoute(accountsRoutes.accountCodeEndpoints):
     case activeRoute(accountsRoutes.accountCodeTypes):
@@ -57,16 +63,23 @@ export const useShowGlobalStats = () => {
     case activeRoute(tokensRoutes.tokenDetailsAccounts):
     case activeRoute(tokensRoutes.tokenDetailsLockedAccounts):
     case activeRoute(tokensRoutes.tokenDetailsRoles):
+    case activeRoute(tokensRoutes.tokenDetailsAnalytics):
     case activeRoute(tokensRoutes.tokensMetaEsdtDetails):
     case activeRoute(tokensRoutes.tokensMetaEsdtDetailsRoles):
     case activeRoute(tokensRoutes.tokensProofDetails):
     case activeRoute(tokensRoutes.tokensProofDetailsAccounts):
     case activeRoute(transactionsRoutes.transactionDetails):
     case activeRoute(transactionsRoutes.transactionDetailsLogs):
+    case activeRoute(transactionsInPoolRoutes.transactionsInPool):
+    case activeRoute(transactionsInPoolRoutes.transactionsInPoolDetails):
+    case activeRoute(eventsRoutes.events):
+    case activeRoute(eventsRoutes.eventDetails):
     case activeRoute(validatorsRoutes.identityDetails):
     case activeRoute(validatorsRoutes.providerDetails):
     case activeRoute(validatorsRoutes.providerTransactions):
     case activeRoute(validatorsRoutes.nodeDetails):
+    case activeRoute(utilitiesRoutes.converters):
+    case activeRoute(utilitiesRoutes.smartContractInteraction):
       return false;
   }
 

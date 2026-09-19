@@ -30,10 +30,10 @@ export const TransactionActionNft = ({
     token?.value !== undefined
       ? token.value
       : transactionActionValue !== undefined
-      ? transactionActionValue
-      : undefined;
+        ? transactionActionValue
+        : undefined;
 
-  const TokenInfo = () => (
+  const tokenInfo = (
     <div className='d-flex align-items-center symbol text-truncate'>
       {token.svgUrl && (
         <img
@@ -90,14 +90,14 @@ export const TransactionActionNft = ({
         >
           {token.type === NftTypeEnum.MetaESDT && token?.svgUrl ? (
             <Overlay title={token.identifier} truncate>
-              <TokenInfo />
+              {tokenInfo}
             </Overlay>
           ) : (
-            <TokenInfo />
+            tokenInfo
           )}
         </NetworkLink>
       ) : (
-        <TokenInfo />
+        tokenInfo
       )}
     </div>
   );

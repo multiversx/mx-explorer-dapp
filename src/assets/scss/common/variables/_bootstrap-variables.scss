@@ -350,7 +350,16 @@ $form-select-border-width: 0;
 // of components dependent on the z-axis and are designed to all work together.
 
 // scss-docs-start zindex-stack
-$zindex-sticky: 1020;
+$zindex-dropdown: 10;
+$zindex-sticky: 11;
+$zindex-fixed: 12;
+$zindex-offcanvas-backdrop: 13;
+$zindex-offcanvas: 14;
+$zindex-modal-backdrop: 15;
+$zindex-modal: 16;
+$zindex-popover: 17;
+$zindex-tooltip: 18;
+$zindex-toast: 19;
 // scss-docs-end zindex-stack
 
 // Dropdowns
@@ -384,7 +393,7 @@ $dropdown-link-color: $neutral-400;
 $dropdown-link-hover-color: $body-color;
 $dropdown-link-hover-bg: $neutral-700;
 $dropdown-link-active-color: $body-color;
-$dropdown-link-active-bg: $neutral-900;
+$dropdown-link-active-bg: $neutral-980;
 $dropdown-link-disabled-color: $neutral-700;
 $dropdown-header-color: $neutral-700;
 // scss-docs-end dropdown-variables
@@ -445,6 +454,8 @@ $tooltip-font-size: 12px;
 $tooltip-padding-y: 0.5rem;
 $tooltip-padding-x: 0.5rem;
 $tooltip-max-width: 280px;
+$tooltip-color: $white;
+$tooltip-bg: $black;
 // scss-docs-end tooltip-variables
 
 // Popovers

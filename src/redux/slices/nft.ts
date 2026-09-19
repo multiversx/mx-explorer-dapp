@@ -16,7 +16,7 @@ export const getInitialNftState = (): NftSliceType => {
       royalties: 0,
       balance: ''
     },
-    isFetched: false
+    isDataReady: false
   };
 };
 
@@ -25,7 +25,7 @@ export const nftSlice = createSlice({
   initialState: getInitialNftState(),
   reducers: {
     setNft: (state: NftSliceType, action: PayloadAction<NftSliceType>) => {
-      state.isFetched = action.payload.isFetched;
+      state.isDataReady = action.payload.isDataReady;
       state.nftState = {
         ...getInitialNftState().nftState,
         ...action.payload.nftState

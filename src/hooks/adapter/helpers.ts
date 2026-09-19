@@ -1,10 +1,11 @@
 import BigNumber from 'bignumber.js';
 import {
+  BLOCKS_FIELDS,
   MAX_RESULTS,
   PAGE_SIZE,
   TRANSACTIONS_TABLE_FIELDS
 } from 'appConstants';
-import { TransactionInPoolTypeEnum } from 'types';
+import { GetEventsType, TransactionInPoolTypeEnum } from 'types';
 import {
   BaseApiType,
   AdapterProviderPropsType,
@@ -14,7 +15,8 @@ import {
   GetTokensType,
   GetCollectionsType,
   GetNftsType,
-  GetTransactionsInPoolType
+  GetTransactionsInPoolType,
+  GetBlocksType
 } from 'types/adapter.types';
 
 export const getAccountParams = (address?: string) =>
@@ -29,6 +31,7 @@ export const getAccountParams = (address?: string) =>
 export function getTransactionsParams({
   page,
   size,
+  searchAfter,
   order,
   fields = TRANSACTIONS_TABLE_FIELDS.join(','),
 
@@ -65,7 +68,7 @@ export function getTransactionsParams({
     ...(isCount
       ? {}
       : {
-          ...getPageParams({ page, size }),
+          ...getPageParams({ page, size, searchAfter }),
           ...(fields ? { fields } : {}),
           ...(order ? { order } : {}),
           ...(withScResults ? { withScResults } : {}),
@@ -92,6 +95,34 @@ export function getTransactionsParams({
     ...(isRelayed ? { isRelayed } : {}),
     ...(withTxsRelayedByAddress ? { withTxsRelayedByAddress } : {}),
     ...(withCrossChainTransfers ? { withCrossChainTransfers } : {})
+  };
+
+  return params;
+}
+
+export function getEventsParams({
+  page,
+  size,
+  searchAfter,
+
+  address,
+  identifier,
+  txHash,
+  shard,
+  before,
+  after,
+
+  // not on api
+  isCount = false
+}: GetEventsType) {
+  const params: AdapterProviderPropsType['params'] = {
+    ...(isCount ? {} : getPageParams({ page, size, searchAfter })),
+    ...(address ? { address } : {}),
+    ...(identifier ? { identifier } : {}),
+    ...(txHash ? { txHash } : {}),
+    ...(shard !== undefined ? { shard } : {}),
+    ...(before ? { before } : {}),
+    ...(after ? { after } : {})
   };
 
   return params;
@@ -177,6 +208,37 @@ export function getNodeParams({
   return params;
 }
 
+export function getBlocksParams({
+  page,
+  size,
+  searchAfter,
+  fields = BLOCKS_FIELDS.join(','),
+
+  shard,
+  nonce,
+  epoch,
+  proposer,
+  withProposerIdentity = true,
+
+  // not on api
+  isCount = false
+}: GetBlocksType) {
+  const params: AdapterProviderPropsType['params'] = {
+    ...(isCount
+      ? {}
+      : {
+          ...getPageParams({ page, size, searchAfter }),
+          ...(withProposerIdentity ? { withProposerIdentity } : {}),
+          ...(fields !== undefined ? { fields } : {})
+        }),
+    ...(proposer ? { proposer } : {}),
+    ...(nonce !== undefined ? { nonce } : {}),
+    ...getShardAndEpochParams(shard, epoch)
+  };
+
+  return params;
+}
+
 export function getProviderParams({
   identity,
   providers,
@@ -193,6 +255,7 @@ export function getProviderParams({
 export function getTokensParams({
   page,
   size,
+  searchAfter,
   sort,
   order,
   fields,
@@ -213,7 +276,7 @@ export function getTokensParams({
     ...(isCount
       ? {}
       : {
-          ...getPageParams({ page, size }),
+          ...getPageParams({ page, size, searchAfter }),
           ...(sort !== undefined ? { sort } : {}),
           ...(order !== undefined ? { order } : {}),
           ...(fields !== undefined ? { fields } : {}),
@@ -232,6 +295,7 @@ export function getTokensParams({
 export function getCollectionsParams({
   page,
   size,
+  searchAfter,
   sort,
   order,
   fields,
@@ -251,7 +315,7 @@ export function getCollectionsParams({
     ...(isCount
       ? {}
       : {
-          ...getPageParams({ page, size }),
+          ...getPageParams({ page, size, searchAfter }),
           ...(sort !== undefined ? { sort } : {}),
           ...(order !== undefined ? { order } : {}),
           ...(fields !== undefined ? { fields } : {}),
@@ -269,6 +333,7 @@ export function getCollectionsParams({
 export function getNftsParams({
   page,
   size,
+  searchAfter,
   sort,
   order,
   fields,
@@ -297,7 +362,7 @@ export function getNftsParams({
     ...(isCount
       ? {}
       : {
-          ...getPageParams({ page, size }),
+          ...getPageParams({ page, size, searchAfter }),
           ...(sort !== undefined ? { sort } : {}),
           ...(order !== undefined ? { order } : {}),
           ...(fields !== undefined ? { fields } : {}),
@@ -338,31 +403,16 @@ export const getShardAndEpochParams = (
   return result;
 };
 
-export function processBlocks(blocks: any[]) {
-  let min = blocks && blocks.length > 0 ? blocks[0].nonce : 0;
-  let max = min;
-  for (const block in blocks) {
-    // tslint:disable-line
-    if (blocks[block].nonce < min) {
-      min = blocks[block].nonce;
-    }
-
-    if (blocks[block].nonce > max) {
-      max = blocks[block].nonce;
-    }
+export const getPageParams = ({
+  page = 1,
+  size = PAGE_SIZE,
+  searchAfter
+}: BaseApiType) => {
+  // the api rejects the request unless `from` is absent alongside a cursor
+  if (searchAfter) {
+    return { size, searchAfter };
   }
 
-  const startBlockNr = min;
-  const endBlockNr = max;
-
-  return {
-    blocks,
-    startBlockNr,
-    endBlockNr
-  };
-}
-
-export const getPageParams = ({ page = 1, size = PAGE_SIZE }: BaseApiType) => {
   const from = new BigNumber(page).minus(1).times(size);
   const isMoreThanMax = from.plus(size).isGreaterThan(MAX_RESULTS);
 

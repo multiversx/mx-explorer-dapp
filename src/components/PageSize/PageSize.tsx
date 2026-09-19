@@ -1,20 +1,23 @@
 import classNames from 'classnames';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { SingleValue } from 'react-select';
 
 import { PAGE_SIZE, MAX_RESULTS } from 'appConstants';
 import { Select, SelectOptionType } from 'components';
-import { stringIsInteger } from 'helpers';
+import { formatBigNumber } from 'helpers';
+import { stringIsInteger } from 'lib';
 import { WithClassnameType } from 'types';
 
 export interface PageSizeUIType extends WithClassnameType {
   maxSize?: number;
   defaultSize?: number;
+  sizeArray?: number[];
 }
 
 export const PageSize = ({
   defaultSize = PAGE_SIZE,
   maxSize = MAX_RESULTS,
+  sizeArray = [PAGE_SIZE, 10, 50, 75, 100],
   className
 }: PageSizeUIType) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,17 +28,17 @@ export const PageSize = ({
     : defaultSize;
 
   const currentSize = Math.min(paramSize, maxSize);
-  const sizeArray = [
-    ...new Set([PAGE_SIZE, 10, 50, 75, 100, currentSize, defaultSize])
-  ].sort(function (a, b) {
-    return a - b;
-  });
+  const sortedArray = [...new Set([...sizeArray, defaultSize])].sort(
+    function (a, b) {
+      return a - b;
+    }
+  );
   const validSizeArray = maxSize
-    ? sizeArray.filter((option) => option <= maxSize)
-    : sizeArray;
+    ? sortedArray.filter((option) => option <= maxSize)
+    : sortedArray;
 
   const options = validSizeArray.map((size) => {
-    return { label: size, value: size };
+    return { label: formatBigNumber({ value: size }), value: size };
   });
 
   const onChangeHandler = (
@@ -55,7 +58,8 @@ export const PageSize = ({
   return (
     <div
       className={classNames(
-        'page-size d-flex align-items-center gap-2 ps-md-3',
+        'page-size d-flex align-items-center gap-2',
+        { 'ps-md-3': !Boolean(className) },
         className
       )}
     >
@@ -64,6 +68,7 @@ export const PageSize = ({
         options={options}
         onChange={onChangeHandler}
         defaultValue={{ label: currentSize, value: currentSize }}
+        aria-label='Records per page'
       />{' '}
       records
     </div>

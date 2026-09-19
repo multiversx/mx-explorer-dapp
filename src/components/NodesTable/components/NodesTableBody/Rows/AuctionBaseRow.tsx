@@ -31,7 +31,7 @@ export const AuctionBaseRow = ({
   className
 }: AuctionBaseRowUIType) => {
   const {
-    isFetched: isStakeFetched,
+    isDataReady: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
 

@@ -1,20 +1,38 @@
+import NumberFlow from '@number-flow/react';
 import classNames from 'classnames';
 
-import { MAX_DISPLAY_ZERO_DECIMALS, ZERO } from 'appConstants';
+import { ELLIPSIS, MAX_DISPLAY_ZERO_DECIMALS, ZERO } from 'appConstants';
 import { FormatAmountUIType, Overlay } from 'components';
 import { DIGITS } from 'config';
 
-export interface FormatDisplayValueUIType
-  extends Omit<FormatAmountUIType, 'value'> {
+const NUMBER_FLOW_TRANSFORM_TIMING = {
+  duration: 400,
+  easing: 'ease-out'
+};
+
+const numberFlowFormats: Record<number, { maximumFractionDigits: number }> = {};
+const getNumberFlowFormat = (digits: number) => {
+  if (!numberFlowFormats[digits]) {
+    numberFlowFormats[digits] = { maximumFractionDigits: digits };
+  }
+
+  return numberFlowFormats[digits];
+};
+
+export interface FormatDisplayValueUIType extends Omit<
+  FormatAmountUIType,
+  'value'
+> {
   formattedValue: string | number;
   completeValue: string | number;
   symbol?: React.ReactNode;
   label?: React.ReactNode;
-  details?: React.ReactNode;
+  details?: React.ReactNode | (() => React.ReactNode);
   hideLessThanOne?: boolean;
   showTooltipSymbol?: boolean;
   showTooltipLabel?: boolean;
   spacedLabel?: boolean;
+  isAnimated?: boolean;
 }
 
 export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
@@ -37,14 +55,17 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     showTooltipLabel,
     spacedLabel,
     decimalOpacity = true,
+    isAnimated,
+    showEllipsisIfZero,
     className
   } = props;
 
   const valueParts = String(formattedValue).split('.');
   const isZero = Number(completeValue) === 0;
-  const displayLabel = label ?? (token ? token : egldLabel);
+  const displayLabel = label ?? token ?? egldLabel;
+  const canAnimate = isAnimated && !isNaN(Number(completeValue)) && false;
 
-  const DisplayValue = () => {
+  const renderDisplayValue = () => {
     if (hideLessThanOne) {
       return <span className='am'>{'< 1'}</span>;
     }
@@ -87,51 +108,68 @@ export const FormatDisplayValue = (props: FormatDisplayValueUIType) => {
     );
   };
 
+  const renderValue = () => {
+    if (canAnimate) {
+      return (
+        <NumberFlow
+          value={Number(completeValue)}
+          locales='en-US'
+          format={getNumberFlowFormat(digits)}
+          transformTiming={NUMBER_FLOW_TRANSFORM_TIMING}
+        />
+      );
+    }
+
+    return renderDisplayValue();
+  };
+
   const showCompleteValue =
     completeValue !== formattedValue &&
     String(completeValue).length > String(formattedValue).length &&
     !isZero;
   const displayTooltip = showTooltip && (details || showCompleteValue);
 
+  const renderTooltipTitle = () => (
+    <>
+      {showCompleteValue && (
+        <>
+          {showSymbol && showTooltipSymbol && symbol && <>{symbol}</>}
+          {completeValue}
+          {showLabel && showTooltipLabel && displayLabel && (
+            <>
+              {spacedLabel && <>&nbsp;</>}
+              {displayLabel}
+            </>
+          )}
+        </>
+      )}
+      {details ? (
+        <>
+          {showCompleteValue && <br />}
+          {typeof details === 'function' ? details() : details}
+        </>
+      ) : null}
+    </>
+  );
+
+  if (isZero && showEllipsisIfZero) {
+    return <span className={classNames(className, 'fam')}>{ELLIPSIS}</span>;
+  }
+
   return (
     <span
-      className={classNames(className, 'fam')}
+      className={classNames(className, 'fam', { anim: canAnimate })}
       {...(props['data-testid'] ? { 'data-testid': props['data-testid'] } : {})}
     >
       {showSymbol && symbol && <>{symbol}</>}
       {displayTooltip ? (
-        <Overlay
-          title={
-            <>
-              {showCompleteValue && (
-                <>
-                  {showSymbol && showTooltipSymbol && symbol && <>{symbol}</>}
-                  {completeValue}
-                  {showLabel && showTooltipLabel && displayLabel && (
-                    <>
-                      {spacedLabel && <>&nbsp;</>}
-                      {displayLabel}
-                    </>
-                  )}
-                </>
-              )}
-              {details ? (
-                <>
-                  {showCompleteValue && <br />}
-                  {details}
-                </>
-              ) : null}
-            </>
-          }
-          persistent
-          truncate
-        >
-          <DisplayValue />
+        <Overlay title={renderTooltipTitle} persistent truncate>
+          {renderValue()}
         </Overlay>
       ) : (
-        <DisplayValue />
+        <>{renderValue()}</>
       )}
-      {showLabel && displayLabel && (
+      {showLabel && displayLabel && !canAnimate && (
         <>
           {superSuffix ? (
             <sup className={classNames('suf', { opc: decimalOpacity })}>

@@ -8,10 +8,12 @@
   --border-radius-medium: 16px;
   --border-radius-low: 8px;
   --headings-font-family: #{$headings-font-family};
-  --font-headings-regular: 'Roobert Regular', 'Inter', Roboto, 'Helvetica Neue',
-    'Noto Sans', 'Liberation Sans', sans-serif;
-  --font-headings-semibold: 'Roobert SemiBold', 'Inter', Roboto,
-    'Helvetica Neue', 'Noto Sans', 'Liberation Sans', sans-serif;
+  --font-headings-regular:
+    'Roobert Regular', 'Inter', Roboto, 'Helvetica Neue', 'Noto Sans',
+    'Liberation Sans', sans-serif;
+  --font-headings-semibold:
+    'Roobert SemiBold', 'Inter', Roboto, 'Helvetica Neue', 'Noto Sans',
+    'Liberation Sans', sans-serif;
 
   --scrollbar-color-thumb: var(--neutral-700);
   --scrollbar-color-thumb-hover: var(--neutral-600);
@@ -31,8 +33,9 @@
   --map-bg: #17201f;
   --yellow-spotlight: #fcd64e;
   --primary: #{$primary} !important;
-  // Project Specific Variables
 
+  // Project Specific Variables
+  --header-navbar-height: #{$header-navbar-height};
   // Overrides
 }
 

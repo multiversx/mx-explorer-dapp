@@ -1,0 +1,30 @@
+@import './variables';
+
+/* ----------------- List Item ----------------- */
+
+.#{$package-name} {
+  &-list-item {
+    border: 1px solid var(--black);
+    &.open {
+      border-color: var(--neutral-800);
+    }
+    & > .card-header + div > .card-body {
+      padding-top: 0;
+      @include media-breakpoint-down(md) {
+        --card-spacer-y: 0.5rem;
+      }
+    }
+    &.card > .card-header {
+      @include media-breakpoint-down(md) {
+        --card-cap-padding-x: 0.5rem;
+        --card-cap-padding-y: 0.75rem;
+      }
+    }
+    .card-header,
+    .card-body {
+      @include media-breakpoint-down(md) {
+        --card-spacer-x: 0.5rem;
+      }
+    }
+  }
+}

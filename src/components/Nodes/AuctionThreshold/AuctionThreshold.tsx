@@ -18,7 +18,7 @@ export const AuctionThreshold = ({
   className
 }: AuctionThresholdUIType) => {
   const {
-    isFetched: isStakeFetched,
+    isDataReady: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake }
   } = useSelector(stakeSelector);
 
@@ -42,8 +42,8 @@ export const AuctionThreshold = ({
   const sign = bNThreshold.isGreaterThan(0)
     ? '+'
     : bNThreshold.isLessThan(0)
-    ? '-'
-    : '';
+      ? '-'
+      : '';
 
   return (
     <span

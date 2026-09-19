@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 
 import { Loader, PageState } from 'components';
 import { useFetchStake, useFetchNodesVersions, useFetchShards } from 'hooks';
@@ -14,7 +14,7 @@ import {
 export const NodesLayout = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const shards = useSelector(shardsSelector);
-  const { isFetched: isNodesVersionsFetched } = useSelector(
+  const { isDataReady: isNodesVersionsFetched } = useSelector(
     nodesVersionsSelector
   );
 

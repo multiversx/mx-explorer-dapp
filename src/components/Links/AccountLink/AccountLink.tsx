@@ -9,8 +9,8 @@ import {
   LockedTokenAddressIcon
 } from 'components';
 import { addressIsBech32, isTouchDevice, urlBuilder } from 'helpers';
-import { interfaceSelector } from 'redux/selectors';
-import { setHighlightedText } from 'redux/slices/interface';
+import { highlightedTextSelector } from 'redux/selectors';
+import { setHighlightedText } from 'redux/slices';
 import { AccountAssetType, WithClassnameType } from 'types';
 
 export interface AccountLinkType extends WithClassnameType {
@@ -35,7 +35,7 @@ export const AccountLink = ({
   'data-testid': testId
 }: AccountLinkType) => {
   const dispatch = useDispatch();
-  const { highlightedText } = useSelector(interfaceSelector);
+  const highlightedText = useSelector(highlightedTextSelector);
 
   if (!address) {
     return '-';

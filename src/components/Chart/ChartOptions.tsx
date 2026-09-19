@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
-import { ToggleType, OptionType } from './helpers/types';
+
+import { ToggleType, OptionType } from 'types';
 
 export const ChartOptions = ({
   options,

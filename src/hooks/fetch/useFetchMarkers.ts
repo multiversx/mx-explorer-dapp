@@ -4,7 +4,7 @@ import { object, string, number } from 'yup';
 
 import { useAdapter } from 'hooks';
 import { markersSelector } from 'redux/selectors';
-import { setMarkers } from 'redux/slices/markers';
+import { setMarkers } from 'redux/slices';
 
 const schema = object({
   continent: string().defined(),
@@ -15,16 +15,47 @@ const schema = object({
   validators: number().defined()
 }).defined();
 
+const MARKERS_RETRY_DELAY = 1500;
+
+let isFetching = false;
+
 export const useFetchMarkers = () => {
   const dispatch = useDispatch();
   const markerUrl = import.meta.env.VITE_APP_MARKERS_API_URL;
   const { getMarkers } = useAdapter();
-  const { isFetched } = useSelector(markersSelector);
+  const { isDataReady } = useSelector(markersSelector);
 
-  const fetchMarkers = () => {
-    if (!isFetched && markerUrl) {
-      getMarkers(markerUrl).then(({ data, success }) => {
-        if (data && success) {
+  useEffect(() => {
+    if (isDataReady || !markerUrl || isFetching) {
+      return;
+    }
+
+    isFetching = true;
+    const controller = new AbortController();
+    let retryTimeoutId: ReturnType<typeof setTimeout> | undefined;
+
+    const fetchMarkers = (isRetry = false) => {
+      getMarkers(markerUrl, { signal: controller.signal }).then(
+        ({ data, success }) => {
+          if (controller.signal.aborted) {
+            return;
+          }
+
+          if (!(data && success)) {
+            if (!isRetry) {
+              retryTimeoutId = setTimeout(
+                () => fetchMarkers(true),
+                MARKERS_RETRY_DELAY
+              );
+            } else {
+              isFetching = false;
+            }
+
+            return;
+          }
+
+          isFetching = false;
+
           schema
             .validate((data as any)[Object.keys(data)[0]], { strict: true })
             .catch(({ errors }) => {
@@ -35,13 +66,19 @@ export const useFetchMarkers = () => {
             setMarkers({
               markers: data,
 
-              isFetched: success
+              isDataReady: success
             })
           );
         }
-      });
-    }
-  };
+      );
+    };
 
-  useEffect(fetchMarkers, []);
+    fetchMarkers();
+
+    return () => {
+      controller.abort();
+      clearTimeout(retryTimeoutId);
+      isFetching = false;
+    };
+  }, []);
 };

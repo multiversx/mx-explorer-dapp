@@ -24,7 +24,7 @@ export const MostUsedApplications = ({
 }: MostUsedApplicationsUIType) => {
   const hasGrowthWidgets = useHasGrowthWidgets();
 
-  const { isFetched, dailyMostUsedApplications } = useSelector(
+  const { isDataReady, dailyMostUsedApplications } = useSelector(
     growthMostUsedSelector
   );
 
@@ -43,7 +43,7 @@ export const MostUsedApplications = ({
 
   return (
     <>
-      {isFetched ? (
+      {isDataReady ? (
         <div
           className={classNames(
             'most-used-applications card card-black',
@@ -52,10 +52,10 @@ export const MostUsedApplications = ({
         >
           <div className='card-header'>
             <div className='card-header-item table-card-header d-flex justify-content-between align-items-center flex-wrap'>
-              <h5>
+              <h3 className='h5'>
                 Most Used Applications{' '}
                 <span className='text-neutral-500 ms-1'>(daily)</span>
-              </h5>
+              </h3>
               {showDashboardLink && (
                 <NetworkLink
                   to={applicationsRoutes.applications}

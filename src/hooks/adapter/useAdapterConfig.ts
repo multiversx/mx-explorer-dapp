@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { METACHAIN_SHARD_ID, TIMEOUT } from 'appConstants';
@@ -19,6 +20,8 @@ interface PropsType {
   params?: AdapterProviderPropsType['params'];
   timeout?: AdapterProviderPropsType['timeout'];
   timestamp?: AdapterProviderPropsType['timestamp'];
+  signal?: AdapterProviderPropsType['signal'];
+  headers?: AdapterProviderPropsType['headers'];
 }
 
 async function wrap(asyncRequest: () => Promise<ApiAdapterResponseType>) {
@@ -40,70 +43,38 @@ export const useAdapterConfig = () => {
     elasticUrl,
     adapter: networkAdapter,
     proxyUrl: nodeUrl,
-    apiAddress,
-    growthApi
+    apiAddress
   } = useSelector(activeNetworkSelector);
 
-  const providers = {
-    api: {
-      baseUrl: apiAddress || '',
-      proxyUrl: apiAddress || '',
-      ...apiAdapter
-    },
-    elastic: {
-      baseUrl: elasticUrl || '',
-      proxyUrl: nodeUrl || '',
-      ...elasticAdapter
-    }
-  };
+  return useMemo(() => {
+    const providers = {
+      api: {
+        baseUrl: apiAddress || '',
+        proxyUrl: apiAddress || '',
+        ...apiAdapter
+      },
+      elastic: {
+        baseUrl: elasticUrl || '',
+        proxyUrl: nodeUrl || '',
+        ...elasticAdapter
+      }
+    };
 
-  const adapter = networkAdapter as NetworkAdapterEnum;
+    const adapter = networkAdapter as NetworkAdapterEnum;
 
-  const {
-    provider,
-    getStats,
-    getNodes,
-    getNodesVersions,
-    getAccountStake,
-    getAccountDelegationLegacy,
-    getAccountDelegation,
-    getEconomics,
-    getShards,
-    getProviders,
-    getProvider
-  } = providers[adapter];
+    const { provider } = providers[adapter];
 
-  const providerProps = {
-    ...providers[adapter],
-    metaChainShardId: METACHAIN_SHARD_ID,
-    timeout: TIMEOUT
-  };
+    const providerProps = {
+      metaChainShardId: METACHAIN_SHARD_ID,
+      timeout: TIMEOUT,
+      ...providers[adapter]
+    };
 
-  const basicProps: PropsType & { url: string } = { url: '' };
+    const basicProps: PropsType & { url: string } = { url: '' };
 
-  return {
-    growthApi,
-    provider: (props = basicProps) =>
-      wrap(() => provider({ ...providerProps, ...props })),
-    getStats: (props = basicProps) =>
-      wrap(() => getStats({ ...providerProps, ...props })),
-    getNodes: (props = basicProps) =>
-      wrap(() => getNodes({ ...providerProps, ...props })),
-    getNodesVersions: (props = basicProps) =>
-      wrap(() => getNodesVersions({ ...providerProps, ...props })),
-    getShards: (props = basicProps) =>
-      wrap(() => getShards({ ...providerProps, ...props })),
-    getAccountDelegation: (props = basicProps) =>
-      wrap(() => getAccountDelegation({ ...providerProps, ...props })),
-    getAccountDelegationLegacy: (props = basicProps) =>
-      wrap(() => getAccountDelegationLegacy({ ...providerProps, ...props })),
-    getAccountStake: (props = basicProps) =>
-      wrap(() => getAccountStake({ ...providerProps, ...props })),
-    getEconomics: (props = basicProps) =>
-      wrap(() => getEconomics({ ...providerProps, ...props })),
-    getProviders: (props = basicProps) =>
-      wrap(() => getProviders({ ...providerProps, ...props })),
-    getProvider: (props = basicProps) =>
-      wrap(() => getProvider({ ...providerProps, ...props }))
-  };
+    return {
+      provider: (props = basicProps) =>
+        wrap(() => provider({ ...providerProps, ...props }))
+    };
+  }, [apiAddress, elasticUrl, nodeUrl, networkAdapter]);
 };

@@ -2,18 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { PageState, Chart, Loader } from 'components';
-import {
-  ChartConfigType,
-  ChartListType,
-  StackedChartConfig
-} from 'components/Chart/helpers/types';
 import { useAdapter } from 'hooks';
 import { faChartBar } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
+import {
+  ChartResolutionRangeType,
+  ChartConfigType,
+  ChartListType,
+  StackedChartConfig
+} from 'types';
 
 import { ChartResolutionSelector } from './components/ChartResolution';
-import { ChartResolutionRangeType } from './components/ChartResolution/types';
-
 import { getChartColorPalette } from '../helpers/getChartColorPalette';
 
 export interface AnalyticsChartDataType {

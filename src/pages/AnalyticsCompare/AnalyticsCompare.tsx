@@ -5,17 +5,16 @@ import {
   useLocation,
   useNavigate,
   useSearchParams
-} from 'react-router-dom';
+} from 'react-router';
 
-import { Loader, Led } from 'components';
-import { ChartListType } from 'components/Chart/helpers/types';
-import { Tabs } from 'components/Tabs';
+import { chartResolution } from 'appConstants';
+import { Loader, Led, Tabs } from 'components';
 import { useAdapter, useHasGrowthWidgets, useNetworkRoute } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
+import { ChartListType } from 'types';
 
 import { AnalyticsStackedChart } from './AnalyticsChart/AnalyticsStackedChart';
-import { ChartResolution } from './AnalyticsChart/components/ChartResolution';
 import { FailedAnalytics } from './components/FailedAnalytics';
 import { NoAnalytics } from './components/NoAnalytics';
 import { FIRST_SERIES_ID, RANGE, SECOND_SERIES_ID } from './constants';
@@ -97,7 +96,7 @@ export const AnalyticsCompare = () => {
     setNewQueryParameters({
       [FIRST_SERIES_ID]: selectedPills[0].id,
       [SECOND_SERIES_ID]: selectedPills[1].id,
-      [RANGE]: searchParams.get(RANGE) ?? ChartResolution['month'].range
+      [RANGE]: searchParams.get(RANGE) ?? chartResolution['month'].range
     });
   }, [selectedPills]);
 

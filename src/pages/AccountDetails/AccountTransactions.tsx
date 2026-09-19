@@ -1,20 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { TransactionsTable } from 'components';
-import { useAdapter, useFetchTransactions } from 'hooks';
+import { useAdapter, useFetchCustomTransfers } from 'hooks';
 import { AccountTabs } from 'layouts/AccountLayout/AccountTabs';
 import { activeNetworkSelector, accountSelector } from 'redux/selectors';
+import { WebsocketEventsEnum, WebsocketSubcriptionsEnum } from 'types';
 
 export const AccountTransactions = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { account } = useSelector(accountSelector);
-  const { address, txCount, balance } = account;
-
   const { getAccountTransfers, getAccountTransfersCount } = useAdapter();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
+  const { account } = useSelector(accountSelector);
+  const { address } = account;
 
   const {
     fetchTransactions,
@@ -22,38 +22,42 @@ export const AccountTransactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getAccountTransfers, getAccountTransfersCount, {
-    address,
-    withTxsRelayedByAddress: true
+  } = useFetchCustomTransfers({
+    uuid: address,
+    dataPromise: getAccountTransfers,
+    dataCountPromise: getAccountTransfersCount,
+    subscription: WebsocketSubcriptionsEnum.subscribeCustomTransfers,
+    event: WebsocketEventsEnum.customTransferUpdate,
+    filters: {
+      address,
+      withTxsRelayedByAddress: true
+    },
+    websocketConfig: { address }
   });
 
   useEffect(() => {
-    if (ref.current !== null) {
-      fetchTransactions();
-    }
-  }, [activeNetworkId, address, txCount, balance]);
+    fetchTransactions();
+  }, [activeNetworkId, address]);
 
   useEffect(() => {
     fetchTransactions(Boolean(searchParams.toString()));
   }, [searchParams]);
 
   return (
-    <>
-      <div ref={ref} className='card p-0'>
-        <div className='row'>
-          <div className='col-12'>
-            <TransactionsTable
-              transactions={transactions}
-              address={address}
-              totalTransactions={totalTransactions}
-              showDirectionCol={true}
-              title={<AccountTabs />}
-              dataChanged={dataChanged}
-              isDataReady={isDataReady}
-            />
-          </div>
+    <div className='card p-0'>
+      <div className='row'>
+        <div className='col-12'>
+          <TransactionsTable
+            transactions={transactions}
+            address={address}
+            totalTransactions={totalTransactions}
+            showDirectionCol={true}
+            title={<AccountTabs />}
+            dataChanged={dataChanged}
+            isDataReady={isDataReady}
+          />
         </div>
       </div>
-    </>
+    </div>
   );
 };

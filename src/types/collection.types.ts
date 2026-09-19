@@ -30,6 +30,7 @@ export interface CollectionType {
   isVerified?: boolean;
   nftCount?: number;
   holderCount?: number;
+  searchAfter?: string;
 }
 
 export interface CollectionSliceType extends SliceType {

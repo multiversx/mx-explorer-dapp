@@ -18,5 +18,5 @@ export interface RankType {
 }
 
 export interface MarkersSliceType extends MarkersType {
-  isFetched: boolean;
+  isDataReady: boolean;
 }

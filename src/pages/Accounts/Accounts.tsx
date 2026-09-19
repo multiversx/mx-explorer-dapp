@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { ELLIPSIS } from 'appConstants';
 import {
@@ -15,6 +15,7 @@ import {
   ColSpanWrapper
 } from 'components';
 import {
+  useAbortSignal,
   useAdapter,
   useGetPage,
   useGetSearch,
@@ -22,7 +23,7 @@ import {
   useHasGrowthWidgets
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
+import { pageHeadersAccountsStatsSelector } from 'redux/selectors';
 import { AccountType, SortOrderEnum } from 'types';
 
 import { FailedAccounts } from './components/FailedAccounts';
@@ -36,8 +37,9 @@ export const Accounts = () => {
 
   const sort = useGetSort();
   const { search } = useGetSearch();
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
 
   const [accounts, setAccounts] = useState<AccountType[]>([]);
   const [dataReady, setDataReady] = useState<boolean | undefined>();
@@ -49,16 +51,24 @@ export const Accounts = () => {
 
   const fetchAccounts = () => {
     setDataChanged(true);
+    const signal = getAbortSignal();
+
     Promise.all([
       getAccounts({
         page,
         size,
-        name: search,
-        ...sort
+        searchAfter,
+        search,
+        ...sort,
+        signal
       }),
-      getAccountsCount({ name: search })
+      getAccountsCount({ search, signal })
     ])
       .then(([accountsData, accountsCountData]) => {
+        if (signal.aborted) {
+          return;
+        }
+
         if (accountsData.success && accountsCountData.success) {
           setAccounts(accountsData.data);
           setTotalAccounts(accountsCountData.data);
@@ -108,6 +118,7 @@ export const Accounts = () => {
                     total={totalAccounts}
                     show={accounts.length > 0}
                     className='d-flex ms-auto me-auto me-sm-0'
+                    items={accounts}
                   />
                 </div>
               </div>
@@ -156,7 +167,11 @@ export const Accounts = () => {
 
               <div className='card-footer table-footer'>
                 <PageSize />
-                <Pager total={totalAccounts} show={accounts.length > 0} />
+                <Pager
+                  total={totalAccounts}
+                  show={accounts.length > 0}
+                  items={accounts}
+                />
               </div>
             </div>
           </div>

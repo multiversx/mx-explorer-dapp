@@ -1,12 +1,16 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import { WithClassnameType } from 'types';
 
+const OVERLAY_DELAY = { show: 0, hide: 200 };
+
+export type OverlayTitleType = React.ReactNode | (() => React.ReactNode);
+
 export interface OverlayUIType extends WithClassnameType {
   children?: React.ReactNode;
-  title: React.ReactNode;
+  title: OverlayTitleType;
   tooltipClassName?: string;
   truncate?: boolean;
   persistent?: boolean;
@@ -29,12 +33,11 @@ export const Overlay = ({
   const handleOnMouseLeave = () => {
     setShow(false);
   };
-  const ref = useRef(null);
 
   return (
     <OverlayTrigger
       placement='top'
-      delay={{ show: 0, hide: 200 }}
+      delay={OVERLAY_DELAY}
       overlay={(props: any) => (
         <Tooltip
           {...(tooltipClassName ? { className: tooltipClassName } : {})}
@@ -46,13 +49,12 @@ export const Overlay = ({
               }
             : { show: props.show.toString() })}
         >
-          {title}
+          {typeof title === 'function' ? title() : title}
         </Tooltip>
       )}
       {...(persistent ? { show } : {})}
     >
       <span
-        ref={ref}
         className={classNames(className, 'cursor-context', {
           'text-truncate': truncate
         })}

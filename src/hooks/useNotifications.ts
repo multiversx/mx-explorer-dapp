@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-import { interfaceSelector } from 'redux/selectors';
+import { notificationsSelector } from 'redux/selectors';
 import {
   addNotification as addStateNotification,
   removeNotification as removeStateNotification
-} from 'redux/slices/interface';
+} from 'redux/slices';
 import { NotificationType } from 'types/interface.types';
 
 interface AddNotificationType {
@@ -17,7 +17,7 @@ interface AddNotificationType {
 
 export const useNotifications = () => {
   const dispatch = useDispatch();
-  const { notifications } = useSelector(interfaceSelector);
+  const notifications = useSelector(notificationsSelector);
 
   const addNotification = ({
     id,

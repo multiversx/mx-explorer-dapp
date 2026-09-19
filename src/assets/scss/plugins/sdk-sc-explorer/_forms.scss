@@ -1,0 +1,73 @@
+@import './variables';
+
+/* ----------------- Forms ----------------- */
+
+.#{$package-name} {
+  &-form-warning {
+    font-size: 0.875rem;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    &-text {
+      color: var(--neutral-400);
+    }
+    &-icon {
+      color: var(--warning);
+    }
+    &-address {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      overflow: hidden;
+      max-width: 100%;
+      gap: 0.5rem;
+      margin-right: 0.25rem;
+    }
+  }
+  &-form-panel {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(
+      145deg,
+      var(--black) 30%,
+      var(--neutral-900) 90%
+    );
+    &-text {
+      margin-top: 0.5rem;
+      color: var(--neutral-400);
+    }
+    &-icon {
+      color: var(--primary);
+      &-warn {
+        color: var(--warning);
+      }
+      &-fail {
+        color: var(--danger);
+      }
+    }
+  }
+  &-transaction-panel {
+    .#{$package-name}-form-panel {
+      &-text {
+        margin-top: 1.25rem;
+        font-size: 1.25rem;
+        color: var(--neutral-200);
+        .#{$package-name}-card-item-container {
+          font-size: 1rem;
+          text-align: left;
+          margin-top: 1.5rem;
+          margin-bottom: 0;
+          line-height: 1.5;
+        }
+      }
+      &-button {
+        margin-top: 1rem;
+      }
+    }
+  }
+}

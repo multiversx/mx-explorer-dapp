@@ -56,6 +56,7 @@ export const AccountsTable = ({
             total={accountsCount}
             show={accounts.length > 0}
             className='d-flex ms-auto me-auto me-sm-0'
+            items={accounts}
           />
         </div>
       </div>
@@ -147,7 +148,11 @@ export const AccountsTable = ({
           </div>
           <div className='card-footer table-footer'>
             <PageSize />
-            <Pager total={accountsCount} show={accounts.length > 0} />
+            <Pager
+              total={accountsCount}
+              show={accounts.length > 0}
+              items={accounts}
+            />
           </div>
         </>
       ) : (

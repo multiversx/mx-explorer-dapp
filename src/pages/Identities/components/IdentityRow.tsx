@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
 
 import { MAX_RESULTS } from 'appConstants';
-import { ReactComponent as CarretDown } from 'assets/img/carret-down.svg';
+import CarretDown from 'assets/img/carret-down.svg';
 import {
   Loader,
   NetworkLink,

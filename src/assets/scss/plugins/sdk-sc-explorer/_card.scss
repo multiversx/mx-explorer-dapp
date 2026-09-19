@@ -1,0 +1,28 @@
+@import './variables';
+
+/* ----------------- Card ----------------- */
+
+.#{$package-name} {
+  &-card {
+    &-header {
+      &-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+    }
+  }
+  &-card-container {
+    margin-bottom: 1rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    &-title {
+      font-family: var(--headings-font-family);
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      background-color: var(--table-header);
+      margin-bottom: 1rem;
+    }
+  }
+}

@@ -1,21 +1,33 @@
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import { Dropdown, Navbar } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router';
 
 import { NetworkLink } from 'components';
 import { isContract, addressIsBech32 } from 'helpers';
-import { useActiveRoute, useIsMainnet, useHasGrowthWidgets } from 'hooks';
+import {
+  useActiveRoute,
+  useIsMainnet,
+  useHasGrowthWidgets,
+  useNetworkRoute
+} from 'hooks';
+import { faAngleDown } from 'icons/regular';
 import { activeNetworkSelector } from 'redux/selectors';
 import {
   blocksRoutes,
   transactionsRoutes,
+  transactionsInPoolRoutes,
   accountsRoutes,
   applicationsRoutes,
   validatorsRoutes,
   tokensRoutes,
   nftRoutes,
   collectionRoutes,
-  analyticsRoutes
+  analyticsRoutes,
+  eventsRoutes,
+  utilitiesRoutes
 } from 'routes';
 
 import { LinksPropsType, MenuLinkType } from './types';
@@ -24,15 +36,31 @@ export const Links = (props: LinksPropsType) => {
   const { onClick } = props;
   const { adapter } = useSelector(activeNetworkSelector);
   const activeRoute = useActiveRoute();
-  const { hash: address } = useParams();
-
+  const networkRoute = useNetworkRoute();
   const hasGrowthWidgets = useHasGrowthWidgets();
   const isMainnet = useIsMainnet();
+  const { hash: address } = useParams();
+  const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>(
+    {}
+  );
+
   const isAdapterAPI = adapter === 'api';
   const isOnAccountRoute =
     address &&
     addressIsBech32(address) &&
     Object.values(accountsRoutes).some((item) => activeRoute(item));
+
+  const isOnTransactionsInPoolRoute = Object.values(
+    transactionsInPoolRoutes
+  ).some((item) => activeRoute(item));
+
+  const toggleDropdown = (label: string) => {
+    setOpenDropdowns((prev) => ({ ...prev, [label]: !prev[label] }));
+  };
+
+  const setDropdownOpen = (label: string, isOpen: boolean) => {
+    setOpenDropdowns((prev) => ({ ...prev, [label]: isOpen }));
+  };
 
   const links: MenuLinkType[] = [
     {
@@ -51,7 +79,31 @@ export const Links = (props: LinksPropsType) => {
       label: 'Transactions',
       show: true,
       to: transactionsRoutes.transactions,
-      activeRoutes: Object.values(transactionsRoutes)
+      activeRoutes: [
+        ...Object.values(transactionsRoutes),
+        ...Object.values(transactionsInPoolRoutes),
+        ...Object.values(eventsRoutes)
+      ],
+      subRoutes: [
+        {
+          label: 'Transactions',
+          show: true,
+          to: transactionsRoutes.transactions,
+          activeRoutes: Object.values(transactionsRoutes)
+        },
+        {
+          label: 'Transaction Pool',
+          show: true,
+          to: transactionsInPoolRoutes.transactionsInPool,
+          activeRoutes: Object.values(transactionsInPoolRoutes)
+        },
+        {
+          label: 'Events',
+          show: true,
+          to: eventsRoutes.events,
+          activeRoutes: Object.values(eventsRoutes)
+        }
+      ]
     },
     {
       label: 'Accounts',
@@ -91,10 +143,30 @@ export const Links = (props: LinksPropsType) => {
       to: analyticsRoutes.analytics,
       show: isAdapterAPI && isMainnet && hasGrowthWidgets,
       activeRoutes: Object.values(analyticsRoutes)
+    },
+    {
+      label: 'Utilities',
+      show: true,
+      to: utilitiesRoutes.converters,
+      activeRoutes: Object.values(utilitiesRoutes),
+      subRoutes: [
+        {
+          label: 'Converters',
+          show: true,
+          to: utilitiesRoutes.converters,
+          activeRoutes: [utilitiesRoutes.converters]
+        },
+        {
+          label: 'Smart Contract Interaction',
+          show: true,
+          to: utilitiesRoutes.smartContractInteraction,
+          activeRoutes: [utilitiesRoutes.smartContractInteraction]
+        }
+      ]
     }
   ].filter((link) => link.show);
 
-  const getIsLinkActive = (link: MenuLinkType) => {
+  const getIsLinkActive = (link: MenuLinkType, includeAsterisk?: boolean) => {
     if (isOnAccountRoute) {
       if (isContract(address)) {
         return link.to === applicationsRoutes.applications;
@@ -103,27 +175,95 @@ export const Links = (props: LinksPropsType) => {
       }
     }
 
+    // avoid false positive from * transactionDetails route
+    if (isOnTransactionsInPoolRoute && includeAsterisk) {
+      return (
+        link.to === transactionsInPoolRoutes.transactionsInPool ||
+        link.to === transactionsInPoolRoutes.transactionsInPoolDetails
+      );
+    }
+
     return link.activeRoutes.some((item) => activeRoute(item));
   };
 
   return (
-    <menu className='links navbar-nav mt-0' role='menubar'>
-      {links.map((link) => {
-        return (
-          <li key={link.label} role='presentation'>
+    <>
+      <Navbar collapseOnSelect className='links navbar-nav mt-0'>
+        {links.map((link) => {
+          if (link.subRoutes) {
+            const show = openDropdowns[link.label];
+            return (
+              <div
+                key={`dropdown-${link.label}`}
+                className={classNames('link dropdown-wrapper', {
+                  active: getIsLinkActive(link) || show
+                })}
+              >
+                <NetworkLink
+                  to={link.to}
+                  onClick={onClick}
+                  className={classNames('link nav-link has-dropdown', {
+                    active: getIsLinkActive(link) || show
+                  })}
+                  onMouseEnter={() => setDropdownOpen(link.label, true)}
+                  onMouseLeave={() => setDropdownOpen(link.label, false)}
+                >
+                  {link.label}
+                </NetworkLink>
+                <Dropdown
+                  className={classNames('link nav-item', {
+                    active: getIsLinkActive(link)
+                  })}
+                  show={show}
+                  onMouseEnter={() => setDropdownOpen(link.label, true)}
+                  onMouseLeave={() => setDropdownOpen(link.label, false)}
+                  onClick={() => {
+                    toggleDropdown(link.label);
+                  }}
+                >
+                  <Dropdown.Toggle
+                    id={`dropdown-${link.label}`}
+                    aria-label={`${link.label} submenu`}
+                    className='nav-link btn btn-link-unstyled'
+                  >
+                    <FontAwesomeIcon icon={faAngleDown} size='sm' />
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu renderOnMount={true}>
+                    {link.subRoutes.map((subroute) => {
+                      return (
+                        <Dropdown.Item
+                          as={Link}
+                          key={subroute.label}
+                          to={networkRoute(subroute.to)}
+                          className={classNames({
+                            active: getIsLinkActive(subroute, true)
+                          })}
+                          onClick={onClick}
+                        >
+                          {subroute.label}
+                        </Dropdown.Item>
+                      );
+                    })}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+            );
+          }
+
+          return (
             <NetworkLink
+              key={link.label}
               to={link.to}
               onClick={onClick}
-              className={classNames('link nav-item', {
+              className={classNames('link nav-link', {
                 active: getIsLinkActive(link)
               })}
-              role='menuitem'
             >
               {link.label}
             </NetworkLink>
-          </li>
-        );
-      })}
-    </menu>
+          );
+        })}
+      </Navbar>
+    </>
   );
 };

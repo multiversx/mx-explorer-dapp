@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { ELLIPSIS } from 'appConstants';
 import { Loader, NetworkLink, Pager, PageSize, TableSearch } from 'components';
 import { getStringPlural } from 'helpers';
 import {
+  useAbortSignal,
   useAdapter,
   useGetSearch,
   useGetSort,
@@ -15,7 +16,7 @@ import {
   useHasGrowthWidgets
 } from 'hooks';
 import { economicsSelector } from 'redux/selectors';
-import { pageHeaderTokensStatsSelector } from 'redux/selectors/pageHeadersTokensStats';
+import { pageHeaderTokensStatsSelector } from 'redux/selectors';
 import { tokensRoutes } from 'routes';
 import { TokenType } from 'types';
 
@@ -30,6 +31,7 @@ export const Tokens = () => {
   const { page, size } = useGetPage();
   const { sort, order } = useGetSort();
   const { getTokens, getTokensCount } = useAdapter();
+  const getAbortSignal = useAbortSignal();
 
   const { ecosystemMarketCap, unprocessed } = useSelector(economicsSelector);
   const pageHeadersTokens = useSelector(pageHeaderTokensStatsSelector);
@@ -43,10 +45,24 @@ export const Tokens = () => {
     growthTotalTokens ?? new BigNumber(totalTokens || 1).toFormat();
 
   const fetchTokens = () => {
+    const signal = getAbortSignal();
+
     Promise.all([
-      getTokens({ search, page, size, sort, order, includeMetaESDT: false }),
-      getTokensCount({ search, includeMetaESDT: false })
+      getTokens({
+        search,
+        page,
+        size,
+        sort,
+        order,
+        includeMetaESDT: false,
+        signal
+      }),
+      getTokensCount({ search, includeMetaESDT: false, signal })
     ]).then(([tokensData, count]) => {
+      if (signal.aborted) {
+        return;
+      }
+
       if (tokensData.success) {
         setTokens(tokensData.data);
         setTotalTokens(count.data);

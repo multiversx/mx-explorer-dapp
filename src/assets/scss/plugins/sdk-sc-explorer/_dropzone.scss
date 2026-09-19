@@ -1,0 +1,103 @@
+@import './variables';
+
+/* ----------------- Dropzone ----------------- */
+
+.#{$package-name} {
+  &-dropzone {
+    padding: 1rem;
+    min-height: 10rem;
+    cursor: pointer;
+    background-color: var(--black);
+    border-radius: var(--border-radius);
+    &-error {
+      background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='32' ry='32' stroke='%23d9534f' stroke-width='1' stroke-dasharray='8' stroke-dashoffset='8' stroke-linecap='round'/%3e%3c/svg%3e") !important;
+    }
+    &-hovered {
+      background-color: var(--neutral-950);
+    }
+    &-disabled {
+      background-color: var(--neutral-700);
+    }
+    &-inner {
+      gap: 1rem;
+    }
+    &-text,
+    &-icon {
+      line-height: 1;
+      font-size: 0.75rem;
+      &.error {
+        color: var(--danger);
+      }
+      &.success {
+        color: var(--primary);
+      }
+    }
+    &-text {
+      color: var(--neutral-400);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+      &-select {
+        color: var(--primary);
+      }
+    }
+    &-icon {
+      font-size: 3rem;
+    }
+    &-files {
+      flex: 1;
+      gap: 0.25rem;
+      padding: 0 0.25rem;
+      max-height: 100%;
+      width: 100%;
+    }
+    &-error-message {
+      font-size: 10px;
+      color: var(--danger);
+    }
+
+    &-file {
+      gap: 1rem;
+      border: 1px solid transparent;
+      padding: 0.5rem;
+      max-width: 18rem;
+      width: 100%;
+      border-radius: 0.25rem;
+      background-color: var(--neutral-800);
+      cursor: text;
+      &.error {
+        border-color: var(--danger);
+      }
+      &-left {
+        gap: 0.25rem;
+        min-width: 0;
+      }
+      &-remove {
+        cursor: pointer;
+        &:hover,
+        &.error {
+          svg {
+            color: var(--danger);
+          }
+        }
+      }
+      &-success,
+      &-error {
+        font-size: 0.75rem;
+        line-height: 1;
+        display: flex;
+        gap: 0.25rem;
+      }
+      &-success {
+        color: var(--primary);
+        &-icon {
+          color: var(--primary);
+        }
+      }
+      &-error {
+        color: var(--danger);
+      }
+    }
+  }
+}

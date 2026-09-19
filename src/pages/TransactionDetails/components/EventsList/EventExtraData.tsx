@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { DataDecode, DecodeMethodEnum } from 'components';
+import { DataDecode } from 'components';
+import { DecodeMethodEnum } from 'lib';
 
 interface EventExtraDataUIType {
   data: string[];

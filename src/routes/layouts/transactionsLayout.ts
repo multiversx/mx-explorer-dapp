@@ -5,10 +5,13 @@ import { TransactionsInPool } from 'pages/TransactionsInPool';
 
 import { TitledRouteObject } from '../routes';
 
+export const transactionsInPoolRoutes = {
+  transactionsInPool: '/transactions/pool',
+  transactionsInPoolDetails: '/transactions/pool/:hash'
+};
+
 export const transactionsRoutes = {
   transactions: '/transactions',
-  transactionsInPool: '/transactions/pool',
-  transactionsInPoolDetails: '/transactions/pool/:hash',
   transactionDetails: '/transactions/:hash/*',
   transactionDetailsLogs: '/transactions/:hash/logs',
   transactionDetailsInnerTransactions: '/transactions/:hash/inner-transactions'
@@ -26,12 +29,12 @@ export const transactionsLayout: TitledRouteObject[] = [
     Component: TransactionDetails
   },
   {
-    path: transactionsRoutes.transactionsInPool,
+    path: transactionsInPoolRoutes.transactionsInPool,
     title: 'Transactions In Pool',
     Component: TransactionsInPool
   },
   {
-    path: transactionsRoutes.transactionsInPoolDetails,
+    path: transactionsInPoolRoutes.transactionsInPoolDetails,
     title: 'Transaction In Pool Details',
     Component: TransactionInPoolDetails
   }

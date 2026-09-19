@@ -3,19 +3,30 @@ import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useAdapter, useHasGrowthWidgets } from 'hooks';
-import { pageHeadersAccountsStatsSelector } from 'redux/selectors/pageHeadersAccountsStats';
-import { setPageHeaderAccountsStats } from 'redux/slices/pageHeadersAccountsStats';
+import {
+  pageHeadersAccountsStatsSelector,
+  statsAccountsSelector
+} from 'redux/selectors';
+import {
+  setPageHeaderAccountsStats,
+  setPageHeaderAccountStatsTotalAccounts
+} from 'redux/slices';
 import { HeadersAccountsType } from 'types/headerStats.types';
 
-export const useHeaderAccountsStats = () => {
+import { PageStatsOptionsType } from './types';
+
+export const useHeaderAccountsStats = ({
+  isEnabled = true
+}: PageStatsOptionsType = {}) => {
   const headersAccounts = useSelector(pageHeadersAccountsStatsSelector);
+  const statsAccounts = useSelector(statsAccountsSelector);
 
   const hasGrowthWidgets = useHasGrowthWidgets();
   const dispatch = useDispatch();
   const { getGrowthHeaders } = useAdapter();
 
   const getHeadersAccounts = async () => {
-    if (Object.keys(headersAccounts).length !== 0) {
+    if (headersAccounts.usersStaking !== undefined) {
       return headersAccounts;
     }
 
@@ -41,10 +52,22 @@ export const useHeaderAccountsStats = () => {
   };
 
   useEffect(() => {
-    if (hasGrowthWidgets) {
+    if (hasGrowthWidgets && isEnabled) {
       getHeadersAccounts();
     }
-  }, [hasGrowthWidgets]);
+  }, [hasGrowthWidgets, isEnabled]);
+
+  useEffect(() => {
+    if (!isEnabled || statsAccounts === 0) {
+      return;
+    }
+
+    dispatch(
+      setPageHeaderAccountStatsTotalAccounts(
+        new BigNumber(statsAccounts).toFormat(0)
+      )
+    );
+  }, [statsAccounts, isEnabled, dispatch]);
 
   return {
     title: 'Accounts',

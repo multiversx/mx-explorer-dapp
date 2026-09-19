@@ -9,7 +9,7 @@ import {
   MultilayerPercentageStepType
 } from '../types';
 
-export const prepareChartData = (steps: MultilayerPercentageStepType[]) => {
+const prepareChartData = (steps: MultilayerPercentageStepType[]) => {
   return steps.map((step) => {
     return {
       name: truncateMiddle(String(step.name), 20),

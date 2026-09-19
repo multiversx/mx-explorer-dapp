@@ -1,10 +1,9 @@
 import { ELLIPSIS } from 'appConstants';
+import { PreviewPanelCard } from 'components';
 import { formatBigNumber } from 'helpers';
 import { useGetEpochRemainingTime } from 'hooks';
 
 import { NodeType, NodeStatusEnum } from 'types';
-
-import { PanelCard } from './PanelCard';
 
 export const TimeRemainingPanelCard = ({ node }: { node: NodeType }) => {
   const { epoch, remainingTime, isStatsFetched } = useGetEpochRemainingTime();
@@ -22,7 +21,7 @@ export const TimeRemainingPanelCard = ({ node }: { node: NodeType }) => {
   };
 
   return (
-    <PanelCard
+    <PreviewPanelCard
       title={getRemainingTimeTitle()}
       className='text-primary'
       featured
@@ -41,6 +40,6 @@ export const TimeRemainingPanelCard = ({ node }: { node: NodeType }) => {
       ) : (
         ELLIPSIS
       )}
-    </PanelCard>
+    </PreviewPanelCard>
   );
 };

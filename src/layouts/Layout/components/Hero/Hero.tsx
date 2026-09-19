@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { BRAND_NAME } from 'appConstants';
 import { FormatEGLD, Search } from 'components';
@@ -144,7 +144,7 @@ export const Hero = () => {
                 showNodesStats ||
                 showApplicationsStats
               ) && (
-                <div className='card-body d-flex flex-row flex-wrap gap-3'>
+                <div className='card-body stats-cards equal-width d-flex flex-row flex-wrap gap-3'>
                   <TransactionsStatsCard />
                   <AccountsStatsCard />
                   <BlockHeightStatsCard />

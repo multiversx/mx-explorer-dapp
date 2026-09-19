@@ -1,4 +1,4 @@
-import { RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router';
 import { ErrorElement } from 'components/ErrorElement';
 import { withPageTitle } from '../helpers/withPageTitle';
 

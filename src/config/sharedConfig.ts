@@ -1,11 +1,12 @@
+import { object, string, boolean } from 'yup';
+
 import {
   DECIMALS,
   GAS_LIMIT,
   GAS_PER_DATA_BYTE,
   GAS_PRICE_MODIFIER,
-  GAS_PRICE as DEFAULT_GAS_PRICE
-} from '@multiversx/sdk-dapp/constants/index';
-import { object, string, boolean } from 'yup';
+  DEFAULT_GAS_PRICE
+} from 'lib';
 import { NetworkUrlType } from 'types/network.types';
 
 interface AppLinksType {
@@ -128,27 +129,28 @@ export const networkBaseSchema = object({
 export const adapterSchema = object({
   extrasApi: string().when('accessToken', {
     is: true,
-    then: string().required()
+    then: (currentSchema) => currentSchema.required()
   }),
   adapter: string().defined().oneOf(['api', 'elastic']),
   apiAddress: string().when('adapter', {
     is: 'api',
-    then: string().required()
+    then: (currentSchema) => currentSchema.required()
   }),
   growthApi: string().when('adapter', {
     is: 'api',
-    then: string().when('id', {
-      is: 'mainnet',
-      then: string().required()
-    })
+    then: (currentSchema) =>
+      currentSchema.when('id', {
+        is: 'mainnet',
+        then: (nestedSchema) => nestedSchema.required()
+      })
   }),
   elasticUrl: string().when('adapter', {
     is: 'elastic',
-    then: string().required()
+    then: (currentSchema) => currentSchema.required()
   }),
   proxyUrl: string().when('adapter', {
     is: 'elastic',
-    then: string().required()
+    then: (currentSchema) => currentSchema.required()
   })
 }).required();
 

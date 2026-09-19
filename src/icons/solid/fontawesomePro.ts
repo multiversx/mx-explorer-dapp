@@ -1,4 +1,3 @@
-/* eslint-disable import/order */
 import {
   faAngleDown,
   faAngleLeft,
@@ -61,6 +60,7 @@ import {
   faExclamationTriangle,
   faExternalLink,
   faEye,
+  faEyeSlash,
   faFileAlt,
   faFileCode,
   faFilter,
@@ -88,6 +88,7 @@ import {
   faMapMarkerAlt,
   faMinus,
   faPalette,
+  faPause,
   faPen,
   faPencil,
   faPersonToPortal,
@@ -188,6 +189,7 @@ export {
   faExclamationTriangle,
   faExternalLink,
   faEye,
+  faEyeSlash,
   faFileAlt,
   faFileCode,
   faFilter,
@@ -215,6 +217,7 @@ export {
   faMapMarkerAlt,
   faMinus,
   faPalette,
+  faPause,
   faPen,
   faPencil,
   faPersonToPortal,

@@ -17,13 +17,13 @@ import {
 } from 'components';
 import { formatDate, formatSize, urlBuilder } from 'helpers';
 import { useIsSovereign } from 'hooks';
-import { faChevronLeft, faChevronRight, faClock } from 'icons/regular';
-import { BlockType } from 'types';
-
-export interface BlockDataType {
-  block: BlockType;
-  nextHash: string;
-}
+import {
+  faChevronLeft,
+  faChevronRight,
+  faClock,
+  faArrowUpRightFromSquare
+} from 'icons/regular';
+import { UIBlockType } from 'types';
 
 function decodeHex(hex: string) {
   let str = '';
@@ -38,10 +38,13 @@ function createHashItemIfLengthIsOdd(length: number) {
   ) : null;
 }
 
-export const BlockData = (props: BlockDataType) => {
-  const { block, nextHash } = props;
-  const isFirstBlock = block.prevHash && block.prevHash.length > 64;
+export const BlockData = ({ block }: { block: UIBlockType }) => {
   const [expanded, setExpanded] = useState(false);
+
+  const isFirstBlock = block.prevHash && block.prevHash.length > 64;
+  const reservedText = block.reserved
+    ? Buffer.from(block.reserved, 'base64').toString()
+    : '';
   const isSovereign = useIsSovereign();
 
   const toggleCollapseClick = (e: React.MouseEvent) => {
@@ -51,9 +54,11 @@ export const BlockData = (props: BlockDataType) => {
 
   // Fixes Trim re-render bug
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       window.dispatchEvent(new Event('resize'));
     }, 0);
+
+    return () => clearTimeout(timeoutId);
   }, [expanded]);
 
   return (
@@ -70,34 +75,36 @@ export const BlockData = (props: BlockDataType) => {
         <DetailItem title='Block Height'>
           <div className='d-flex justify-content-between align-items-center'>
             <div>{block.nonce}</div>
-            <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
-              <li className='list-inline-item me-0'>
-                <div className='pager pager-inline'>
-                  <NetworkLink
-                    to={`/blocks/${block.prevHash}`}
-                    data-testid='previousPageButton'
-                  >
-                    <FontAwesomeIcon icon={faChevronLeft} /> Prev
-                  </NetworkLink>
-                </div>
-              </li>
-              <li className='list-inline-item me-0'>
-                <div className='pager pager-inline'>
-                  {nextHash !== '' ? (
+            {Boolean(block.nonce) && (
+              <ul className='list-inline m-0 d-flex flex-wrap gap-2'>
+                <li className='list-inline-item me-0'>
+                  <div className='pager pager-inline'>
                     <NetworkLink
-                      data-testid='nextPageButton'
-                      to={`/blocks/${nextHash}`}
+                      to={`/blocks/${block.prevHash}`}
+                      data-testid='previousPageButton'
                     >
-                      Next <FontAwesomeIcon icon={faChevronRight} />
+                      <FontAwesomeIcon icon={faChevronLeft} /> Prev
                     </NetworkLink>
-                  ) : (
-                    <span className='text-neutral-400'>
-                      Next <FontAwesomeIcon icon={faChevronRight} />
-                    </span>
-                  )}
-                </div>
-              </li>
-            </ul>
+                  </div>
+                </li>
+                <li className='list-inline-item me-0'>
+                  <div className='pager pager-inline'>
+                    {block?.nextHash && block.nextHash !== '' ? (
+                      <NetworkLink
+                        data-testid='nextPageButton'
+                        to={`/blocks/${block.nextHash}`}
+                      >
+                        Next <FontAwesomeIcon icon={faChevronRight} />
+                      </NetworkLink>
+                    ) : (
+                      <span className='text-neutral-400'>
+                        Next <FontAwesomeIcon icon={faChevronRight} />
+                      </span>
+                    )}
+                  </div>
+                </li>
+              </ul>
+            )}
           </div>
         </DetailItem>
         <DetailItem title='Block Hash'>
@@ -161,7 +168,7 @@ export const BlockData = (props: BlockDataType) => {
           {new BigNumber(block.maxGasLimit).toFormat()}
         </DetailItem>
         <DetailItem title='Proposer'>
-          {block.proposer ? (
+          {block.proposer && Boolean(block.nonce) ? (
             <IdentityBlock block={block} />
           ) : (
             <span className='text-neutral-400'>N/A</span>
@@ -258,17 +265,54 @@ export const BlockData = (props: BlockDataType) => {
             {isFirstBlock ? (
               <span className='text-neutral-400'>N/A</span>
             ) : block.prevHash ? (
-              <NetworkLink
-                className='trim-wrapper'
-                to={`/blocks/${block.prevHash}`}
-              >
-                <Trim text={block.prevHash} />
-              </NetworkLink>
+              <>
+                <NetworkLink
+                  className='trim-wrapper'
+                  to={urlBuilder.blockDetails(block.prevHash)}
+                >
+                  <Trim text={block.prevHash} />
+                </NetworkLink>
+                <CopyButton text={block.prevHash} />
+                <NetworkLink
+                  to={urlBuilder.blockDetails(block.prevHash)}
+                  className='side-action'
+                  target='_blank'
+                  rel='noreferrer nofollow noopener'
+                >
+                  <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                </NetworkLink>
+              </>
             ) : (
               <span className='text-neutral-400'>N/A</span>
             )}
           </div>
         </DetailItem>
+        {block.lastExecutionResultHash && (
+          <DetailItem title='Last Execution Result Hash'>
+            <div className='d-flex align-items-center'>
+              <NetworkLink
+                className='trim-wrapper'
+                to={urlBuilder.blockDetails(block.lastExecutionResultHash)}
+              >
+                <Trim text={block.lastExecutionResultHash} />
+              </NetworkLink>
+              <CopyButton text={block.lastExecutionResultHash} />
+              <NetworkLink
+                to={urlBuilder.blockDetails(block.lastExecutionResultHash)}
+                className='side-action'
+                target='_blank'
+                rel='noreferrer nofollow noopener'
+              >
+                <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+              </NetworkLink>
+            </div>
+          </DetailItem>
+        )}
+        {block.lastExecutionResultNonce && (
+          <DetailItem title='Last Result Nonce'>
+            {block.lastExecutionResultNonce}
+          </DetailItem>
+        )}
         <DetailItem title='Public Keys Bitmap'>
           {block.pubKeyBitmap ? (
             <Trim text={block.pubKeyBitmap} />
@@ -284,6 +328,18 @@ export const BlockData = (props: BlockDataType) => {
               </pre>
             </DetailItem>
           </>
+        )}
+        {reservedText && (
+          <DetailItem title='Data'>
+            <div className='position-relative data-decode overflow-hidden mt-1'>
+              <div className='form-control textarea textarea-lg'>
+                {reservedText}
+              </div>
+              <div className='d-flex button-holder'>
+                <CopyButton text={reservedText} className='copy-button' />
+              </div>
+            </div>
+          </DetailItem>
         )}
       </div>
     </div>

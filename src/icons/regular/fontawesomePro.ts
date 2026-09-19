@@ -1,4 +1,3 @@
-/* eslint-disable import/order */
 import {
   faAngleDown,
   faAngleLeft,
@@ -88,6 +87,7 @@ import {
   faMapMarkerAlt,
   faMinus,
   faPalette,
+  faPause,
   faPen,
   faPencil,
   faPersonToPortal,
@@ -215,6 +215,7 @@ export {
   faMapMarkerAlt,
   faMinus,
   faPalette,
+  faPause,
   faPen,
   faPencil,
   faPersonToPortal,

@@ -1,16 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useGetLoginInfo, useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
-import { NotificationModal } from '@multiversx/sdk-dapp/UI/NotificationModal/NotificationModal';
-import { SignTransactionsModals } from '@multiversx/sdk-dapp/UI/SignTransactionsModals/SignTransactionsModals';
-import { TransactionsToastList } from '@multiversx/sdk-dapp/UI/TransactionsToastList/TransactionsToastList';
-import { DappProvider } from '@multiversx/sdk-dapp/wrappers/DappProvider/DappProvider';
-import { ScExplorerContainer } from '@multiversx/sdk-dapp-sc-explorer/containers/ScExplorerContainer';
-import { VerifiedContractTabsEnum } from '@multiversx/sdk-dapp-sc-explorer/types/base.types';
-import { VerifiedContractType } from '@multiversx/sdk-dapp-sc-explorer/types/verifiedContract.types';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
-import { Loader, PageState } from 'components';
+import { Loader, PageState, SdkDappWrapper } from 'components';
 import { useNetworkRoute, useIsMainnet } from 'hooks';
 import { faClone } from 'icons/regular';
 import {
@@ -33,11 +25,26 @@ import {
   faSpinner
 } from 'icons/solid';
 import { getHeaders } from 'interceptors';
+import {
+  SdkDappAccountType,
+  useGetAccountInfo,
+  useGetLoginInfo,
+  VerifiedContractTabsEnum,
+  VerifiedContractType
+} from 'lib';
 import { accountSelector, activeNetworkSelector } from 'redux/selectors';
 import { WithClassnameType } from 'types';
 
 import { getVerifiedContractSectionUrl } from './helpers';
 import { useGetActiveSection, useGetEnvironment } from './hooks';
+
+import '@multiversx/sdk-dapp-sc-explorer/out/styles.css';
+
+const ScExplorerContainer = lazy(() =>
+  import('@multiversx/sdk-dapp-sc-explorer/out/containers/ScExplorerContainer').then(
+    (module) => ({ default: module.ScExplorerContainer })
+  )
+);
 
 export interface AccountVerifiedContractUIType extends WithClassnameType {
   contract?: VerifiedContractType;
@@ -74,8 +81,6 @@ export const AccountVerifiedContract = ({
   if (!isVerified || !environment) {
     return null;
   }
-
-  const walletConnectV2ProjectId = import.meta.env.VITE_APP_WALLETCONNECT_ID;
 
   const customClassNames = {
     cardClassName: 'card card-black',
@@ -134,54 +139,42 @@ export const AccountVerifiedContract = ({
       )}
       {isDataReady === true && contract && (
         <div>
-          <DappProvider
-            environment={environment}
-            customNetworkConfig={{
-              name: 'sdk-sc-explorer',
-              skipFetchFromServer: true,
-              walletConnectV2ProjectId,
-              apiAddress
-            }}
-            dappConfig={{
-              shouldUseWebViewProvider: true
-            }}
-          >
-            <TransactionsToastList />
-            <NotificationModal />
-            <SignTransactionsModals />
-            <ScExplorerContainer
-              smartContract={{
-                verifiedContract: contract,
-                deployedContractDetails: account
-              }}
-              accountConsumerHandlers={{
-                useGetLoginInfo,
-                useGetAccountInfo
-              }}
-              networkConfig={{ environment, apiAddress }}
-              customClassNames={customClassNames}
-              icons={icons}
-              className='mx-4'
-              activeSection={activeSection}
-              setActiveSection={setActiveSection}
-              config={{
-                canMutate: !isMainnet,
-                canLoadAbi: false,
-                canDeploy: false,
-                canUpgrade: false,
-                canDisplayContractDetails: false,
-                ...(extraRequestHeaders
-                  ? {
-                      loginParams: {
-                        nativeAuth: {
-                          extraRequestHeaders
+          <SdkDappWrapper>
+            <Suspense fallback={<Loader />}>
+              <ScExplorerContainer
+                smartContract={{
+                  verifiedContract: contract,
+                  deployedContractDetails: account as SdkDappAccountType
+                }}
+                accountConsumerHandlers={{
+                  useGetLoginInfo,
+                  useGetAccountInfo
+                }}
+                networkConfig={{ environment, apiAddress }}
+                customClassNames={customClassNames}
+                icons={icons}
+                className='mx-4'
+                activeSection={activeSection}
+                setActiveSection={setActiveSection}
+                config={{
+                  canMutate: !isMainnet,
+                  canLoadAbi: false,
+                  canDeploy: false,
+                  canUpgrade: false,
+                  canDisplayContractDetails: false,
+                  ...(extraRequestHeaders
+                    ? {
+                        loginParams: {
+                          nativeAuth: {
+                            extraRequestHeaders
+                          }
                         }
                       }
-                    }
-                  : {})
-              }}
-            />
-          </DappProvider>
+                    : {})
+                }}
+              />
+            </Suspense>
+          </SdkDappWrapper>
         </div>
       )}
     </>

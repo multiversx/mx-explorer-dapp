@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { METACHAIN_SHARD_ID } from 'appConstants';
 import { isHash, addressIsBech32, isMetachain } from 'helpers';

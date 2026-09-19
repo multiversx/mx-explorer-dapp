@@ -27,7 +27,7 @@
     left: 2.375rem;
     padding: 0.375rem 0.75rem;
     border-radius: 1rem;
-    font-size: $font-size-base;
+    font-size: var(--body-font-size);
     border: 2px solid var(--primary);
     color: var(--primary-200);
     background: linear-gradient(

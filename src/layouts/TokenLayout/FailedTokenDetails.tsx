@@ -2,9 +2,9 @@ import { PageState } from 'components';
 import { faCoins } from 'icons/regular';
 
 export const FailedTokenDetails = ({
-  tokenId
+  tokenIdentifier
 }: {
-  tokenId: string | undefined;
+  tokenIdentifier: string | undefined;
 }) => {
   return (
     <PageState
@@ -12,7 +12,7 @@ export const FailedTokenDetails = ({
       title='Unable to locate this token'
       description={
         <div className='px-spacer'>
-          <span className='text-break-all'>{tokenId}</span>
+          <span className='text-break-all'>{tokenIdentifier}</span>
         </div>
       }
       isError

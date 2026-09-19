@@ -1,6 +1,5 @@
-import { RawAbiType } from '@multiversx/sdk-dapp-sc-explorer/types/abi.types';
-
 import { downloadFile } from 'helpers';
+import { RawAbiType } from 'lib';
 
 export const DownloadABIFile = ({
   abi,

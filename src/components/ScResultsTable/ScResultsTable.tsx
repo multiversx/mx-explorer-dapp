@@ -35,6 +35,7 @@ export const ScResultsTable = ({
               show={scResults.length > 0}
               hasTestId={false}
               className='d-flex ms-auto me-auto me-sm-0'
+              items={scResults}
             />
           </div>
         </div>
@@ -66,7 +67,11 @@ export const ScResultsTable = ({
 
         <div className='card-footer table-footer'>
           <PageSize />
-          <Pager total={totalScResults} show={scResults.length > 0} />
+          <Pager
+            total={totalScResults}
+            show={scResults.length > 0}
+            items={scResults}
+          />
         </div>
       </div>
     </div>

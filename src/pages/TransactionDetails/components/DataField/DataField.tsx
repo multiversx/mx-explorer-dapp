@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { DecodeMethodEnum } from '@multiversx/sdk-dapp/types';
 import { Anchorme } from 'react-anchorme';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import { MAX_DISPLAY_TX_DATA_LENGTH } from 'appConstants';
 import { DetailItem, ModalLink, DataDecode } from 'components';
@@ -12,17 +11,20 @@ import {
   useActiveRoute,
   useGetTransactionUrlHashParams
 } from 'hooks';
+import { DecodeMethodEnum } from 'lib';
 import { transactionsRoutes } from 'routes';
 import { ScamInfoType, WithClassnameType } from 'types';
 
 export interface DataFieldUIType extends WithClassnameType {
   data?: string;
+  title?: string;
   scamInfo?: ScamInfoType;
   skipDataScamCheck?: boolean;
 }
 
 export const DataField = ({
   data,
+  title = 'Input Data',
   scamInfo,
   skipDataScamCheck
 }: DataFieldUIType) => {
@@ -74,7 +76,7 @@ export const DataField = ({
   );
 
   return (
-    <DetailItem title='Input Data' className='data-field'>
+    <DetailItem title={title} className='data-field'>
       <DataDecode
         value={value}
         initialDecodeMethod={!id ? dataDecode : DecodeMethodEnum.raw}

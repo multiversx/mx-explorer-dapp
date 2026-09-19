@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import Select from 'react-select';
 import Creatable from 'react-select/creatable';
 
@@ -84,6 +84,7 @@ export const SelectFilter = ({
     <Creatable
       options={options}
       name={name}
+      aria-label={name}
       data-testid={name}
       className={`styled-select ${className}`}
       classNamePrefix='styled-select'
@@ -124,6 +125,7 @@ export const SelectFilter = ({
     <Select
       options={options}
       name={name}
+      aria-label={name}
       data-testid={name}
       className={`styled-select ${className}`}
       classNamePrefix='styled-select'

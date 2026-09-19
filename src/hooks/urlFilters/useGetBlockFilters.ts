@@ -1,13 +1,15 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
-import { getUrlParam } from 'helpers';
+import { cleanUrlFilters, getUrlParam } from 'helpers';
 import { BlockFiltersEnum } from 'types';
 
 export const useGetBlockFilters = () => {
   const [searchParams] = useSearchParams();
   const getParam = getUrlParam(searchParams);
 
-  return {
-    shard: getParam(BlockFiltersEnum.shard, true)
+  const filters = {
+    shard: getParam(BlockFiltersEnum.shard, { checkIsInteger: true })
   };
+
+  return cleanUrlFilters(filters);
 };

@@ -1,0 +1,103 @@
+@import './variables';
+
+/* ----------------- Layout ----------------- */
+
+.#{$package-name} {
+  &-layout {
+    background-color: var(--neutral-800);
+    border-radius: 1rem;
+    overflow: hidden;
+    &-header {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 0.5rem;
+      row-gap: 1rem;
+      padding: 1rem;
+      @include media-breakpoint-up(md) {
+        padding: 1.5rem;
+      }
+      &-title {
+        font-size: 1.25rem;
+        font-family: var(--headings-font-family);
+        font-weight: 500;
+        text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.45);
+        @include media-breakpoint-up(md) {
+          font-size: 1.125rem;
+        }
+      }
+      &-subtitle {
+        font-size: 0.875rem;
+        color: var(--neutral-400);
+      }
+    }
+    &-content {
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+      }
+      &-sidebar {
+        flex-shrink: 0;
+        padding: 0 0.5rem 0.5rem 0.5rem;
+        gap: 0.25rem;
+        @include media-breakpoint-up(md) {
+          max-width: 12.5rem;
+          flex-basis: 18%;
+        }
+      }
+      &-body {
+        padding: 0.5rem;
+        background-color: var(--neutral-900);
+        flex-basis: 85%;
+        gap: 1rem;
+        @include media-breakpoint-up(md) {
+          padding: 1.5rem;
+        }
+      }
+    }
+  }
+  &-disconnected-wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
+    @include media-breakpoint-up(md) {
+      margin-left: auto;
+    }
+    &-text {
+      max-width: 12rem;
+      color: var(--neutral-300);
+      font-size: 0.813rem;
+      line-height: 100%;
+      letter-spacing: -0.13px;
+      @include media-breakpoint-up(md) {
+        text-align: right;
+      }
+    }
+  }
+  &-connected-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.688rem 1rem 0.688rem 2rem;
+    border-radius: 0.5rem;
+    background: var(--neutral-900);
+    max-width: 16rem;
+    mvx-trim {
+      max-width: 9rem;
+    }
+    @include media-breakpoint-up(md) {
+      margin-left: auto;
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0.75rem;
+      margin-top: 0.125rem;
+      display: inline-block;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 100%;
+      background-color: var(--primary);
+    }
+  }
+}

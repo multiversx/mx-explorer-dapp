@@ -1,9 +1,8 @@
-import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
-import { ELLIPSIS } from 'appConstants';
 import { ProgressRing } from 'components';
-import { useFetchEpochProgress } from 'hooks';
+import { formatBigNumber, getStringPlural } from 'helpers';
+import { useEpochProgress } from 'hooks';
 import { WithClassnameType } from 'types';
 
 export interface EpochRingType extends WithClassnameType {
@@ -14,32 +13,30 @@ export const EpochProgressRing = ({
   showTime = true,
   className
 }: EpochRingType) => {
-  const { isReady, epoch, epochPercentage, epochTimeRemaining, roundsLeft } =
-    useFetchEpochProgress();
+  const { epoch, epochPercentage, epochTimeRemaining, roundsLeft, isReady } =
+    useEpochProgress();
 
   return (
-    <div className={`epoch-progress-ring ${className ?? ''}`}>
-      <ProgressRing progress={epochPercentage} size={140} hasBg>
+    <div className={classNames('epoch-progress-ring', className)}>
+      <ProgressRing
+        progress={Number(epochPercentage.toFixed(2))}
+        size={140}
+        hasBg
+      >
         <div className='label' data-testid='currentEpoch'>
-          {isReady && epoch !== undefined ? (
-            <>
-              Epoch
-              <br />
-              {new BigNumber(epoch).toFormat(0)}
-            </>
-          ) : (
-            ELLIPSIS
-          )}
+          Epoch
+          <br />
+          {formatBigNumber({ value: epoch, showEllipsisIfZero: !isReady })}
         </div>
         <div
           className={classNames('description', { 'cursor-context': showTime })}
           {...(showTime ? { title: epochTimeRemaining } : {})}
         >
-          {roundsLeft && roundsLeft >= 0 ? (
-            <>{new BigNumber(roundsLeft).toFormat(0)} Rounds Left</>
-          ) : (
-            ELLIPSIS
-          )}
+          {formatBigNumber({ value: roundsLeft, showEllipsisIfZero: !isReady })}{' '}
+          {getStringPlural(roundsLeft, {
+            string: 'Round'
+          })}{' '}
+          Left
         </div>
       </ProgressRing>
     </div>

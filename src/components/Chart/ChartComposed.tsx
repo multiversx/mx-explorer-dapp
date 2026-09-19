@@ -1,4 +1,3 @@
-/* eslint-disable import/order */
 import { Fragment, useState } from 'react';
 import moment from 'moment';
 import {
@@ -13,13 +12,15 @@ import {
   Surface,
   Symbols
 } from 'recharts';
-import { Props } from 'recharts/types/component/DefaultLegendContent';
+import { NumberDomain } from 'recharts/types/util/types';
+
+import { formatTimestamp, getColors } from 'helpers';
+import { ChartComposedProps, ChartConfigType } from 'types';
+
 import { ChartTooltip } from './ChartTooltip';
 import { formatYAxis } from './helpers/formatYAxis';
 import { StartEndTick } from './helpers/StartEndTick';
-import { ChartComposedProps, ChartConfigType } from './helpers/types';
 import { useChartComposedData } from './hooks/useChartComposedData';
-import { getColors } from 'helpers';
 
 export const ChartComposed = ({
   seriesConfig,
@@ -91,7 +92,9 @@ export const ChartComposed = ({
     setHiddenSeries(modifiedSeries);
   };
 
-  const renderCustomizedLegend = ({ payload }: Props) => {
+  const renderCustomizedLegend = () => {
+    const payload = getLegendPayload();
+
     return (
       <div className='d-flex justify-content-center flex-wrap customized-legend'>
         {payload?.map((entry: any) => {
@@ -106,7 +109,7 @@ export const ChartComposed = ({
             ...styleRest,
             margin: 5,
             color: `${active ? secondary : color}`,
-            borderColor: `${active ? secondary : borderColor ?? color}`
+            borderColor: `${active ? secondary : (borderColor ?? color)}`
           };
 
           return (
@@ -142,7 +145,7 @@ export const ChartComposed = ({
     );
   };
 
-  const calculateDomain = ([alpha, beta]: number[]): [number, number] => {
+  const calculateDomain = ([alpha, beta]: NumberDomain): NumberDomain => {
     const end = beta + beta / 90;
 
     if (!isFinite(alpha) && !isFinite(beta)) {
@@ -182,7 +185,12 @@ export const ChartComposed = ({
             </defs>
           ))}
 
-          <CartesianGrid vertical={false} stroke={neutral800} opacity={0.8} />
+          <CartesianGrid
+            vertical={false}
+            stroke={neutral800}
+            opacity={0.8}
+            yAxisId={seriesConfig[0]?.yAxisConfig?.id}
+          />
 
           <XAxis
             minTickGap={40}
@@ -191,8 +199,7 @@ export const ChartComposed = ({
             tickLine={false}
             domain={chartData.map((x) => x.timestamp)}
             tickFormatter={(tick) =>
-              moment
-                .unix(tick)
+              moment(formatTimestamp(tick))
                 .utc()
                 .format(dateFormat ?? 'D MMM')
             }
@@ -279,7 +286,6 @@ export const ChartComposed = ({
                 cursor: 'pointer',
                 paddingTop: '1.5rem'
               }}
-              payload={getLegendPayload()}
               content={renderCustomizedLegend}
             />
           )}

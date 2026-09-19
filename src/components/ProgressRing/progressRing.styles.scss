@@ -12,11 +12,20 @@
     }
   }
 
+  &.sweep-ring {
+    .progress-ring circle {
+      transition: none;
+    }
+    .progress-ring .fill {
+      animation: ring-sweep var(--sweep-duration, 600ms) linear infinite;
+    }
+  }
+
   .progress-ring {
     circle {
       transition: stroke-dashoffset 0.35s;
     }
-    &.progress-0 {
+    &.no-transition {
       circle {
         transition: none;
       }
@@ -75,12 +84,18 @@
   }
 }
 
-.block-progress-ring {
-  .progress-ring {
-    &.progress-1667 {
-      circle {
-        transition: none !important;
-      }
-    }
+@keyframes ring-sweep {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-ring-wrapper.sweep-ring .progress-ring .fill {
+    animation: none;
+    stroke-dashoffset: 0;
   }
 }

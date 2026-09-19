@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Overlay } from 'components';
@@ -9,19 +10,18 @@ interface ScAddressIconType {
   secondInitiator?: string;
 }
 
-export const ScAddressIcon = ({
-  initiator,
-  secondInitiator
-}: ScAddressIconType) => {
-  const showIcon = isContract(initiator) || isContract(secondInitiator);
+export const ScAddressIcon = memo(
+  ({ initiator, secondInitiator }: ScAddressIconType) => {
+    const showIcon = isContract(initiator) || isContract(secondInitiator);
 
-  return showIcon ? (
-    <Overlay title='Smart Contract'>
-      <FontAwesomeIcon
-        icon={faCommand}
-        className='me-1 text-primary'
-        size='sm'
-      />
-    </Overlay>
-  ) : null;
-};
+    return showIcon ? (
+      <Overlay title='Smart Contract'>
+        <FontAwesomeIcon
+          icon={faCommand}
+          className='me-1 text-primary'
+          size='sm'
+        />
+      </Overlay>
+    ) : null;
+  }
+);

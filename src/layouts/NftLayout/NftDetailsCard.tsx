@@ -240,7 +240,7 @@ export const NftDetailsCard = () => {
               )
             }
           : {},
-        uris !== undefined && uris[0]
+        uris !== undefined && uris.length > 0
           ? {
               title: 'Assets',
               value: (

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { Anchor, Dropdown } from 'react-bootstrap';
@@ -17,18 +18,20 @@ export const Switcher = () => {
   const { isSubSubdomain } = getSubdomainNetwork();
   const getNetworkChangeLink = useGetNetworkChangeLink();
 
-  const networkLinks = networks
-    .filter((network) => !network.isCustom)
-    .map(({ name, id }) => {
-      const url = getNetworkChangeLink({ networkId: id });
-      return {
-        name,
-        url,
-        id
-      };
-    });
+  const networkLinks = useMemo(() => {
+    return networks
+      .filter((network) => !network.isCustom)
+      .map(({ name, id }) => {
+        const url = getNetworkChangeLink({ networkId: id });
+        return {
+          name,
+          url,
+          id
+        };
+      });
+  }, [networks]);
 
-  const LinksList = () => {
+  const renderLinksList = () => {
     return (
       <div className='network-list'>
         {links.length > 0 ? (
@@ -96,7 +99,7 @@ export const Switcher = () => {
         className='btn-unstyled control'
         aria-haspopup='true'
         aria-controls='network-switch-menu'
-        aria-label='Change Network'
+        aria-label={`${activeNetworkName} - Change Network`}
       >
         <div className='value text-truncate'>{activeNetworkName}</div>
         <FontAwesomeIcon
@@ -112,11 +115,9 @@ export const Switcher = () => {
       >
         <div className='network-switch-list'>
           {hasExtraNetworks ? (
-            <CustomNetworkMenu>
-              <LinksList />
-            </CustomNetworkMenu>
+            <CustomNetworkMenu>{renderLinksList()}</CustomNetworkMenu>
           ) : (
-            <LinksList />
+            renderLinksList()
           )}
         </div>
       </Dropdown.Menu>

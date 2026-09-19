@@ -1,23 +1,48 @@
-import { useDispatch } from 'react-redux';
+import { useCallback } from 'react';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 
-import { processStats, getExtraStats } from 'helpers';
-import { useAdapter } from 'hooks';
-import { setStats } from 'redux/slices/stats';
+import {
+  websocketActiveSubscriptions,
+  websocketConnection
+} from 'appConstants';
+import { useAdapter, useRegisterWebsocketListener } from 'hooks';
+import { statsIsWebsocketSelector, statsSelector } from 'redux/selectors';
+import { setStats } from 'redux/slices';
+import { RootState } from 'redux/store';
+import {
+  StatsType,
+  WebsocketEventsEnum,
+  WebsocketSubcriptionsEnum
+} from 'types';
 
 let currentRequest: any = null;
 
-export const useFetchStats = () => {
+interface FetchStatsType {
+  skipBrowserCache?: boolean;
+}
+
+interface UseFetchStatsOptionsType {
+  registerWebsocketListener?: boolean;
+}
+
+export const useFetchStats = ({
+  registerWebsocketListener = false
+}: UseFetchStatsOptionsType = {}) => {
   const dispatch = useDispatch();
   const { getStats } = useAdapter();
+  const isWebsocket = useSelector(statsIsWebsocketSelector);
+  const store = useStore<RootState>();
 
-  const getStatsOnce = () => {
+  const getStatsOnce = ({ skipBrowserCache }: FetchStatsType = {}) => {
     if (currentRequest) {
       return currentRequest;
     }
 
     const requestPromise = new Promise(async (resolve, reject) => {
       try {
-        const response = await getStats();
+        const response = await getStats(
+          skipBrowserCache ? { headers: { 'Cache-Control': 'no-cache' } } : {}
+        );
         resolve(response);
       } catch (error) {
         reject(error);
@@ -30,30 +55,29 @@ export const useFetchStats = () => {
     return requestPromise;
   };
 
-  const fetchStats = async () => {
-    const { data, success } = await getStatsOnce();
+  // Default Stats Updater, subscribe to websocket events on default flow
+  const onWebsocketEvent = (event: StatsType) => {
+    dispatch(setStats({ stats: event, isWebsocket: true, isDataReady: true }));
+  };
 
+  useRegisterWebsocketListener({
+    ...(registerWebsocketListener
+      ? {
+          subscription: WebsocketSubcriptionsEnum.subscribeStats,
+          event: WebsocketEventsEnum.statsUpdate
+        }
+      : {}),
+    onWebsocketEvent
+  });
+
+  const fetchApiStats = async ({ skipBrowserCache }: FetchStatsType = {}) => {
+    const { data, success } = await getStatsOnce({ skipBrowserCache });
     if (data && success) {
-      const {
-        epochPercentage,
-        epochTotalTime,
-        epochTimeElapsed,
-        epochTimeRemaining
-      } = getExtraStats(data);
-
-      const processedStats = processStats(data);
       dispatch(
         setStats({
-          ...processedStats,
-
-          unprocessed: {
-            ...data,
-            epochPercentage,
-            epochTotalTime,
-            epochTimeElapsed,
-            epochTimeRemaining
-          },
-          isFetched: true
+          stats: data,
+          isWebsocket: false,
+          isDataReady: true
         })
       );
     }
@@ -61,5 +85,21 @@ export const useFetchStats = () => {
     return { data, success };
   };
 
-  return fetchStats;
+  const fetchStats = useCallback(
+    async ({ skipBrowserCache }: FetchStatsType = {}) => {
+      if (
+        isWebsocket &&
+        websocketActiveSubscriptions.has(
+          WebsocketSubcriptionsEnum.subscribeStats
+        )
+      ) {
+        return { data: statsSelector(store.getState()).stats, success: true };
+      }
+
+      return await fetchApiStats({ skipBrowserCache });
+    },
+    [isWebsocket, websocketActiveSubscriptions, websocketConnection]
+  );
+
+  return { fetchStats };
 };

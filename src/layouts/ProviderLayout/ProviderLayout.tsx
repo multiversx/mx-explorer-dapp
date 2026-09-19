@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, Outlet } from 'react-router-dom';
+import { useParams, Outlet } from 'react-router';
 
 import { NODE_STATUS_PREVIEW_FIELDS, MAX_RESULTS } from 'appConstants';
 import { Loader, NodesOverview, PageState, SharedIdentity } from 'components';
@@ -17,7 +17,7 @@ import { IdentityType, NodeTypeEnum, ProviderType } from 'types';
 import { ProviderDetailsCard } from './ProviderDetailsCard';
 
 export const ProviderLayout = () => {
-  const { isFetched: isNodesOverviewFetched } = useSelector(
+  const { isDataReady: isNodesOverviewFetched } = useSelector(
     nodesOverviewSelector
   );
   const { hash: address } = useParams();
@@ -39,7 +39,7 @@ export const ProviderLayout = () => {
   const fetchProvider = async () => {
     if (address) {
       const { data, success } = await getProvider({ address });
-      if (success && data) {
+      if (success && data?.identity) {
         const identityDetails = await getIdentity(data.identity);
         if (identityDetails.success) {
           setIdentity(identityDetails.data);

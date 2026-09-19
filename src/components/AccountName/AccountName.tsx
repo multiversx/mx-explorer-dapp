@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 
 import { HEROTAG_SUFFIX } from 'appConstants';
-import { ReactComponent as IdentityLogo } from 'assets/img/logos/identity.svg';
+import IdentityLogo from 'assets/img/logos/identity.svg';
 import { Trim, Overlay } from 'components';
 import { formatHerotag } from 'helpers';
-import { useAdapter } from 'hooks';
+import { useAbortSignal, useAdapter } from 'hooks';
 import { AccountAssetType, WithClassnameType } from 'types';
 
 export interface AccountNameUIType extends WithClassnameType {
@@ -12,6 +13,7 @@ export interface AccountNameUIType extends WithClassnameType {
   username?: string;
   assets?: AccountAssetType;
   fetchAssets?: boolean;
+  trimClassName?: string;
 }
 
 export const AccountName = ({
@@ -19,14 +21,22 @@ export const AccountName = ({
   username,
   assets,
   fetchAssets = false,
-  className,
+  className = '',
+  trimClassName = '',
   'data-testid': dataTestId = ''
 }: AccountNameUIType) => {
   const { getAccountAssets } = useAdapter();
+  const getAbortSignal = useAbortSignal();
   const [fetchedAssets, setFetchedAssets] = useState<AccountAssetType>();
 
   const fetchAccountAssets = () => {
-    getAccountAssets({ address }).then(({ success, data }) => {
+    const signal = getAbortSignal();
+
+    getAccountAssets({ address, signal }).then(({ success, data }) => {
+      if (signal.aborted) {
+        return;
+      }
+
       if (data && success) {
         setFetchedAssets({
           ...data.assets,
@@ -78,5 +88,11 @@ export const AccountName = ({
     );
   }
 
-  return <Trim text={address} className={className} data-testid={dataTestId} />;
+  return (
+    <Trim
+      text={address}
+      className={classNames(className, trimClassName)}
+      data-testid={dataTestId}
+    />
+  );
 };

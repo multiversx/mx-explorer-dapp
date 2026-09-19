@@ -25,6 +25,7 @@ export const TransactionActionToken = ({
     return (
       <div className='d-flex align-items-center symbol text-truncate text-neutral-100'>
         <FormatAmount
+          egldLabel={NATIVE_TOKEN_IDENTIFIER}
           value={token.value}
           showLastNonZeroDecimal={showLastNonZeroDecimal}
           showUsdValue={false}

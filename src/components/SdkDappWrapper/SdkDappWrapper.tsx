@@ -1,0 +1,55 @@
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import { Loader } from 'components';
+import { initApp, InitAppType } from 'lib';
+import { useGetEnvironment } from 'pages/AccountDetails/AccountVerifiedContract/hooks';
+import { activeNetworkSelector } from 'redux/selectors';
+
+export const SdkDappWrapper = ({ children }: { children: ReactNode }) => {
+  const environment = useGetEnvironment();
+  const { apiAddress } = useSelector(activeNetworkSelector);
+  const walletConnectV2ProjectId = import.meta.env.VITE_APP_WALLETCONNECT_ID;
+
+  const [initialized, setInitialized] = useState<boolean>(false);
+  const isMountingRef = useRef(false);
+
+  const initializeApp = async () => {
+    if (isMountingRef.current || !environment) {
+      return;
+    }
+
+    isMountingRef.current = true;
+
+    const config: InitAppType = {
+      storage: { getStorageCallback: () => sessionStorage },
+      dAppConfig: {
+        nativeAuth: true,
+        environment,
+        network: {
+          name: 'sdk-sc-explorer',
+          skipFetchFromServer: true,
+          apiAddress
+        },
+        providers: {
+          walletConnect: {
+            walletConnectV2ProjectId
+          }
+        }
+      }
+    };
+
+    try {
+      await initApp(config);
+      setInitialized(true);
+    } catch (error) {
+      console.error('Error initializing app:', error);
+    }
+  };
+
+  useEffect(() => {
+    initializeApp();
+  }, []);
+
+  return <>{!initialized ? <Loader /> : children}</>;
+};

@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 
 import { ELLIPSIS } from 'appConstants';
-import { ReactComponent as MultiversXSymbol } from 'assets/img/multiversx-legacy-delegation.svg';
+import MultiversXSymbol from 'assets/img/multiversx-legacy-delegation.svg';
 import { FormatAmount } from 'components';
 import { faLeaf } from 'icons/regular';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
@@ -20,7 +20,7 @@ export const AccountLegacyDelegation = ({
   identity?: IdentityType;
 }) => {
   const {
-    isFetched,
+    isDataReady,
     unprocessed: { baseApr, topUpApr }
   } = useSelector(economicsSelector);
   const { egldLabel } = useSelector(activeNetworkSelector);
@@ -37,7 +37,7 @@ export const AccountLegacyDelegation = ({
     useState<string>(ELLIPSIS);
 
   const getLegacyDelegationApr = () => {
-    if (isFetched && identity?.stake && identity?.topUp && identity?.locked) {
+    if (isDataReady && identity?.stake && identity?.topUp && identity?.locked) {
       const legacyDelegationBN = new BigNumber(identity.stake)
         .times(new BigNumber(baseApr))
         .plus(new BigNumber(identity.topUp).times(topUpApr))
@@ -50,7 +50,7 @@ export const AccountLegacyDelegation = ({
     }
   };
 
-  useEffect(getLegacyDelegationApr, [isFetched, identity]);
+  useEffect(getLegacyDelegationApr, [isDataReady, identity]);
 
   return (
     <div className='delegation-row d-flex flex-wrap align-items-center justify-content-between p-3 px-md-4'>
@@ -63,14 +63,15 @@ export const AccountLegacyDelegation = ({
             <div className='provider-title font-headings d-flex align-items-center'>
               MultiversX Legacy Delegation
             </div>
-
-            <div className='d-flex flex-wrap provider-metrics'>
-              <div>
-                <FontAwesomeIcon size='xs' icon={faLeaf} className='me-1' />
-                Up to {legacyDelegationApr}
-                <span className='text-neutral-400 ms-1'>APY</span>
+            {identity && (
+              <div className='d-flex flex-wrap provider-metrics'>
+                <div>
+                  <FontAwesomeIcon size='xs' icon={faLeaf} className='me-1' />
+                  Up to {legacyDelegationApr}
+                  <span className='text-neutral-400 ms-1'>APY</span>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

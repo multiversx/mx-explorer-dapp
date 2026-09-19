@@ -19,9 +19,7 @@ export interface ExtendedStatsType extends StatsType {
   epochTimeRemaining: number;
 }
 
-export interface StatsSliceType extends SliceType {
-  unprocessed: ExtendedStatsType;
-
+export interface ProcessedStatsType {
   shards: string;
   blocks: string;
   accounts: string;
@@ -36,4 +34,10 @@ export interface StatsSliceType extends SliceType {
   epochTotalTime: string;
   epochTimeElapsed: string;
   epochTimeRemaining: string;
+}
+
+export interface StatsSliceType extends SliceType {
+  unprocessed: ExtendedStatsType;
+  stats: ProcessedStatsType;
+  isWebsocket: boolean;
 }

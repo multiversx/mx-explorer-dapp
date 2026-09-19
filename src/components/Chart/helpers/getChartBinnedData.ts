@@ -1,18 +1,11 @@
 import moment, { Moment, unitOfTime } from 'moment';
 
-import { ChartDataType } from 'components/Chart/helpers/types';
-import { formatAmount } from 'helpers';
-
-interface AccountBalanceHistoryType {
-  address: string;
-  balance: string;
-  timestamp: number;
-  isSender?: boolean;
-}
+import { formatAmount, formatTimestamp } from 'helpers';
+import { AccountBalanceHistoryType, ChartDataType } from 'types';
 
 const getMoment = (timestamp: string | number): Moment => {
   return typeof timestamp === 'number'
-    ? moment.unix(timestamp)
+    ? moment(formatTimestamp(timestamp))
     : moment(timestamp);
 };
 
@@ -57,7 +50,8 @@ export const getIntervalDates = (
 
 export const formatEntry = (entry: AccountBalanceHistoryType) => {
   const value = formatAmount({
-    input: entry.balance
+    input: entry.balance,
+    decimals: entry.decimals
   });
   return {
     timestamp: entry.timestamp,
@@ -95,7 +89,7 @@ export const getChartBinnedData = (data: AccountBalanceHistoryType[]) => {
 
   for (const date of intervalDates) {
     binnedData[date] = {
-      timestamp: Number(moment.unix(date).format('X')),
+      timestamp: Number(moment(formatTimestamp(date)).format('X')),
       value: ''
     };
   }

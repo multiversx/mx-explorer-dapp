@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 import { ELLIPSIS } from 'appConstants';
 import { FormatAmountUIType } from 'components';
 import { DIGITS } from 'config';
-import { formatAmount, stringIsFloat, formatBigNumber } from 'helpers';
+import { formatAmount, formatBigNumber } from 'helpers';
+import { stringIsFloat } from 'lib';
 import { economicsSelector } from 'redux/selectors';
 import { FormatDisplayValue } from '../FormatDisplayValue';
 
@@ -16,7 +17,7 @@ export interface FormatUSDUIType extends Omit<FormatAmountUIType, 'value'> {
 }
 
 export const FormatUSD = (props: FormatUSDUIType) => {
-  const { isFetched, unprocessed } = useSelector(economicsSelector);
+  const { isDataReady, unprocessed } = useSelector(economicsSelector);
   const {
     value: unprocessedValue,
     usd: usdValue,
@@ -39,7 +40,7 @@ export const FormatUSD = (props: FormatUSDUIType) => {
     decimalSeparator: '.'
   });
 
-  if (!stringIsFloat(formattedAmount) || (!usdValue && !isFetched)) {
+  if (!stringIsFloat(formattedAmount) || (!usdValue && !isDataReady)) {
     return (
       <span
         {...(props['data-testid']
@@ -53,7 +54,7 @@ export const FormatUSD = (props: FormatUSDUIType) => {
   }
 
   const usd =
-    usdValue ?? (isFetched && unprocessed.price ? unprocessed.price : 1);
+    usdValue ?? (isDataReady && unprocessed.price ? unprocessed.price : 1);
   const bNValue = new BigNumber(amount).times(new BigNumber(usd));
 
   const completeValue = bNValue.toFormat();

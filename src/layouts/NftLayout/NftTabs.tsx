@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { Tabs } from 'components/Tabs';
+import { Tabs } from 'components';
 import { isProof, urlBuilder } from 'helpers';
 import { nftSelector } from 'redux/selectors';
 import { nftRoutes, tokensRoutes } from 'routes';
@@ -13,8 +13,8 @@ export const NftTabs = () => {
 
   const showOverview = Boolean(
     type &&
-      type !== NftTypeEnum.MetaESDT &&
-      (metadata?.attributes || (rarities && Object.keys(rarities).length > 0))
+    type !== NftTypeEnum.MetaESDT &&
+    (metadata?.attributes || (rarities && Object.keys(rarities).length > 0))
   );
 
   const tabs = [

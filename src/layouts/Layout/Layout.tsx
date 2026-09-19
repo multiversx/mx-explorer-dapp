@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
-import { useLocation, Outlet } from 'react-router-dom';
+import { useLocation, Outlet } from 'react-router';
 
 import { NotificationsBar, NetworkReady, MetaTags } from 'components';
 import {
   useFetchStats,
   useFetchEconomics,
-  useNetworkRouter,
+  useFetchShards,
   useLoopManager,
   useCheckVersion,
   useGetURLNetwork,
-  useInitDatadog,
+  useInitWebsocket,
+  useRoundManager,
   useSetBrowserClassNames,
-  useSetDappConfig
+  useSetDappConfig,
+  useTempStorageNotification
 } from 'hooks';
 import { activeNetworkSelector, defaultNetworkSelector } from 'redux/selectors';
 
@@ -30,15 +32,17 @@ export const Layout = () => {
   const { id: defaultNetworkId } = useSelector(defaultNetworkSelector);
 
   const fetchEconomics = useFetchEconomics();
-  const fetchStats = useFetchStats();
+  const { fetchStats } = useFetchStats({ registerWebsocketListener: true });
 
-  useNetworkRouter();
+  useFetchShards();
+
   useLoopManager();
+  useRoundManager();
   useCheckVersion();
-  useInitDatadog();
+  useInitWebsocket();
   useSetDappConfig();
   useSetBrowserClassNames();
-  // useTempStorageNotification();
+  useTempStorageNotification();
 
   const [freeze, setFreeze] = useState(false);
 
@@ -50,6 +54,7 @@ export const Layout = () => {
 
   useEffect(() => {
     if (urlNetwork && urlNetwork.id === activeNetworkId) {
+      // initial fetch, will be updated by websocket
       fetchStats();
       fetchEconomics();
     }

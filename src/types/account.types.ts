@@ -8,7 +8,8 @@ import {
   SliceType,
   RolesType,
   TokenType,
-  CollectionType
+  CollectionType,
+  TransactionType
 } from 'types';
 
 export interface AccountType {
@@ -38,6 +39,7 @@ export interface AccountType {
   activeGuardianServiceUid?: string;
   ownerAssets?: AccountAssetType;
   transfersLast24h?: number;
+  searchAfter?: string;
 }
 
 export interface AccountSliceType extends SliceType {
@@ -78,12 +80,19 @@ export interface AccountStakingSliceType {
   accountStakingFetched: boolean;
 }
 
+export interface AccountExtraAnalyticsSliceType {
+  accountTransactions: TransactionType[];
+  accountTransactionsFetched?: boolean;
+}
+
+export interface AccountExtraBaseSliceType extends AccountExtraAnalyticsSliceType {
+  address: string;
+  firstTransactionDate?: number;
+  tokenBalance?: string;
+}
+
 export interface AccountExtraSliceType extends SliceType {
-  accountExtra: {
-    address: string;
-    firstTransactionDate?: number;
-    tokenBalance?: string;
-  };
+  accountExtra: AccountExtraBaseSliceType;
 }
 
 export interface AccountAssetType {
@@ -122,4 +131,12 @@ export interface AccountCollectionRolesType extends CollectionType {
 export enum AccountRolesTypeEnum {
   tokens = 'tokens',
   collections = 'collections'
+}
+
+export interface AccountBalanceHistoryType {
+  address: string;
+  balance: string;
+  timestamp: number;
+  decimals?: number;
+  isSender?: boolean;
 }

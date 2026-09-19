@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
-import { CUSTOM_NETWORK_ID } from 'appConstants';
+import { CUSTOM_NETWORK_ID, DEFAULT_HRP, REFRESH_RATE } from 'appConstants';
 import { networks } from 'config';
 import { cookie, storage, getSubdomainNetwork } from 'helpers';
 import { useAdapter, useGetNetworkChangeLink } from 'hooks';
@@ -31,7 +31,7 @@ const validateUrl = (url: string) => {
 };
 
 export const useCustomNetwork = (customUrl: string) => {
-  const { getNetworkConfig } = useAdapter();
+  const { getDappConfig, getNetworkConfig, getWebsocketConfig } = useAdapter();
   const getNetworkChangeLink = useGetNetworkChangeLink();
   const { isSubSubdomain } = getSubdomainNetwork();
   const activeNetwork = useSelector(activeNetworkSelector);
@@ -63,10 +63,24 @@ export const useCustomNetwork = (customUrl: string) => {
 
     const apiAddress = new URL(customUrl).toString().replace(/\/+$/, '');
 
-    const { data, success } = await getNetworkConfig(apiAddress);
+    const [dappConfig, networkConfig, websocketConfig] = await Promise.all([
+      getDappConfig(apiAddress),
+      getNetworkConfig(apiAddress),
+      getWebsocketConfig(apiAddress)
+    ]);
+    const { data, success } = dappConfig;
     if (data && success) {
-      const { chainId, egldLabel, explorerAddress, walletAddress, name } =
-        data as DappNetworkConfigType;
+      const {
+        chainId,
+        egldLabel,
+        explorerAddress,
+        walletAddress,
+        name,
+        refreshRate
+      } = data as DappNetworkConfigType;
+      const hrp =
+        networkConfig?.data?.data?.config?.erd_address_hrp ?? DEFAULT_HRP;
+      const updatesWebsocketUrl = websocketConfig?.data?.url;
 
       if (chainId && egldLabel && walletAddress && explorerAddress) {
         const customNetwork = {
@@ -75,11 +89,18 @@ export const useCustomNetwork = (customUrl: string) => {
           adapter: NetworkAdapterEnum.api,
           theme: 'testnet',
           isCustom: true,
+          refreshRate: refreshRate ?? REFRESH_RATE,
           apiAddress,
           chainId,
           egldLabel,
+          hrp,
           walletAddress,
-          explorerAddress
+          explorerAddress,
+          ...(updatesWebsocketUrl
+            ? {
+                updatesWebsocketUrl: `https://${updatesWebsocketUrl}`
+              }
+            : {})
         };
 
         try {
@@ -88,10 +109,13 @@ export const useCustomNetwork = (customUrl: string) => {
           const configData = {
             key: CUSTOM_NETWORK_ID as typeof CUSTOM_NETWORK_ID,
             data: JSON.stringify([customNetwork]),
-            expirationDate: isSubSubdomain ? in2Minutes : in30Days
+            expirationDate: in30Days
           };
           if (isSubSubdomain) {
-            cookie.saveToCookies(configData);
+            cookie.saveToCookies({
+              ...configData,
+              expirationDate: isSubSubdomain ? in2Minutes : in30Days
+            });
           } else {
             storage.saveToLocal(configData);
           }
@@ -108,9 +132,11 @@ export const useCustomNetwork = (customUrl: string) => {
         setIsSaving(false);
 
         // we want to reset the whole state, react router's navigate might lead to unwanted innacuracies
-        window.location.href = getNetworkChangeLink({
-          networkId: CUSTOM_NETWORK_ID
-        });
+        setTimeout(() => {
+          window.location.href = getNetworkChangeLink({
+            networkId: CUSTOM_NETWORK_ID
+          });
+        }, 400);
 
         return;
       }

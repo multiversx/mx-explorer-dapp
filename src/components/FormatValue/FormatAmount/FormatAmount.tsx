@@ -1,30 +1,48 @@
-import { FormatAmountPropsType as SdkDappFormatAmountType } from '@multiversx/sdk-dapp/UI/FormatAmount/formatAmount.types';
-import { stringIsInteger } from '@multiversx/sdk-dapp/utils/validation/stringIsInteger';
 import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { ELLIPSIS } from 'appConstants';
+import {
+  ELLIPSIS,
+  NATIVE_TOKEN_IDENTIFIER,
+  NATIVE_TOKEN_SEARCH_LABEL
+} from 'appConstants';
 import { NativeTokenSymbol } from 'components';
 import { DECIMALS, DIGITS } from 'config';
 import { formatAmount, isEgldToken } from 'helpers';
+import { stringIsInteger } from 'lib';
 import { activeNetworkSelector, economicsSelector } from 'redux/selectors';
+
+import { WithClassnameType } from 'types';
+
 import { FormatDisplayValue } from '../FormatDisplayValue';
 import { FormatUSD } from '../FormatUSD';
 
-export interface FormatAmountUIType extends SdkDappFormatAmountType {
+export interface FormatAmountUIType extends WithClassnameType {
+  value: string;
+  showLastNonZeroDecimal?: boolean;
+  showLabel?: boolean;
+  token?: string;
+  digits?: number;
+  decimals?: number;
+  egldLabel?: string;
+  'data-testid'?: string;
+
   showTooltip?: boolean;
   showSymbol?: boolean;
   superSuffix?: boolean;
   showUsdValue?: boolean;
   decimalOpacity?: boolean;
+  isAnimated?: boolean;
+  showEllipsisIfZero?: boolean;
   usd?: string | number;
 }
 
 export const FormatAmount = (props: FormatAmountUIType) => {
-  const { egldLabel } = useSelector(activeNetworkSelector);
-  const { isFetched, unprocessed } = useSelector(economicsSelector);
+  const { egldLabel: networkEgldLabel } = useSelector(activeNetworkSelector);
+  const { isDataReady, unprocessed } = useSelector(economicsSelector);
   const {
+    egldLabel,
     value,
     className,
     token,
@@ -37,8 +55,11 @@ export const FormatAmount = (props: FormatAmountUIType) => {
     showTooltip = true,
     usd
   } = props;
+  const label = egldLabel ?? networkEgldLabel;
+  const displayLabel =
+    label === NATIVE_TOKEN_IDENTIFIER ? NATIVE_TOKEN_SEARCH_LABEL : label;
   const dataTestId = props['data-testid'] ?? 'formatAmountComponent';
-  const isCustomIcon = !isEgldToken(egldLabel);
+  const isCustomIcon = !isEgldToken(networkEgldLabel);
 
   if (!stringIsInteger(value)) {
     return (
@@ -75,14 +96,14 @@ export const FormatAmount = (props: FormatAmountUIType) => {
     showUsdValue &&
     !isZero &&
     (showSymbol || showLabel) &&
-    ((isFetched && unprocessed.price) || (usd && !token));
+    ((isDataReady && unprocessed.price) || (usd && !token));
 
   return (
     <FormatDisplayValue
       {...props}
       formattedValue={formattedValue}
       completeValue={completeValue}
-      label={egldLabel}
+      label={displayLabel}
       data-testid={dataTestId}
       showSymbol={showSymbol}
       showLastNonZeroDecimal={showLastNonZeroDecimal}
@@ -101,7 +122,7 @@ export const FormatAmount = (props: FormatAmountUIType) => {
         : {})}
       {...(showUsdValueTooltip
         ? {
-            details: (
+            details: () => (
               <>
                 {usd ? '' : 'Current '}
                 USD Value:{' '}

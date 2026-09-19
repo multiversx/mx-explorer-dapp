@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -15,7 +15,7 @@ export const ChartHeading = ({
   svgIcon?: ReactElement;
   iconClass?: string;
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }) => (
   <div className={`chart-heading card-header ${className ?? ''}`}>
     <div className='card-header-item d-flex align-items-center'>

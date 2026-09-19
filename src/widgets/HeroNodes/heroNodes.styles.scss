@@ -1,7 +1,7 @@
 .hero-nodes {
   .unstyled-chart-box {
     margin: 0;
-    @media (min-width: 1200px) {
+    @include media-breakpoint-up(xl) {
       width: 100%;
     }
   }

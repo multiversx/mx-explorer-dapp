@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { TransactionsTable, PulsatingLed, NetworkLink } from 'components';
 import { MethodList } from 'components/TransactionsTable/components';
@@ -13,10 +13,10 @@ import {
   useIsSovereign
 } from 'hooks';
 import { activeNetworkSelector } from 'redux/selectors';
-import { transactionsRoutes } from 'routes';
+import { transactionsInPoolRoutes } from 'routes';
+import { WebsocketEventsEnum, WebsocketSubcriptionsEnum } from 'types';
 
 export const Transactions = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
   const getShardText = useGetShardText();
   const urlParams = useGetTransactionFilters();
@@ -34,14 +34,17 @@ export const Transactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getTransactions, getTransactionsCount, {
-    ...(isSovereign ? { withCrossChainTransfers: true } : {})
+  } = useFetchTransactions({
+    dataPromise: getTransactions,
+    dataCountPromise: getTransactionsCount,
+    filters: { ...(isSovereign ? { withCrossChainTransfers: true } : {}) },
+    subscription: WebsocketSubcriptionsEnum.subscribeTransactions,
+    event: WebsocketEventsEnum.transactionUpdate,
+    hasMaxTransactionsSize: true
   });
 
   useEffect(() => {
-    if (ref.current !== null) {
-      fetchTransactions();
-    }
+    fetchTransactions();
   }, [activeNetworkId, firstPageRefreshTrigger]);
 
   useEffect(() => {
@@ -55,7 +58,7 @@ export const Transactions = () => {
   }, [receiverShard, senderShard]);
 
   return (
-    <div ref={ref} className='container page-content'>
+    <div className='container page-content'>
       <div className='card p-0'>
         <div className='row'>
           <div className='col-12'>
@@ -65,6 +68,8 @@ export const Transactions = () => {
               inactiveFilters={[]}
               dataChanged={dataChanged}
               isDataReady={isDataReady}
+              hasPauseButton
+              hasTxPreviewBtn
               title={
                 <h5
                   data-testid='title'
@@ -87,7 +92,7 @@ export const Transactions = () => {
                   <PulsatingLed className='mx-2 mt-1' />
                   <div className='d-flex align-items-center flex-wrap gap-2'>
                     <NetworkLink
-                      to={transactionsRoutes.transactionsInPool}
+                      to={transactionsInPoolRoutes.transactionsInPool}
                       className='btn btn-sm btn-dark-gradient'
                     >
                       Transaction Pool

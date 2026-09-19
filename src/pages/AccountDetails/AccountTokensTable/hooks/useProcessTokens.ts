@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router';
 
-import { isValidTokenValue, getTotalTokenUsdValue } from 'helpers';
+import { isValidAccountTokenValue, getTotalTokenUsdValue } from 'helpers';
 import { useGetSearch, useGetSort } from 'hooks';
 import { accountExtraSelector } from 'redux/selectors';
 import { setAccountExtra, getInitialAccountExtraState } from 'redux/slices';
@@ -21,7 +21,7 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
 
   const [searchParams] = useSearchParams();
   const { hash: address } = useParams() as any;
-  const { accountExtra, isFetched: isAccountExtraFetched } =
+  const { accountExtra, isDataReady: isAccountExtraFetched } =
     useSelector(accountExtraSelector);
   const { address: extraAddress } = accountExtra;
   const { search } = useGetSearch();
@@ -29,7 +29,7 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
   const { type } = Object.fromEntries(searchParams);
 
   const validTokenValues = accountTokens.filter((token: TokenType) =>
-    isValidTokenValue(token)
+    isValidAccountTokenValue(token)
   );
   const tokenBalance = getTotalTokenUsdValue(validTokenValues);
 
@@ -39,7 +39,7 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
     dispatch(
       setAccountExtra({
         accountExtra: { ...accountExtraDetails, address },
-        isFetched: true
+        isDataReady: true
       })
     );
   }
@@ -55,7 +55,7 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
     let currentOrder = order;
     if (!(sort && order)) {
       const hasValidValues = filteredTokens.some((token) =>
-        isValidTokenValue(token)
+        isValidAccountTokenValue(token)
       );
       if (!hasValidValues) {
         currentSort = SortTokenFieldEnum.name;
@@ -76,7 +76,7 @@ export const useProcessTokens = (accountTokens: TokenType[]) => {
   const processedAccountTokens = useMemo(() => {
     const processedSortArray = accountTokens.map((token) => {
       const portofolioPercentage =
-        token.valueUsd && tokenBalance
+        token.valueUsd && tokenBalance && isValidAccountTokenValue(token)
           ? new BigNumber(token.valueUsd).dividedBy(tokenBalance).times(100)
           : new BigNumber(0);
       return { ...token, portofolioPercentage };

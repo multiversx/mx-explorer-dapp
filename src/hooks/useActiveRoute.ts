@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { useMatchPath, useNetworkRoute } from 'hooks';
 import { collectionRoutes } from 'routes';

@@ -24,7 +24,7 @@ export const NodeQualification = ({
   className
 }: NodeQualificationUIType) => {
   const {
-    isFetched: isStakeFetched,
+    isDataReady: isStakeFetched,
     unprocessed: { minimumAuctionQualifiedStake, notQualifiedAuctionValidators }
   } = useSelector(stakeSelector);
   const { isAuctionDangerZone, isQualified } = useGetNodeFilters();
@@ -50,7 +50,7 @@ export const NodeQualification = ({
   const showDangerZone =
     (isAuctionDangerZone && isQualified) || notQualifiedAuctionValidators;
 
-  const NodeStatusComponent = () => {
+  const renderNodeStatus = () => {
     if (auctionQualified) {
       return (
         <>
@@ -79,7 +79,7 @@ export const NodeQualification = ({
           <Overlay title='Dropped'>
             <FontAwesomeIcon
               icon={faScissors}
-              className='text-red-400 icon-dropped'
+              className='text-red-400 icon-small'
             />
           </Overlay>
         )}
@@ -89,7 +89,7 @@ export const NodeQualification = ({
 
   return (
     <div className={classNames('d-flex align-items-center gap-2', className)}>
-      <NodeStatusComponent />
+      {renderNodeStatus()}
     </div>
   );
 };

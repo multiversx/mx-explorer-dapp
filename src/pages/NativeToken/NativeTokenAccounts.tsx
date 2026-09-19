@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { AccountsTable } from 'components';
 import { useAdapter, useGetNativeTokenDetails, useGetPage } from 'hooks';
@@ -13,7 +13,7 @@ export const NativeTokenAccounts = () => {
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
 
   const { price, marketCap, supply, decimals } = useGetNativeTokenDetails();
-  const { page, size } = useGetPage();
+  const { page, size, searchAfter } = useGetPage();
   const { getAccounts, getAccountsCount } = useAdapter();
 
   const [accounts, setAccounts] = useState<AccountType[]>([]);
@@ -21,17 +21,18 @@ export const NativeTokenAccounts = () => {
   const [isDataReady, setIsDataReady] = useState<boolean | undefined>();
 
   const fetchAccounts = () => {
-    Promise.all([getAccounts({ page, size }), getAccountsCount({})]).then(
-      ([tokenAccountsData, tokenAccountsCountData]) => {
-        if (tokenAccountsData.success && tokenAccountsCountData.success) {
-          setAccounts(tokenAccountsData.data);
-          setAccountsCount(tokenAccountsCountData.data);
-        }
-        setIsDataReady(
-          tokenAccountsData.success && tokenAccountsCountData.success
-        );
+    Promise.all([
+      getAccounts({ page, size, searchAfter }),
+      getAccountsCount({})
+    ]).then(([tokenAccountsData, tokenAccountsCountData]) => {
+      if (tokenAccountsData.success && tokenAccountsCountData.success) {
+        setAccounts(tokenAccountsData.data);
+        setAccountsCount(tokenAccountsCountData.data);
       }
-    );
+      setIsDataReady(
+        tokenAccountsData.success && tokenAccountsCountData.success
+      );
+    });
   };
 
   useEffect(() => {

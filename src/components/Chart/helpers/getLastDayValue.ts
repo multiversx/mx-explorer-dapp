@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 import { ELLIPSIS } from 'appConstants';
-import { ChartDataType } from 'components/Chart/helpers/types';
+import { ChartDataType } from 'types';
 
 export const getLastDayValue = (chartData: ChartDataType[]) => {
   if (chartData.length >= 2) {

@@ -1,5 +1,9 @@
 import classNames from 'classnames';
-import { default as ReactSelect, SingleValue, components } from 'react-select';
+import {
+  default as ReactSelect,
+  SingleValue as ReactSelectSingleValue,
+  components
+} from 'react-select';
 
 export interface SelectOptionType {
   label: string | number;
@@ -9,8 +13,9 @@ export interface SelectOptionType {
 export interface SelectPropsType {
   options: SelectOptionType[];
   value?: SelectOptionType;
-  onChange: (option: SingleValue<SelectOptionType>) => void;
+  onChange: (option: ReactSelectSingleValue<SelectOptionType>) => void;
   defaultValue?: SelectOptionType;
+  'aria-label'?: string;
 }
 
 const Control: typeof components.Control = (props) => (

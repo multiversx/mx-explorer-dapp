@@ -1,22 +1,23 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router';
 
 import { TransactionsTable } from 'components';
-import { useAdapter, useFetchTransactions } from 'hooks';
+import { useAdapter, useFetchCustomTransfers } from 'hooks';
 import { TokenTabs } from 'layouts/TokenLayout/TokenTabs';
-import { activeNetworkSelector, tokenSelector } from 'redux/selectors';
-import { TransactionFiltersEnum } from 'types';
+import { activeNetworkSelector } from 'redux/selectors';
+import {
+  TransactionFiltersEnum,
+  WebsocketEventsEnum,
+  WebsocketSubcriptionsEnum
+} from 'types';
 
 export const TokenTransactions = () => {
-  const ref = useRef(null);
   const [searchParams] = useSearchParams();
-  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
-  const { token } = useSelector(tokenSelector);
-  const { transactions: transactionsCount } = token;
-
   const { getTokenTransfers, getTokenTransfersCount } = useAdapter();
-  const { hash: tokenId } = useParams();
+  const { id: activeNetworkId } = useSelector(activeNetworkSelector);
+
+  const { hash: tokenIdentifier } = useParams();
 
   const {
     fetchTransactions,
@@ -24,27 +25,33 @@ export const TokenTransactions = () => {
     totalTransactions,
     isDataReady,
     dataChanged
-  } = useFetchTransactions(getTokenTransfers, getTokenTransfersCount, {
-    tokenId
+  } = useFetchCustomTransfers({
+    uuid: tokenIdentifier,
+    dataPromise: getTokenTransfers,
+    dataCountPromise: getTokenTransfersCount,
+    subscription: WebsocketSubcriptionsEnum.subscribeCustomTransfers,
+    event: WebsocketEventsEnum.customTransferUpdate,
+    filters: {
+      token: tokenIdentifier
+    },
+    websocketConfig: { token: tokenIdentifier }
   });
 
   useEffect(() => {
-    if (ref.current !== null) {
-      fetchTransactions();
-    }
-  }, [activeNetworkId, tokenId, transactionsCount]);
+    fetchTransactions();
+  }, [activeNetworkId, tokenIdentifier]);
 
   useEffect(() => {
     fetchTransactions(Boolean(searchParams.toString()));
   }, [searchParams]);
 
   return (
-    <div ref={ref} className='card p-0'>
+    <div className='card p-0'>
       <div className='row'>
         <div className='col-12'>
           <TransactionsTable
             transactions={transactions}
-            token={tokenId}
+            token={tokenIdentifier}
             totalTransactions={totalTransactions}
             title={<TokenTabs />}
             dataChanged={dataChanged}
