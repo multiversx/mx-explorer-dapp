@@ -16,6 +16,9 @@ export const MostUsed = () => {
 
   useFetchGrowthMostUsed();
 
+  // temp, until we get one day of tx
+  return null;
+
   if (!hasGrowthWidgets) {
     return null;
   }
