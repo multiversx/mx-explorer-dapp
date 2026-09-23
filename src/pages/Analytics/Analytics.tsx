@@ -11,7 +11,7 @@ import { NoAnalytics } from 'pages/AnalyticsCompare/components/NoAnalytics';
 import { activeNetworkSelector } from 'redux/selectors';
 import { analyticsRoutes } from 'routes';
 import { ChartListType } from 'types';
-import { ChartContractsTransactions, MostUsed } from 'widgets';
+import { ChartContractsTransactions } from 'widgets';
 
 import { ChartWrapper } from './components/ChartWrapper';
 
@@ -258,11 +258,11 @@ export const Analytics = () => {
             </div>
           </ChartWrapper>
 
-          <ChartWrapper>
+          {/* <ChartWrapper>
             <div className='mt-n4 px-3 pb-3'>
               <MostUsed />
             </div>
-          </ChartWrapper>
+          </ChartWrapper> */}
 
           <ChartWrapper>
             <div className='px-3 pb-3'>
