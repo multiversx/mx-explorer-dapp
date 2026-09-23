@@ -40,7 +40,6 @@ import {
   growthMostUsedSelector
 } from 'redux/selectors';
 import { AccountType, SortOrderEnum } from 'types';
-import { MostUsedApplications } from 'widgets';
 
 import { FailedApplications } from './components/FailedApplications';
 import { NoApplications } from './components/NoApplications';
@@ -124,7 +123,7 @@ export const Applications = () => {
 
   return (
     <div className='container page-content'>
-      {hasGrowthWidgets && <MostUsedApplications className='mb-3' />}
+      {/* {hasGrowthWidgets && <MostUsedApplications className='mb-3' />} */}
       {dataReady === false && <FailedApplications />}
       {dataReady === true && (
         <div className='row'>
