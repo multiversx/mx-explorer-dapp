@@ -127,7 +127,8 @@ export const LatestBlocks = () => {
   } = useFetchBlocks({
     dataPromise: getBlocks,
     subscription: WebsocketSubcriptionsEnum.subscribeBlocks,
-    event: WebsocketEventsEnum.blocksUpdate
+    event: WebsocketEventsEnum.blocksUpdate,
+    hasRetryBackoff: true
   });
 
   const blocks = useMemo(

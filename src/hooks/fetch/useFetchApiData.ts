@@ -12,6 +12,8 @@ import {
   WebsocketSubcriptionsEnum
 } from 'types';
 
+import { useRetryBackoff } from './useRetryBackoff';
+
 export interface FetchApiDataProps {
   onApiData: (response: any) => void;
   dataPromise: (params?: any) => Promise<ApiAdapterResponseType>;
@@ -25,6 +27,7 @@ export interface FetchApiDataProps {
   uuid?: string;
   isRefreshPaused?: boolean;
   isCustomUpdate?: boolean;
+  hasRetryBackoff?: boolean;
 }
 
 export const useFetchApiData = ({
@@ -39,9 +42,11 @@ export const useFetchApiData = ({
   urlParams = {},
   uuid = '',
   isCustomUpdate,
-  isRefreshPaused = false
+  isRefreshPaused = false,
+  hasRetryBackoff = false
 }: FetchApiDataProps) => {
   const { page, size, searchAfter } = useGetPage();
+  const { isBackingOff, trackResult } = useRetryBackoff();
   const [dataChanged, setDataChanged] = useState(false);
 
   const isFetchingRef = useRef(false);
@@ -97,7 +102,7 @@ export const useFetchApiData = ({
         return;
       }
 
-      if (isRefreshPaused) {
+      if (isRefreshPaused || (hasRetryBackoff && isBackingOff())) {
         return;
       }
 
@@ -125,6 +130,7 @@ export const useFetchApiData = ({
             return;
           }
 
+          trackResult(response.every(({ success }) => success));
           onApiData(response);
         })
         .finally(() => {
@@ -145,6 +151,7 @@ export const useFetchApiData = ({
       subscription,
       hasUrlParams,
       isRefreshPaused,
+      hasRetryBackoff,
       onApiData,
       filters
     ]

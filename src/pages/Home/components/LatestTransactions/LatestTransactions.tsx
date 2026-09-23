@@ -187,7 +187,8 @@ export const LatestTransactions = () => {
     dataPromise: getTransactions,
     filters: { ...(isSovereign ? { withCrossChainTransfers: true } : {}) },
     subscription: WebsocketSubcriptionsEnum.subscribeTransactions,
-    event: WebsocketEventsEnum.transactionUpdate
+    event: WebsocketEventsEnum.transactionUpdate,
+    hasRetryBackoff: true
   });
 
   const transactions = useMemo(

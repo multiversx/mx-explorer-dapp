@@ -19,6 +19,7 @@ export * from './getPercentageFilled';
 export * from './getPrimaryColor';
 export * from './getProgressStepInterval';
 export * from './getProofHash';
+export * from './getRetryDelay';
 export * from './getRangeDays';
 export * from './getRangeEntries';
 export * from './getRangeText';
