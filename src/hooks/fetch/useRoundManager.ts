@@ -9,11 +9,13 @@ import {
 import { resetEpochRoundsLeft, setEpochRoundsLeft } from 'redux/slices';
 
 import { useFetchStats } from './useFetchStats';
+import { useRetryBackoff } from './useRetryBackoff';
 import { useRoundDuration, useSyncRoundDuration } from './useRoundTicker';
 
 export const useRoundManager = () => {
   const dispatch = useDispatch();
   const { fetchStats } = useFetchStats();
+  const { isBackingOff, trackResult } = useRetryBackoff();
   const { id: activeNetworkId } = useSelector(activeNetworkSelector);
   const roundsPerEpoch = useSelector(statsRoundsPerEpochSelector);
   const roundsPassed = useSelector(statsRoundsPassedSelector);
@@ -39,13 +41,14 @@ export const useRoundManager = () => {
     }
 
     const intervalId = setInterval(() => {
-      if (document.hidden || hasCallMadeRef.current) {
+      if (document.hidden || hasCallMadeRef.current || isBackingOff()) {
         return;
       }
       hasCallMadeRef.current = true;
 
       fetchStats({ skipBrowserCache: true }).then(({ success }) => {
         hasCallMadeRef.current = false;
+        trackResult(success);
 
         if (!success) {
           return;
@@ -81,5 +84,5 @@ export const useRoundManager = () => {
     }, roundDuration);
 
     return () => clearInterval(intervalId);
-  }, [dispatch, fetchStats, roundDuration]);
+  }, [dispatch, fetchStats, roundDuration, isBackingOff, trackResult]);
 };

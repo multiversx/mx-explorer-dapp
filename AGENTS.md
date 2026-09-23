@@ -87,6 +87,8 @@ All API responses are wrapped by `useAdapterConfig`'s `wrap()` function and retu
 
 `useLoopManager` (`src/hooks/layout/`) runs a `setInterval` that dispatches `triggerRefresh()` on the Redux `refreshSlice`. This updates `timestamp` in the store. Page-level hooks react to `timestamp` from `refreshSelector` to re-fetch data. The poll interval adapts to the API's `refreshRate` (from stats) — typically 6000ms, drops to 600ms after Supernova.
 
+Pollers back off when the API keeps failing, so clients don't hammer it at 600ms. `useRetryBackoff` (`src/hooks/fetch/`) allows `MAX_FAILED_REQUESTS` consecutive failures and then spaces retries exponentially (with jitter) up to a 60s cap. The first success resets it, and so does a network change. `useRoundManager` (`/stats`) always uses it. `useFetchApiData` uses it only when `hasRetryBackoff` is passed, which `LatestBlocks` and `LatestTransactions` do. It is opt-in there because the same `fetchData` also serves user-driven paging and filtering, which shouldn't be delayed.
+
 ### Websocket (Optional)
 
 When the network config includes `updatesWebsocketUrl`, a Socket.IO connection is established via `useInitWebsocket`. Components that want real-time updates call `useRegisterWebsocketListener` with a subscription name and event handler. Stats updates are the primary websocket consumer — when active, the polling loop defers to websocket events instead.
