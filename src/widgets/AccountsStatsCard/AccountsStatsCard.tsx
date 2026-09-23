@@ -31,7 +31,7 @@ export const AccountsStatsCard = () => {
       }
       isAnimated={isAnimated}
     >
-      {hasGrowthWidgets && (
+      {hasGrowthWidgets && false && (
         <>
           <FontAwesomeIcon icon={faCircleBolt} className='me-2' />
           {formatBigNumber({
