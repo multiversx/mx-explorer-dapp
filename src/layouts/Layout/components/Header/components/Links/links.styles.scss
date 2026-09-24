@@ -12,14 +12,15 @@
     align-items: center;
     justify-content: start;
     cursor: pointer;
-    padding-left: var(--nav-link-padding-x);
-    padding-right: var(--nav-link-padding-x);
+    padding-left: 0;
+    padding-right: 0;
     margin: auto;
 
     .nav-link {
-      // --nav-link-padding-y: 0;
-      --nav-link-padding-x: 0;
       width: auto;
+      &.has-dropdown {
+        padding-right: 0;
+      }
       &:focus-visible {
         box-shadow: none;
       }
@@ -33,7 +34,8 @@
       align-items: center;
       justify-content: center;
       min-width: 1.125rem;
-      min-height: 1.5rem;
+      min-height: 1.875rem;
+      padding-right: var(--nav-link-padding-x);
       &.show {
         svg.fa-angle-down {
           transform: rotateZ(180deg);
