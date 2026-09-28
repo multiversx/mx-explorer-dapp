@@ -40,7 +40,7 @@ export const TransactionsStatsCard = ({
       className={className}
       isAnimated={isAnimated}
     >
-      {hasGrowthWidgets && false && (
+      {hasGrowthWidgets && (
         <>
           <FontAwesomeIcon icon={faCirclePlus} className='me-2' />
           {formatBigNumber({
