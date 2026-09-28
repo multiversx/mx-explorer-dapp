@@ -16,16 +16,16 @@
     text-wrap: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    &.has-animation {
-      margin-top: -0.438rem;
-    }
+    // &.has-animation {
+    //   margin-top: -0.438rem;
+    // }
   }
   .stats-card-content {
     margin-bottom: 0;
     margin-top: 0.5rem;
-    &.has-animation {
-      margin-top: 0.313rem;
-    }
+    // &.has-animation {
+    //   margin-top: 0.313rem;
+    // }
   }
 }
 

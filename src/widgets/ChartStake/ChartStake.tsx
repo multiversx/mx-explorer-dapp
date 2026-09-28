@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { SingleValue } from 'react-select';
 
+import { ELLIPSIS } from 'appConstants';
 import { SelectOptionType } from 'components';
 import { getPrimaryColor } from 'helpers';
 import { useFetchGrowthStaking } from 'hooks';
@@ -109,7 +110,8 @@ export const ChartStake = ({ className }: WithClassnameType) => {
       title='Total Staked'
       value={
         <>
-          {totalStaked} {egldLabel} <span>({stakingPercentage})</span>
+          {totalStaked} {egldLabel}{' '}
+          {stakingPercentage !== ELLIPSIS && <span>({stakingPercentage})</span>}
         </>
       }
       filters={FILTERS}
