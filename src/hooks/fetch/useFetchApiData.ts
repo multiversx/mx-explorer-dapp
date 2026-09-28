@@ -50,6 +50,7 @@ export const useFetchApiData = ({
   const [dataChanged, setDataChanged] = useState(false);
 
   const isFetchingRef = useRef(false);
+  const lastFiltersKeyRef = useRef<string | undefined>(undefined);
   const abortControllerRef = useRef<AbortController | undefined>(undefined);
 
   useEffect(() => {
@@ -102,11 +103,18 @@ export const useFetchApiData = ({
         return;
       }
 
-      if (isRefreshPaused || (hasRetryBackoff && isBackingOff())) {
+      const filtersKey = JSON.stringify(filters);
+      const hasFiltersChanged = filtersKey !== lastFiltersKeyRef.current;
+
+      if (
+        (isRefreshPaused && !hasFiltersChanged) ||
+        (hasRetryBackoff && isBackingOff())
+      ) {
         return;
       }
 
       isFetchingRef.current = true;
+      lastFiltersKeyRef.current = filtersKey;
 
       if (hasUrlParams && paramsChange) {
         setDataChanged(true);
