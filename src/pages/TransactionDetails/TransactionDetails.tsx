@@ -35,7 +35,9 @@ export const TransactionDetails = () => {
 
   const fetchTransaction = async () => {
     if (transactionId && isHash(transactionId)) {
-      const { data, success } = await getTransaction(transactionId);
+      const { data, success } = await getTransaction(transactionId, {
+        scResultsOrderedByExecution: true
+      });
       let originalTxHash = data?.originalTxHash;
 
       if (!success && !data) {

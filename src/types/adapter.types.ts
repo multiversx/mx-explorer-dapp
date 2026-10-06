@@ -137,6 +137,10 @@ export interface GetIdentitiesType extends SortableApiType {
   identities?: string;
 }
 
+export interface GetTransactiontype extends AxiosParamsApiType {
+  scResultsOrderedByExecution?: boolean;
+}
+
 export interface GetTransactionsType extends SortableApiType {
   sender?: string;
   receiver?: string;

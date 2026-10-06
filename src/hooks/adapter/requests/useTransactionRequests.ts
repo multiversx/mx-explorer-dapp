@@ -6,7 +6,8 @@ import {
   AxiosParamsApiType,
   BaseApiType,
   GetTransactionsType,
-  GetTransactionsInPoolType
+  GetTransactionsInPoolType,
+  GetTransactiontype
 } from 'types/adapter.types';
 
 import {
@@ -43,8 +44,14 @@ export const useTransactionRequests = () => {
 
       getTransaction: (
         transactionId: string,
-        { signal, timeout }: AxiosParamsApiType = {}
-      ) => provider({ url: `/transactions/${transactionId}`, signal, timeout }),
+        { signal, timeout, ...params }: GetTransactiontype = {}
+      ) =>
+        provider({
+          url: `/transactions/${transactionId}`,
+          signal,
+          timeout,
+          params
+        }),
 
       getTransactions: ({ signal, timeout, ...params }: GetTransactionsType) =>
         provider({
