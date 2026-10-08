@@ -4,12 +4,17 @@ import { ELLIPSIS } from 'appConstants';
 import { useGetPage, useGetTransactionInPoolFilters } from 'hooks';
 import { transactionsInPoolSelector } from 'redux/selectors';
 import { setTransactionsInPool } from 'redux/slices';
-import { TransactionInPoolType } from 'types';
+import {
+  ApiErrorCodeEnum,
+  TransactionInPoolType,
+  WebsocketPoolUpdateStatusEnum
+} from 'types';
 import { FetchApiDataProps, useFetchApiData } from './useFetchApiData';
 
 interface TransactionsInPoolWebsocketResponseType {
-  pool: TransactionInPoolType[];
-  poolCount: number;
+  status?: WebsocketPoolUpdateStatusEnum;
+  pool: TransactionInPoolType[] | null;
+  poolCount: number | null;
 }
 
 export const useFetchTransactionsInPool = (
@@ -25,7 +30,8 @@ export const useFetchTransactionsInPool = (
     transactionsInPool,
     transactionsInPoolCount,
     isDataReady,
-    isRefreshPaused
+    isRefreshPaused,
+    isPoolTooLarge
   } = useSelector(transactionsInPoolSelector);
 
   const onWebsocketData = (event: TransactionsInPoolWebsocketResponseType) => {
@@ -33,13 +39,14 @@ export const useFetchTransactionsInPool = (
       return;
     }
 
-    const { pool, poolCount } = event;
+    const { status, pool, poolCount } = event;
     dispatch(
       setTransactionsInPool({
-        transactionsInPool: pool,
-        transactionsInPoolCount: poolCount,
+        transactionsInPool: pool ?? [],
+        transactionsInPoolCount: poolCount ?? ELLIPSIS,
+        isPoolTooLarge: status === WebsocketPoolUpdateStatusEnum.tooLarge,
         isWebsocket: true,
-        isDataReady: true
+        isDataReady: Boolean(pool)
       })
     );
   };
@@ -50,6 +57,9 @@ export const useFetchTransactionsInPool = (
       setTransactionsInPool({
         transactionsInPool: transactionsInPoolData.data ?? [],
         transactionsInPoolCount: transactionsInPoolCountData?.data ?? ELLIPSIS,
+        isPoolTooLarge:
+          transactionsInPoolData.errorCode ===
+          ApiErrorCodeEnum.transactionPoolTooLarge,
         isWebsocket: false,
         isDataReady:
           transactionsInPoolData.success &&
@@ -76,6 +86,7 @@ export const useFetchTransactionsInPool = (
     transactionsInPool,
     totalTransactionsInPool: transactionsInPoolCount,
     isDataReady,
+    isPoolTooLarge,
     fetchTransactionsInPool: fetchData,
     dataChanged
   };

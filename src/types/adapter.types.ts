@@ -6,6 +6,10 @@ export enum NetworkAdapterEnum {
   elastic = 'elastic'
 }
 
+export enum ApiErrorCodeEnum {
+  transactionPoolTooLarge = 'transaction_pool_too_large'
+}
+
 export interface AxiosParamsApiType {
   signal?: any;
   timeout?: any;
@@ -272,4 +276,5 @@ export type ApiAdapterResponseType =
   | {
       success: boolean;
       data?: undefined;
+      errorCode?: string;
     };

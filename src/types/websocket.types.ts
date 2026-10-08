@@ -23,3 +23,9 @@ export enum WebsocketEventsEnum {
   customTransferUpdate = 'customTransferUpdate',
   customEventUpdate = 'customEventUpdate'
 }
+
+export enum WebsocketPoolUpdateStatusEnum {
+  success = 'success',
+  tooLarge = 'tooLarge',
+  internalServerError = 'internalServerError'
+}
