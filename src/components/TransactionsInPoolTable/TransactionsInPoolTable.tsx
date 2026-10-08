@@ -10,7 +10,7 @@ import {
 } from 'components';
 import { formatBigNumber, getStringPlural } from 'helpers';
 import { useGetTransactionInPoolFilters } from 'hooks';
-import { faCode, faExchangeAlt } from 'icons/regular';
+import { faCode, faExchangeAlt, faExclamationTriangle } from 'icons/regular';
 import {
   UITransactionInPoolType,
   TransactionFiltersEnum,
@@ -25,6 +25,7 @@ export interface TransactionsInPoolTableUIType {
   title?: React.ReactNode;
   dataChanged?: boolean;
   isDataReady?: boolean;
+  isPoolTooLarge?: boolean;
   inactiveFilters?: TransactionFiltersEnum[];
 }
 
@@ -42,6 +43,7 @@ export const TransactionsInPoolTable = ({
   ),
   dataChanged = false,
   isDataReady,
+  isPoolTooLarge = false,
   inactiveFilters
 }: TransactionsInPoolTableUIType) => {
   const { type } = useGetTransactionInPoolFilters();
@@ -74,11 +76,20 @@ export const TransactionsInPoolTable = ({
                 )}
                 {isDataReady === false && (
                   <ColSpanWrapper colSpan={8}>
-                    <PageState
-                      icon={faExchangeAlt}
-                      title={`No ${type ? `${type} ` : ''}Transactions in Pool`}
-                      className='py-spacer my-auto'
-                    />
+                    {isPoolTooLarge ? (
+                      <PageState
+                        icon={faExclamationTriangle}
+                        title='The transaction pool is too large to be displayed'
+                        className='py-spacer my-auto'
+                        isError
+                      />
+                    ) : (
+                      <PageState
+                        icon={faExchangeAlt}
+                        title={`No ${type ? `${type} ` : ''}Transactions in Pool`}
+                        className='py-spacer my-auto'
+                      />
+                    )}
                   </ColSpanWrapper>
                 )}
 
