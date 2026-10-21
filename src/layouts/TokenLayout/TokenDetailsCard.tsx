@@ -8,6 +8,7 @@ import {
   SocialWebsite,
   RolesBadges,
   HeroDetailsCard,
+  HeroDescription,
   FormatUSD,
   LowLiquidityTooltip,
   PriceSourceTooltip,
@@ -58,14 +59,7 @@ export const TokenDetailsCard = () => {
     assets?.description
       ? {
           title: 'Description',
-          value: (
-            <div
-              className='description line-clamp-2'
-              title={assets.description}
-            >
-              {assets.description}
-            </div>
-          )
+          value: <HeroDescription description={assets.description} />
         }
       : {},
     assets?.website

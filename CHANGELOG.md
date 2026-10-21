@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ## [[2.4.1](https://github.com/multiversx/mx-explorer-dapp/pull/247)] - 2026-10-20
+
+- [Handle transaction pool is too large to be displayed](https://github.com/multiversx/mx-explorer-dapp/pull/246)
+- [Add scResultsOrderedByExecution on transaction details](https://github.com/multiversx/mx-explorer-dapp/pull/245)
+- [Paused data applies only to polling](https://github.com/multiversx/mx-explorer-dapp/pull/244)
+- [Pause polling on consecutive 500s](https://github.com/multiversx/mx-explorer-dapp/pull/241)
+- [Fix auction list time remaining display](https://github.com/multiversx/mx-explorer-dapp/pull/238)
 - [Fix Epoch Remaining Time](https://github.com/multiversx/mx-explorer-dapp/pull/236)
 
 - ## [[2.4.0](https://github.com/multiversx/mx-explorer-dapp/pull/235)] - 2026-09-10

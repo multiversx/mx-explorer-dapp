@@ -293,6 +293,7 @@ export interface CustomTransactionSliceType extends TransactionSliceType {
 export interface TransactionInPoolSliceType extends SliceType {
   transactionsInPool: UITransactionInPoolType[];
   transactionsInPoolCount: number | typeof ELLIPSIS;
+  isPoolTooLarge?: boolean;
 }
 
 export interface TransactionOverviewSliceType extends SliceType {

@@ -11,6 +11,7 @@ import {
   NftPreview,
   SpotlightButton,
   HeroDetailsCard,
+  HeroDescription,
   Overlay,
   SocialIcons,
   SocialWebsite,
@@ -141,24 +142,13 @@ export const NftDetailsCard = () => {
         Boolean(description && (!scamInfo || showData))
           ? {
               title: 'Description',
-              value: (
-                <div className='description line-clamp-2' title={description}>
-                  {description}
-                </div>
-              )
+              value: <HeroDescription description={description} />
             }
           : {},
         hasExtraDescription && (!scamInfo || showData)
           ? {
               title: 'Collection',
-              value: (
-                <div
-                  className='description line-clamp-2'
-                  title={assets.description}
-                >
-                  {assets.description}
-                </div>
-              )
+              value: <HeroDescription description={assets.description} />
             }
           : {},
         assets?.website && (!scamInfo || showData)

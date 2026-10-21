@@ -31,6 +31,7 @@ export const TransactionsInPool = () => {
     transactionsInPool,
     totalTransactionsInPool,
     isDataReady,
+    isPoolTooLarge,
     dataChanged
   } = useFetchTransactionsInPool({
     dataPromise: getTransactionsInPool,
@@ -61,6 +62,7 @@ export const TransactionsInPool = () => {
               totalTransactionsInPool={totalTransactionsInPool}
               dataChanged={dataChanged}
               isDataReady={isDataReady}
+              isPoolTooLarge={isPoolTooLarge}
             />
           </div>
         </div>

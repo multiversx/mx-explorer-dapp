@@ -7,6 +7,12 @@ const generator = require('mochawesome-report-generator');
 
 const FAILED_SPECS_FILE = 'failed-specs.txt';
 
+type CypressSpecRun = {
+  stats: { failures: number };
+  error: string | null;
+  spec: { relative: string };
+};
+
 async function runTests() {
   await fse.remove('mochawesome-report');
   await fse.remove(FAILED_SPECS_FILE);
@@ -23,9 +29,11 @@ async function runTests() {
     process.exit(1);
   }
 
-  const failedSpecs = results.runs
-    .filter((run) => run.stats.failures > 0 || Boolean(run.error))
-    .map((run) => run.spec.relative);
+  const failedSpecs: string[] = results.runs
+    .filter(
+      (run: CypressSpecRun) => run.stats.failures > 0 || Boolean(run.error)
+    )
+    .map((run: CypressSpecRun) => run.spec.relative);
 
   if (failedSpecs.length > 0) {
     await fse.outputFile(FAILED_SPECS_FILE, `${failedSpecs.join('\n')}\n`);

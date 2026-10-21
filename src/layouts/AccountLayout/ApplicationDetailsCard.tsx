@@ -18,6 +18,7 @@ import {
   SocialIcons,
   SocialWebsite,
   HeroDetailsCard,
+  HeroDescription,
   InfoTooltip,
   ShardLink
 } from 'components';
@@ -132,14 +133,7 @@ export const ApplicationDetailsCard = () => {
           ...(assets?.description
             ? {
                 title: 'Description',
-                value: (
-                  <div
-                    className='description line-clamp-2'
-                    title={assets.description}
-                  >
-                    {assets.description}
-                  </div>
-                )
+                value: <HeroDescription description={assets.description} />
               }
             : {})
         },

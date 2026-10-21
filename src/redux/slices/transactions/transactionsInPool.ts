@@ -9,7 +9,8 @@ export const getInitialTransactionsInPoolState =
       transactionsInPoolCount: ELLIPSIS,
       isDataReady: undefined,
       isRefreshPaused: false,
-      isWebsocket: false
+      isWebsocket: false,
+      isPoolTooLarge: false
     };
   };
 
@@ -37,6 +38,7 @@ export const transactionsInPoolSlice = createSlice({
 
       state.isDataReady = action.payload.isDataReady;
       state.isWebsocket = action.payload.isWebsocket;
+      state.isPoolTooLarge = Boolean(action.payload.isPoolTooLarge);
     },
     pauseTxPoolRefresh: (state: TransactionInPoolSliceType) => {
       state.isRefreshPaused = true;

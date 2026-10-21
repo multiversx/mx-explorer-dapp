@@ -6,6 +6,7 @@ import {
   SocialIcons,
   SocialWebsite,
   HeroDetailsCard,
+  HeroDescription,
   FormatUSD,
   NativeTokenLogo
 } from 'components';
@@ -48,14 +49,7 @@ export const NativeTokenDetailsCard = () => {
       assets?.description
         ? {
             title: 'Description',
-            value: (
-              <div
-                className='description line-clamp-2'
-                title={assets.description}
-              >
-                {assets.description}
-              </div>
-            )
+            value: <HeroDescription description={assets.description} />
           }
         : {},
       assets?.website

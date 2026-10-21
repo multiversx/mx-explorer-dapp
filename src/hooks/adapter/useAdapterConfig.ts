@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { isAxiosError } from 'axios';
 import { useSelector } from 'react-redux';
 
 import { METACHAIN_SHARD_ID, TIMEOUT } from 'appConstants';
@@ -33,7 +34,8 @@ async function wrap(asyncRequest: () => Promise<ApiAdapterResponseType>) {
     };
   } catch (err) {
     return {
-      success: false
+      success: false,
+      errorCode: isAxiosError(err) ? err.response?.data?.code : undefined
     };
   }
 }

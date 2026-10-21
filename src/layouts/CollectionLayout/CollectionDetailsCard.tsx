@@ -11,6 +11,7 @@ import {
   SocialWebsite,
   SpotlightButton,
   HeroDetailsCard,
+  HeroDescription,
   Overlay,
   NftSubTypeBadge
 } from 'components';
@@ -94,14 +95,7 @@ export const CollectionDetailsCard = () => {
         assets?.description && !scamInfo
           ? {
               title: 'Description',
-              value: (
-                <div
-                  className='description line-clamp-2'
-                  title={assets.description}
-                >
-                  {assets.description}
-                </div>
-              )
+              value: <HeroDescription description={assets.description} />
             }
           : {},
         assets?.website && !scamInfo
